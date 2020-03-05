@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ph-ee-connector-ams-mifos"
+  labels:
+    app: ph-ee-connector-ams-mifos
+  annotations:
+spec:
+  containers:
+    - name: phee-connector-ams-mifos
+      image: paymenthubee.azurecr.io/phee/connector-ams-mifos
+      ports:
+        - containerPort: 5000
+      env: 
+        - name: "dfspids"
+          value: "DFSPID"
+        - name: "zeebe.broker.contactpoint"
+          value: "zeebe-zeebe:26500"
+  restartPolicy: Always
+

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ph-ee-connector-channel"
+  labels:
+    app: ph-ee-connector-channel
+  annotations:
+spec:
+  containers:
+    - name: phee-connector-channel
+      image: paymenthubee.azurecr.io/phee/connector-channel
+      ports:
+        - containerPort: 5000
+      env: 
+        - name: "dfspids"
+          value: "DFSPID"
+        - name: "zeebe.broker.contactpoint"
+          value: "zeebe-zeebe:26500"
+  restartPolicy: Always
+

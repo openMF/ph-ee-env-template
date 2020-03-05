@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ph-ee-connector-mojaloop-java"
+  labels:
+    app: ph-ee-connector-mojaloop-java
+  annotations:
+spec:
+  containers:
+    - name: phee-connector-mojaloop-java
+      image: paymenthubee.azurecr.io/phee/connector-mojaloop-java
+      ports:
+        - containerPort: 5000
+      env: 
+        - name: "dfspids"
+          value: "DFSPID"
+        - name: "zeebe.broker.contactpoint"
+          value: "zeebe-zeebe:26500"
+  restartPolicy: Always
+
