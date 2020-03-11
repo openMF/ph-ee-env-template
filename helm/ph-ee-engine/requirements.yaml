@@ -14,4 +14,7 @@ dependencies:
 - name: nginx-ingress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.26.2
+- name: zeebe-operate
+  repository: https://helm.zeebe.io
+  version: 0.0.18
 
