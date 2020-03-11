@@ -15,6 +15,6 @@ spec:
         - name: "dfspids"
           value: "DFSPID"
         - name: "zeebe.broker.contactpoint"
-          value: "zeebe-zeebe:26500"
+          value: "ph-ee-zeebe:26500"
   restartPolicy: Always
 
