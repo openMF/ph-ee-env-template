@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-mojaloop-java
+  name: ph-ee-connector-mojaloop-java-svc
+  namespace: default
+spec:
+  ports:
+  - name: port
+    port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: ph-ee-connector-mojaloop-java
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
