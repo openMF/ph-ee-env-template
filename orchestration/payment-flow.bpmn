@@ -43,7 +43,7 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_0t9574k" name="Local Quote by AMS">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="local-quote" />
+        <zeebe:taskDefinition type="payer-local-quote" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0ew6rln</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_06v9rrn</bpmn:outgoing>
