@@ -39,7 +39,7 @@ spec:
         {{- end }}    
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "paymenthubee.azurecr.io/phee/camunda-zeebe"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: ZEEBE_LOG_LEVEL
