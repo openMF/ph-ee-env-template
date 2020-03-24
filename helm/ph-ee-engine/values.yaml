@@ -52,7 +52,7 @@ JavaOpts: |
 image:
   repository: camunda/zeebe
   tag: 0.22.1
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 labels:
   app: zeebe    
 service:
