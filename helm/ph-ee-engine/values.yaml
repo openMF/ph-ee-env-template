@@ -28,7 +28,7 @@ elasticsearch:
   minimumMasterNodes: 1
 
 kibana:
-  enabled: true
+  enabled: false
   imageTag: 6.8.5
 
 prometheus:
