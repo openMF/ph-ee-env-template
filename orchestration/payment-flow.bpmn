@@ -25,7 +25,7 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0gqboyc" sourceRef="Task_0nskhvh" targetRef="Task_0vca3nk" />
     <bpmn:sequenceFlow id="SequenceFlow_084skjx" sourceRef="Task_0vca3nk" targetRef="Task_1f0uieb" />
-    <bpmn:receiveTask id="Task_1f0uieb" name="Transfer Result (Error or Fulfillment)" messageRef="Message_1fxiyaq">
+    <bpmn:receiveTask id="Task_1f0uieb" name="Transfer Response" messageRef="Message_1fxiyaq">
       <bpmn:incoming>SequenceFlow_084skjx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16q7pp2</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -55,9 +55,9 @@
       <bpmn:incoming>SequenceFlow_1tu2dpf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gqboyc</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0vca3nk" name="Transfer Prepare">
+    <bpmn:serviceTask id="Task_0vca3nk" name="Send transfer request">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="transfer-prepare" />
+        <zeebe:taskDefinition type="send-transfer-request" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0gqboyc</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_13mvek9</bpmn:incoming>
@@ -257,7 +257,7 @@
       <zeebe:subscription correlationKey="transactionId" />
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="Message_1fxiyaq" name="transfer-prepare">
+  <bpmn:message id="Message_1fxiyaq" name="transfer-response">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="transactionId" />
     </bpmn:extensionElements>
