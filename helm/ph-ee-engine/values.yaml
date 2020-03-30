@@ -1,16 +1,18 @@
 
-#global: 
-#  elasticsearch:
-#    host: "ph-ee-elasticsearch-master"
-#    port: 9200 
-#    clusterName: "ph-ee-elasticsearch"
-#  zeebe: "ph-ee-zeebe"
-#  zeebe-operate:
-#    global:
-#      zeebe: "ph-ee-zeebe"
-#      elasticsearch:
-#        host: "ph-ee-elasticsearch-master"
-#        clusterName: "ph-ee-elasticsearch-master"
+global:
+  elasticsearch:
+    host: "ph-ee-elasticsearch-master"
+    port: 9200
+    clusterName: "ph-ee-elasticsearch"
+  kibana:
+    elasticsearchHosts: "http://ph-ee-elasticsearch-master:9200"
+  zeebe: "ph-ee-zeebe"
+  zeebe-operate:
+    global:
+      zeebe: "ph-ee-zeebe"
+      elasticsearch:
+        host: "ph-ee-elasticsearch-master"
+        clusterName: "ph-ee-elasticsearch-master"
 
 
 clusterSize: "1"
