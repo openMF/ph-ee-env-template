@@ -41,6 +41,9 @@ spec:
       - name: {{ .Chart.Name }}
         image: "paymenthubee.azurecr.io/phee/camunda-zeebe"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args:
+        - "--spring.profiles.active=default"
+        - "--spring.config.location=file:./config/zeebe.cfg.yaml"
         env:
         - name: ZEEBE_LOG_LEVEL
           value: debug
