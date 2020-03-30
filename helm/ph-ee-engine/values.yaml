@@ -1,16 +1,16 @@
 
 global: 
-  elasticsearch:
-    host: "ph-ee-elasticsearch-master"
-    port: 9200 
-    clusterName: "ph-ee-elasticsearch"
-  zeebe: "ph-ee-zeebe"
-  zeebe-operate:
-    global:
-      zeebe: "ph-ee-zeebe"
-      elasticsearch:
-        host: "ph-ee-elasticsearch-master"
-        clusterName: "ph-ee-elasticsearch-master"
+#  elasticsearch:
+#    host: "ph-ee-elasticsearch-master"
+#    port: 9200 
+#    clusterName: "ph-ee-elasticsearch"
+#  zeebe: "ph-ee-zeebe"
+#  zeebe-operate:
+#    global:
+#      zeebe: "ph-ee-zeebe"
+#      elasticsearch:
+#        host: "ph-ee-elasticsearch-master"
+#        clusterName: "ph-ee-elasticsearch-master"
 
 
 clusterSize: "1"
@@ -28,7 +28,7 @@ elasticsearch:
   minimumMasterNodes: 1
 
 kibana:
-  enabled: false
+  enabled: true
   imageTag: 6.8.5
 
 prometheus:
