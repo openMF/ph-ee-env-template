@@ -1,5 +1,5 @@
 
-global: 
+#global: 
 #  elasticsearch:
 #    host: "ph-ee-elasticsearch-master"
 #    port: 9200 
