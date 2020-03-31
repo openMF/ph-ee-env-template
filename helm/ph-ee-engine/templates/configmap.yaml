@@ -13,6 +13,7 @@ data:
     configFile=/usr/local/zeebe/conf/zeebe.cfg.toml
     export ZEEBE_HOST=$(hostname -f)
     export ZEEBE_NODE_ID="${HOSTNAME##*-}"
+    export SPRING_CONFIG_LOCATION="file:./config/zeebe.cfg.yaml"
     
     # We need to specify all brokers as contact points for partition healing to work correctly
     # https://github.com/zeebe-io/zeebe/issues/2684
