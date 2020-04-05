@@ -10,33 +10,23 @@
         <zeebe:taskDefinition type="payee-party-lookup-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1jawp7n</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_05i1bde</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0vk18w4</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_05i1bde" sourceRef="Task_1lfzg19" targetRef="ExclusiveGateway_0oihs3d" />
     <bpmn:serviceTask id="Task_0c02j6o" name="Send Party Lookup response">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payee-party-lookup-response-DFSPID" />
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0noy6v3</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0vk18w4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1cpr2t7</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_16lkx2s">
       <bpmn:incoming>SequenceFlow_1cpr2t7</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1cpr2t7" sourceRef="Task_0c02j6o" targetRef="EndEvent_16lkx2s" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0oihs3d" default="SequenceFlow_1m437yt">
-      <bpmn:incoming>SequenceFlow_05i1bde</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0noy6v3</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_1m437yt</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0noy6v3" name="Existing and Valid Party" sourceRef="ExclusiveGateway_0oihs3d" targetRef="Task_0c02j6o">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">partyIdLookupResult == "SUCCESS"</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:boundaryEvent id="IntermediateThrowEvent_0jlg7lc" attachedToRef="Task_1lfzg19">
       <bpmn:outgoing>SequenceFlow_196cypc</bpmn:outgoing>
       <bpmn:errorEventDefinition errorRef="Error_18tpyw8" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1m437yt" name="Error or Non existing PartyId" sourceRef="ExclusiveGateway_0oihs3d" targetRef="Task_0xyli0d" />
     <bpmn:sequenceFlow id="SequenceFlow_196cypc" name="Technical Error" sourceRef="IntermediateThrowEvent_0jlg7lc" targetRef="Task_0xyli0d" />
     <bpmn:endEvent id="EndEvent_02an9bi">
       <bpmn:incoming>SequenceFlow_08f5fxr</bpmn:incoming>
@@ -46,14 +36,14 @@
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payee-party-lookup-error-DFSPID" />
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_1m437yt</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_196cypc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08f5fxr</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0vk18w4" sourceRef="Task_1lfzg19" targetRef="Task_0c02j6o" />
     <bpmn:group id="Group_1vkhreq" categoryValueRef="CategoryValue_1r92cq5" />
     <bpmn:group id="Group_12w8hx2" categoryValueRef="CategoryValue_1wvxa5g" />
   </bpmn:process>
-  <bpmn:error id="Error_18tpyw8" name="error" errorCode="1000" />
+  <bpmn:error id="Error_18tpyw8" name="payee-party-lookup" errorCode="3204" />
   <bpmn:category id="Category_06dk1w7">
     <bpmn:categoryValue id="CategoryValue_1r92cq5" value="AMS" />
   </bpmn:category>
@@ -75,10 +65,6 @@
       <bpmndi:BPMNShape id="ServiceTask_0jsqp82_di" bpmnElement="Task_1lfzg19">
         <dc:Bounds x="290" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_05i1bde_di" bpmnElement="SequenceFlow_05i1bde">
-        <di:waypoint x="390" y="120" />
-        <di:waypoint x="445" y="120" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0lbt4y7_di" bpmnElement="Task_0c02j6o">
         <dc:Bounds x="590" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -89,27 +75,9 @@
         <di:waypoint x="690" y="120" />
         <di:waypoint x="732" y="120" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0oihs3d_di" bpmnElement="ExclusiveGateway_0oihs3d" isMarkerVisible="true">
-        <dc:Bounds x="445" y="95" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0noy6v3_di" bpmnElement="SequenceFlow_0noy6v3">
-        <di:waypoint x="495" y="120" />
-        <di:waypoint x="590" y="120" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="456" y="66" width="87" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BoundaryEvent_03h84u6_di" bpmnElement="IntermediateThrowEvent_0jlg7lc">
         <dc:Bounds x="342" y="142" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1m437yt_di" bpmnElement="SequenceFlow_1m437yt">
-        <di:waypoint x="470" y="145" />
-        <di:waypoint x="470" y="260" />
-        <di:waypoint x="590" y="260" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="482" y="226" width="76" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_196cypc_di" bpmnElement="SequenceFlow_196cypc">
         <di:waypoint x="360" y="178" />
         <di:waypoint x="360" y="280" />
@@ -140,6 +108,10 @@
           <dc:Bounds x="617" y="57" width="46" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vk18w4_di" bpmnElement="SequenceFlow_0vk18w4">
+        <di:waypoint x="390" y="120" />
+        <di:waypoint x="590" y="120" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
