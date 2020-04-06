@@ -148,7 +148,6 @@
       <bpmn:incoming>SequenceFlow_1d2huaz</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0t11r3b</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_166pluk</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_03sd3yg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17ch2m7</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_0bib50r" sourceRef="Task_0fnxxxc" targetRef="EndEvent_1dxurgd" />
@@ -225,11 +224,6 @@
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="SequenceFlow_166pluk" sourceRef="IntermediateThrowEvent_0vbg5f9" targetRef="Task_0p32nxh" />
-    <bpmn:boundaryEvent id="IntermediateThrowEvent_1ui45o9" attachedToRef="Task_0t9574k">
-      <bpmn:outgoing>SequenceFlow_03sd3yg</bpmn:outgoing>
-      <bpmn:errorEventDefinition errorRef="Error_1ulfk7q" />
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_03sd3yg" sourceRef="IntermediateThrowEvent_1ui45o9" targetRef="Task_0p32nxh" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_047pv97" default="SequenceFlow_1o1hhwq">
       <bpmn:incoming>SequenceFlow_1iy5byi</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1o1hhwq</bpmn:outgoing>
@@ -648,14 +642,6 @@
         <di:waypoint x="450" y="209" />
         <di:waypoint x="450" y="120" />
         <di:waypoint x="1250" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BoundaryEvent_0pk6sch_di" bpmnElement="IntermediateThrowEvent_1ui45o9">
-        <dc:Bounds x="1052" y="209" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_03sd3yg_di" bpmnElement="SequenceFlow_03sd3yg">
-        <di:waypoint x="1070" y="209" />
-        <di:waypoint x="1070" y="160" />
-        <di:waypoint x="1250" y="160" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_047pv97_di" bpmnElement="ExclusiveGateway_047pv97" isMarkerVisible="true">
         <dc:Bounds x="925" y="655" width="50" height="50" />

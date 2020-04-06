@@ -43,7 +43,7 @@
     <bpmn:group id="Group_1vkhreq" categoryValueRef="CategoryValue_1r92cq5" />
     <bpmn:group id="Group_12w8hx2" categoryValueRef="CategoryValue_1wvxa5g" />
   </bpmn:process>
-  <bpmn:error id="Error_18tpyw8" name="payee-party-lookup" errorCode="3204" />
+  <bpmn:error id="Error_18tpyw8" name="payee-party-lookup-error" errorCode="payee-party-lookup-error" />
   <bpmn:category id="Category_06dk1w7">
     <bpmn:categoryValue id="CategoryValue_1r92cq5" value="AMS" />
   </bpmn:category>
