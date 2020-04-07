@@ -8,6 +8,8 @@ global:
     elasticsearchHosts: "http://ph-ee-elasticsearch-master:9200"
   zeebe: "ph-ee-zeebe"
   zeebe-operate:
+    image:
+      tag: 0.23.0-alpha2
     global:
       zeebe: "ph-ee-zeebe"
       elasticsearch:
