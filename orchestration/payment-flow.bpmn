@@ -125,20 +125,13 @@
       <bpmn:outgoing>SequenceFlow_08e8xhh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_139sllv" name="Transaction Completed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_0qxl8kt">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transactionStatus == "200"</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferState == "COMMITTED"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_08e8xhh" name="Transaction Rejected" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_1q95sc9" />
     <bpmn:endEvent id="EndEvent_0q5ti1r" name="trasnfer got rejected">
       <bpmn:incoming>SequenceFlow_1xj9hzj</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1iy5byi" sourceRef="Task_1w0mort" targetRef="ExclusiveGateway_047pv97" />
-    <bpmn:serviceTask id="Task_1w0mort" name="Send to operator">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="send-to-operator" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0genjrl</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1iy5byi</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_17ch2m7" sourceRef="Task_0p32nxh" targetRef="EndEvent_0wgldp1" />
     <bpmn:serviceTask id="Task_0p32nxh" name="Send Error Event To Channel">
       <bpmn:extensionElements>
@@ -226,6 +219,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_166pluk" sourceRef="IntermediateThrowEvent_0vbg5f9" targetRef="Task_0p32nxh" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_047pv97" default="SequenceFlow_1o1hhwq">
       <bpmn:incoming>SequenceFlow_1iy5byi</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0w21zzg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1o1hhwq</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0g2iqvu</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -242,6 +236,41 @@
       <bpmn:outgoing>SequenceFlow_123d6qc</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_123d6qc" sourceRef="ServiceTask_0ztyyxf" targetRef="ServiceTask_0zd68jh" />
+    <bpmn:receiveTask id="Task_1w0mort" name="Send to operator" messageRef="Message_1jjvt71">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-operator" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0genjrl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1iy5byi</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:boundaryEvent id="IntermediateThrowEvent_1mdgpbk" name="1 hour final timeout" attachedToRef="Task_1w0mort">
+      <bpmn:outgoing>SequenceFlow_0w21zzg</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0w21zzg" sourceRef="IntermediateThrowEvent_1mdgpbk" targetRef="ExclusiveGateway_047pv97" />
+    <bpmn:subProcess id="SubProcess_0n9j3ly" triggeredByEvent="true">
+      <bpmn:startEvent id="StartEvent_02ailbm" name="internal error">
+        <bpmn:outgoing>SequenceFlow_049vwmt</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1b9loeo" errorRef="Error_1hntnxv" />
+      </bpmn:startEvent>
+      <bpmn:endEvent id="EndEvent_0qhgymd" name="Transfer failed">
+        <bpmn:incoming>SequenceFlow_1xzssyo</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="ServiceTask_1yzs5oc" name="send-error-to-channel">
+        <bpmn:extensionElements>
+          <zeebe:taskHeaders>
+            <zeebe:header key="errorCode" value="errorCode" />
+          </zeebe:taskHeaders>
+          <zeebe:taskDefinition type="send-error-to-channel" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_049vwmt</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_1xzssyo</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="SequenceFlow_049vwmt" sourceRef="StartEvent_02ailbm" targetRef="ServiceTask_1yzs5oc" />
+      <bpmn:sequenceFlow id="SequenceFlow_1xzssyo" sourceRef="ServiceTask_1yzs5oc" targetRef="EndEvent_0qhgymd" />
+    </bpmn:subProcess>
     <bpmn:group id="Group_0nlgr8s" categoryValueRef="CategoryValue_0v7ri8k" />
     <bpmn:group id="Group_03ix7n4" categoryValueRef="CategoryValue_1ga96nc" />
     <bpmn:group id="Group_173at5u" categoryValueRef="CategoryValue_0ptkm7b" />
@@ -253,6 +282,7 @@
       <bpmn:text>Manual intervention required, transaction is in an unknown state</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0vtfvi8" sourceRef="Task_1w0mort" targetRef="TextAnnotation_0udvuco" />
+    <bpmn:group id="Group_0n4l4di" categoryValueRef="CategoryValue_0t4fccu" />
   </bpmn:process>
   <bpmn:message id="Message_0l98qgu" name="payee-user-lookup">
     <bpmn:extensionElements>
@@ -296,6 +326,15 @@
     <bpmn:categoryValue id="CategoryValue_0eoi7eg" value="Channel" />
   </bpmn:category>
   <bpmn:error id="Error_1ulfk7q" name="local-quote-error" errorCode="local-quote-error" />
+  <bpmn:message id="Message_1jjvt71" name="operator-manual-recovery">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="transactionId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:category id="Category_1njbjad">
+    <bpmn:categoryValue id="CategoryValue_0t4fccu" value="Channel" />
+  </bpmn:category>
+  <bpmn:error id="Error_1hntnxv" name="server-error" errorCode="2001" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PaymentTest3">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -487,11 +526,8 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1iy5byi_di" bpmnElement="SequenceFlow_1iy5byi">
         <di:waypoint x="870" y="680" />
-        <di:waypoint x="925" y="680" />
+        <di:waypoint x="935" y="680" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0adtvgq_di" bpmnElement="Task_1w0mort">
-        <dc:Bounds x="770" y="640" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_17ch2m7_di" bpmnElement="SequenceFlow_17ch2m7">
         <di:waypoint x="1350" y="150" />
         <di:waypoint x="1522" y="150" />
@@ -644,18 +680,18 @@
         <di:waypoint x="1250" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_047pv97_di" bpmnElement="ExclusiveGateway_047pv97" isMarkerVisible="true">
-        <dc:Bounds x="925" y="655" width="50" height="50" />
+        <dc:Bounds x="935" y="655" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1o1hhwq_di" bpmnElement="SequenceFlow_1o1hhwq">
-        <di:waypoint x="975" y="680" />
+        <di:waypoint x="985" y="680" />
         <di:waypoint x="1162" y="680" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0g2iqvu_di" bpmnElement="SequenceFlow_0g2iqvu">
-        <di:waypoint x="950" y="655" />
-        <di:waypoint x="950" y="460" />
+        <di:waypoint x="960" y="655" />
+        <di:waypoint x="960" y="460" />
         <di:waypoint x="995" y="460" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="873" y="570" width="74" height="40" />
+          <dc:Bounds x="883" y="570" width="74" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_12hhy7l_di" bpmnElement="SequenceFlow_12hhy7l">
@@ -668,6 +704,53 @@
       <bpmndi:BPMNEdge id="SequenceFlow_123d6qc_di" bpmnElement="SequenceFlow_123d6qc">
         <di:waypoint x="1262" y="680" />
         <di:waypoint x="1325" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ReceiveTask_1ki4b99_di" bpmnElement="Task_1w0mort">
+        <dc:Bounds x="770" y="640" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1mcw30l_di" bpmnElement="IntermediateThrowEvent_1mdgpbk">
+        <dc:Bounds x="822" y="702" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="772" y="744" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0w21zzg_di" bpmnElement="SequenceFlow_0w21zzg">
+        <di:waypoint x="840" y="738" />
+        <di:waypoint x="840" y="758" />
+        <di:waypoint x="960" y="758" />
+        <di:waypoint x="960" y="705" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_0n4l4di_di" bpmnElement="Group_0n4l4di">
+        <dc:Bounds x="754" y="621" width="132" height="178" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="799" y="783" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_0n9j3ly_di" bpmnElement="SubProcess_0n9j3ly" isExpanded="true">
+        <dc:Bounds x="130" y="560" width="385" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_02ailbm_di" bpmnElement="StartEvent_02ailbm">
+        <dc:Bounds x="172" y="602" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="645" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0qhgymd_di" bpmnElement="EndEvent_0qhgymd">
+        <dc:Bounds x="452" y="602" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="436" y="645" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1yzs5oc_di" bpmnElement="ServiceTask_1yzs5oc">
+        <dc:Bounds x="270" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_049vwmt_di" bpmnElement="SequenceFlow_049vwmt">
+        <di:waypoint x="208" y="620" />
+        <di:waypoint x="270" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xzssyo_di" bpmnElement="SequenceFlow_1xzssyo">
+        <di:waypoint x="370" y="620" />
+        <di:waypoint x="452" y="620" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

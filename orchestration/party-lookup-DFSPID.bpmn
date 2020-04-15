@@ -23,94 +23,105 @@
       <bpmn:incoming>SequenceFlow_1cpr2t7</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1cpr2t7" sourceRef="Task_0c02j6o" targetRef="EndEvent_16lkx2s" />
-    <bpmn:boundaryEvent id="IntermediateThrowEvent_0jlg7lc" attachedToRef="Task_1lfzg19">
-      <bpmn:outgoing>SequenceFlow_196cypc</bpmn:outgoing>
-      <bpmn:errorEventDefinition errorRef="Error_18tpyw8" />
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_196cypc" name="Technical Error" sourceRef="IntermediateThrowEvent_0jlg7lc" targetRef="Task_0xyli0d" />
-    <bpmn:endEvent id="EndEvent_02an9bi">
-      <bpmn:incoming>SequenceFlow_08f5fxr</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_08f5fxr" sourceRef="Task_0xyli0d" targetRef="EndEvent_02an9bi" />
-    <bpmn:serviceTask id="Task_0xyli0d" name="Send Lookup Error Response">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="payee-party-lookup-error-DFSPID" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_196cypc</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_08f5fxr</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_0vk18w4" sourceRef="Task_1lfzg19" targetRef="Task_0c02j6o" />
-    <bpmn:group id="Group_1vkhreq" categoryValueRef="CategoryValue_1r92cq5" />
+    <bpmn:subProcess id="SubProcess_1wijakf" triggeredByEvent="true">
+      <bpmn:startEvent id="StartEvent_0enb069" name="internal error">
+        <bpmn:outgoing>SequenceFlow_0wundls</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1y671bx" errorRef="Error_0sncywj" />
+      </bpmn:startEvent>
+      <bpmn:endEvent id="EndEvent_0evlkto" name="Transfer failed">
+        <bpmn:incoming>SequenceFlow_0cy3t8e</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="ServiceTask_15tinr9" name="send-error-to-channel">
+        <bpmn:extensionElements>
+          <zeebe:taskHeaders>
+            <zeebe:header key="errorCode" value="errorCode" />
+          </zeebe:taskHeaders>
+          <zeebe:taskDefinition type="send-error-to-channel" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_0wundls</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0cy3t8e</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="SequenceFlow_0wundls" sourceRef="StartEvent_0enb069" targetRef="ServiceTask_15tinr9" />
+      <bpmn:sequenceFlow id="SequenceFlow_0cy3t8e" sourceRef="ServiceTask_15tinr9" targetRef="EndEvent_0evlkto" />
+    </bpmn:subProcess>
     <bpmn:group id="Group_12w8hx2" categoryValueRef="CategoryValue_1wvxa5g" />
+    <bpmn:group id="Group_0nc0ugq" categoryValueRef="CategoryValue_1m9c66x" />
   </bpmn:process>
   <bpmn:error id="Error_18tpyw8" name="payee-party-lookup-error" errorCode="payee-party-lookup-error" />
-  <bpmn:category id="Category_06dk1w7">
-    <bpmn:categoryValue id="CategoryValue_1r92cq5" value="AMS" />
-  </bpmn:category>
   <bpmn:category id="Category_1nzyv9g">
     <bpmn:categoryValue id="CategoryValue_1wvxa5g" value="Mojaloop" />
   </bpmn:category>
+  <bpmn:category id="Category_149zllf">
+    <bpmn:categoryValue id="CategoryValue_1m9c66x" value="AMS" />
+  </bpmn:category>
+  <bpmn:error id="Error_0sncywj" name="server-error" errorCode="2001" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PayeePartyLookup-DFSPID">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="172" y="102" width="36" height="36" />
+        <dc:Bounds x="192" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="159" y="145" width="63" height="14" />
+          <dc:Bounds x="179" y="145" width="64" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1jawp7n_di" bpmnElement="SequenceFlow_1jawp7n">
-        <di:waypoint x="208" y="120" />
+        <di:waypoint x="228" y="120" />
         <di:waypoint x="290" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0jsqp82_di" bpmnElement="Task_1lfzg19">
         <dc:Bounds x="290" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_0lbt4y7_di" bpmnElement="Task_0c02j6o">
-        <dc:Bounds x="590" y="80" width="100" height="80" />
+        <dc:Bounds x="450" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_16lkx2s_di" bpmnElement="EndEvent_16lkx2s">
-        <dc:Bounds x="732" y="102" width="36" height="36" />
+        <dc:Bounds x="612" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1cpr2t7_di" bpmnElement="SequenceFlow_1cpr2t7">
-        <di:waypoint x="690" y="120" />
-        <di:waypoint x="732" y="120" />
+        <di:waypoint x="550" y="120" />
+        <di:waypoint x="612" y="120" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BoundaryEvent_03h84u6_di" bpmnElement="IntermediateThrowEvent_0jlg7lc">
-        <dc:Bounds x="342" y="142" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_196cypc_di" bpmnElement="SequenceFlow_196cypc">
-        <di:waypoint x="360" y="178" />
-        <di:waypoint x="360" y="280" />
-        <di:waypoint x="590" y="280" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="363" y="216" width="74" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_02an9bi_di" bpmnElement="EndEvent_02an9bi">
-        <dc:Bounds x="732" y="242" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_08f5fxr_di" bpmnElement="SequenceFlow_08f5fxr">
-        <di:waypoint x="690" y="260" />
-        <di:waypoint x="732" y="260" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0lo1w5n_di" bpmnElement="Task_0xyli0d">
-        <dc:Bounds x="590" y="220" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Group_1vkhreq_di" bpmnElement="Group_1vkhreq">
-        <dc:Bounds x="270" y="50" width="140" height="140" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="328" y="57" width="24" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_12w8hx2_di" bpmnElement="Group_12w8hx2">
-        <dc:Bounds x="570" y="50" width="140" height="280" />
+        <dc:Bounds x="430" y="50" width="140" height="130" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="617" y="57" width="46" height="14" />
+          <dc:Bounds x="477" y="57" width="46" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0vk18w4_di" bpmnElement="SequenceFlow_0vk18w4">
         <di:waypoint x="390" y="120" />
-        <di:waypoint x="590" y="120" />
+        <di:waypoint x="450" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_0nc0ugq_di" bpmnElement="Group_0nc0ugq">
+        <dc:Bounds x="270" y="50" width="140" height="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="329" y="57" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_1wijakf_di" bpmnElement="SubProcess_1wijakf" isExpanded="true">
+        <dc:Bounds x="190" y="220" width="385" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0enb069_di" bpmnElement="StartEvent_0enb069">
+        <dc:Bounds x="232" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="219" y="305" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0evlkto_di" bpmnElement="EndEvent_0evlkto">
+        <dc:Bounds x="512" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="496" y="305" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_15tinr9_di" bpmnElement="ServiceTask_15tinr9">
+        <dc:Bounds x="330" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0wundls_di" bpmnElement="SequenceFlow_0wundls">
+        <di:waypoint x="268" y="280" />
+        <di:waypoint x="330" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cy3t8e_di" bpmnElement="SequenceFlow_0cy3t8e">
+        <di:waypoint x="430" y="280" />
+        <di:waypoint x="512" y="280" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
