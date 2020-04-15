@@ -116,16 +116,16 @@
       <bpmn:incoming>SequenceFlow_0m3vuwu</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0genjrl" sourceRef="ExclusiveGateway_1ica1ft" targetRef="Task_1w0mort" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0ofpvy1" default="SequenceFlow_08e8xhh">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0ofpvy1" default="SequenceFlow_139sllv">
       <bpmn:incoming>SequenceFlow_16q7pp2</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0g2iqvu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_139sllv</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_08e8xhh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_139sllv" name="Transaction Completed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_0qxl8kt">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferState == "COMMITTED"</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_139sllv" name="Transaction Completed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_0qxl8kt" />
+    <bpmn:sequenceFlow id="SequenceFlow_08e8xhh" name="Transaction Rejected" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_1q95sc9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">payeeTransferFailed == true || transferState != "COMMITTED"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_08e8xhh" name="Transaction Rejected" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_1q95sc9" />
     <bpmn:endEvent id="EndEvent_0q5ti1r" name="trasnfer got rejected">
       <bpmn:incoming>SequenceFlow_1xj9hzj</bpmn:incoming>
     </bpmn:endEvent>
@@ -199,17 +199,17 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0ew6rln" sourceRef="ExclusiveGateway_0dv6msq" targetRef="Task_0t9574k" />
     <bpmn:sequenceFlow id="SequenceFlow_1d2huaz" name="payee quote failed, rejected" sourceRef="ExclusiveGateway_0dv6msq" targetRef="Task_0p32nxh">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">quoteResponse == "BAD"</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">payeeQuoteFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1vrqyz7" default="SequenceFlow_0t11r3b">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1vrqyz7" default="SequenceFlow_11uuh51">
       <bpmn:incoming>SequenceFlow_06tbhc9</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11uuh51</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0t11r3b</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_11uuh51" name="valid user?" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_0vw96zs">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">isValidUserLookup == true</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_11uuh51" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_0vw96zs" />
+    <bpmn:sequenceFlow id="SequenceFlow_0t11r3b" name="invalid user" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_0p32nxh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">payeePartyLookupFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0t11r3b" name="invalid user" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_0p32nxh" />
     <bpmn:boundaryEvent id="IntermediateThrowEvent_0vbg5f9" name="payee party lookup timeout" attachedToRef="Task_16z19d7">
       <bpmn:outgoing>SequenceFlow_166pluk</bpmn:outgoing>
       <bpmn:timerEventDefinition>
