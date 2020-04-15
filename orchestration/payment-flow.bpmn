@@ -90,7 +90,7 @@
     <bpmn:boundaryEvent id="IntermediateThrowEvent_02gm0jg" name="payee quote timeout" attachedToRef="Task_1rzppi6">
       <bpmn:outgoing>SequenceFlow_0mavnpt</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0rbkeah">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:endEvent id="EndEvent_0wgldp1">
@@ -100,7 +100,7 @@
     <bpmn:boundaryEvent id="IntermediateThrowEvent_0ucf3xc" name="no response" attachedToRef="Task_1f0uieb">
       <bpmn:outgoing>SequenceFlow_0tnvq1l</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1ica1ft" default="SequenceFlow_0genjrl">
