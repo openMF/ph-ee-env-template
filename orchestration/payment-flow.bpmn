@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_07042y7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.8.0">
-  <bpmn:process id="PaymentTest3" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Transfer&#10;Initiation">
+  <bpmn:process id="Payer_Fund_Transfer" name="Payer Initiating Fund Transfer" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_InitTransfer" name="Transfer&#10;Initiation">
       <bpmn:outgoing>SequenceFlow_1pymsem</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1pymsem" sourceRef="StartEvent_1" targetRef="Task_0hsdomn" />
-    <bpmn:sequenceFlow id="SequenceFlow_0h8jckr" sourceRef="Task_0hsdomn" targetRef="Task_16z19d7" />
-    <bpmn:receiveTask id="Task_16z19d7" name="Payee User Lookup response" messageRef="Message_0l98qgu">
+    <bpmn:sequenceFlow id="SequenceFlow_1pymsem" sourceRef="StartEvent_InitTransfer" targetRef="Task_PayeeLookup" />
+    <bpmn:sequenceFlow id="SequenceFlow_0h8jckr" sourceRef="Task_PayeeLookup" targetRef="ReceiveTask_PayeeLookupResp" />
+    <bpmn:receiveTask id="ReceiveTask_PayeeLookupResp" name="Payee User Lookup response" messageRef="Message_0l98qgu">
       <bpmn:incoming>SequenceFlow_0h8jckr</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_06tbhc9</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:receiveTask id="Task_1rzppi6" name="Payee Quote response" messageRef="Message_0ib6vhn">
+    <bpmn:receiveTask id="ReceiveTask_PayeeQuoteResp" name="Payee Quote response" messageRef="Message_0ib6vhn">
       <bpmn:incoming>SequenceFlow_0btqmmg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0p78e79</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0p78e79" sourceRef="Task_1rzppi6" targetRef="ExclusiveGateway_0dv6msq" />
-    <bpmn:receiveTask id="Task_1i6976m" name="Receive Payer decision" messageRef="Message_1ys7roe">
+    <bpmn:sequenceFlow id="SequenceFlow_0p78e79" sourceRef="ReceiveTask_PayeeQuoteResp" targetRef="ExclusiveGateway_0dv6msq" />
+    <bpmn:receiveTask id="ReceiveTask_PayerDecisionResp" name="Receive Payer decision" messageRef="Message_1ys7roe">
       <bpmn:incoming>SequenceFlow_1ffxwgp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0uphhfj</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1tu2dpf" name="Payer confirm" sourceRef="ExclusiveGateway_0b3aaz0" targetRef="Task_0nskhvh">
+    <bpmn:sequenceFlow id="SequenceFlow_1tu2dpf" name="Payer confirm" sourceRef="ExclusiveGateway_0b3aaz0" targetRef="Task_BlockFunds">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">payerConfirmed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_084skjx" sourceRef="Task_0vca3nk" targetRef="Task_1f0uieb" />
-    <bpmn:receiveTask id="Task_1f0uieb" name="Transfer Response" messageRef="Message_1fxiyaq">
+    <bpmn:sequenceFlow id="SequenceFlow_084skjx" sourceRef="Task_SendTransfer" targetRef="ReceiveTask_TransferResp" />
+    <bpmn:receiveTask id="ReceiveTask_TransferResp" name="Transfer Response" messageRef="Message_1fxiyaq">
       <bpmn:incoming>SequenceFlow_084skjx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16q7pp2</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:sequenceFlow id="SequenceFlow_16q7pp2" sourceRef="Task_1f0uieb" targetRef="ExclusiveGateway_0ofpvy1" />
-    <bpmn:endEvent id="EndEvent_1dxurgd" name="Transfer succesfully&#10;completed">
+    <bpmn:sequenceFlow id="SequenceFlow_16q7pp2" sourceRef="ReceiveTask_TransferResp" targetRef="ExclusiveGateway_0ofpvy1" />
+    <bpmn:endEvent id="EndEvent_Success_Completed" name="Transfer succesfully&#10;completed">
       <bpmn:incoming>SequenceFlow_0bib50r</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0idegqg" sourceRef="Task_0qxl8kt" targetRef="ExclusiveGateway_19vlfln" />
-    <bpmn:serviceTask id="Task_0hsdomn" name="Payee User Lookup">
+    <bpmn:sequenceFlow id="SequenceFlow_0idegqg" sourceRef="Task_BookFunds" targetRef="ExclusiveGateway_19vlfln" />
+    <bpmn:serviceTask id="Task_PayeeLookup" name="Payee User Lookup">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payee-user-lookup" />
       </bpmn:extensionElements>
@@ -40,21 +40,21 @@
       <bpmn:incoming>SequenceFlow_0vrua4x</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0h8jckr</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0t9574k" name="Local Quote">
+    <bpmn:serviceTask id="Task_LocalQuote" name="Local Quote">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payer-local-quote" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0ew6rln</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0q7anwv</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0nskhvh" name="Payer Block Funds">
+    <bpmn:serviceTask id="Task_BlockFunds" name="Payer Block Funds">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="block-funds" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1tu2dpf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1oczuzx</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0vca3nk" name="Send transfer request">
+    <bpmn:serviceTask id="Task_SendTransfer" name="Send transfer request">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-transfer-request" />
       </bpmn:extensionElements>
@@ -62,7 +62,7 @@
       <bpmn:incoming>SequenceFlow_18kubg3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_084skjx</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0qxl8kt" name="Payer Book Funds">
+    <bpmn:serviceTask id="Task_BookFunds" name="Payer Book Funds">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="book-funds" />
       </bpmn:extensionElements>
@@ -76,7 +76,7 @@
       <bpmn:outgoing>SequenceFlow_09gkp54</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0zniywb</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Task_0vw96zs" name="Payee Quote">
+    <bpmn:serviceTask id="Task_PayeeQuote" name="Payee Quote">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="quote" />
       </bpmn:extensionElements>
@@ -84,25 +84,25 @@
       <bpmn:incoming>SequenceFlow_11uuh51</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0btqmmg</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0btqmmg" sourceRef="Task_0vw96zs" targetRef="Task_1rzppi6" />
-    <bpmn:sequenceFlow id="SequenceFlow_09gkp54" name="retry count &#60; n" sourceRef="ExclusiveGateway_1ii0ha0" targetRef="Task_0vw96zs">
+    <bpmn:sequenceFlow id="SequenceFlow_0btqmmg" sourceRef="Task_PayeeQuote" targetRef="ReceiveTask_PayeeQuoteResp" />
+    <bpmn:sequenceFlow id="SequenceFlow_09gkp54" name="retry count &#60; n" sourceRef="ExclusiveGateway_1ii0ha0" targetRef="Task_PayeeQuote">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">quoteRetryCount &lt; 3</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_06tbhc9" sourceRef="Task_16z19d7" targetRef="ExclusiveGateway_1vrqyz7" />
-    <bpmn:boundaryEvent id="IntermediateThrowEvent_02gm0jg" name="quote timeout" attachedToRef="Task_1rzppi6">
+    <bpmn:sequenceFlow id="SequenceFlow_06tbhc9" sourceRef="ReceiveTask_PayeeLookupResp" targetRef="ExclusiveGateway_1vrqyz7" />
+    <bpmn:boundaryEvent id="IntermediateThrowEvent_02gm0jg" name="quote timeout" attachedToRef="ReceiveTask_PayeeQuoteResp">
       <bpmn:outgoing>SequenceFlow_0mavnpt</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0rbkeah">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0zniywb" name="retries exhausted" sourceRef="ExclusiveGateway_1ii0ha0" targetRef="Task_0p32nxh" />
+    <bpmn:sequenceFlow id="SequenceFlow_0zniywb" name="retries exhausted" sourceRef="ExclusiveGateway_1ii0ha0" targetRef="Task_Error2Chn" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1ica1ft" default="SequenceFlow_0genjrl">
       <bpmn:incoming>SequenceFlow_0tnvq1l</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13mvek9</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0genjrl</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0tnvq1l" sourceRef="IntermediateThrowEvent_0ucf3xc" targetRef="ExclusiveGateway_1ica1ft" />
-    <bpmn:sequenceFlow id="SequenceFlow_13mvek9" name="retry count &#60; n" sourceRef="ExclusiveGateway_1ica1ft" targetRef="Task_0vca3nk">
+    <bpmn:sequenceFlow id="SequenceFlow_13mvek9" name="retry count &#60; n" sourceRef="ExclusiveGateway_1ica1ft" targetRef="Task_SendTransfer">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferRetryCount &lt; 3</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0genjrl" name="retries exhausted" sourceRef="ExclusiveGateway_1ica1ft" targetRef="ExclusiveGateway_18oxkuv" />
@@ -112,11 +112,11 @@
       <bpmn:outgoing>SequenceFlow_139sllv</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_08e8xhh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_139sllv" name="Transaction Completed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_0qxl8kt" />
-    <bpmn:sequenceFlow id="SequenceFlow_08e8xhh" name="Transaction Rejected or&#10; Failed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_1q95sc9">
+    <bpmn:sequenceFlow id="SequenceFlow_139sllv" name="Transaction Completed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_BookFunds" />
+    <bpmn:sequenceFlow id="SequenceFlow_08e8xhh" name="Transaction Rejected or&#10; Failed" sourceRef="ExclusiveGateway_0ofpvy1" targetRef="Task_ReleaseBlock">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferFailed == true || transferState != "COMMITTED"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="Task_0p32nxh" name="Send Error Event To Channel">
+    <bpmn:serviceTask id="Task_Error2Chn" name="Send Error Event To Channel">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-error-to-channel" />
       </bpmn:extensionElements>
@@ -128,30 +128,30 @@
       <bpmn:incoming>SequenceFlow_1oanf9v</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bb7vzi</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0bib50r" sourceRef="Task_0fnxxxc" targetRef="EndEvent_1dxurgd" />
-    <bpmn:serviceTask id="Task_0fnxxxc" name="Send Successful Fund Transfer Event To Channel">
+    <bpmn:sequenceFlow id="SequenceFlow_0bib50r" sourceRef="Task_Success2Chn" targetRef="EndEvent_Success_Completed" />
+    <bpmn:serviceTask id="Task_Success2Chn" name="Send Successful Fund Transfer Event To Channel">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-success-to-channel" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0ag4vvo</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0bib50r</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="ServiceTask_11hlong" name="Send Error Event To Channel">
+    <bpmn:serviceTask id="Task_FailedBlcok2Chn" name="Send Error Event To Channel">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-error-to-channel" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1ylr5st</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1jrvf6v</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="ServiceTask_0zd68jh" name="Send Unknown Status Event To Channel">
+    <bpmn:serviceTask id="Task_InProgressNotif2Chn" name="Send Unknown Status Event To Channel">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-unknown-to-channel" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0nabkgu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dnajsk</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1ffxwgp" sourceRef="Task_11ralt4" targetRef="Task_1i6976m" />
-    <bpmn:serviceTask id="Task_11ralt4" name="Requesting Confirmation from Payer">
+    <bpmn:sequenceFlow id="SequenceFlow_1ffxwgp" sourceRef="Task_GetPayerConfirm" targetRef="ReceiveTask_PayerDecisionResp" />
+    <bpmn:serviceTask id="Task_GetPayerConfirm" name="Requesting Confirmation from Payer">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payer-request-confirm" />
       </bpmn:extensionElements>
@@ -163,11 +163,11 @@
       <bpmn:outgoing>SequenceFlow_1tu2dpf</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1oanf9v</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0uphhfj" sourceRef="Task_1i6976m" targetRef="ExclusiveGateway_0b3aaz0" />
-    <bpmn:endEvent id="EndEvent_0l0bcq2" name="Transfer aborted">
+    <bpmn:sequenceFlow id="SequenceFlow_0uphhfj" sourceRef="ReceiveTask_PayerDecisionResp" targetRef="ExclusiveGateway_0b3aaz0" />
+    <bpmn:endEvent id="EndEvent_Failure_Aborted" name="Transfer aborted">
       <bpmn:incoming>SequenceFlow_1bb7vzi</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Task_1q95sc9" name="Payer Release Block">
+    <bpmn:serviceTask id="Task_ReleaseBlock" name="Payer Release Block">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="release-block" />
       </bpmn:extensionElements>
@@ -180,8 +180,8 @@
       <bpmn:outgoing>SequenceFlow_0ew6rln</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1d2huaz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0ew6rln" sourceRef="ExclusiveGateway_0dv6msq" targetRef="Task_0t9574k" />
-    <bpmn:sequenceFlow id="SequenceFlow_1d2huaz" name=" quote failure" sourceRef="ExclusiveGateway_0dv6msq" targetRef="Task_0p32nxh">
+    <bpmn:sequenceFlow id="SequenceFlow_0ew6rln" sourceRef="ExclusiveGateway_0dv6msq" targetRef="Task_LocalQuote" />
+    <bpmn:sequenceFlow id="SequenceFlow_1d2huaz" name=" quote failure" sourceRef="ExclusiveGateway_0dv6msq" targetRef="Task_Error2Chn">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">quoteFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1vrqyz7" default="SequenceFlow_11uuh51">
@@ -189,11 +189,11 @@
       <bpmn:outgoing>SequenceFlow_11uuh51</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0t11r3b</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_11uuh51" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_0vw96zs" />
-    <bpmn:sequenceFlow id="SequenceFlow_0t11r3b" name="party lookup failure" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_0p32nxh">
+    <bpmn:sequenceFlow id="SequenceFlow_11uuh51" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_PayeeQuote" />
+    <bpmn:sequenceFlow id="SequenceFlow_0t11r3b" name="party lookup failure" sourceRef="ExclusiveGateway_1vrqyz7" targetRef="Task_Error2Chn">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">partyLookupFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:boundaryEvent id="IntermediateThrowEvent_0vbg5f9" name="party lookup timeout" attachedToRef="Task_16z19d7">
+    <bpmn:boundaryEvent id="IntermediateThrowEvent_0vbg5f9" name="party lookup timeout" attachedToRef="ReceiveTask_PayeeLookupResp">
       <bpmn:outgoing>SequenceFlow_0u5ni5c</bpmn:outgoing>
       <bpmn:timerEventDefinition>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
@@ -205,7 +205,7 @@
       <bpmn:outgoing>SequenceFlow_09c5vyn</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0g2iqvu" name="manually recovered from failure" sourceRef="ExclusiveGateway_047pv97" targetRef="ExclusiveGateway_0ofpvy1" />
-    <bpmn:receiveTask id="Task_1w0mort" name="Receive operator decision" messageRef="Message_1jjvt71">
+    <bpmn:receiveTask id="ReceiveTask_OperOverrideUnknown" name="Receive operator decision" messageRef="Message_1jjvt71">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
@@ -217,9 +217,9 @@
       <bpmn:outgoing>SequenceFlow_18kubg3</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1ylr5st</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1oczuzx" sourceRef="Task_0nskhvh" targetRef="ExclusiveGateway_1j5plqm" />
-    <bpmn:sequenceFlow id="SequenceFlow_18kubg3" sourceRef="ExclusiveGateway_1j5plqm" targetRef="Task_0vca3nk" />
-    <bpmn:sequenceFlow id="SequenceFlow_1ylr5st" name="block funds failed?" sourceRef="ExclusiveGateway_1j5plqm" targetRef="ServiceTask_11hlong">
+    <bpmn:sequenceFlow id="SequenceFlow_1oczuzx" sourceRef="Task_BlockFunds" targetRef="ExclusiveGateway_1j5plqm" />
+    <bpmn:sequenceFlow id="SequenceFlow_18kubg3" sourceRef="ExclusiveGateway_1j5plqm" targetRef="Task_SendTransfer" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ylr5st" name="block funds failed?" sourceRef="ExclusiveGateway_1j5plqm" targetRef="Task_FailedBlcok2Chn">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferPrepareFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1n5fasj" default="SequenceFlow_01tpjgc">
@@ -227,9 +227,9 @@
       <bpmn:outgoing>SequenceFlow_01tpjgc</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1l16e8u</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0q7anwv" sourceRef="Task_0t9574k" targetRef="ExclusiveGateway_1n5fasj" />
-    <bpmn:sequenceFlow id="SequenceFlow_01tpjgc" sourceRef="ExclusiveGateway_1n5fasj" targetRef="Task_11ralt4" />
-    <bpmn:sequenceFlow id="SequenceFlow_1l16e8u" name="local quote failure" sourceRef="ExclusiveGateway_1n5fasj" targetRef="Task_0p32nxh">
+    <bpmn:sequenceFlow id="SequenceFlow_0q7anwv" sourceRef="Task_LocalQuote" targetRef="ExclusiveGateway_1n5fasj" />
+    <bpmn:sequenceFlow id="SequenceFlow_01tpjgc" sourceRef="ExclusiveGateway_1n5fasj" targetRef="Task_GetPayerConfirm" />
+    <bpmn:sequenceFlow id="SequenceFlow_1l16e8u" name="local quote failure" sourceRef="ExclusiveGateway_1n5fasj" targetRef="Task_Error2Chn">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">localQuoteFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1nmfm6z" default="SequenceFlow_0eh0472">
@@ -238,74 +238,74 @@
       <bpmn:outgoing>SequenceFlow_0eh0472</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0u5ni5c" sourceRef="IntermediateThrowEvent_0vbg5f9" targetRef="ExclusiveGateway_1nmfm6z" />
-    <bpmn:sequenceFlow id="SequenceFlow_0vrua4x" name="retry count &#60; n" sourceRef="ExclusiveGateway_1nmfm6z" targetRef="Task_0hsdomn">
+    <bpmn:sequenceFlow id="SequenceFlow_0vrua4x" name="retry count &#60; n" sourceRef="ExclusiveGateway_1nmfm6z" targetRef="Task_PayeeLookup">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">partyLookupRetryCount &lt; 3</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0eh0472" name="retries exhausted" sourceRef="ExclusiveGateway_1nmfm6z" targetRef="Task_0p32nxh" />
+    <bpmn:sequenceFlow id="SequenceFlow_0eh0472" name="retries exhausted" sourceRef="ExclusiveGateway_1nmfm6z" targetRef="Task_Error2Chn" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_19vlfln" default="SequenceFlow_0ag4vvo">
       <bpmn:incoming>SequenceFlow_0idegqg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ag4vvo</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_15vsvig</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0ag4vvo" sourceRef="ExclusiveGateway_19vlfln" targetRef="Task_0fnxxxc" />
-    <bpmn:sequenceFlow id="SequenceFlow_1bb7vzi" sourceRef="Task_0p32nxh" targetRef="EndEvent_0l0bcq2" />
-    <bpmn:sequenceFlow id="SequenceFlow_1oanf9v" name="Payer decline" sourceRef="ExclusiveGateway_0b3aaz0" targetRef="Task_0p32nxh" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ag4vvo" sourceRef="ExclusiveGateway_19vlfln" targetRef="Task_Success2Chn" />
+    <bpmn:sequenceFlow id="SequenceFlow_1bb7vzi" sourceRef="Task_Error2Chn" targetRef="EndEvent_Failure_Aborted" />
+    <bpmn:sequenceFlow id="SequenceFlow_1oanf9v" name="Payer decline" sourceRef="ExclusiveGateway_0b3aaz0" targetRef="Task_Error2Chn" />
     <bpmn:parallelGateway id="ExclusiveGateway_18oxkuv">
       <bpmn:incoming>SequenceFlow_0genjrl</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nabkgu</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_16yh52d</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:endEvent id="EndEvent_08u9tlb" name="Channel notified">
+    <bpmn:endEvent id="EndEvent_Intermediate_StatusSent" name="Channel notified">
       <bpmn:incoming>SequenceFlow_0dnajsk</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0dnajsk" sourceRef="ServiceTask_0zd68jh" targetRef="EndEvent_08u9tlb" />
-    <bpmn:sequenceFlow id="SequenceFlow_0nabkgu" sourceRef="ExclusiveGateway_18oxkuv" targetRef="ServiceTask_0zd68jh" />
-    <bpmn:serviceTask id="Task_07rtzza" name="Notify unknown state of transaction">
+    <bpmn:sequenceFlow id="SequenceFlow_0dnajsk" sourceRef="Task_InProgressNotif2Chn" targetRef="EndEvent_Intermediate_StatusSent" />
+    <bpmn:sequenceFlow id="SequenceFlow_0nabkgu" sourceRef="ExclusiveGateway_18oxkuv" targetRef="Task_InProgressNotif2Chn" />
+    <bpmn:serviceTask id="Task_NoRespFromMoja2Oper" name="Notify unknown state of transaction">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="notify-operator" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_16yh52d</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1jl9j3d</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_15uek64" sourceRef="Task_1w0mort" targetRef="ExclusiveGateway_047pv97" />
-    <bpmn:endEvent id="EndEvent_052rmg8" name="Operator manual override">
+    <bpmn:sequenceFlow id="SequenceFlow_15uek64" sourceRef="ReceiveTask_OperOverrideUnknown" targetRef="ExclusiveGateway_047pv97" />
+    <bpmn:endEvent id="EndEvent_Success_ReleaseManOverride" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_0r69kws</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_11antd6" name="Transfer aborted">
+    <bpmn:endEvent id="EndEvent_Failure_Block" name="Transfer aborted, cannot blcok">
       <bpmn:incoming>SequenceFlow_1jrvf6v</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1jrvf6v" sourceRef="ServiceTask_11hlong" targetRef="EndEvent_11antd6" />
+    <bpmn:sequenceFlow id="SequenceFlow_1jrvf6v" sourceRef="Task_FailedBlcok2Chn" targetRef="EndEvent_Failure_Block" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1hp2mnc" default="SequenceFlow_1bgw6c7">
       <bpmn:incoming>SequenceFlow_1fjf0ax</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bgw6c7</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0uz4rxk</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="EndEvent_0ttk216" name="Transfer failed / rejected">
+    <bpmn:endEvent id="EndEvent_Failure_Rejected" name="Transfer failed / rejected">
       <bpmn:incoming>SequenceFlow_1289aur</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Task_1b2pqma" name="Notify AMS Book failure">
+    <bpmn:serviceTask id="Task_AMSBookFailure2Oper" name="Notify AMS Book failure">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="notify-ams-failure" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_15vsvig</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1d7ien0</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="ServiceTask_1vij8j6" name="Notify AMS Release Block failure">
+    <bpmn:serviceTask id="Task_AMSReleaseFailure2Oper" name="Notify AMS Release Block failure">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="notify-ams-failure" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0uz4rxk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1m3fp8f</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:receiveTask id="ReceiveTask_1stzbit" name="Receive operator decision" messageRef="Message_1jjvt71">
+    <bpmn:receiveTask id="ReceiveTask_OperOverrideBook" name="Receive operator decision" messageRef="Message_1jjvt71">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1d7ien0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1t03f2t</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1d7ien0" sourceRef="Task_1b2pqma" targetRef="ReceiveTask_1stzbit" />
-    <bpmn:receiveTask id="ReceiveTask_10720ca" name="Receive operator decision" messageRef="Message_1jjvt71">
+    <bpmn:sequenceFlow id="SequenceFlow_1d7ien0" sourceRef="Task_AMSBookFailure2Oper" targetRef="ReceiveTask_OperOverrideBook" />
+    <bpmn:receiveTask id="ReceiveTask_OperOverrideRelease" name="Receive operator decision" messageRef="Message_1jjvt71">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
@@ -317,50 +317,50 @@
       <bpmn:outgoing>SequenceFlow_1nkyihv</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0r69kws</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="ServiceTask_12jf9uv" name="Send Failed Fund Transfer Event To Channel">
+    <bpmn:serviceTask id="Task_RejectedTransfer2Chn" name="Send Failed Fund Transfer Event To Channel">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-error-to-channel" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1bgw6c7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1289aur</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1289aur" sourceRef="ServiceTask_12jf9uv" targetRef="EndEvent_0ttk216" />
+    <bpmn:sequenceFlow id="SequenceFlow_1289aur" sourceRef="Task_RejectedTransfer2Chn" targetRef="EndEvent_Failure_Rejected" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1suv1fz" default="SequenceFlow_1z0i3k2">
       <bpmn:incoming>SequenceFlow_1t03f2t</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1z0i3k2</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_11xfsas</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1t03f2t" sourceRef="ReceiveTask_1stzbit" targetRef="ExclusiveGateway_1suv1fz" />
-    <bpmn:sequenceFlow id="SequenceFlow_1z0i3k2" sourceRef="ExclusiveGateway_1suv1fz" targetRef="Task_0qxl8kt" />
-    <bpmn:sequenceFlow id="SequenceFlow_15vsvig" name="book funds&#10; failed?" sourceRef="ExclusiveGateway_19vlfln" targetRef="Task_1b2pqma">
+    <bpmn:sequenceFlow id="SequenceFlow_1t03f2t" sourceRef="ReceiveTask_OperOverrideBook" targetRef="ExclusiveGateway_1suv1fz" />
+    <bpmn:sequenceFlow id="SequenceFlow_1z0i3k2" sourceRef="ExclusiveGateway_1suv1fz" targetRef="Task_BookFunds" />
+    <bpmn:sequenceFlow id="SequenceFlow_15vsvig" name="book funds&#10; failed?" sourceRef="ExclusiveGateway_19vlfln" targetRef="Task_AMSBookFailure2Oper">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferCreateFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:endEvent id="EndEvent_1iwpzt0" name="Operator manual override">
+    <bpmn:endEvent id="EndEvent_Success_BookManOverride" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_11xfsas</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_11xfsas" sourceRef="ExclusiveGateway_1suv1fz" targetRef="EndEvent_1iwpzt0">
+    <bpmn:sequenceFlow id="SequenceFlow_11xfsas" sourceRef="ExclusiveGateway_1suv1fz" targetRef="EndEvent_Success_BookManOverride">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">operatorManualOverride == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1fjf0ax" sourceRef="Task_1q95sc9" targetRef="ExclusiveGateway_1hp2mnc" />
-    <bpmn:sequenceFlow id="SequenceFlow_1bgw6c7" sourceRef="ExclusiveGateway_1hp2mnc" targetRef="ServiceTask_12jf9uv" />
-    <bpmn:sequenceFlow id="SequenceFlow_0uz4rxk" name="release block&#10; failed?" sourceRef="ExclusiveGateway_1hp2mnc" targetRef="ServiceTask_1vij8j6">
+    <bpmn:sequenceFlow id="SequenceFlow_1fjf0ax" sourceRef="Task_ReleaseBlock" targetRef="ExclusiveGateway_1hp2mnc" />
+    <bpmn:sequenceFlow id="SequenceFlow_1bgw6c7" sourceRef="ExclusiveGateway_1hp2mnc" targetRef="Task_RejectedTransfer2Chn" />
+    <bpmn:sequenceFlow id="SequenceFlow_0uz4rxk" name="release block&#10; failed?" sourceRef="ExclusiveGateway_1hp2mnc" targetRef="Task_AMSReleaseFailure2Oper">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferReleaseFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1m3fp8f" sourceRef="ServiceTask_1vij8j6" targetRef="ReceiveTask_10720ca" />
-    <bpmn:sequenceFlow id="SequenceFlow_0wqgjqz" sourceRef="ReceiveTask_10720ca" targetRef="ExclusiveGateway_098wsk1" />
-    <bpmn:sequenceFlow id="SequenceFlow_1nkyihv" sourceRef="ExclusiveGateway_098wsk1" targetRef="Task_1q95sc9" />
-    <bpmn:sequenceFlow id="SequenceFlow_0r69kws" sourceRef="ExclusiveGateway_098wsk1" targetRef="EndEvent_052rmg8">
+    <bpmn:sequenceFlow id="SequenceFlow_1m3fp8f" sourceRef="Task_AMSReleaseFailure2Oper" targetRef="ReceiveTask_OperOverrideRelease" />
+    <bpmn:sequenceFlow id="SequenceFlow_0wqgjqz" sourceRef="ReceiveTask_OperOverrideRelease" targetRef="ExclusiveGateway_098wsk1" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nkyihv" sourceRef="ExclusiveGateway_098wsk1" targetRef="Task_ReleaseBlock" />
+    <bpmn:sequenceFlow id="SequenceFlow_0r69kws" sourceRef="ExclusiveGateway_098wsk1" targetRef="EndEvent_Success_ReleaseManOverride">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">operatorManualOverride == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:endEvent id="EndEvent_10x96vm" name="Operator manual override">
+    <bpmn:endEvent id="EndEvent_Success_TransferManOverride" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_09c5vyn</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_09c5vyn" sourceRef="ExclusiveGateway_047pv97" targetRef="EndEvent_10x96vm">
+    <bpmn:sequenceFlow id="SequenceFlow_09c5vyn" sourceRef="ExclusiveGateway_047pv97" targetRef="EndEvent_Success_TransferManOverride">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">operatorManualOverride == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_16yh52d" sourceRef="ExclusiveGateway_18oxkuv" targetRef="Task_07rtzza" />
-    <bpmn:sequenceFlow id="SequenceFlow_1jl9j3d" sourceRef="Task_07rtzza" targetRef="Task_1w0mort" />
-    <bpmn:boundaryEvent id="IntermediateThrowEvent_0ucf3xc" name="transfer timeout" attachedToRef="Task_1f0uieb">
+    <bpmn:sequenceFlow id="SequenceFlow_16yh52d" sourceRef="ExclusiveGateway_18oxkuv" targetRef="Task_NoRespFromMoja2Oper" />
+    <bpmn:sequenceFlow id="SequenceFlow_1jl9j3d" sourceRef="Task_NoRespFromMoja2Oper" targetRef="ReceiveTask_OperOverrideUnknown" />
+    <bpmn:boundaryEvent id="IntermediateThrowEvent_0ucf3xc" name="transfer timeout" attachedToRef="ReceiveTask_TransferResp">
       <bpmn:outgoing>SequenceFlow_0tnvq1l</bpmn:outgoing>
       <bpmn:timerEventDefinition>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
@@ -443,8 +443,8 @@
     <bpmn:categoryValue id="CategoryValue_1yaia5q" value="Operations" />
   </bpmn:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PaymentTest3">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Payer_Fund_Transfer">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_InitTransfer" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="162" y="272" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="160" y="315" width="41" height="27" />
@@ -458,17 +458,17 @@
         <di:waypoint x="360" y="290" />
         <di:waypoint x="390" y="290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_0p9vznl_di" bpmnElement="Task_16z19d7" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+      <bpmndi:BPMNShape id="ReceiveTask_0p9vznl_di" bpmnElement="ReceiveTask_PayeeLookupResp" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="390" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ReceiveTask_1r5ukmu_di" bpmnElement="Task_1rzppi6" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+      <bpmndi:BPMNShape id="ReceiveTask_1r5ukmu_di" bpmnElement="ReceiveTask_PayeeQuoteResp" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="765" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0p78e79_di" bpmnElement="SequenceFlow_0p78e79">
         <di:waypoint x="865" y="290" />
         <di:waypoint x="910" y="290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_1wuemzm_di" bpmnElement="Task_1i6976m" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ReceiveTask_1wuemzm_di" bpmnElement="ReceiveTask_PayerDecisionResp" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1400" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1tu2dpf_di" bpmnElement="SequenceFlow_1tu2dpf">
@@ -484,36 +484,36 @@
         <di:waypoint x="820" y="500" />
         <di:waypoint x="860" y="500" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_0e6yh2a_di" bpmnElement="Task_1f0uieb" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+      <bpmndi:BPMNShape id="ReceiveTask_0e6yh2a_di" bpmnElement="ReceiveTask_TransferResp" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="860" y="460" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_16q7pp2_di" bpmnElement="SequenceFlow_16q7pp2">
         <di:waypoint x="960" y="500" />
         <di:waypoint x="1065" y="500" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1dxurgd_di" bpmnElement="EndEvent_1dxurgd" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_1dxurgd_di" bpmnElement="EndEvent_Success_Completed" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="482" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1696" y="480" width="55" height="40" />
+          <dc:Bounds x="1697" y="480" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0idegqg_di" bpmnElement="SequenceFlow_0idegqg">
         <di:waypoint x="1300" y="500" />
         <di:waypoint x="1364" y="500" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_15oy5aq_di" bpmnElement="Task_0hsdomn" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+      <bpmndi:BPMNShape id="ServiceTask_15oy5aq_di" bpmnElement="Task_PayeeLookup" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="260" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_08qabix_di" bpmnElement="Task_0t9574k" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
+      <bpmndi:BPMNShape id="ServiceTask_08qabix_di" bpmnElement="Task_LocalQuote" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
         <dc:Bounds x="1000" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_08py9hw_di" bpmnElement="Task_0nskhvh" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
+      <bpmndi:BPMNShape id="ServiceTask_08py9hw_di" bpmnElement="Task_BlockFunds" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
         <dc:Bounds x="460" y="460" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_0iqdewf_di" bpmnElement="Task_0vca3nk" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+      <bpmndi:BPMNShape id="ServiceTask_0iqdewf_di" bpmnElement="Task_SendTransfer" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="720" y="460" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_0k9p5kv_di" bpmnElement="Task_0qxl8kt" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
+      <bpmndi:BPMNShape id="ServiceTask_0k9p5kv_di" bpmnElement="Task_BookFunds" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
         <dc:Bounds x="1200" y="460" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0mavnpt_di" bpmnElement="SequenceFlow_0mavnpt">
@@ -526,7 +526,7 @@
           <dc:Bounds x="855" y="282" width="71" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_0l5bw9h_di" bpmnElement="Task_0vw96zs" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+      <bpmndi:BPMNShape id="ServiceTask_0l5bw9h_di" bpmnElement="Task_PayeeQuote" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="610" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0btqmmg_di" bpmnElement="SequenceFlow_0btqmmg">
@@ -602,20 +602,20 @@
           <dc:Bounds x="1103" y="803" width="58" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_19ojbc6_di" bpmnElement="Task_0p32nxh" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ServiceTask_19ojbc6_di" bpmnElement="Task_Error2Chn" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1262" y="90" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0bib50r_di" bpmnElement="SequenceFlow_0bib50r">
         <di:waypoint x="1592" y="500" />
         <di:waypoint x="1644" y="500" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0s4hm4l_di" bpmnElement="Task_0fnxxxc" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ServiceTask_0s4hm4l_di" bpmnElement="Task_Success2Chn" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1492" y="460" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_11hlong_di" bpmnElement="ServiceTask_11hlong" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ServiceTask_11hlong_di" bpmnElement="Task_FailedBlcok2Chn" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1492" y="710" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_0zd68jh_di" bpmnElement="ServiceTask_0zd68jh" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ServiceTask_0zd68jh_di" bpmnElement="Task_InProgressNotif2Chn" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="736" y="790" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_0nlgr8s_di" bpmnElement="Group_0nlgr8s" bioc:stroke="black" bioc:fill="white">
@@ -634,7 +634,7 @@
         <di:waypoint x="1360" y="290" />
         <di:waypoint x="1400" y="290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0c37hqz_di" bpmnElement="Task_11ralt4" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ServiceTask_0c37hqz_di" bpmnElement="Task_GetPayerConfirm" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1260" y="250" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0b3aaz0_di" bpmnElement="ExclusiveGateway_0b3aaz0" isMarkerVisible="true">
@@ -644,10 +644,10 @@
         <di:waypoint x="1500" y="290" />
         <di:waypoint x="1545" y="290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0l0bcq2_di" bpmnElement="EndEvent_0l0bcq2" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0l0bcq2_di" bpmnElement="EndEvent_Failure_Aborted" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1692" y="123" width="80" height="14" />
+          <dc:Bounds x="1692" y="123" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_173at5u_di" bpmnElement="Group_173at5u">
@@ -680,7 +680,7 @@
           <dc:Bounds x="1487" y="430" width="42" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_0hzjk4s_di" bpmnElement="Task_1q95sc9" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
+      <bpmndi:BPMNShape id="ServiceTask_0hzjk4s_di" bpmnElement="Task_ReleaseBlock" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
         <dc:Bounds x="1200" y="810" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0dv6msq_di" bpmnElement="ExclusiveGateway_0dv6msq" isMarkerVisible="true">
@@ -733,7 +733,7 @@
           <dc:Bounds x="1038" y="1024" width="74" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_1ki4b99_di" bpmnElement="Task_1w0mort" bioc:stroke="black" bioc:fill="white">
+      <bpmndi:BPMNShape id="ReceiveTask_1ki4b99_di" bpmnElement="ReceiveTask_OperOverrideUnknown" bioc:stroke="black" bioc:fill="white">
         <dc:Bounds x="870" y="1020" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_0n4l4di_di" bpmnElement="Group_0n4l4di">
@@ -832,7 +832,7 @@
       <bpmndi:BPMNShape id="ParallelGateway_0xhxe5a_di" bpmnElement="ExclusiveGateway_18oxkuv">
         <dc:Bounds x="895" y="805" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_08u9tlb_di" bpmnElement="EndEvent_08u9tlb">
+      <bpmndi:BPMNShape id="EndEvent_08u9tlb_di" bpmnElement="EndEvent_Intermediate_StatusSent">
         <dc:Bounds x="642" y="812" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="622" y="855" width="80" height="14" />
@@ -852,7 +852,7 @@
         <di:waypoint x="895" y="830" />
         <di:waypoint x="836" y="830" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_089p2ug_di" bpmnElement="Task_07rtzza">
+      <bpmndi:BPMNShape id="ServiceTask_089p2ug_di" bpmnElement="Task_NoRespFromMoja2Oper">
         <dc:Bounds x="870" y="920" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_15uek64_di" bpmnElement="SequenceFlow_15uek64">
@@ -860,16 +860,16 @@
         <di:waypoint x="920" y="1130" />
         <di:waypoint x="1005" y="1130" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_052rmg8_di" bpmnElement="EndEvent_052rmg8" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_052rmg8_di" bpmnElement="EndEvent_Success_ReleaseManOverride" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="932" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1690" y="946" width="84" height="27" />
+          <dc:Bounds x="1691" y="946" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_11antd6_di" bpmnElement="EndEvent_11antd6" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_11antd6_di" bpmnElement="EndEvent_Failure_Block" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="732" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1694" y="743" width="80" height="14" />
+          <dc:Bounds x="1693" y="743" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1jrvf6v_di" bpmnElement="SequenceFlow_1jrvf6v">
@@ -879,32 +879,32 @@
       <bpmndi:BPMNShape id="ExclusiveGateway_1hp2mnc_di" bpmnElement="ExclusiveGateway_1hp2mnc" isMarkerVisible="true">
         <dc:Bounds x="1364" y="825" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0ttk216_di" bpmnElement="EndEvent_0ttk216" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0ttk216_di" bpmnElement="EndEvent_Failure_Rejected" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="832" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1694" y="843" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_1urtpjy_di" bpmnElement="Task_1b2pqma">
+      <bpmndi:BPMNShape id="ServiceTask_1urtpjy_di" bpmnElement="Task_AMSBookFailure2Oper">
         <dc:Bounds x="1339" y="650" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_1vij8j6_di" bpmnElement="ServiceTask_1vij8j6">
+      <bpmndi:BPMNShape id="ServiceTask_1vij8j6_di" bpmnElement="Task_AMSReleaseFailure2Oper">
         <dc:Bounds x="1339" y="1010" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ReceiveTask_1stzbit_di" bpmnElement="ReceiveTask_1stzbit" bioc:stroke="black" bioc:fill="white">
+      <bpmndi:BPMNShape id="ReceiveTask_1stzbit_di" bpmnElement="ReceiveTask_OperOverrideBook" bioc:stroke="black" bioc:fill="white">
         <dc:Bounds x="1200" y="650" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1d7ien0_di" bpmnElement="SequenceFlow_1d7ien0">
         <di:waypoint x="1339" y="690" />
         <di:waypoint x="1300" y="690" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_10720ca_di" bpmnElement="ReceiveTask_10720ca" bioc:stroke="black" bioc:fill="white">
+      <bpmndi:BPMNShape id="ReceiveTask_10720ca_di" bpmnElement="ReceiveTask_OperOverrideRelease" bioc:stroke="black" bioc:fill="white">
         <dc:Bounds x="1200" y="1010" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_098wsk1_di" bpmnElement="ExclusiveGateway_098wsk1" isMarkerVisible="true">
         <dc:Bounds x="1225" y="925" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_12jf9uv_di" bpmnElement="ServiceTask_12jf9uv" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+      <bpmndi:BPMNShape id="ServiceTask_12jf9uv_di" bpmnElement="Task_RejectedTransfer2Chn" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1492" y="810" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1289aur_di" bpmnElement="SequenceFlow_1289aur">
@@ -935,10 +935,10 @@
           <dc:Bounds x="1392" y="558" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1iwpzt0_di" bpmnElement="EndEvent_1iwpzt0" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_1iwpzt0_di" bpmnElement="EndEvent_Success_BookManOverride" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="582" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1690" y="596" width="84" height="27" />
+          <dc:Bounds x="1691" y="596" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_11xfsas_di" bpmnElement="SequenceFlow_11xfsas">
@@ -976,10 +976,10 @@
         <di:waypoint x="1275" y="950" />
         <di:waypoint x="1644" y="950" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_10x96vm_di" bpmnElement="EndEvent_10x96vm" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_10x96vm_di" bpmnElement="EndEvent_Success_TransferManOverride" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="1112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1690" y="1126" width="84" height="27" />
+          <dc:Bounds x="1691" y="1126" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_09c5vyn_di" bpmnElement="SequenceFlow_09c5vyn">
