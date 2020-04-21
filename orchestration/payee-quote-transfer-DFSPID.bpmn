@@ -30,7 +30,7 @@
       <bpmn:outgoing>SequenceFlow_0tifm4f</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1rjfrgt</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_TransferEvent" name="ErrorCallback">
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_TransferEvent" name="Transfer Event">
       <bpmn:incoming>SequenceFlow_0ha729a</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0j1b0rd</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1jb7o1y" />
@@ -200,7 +200,7 @@
       <bpmndi:BPMNShape id="IntermediateCatchEvent_03i61sh_di" bpmnElement="IntermediateCatchEvent_TransferEvent" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="712" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="698" y="93" width="67" height="14" />
+          <dc:Bounds x="696" y="93" width="72" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0ha729a_di" bpmnElement="SequenceFlow_0ha729a">
