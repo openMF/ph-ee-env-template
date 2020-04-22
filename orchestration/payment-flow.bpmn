@@ -28,7 +28,7 @@
       <bpmn:outgoing>SequenceFlow_16q7pp2</bpmn:outgoing>
     </bpmn:receiveTask>
     <bpmn:sequenceFlow id="SequenceFlow_16q7pp2" sourceRef="Task_1f0uieb" targetRef="ExclusiveGateway_0ofpvy1" />
-    <bpmn:endEvent id="EndEvent_1dxurgd" name="Transfer succesfully&#10;completed">
+    <bpmn:endEvent id="EndEvent_Success" name="Transfer succesfully&#10;completed">
       <bpmn:incoming>SequenceFlow_0bib50r</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0idegqg" sourceRef="Task_0qxl8kt" targetRef="ExclusiveGateway_19vlfln" />
@@ -128,7 +128,7 @@
       <bpmn:incoming>SequenceFlow_1oanf9v</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bb7vzi</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0bib50r" sourceRef="Task_0fnxxxc" targetRef="EndEvent_1dxurgd" />
+    <bpmn:sequenceFlow id="SequenceFlow_0bib50r" sourceRef="Task_0fnxxxc" targetRef="EndEvent_Success" />
     <bpmn:serviceTask id="Task_0fnxxxc" name="Send Successful Fund Transfer Event To Channel">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-success-to-channel" />
@@ -164,7 +164,7 @@
       <bpmn:outgoing>SequenceFlow_1oanf9v</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0uphhfj" sourceRef="Task_1i6976m" targetRef="ExclusiveGateway_0b3aaz0" />
-    <bpmn:endEvent id="EndEvent_0l0bcq2" name="Transfer aborted">
+    <bpmn:endEvent id="EndEvent_FailQuote" name="Transfer aborted">
       <bpmn:incoming>SequenceFlow_1bb7vzi</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_1q95sc9" name="Payer Release Block">
@@ -248,7 +248,7 @@
       <bpmn:outgoing>SequenceFlow_15vsvig</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0ag4vvo" sourceRef="ExclusiveGateway_19vlfln" targetRef="Task_0fnxxxc" />
-    <bpmn:sequenceFlow id="SequenceFlow_1bb7vzi" sourceRef="Task_0p32nxh" targetRef="EndEvent_0l0bcq2" />
+    <bpmn:sequenceFlow id="SequenceFlow_1bb7vzi" sourceRef="Task_0p32nxh" targetRef="EndEvent_FailQuote" />
     <bpmn:sequenceFlow id="SequenceFlow_1oanf9v" name="Payer decline" sourceRef="ExclusiveGateway_0b3aaz0" targetRef="Task_0p32nxh" />
     <bpmn:parallelGateway id="ExclusiveGateway_18oxkuv">
       <bpmn:incoming>SequenceFlow_0genjrl</bpmn:incoming>
@@ -268,19 +268,19 @@
       <bpmn:outgoing>SequenceFlow_1jl9j3d</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_15uek64" sourceRef="Task_1w0mort" targetRef="ExclusiveGateway_047pv97" />
-    <bpmn:endEvent id="EndEvent_052rmg8" name="Operator manual override">
+    <bpmn:endEvent id="EndEvent_SuccessOperatorTransfer" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_0r69kws</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_11antd6" name="Transfer aborted">
+    <bpmn:endEvent id="EndEvent_FailBlock" name="Transfer aborted">
       <bpmn:incoming>SequenceFlow_1jrvf6v</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1jrvf6v" sourceRef="ServiceTask_11hlong" targetRef="EndEvent_11antd6" />
+    <bpmn:sequenceFlow id="SequenceFlow_1jrvf6v" sourceRef="ServiceTask_11hlong" targetRef="EndEvent_FailBlock" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1hp2mnc" default="SequenceFlow_1bgw6c7">
       <bpmn:incoming>SequenceFlow_1fjf0ax</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bgw6c7</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0uz4rxk</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="EndEvent_0ttk216" name="Transfer failed / rejected">
+    <bpmn:endEvent id="EndEvent_FailTransfer" name="Transfer failed / rejected">
       <bpmn:incoming>SequenceFlow_1289aur</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_1b2pqma" name="Notify AMS Book failure">
@@ -324,7 +324,7 @@
       <bpmn:incoming>SequenceFlow_1bgw6c7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1289aur</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1289aur" sourceRef="ServiceTask_12jf9uv" targetRef="EndEvent_0ttk216" />
+    <bpmn:sequenceFlow id="SequenceFlow_1289aur" sourceRef="ServiceTask_12jf9uv" targetRef="EndEvent_FailTransfer" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1suv1fz" default="SequenceFlow_1z0i3k2">
       <bpmn:incoming>SequenceFlow_1t03f2t</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1z0i3k2</bpmn:outgoing>
@@ -335,10 +335,10 @@
     <bpmn:sequenceFlow id="SequenceFlow_15vsvig" name="book funds&#10; failed?" sourceRef="ExclusiveGateway_19vlfln" targetRef="Task_1b2pqma">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferCreateFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:endEvent id="EndEvent_1iwpzt0" name="Operator manual override">
+    <bpmn:endEvent id="EndEvent_SuccessOperatorBook" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_11xfsas</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_11xfsas" sourceRef="ExclusiveGateway_1suv1fz" targetRef="EndEvent_1iwpzt0">
+    <bpmn:sequenceFlow id="SequenceFlow_11xfsas" sourceRef="ExclusiveGateway_1suv1fz" targetRef="EndEvent_SuccessOperatorBook">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">operatorManualOverride == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1fjf0ax" sourceRef="Task_1q95sc9" targetRef="ExclusiveGateway_1hp2mnc" />
@@ -349,13 +349,13 @@
     <bpmn:sequenceFlow id="SequenceFlow_1m3fp8f" sourceRef="ServiceTask_1vij8j6" targetRef="ReceiveTask_10720ca" />
     <bpmn:sequenceFlow id="SequenceFlow_0wqgjqz" sourceRef="ReceiveTask_10720ca" targetRef="ExclusiveGateway_098wsk1" />
     <bpmn:sequenceFlow id="SequenceFlow_1nkyihv" sourceRef="ExclusiveGateway_098wsk1" targetRef="Task_1q95sc9" />
-    <bpmn:sequenceFlow id="SequenceFlow_0r69kws" sourceRef="ExclusiveGateway_098wsk1" targetRef="EndEvent_052rmg8">
+    <bpmn:sequenceFlow id="SequenceFlow_0r69kws" sourceRef="ExclusiveGateway_098wsk1" targetRef="EndEvent_SuccessOperatorTransfer">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">operatorManualOverride == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:endEvent id="EndEvent_10x96vm" name="Operator manual override">
+    <bpmn:endEvent id="EndEvent_SuccessOperator3" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_09c5vyn</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_09c5vyn" sourceRef="ExclusiveGateway_047pv97" targetRef="EndEvent_10x96vm">
+    <bpmn:sequenceFlow id="SequenceFlow_09c5vyn" sourceRef="ExclusiveGateway_047pv97" targetRef="EndEvent_SuccessOperator3">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">operatorManualOverride == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_16yh52d" sourceRef="ExclusiveGateway_18oxkuv" targetRef="Task_07rtzza" />
@@ -491,10 +491,10 @@
         <di:waypoint x="960" y="500" />
         <di:waypoint x="1065" y="500" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1dxurgd_di" bpmnElement="EndEvent_1dxurgd" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_1dxurgd_di" bpmnElement="EndEvent_Success" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="482" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1696" y="480" width="55" height="40" />
+          <dc:Bounds x="1697" y="480" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0idegqg_di" bpmnElement="SequenceFlow_0idegqg">
@@ -644,10 +644,10 @@
         <di:waypoint x="1500" y="290" />
         <di:waypoint x="1545" y="290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0l0bcq2_di" bpmnElement="EndEvent_0l0bcq2" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0l0bcq2_di" bpmnElement="EndEvent_FailQuote" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1692" y="123" width="80" height="14" />
+          <dc:Bounds x="1692" y="123" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_173at5u_di" bpmnElement="Group_173at5u">
@@ -860,16 +860,16 @@
         <di:waypoint x="920" y="1130" />
         <di:waypoint x="1005" y="1130" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_052rmg8_di" bpmnElement="EndEvent_052rmg8" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_052rmg8_di" bpmnElement="EndEvent_SuccessOperatorTransfer" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="932" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1690" y="946" width="84" height="27" />
+          <dc:Bounds x="1691" y="946" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_11antd6_di" bpmnElement="EndEvent_11antd6" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_11antd6_di" bpmnElement="EndEvent_FailBlock" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="732" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1694" y="743" width="80" height="14" />
+          <dc:Bounds x="1694" y="743" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1jrvf6v_di" bpmnElement="SequenceFlow_1jrvf6v">
@@ -879,10 +879,10 @@
       <bpmndi:BPMNShape id="ExclusiveGateway_1hp2mnc_di" bpmnElement="ExclusiveGateway_1hp2mnc" isMarkerVisible="true">
         <dc:Bounds x="1364" y="825" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0ttk216_di" bpmnElement="EndEvent_0ttk216" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0ttk216_di" bpmnElement="EndEvent_FailTransfer" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="832" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1694" y="843" width="76" height="27" />
+          <dc:Bounds x="1694" y="843" width="77" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_1urtpjy_di" bpmnElement="Task_1b2pqma">
@@ -935,10 +935,10 @@
           <dc:Bounds x="1392" y="558" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1iwpzt0_di" bpmnElement="EndEvent_1iwpzt0" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_1iwpzt0_di" bpmnElement="EndEvent_SuccessOperatorBook" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="582" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1690" y="596" width="84" height="27" />
+          <dc:Bounds x="1691" y="596" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_11xfsas_di" bpmnElement="SequenceFlow_11xfsas">
@@ -976,10 +976,10 @@
         <di:waypoint x="1275" y="950" />
         <di:waypoint x="1644" y="950" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_10x96vm_di" bpmnElement="EndEvent_10x96vm" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_10x96vm_di" bpmnElement="EndEvent_SuccessOperator3" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1644" y="1112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1690" y="1126" width="84" height="27" />
+          <dc:Bounds x="1691" y="1126" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_09c5vyn_di" bpmnElement="SequenceFlow_09c5vyn">
