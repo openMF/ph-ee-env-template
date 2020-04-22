@@ -20,7 +20,7 @@
       <bpmn:incoming>SequenceFlow_15be5zz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nuzh5t</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="EndEvent_Success" name="Transfer success">
+    <bpmn:endEvent id="EndEvent_0onv3vg" name="Transfer success">
       <bpmn:incoming>SequenceFlow_1yi59vy</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1nuzh5t" sourceRef="Task_1gmgaux" targetRef="ExclusiveGateway_1x5kvlf" />
@@ -72,7 +72,7 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_1tkl7ok" sourceRef="Task_1pzesbg" targetRef="ExclusiveGateway_0dk5sxo" />
     <bpmn:sequenceFlow id="SequenceFlow_00cmaa9" sourceRef="ServiceTask_1oofpfc" targetRef="ExclusiveGateway_0qzjchh" />
-    <bpmn:endEvent id="EndEvent_FailSwitch" name="Transfer failed">
+    <bpmn:endEvent id="EndEvent_1q0xuvq" name="Transfer failed">
       <bpmn:incoming>SequenceFlow_1b5fd21</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="ServiceTask_1hoe0u6" name="transfer failed response (Switch)">
@@ -82,14 +82,14 @@
       <bpmn:incoming>SequenceFlow_0gp1sbx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1b5fd21</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1b5fd21" sourceRef="ServiceTask_1hoe0u6" targetRef="EndEvent_FailSwitch" />
+    <bpmn:sequenceFlow id="SequenceFlow_1b5fd21" sourceRef="ServiceTask_1hoe0u6" targetRef="EndEvent_1q0xuvq" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0dk5sxo" default="SequenceFlow_1nxdko8">
       <bpmn:incoming>SequenceFlow_1tkl7ok</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nxdko8</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0gp1sbx</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1nxdko8" sourceRef="ExclusiveGateway_0dk5sxo" targetRef="ExclusiveGateway_1eru5q5" />
-    <bpmn:sequenceFlow id="SequenceFlow_1l50z66" sourceRef="ExclusiveGateway_1x5kvlf" targetRef="EndEvent_FailQuoteReject">
+    <bpmn:sequenceFlow id="SequenceFlow_1l50z66" sourceRef="ExclusiveGateway_1x5kvlf" targetRef="EndEvent_0s9qghu">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">quoteFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1awxy5o" name="Mojaloop Quote Error Event">
@@ -98,17 +98,17 @@
       <bpmn:messageEventDefinition messageRef="Message_1xn7tly" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0tifm4f" sourceRef="ExclusiveGateway_0njdior" targetRef="IntermediateThrowEvent_1awxy5o" />
-    <bpmn:sequenceFlow id="SequenceFlow_0bhw2cx" sourceRef="IntermediateThrowEvent_1awxy5o" targetRef="EndEvent_FailQuote" />
-    <bpmn:endEvent id="EndEvent_FailTimeout" name="Transfer timeout">
+    <bpmn:sequenceFlow id="SequenceFlow_0bhw2cx" sourceRef="IntermediateThrowEvent_1awxy5o" targetRef="EndEvent_0f33ds3" />
+    <bpmn:endEvent id="EndEvent_0dkucpv" name="Transfer timeout">
       <bpmn:incoming>SequenceFlow_1dg7uh7</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_FailQuote" name="Quote error">
+    <bpmn:endEvent id="EndEvent_0f33ds3" name="Quote error">
       <bpmn:incoming>SequenceFlow_0bhw2cx</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_FailQuoteReject" name="Quote reject / failure">
+    <bpmn:endEvent id="EndEvent_0s9qghu" name="Quote reject / failure">
       <bpmn:incoming>SequenceFlow_1l50z66</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1dg7uh7" sourceRef="IntermediateCatchEvent_0eo6y4p" targetRef="EndEvent_FailTimeout" />
+    <bpmn:sequenceFlow id="SequenceFlow_1dg7uh7" sourceRef="IntermediateCatchEvent_0eo6y4p" targetRef="EndEvent_0dkucpv" />
     <bpmn:sequenceFlow id="SequenceFlow_1rjfrgt" sourceRef="ExclusiveGateway_0njdior" targetRef="IntermediateCatchEvent_0eo6y4p" />
     <bpmn:sequenceFlow id="SequenceFlow_0j1b0rd" sourceRef="IntermediateCatchEvent_03i61sh" targetRef="Task_1pzesbg" />
     <bpmn:sequenceFlow id="SequenceFlow_04hdoau" sourceRef="ExclusiveGateway_1eru5q5" targetRef="ServiceTask_1oofpfc" />
@@ -121,7 +121,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0gp1sbx" sourceRef="ExclusiveGateway_0dk5sxo" targetRef="ServiceTask_1hoe0u6">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferCreateFailed == true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1yi59vy" sourceRef="ExclusiveGateway_0qzjchh" targetRef="EndEvent_Success" />
+    <bpmn:sequenceFlow id="SequenceFlow_1yi59vy" sourceRef="ExclusiveGateway_0qzjchh" targetRef="EndEvent_0onv3vg" />
     <bpmn:parallelGateway id="ExclusiveGateway_0qzjchh">
       <bpmn:incoming>SequenceFlow_00cmaa9</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0qveqrp</bpmn:incoming>
@@ -188,10 +188,10 @@
       <bpmndi:BPMNShape id="ServiceTask_0d4u0p8_di" bpmnElement="Task_1gmgaux" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="400" y="147" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0onv3vg_di" bpmnElement="EndEvent_Success" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+      <bpmndi:BPMNShape id="EndEvent_0onv3vg_di" bpmnElement="EndEvent_0onv3vg" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1402" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1448" y="123" width="84" height="14" />
+          <dc:Bounds x="1448" y="123" width="83" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1nuzh5t_di" bpmnElement="SequenceFlow_1nuzh5t">
@@ -278,10 +278,10 @@
         <di:waypoint x="1260" y="130" />
         <di:waypoint x="1305" y="130" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1q0xuvq_di" bpmnElement="EndEvent_FailSwitch" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_1q0xuvq_di" bpmnElement="EndEvent_1q0xuvq" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1402" y="402" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1446" y="413" width="70" height="14" />
+          <dc:Bounds x="1446" y="413" width="69" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_1hoe0u6_di" bpmnElement="ServiceTask_1hoe0u6" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
@@ -321,19 +321,19 @@
         <di:waypoint x="758" y="520" />
         <di:waypoint x="1402" y="520" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0dkucpv_di" bpmnElement="EndEvent_FailTimeout" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0dkucpv_di" bpmnElement="EndEvent_0dkucpv" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1402" y="582" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1450" y="593" width="80" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0f33ds3_di" bpmnElement="EndEvent_FailQuote" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0f33ds3_di" bpmnElement="EndEvent_0f33ds3" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1402" y="502" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1453" y="513" width="57" height="14" />
+          <dc:Bounds x="1452" y="513" width="58" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0s9qghu_di" bpmnElement="EndEvent_FailQuoteReject" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+      <bpmndi:BPMNShape id="EndEvent_0s9qghu_di" bpmnElement="EndEvent_0s9qghu" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1402" y="652" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1447" y="663" width="67" height="27" />
