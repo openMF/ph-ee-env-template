@@ -95,7 +95,7 @@
     <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_ErrorCallback" name="Mojaloop Quote Error Event">
       <bpmn:incoming>SequenceFlow_0tifm4f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0bhw2cx</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_173oklu" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0tifm4f" sourceRef="ExclusiveGateway_0njdior" targetRef="IntermediateCatchEvent_ErrorCallback" />
     <bpmn:sequenceFlow id="SequenceFlow_0bhw2cx" sourceRef="IntermediateCatchEvent_ErrorCallback" targetRef="EndEvent_Failure_Quote" />
@@ -118,7 +118,9 @@
       <bpmn:outgoing>SequenceFlow_1nhsyf3</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1nhsyf3" sourceRef="ExclusiveGateway_1eru5q5" targetRef="Task_Success2Chn" />
-    <bpmn:sequenceFlow id="SequenceFlow_0gp1sbx" sourceRef="ExclusiveGateway_0dk5sxo" targetRef="Task_Failure2Moja" />
+    <bpmn:sequenceFlow id="SequenceFlow_0gp1sbx" sourceRef="ExclusiveGateway_0dk5sxo" targetRef="Task_Failure2Moja">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">transferCreateFailed == true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1yi59vy" sourceRef="ExclusiveGateway_0qzjchh" targetRef="EndEvent_Success_Transfer" />
     <bpmn:parallelGateway id="ExclusiveGateway_0qzjchh">
       <bpmn:incoming>SequenceFlow_00cmaa9</bpmn:incoming>
@@ -159,6 +161,11 @@
   <bpmn:category id="Category_0z1irya">
     <bpmn:categoryValue id="CategoryValue_0jo1phc" value="Mojaloop" />
   </bpmn:category>
+  <bpmn:message id="Message_173oklu" name="quote">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="quoteId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PayeeQuoteTransfer-DFSPID">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_QuoteRequest" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">

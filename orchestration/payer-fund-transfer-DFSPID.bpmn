@@ -271,7 +271,7 @@
     <bpmn:endEvent id="EndEvent_Success_ReleaseManOverride" name="Operator manual override">
       <bpmn:incoming>SequenceFlow_0r69kws</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_Failure_Block" name="Transfer aborted, cannot blcok">
+    <bpmn:endEvent id="EndEvent_Failure_Block" name="Transfer aborted, failed to block">
       <bpmn:incoming>SequenceFlow_1jrvf6v</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1jrvf6v" sourceRef="Task_FailedBlcok2Chn" targetRef="EndEvent_Failure_Block" />
@@ -367,17 +367,17 @@
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:group id="Group_0nlgr8s" categoryValueRef="CategoryValue_0v7ri8k" />
-    <bpmn:group id="Group_03ix7n4" categoryValueRef="CategoryValue_1ga96nc" />
     <bpmn:group id="Group_173at5u" categoryValueRef="CategoryValue_0ptkm7b" />
-    <bpmn:group id="Group_0kd2dkx" categoryValueRef="CategoryValue_0j1t6i9" />
     <bpmn:group id="Group_1ndyx8e" categoryValueRef="CategoryValue_1ft9a75" />
-    <bpmn:group id="Group_1aqm94k" categoryValueRef="CategoryValue_0b8sfea" />
     <bpmn:group id="Group_1xf6x7c" categoryValueRef="CategoryValue_0eoi7eg" />
     <bpmn:group id="Group_0n4l4di" categoryValueRef="CategoryValue_0t4fccu" />
     <bpmn:group id="Group_0jhslcm" categoryValueRef="CategoryValue_04731gk" />
-    <bpmn:group id="Group_15ye83z" categoryValueRef="CategoryValue_01ntduk" />
     <bpmn:group id="Group_19dpnkt" categoryValueRef="CategoryValue_08lp2k5" />
     <bpmn:group id="Group_1yti97u" categoryValueRef="CategoryValue_1yaia5q" />
+    <bpmn:group id="Group_1v33x42" categoryValueRef="CategoryValue_015sd1c" />
+    <bpmn:group id="Group_04edjvg" categoryValueRef="CategoryValue_0pqzyuk" />
+    <bpmn:group id="Group_0hnd4rf" categoryValueRef="CategoryValue_1xgnx4j" />
+    <bpmn:group id="Group_1dpom11" categoryValueRef="CategoryValue_1pzrnws" />
   </bpmn:process>
   <bpmn:message id="Message_0l98qgu" name="payee-user-lookup">
     <bpmn:extensionElements>
@@ -402,20 +402,11 @@
   <bpmn:category id="Category_0tb4z49">
     <bpmn:categoryValue id="CategoryValue_0v7ri8k" value="Mojaloop" />
   </bpmn:category>
-  <bpmn:category id="Category_1ouchec">
-    <bpmn:categoryValue id="CategoryValue_1ga96nc" value="AMS" />
-  </bpmn:category>
   <bpmn:category id="Category_0hszjwy">
     <bpmn:categoryValue id="CategoryValue_0ptkm7b" value="Channel" />
   </bpmn:category>
-  <bpmn:category id="Category_08j69wv">
-    <bpmn:categoryValue id="CategoryValue_0j1t6i9" value="AMS" />
-  </bpmn:category>
   <bpmn:category id="Category_1ng91cn">
     <bpmn:categoryValue id="CategoryValue_1ft9a75" value="Mojaloop" />
-  </bpmn:category>
-  <bpmn:category id="Category_0zsnng9">
-    <bpmn:categoryValue id="CategoryValue_0b8sfea" value="AMS" />
   </bpmn:category>
   <bpmn:category id="Category_18ohk5z">
     <bpmn:categoryValue id="CategoryValue_0eoi7eg" value="Channel" />
@@ -433,14 +424,23 @@
   <bpmn:category id="Category_1pt8rzt">
     <bpmn:categoryValue id="CategoryValue_04731gk" value="Operations" />
   </bpmn:category>
-  <bpmn:category id="Category_1yvl6gy">
-    <bpmn:categoryValue id="CategoryValue_01ntduk" value="AMS" />
-  </bpmn:category>
   <bpmn:category id="Category_0x1fo47">
     <bpmn:categoryValue id="CategoryValue_08lp2k5" value="Operations" />
   </bpmn:category>
   <bpmn:category id="Category_1igvszp">
     <bpmn:categoryValue id="CategoryValue_1yaia5q" value="Operations" />
+  </bpmn:category>
+  <bpmn:category id="Category_0z8jo0b">
+    <bpmn:categoryValue id="CategoryValue_015sd1c" value="AMS" />
+  </bpmn:category>
+  <bpmn:category id="Category_1qsdd67">
+    <bpmn:categoryValue id="CategoryValue_0pqzyuk" value="AMS" />
+  </bpmn:category>
+  <bpmn:category id="Category_1ek1ma6">
+    <bpmn:categoryValue id="CategoryValue_1xgnx4j" value="AMS" />
+  </bpmn:category>
+  <bpmn:category id="Category_1qg34dl">
+    <bpmn:categoryValue id="CategoryValue_1pzrnws" value="AMS" />
   </bpmn:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PayerFundTransfer-DFSPID">
@@ -624,12 +624,6 @@
           <dc:Bounds x="246" y="333" width="46" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Group_03ix7n4_di" bpmnElement="Group_03ix7n4">
-        <dc:Bounds x="970" y="226" width="150" height="128" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="988" y="333" width="24" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1ffxwgp_di" bpmnElement="SequenceFlow_1ffxwgp">
         <di:waypoint x="1360" y="290" />
         <di:waypoint x="1400" y="290" />
@@ -656,22 +650,10 @@
           <dc:Bounds x="1153" y="331" width="42" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Group_0kd2dkx_di" bpmnElement="Group_0kd2dkx">
-        <dc:Bounds x="435" y="443" width="150" height="114" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="451" y="450" width="24" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_1ndyx8e_di" bpmnElement="Group_1ndyx8e" bioc:stroke="black" bioc:fill="white">
         <dc:Bounds x="706" y="436" width="264" height="128" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="726" y="443" width="46" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Group_1aqm94k_di" bpmnElement="Group_1aqm94k">
-        <dc:Bounds x="1180" y="420" width="132" height="144" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1196" y="430" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_1xf6x7c_di" bpmnElement="Group_1xf6x7c">
@@ -869,7 +851,7 @@
       <bpmndi:BPMNShape id="EndEvent_11antd6_di" bpmnElement="EndEvent_Failure_Block" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
         <dc:Bounds x="1644" y="732" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1693" y="743" width="84" height="27" />
+          <dc:Bounds x="1694" y="743" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1jrvf6v_di" bpmnElement="SequenceFlow_1jrvf6v">
@@ -911,12 +893,6 @@
         <di:waypoint x="1592" y="850" />
         <di:waypoint x="1644" y="850" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Group_15ye83z_di" bpmnElement="Group_15ye83z">
-        <dc:Bounds x="1186" y="785" width="128" height="130" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1201" y="795" width="24" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_1suv1fz_di" bpmnElement="ExclusiveGateway_1suv1fz" isMarkerVisible="true">
         <dc:Bounds x="1225" y="575" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -1010,6 +986,30 @@
         <dc:Bounds x="1177" y="625" width="277" height="120" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1179" y="634" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1v33x42_di" bpmnElement="Group_1v33x42">
+        <dc:Bounds x="444" y="436" width="131" height="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="460" y="443" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_04edjvg_di" bpmnElement="Group_04edjvg">
+        <dc:Bounds x="1185" y="439" width="131" height="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1201" y="446" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_0hnd4rf_di" bpmnElement="Group_0hnd4rf">
+        <dc:Bounds x="1185" y="789" width="131" height="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1201" y="796" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1dpom11_di" bpmnElement="Group_1dpom11">
+        <dc:Bounds x="985" y="229" width="131" height="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1001" y="236" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
