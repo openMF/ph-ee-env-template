@@ -18,5 +18,7 @@ spec:
           value: "ph-ee-zeebe:26500"
         - name: "SPRING_PROFILES_ACTIVE"
           value: "{{ .Values.ph_ee_connector_mojaloop.SPRING_PROFILES_ACTIVE }}"
+        - name: "ams.local.enabled"
+          value: "false"
   restartPolicy: Always
 
