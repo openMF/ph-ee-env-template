@@ -12,8 +12,8 @@ spec:
       ports:
         - containerPort: 5000
       env:
-        - name: "fineract.datasource.core.username"
+        - name: "FINERACT_DATASOURCE_CORE_USERNAME"
           value: "mifos"
-        - name: "fineract.datasource.core.password"
+        - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
           value: "password"
   restartPolicy: Always
