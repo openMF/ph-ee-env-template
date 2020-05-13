@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ph-ee-identity-provider"
+  labels:
+    app: ph-ee-identity-provider
+  annotations:
+spec:
+  containers:
+    - name: phee-identity-provider
+      image: paymenthubee.azurecr.io/phee/identity-provider
+      ports:
+        - containerPort: 5000
+      env:
+        - name: "fineract.datasource.core.username"
+          value: "mifos"
+        - name: "fineract.datasource.core.password"
+          value: "password"
+  restartPolicy: Always
