@@ -26,6 +26,7 @@ elasticsearch:
 kibana:
   enabled: false
   imageTag: 6.8.5
+  fullnameOverride: "ph-ee-kibana"
   
 prometheus:
   enabled: false
