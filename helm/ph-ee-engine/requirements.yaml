@@ -2,15 +2,15 @@ dependencies:
 - name: zeebe-cluster
   repository: https://helm.zeebe.io
   version: 0.0.100
-#- name: elasticsearch
-#  repository: http://helm.elastic.co 
-#  version: 7.5.1
-#  condition: "elasticsearch.enabled"
-#- name: kibana
-#  repository: http://helm.elastic.co 
-#  version: 7.5.1
-#  condition: "kibana.enabled"
-#- name: kurbaprometheus-operator
+- name: elasticsearch
+  repository: http://helm.elastic.co 
+  version: 7.7.0
+  condition: "elasticsearch.enabled"
+- name: kibana
+  repository: http://helm.elastic.co 
+  version: 7.7.0
+  condition: "kibana.enabled"
+#- name: prometheus-operator
 #  repository: https://kubernetes-charts.storage.googleapis.com/
 #  version: 8.5.11
 #  condition: "prometheus.enabled"

@@ -1,3 +1,6 @@
+global:
+  zeebe: "ph-ee-zeebe"
+
 zeebe-cluster:
   clusterSize: "1"
   partitionCount: "1"
@@ -7,18 +10,25 @@ zeebe-cluster:
   pvcSize: "10Gi"
   pvcAccessModes: [ "ReadWriteOnce" ]
   
+  # zeebe's ES and Kibana
   elasticsearch:
     enabled: false
-    imageTag: 6.8.5
-    replicas: 1
-    minimumMasterNodes: 1
-  
   kibana:
     enabled: false
-    imageTag: 6.8.5
   
-  prometheus:
+# payment hub ES and Kibana
+elasticsearch:
+  enabled: false
+  imageTag: 6.8.5
+  replicas: 1
+  minimumMasterNodes: 1
+  
+kibana:
+  enabled: false
+  imageTag: 6.8.5
+  
+prometheus:
+  enabled: false
+  servicemonitor:
     enabled: false
-    servicemonitor:
-      enabled: false
   
