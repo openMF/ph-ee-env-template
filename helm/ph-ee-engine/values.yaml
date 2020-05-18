@@ -1,92 +1,24 @@
-
-global:
+zeebe-cluster:
+  clusterSize: "1"
+  partitionCount: "1"
+  replicationFactor: "1"
+  cpuThreadCount: "2"
+  ioThreadCount: "2"
+  pvcSize: "10Gi"
+  pvcAccessModes: [ "ReadWriteOnce" ]
+  
   elasticsearch:
-    host: "ph-ee-elasticsearch-master"
-    port: 9200
-    clusterName: "ph-ee-elasticsearch"
-  kibana:
-    elasticsearchHosts: "http://ph-ee-elasticsearch-master:9200"
-  zeebe: "ph-ee-zeebe"
-  zeebe-operate:
-    global:
-      zeebe: "ph-ee-zeebe"
-      elasticsearch:
-        host: "ph-ee-elasticsearch-master"
-        clusterName: "ph-ee-elasticsearch-master"
-
-zeebe-operate:
-  image:
-    repository: camunda/operate
-    tag: 0.23.0-alpha2
-
-clusterSize: "1"
-partitionCount: "1"
-replicationFactor: "1"
-cpuThreadCount: "2"
-ioThreadCount: "2"
-pvcSize: "10Gi"
-pvcAccessModes: [ "ReadWriteOnce" ]
-
-elasticsearch:
-  enabled: true
-  imageTag: 6.8.5
-  replicas: 1
-  minimumMasterNodes: 1
-
-kibana:
-  enabled: true
-  imageTag: 6.8.5
-
-prometheus:
-  enabled: false
-  servicemonitor:
     enabled: false
-
-JavaOpts: |
-  -XX:+UseParallelGC 
-  -XX:MinHeapFreeRatio=5
-  -XX:MaxHeapFreeRatio=10
-  -XX:MaxRAMPercentage=25.0 
-  -XX:GCTimeRatio=4 
-  -XX:AdaptiveSizePolicyWeight=90
-  -XX:+PrintFlagsFinal
-  -Xmx4g
-  -Xms4g
-  -XX:+HeapDumpOnOutOfMemoryError
-  -XX:HeapDumpPath=/usr/local/zeebe/data
-  -XX:ErrorFile=/usr/local/zeebe/data/zeebe_error%p.log
-image:
-  repository: camunda/zeebe
-  tag: 0.23.0-alpha2
-  pullPolicy: Always
-labels:
-  app: zeebe    
-service:
-  type: ClusterIP
-  http:
-    port: 9600
-  gateway:
-    port: 26500
-  command:
-    port: 26501  
-  internal:
-    port: 26502
-resources: 
-  requests:
-    cpu: 500m
-    memory: 2Gi
-  limits:
-    cpu: 2000m
-    memory: 2Gi
-probePath: /ready
-readinessProbe:
-  failureThreshold: 1
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 1
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+    imageTag: 6.8.5
+    replicas: 1
+    minimumMasterNodes: 1
+  
+  kibana:
+    enabled: false
+    imageTag: 6.8.5
+  
+  prometheus:
+    enabled: false
+    servicemonitor:
+      enabled: false
+  
