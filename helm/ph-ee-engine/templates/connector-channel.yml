@@ -12,8 +12,6 @@ spec:
       ports:
         - containerPort: 5000
       env: 
-        - name: "dfspids"
-          value: "DFSPID"
         - name: "zeebe.broker.contactpoint"
           value: "ph-ee-zeebe:26500"
   restartPolicy: Always
