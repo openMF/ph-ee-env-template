@@ -1,20 +1,36 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: "ph-ee-connector-channel"
   labels:
     app: ph-ee-connector-channel
-  annotations:
 spec:
-  containers:
-    - name: phee-connector-channel
-      image: paymenthubee.azurecr.io/phee/connector-channel
-      ports:
-        - containerPort: 5000
-      env: 
-        - name: "zeebe.broker.contactpoint"
-          value: "ph-ee-zeebe:26500"
-  restartPolicy: Always
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph-ee-connector-channel
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-channel
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+    spec:
+      containers:
+        - name: phee-connector-channel
+          image: paymenthubee.azurecr.io/phee/connector-channel
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_connector_channel.SPRING_PROFILES_ACTIVE }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
 
 ---
 apiVersion: extensions/v1beta1
@@ -31,4 +47,3 @@ spec:
         - backend:
             serviceName: ph-ee-connector-channel
             servicePort: 80
-
