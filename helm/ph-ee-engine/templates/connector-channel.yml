@@ -16,3 +16,19 @@ spec:
           value: "ph-ee-zeebe:26500"
   restartPolicy: Always
 
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ph-ee-connector-channel
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+    - host: ph-ee-connector-channel
+      http:
+        paths:
+        - backend:
+            serviceName: ph-ee-connector-channel
+            servicePort: 80
+
