@@ -2,6 +2,9 @@ dependencies:
 - name: zeebe-cluster
   repository: https://helm.zeebe.io
   version: 0.0.100
+- name: zeebe-operate
+  repository: https://helm.zeebe.io
+  version: 0.0.22
 - name: elasticsearch
   repository: http://helm.elastic.co 
   version: 7.7.0

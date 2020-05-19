@@ -1,5 +1,8 @@
 global:
   zeebe: "ph-ee-zeebe"
+  elasticsearch: # used by operate
+    host: ph-ee-elasticsearch-master
+    clusterName: elasticsearch
 
 zeebe-cluster:
   clusterSize: "1"
