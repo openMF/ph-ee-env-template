@@ -17,7 +17,7 @@ spec:
         deployTime: "{{ .Values.deployTime }}"
     spec:
       containers:
-        - name: phee-connector-ams-mifos
+        - name: ph-ee-connector-ams-mifos
           image: paymenthubee.azurecr.io/phee/connector-ams-mifos
           ports:
             - containerPort: 5000

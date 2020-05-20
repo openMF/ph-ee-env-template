@@ -17,7 +17,7 @@ spec:
         deployTime: "{{ .Values.deployTime }}"
     spec:
       containers:
-        - name: phee-connector-channel
+        - name: ph-ee-connector-channel
           image: paymenthubee.azurecr.io/phee/connector-channel
           ports:
             - containerPort: 5000
@@ -41,7 +41,7 @@ metadata:
     kubernetes.io/ingress.class: azure/application-gateway
 spec:
   rules:
-    - host: ph-ee-connector-channel
+    - host: "{{ .Values.ph_ee_connector_channel.hostname }}"
       http:
         paths:
         - backend:
