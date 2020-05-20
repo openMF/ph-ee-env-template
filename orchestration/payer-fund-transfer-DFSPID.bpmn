@@ -34,7 +34,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0idegqg" sourceRef="Task_BookFunds" targetRef="ExclusiveGateway_19vlfln" />
     <bpmn:serviceTask id="Task_PayeeLookup" name="Payee User Lookup">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="payee-user-lookup" />
+        <zeebe:taskDefinition type="party-lookup-request-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1pymsem</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0vrua4x</bpmn:incoming>
@@ -56,7 +56,7 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_SendTransfer" name="Send transfer request">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="send-transfer-request" />
+        <zeebe:taskDefinition type="send-transfer-request-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_13mvek9</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_18kubg3</bpmn:incoming>
@@ -78,7 +78,7 @@
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_PayeeQuote" name="Payee Quote">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="quote" />
+        <zeebe:taskDefinition type="quote-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_09gkp54</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_11uuh51</bpmn:incoming>
@@ -379,7 +379,7 @@
     <bpmn:group id="Group_0hnd4rf" categoryValueRef="CategoryValue_1xgnx4j" />
     <bpmn:group id="Group_1dpom11" categoryValueRef="CategoryValue_1pzrnws" />
   </bpmn:process>
-  <bpmn:message id="Message_0l98qgu" name="payee-user-lookup">
+  <bpmn:message id="Message_0l98qgu" name="party-lookup">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="transactionId" />
     </bpmn:extensionElements>
