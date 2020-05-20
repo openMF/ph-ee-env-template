@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-identity-provider"
+  labels:
+    app: ph-ee-identity-provider
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph-ee-identity-provider
+  template:
+    metadata:
+      labels:
+        app: ph-ee-identity-provider
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+    spec:
+      containers:
+        - name: phee-connector-mojaloop-java
+          image: paymenthubee.azurecr.io/phee/identity-provider
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "FINERACT_DATASOURCE_CORE_USERNAME"
+              value: "mifos"
+            - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
+              value: "password"
+            - name: "SECURITY_OAUTH2_RESOURCE_JWT_KEY-URI"
+              value: "http://identity-provider.mifos.io/oauth/token_key"
+            - name: "REST_AUTHORIZATION_ENABLED"
+              value: "true"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-identity-provider
+  name: ph-ee-identity-provider
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-identity-provider
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: identity-provider.mifos.io
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+    - host: identity-provider.mifos.io
+      http:
+        paths:
+          - backend:
+              serviceName: identity-provider
+              servicePort: 80
