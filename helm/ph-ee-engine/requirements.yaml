@@ -1,7 +1,7 @@
 dependencies:
 - name: zeebe-cluster
   repository: https://helm.zeebe.io
-  version: 0.0.100
+  version: 0.0.102
 - name: zeebe-operate
   repository: https://helm.zeebe.io
   version: 0.0.22

@@ -1,7 +1,7 @@
 dependencies:
 - name: zeebe-cluster
   repository: https://helm.zeebe.io
-  version: 0.0.100
+  version: 0.0.102
 - name: zeebe-operate
   repository: https://helm.zeebe.io
   version: 0.0.22
@@ -11,5 +11,5 @@ dependencies:
 - name: kibana
   repository: http://helm.elastic.co
   version: 7.7.0
-digest: sha256:d27c777b9b038ccdf0f55269ba1ee9b6a7fe6dd868514c8e6b48d7fcaf286833
-generated: "2020-05-19T12:39:20.542298694+02:00"
+digest: sha256:f6c2bdc4e72cb964b922603061961fb5d246b6d3c32fe38d629d1204274f0eb2
+generated: "2020-05-20T11:22:13.674056659+02:00"
