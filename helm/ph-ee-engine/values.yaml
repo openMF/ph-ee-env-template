@@ -66,3 +66,11 @@ ph_ee_connector_mojaloop:
 ph_ee_connector_channel:
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
+
+ph_ee_identity_provider:
+  SPRING_PROFILES_ACTIVE: ""
+  hostname: ""
+
+ph_ee_operations:
+  hostname: ""
+  webhost: ""
