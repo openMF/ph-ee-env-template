@@ -14,6 +14,17 @@ dependencies:
   repository: http://helm.elastic.co 
   version: 7.7.0
   condition: "kibana.enabled"
+- name: mysql
+  version: 1.6.2
+  repository: "https://kubernetes-charts.storage.googleapis.com"
+  alias: operationsMysql
+  condition: "operations.enabled"
+- name: mysql
+  version: 1.6.2
+  repository: "https://kubernetes-charts.storage.googleapis.com"
+  alias: identityMysql
+  condition: "operations.enabled"
+
 #- name: prometheus-operator
 #  repository: https://kubernetes-charts.storage.googleapis.com/
 #  version: 8.5.11

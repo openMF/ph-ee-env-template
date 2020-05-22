@@ -11,5 +11,11 @@ dependencies:
 - name: kibana
   repository: http://helm.elastic.co
   version: 7.7.0
-digest: sha256:f6c2bdc4e72cb964b922603061961fb5d246b6d3c32fe38d629d1204274f0eb2
-generated: "2020-05-20T11:22:13.674056659+02:00"
+- name: mysql
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.6.2
+- name: mysql
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.6.2
+digest: sha256:fe500ea603233d94b52425f76bad2ce6cce6f2b1e3abcb4234ca327bc7d8d751
+generated: "2020-05-22T12:11:41.473187345+02:00"

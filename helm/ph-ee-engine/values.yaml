@@ -43,6 +43,15 @@ kibana:
   imageTag: 6.8.5
   fullnameOverride: "ph-ee-kibana"
   
+operations:
+  enabled: true
+
+operationsMysql:
+  fullnameOverride: operations-mysql
+
+identityMysql:
+  fullnameOverride: identity-mysql
+
 prometheus:
   enabled: false
   servicemonitor:
