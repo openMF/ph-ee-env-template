@@ -21,6 +21,12 @@ spec:
           image: paymenthubee.azurecr.io/phee/identity-provider
           ports:
             - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /oauth/token_key
+              port: 5000
+            periodSeconds: 30
+            timeoutSeconds: 5
           env:
             - name: "FINERACT_DATASOURCE_CORE_USERNAME"
               value: "mifos"
@@ -57,7 +63,6 @@ metadata:
   name: identity-provider.mifos.io
   annotations:
     kubernetes.io/ingress.class: azure/application-gateway
-    appgw.ingress.kubernetes.io/backend-path-prefix: /oauth/token_key
 spec:
   rules:
     - host: identity-provider.mifos.io
