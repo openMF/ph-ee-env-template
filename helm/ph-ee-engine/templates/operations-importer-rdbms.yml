@@ -21,6 +21,16 @@ spec:
           image: paymenthubee.azurecr.io/phee/importer-rdbms
           ports:
             - containerPort: 8000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_operations.SPRING_PROFILES_ACTIVE }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
 
 ---
 kind: Service
@@ -49,4 +59,4 @@ spec:
           - backend:
               serviceName: ph-ee-importer-rdbms
               servicePort: 8000
-{{- end }}
+  {{- end }}

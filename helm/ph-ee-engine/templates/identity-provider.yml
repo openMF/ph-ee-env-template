@@ -34,10 +34,6 @@ spec:
               value: "mifos"
             - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
               value: "password"
-            - name: "SECURITY_OAUTH2_RESOURCE_JWT_KEY-URI"
-              value: "http://identity-provider.mifos.io/oauth/token_key"
-            - name: "REST_AUTHORIZATION_ENABLED"
-              value: "true"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_identity_provider.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
