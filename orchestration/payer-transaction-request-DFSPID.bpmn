@@ -68,7 +68,7 @@
       <bpmn:incoming>SequenceFlow_1tycp8s</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1x48wlr</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1daeyhw" default="SequenceFlow_12kk2x4">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1daeyhw" default="SequenceFlow_1x0uf57">
       <bpmn:incoming>SequenceFlow_0bxjqxn</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_11uzipj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_12kk2x4</bpmn:outgoing>
@@ -97,7 +97,7 @@
       <bpmn:incoming>SequenceFlow_0foazs5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1drvhkw</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:receiveTask id="ReceiveTask_1g9kb6e" name="Receive Payer decision">
+    <bpmn:receiveTask id="ReceiveTask_1g9kb6e" name="Receive Payer decision" messageRef="Message_0wci8ou">
       <bpmn:incoming>SequenceFlow_1drvhkw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0bxjqxn</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -177,13 +177,17 @@
     <bpmn:sequenceFlow id="SequenceFlow_1x48wlr" sourceRef="ServiceTask_04fegup" targetRef="ReceiveTask_1gbmisr" />
     <bpmn:sequenceFlow id="SequenceFlow_0bxjqxn" sourceRef="ReceiveTask_1g9kb6e" targetRef="ExclusiveGateway_1daeyhw" />
     <bpmn:sequenceFlow id="SequenceFlow_11uzipj" sourceRef="ServiceTask_03we602" targetRef="ExclusiveGateway_1daeyhw" />
-    <bpmn:sequenceFlow id="SequenceFlow_12kk2x4" sourceRef="ExclusiveGateway_1daeyhw" targetRef="ServiceTask_02435tk" />
+    <bpmn:sequenceFlow id="SequenceFlow_12kk2x4" sourceRef="ExclusiveGateway_1daeyhw" targetRef="ServiceTask_02435tk">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">payerConfirmed == true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1x0uf57" name="payer reject/validation failed?" sourceRef="ExclusiveGateway_1daeyhw" targetRef="ServiceTask_1vbng1r" />
     <bpmn:sequenceFlow id="SequenceFlow_1n7w31w" sourceRef="ReceiveTask_1gbmisr" targetRef="ServiceTask_03we602" />
     <bpmn:sequenceFlow id="SequenceFlow_0t1uw8e" sourceRef="ServiceTask_1vbng1r" targetRef="EndEvent_13ghooj" />
     <bpmn:sequenceFlow id="SequenceFlow_0foazs5" sourceRef="ExclusiveGateway_1rb1d7j" targetRef="ServiceTask_12u9dfy" />
     <bpmn:sequenceFlow id="SequenceFlow_1drvhkw" sourceRef="ServiceTask_12u9dfy" targetRef="ReceiveTask_1g9kb6e" />
-    <bpmn:sequenceFlow id="SequenceFlow_0y5jjvn" name="authorisation required?" sourceRef="ExclusiveGateway_1rb1d7j" targetRef="ServiceTask_194r2gw" />
+    <bpmn:sequenceFlow id="SequenceFlow_0y5jjvn" name="authorisation required?" sourceRef="ExclusiveGateway_1rb1d7j" targetRef="ServiceTask_194r2gw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">isAuthorisationRequired == true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1eqt91u" sourceRef="BoundaryEvent_1cjr0jr" targetRef="ExclusiveGateway_07zukps" />
     <bpmn:sequenceFlow id="SequenceFlow_0t895dl" sourceRef="ExclusiveGateway_07zukps" targetRef="ServiceTask_018p4tx" />
     <bpmn:sequenceFlow id="SequenceFlow_0q5pn1h" sourceRef="ServiceTask_018p4tx" targetRef="EndEvent_03gd2xu" />
@@ -201,6 +205,11 @@
     <bpmn:association id="Association_0hst7bb" sourceRef="ServiceTask_03we602" targetRef="TextAnnotation_0uup8gt" />
     <bpmn:association id="Association_0mhb44y" sourceRef="ServiceTask_194r2gw" targetRef="TextAnnotation_01r8qk8" />
   </bpmn:process>
+  <bpmn:message id="Message_0wci8ou" name="accept-quote">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="transactionId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0kilxw6">
       <bpmndi:BPMNShape id="ServiceTask_14a3za6_di" bpmnElement="ServiceTask_14a3za6" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
