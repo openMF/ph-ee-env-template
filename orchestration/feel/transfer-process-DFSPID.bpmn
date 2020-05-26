@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" exporter="Zeebe Modeler" exporterVersion="0.8.0" expressionLanguage="http://www.w3.org/1999/XPath" id="Definitions_05llr1y" targetNamespace="http://bpmn.io/schema/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <bpmn:process id="transfer-process-DFSPID" isClosed="false" isExecutable="true" processType="None">
-    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_0vs4dff" implementation="##WebService" instantiate="false" isForCompensation="false" name="Transfer Response" startQuantity="1">
+    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_0vs4dff" implementation="##WebService" instantiate="false" isForCompensation="false" messageRef="Message_1a12uqz" name="Transfer Response" startQuantity="1">
       <bpmn:incoming>SequenceFlow_1pha5ve</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0b3ulz9</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -76,7 +76,7 @@
       <bpmn:outgoing>SequenceFlow_1q2vgfi</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1yhv4ai</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_0lw9umx" implementation="##WebService" instantiate="false" isForCompensation="false" name="Receive operator decision" startQuantity="1">
+    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_0lw9umx" implementation="##WebService" instantiate="false" isForCompensation="false" messageRef="Message_0ylf8y2" name="Receive operator decision" startQuantity="1">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator"/>
       </bpmn:extensionElements>
@@ -136,14 +136,14 @@
       <bpmn:incoming>SequenceFlow_08elqto</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_09sbyb5</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_1juqudv" implementation="##WebService" instantiate="false" isForCompensation="false" name="Receive operator decision" startQuantity="1">
+    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_1juqudv" implementation="##WebService" instantiate="false" isForCompensation="false" messageRef="Message_0ylf8y2" name="Receive operator decision" startQuantity="1">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator"/>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_08yrb7l</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ute92m</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_0b5tqli" implementation="##WebService" instantiate="false" isForCompensation="false" name="Receive operator decision" startQuantity="1">
+    <bpmn:receiveTask completionQuantity="1" id="ReceiveTask_0b5tqli" implementation="##WebService" instantiate="false" isForCompensation="false" messageRef="Message_0ylf8y2" name="Receive operator decision" startQuantity="1">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator"/>
       </bpmn:extensionElements>
@@ -266,6 +266,16 @@
   <bpmn:category id="Category_02k8bsh">
     <bpmn:categoryValue id="CategoryValue_1vw9qlx" value="AMS"/>
   </bpmn:category>
+  <bpmn:message id="Message_0ylf8y2" name="operator-manual-recovery">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=transactionId"/>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1a12uqz" name="transfer-response">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=transactionId"/>
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane bpmnElement="transfer-process-DFSPID" id="BPMNPlane_1">
       <bpmndi:BPMNShape bioc:fill="white" bioc:stroke="black" bpmnElement="Group_0nx9nfp" id="Group_0nx9nfp_di">
