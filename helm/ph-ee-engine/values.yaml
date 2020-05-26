@@ -21,10 +21,12 @@ zeebe-cluster:
       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
         value: "4"
   
-  # zeebe's ES and Kibana
+  # zeebe's dependencies
   elasticsearch:
     enabled: false
   kibana:
+    enabled: false
+  prometheus:
     enabled: false
   
 # payment hub Operate, ES and Kibana
