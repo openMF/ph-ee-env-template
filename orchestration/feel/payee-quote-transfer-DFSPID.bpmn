@@ -134,6 +134,10 @@
     <bpmn:group categoryValueRef="CategoryValue_0w9xkzi" id="Group_01nfdcs"/>
     <bpmn:group categoryValueRef="CategoryValue_0lkuc6h" id="Group_11tiusk"/>
     <bpmn:group categoryValueRef="CategoryValue_0jo1phc" id="Group_0e3pj6m"/>
+    <bpmn:textAnnotation id="TextAnnotation_1em9p4j" textFormat="text/plain">
+      <bpmn:text>add timeout dynamically for transfer and rtp?</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association associationDirection="None" id="Association_1mwaz38" sourceRef="IntermediateCatchEvent_Timer" targetRef="TextAnnotation_1em9p4j"/>
   </bpmn:process>
   <bpmn:message id="Message_1jb7o1y" name="TransferMessage-DFSPID">
     <bpmn:extensionElements>
@@ -386,6 +390,13 @@
         <di:waypoint x="1260" y="270"/>
         <di:waypoint x="1330" y="270"/>
         <di:waypoint x="1330" y="155"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="TextAnnotation_1em9p4j" id="TextAnnotation_1em9p4j_di">
+        <dc:Bounds height="68" width="100" x="690" y="700"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="Association_1mwaz38" id="Association_1mwaz38_di">
+        <di:waypoint x="740" y="618"/>
+        <di:waypoint x="740" y="700"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

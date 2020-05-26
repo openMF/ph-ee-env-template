@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" exporter="Zeebe Modeler" exporterVersion="0.8.0" expressionLanguage="http://www.w3.org/1999/XPath" id="Definitions_0p96e5j" targetNamespace="http://bpmn.io/schema/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <bpmn:process id="PayeePartyLookup-DFSPID" isClosed="false" isExecutable="true" name="PayeePartyLookup-DFSPID" processType="None">
-    <bpmn:startEvent id="StartEvent_PayeeLookup" isInterrupting="true" name="User Lookup request" parallelMultiple="false">
+    <bpmn:startEvent id="StartEvent_PayeeLookup" isInterrupting="true" name="Party Lookup request" parallelMultiple="false">
       <bpmn:outgoing>SequenceFlow_1jawp7n</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1jawp7n" sourceRef="StartEvent_PayeeLookup" targetRef="Task_PartyLookup"/>
     <bpmn:serviceTask completionQuantity="1" id="Task_PartyLookup" implementation="##WebService" isForCompensation="false" name="Party ID lookup and&#10;Validate account" startQuantity="1">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="payee-party-lookup-DFSPID"/>
+        <zeebe:taskDefinition type="party-lookup-local-DFSPID"/>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1jawp7n</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0vk18w4</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask completionQuantity="1" id="Task_LookupResp2Moja" implementation="##WebService" isForCompensation="false" name="Send Party Lookup response" startQuantity="1">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="payee-party-lookup-response-DFSPID"/>
+        <zeebe:taskDefinition type="party-lookup-local-response-DFSPID"/>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0vk18w4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1cpr2t7</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="EndEvent_Success_PayeeLokup" name="User Lookup response">
+    <bpmn:endEvent id="EndEvent_Success_PayeeLokup" name="Party Lookup response">
       <bpmn:incoming>SequenceFlow_1cpr2t7</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1cpr2t7" sourceRef="Task_LookupResp2Moja" targetRef="EndEvent_Success_PayeeLokup"/>
@@ -39,7 +39,7 @@
       <bpmndi:BPMNShape bioc:fill="rgb(200, 230, 201)" bioc:stroke="rgb(67, 160, 71)" bpmnElement="StartEvent_PayeeLookup" id="_BPMNShape_StartEvent_2">
         <dc:Bounds height="36" width="36" x="192" y="102"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="27" width="63" x="180" y="145"/>
+          <dc:Bounds height="27" width="66" x="179" y="145"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1jawp7n" id="SequenceFlow_1jawp7n_di">
@@ -55,7 +55,7 @@
       <bpmndi:BPMNShape bioc:fill="rgb(200, 230, 201)" bioc:stroke="rgb(67, 160, 71)" bpmnElement="EndEvent_Success_PayeeLokup" id="EndEvent_16lkx2s_di">
         <dc:Bounds height="36" width="36" x="612" y="102"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="27" width="63" x="600" y="145"/>
+          <dc:Bounds height="27" width="66" x="599" y="145"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1cpr2t7" id="SequenceFlow_1cpr2t7_di">
