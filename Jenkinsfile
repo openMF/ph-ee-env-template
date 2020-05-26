@@ -13,7 +13,7 @@ cd -
 helm package ph-ee-engine
 helm repo index .
 
-cp index.yaml ph-ee-engine-1.0.0-SNAPSHOT.tgz jenkins.mifos.io:/srv/data/helm-charts/
+cp index.yaml ph-ee-engine-1.0.0-SNAPSHOT.tgz /srv/data/helm-charts/
 '''
             }
         }
