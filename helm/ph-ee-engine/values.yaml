@@ -20,7 +20,7 @@ zeebe-cluster:
     env:
       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
         value: "4"
-  
+
   # zeebe's dependencies
   elasticsearch:
     enabled: false
@@ -28,7 +28,22 @@ zeebe-cluster:
     enabled: false
   prometheus:
     enabled: false
-  
+
+  extraInitContainers: |
+    - name: init-ph-ee-kafka-exporter
+      image: busybox:1.28
+      command: ['/bin/sh', '-c']
+      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/service/rest/v1/search/assets/download?maven.groupId=hu.dpc.phee&maven.artifactId=exporter&maven.baseVersion=1.0.0-SNAPSHOT&sort=latest"; ls -al /exporters/']
+      volumeMounts:
+      - name: exporters
+        mountPath: /exporters/
+
+#  zeebeCfg: |
+#    exporters:
+#      - id: ph-ee-kafka-exporter
+#        jarPath: /exporters/ph-ee-kafka-exporter.jar
+#        className: hu.dpc.rt.kafkastreamer.exporter.KafkaExporter
+
 # payment hub Operate, ES and Kibana
 zeebe-operate:
   enabled: false
@@ -39,12 +54,12 @@ elasticsearch:
   imageTag: 6.8.5
   replicas: 1
   minimumMasterNodes: 1
-  
+
 kibana:
   enabled: false
   imageTag: 6.8.5
   fullnameOverride: "ph-ee-kibana"
-  
+
 operations:
   enabled: true
 

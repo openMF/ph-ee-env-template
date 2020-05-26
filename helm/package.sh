@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ph-ee-engine
-rm charts/*
+#rm charts/*
 helm dep up
 cd -
 
