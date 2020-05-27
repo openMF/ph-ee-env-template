@@ -1,10 +1,13 @@
-global:
-  zeebe: "ph-ee-zeebe"
-  elasticsearch: # used by operate
-    host: ph-ee-elasticsearch-master
-    clusterName: elasticsearch
 
 zeebe-cluster:
+  global:
+    zeebe: "zeebe-zeebe"
+    elasticsearch:
+      host: "zeebe-elasticsearch"
+
+  image:
+    repository: paymenthubee.azurecr.io/phee/zeebe
+    tag: 0.23.1-kafkaclient
   clusterSize: "1"
   partitionCount: "1"
   replicationFactor: "1"
@@ -13,6 +16,10 @@ zeebe-cluster:
   pvcSize: "10Gi"
   pvcAccessModes: [ "ReadWriteOnce" ]
   env:
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
+      value: /exporters/ph-ee-kafka-exporter.jar
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
+      value: hu.dpc.rt.kafkastreamer.exporter.KafkaExporter
 
   gateway:
     replicas: 1
@@ -24,8 +31,14 @@ zeebe-cluster:
   # zeebe's dependencies
   elasticsearch:
     enabled: false
+    fullnameOverride: "zeebe-elasticsearch"
+    clusterName: "zeebe-elasticsearch"
+
   kibana:
     enabled: false
+    fullnameOverride: "zeebee-kibana"
+    elasticsearchHosts: "http://zeebe-elasticsearch:9200/"
+
   prometheus:
     enabled: false
 
@@ -33,32 +46,34 @@ zeebe-cluster:
     - name: init-ph-ee-kafka-exporter
       image: busybox:1.28
       command: ['/bin/sh', '-c']
-      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/service/rest/v1/search/assets/download?maven.groupId=hu.dpc.phee&maven.artifactId=exporter&maven.baseVersion=1.0.0-SNAPSHOT&sort=latest"; ls -al /exporters/']
+      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/hu/dpc/phee/exporter/1.0.0-SNAPSHOT/exporter-1.0.0-20200527.134202-7.jar"; ls -al /exporters/']
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
 
-#  zeebeCfg: |
-#    exporters:
-#      - id: ph-ee-kafka-exporter
-#        jarPath: /exporters/ph-ee-kafka-exporter.jar
-#        className: hu.dpc.rt.kafkastreamer.exporter.KafkaExporter
-
 # payment hub Operate, ES and Kibana
 zeebe-operate:
   enabled: false
-  fullnameOverride: "ph-ee-zeebe-operate"
+  fullnameOverride: "zeebe-operate"
+  global:
+    elasticsearch:
+      host: "ph-ee-elasticsearch"
+      clusterName: "ph-ee-elasticsearch"
+
 
 elasticsearch:
   enabled: false
   imageTag: 6.8.5
   replicas: 1
+  fullnameOverride: "ph-ee-elasticsearch"
+  clusterName: "ph-ee-elasticsearch"
   minimumMasterNodes: 1
 
 kibana:
   enabled: false
   imageTag: 6.8.5
   fullnameOverride: "ph-ee-kibana"
+  elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
 
 operations:
   enabled: true
