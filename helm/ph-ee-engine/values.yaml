@@ -37,7 +37,7 @@ zeebe-cluster:
   kibana:
     enabled: false
     fullnameOverride: "zeebee-kibana"
-    elasticsearchHosts: "http://zeebe-elasticsearch:9200/"
+    elasticsearchHosts: "http://zeebe-elasticsearch-master:9200/"
 
   prometheus:
     enabled: false
