@@ -69,7 +69,7 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="ServiceTask_12u9dfy" name="Requesting Confirmation from Payer" implementation="##WebService">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="payer-request-confirm" />
+        <zeebe:taskDefinition type="payer-request-confirm-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0foazs5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1drvhkw</bpmn:outgoing>
