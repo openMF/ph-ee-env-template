@@ -20,7 +20,7 @@
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="ServiceTask_09m92gq" name="Local Quote" implementation="##WebService">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="payer-local-quote" />
+        <zeebe:taskDefinition type="payer-local-quote-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_02phkif</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1xq7wiz</bpmn:outgoing>
