@@ -19,9 +19,4 @@ dependencies:
   repository: "https://kubernetes-charts.storage.googleapis.com"
   alias: operationsMysql
   condition: "operations.enabled"
-- name: mysql
-  version: 1.6.2
-  repository: "https://kubernetes-charts.storage.googleapis.com"
-  alias: identityMysql
-  condition: "operations.enabled"
 
