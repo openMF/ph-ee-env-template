@@ -60,8 +60,8 @@ zeebe-operate:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
-      host: "ph-ee-elasticsearch"
-      clusterName: "ph-ee-elasticsearch"
+      host: "zeebe-elasticsearch"
+      clusterName: "zeebe-elasticsearch"
 
 
 elasticsearch:
