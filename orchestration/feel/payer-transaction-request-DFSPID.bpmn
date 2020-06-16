@@ -182,7 +182,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_16x0c56" sourceRef="Task_0b3cvdl" targetRef="Task_0qdkmrc" />
     <bpmn:callActivity id="Task_0qdkmrc" name="transfer process">
       <bpmn:extensionElements>
-        <zeebe:calledElement processId="transfer-process-DFSPID" />
+        <zeebe:calledElement processId="transferProcess-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_16x0c56</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0w6dxoc</bpmn:outgoing>
