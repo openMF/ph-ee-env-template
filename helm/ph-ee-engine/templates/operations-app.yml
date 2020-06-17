@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-operations-app
-          image: paymenthubee.azurecr.io/phee/identity-provider
+          image: paymenthubee.azurecr.io/phee/operations-app
           ports:
             - containerPort: 5000
           readinessProbe:
@@ -34,7 +34,7 @@ spec:
             - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
               value: "password"
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_identity_provider.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.ph_ee_operations_app.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -71,7 +71,7 @@ metadata:
     kubernetes.io/ingress.class: azure/application-gateway
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_identity_provider.hostname }}"
+    - host: "{{ .Values.ph_ee_operations_app.hostname }}"
       http:
         paths:
           - backend:
