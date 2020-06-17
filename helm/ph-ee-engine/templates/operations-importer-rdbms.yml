@@ -32,31 +32,4 @@ spec:
           configMap:
             name: ph-ee-config
 
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: ph-ee-importer-rdbms
-spec:
-  selector:
-    app: ph-ee-importer-rdbms
-  ports:
-    - protocol: TCP
-      port: 8000
-
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: ph-ee-operations
-  annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
-spec:
-  rules:
-    - host: "{{ .Values.ph_ee_operations.hostname }}"
-      http:
-        paths:
-          - backend:
-              serviceName: ph-ee-importer-rdbms
-              servicePort: 8000
-  {{- end }}
+{{- end }}
