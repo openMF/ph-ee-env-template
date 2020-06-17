@@ -15,6 +15,11 @@ zeebe-cluster:
   ioThreadCount: "2"
   pvcSize: "10Gi"
   pvcAccessModes: [ "ReadWriteOnce" ]
+
+  resources:
+    requests:
+      cpu: 100m
+
   env:
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
       value: /exporters/ph-ee-kafka-exporter.jar
