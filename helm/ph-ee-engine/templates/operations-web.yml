@@ -37,7 +37,7 @@ data:
     oauth.enabled true
     oauth.basicAuth true
     oauth.basicAuthToken Y2xpZW50Og==
-    oauth.serverUrl http://{{ .Values.ph_ee_operations_app.hostname }}
+    oauth.serverUrl http://{{ .Values.ph_ee_identity.hostname }}
     serverUrl http://{{ .Values.ph_ee_operations.hostname }}
 kind: ConfigMap
 metadata:
