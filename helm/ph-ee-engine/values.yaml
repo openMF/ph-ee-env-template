@@ -7,7 +7,7 @@ zeebe-cluster:
 
   image:
     repository: paymenthubee.azurecr.io/phee/zeebe
-    tag: 0.23.2-kafkaclient
+    tag: 0.23.3-kafkaclient
   clusterSize: "1"
   partitionCount: "1"
   replicationFactor: "1"

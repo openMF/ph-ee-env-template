@@ -1,7 +1,7 @@
 dependencies:
 - name: zeebe-cluster
   repository: https://helm.zeebe.io
-  version: 0.0.102
+  version: 0.0.122
 - name: zeebe-operate
   repository: https://helm.zeebe.io
   version: 0.0.22
@@ -14,5 +14,5 @@ dependencies:
 - name: mysql
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.6.2
-digest: sha256:d9282a7d0b64748bcd1a545e0f32840a3b8b70d788ecb8aa4e198fb2e18f1620
-generated: "2020-06-12T11:29:01.135032526+02:00"
+digest: sha256:1b16459fb494d8810369a764d8d28367fcf5181915cdff07763c22be0c414cc3
+generated: "2020-06-17T17:41:12.498046106+02:00"
