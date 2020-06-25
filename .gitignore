@@ -2,5 +2,5 @@ charts/
 helm/*.tgz
 helm/index.yaml
 
-
+*.iml
 **/*.lock

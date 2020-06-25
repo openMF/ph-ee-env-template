@@ -26,7 +26,7 @@ zeebe-cluster:
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
       value: hu.dpc.rt.kafkastreamer.exporter.KafkaExporter
     - name: ZEEBE_BROKER_GATEWAY_ENABLE
-      value: "true"
+      value: "false"
 
   gateway:
     replicas: 0
