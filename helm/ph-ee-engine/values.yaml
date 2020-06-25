@@ -3,7 +3,7 @@ zeebe-cluster:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
-      host: "zeebe-elasticsearch"
+      host: "zeebe-elasticsearch-master"
 
   image:
     repository: paymenthubee.azurecr.io/phee/zeebe
@@ -38,8 +38,8 @@ zeebe-cluster:
   # zeebe's dependencies
   elasticsearch:
     enabled: false
-    fullnameOverride: "zeebe-elasticsearch"
-    clusterName: "zeebe-elasticsearch"
+    fullnameOverride: "zeebe-elasticsearch-master"
+    clusterName: "zeebe-elasticsearch-master"
 
   kibana:
     enabled: false
@@ -65,8 +65,8 @@ zeebe-operate:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
-      host: "zeebe-elasticsearch"
-      clusterName: "zeebe-elasticsearch"
+      host: "zeebe-elasticsearch-master"
+      clusterName: "zeebe-elasticsearch-master"
 
 
 elasticsearch:
