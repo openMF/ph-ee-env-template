@@ -38,8 +38,8 @@ zeebe-cluster:
   # zeebe's dependencies
   elasticsearch:
     enabled: false
-    fullnameOverride: "zeebe-elasticsearch-master"
-    clusterName: "zeebe-elasticsearch-master"
+    fullnameOverride: "zeebe-elasticsearch"
+    clusterName: "zeebe-elasticsearch"
 
   kibana:
     enabled: false
