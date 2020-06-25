@@ -3,7 +3,7 @@ zeebe-cluster:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
-      host: "zeebe-elasticsearch-master"
+      host: "zeebe-elasticsearch"
 
   image:
     repository: paymenthubee.azurecr.io/phee/zeebe
@@ -65,8 +65,8 @@ zeebe-operate:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
-      host: "zeebe-elasticsearch-master"
-      clusterName: "zeebe-elasticsearch-master"
+      host: "zeebe-elasticsearch"
+      clusterName: "zeebe-elasticsearch"
 
 
 elasticsearch:
