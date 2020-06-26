@@ -6,9 +6,10 @@ pipeline {
                sh '''
 cd helm/
 cd ph-ee-engine
-rm charts/*
+rm -f Chart.lock requirements.lock charts/*
 helm dep up
 cd -
+rm -f ph-ee-engine-1.0.0-SNAPSHOT.tgz
 
 helm package ph-ee-engine
 helm repo index .
