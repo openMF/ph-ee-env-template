@@ -25,11 +25,9 @@ zeebe-cluster:
       value: /exporters/ph-ee-kafka-exporter.jar
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
       value: hu.dpc.rt.kafkastreamer.exporter.KafkaExporter
-    - name: ZEEBE_BROKER_GATEWAY_ENABLE
-      value: "true"
 
   gateway:
-    replicas: 0
+    replicas: 1
     logLevel: warn
     env:
       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
