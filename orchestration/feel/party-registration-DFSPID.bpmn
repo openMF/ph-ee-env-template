@@ -20,10 +20,10 @@
       <bpmn:outgoing>SequenceFlow_13043ai</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_1x1l5ms" name="Party registration end">
-      <bpmn:incoming>SequenceFlow_1is80vv</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0a5fuor</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_13043ai" sourceRef="Task_1vp1z0l" targetRef="ExclusiveGateway_1f6zzy7" />
-    <bpmn:sequenceFlow id="SequenceFlow_1is80vv" sourceRef="Task_1w1k0fk" targetRef="EndEvent_1x1l5ms" />
+    <bpmn:sequenceFlow id="SequenceFlow_1is80vv" sourceRef="Task_1w1k0fk" targetRef="ServiceTask_180lqp3" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1f6zzy7" default="SequenceFlow_0sdmgw0">
       <bpmn:incoming>SequenceFlow_13043ai</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0sdmgw0</bpmn:outgoing>
@@ -44,9 +44,18 @@
       <bpmn:incoming>SequenceFlow_0errykb</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0errykb" sourceRef="Task_0coo8cr" targetRef="EndEvent_0mdcndj" />
+    <bpmn:serviceTask id="ServiceTask_180lqp3" name="Send success To Channel">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-success-to-channel" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1is80vv</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0a5fuor</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0a5fuor" sourceRef="ServiceTask_180lqp3" targetRef="EndEvent_1x1l5ms" />
     <bpmn:group id="Group_08ncic6" categoryValueRef="CategoryValue_1br804o" />
     <bpmn:group id="Group_08le3d8" categoryValueRef="CategoryValue_1qak4pu" />
     <bpmn:group id="Group_1wb0wgg" categoryValueRef="CategoryValue_1farcu4" />
+    <bpmn:group id="Group_00oeuvr" categoryValueRef="CategoryValue_1dr7y9h" />
   </bpmn:process>
   <bpmn:category id="Category_1sym00a">
     <bpmn:categoryValue id="CategoryValue_1br804o" value="AMS" />
@@ -56,6 +65,9 @@
   </bpmn:category>
   <bpmn:category id="Category_1oha9dr">
     <bpmn:categoryValue id="CategoryValue_1farcu4" value="Channel" />
+  </bpmn:category>
+  <bpmn:category id="Category_1j71wl7">
+    <bpmn:categoryValue id="CategoryValue_1dr7y9h" value="Channel" />
   </bpmn:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PartyRegistration-DFSPID">
@@ -76,9 +88,9 @@
         <dc:Bounds x="300" y="237" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1x1l5ms_di" bpmnElement="EndEvent_1x1l5ms">
-        <dc:Bounds x="722" y="259" width="36" height="36" />
+        <dc:Bounds x="862" y="259" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="699" y="302" width="84" height="27" />
+          <dc:Bounds x="839" y="302" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_08ncic6_di" bpmnElement="Group_08ncic6">
@@ -99,7 +111,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1is80vv_di" bpmnElement="SequenceFlow_1is80vv">
         <di:waypoint x="660" y="277" />
-        <di:waypoint x="722" y="277" />
+        <di:waypoint x="710" y="277" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_1f6zzy7_di" bpmnElement="ExclusiveGateway_1f6zzy7" isMarkerVisible="true">
         <dc:Bounds x="455" y="252" width="50" height="50" />
@@ -132,6 +144,19 @@
         <di:waypoint x="660" y="140" />
         <di:waypoint x="722" y="140" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_180lqp3_di" bpmnElement="ServiceTask_180lqp3" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+        <dc:Bounds x="710" y="237" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0a5fuor_di" bpmnElement="SequenceFlow_0a5fuor">
+        <di:waypoint x="810" y="277" />
+        <di:waypoint x="862" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_00oeuvr_di" bpmnElement="Group_00oeuvr">
+        <dc:Bounds x="695" y="216" width="131" height="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="702" y="223" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
