@@ -31,7 +31,7 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0sdmgw0" sourceRef="ExclusiveGateway_1f6zzy7" targetRef="Task_1w1k0fk" />
     <bpmn:sequenceFlow id="SequenceFlow_10m9u5m" sourceRef="ExclusiveGateway_1f6zzy7" targetRef="Task_0coo8cr">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=errorInformation != null</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=interopRegistrationFailed = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Task_0coo8cr" name="Send Error Event To Channel">
       <bpmn:extensionElements>
