@@ -47,3 +47,21 @@ spec:
         - backend:
             serviceName: ph-ee-connector-channel
             servicePort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-channel
+  name: ph-ee-connector-channel
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-channel
+  sessionAffinity: None
+  type: ClusterIP
