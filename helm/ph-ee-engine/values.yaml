@@ -22,15 +22,15 @@ zeebe-cluster:
 
   env:
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
-      value: /exporters/ph-ee-kafka-exporter.jar
+      value: "/exporters/ph-ee-kafka-exporter.jar"
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
-      value: hu.dpc.rt.kafkastreamer.exporter.KafkaExporter
+      value: "hu.dpc.rt.kafkastreamer.exporter.KafkaExporter"
     - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_INITIALLIMIT
-      value: 1000
+      value: "1000"
     - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_ALPHA
-      value: 2
+      value: "2"
     - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_BETA
-      value: 8
+      value: "8"
 
   gateway:
     replicas: 1
