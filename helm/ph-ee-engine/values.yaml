@@ -57,7 +57,7 @@ zeebe-cluster:
     - name: init-ph-ee-kafka-exporter
       image: busybox:1.28
       command: ['/bin/sh', '-c']
-      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/hu/dpc/phee/exporter/1.0.0-SNAPSHOT/exporter-1.0.0-20200527.134202-7.jar"; ls -al /exporters/']
+      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/hu/dpc/phee/exporter/1.0.0-SNAPSHOT/exporter-1.0.0-20200812.142323-10.jar"; ls -al /exporters/']
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
