@@ -154,18 +154,13 @@
       <bpmn:outgoing>SequenceFlow_1n9vz7k</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:endEvent id="EndEvent_1grilxs" name="Special Termination">
-      <bpmn:incoming>SequenceFlow_0ag3elo</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0vwctf9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0vwctf9" sourceRef="ExclusiveGateway_1crdrlu" targetRef="Task_DoNothing">
+    <bpmn:sequenceFlow id="SequenceFlow_0vwctf9" sourceRef="ExclusiveGateway_1crdrlu" targetRef="EndEvent_1grilxs">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=specialTermination = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1n9vz7k" sourceRef="ExclusiveGateway_1crdrlu" targetRef="Task_PayeeLookup" />
     <bpmn:sequenceFlow id="SequenceFlow_0r3ndmt" sourceRef="Task_PayeeLookup" targetRef="ReceiveTask_PayeeLookupResp" />
-    <bpmn:task id="Task_DoNothing" name="Do Nothing Task">
-      <bpmn:incoming>SequenceFlow_0vwctf9</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0ag3elo</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_0ag3elo" sourceRef="Task_DoNothing" targetRef="EndEvent_1grilxs" />
     <bpmn:group id="Group_0nlgr8s" categoryValueRef="CategoryValue_0v7ri8k" />
     <bpmn:group id="Group_173at5u" categoryValueRef="CategoryValue_0ptkm7b" />
     <bpmn:group id="Group_1dpom11" categoryValueRef="CategoryValue_1pzrnws" />
@@ -447,7 +442,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0vwctf9_di" bpmnElement="SequenceFlow_0vwctf9">
         <di:waypoint x="260" y="315" />
-        <di:waypoint x="260" y="370" />
+        <di:waypoint x="260" y="482" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="458" y="392" width="71" height="14" />
         </bpmndi:BPMNLabel>
@@ -459,13 +454,6 @@
       <bpmndi:BPMNEdge id="SequenceFlow_0r3ndmt_di" bpmnElement="SequenceFlow_0r3ndmt">
         <di:waypoint x="460" y="290" />
         <di:waypoint x="490" y="290" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1oytnaz_di" bpmnElement="Task_DoNothing">
-        <dc:Bounds x="210" y="370" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ag3elo_di" bpmnElement="SequenceFlow_0ag3elo">
-        <di:waypoint x="260" y="450" />
-        <di:waypoint x="260" y="482" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
