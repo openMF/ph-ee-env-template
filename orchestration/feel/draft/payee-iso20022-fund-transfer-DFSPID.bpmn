@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_12z3juy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.8.0">
-  <bpmn:process id="Process_0u0exai" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_12z3juy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.8.0">
+  <bpmn:process id="iso20022-fund-transfer" name="=operatorStop = true" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_1ujj7bf</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1ujj7bf" sourceRef="StartEvent_1" targetRef="Task_0f39y6h" />
     <bpmn:serviceTask id="Task_0f39y6h" name="Check Availability Of Target Account">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="check-target-account" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1ujj7bf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1uur72v</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_1uur72v" sourceRef="Task_0f39y6h" targetRef="Task_1ykf2kf" />
     <bpmn:serviceTask id="Task_1ykf2kf" name="Send Response to Scheme">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-response" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1u2a2b3</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1uur72v</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1g75hpz</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_1g75hpz" sourceRef="Task_1ykf2kf" targetRef="Task_0u35776" />
-    <bpmn:receiveTask id="Task_0u35776" name="Waiting for Final Confirmation">
+    <bpmn:receiveTask id="Task_0u35776" name="Waiting for Final Confirmation" messageRef="Message_15c5ag1">
       <bpmn:incoming>SequenceFlow_1g75hpz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11umrph</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0ij3bky" name="Settlement Successful?">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0ij3bky" name="Settlement Successful?" default="SequenceFlow_1t0fplh">
       <bpmn:incoming>SequenceFlow_11umrph</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1t0fplh</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1lozpuf</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_11umrph" sourceRef="Task_0u35776" targetRef="ExclusiveGateway_0ij3bky" />
-    <bpmn:task id="Task_1ncsvee" name="Book Transferred Amount to AMS">
-      <bpmn:incoming>SequenceFlow_1t0fplh</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_0jubcs1</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_19c5mv1</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_1t0fplh" sourceRef="ExclusiveGateway_0ij3bky" targetRef="Task_1ncsvee" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_05dv342" name="Forwarding To Mojaloop Required?" default="SequenceFlow_1kfsrrq">
       <bpmn:incoming>SequenceFlow_1cxw3ik</bpmn:incoming>
@@ -40,35 +41,50 @@
     <bpmn:sequenceFlow id="SequenceFlow_19c5mv1" sourceRef="Task_1ncsvee" targetRef="ExclusiveGateway_1co4ewn" />
     <bpmn:boundaryEvent id="IntermediateThrowEvent_0d430uo" cancelActivity="false" attachedToRef="Task_0u35776">
       <bpmn:outgoing>SequenceFlow_0ligfjf</bpmn:outgoing>
-      <bpmn:timerEventDefinition />
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0axmkwt">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0axmkwt" default="SequenceFlow_10fbgld">
       <bpmn:incoming>SequenceFlow_0ligfjf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1u2a2b3</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_10fbgld</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0ligfjf" name="no response yet" sourceRef="IntermediateThrowEvent_0d430uo" targetRef="ExclusiveGateway_0axmkwt" />
-    <bpmn:sequenceFlow id="SequenceFlow_1u2a2b3" name="retry count &#60; n" sourceRef="ExclusiveGateway_0axmkwt" targetRef="Task_1ykf2kf" />
+    <bpmn:sequenceFlow id="SequenceFlow_1u2a2b3" name="retry count &#60; n" sourceRef="ExclusiveGateway_0axmkwt" targetRef="Task_1ykf2kf">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=sendResponseRetryCount &lt; 3</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_10fbgld" sourceRef="ExclusiveGateway_0axmkwt" targetRef="Task_13yv2km" />
     <bpmn:endEvent id="EndEvent_0wutwnb">
       <bpmn:incoming>SequenceFlow_0wgm093</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0wgm093" sourceRef="Task_13yv2km" targetRef="EndEvent_0wutwnb" />
     <bpmn:serviceTask id="Task_13yv2km" name="Notify Operator of Incomplete Transaction">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="notify-operator" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_10fbgld</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0wgm093</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_12qgsxa" name="yes" sourceRef="ExclusiveGateway_05dv342" targetRef="Task_0n0u3zz" />
+    <bpmn:sequenceFlow id="SequenceFlow_12qgsxa" name="yes" sourceRef="ExclusiveGateway_05dv342" targetRef="Task_0n0u3zz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=forwardMojaloop = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:endEvent id="EndEvent_15wn4uh">
       <bpmn:incoming>SequenceFlow_1kfsrrq</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1kfsrrq" name="no" sourceRef="ExclusiveGateway_05dv342" targetRef="EndEvent_15wn4uh" />
     <bpmn:callActivity id="Task_0n0u3zz" name="Initiate Mojaloop Transaction">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="mojaloopTransaction" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_12qgsxa</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nufa3t</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="SequenceFlow_0nufa3t" sourceRef="Task_0n0u3zz" targetRef="Task_0cbi251" />
     <bpmn:serviceTask id="Task_0cbi251" name="Notify Original Sender on Transfer Final Status">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-final-status" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0nufa3t</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gad0rf</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -79,27 +95,31 @@
     <bpmn:endEvent id="EndEvent_0zzbm51">
       <bpmn:incoming>SequenceFlow_1lozpuf</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1lozpuf" sourceRef="ExclusiveGateway_0ij3bky" targetRef="EndEvent_0zzbm51" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1co4ewn">
+    <bpmn:sequenceFlow id="SequenceFlow_1lozpuf" sourceRef="ExclusiveGateway_0ij3bky" targetRef="EndEvent_0zzbm51">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=settlementFailed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1co4ewn" name="AMS book success?" default="SequenceFlow_1cxw3ik">
       <bpmn:incoming>SequenceFlow_19c5mv1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1cxw3ik</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1rk0kts</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:receiveTask id="ReceiveTask_0f3mm4w" name="Receive operator decision" implementation="##WebService">
+    <bpmn:receiveTask id="ReceiveTask_0f3mm4w" name="Receive operator decision" implementation="##WebService" messageRef="Message_0sc77no">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1es78pe</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13i7ykb</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0t8wxbl">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0t8wxbl" default="SequenceFlow_0jubcs1">
       <bpmn:incoming>SequenceFlow_13i7ykb</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0jubcs1</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0ykpqal</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_13i7ykb" sourceRef="ReceiveTask_0f3mm4w" targetRef="ExclusiveGateway_0t8wxbl" />
     <bpmn:sequenceFlow id="SequenceFlow_1cxw3ik" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ExclusiveGateway_05dv342" />
-    <bpmn:sequenceFlow id="SequenceFlow_1rk0kts" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ServiceTask_07vjjqw" />
+    <bpmn:sequenceFlow id="SequenceFlow_1rk0kts" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ServiceTask_07vjjqw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=bookingFailed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:serviceTask id="ServiceTask_07vjjqw" name="Notify AMS Book failure" implementation="##WebService">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="notify-ams-failure" />
@@ -112,7 +132,17 @@
     <bpmn:endEvent id="EndEvent_174hsxf">
       <bpmn:incoming>SequenceFlow_0ykpqal</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0ykpqal" sourceRef="ExclusiveGateway_0t8wxbl" targetRef="EndEvent_174hsxf" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ykpqal" sourceRef="ExclusiveGateway_0t8wxbl" targetRef="EndEvent_174hsxf">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=operatorStop = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Task_1ncsvee" name="Book Transferred Amount to AMS">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="book-transferred" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1t0fplh</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0jubcs1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19c5mv1</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:group id="Group_1g2d79n" categoryValueRef="CategoryValue_0wooqsf" />
     <bpmn:group id="Group_0ilofwc" categoryValueRef="CategoryValue_11iy8nk" />
     <bpmn:group id="Group_1g10let" categoryValueRef="CategoryValue_11g2qus" />
@@ -134,8 +164,18 @@
   <bpmn:category id="Category_0cppr1s">
     <bpmn:categoryValue id="CategoryValue_0mkq43a" value="Mojaloop" />
   </bpmn:category>
+  <bpmn:message id="Message_15c5ag1" name="waiting-final-confirm">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=responseId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_0sc77no" name="receive-operator-decision">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=operatorDecisionId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0u0exai">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="iso20022-fund-transfer">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="159" y="229" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -170,9 +210,6 @@
         <di:waypoint x="680" y="247" />
         <di:waypoint x="745" y="247" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1ncsvee_di" bpmnElement="Task_1ncsvee" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
-        <dc:Bounds x="860" y="207" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1t0fplh_di" bpmnElement="SequenceFlow_1t0fplh">
         <di:waypoint x="795" y="247" />
         <di:waypoint x="860" y="247" />
@@ -285,6 +322,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_1co4ewn_di" bpmnElement="ExclusiveGateway_1co4ewn" isMarkerVisible="true">
         <dc:Bounds x="1012" y="222" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1011" y="192" width="52" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ReceiveTask_0f3mm4w_di" bpmnElement="ReceiveTask_0f3mm4w" bioc:stroke="black" bioc:fill="white">
         <dc:Bounds x="860" y="438" width="100" height="80" />
@@ -333,6 +373,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1199" y="190" width="45" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0vd5va0_di" bpmnElement="Task_1ncsvee" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
+        <dc:Bounds x="860" y="207" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
