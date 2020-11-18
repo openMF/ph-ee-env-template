@@ -16,6 +16,8 @@ spec:
       labels:
         app: ph-ee-importer-rdbms
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
         - name: ph-ee-importer-rdbms
           image: paymenthubee.azurecr.io/phee/importer-rdbms

@@ -16,6 +16,8 @@ spec:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
         - name: ph-ee-connector-ams-mifos
           image: paymenthubee.azurecr.io/phee/connector-ams-mifos

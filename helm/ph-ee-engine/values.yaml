@@ -7,7 +7,7 @@ zeebe-cluster:
 
   image:
     repository: paymenthubee.azurecr.io/phee/zeebe
-    tag: 0.24.2-kafkaclient
+    tag: 0.25.1-kafkaclient
   clusterSize: "1"
   partitionCount: "1"
   replicationFactor: "1"
@@ -25,6 +25,10 @@ zeebe-cluster:
       value: "false"
     - name: ZEEBE_BROKER_EXECUTION_METRICS_EXPORTER_ENABLED
       value: "true"
+    - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME
+      value: "hu.dpc.rt.kafkastreamer.exporter.NoOpExporter"
+    - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_JARPATH
+      value: "/exporters/ph-ee-kafka-exporter.jar"
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
       value: "/exporters/ph-ee-kafka-exporter.jar"
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
@@ -64,7 +68,7 @@ zeebe-cluster:
     - name: init-ph-ee-kafka-exporter
       image: busybox:1.28
       command: ['/bin/sh', '-c']
-      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/hu/dpc/phee/exporter/1.0.0-SNAPSHOT/exporter-1.0.0-20200812.142323-10.jar"; ls -al /exporters/']
+      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/hu/dpc/phee/exporter/1.0.0-SNAPSHOT/exporter-1.0.0-20200930.211933-11.jar"; ls -al /exporters/']
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
