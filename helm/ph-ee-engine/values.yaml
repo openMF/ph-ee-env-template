@@ -82,6 +82,8 @@ zeebe-operate:
     elasticsearch:
       host: "zeebe-elasticsearch"
       clusterName: "zeebe-elasticsearch"
+  image:
+    tag: 0.25.0
 
 
 elasticsearch:

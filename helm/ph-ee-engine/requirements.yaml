@@ -4,7 +4,7 @@ dependencies:
   version: 0.0.122
 - name: zeebe-operate
   repository: http://chartmuseum-jx.35.230.155.173.nip.io/
-  version: 0.0.27
+  version: 0.0.28
   condition: "zeebe-operate.enabled"
 - name: elasticsearch
   repository: http://helm.elastic.co 
