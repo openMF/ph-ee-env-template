@@ -214,9 +214,9 @@
       <zeebe:subscription correlationKey="=transactionId" />
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="Message_1qhs6qd" name="quote">
+  <bpmn:message id="Message_1qhs6qd" name="quoteCallbackId">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=quoteId" />
+      <zeebe:subscription correlationKey="=quoteCallbackId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0dy1akp" name="payer-auth-response">

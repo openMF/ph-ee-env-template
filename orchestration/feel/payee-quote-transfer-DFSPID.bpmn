@@ -165,9 +165,9 @@
   <bpmn:category id="Category_0z1irya">
     <bpmn:categoryValue id="CategoryValue_0jo1phc" value="Mojaloop" />
   </bpmn:category>
-  <bpmn:message id="Message_173oklu" name="quote">
+  <bpmn:message id="Message_173oklu" name="quoteCallbackId">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=quoteId" />
+      <zeebe:subscription correlationKey="=quoteCallbackId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">

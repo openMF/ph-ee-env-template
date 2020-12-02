@@ -158,9 +158,9 @@
       <zeebe:subscription correlationKey="=transactionId" />
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="Message_0ib6vhn" name="quote">
+  <bpmn:message id="Message_0ib6vhn" name="quoteCallbackId">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=quoteId" />
+      <zeebe:subscription correlationKey="=quoteCallbackId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_1ys7roe" name="accept-quote">
