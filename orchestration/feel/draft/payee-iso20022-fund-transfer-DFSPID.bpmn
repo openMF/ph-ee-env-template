@@ -118,7 +118,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_13i7ykb" sourceRef="ReceiveTask_0f3mm4w" targetRef="ExclusiveGateway_0t8wxbl" />
     <bpmn:sequenceFlow id="SequenceFlow_1cxw3ik" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ExclusiveGateway_05dv342" />
     <bpmn:sequenceFlow id="SequenceFlow_1rk0kts" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ServiceTask_07vjjqw">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=bookingFailed = true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transferCreateFailed = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="ServiceTask_07vjjqw" name="Notify AMS Book failure" implementation="##WebService">
       <bpmn:extensionElements>
@@ -137,7 +137,7 @@
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Task_1ncsvee" name="Book Transferred Amount to AMS">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="book-funds" />
+        <zeebe:taskDefinition type="payee-commit-transfer-tn01" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1t0fplh</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0jubcs1</bpmn:incoming>
