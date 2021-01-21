@@ -75,7 +75,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_1kfsrrq" name="no" sourceRef="ExclusiveGateway_05dv342" targetRef="EndEvent_15wn4uh" />
     <bpmn:callActivity id="Task_0n0u3zz" name="Initiate Mojaloop Transaction">
       <bpmn:extensionElements>
-        <zeebe:calledElement processId="mojaloopTransaction" />
+        <zeebe:calledElement processId="PayerFundTransfer-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_12qgsxa</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nufa3t</bpmn:outgoing>
