@@ -156,7 +156,7 @@
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_087rb2p" sourceRef="ExclusiveGateway_0v936jt" targetRef="IntermediateCatchEvent_19uga4n" />
     <bpmn:sequenceFlow id="SequenceFlow_12nueew" sourceRef="IntermediateCatchEvent_19uga4n" targetRef="ExclusiveGateway_1ii0ha0" />
-    <bpmn:receiveTask id="ReceiveTask_1cosqwx" name="Transfer Response" implementation="##WebService">
+    <bpmn:receiveTask id="ReceiveTask_1cosqwx" name="Transfer Response" implementation="##WebService" messageRef="Message_1fxiyaq">
       <bpmn:incoming>SequenceFlow_021l36b</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0hjdph9</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -231,7 +231,7 @@
       <bpmn:outgoing>SequenceFlow_11ybwbd</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0udfio5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:receiveTask id="ReceiveTask_0gecnyd" name="Receive operator decision" implementation="##WebService">
+    <bpmn:receiveTask id="ReceiveTask_0gecnyd" name="Receive operator decision" implementation="##WebService" messageRef="Message_1jjvt71">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
@@ -283,14 +283,14 @@
       <bpmn:incoming>SequenceFlow_0jgx2x0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1tq3ry1</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:receiveTask id="ReceiveTask_0nax9ah" name="Receive operator decision" implementation="##WebService">
+    <bpmn:receiveTask id="ReceiveTask_0nax9ah" name="Receive operator decision" implementation="##WebService" messageRef="Message_1jjvt71">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1g74z3o</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0xh7fo1</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:receiveTask id="ReceiveTask_024aden" name="Receive operator decision" implementation="##WebService">
+    <bpmn:receiveTask id="ReceiveTask_024aden" name="Receive operator decision" implementation="##WebService" messageRef="Message_1jjvt71">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-operator" />
       </bpmn:extensionElements>
