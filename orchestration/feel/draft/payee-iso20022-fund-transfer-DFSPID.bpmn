@@ -75,23 +75,15 @@
     <bpmn:sequenceFlow id="SequenceFlow_1kfsrrq" name="no" sourceRef="ExclusiveGateway_05dv342" targetRef="EndEvent_15wn4uh" />
     <bpmn:callActivity id="Task_0n0u3zz" name="Initiate Mojaloop Transaction">
       <bpmn:extensionElements>
-        <zeebe:calledElement processId="mojaloopTransaction" />
+        <zeebe:calledElement processId="PayerFundTransfer-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_12qgsxa</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nufa3t</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="SequenceFlow_0nufa3t" sourceRef="Task_0n0u3zz" targetRef="Task_0cbi251" />
-    <bpmn:serviceTask id="Task_0cbi251" name="Notify Original Sender on Transfer Final Status">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="send-final-status" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0nufa3t</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0gad0rf</bpmn:outgoing>
-    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0nufa3t" sourceRef="Task_0n0u3zz" targetRef="EndEvent_1rw8u88" />
     <bpmn:endEvent id="EndEvent_1rw8u88">
-      <bpmn:incoming>SequenceFlow_0gad0rf</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0nufa3t</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0gad0rf" sourceRef="Task_0cbi251" targetRef="EndEvent_1rw8u88" />
     <bpmn:endEvent id="EndEvent_0zzbm51">
       <bpmn:incoming>SequenceFlow_1lozpuf</bpmn:incoming>
     </bpmn:endEvent>
@@ -118,7 +110,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_13i7ykb" sourceRef="ReceiveTask_0f3mm4w" targetRef="ExclusiveGateway_0t8wxbl" />
     <bpmn:sequenceFlow id="SequenceFlow_1cxw3ik" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ExclusiveGateway_05dv342" />
     <bpmn:sequenceFlow id="SequenceFlow_1rk0kts" sourceRef="ExclusiveGateway_1co4ewn" targetRef="ServiceTask_07vjjqw">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=bookingFailed = true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transferCreateFailed = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="ServiceTask_07vjjqw" name="Notify AMS Book failure" implementation="##WebService">
       <bpmn:extensionElements>
@@ -137,7 +129,7 @@
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Task_1ncsvee" name="Book Transferred Amount to AMS">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="book-funds" />
+        <zeebe:taskDefinition type="payee-commit-transfer-tn01" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1t0fplh</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0jubcs1</bpmn:incoming>
@@ -294,18 +286,11 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0nufa3t_di" bpmnElement="SequenceFlow_0nufa3t">
         <di:waypoint x="1400" y="247" />
-        <di:waypoint x="1470" y="247" />
+        <di:waypoint x="1482" y="247" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_15ce2qb_di" bpmnElement="Task_0cbi251">
-        <dc:Bounds x="1470" y="207" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1rw8u88_di" bpmnElement="EndEvent_1rw8u88" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
-        <dc:Bounds x="1642" y="229" width="36" height="36" />
+        <dc:Bounds x="1482" y="229" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0gad0rf_di" bpmnElement="SequenceFlow_0gad0rf">
-        <di:waypoint x="1570" y="247" />
-        <di:waypoint x="1642" y="247" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0zzbm51_di" bpmnElement="EndEvent_0zzbm51" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1312" y="592" width="36" height="36" />
       </bpmndi:BPMNShape>

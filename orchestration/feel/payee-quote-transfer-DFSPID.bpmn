@@ -10,22 +10,20 @@
         <zeebe:taskDefinition type="payee-quote-DFSPID" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0upmeol</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_15be5zz</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_07ubxkp</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_15be5zz" sourceRef="Task_PayeeQuote" targetRef="Task_SendPayeeQuote2Moja" />
     <bpmn:serviceTask id="Task_SendPayeeQuote2Moja" name="Send quote response (Switch)" implementation="##WebService">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payee-quote-response-DFSPID" />
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_15be5zz</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1nuzh5t</bpmn:outgoing>
+      <bpmn:incoming>SequenceFlow_12altlz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1871cq3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_Success_Transfer" name="Transfer success">
       <bpmn:incoming>SequenceFlow_1yi59vy</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1nuzh5t" sourceRef="Task_SendPayeeQuote2Moja" targetRef="ExclusiveGateway_1x5kvlf" />
     <bpmn:eventBasedGateway id="ExclusiveGateway_0njdior" name="">
-      <bpmn:incoming>SequenceFlow_12altlz</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1871cq3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ha729a</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0tifm4f</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1rjfrgt</bpmn:outgoing>
@@ -58,11 +56,11 @@
       <bpmn:outgoing>SequenceFlow_0qveqrp</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1x5kvlf" default="SequenceFlow_12altlz">
-      <bpmn:incoming>SequenceFlow_1nuzh5t</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_07ubxkp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_12altlz</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1l50z66</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_12altlz" sourceRef="ExclusiveGateway_1x5kvlf" targetRef="ExclusiveGateway_0njdior" />
+    <bpmn:sequenceFlow id="SequenceFlow_12altlz" sourceRef="ExclusiveGateway_1x5kvlf" targetRef="Task_SendPayeeQuote2Moja" />
     <bpmn:serviceTask id="Task_BookFund" name="Book funds to account" implementation="##WebService">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="payee-commit-transfer-DFSPID" />
@@ -128,6 +126,8 @@
       <bpmn:outgoing>SequenceFlow_1yi59vy</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0qveqrp" sourceRef="Task_Success2Chn" targetRef="ExclusiveGateway_0qzjchh" />
+    <bpmn:sequenceFlow id="SequenceFlow_07ubxkp" sourceRef="Task_PayeeQuote" targetRef="ExclusiveGateway_1x5kvlf" />
+    <bpmn:sequenceFlow id="SequenceFlow_1871cq3" sourceRef="Task_SendPayeeQuote2Moja" targetRef="ExclusiveGateway_0njdior" />
     <bpmn:group id="Group_1g79yhg" categoryValueRef="CategoryValue_1g7n489" />
     <bpmn:group id="Group_1f2nase" categoryValueRef="CategoryValue_15tv3pk" />
     <bpmn:group id="Group_0x8qid8" categoryValueRef="CategoryValue_06atwyt" />
@@ -165,7 +165,7 @@
   <bpmn:category id="Category_0z1irya">
     <bpmn:categoryValue id="CategoryValue_0jo1phc" value="Mojaloop" />
   </bpmn:category>
-  <bpmn:message id="Message_173oklu" name="quote">
+  <bpmn:message id="Message_173oklu" name="quote-error">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="=quoteId" />
     </bpmn:extensionElements>
@@ -185,12 +185,8 @@
       <bpmndi:BPMNShape id="ServiceTask_0p1jpw7_di" bpmnElement="Task_PayeeQuote" bioc:stroke="rgb(142, 36, 170)" bioc:fill="rgb(225, 190, 231)">
         <dc:Bounds x="250" y="147" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_15be5zz_di" bpmnElement="SequenceFlow_15be5zz">
-        <di:waypoint x="350" y="187" />
-        <di:waypoint x="400" y="187" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0d4u0p8_di" bpmnElement="Task_SendPayeeQuote2Moja" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
-        <dc:Bounds x="400" y="147" width="100" height="80" />
+        <dc:Bounds x="490" y="147" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_0onv3vg_di" bpmnElement="EndEvent_Success_Transfer" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="1402" y="112" width="36" height="36" />
@@ -198,10 +194,6 @@
           <dc:Bounds x="1448" y="123" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1nuzh5t_di" bpmnElement="SequenceFlow_1nuzh5t">
-        <di:waypoint x="500" y="187" />
-        <di:waypoint x="545" y="187" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EventBasedGateway_1ige1e0_di" bpmnElement="ExclusiveGateway_0njdior" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="635" y="162" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -235,9 +227,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_1f2nase_di" bpmnElement="Group_1f2nase">
-        <dc:Bounds x="380" y="117" width="140" height="140" />
+        <dc:Bounds x="470" y="117" width="140" height="140" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="397" y="124" width="46" height="14" />
+          <dc:Bounds x="487" y="124" width="46" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_0x8qid8_di" bpmnElement="Group_0x8qid8">
@@ -265,11 +257,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_1x5kvlf_di" bpmnElement="ExclusiveGateway_1x5kvlf" isMarkerVisible="true">
-        <dc:Bounds x="545" y="162" width="50" height="50" />
+        <dc:Bounds x="395" y="162" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_12altlz_di" bpmnElement="SequenceFlow_12altlz">
-        <di:waypoint x="595" y="187" />
-        <di:waypoint x="635" y="187" />
+        <di:waypoint x="445" y="187" />
+        <di:waypoint x="490" y="187" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="631" y="145" width="77" height="14" />
         </bpmndi:BPMNLabel>
@@ -303,9 +295,9 @@
         <di:waypoint x="1065" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1l50z66_di" bpmnElement="SequenceFlow_1l50z66">
-        <di:waypoint x="570" y="212" />
-        <di:waypoint x="570" y="670" />
-        <di:waypoint x="1400" y="670" />
+        <di:waypoint x="420" y="212" />
+        <di:waypoint x="420" y="670" />
+        <di:waypoint x="1402" y="670" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="492" y="448" width="76" height="14" />
         </bpmndi:BPMNLabel>
@@ -397,6 +389,14 @@
       <bpmndi:BPMNEdge id="Association_1mwaz38_di" bpmnElement="Association_1mwaz38">
         <di:waypoint x="740" y="618" />
         <di:waypoint x="740" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_07ubxkp_di" bpmnElement="SequenceFlow_07ubxkp">
+        <di:waypoint x="350" y="187" />
+        <di:waypoint x="395" y="187" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1871cq3_di" bpmnElement="SequenceFlow_1871cq3">
+        <di:waypoint x="590" y="187" />
+        <di:waypoint x="635" y="187" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -7,7 +7,7 @@ zeebe-cluster:
 
   image:
     repository: paymenthubee.azurecr.io/phee/zeebe
-    tag: 0.25.1-kafkaclient
+    tag: 0.26.1-kafkaclient
   clusterSize: "1"
   partitionCount: "1"
   replicationFactor: "1"
@@ -83,7 +83,7 @@ zeebe-operate:
       host: "zeebe-elasticsearch"
       clusterName: "zeebe-elasticsearch"
   image:
-    tag: 0.25.0
+    tag: 0.26.1
 
 
 elasticsearch:
