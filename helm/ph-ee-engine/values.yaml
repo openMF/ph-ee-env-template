@@ -68,7 +68,7 @@ zeebe-cluster:
     - name: init-ph-ee-kafka-exporter
       image: busybox:1.28
       command: ['/bin/sh', '-c']
-      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/hu/dpc/phee/exporter/1.0.0-SNAPSHOT/exporter-1.0.0-20200930.211933-11.jar"; ls -al /exporters/']
+      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/jars/exporter-1.0.0-SNAPSHOT.jar"; ls -al /exporters/']
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
@@ -88,7 +88,7 @@ zeebe-operate:
 
 elasticsearch:
   enabled: false
-  imageTag: 6.8.5
+  imageTag: 7.7.0
   replicas: 1
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
@@ -96,7 +96,7 @@ elasticsearch:
 
 kibana:
   enabled: false
-  imageTag: 6.8.5
+  imageTag: 7.7.0
   fullnameOverride: "ph-ee-kibana"
   elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
 
@@ -129,3 +129,6 @@ ph_ee_operations:
 
 ph_ee_identity:
     hostname: ""
+
+ph_ee_connector_gsma:
+  SPRING_PROFILES_ACTIVE: ""
