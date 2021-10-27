@@ -1,0 +1,16 @@
+name: Tests
+on: [push]
+jobs:
+  CheckDependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'v3.7.0'
+        id: install
+      - name: Check helm dependencies
+        working-directory: ./helm/ph-ee-engine
+        run: helm dep up
