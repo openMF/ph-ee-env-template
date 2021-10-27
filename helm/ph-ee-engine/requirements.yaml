@@ -7,8 +7,8 @@ dependencies:
   version: 1.0.0
   condition: "zeebe-operate.enabled"
 - name: elasticsearch
-  repository: http://jenkins.mifos.io:8082/
-  version: 8.0.0-SNAPSHOT
+  repository: http://helm.elastic.co
+  version: 7.13.2
 - name: kibana
   repository: http://helm.elastic.co
   version: 7.13.2
