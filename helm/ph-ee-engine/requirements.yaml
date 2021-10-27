@@ -1,18 +1,17 @@
 dependencies:
-- name: zeebe-cluster
+- name: zeebe-cluster-helm
   repository: https://helm.camunda.io
-  version: 0.0.122
-- name: zeebe-operate
+  version: 1.0.0
+- name: zeebe-operate-helm
   repository: https://helm.camunda.io
-  version: 0.0.28
+  version: 1.0.0
   condition: "zeebe-operate.enabled"
 - name: elasticsearch
-  repository: http://helm.elastic.co 
-  version: 7.11
-  condition: "elasticsearch.enabled"
+  repository: http://helm.elastic.co
+  version: 7.13.2
 - name: kibana
-  repository: http://helm.elastic.co 
-  version: 7.11
+  repository: http://helm.elastic.co
+  version: 7.13.2
   condition: "kibana.enabled"
 - name: mysql
   version: 1.6.2

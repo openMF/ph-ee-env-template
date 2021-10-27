@@ -1,6 +1,7 @@
 charts/
 helm/*.tgz
 helm/index.yaml
+.idea/
 
 *.iml
 **/*.lock
