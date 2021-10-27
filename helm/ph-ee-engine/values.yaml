@@ -1,13 +1,14 @@
 
-zeebe-cluster:
+zeebe-cluster-helm:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
       host: "zeebe-elasticsearch"
 
   image:
-    repository: paymenthubee.azurecr.io/phee/zeebe
-    tag: 0.26.1-kafkaclient
+    repository: camunda/zeebe
+    tag: 1.1.0
+
   clusterSize: "1"
   partitionCount: "1"
   replicationFactor: "1"
@@ -74,21 +75,24 @@ zeebe-cluster:
         mountPath: /exporters/
 
 # payment hub Operate, ES and Kibana
-zeebe-operate:
+zeebe-operate-helm:
   enabled: false
+
+  image:
+    repository: camunda/operate
+    tag: 1.1.0
+
   fullnameOverride: "zeebe-operate"
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
       host: "zeebe-elasticsearch"
       clusterName: "zeebe-elasticsearch"
-  image:
-    tag: 0.26.1
 
 
 elasticsearch:
   enabled: false
-  imageTag: 7.7.0
+  imageTag: 7.13.2
   replicas: 1
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
@@ -96,7 +100,7 @@ elasticsearch:
 
 kibana:
   enabled: false
-  imageTag: 7.7.0
+  imageTag: 7.13.2
   fullnameOverride: "ph-ee-kibana"
   elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
 
@@ -115,9 +119,6 @@ ph_ee_connector_mojaloop:
 ph_ee_connector_channel:
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
-
-ph_ee_connector_gsma:
-  SPRING_PROFILES_ACTIVE: ""
 
 ph_ee_operations_app:
   SPRING_PROFILES_ACTIVE: ""
