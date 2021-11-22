@@ -19,18 +19,8 @@ spec:
       containers:
         - name: ph-ee-connector-notifications
           image: ankitafynarfin/ph-ee-connector-notifications
-#          ports:
-#            - containerPort: 5000
-#          env:
-#            - name: "SPRING_PROFILES_ACTIVE"
-#              value: "{{ .Values.ph_ee_connector_channel.SPRING_PROFILES_ACTIVE }}"
-#          volumeMounts:
-#            - name: ph-ee-config
-#              mountPath: "/config"
-#      volumes:
-#        - name: ph-ee-config
-#          configMap:
-#            name: ph-ee-config
+          ports:
+           - containerPort: 5000
 
 
 ---
