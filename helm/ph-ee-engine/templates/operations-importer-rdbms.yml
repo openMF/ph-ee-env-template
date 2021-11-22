@@ -20,7 +20,7 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-importer-rdbms
-          image: paymenthubee.azurecr.io/phee/importer-rdbms
+          image: shanidkh/ph-ee:ph-ee-importer-rdbms
           ports:
             - containerPort: 8000
           env:

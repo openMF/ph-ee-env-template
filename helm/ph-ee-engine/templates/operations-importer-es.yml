@@ -20,6 +20,6 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-importer-es
-          image: paymenthubee.azurecr.io/phee/importer-es
+          image: danishfynarfin/ph-ee-importer-es
 
 {{- end }}

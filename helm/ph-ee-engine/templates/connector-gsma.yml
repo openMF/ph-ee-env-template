@@ -20,7 +20,7 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-connector-gsma
-          image: paymenthubee.azurecr.io/phee/connector-gsma
+          image: danishfynarfin/ph-ee-connector-gsma
           ports:
             - containerPort: 5000
           env:

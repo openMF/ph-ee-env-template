@@ -20,7 +20,7 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-operations-web
-          image: paymenthubee.azurecr.io/phee/operations-web
+          image: danishfynarfin/ph-ee-operations-web
           ports:
             - containerPort: 4200
           volumeMounts:
