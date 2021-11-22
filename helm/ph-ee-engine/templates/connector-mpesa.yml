@@ -21,9 +21,6 @@ spec:
           image: danishfynarfin/ph-ee-connector-mpesa
           ports:
             - containerPort: 5000
-          env:
-            - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_mpesa.SPRING_PROFILES_ACTIVE }}"
 
 ---
 apiVersion: v1
