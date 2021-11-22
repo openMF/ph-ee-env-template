@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-pesa"
+  labels:
+    app: ph-ee-connector-ams-pesa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-pesa
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-pesa
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: ph-ee-connector-ams-pesa
+          image: danishfynarfin/ph-ee-connector-ams-pesa
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.SPRING_PROFILES_ACTIVE }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
