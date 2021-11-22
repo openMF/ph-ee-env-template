@@ -1,88 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: fineract-server
-  name: messagegatewaymysql
-spec:
-  selector:
-    matchLabels:
-      app: fineract-server
-      tier: messagegatewaymysql
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: fineract-server
-        tier: messagegatewaymysql
-    spec:
-      containers:
-        - image: mysql:5.7
-          name: mysql
-          resources:
-            requests:
-              memory: "1Gi"
-              cpu: "1000m"
-            limits:
-              memory: "5Gi"
-              cpu: "2000m"
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: fineract-tenants-db-secret
-                  key: password
-          livenessProbe:
-            exec:
-              command: ["sh","-c","mysqladmin ping -h localhost -uroot -p${MYSQL_ROOT_PASSWORD}"]
-            failureThreshold: 10
-            timeoutSeconds: 10
-          readinessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - mysqladmin ping -uroot -p${MYSQL_PASSWORD}
-            failureThreshold: 10
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          ports:
-            - containerPort: 3306
-              name: messagegatewaymysql
-          volumeMounts:
-            - name: messagegatewaymysql-initdb
-              mountPath: /docker-entrypoint-initdb.d/
-            - name: messagegatewaymysql-persistent-storage
-              mountPath: /var/lib/mysql/
-      volumes:
-        - name: messagegatewaymysql-initdb
-          configMap:
-            name: messagegatewaymysql-initdb
-        - name: messagegatewaymysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: messagegatewaymysql-pv-claim
-
-----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: messagegatewaymysql-initdb
-  labels:
-    app: fineract-server
-data:
-  init.sql: |
-    # create databases
-    CREATE DATABASE IF NOT EXISTS `message-gateway`;
-    # create root user and grant rights
-    GRANT ALL ON *.* TO 'root'@'%';
-
-----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: "message-gateway"
   labels:
     app: message-gateway
@@ -103,7 +21,7 @@ spec:
             - containerPort: 9191
           env:
             - name: spring.datasource.url
-              value: jdbc:mysql:thin://messagegatewaymysql:3306/messagegateway
+              value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
           # volumeMounts:
           #   - name: ph-ee-config
           #     mountPath: "/config"
