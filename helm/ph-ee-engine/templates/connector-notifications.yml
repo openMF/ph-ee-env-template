@@ -19,7 +19,7 @@ spec:
       containers:
         - name: ph-ee-connector-notifications
           image: ankitafynarfin/ph-ee-connector-notifications
-        ports:
+          ports:
            - containerPort: 5000
 
 
