@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "message-gateway"
+  labels:
+    app: message-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-gateway
+  template:
+    metadata:
+      labels:
+        app: message-gateway
+    spec:
+      containers:
+        - name: message-gateway
+          image: rrka79wal/message-gateway:0.0.1
+          ports:
+            - containerPort: 9191
+          env:
+            - name: spring.datasource.url
+              value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
+          # volumeMounts:
+          #   - name: ph-ee-config
+          #     mountPath: "/config"
+      # volumes:
+      #   - name: ph-ee-config
+      #     configMap:
+      #       name: ph-ee-config
+
