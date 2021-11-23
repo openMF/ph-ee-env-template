@@ -16,11 +16,9 @@ spec:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
-        - name: ph-ee-connector-gsma
-          image: danishfynarfin/ph-ee-connector-gsma
+        - name: ph-ee-connector-gsma-mm
+          image: danishfynarfin/ph-ee-connector-gsma-mm
           ports:
             - containerPort: 5000
           env:
