@@ -1,9 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+spec:		
+  template:
+    spec:
+      containers:
+        - image: mysql:5.7
+          name: message-gateway-mysql
+          volumeMounts:
+            - name: message-gateway-mysql-initdb
+              mountPath: /docker-entrypoint-initdb.d/
+            - name: message-gateway-mysql-persistent-storage
+              mountPath: /var/lib/mysql/
+        volumes:
+        - name: message-gateway-mysql-initdb
+          configMap:
+            name: message-gateway-mysql-initdb
+        - name: message-gateway-mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: message-gateway-mysql-pv-claim
+
+---
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: operations-mysql-initdb
+  name: message-gateway-mysql-initdb
   labels:
-    app: operations-mysql
+    app: message-gateway-mysql
 data:
   init.sql: |
     # create databases
@@ -36,7 +59,7 @@ spec:
             - containerPort: 9191
           env:
             - name: spring.datasource.url
-              value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
+              value: jdbc:mysql:thin://message-gateway-mysql:3306/messagegateway
           # volumeMounts:
           #   - name: ph-ee-config
           #     mountPath: "/config"
