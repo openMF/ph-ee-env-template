@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
         - name: ph-ee-importer-es
-          image: danishfynarfin/ph-ee-importer-es
+          image: rrka79wal/ph-ee-importer-es
 
 {{- end }}
