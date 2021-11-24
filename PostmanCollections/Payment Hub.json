@@ -1,8 +1,8 @@
 {
     "info": {
-        "_postman_id": "1ba52624-7086-4e4e-b86f-50651134c2c7",
+        "_postman_id": "f8fbb613-9a2a-43c8-8f97-71a8a29ee986",
         "name": "Payment Hub APIs",
-        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
         {
@@ -10,7 +10,6 @@
             "item": [
                 {
                     "name": "Account Statement by Identifier",
-                    "id": "3a8331ff-2dcb-49ad-9d76-6b367e543aa3",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -20,13 +19,24 @@
                                 "type": "text"
                             }
                         ],
-                        "url": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/statemententries"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/statemententries",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "accounts",
+                                "{{IdentifierType}}",
+                                "{{IdentifierId}}",
+                                "statemententries"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Account Balance",
-                    "id": "b9b2cbe5-f880-4261-b3a4-0b1a2548ec2e",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -48,13 +58,24 @@
                             "mode": "raw",
                             "raw": ""
                         },
-                        "url": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/balance"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/balance",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "accounts",
+                                "{{IdentifierType}}",
+                                "{{IdentifierId}}",
+                                "balance"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Account Status",
-                    "id": "19447c54-8656-4bf5-a04b-bdf8bf18513e",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -64,13 +85,24 @@
                                 "type": "text"
                             }
                         ],
-                        "url": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/status"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/status",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "accounts",
+                                "{{IdentifierType}}",
+                                "{{IdentifierId}}",
+                                "status"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Account Name",
-                    "id": "0490e609-2db5-490f-b64c-8a90ab0c88dd",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -92,13 +124,24 @@
                             "mode": "raw",
                             "raw": ""
                         },
-                        "url": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/accountname"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/accountname",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "accounts",
+                                "{{IdentifierType}}",
+                                "{{IdentifierId}}",
+                                "accountname"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Account Transactions",
-                    "id": "841a1da7-be5f-4c95-8336-6ccba94c5a67",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -120,13 +163,24 @@
                             "mode": "raw",
                             "raw": ""
                         },
-                        "url": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/transactions"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/accounts/{{IdentifierType}}/{{IdentifierId}}/transactions",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "accounts",
+                                "{{IdentifierType}}",
+                                "{{IdentifierId}}",
+                                "transactions"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Deposit Money Copy",
-                    "id": "02bf662f-2e32-4a4d-84f0-0c07260a9e23",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -145,19 +199,26 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/deposit"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/deposit",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "deposit"
+                            ]
+                        }
                     },
                     "response": []
                 }
-            ],
-            "id": "a7df8468-27f5-4cae-929c-66b248005abc"
+            ]
         },
         {
             "name": "Customer Management",
             "item": [
                 {
                     "name": "Customer Set PIN",
-                    "id": "0a90667e-84bd-4b94-ac28-77ff91c15799",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -176,13 +237,24 @@
                             "mode": "raw",
                             "raw": "{\n    \"existingPin\": \"String\",\n    \"pin\": \"String\"\n}"
                         },
-                        "url": "{{ChannelHostName}}/channel/customers/{{IdentifierType}}/{{IdentifierId}}/cpin"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/customers/{{IdentifierType}}/{{IdentifierId}}/cpin",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "customers",
+                                "{{IdentifierType}}",
+                                "{{IdentifierId}}",
+                                "cpin"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Customer Creation",
-                    "id": "483fcdcb-1cee-42a2-9430-2aa5cbc861e4",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -201,45 +273,68 @@
                             "mode": "raw",
                             "raw": "{\n    \"identifierType\": \"String\",\n    \"IdentifierId\": \"String\"\n}"
                         },
-                        "url": "{{ChannelHostName}}/channel/customers"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/customers",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "customers"
+                            ]
+                        }
                     },
                     "response": []
                 }
-            ],
-            "id": "e0c65dac-31d5-4606-a4a3-4c937a3b9608"
+            ]
         },
         {
             "name": "Miscellaneous",
             "item": [
                 {
                     "name": "Heartbeat",
-                    "id": "6bf64105-ebf9-409d-b573-e74110a9cc02",
                     "request": {
                         "method": "GET",
                         "header": [],
-                        "url": "{{ChannelHostName}}/channel/heartbeat"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/heartbeat",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "heartbeat"
+                            ]
+                        }
                     },
                     "response": []
                 }
-            ],
-            "id": "610b53eb-4f89-4d24-99a2-903c7413e8aa"
+            ]
         },
         {
             "name": "Mojaloop APIs",
             "item": [
                 {
                     "name": "Transfer Details",
-                    "id": "b9263412-a19d-46bd-b3ae-4eb2f76a8973",
                     "request": {
                         "method": "GET",
                         "header": [],
-                        "url": "{{ChannelHostName}}/channel/transfer/{{transactionId}}"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/transfer/{{transactionId}}",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "transfer",
+                                "{{transactionId}}"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Transfer",
-                    "id": "7155910d-403e-4d9b-819c-ea0a6f4ba5e1",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -252,13 +347,21 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/transfer"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/transfer",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "transfer"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Transfer Request",
-                    "id": "4e391916-c8d8-4bc9-9628-e13dbabf5f5d",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -271,13 +374,21 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/transactionRequest"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/transactionRequest",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "transactionRequest"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Party Registration",
-                    "id": "4cc03249-b8f4-4a30-90c5-784bd2d9513e",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -290,19 +401,26 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/partyRegistration"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/partyRegistration",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "partyRegistration"
+                            ]
+                        }
                     },
                     "response": []
                 }
-            ],
-            "id": "e03309fb-5336-4b99-a4cf-7d7debf39e3a"
+            ]
         },
         {
             "name": "Mobile Money APIs",
             "item": [
                 {
                     "name": "Bilateral Money Transfer",
-                    "id": "aff72572-d477-469f-9128-5170f2d129d8",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -321,13 +439,22 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/{{provider}}/transfer"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/{{provider}}/transfer",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "{{provider}}",
+                                "transfer"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "MerchantPay",
-                    "id": "31a8e378-a089-4d27-b023-b7dc5338b1e7",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -346,13 +473,22 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/{{provider}}/merchantpay"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/{{provider}}/merchantpay",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "{{provider}}",
+                                "merchantpay"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "MerchantPay with AuthCode",
-                    "id": "f0ddb9c3-6fdd-4296-9c76-703714a725e4",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -371,13 +507,24 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/{{provider}}/merchantpay/authcode/{{authorizationCode}}"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/{{provider}}/merchantpay/authcode/{{authorizationCode}}",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "{{provider}}",
+                                "merchantpay",
+                                "authcode",
+                                "{{authorizationCode}}"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "International Transfer",
-                    "id": "e5fd80e6-b00f-4168-9852-fe6cc548d06e",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -396,13 +543,22 @@
                             "mode": "raw",
                             "raw": "{\r\n    \"amount\": \"54\",\r\n    \"type\": \"transfer\",\r\n    \"requestingLei\": \"ibank-usa\", \r\n    \"receivingLei\": \"ibank-india\",\r\n    \"creditParty\": [\r\n        {\r\n            \"key\": \"msisdn\",\r\n            \"value\": \"919900878571\"\r\n        }\r\n    ],\r\n    \"currency\": \"USD\",\r\n    \"debitParty\": [\r\n        {\r\n            \"key\": \"msisdn\",\r\n            \"value\": \"7543010\"\r\n        }\r\n    ],\r\n    \"internationalTransferInformation\":{\r\n                    \"originCountry\":\"US\",\r\n                    \"receivingCountry\":\"IN\",\r\n                    \"receivingCurrency\":\"INR\",\r\n                    \"currencyPair\":\"INR/USD\"\r\n        }\r\n}"
                         },
-                        "url": "{{ChannelHostName}}/channel/{{provider}}/inttransfer"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/{{provider}}/inttransfer",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "{{provider}}",
+                                "inttransfer"
+                            ]
+                        }
                     },
                     "response": []
                 },
                 {
                     "name": "Deposit Money",
-                    "id": "846b8a83-d28f-48b6-823c-06fa96363304",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -421,19 +577,27 @@
                                 }
                             }
                         },
-                        "url": "{{ChannelHostName}}/channel/{{provider}}/deposit"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/{{provider}}/deposit",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "{{provider}}",
+                                "deposit"
+                            ]
+                        }
                     },
                     "response": []
                 }
-            ],
-            "id": "147165bf-02b3-4a2d-aedc-b0feb54a0258"
+            ]
         },
         {
             "name": "Bulk APIs",
             "item": [
                 {
                     "name": "Bulk Transfer",
-                    "id": "9c2d5d40-6857-4d4d-9e2a-370c459986ca",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -465,11 +629,20 @@
                                 }
                             ]
                         },
-                        "url": "{{ChannelHostName}}/channel/bulk/transfer"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/bulk/transfer",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "bulk",
+                                "transfer"
+                            ]
+                        }
                     },
                     "response": [
                         {
-                            "id": "5cf49de0-b12b-42e4-b01e-04fc9f90f1e4",
                             "name": "Bulk Transfer",
                             "originalRequest": {
                                 "method": "POST",
@@ -502,7 +675,17 @@
                                         }
                                     ]
                                 },
-                                "url": "{{ChannelHostName}}/channel/bulk/transfer"
+                                "url": {
+                                    "raw": "{{ChannelHostName}}/channel/bulk/transfer",
+                                    "host": [
+                                        "{{ChannelHostName}}"
+                                    ],
+                                    "path": [
+                                        "channel",
+                                        "bulk",
+                                        "transfer"
+                                    ]
+                                }
                             },
                             "_postman_previewlanguage": "json",
                             "header": [],
@@ -513,7 +696,6 @@
                 },
                 {
                     "name": "Bulk Account Lookup",
-                    "id": "78ad11f4-0a1f-4694-9d5b-386abc377016",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -545,11 +727,20 @@
                                 }
                             ]
                         },
-                        "url": "{{ChannelHostName}}/channel/bulk/lookup"
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/bulk/lookup",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "bulk",
+                                "lookup"
+                            ]
+                        }
                     },
                     "response": [
                         {
-                            "id": "d2292f43-7e0c-4326-9e9a-ecd1f2a49284",
                             "name": "Bulk Account Lookup",
                             "originalRequest": {
                                 "method": "POST",
@@ -582,7 +773,17 @@
                                         }
                                     ]
                                 },
-                                "url": "{{ChannelHostName}}/channel/bulk/lookup"
+                                "url": {
+                                    "raw": "{{ChannelHostName}}/channel/bulk/lookup",
+                                    "host": [
+                                        "{{ChannelHostName}}"
+                                    ],
+                                    "path": [
+                                        "channel",
+                                        "bulk",
+                                        "lookup"
+                                    ]
+                                }
                             },
                             "_postman_previewlanguage": "json",
                             "header": [],
@@ -593,7 +794,6 @@
                 },
                 {
                     "name": "Batch Summary",
-                    "id": "e39f124d-c8b9-4a22-937d-fa04b6c82561",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -668,7 +868,6 @@
                     },
                     "response": [
                         {
-                            "id": "671da7f9-db45-4218-87e0-db77a9424717",
                             "name": "Batch Summary",
                             "originalRequest": {
                                 "method": "GET",
@@ -751,7 +950,6 @@
                 },
                 {
                     "name": "Batch Details",
-                    "id": "c3bf626f-fc7c-49b1-9a3e-6ca1ea1ce394",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -832,7 +1030,6 @@
                     },
                     "response": [
                         {
-                            "id": "7d4a58b7-ca1b-42e4-8ac6-c30f13b20a2a",
                             "name": "Batch Details",
                             "originalRequest": {
                                 "method": "GET",
@@ -921,7 +1118,6 @@
                 },
                 {
                     "name": "Batch Lookup Details",
-                    "id": "00bcf24f-7286-4310-ad77-61439c4290a2",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -995,7 +1191,6 @@
                     },
                     "response": [
                         {
-                            "id": "7b60c912-b6f8-4f9f-9caa-687989103183",
                             "name": "Batch Lookup Details",
                             "originalRequest": {
                                 "method": "GET",
@@ -1075,8 +1270,39 @@
                         }
                     ]
                 }
-            ],
-            "id": "a743aac1-d512-4047-9e22-182ba318df03"
+            ]
+        },
+        {
+            "name": "Collection APIs",
+            "item": [
+                {
+                    "name": "Collection Request",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"payer\": [\n        {\n            \"key\": \"MSISDN\",\n            \"value\": \"+747543010\"\n        },\n        {\n            \"key\": \"ACCOUNTID\",\n            \"value\": \"1231234\"\n        }\n    ],\n    \"amount\": \"USD 2000\",\n    \"transactionType\": {\n        \"scenario\": \"MPESA\",\n        \"subType\": \"BUYGOODS\",\n        \"initiator\": \"PAYEE\",\n        \"initiatorType\": \"BUSINESS\"\n    }\n\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{ChannelHostName}}/channel/collection",
+                            "host": [
+                                "{{ChannelHostName}}"
+                            ],
+                            "path": [
+                                "channel",
+                                "collection"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
         }
     ]
 }
