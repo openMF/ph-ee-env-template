@@ -20,7 +20,7 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-connector-channel
-          image: shanidkh/ph-ee:ph-ee-connector-channel
+          image: danishfynarfin/ph-ee-connector-channel
           ports:
             - containerPort: 5000
           env:
