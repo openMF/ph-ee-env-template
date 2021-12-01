@@ -22,7 +22,7 @@ spec:
 
       containers:
         - name: ph-ee-operations-app
-          image: shanidkh/ph-ee:ph-ee-operations-app
+          image: us.icr.io/phee-ns/ph-ee-ops-bk
           ports:
             - containerPort: 5000
           readinessProbe:

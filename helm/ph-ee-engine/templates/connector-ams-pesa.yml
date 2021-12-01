@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-ams-pesa
-          image: danishfynarfin/ph-ee-connector-ams-pesa
+          image: us.icr.io/phee-ns/ph-ee-connector-ams-pesa
           ports:
             - containerPort: 5000

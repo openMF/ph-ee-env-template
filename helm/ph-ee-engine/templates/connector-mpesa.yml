@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mpesa
-          image: danishfynarfin/ph-ee-connector-mpesa
+          image: us.icr.io/phee-ns/ph-ee-mpesa
           ports:
             - containerPort: 5000
 

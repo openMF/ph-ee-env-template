@@ -20,7 +20,7 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-importer-rdbms
-          image: shanidkh/ph-ee:ph-ee-importer-rdbms
+          image: us.icr.io/phee-ns/importer-rdbms
           ports:
             - containerPort: 8000
           env:

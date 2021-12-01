@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-gsma-mm
-          image: danishfynarfin/ph-ee-connector-gsma-mm
+          image: us.icr.io/phee-ns/ph-ee-gsma
           ports:
             - containerPort: 5000
           env:

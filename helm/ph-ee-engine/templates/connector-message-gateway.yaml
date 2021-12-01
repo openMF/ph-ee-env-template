@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
         - name: message-gateway
-          image: rrka79wal/message-gateway:0.0.1
+          image: us.icr.io/phee-ns/message-gateway
           ports:
             - containerPort: 9191
           env:
