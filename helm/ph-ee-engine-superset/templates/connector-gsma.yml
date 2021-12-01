@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-bulk"
+  name: "ph-ee-connector-gsma"
   labels:
-    app: ph-ee-connector-bulk
+    app: ph-ee-connector-gsma
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ph-ee-connector-bulk
+      app: ph-ee-connector-gsma
   template:
     metadata:
       labels:
-        app: ph-ee-connector-bulk
+        app: ph-ee-connector-gsma
       annotations:
         deployTime: "{{ .Values.deployTime }}"
     spec:
       containers:
-        - name: ph-ee-connector-bulk
-          image: us.icr.io/phee-ns/ph-ee-connector-bulk
+        - name: ph-ee-connector-gsma-mm
+          image: us.icr.io/phee-ns/ph-ee-gsma
           ports:
             - containerPort: 5000
           env:
@@ -37,8 +37,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: ph-ee-connector-bulk
-  name: ph-ee-connector-bulk
+    app: ph-ee-connector-gsma
+  name: ph-ee-connector-gsma
   namespace: default
 spec:
   ports:
@@ -47,6 +47,6 @@ spec:
       protocol: TCP
       targetPort: 5000
   selector:
-    app: ph-ee-connector-bulk
+    app: ph-ee-connector-gsma
   sessionAffinity: None
   type: ClusterIP

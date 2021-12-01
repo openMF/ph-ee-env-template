@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-mifos"
+  labels:
+    app: ph-ee-connector-ams-mifos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-mifos
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-mifos
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+    spec:
+      containers:
+        - name: ph-ee-connector-ams-mifos
+          image: us.icr.io/phee-ns/phee-connector-ams
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.SPRING_PROFILES_ACTIVE }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-mpesa"
+  labels:
+    app: ph-ee-connector-mpesa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph-ee-connector-mpesa
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-mpesa
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+    spec:
+      containers:
+        - name: ph-ee-connector-mpesa
+          image: us.icr.io/phee-ns/ph-ee-mpesa
+          ports:
+            - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-mpesa
+  name: ph-ee-connector-mpesa
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-mpesa
+  sessionAffinity: None
+  type: ClusterIP
