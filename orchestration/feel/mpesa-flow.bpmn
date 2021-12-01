@@ -88,7 +88,6 @@
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="failure" name="Send SMS Failure">
       <bpmn:incoming>Flow_1j9hjuz</bpmn:incoming>
-      <bpmn:incoming>Flow_083o5i2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:endEvent id="sucess" name="Send SMS Success">
       <bpmn:incoming>Flow_0jqg26i</bpmn:incoming>
@@ -101,16 +100,11 @@
       <bpmn:incoming>Flow_03ncatg</bpmn:incoming>
       <bpmn:outgoing>Flow_1xxzwtm</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_16fd2cn" default="Flow_083o5i2">
-      <bpmn:incoming>Flow_10rd5v3</bpmn:incoming>
-      <bpmn:outgoing>Flow_1teyq5o</bpmn:outgoing>
-      <bpmn:outgoing>Flow_083o5i2</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="get-notification-status" name="Get Message Status">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="get-notification-status" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1teyq5o</bpmn:incoming>
+      <bpmn:incoming>Flow_1pj1te5</bpmn:incoming>
       <bpmn:outgoing>Flow_18aq99i</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:receiveTask id="notification-callback" name="Waiting For Callback" messageRef="Message_0zb2ivt">
@@ -128,9 +122,6 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0jqg26i" sourceRef="Gateway_0y10qkw" targetRef="sucess" />
     <bpmn:sequenceFlow id="Flow_1xxzwtm" sourceRef="notification-service" targetRef="notification-callback" />
-    <bpmn:sequenceFlow id="Flow_1teyq5o" sourceRef="Gateway_16fd2cn" targetRef="get-notification-status">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=messageDeliveryStatusRetry &lt; 3</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_18aq99i" sourceRef="get-notification-status" targetRef="notification-callback" />
     <bpmn:sequenceFlow id="Flow_0j6zo4i" sourceRef="notification-callback" targetRef="Gateway_0y10qkw" />
     <bpmn:sequenceFlow id="Flow_0bd5ax9" sourceRef="transaction-success" targetRef="notification-service" />
@@ -142,14 +133,12 @@
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0wms0vt" sourceRef="Event_1ku0cyr" targetRef="get-transaction-status" />
-    <bpmn:sequenceFlow id="Flow_083o5i2" sourceRef="Gateway_16fd2cn" targetRef="failure" />
     <bpmn:boundaryEvent id="Event_1b36xu9" attachedToRef="notification-callback">
-      <bpmn:outgoing>Flow_10rd5v3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1pj1te5</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1dx654p">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_10rd5v3" sourceRef="Event_1b36xu9" targetRef="Gateway_16fd2cn" />
     <bpmn:exclusiveGateway id="Gateway_1hsu2ep" default="Flow_03q232e">
       <bpmn:incoming>Flow_1pz4ziy</bpmn:incoming>
       <bpmn:outgoing>Flow_1ly4bcu</bpmn:outgoing>
@@ -160,6 +149,7 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transactionFailed = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_03q232e" sourceRef="Gateway_1hsu2ep" targetRef="transaction-callback" />
+    <bpmn:sequenceFlow id="Flow_1pj1te5" sourceRef="Event_1b36xu9" targetRef="get-notification-status" />
     <bpmn:group id="Group_0ywm3xk" categoryValueRef="CategoryValue_1kx0jfq" />
     <bpmn:group id="Group_1kwcabs" categoryValueRef="CategoryValue_18pimjz" />
     <bpmn:group id="Group_1njtil5" categoryValueRef="CategoryValue_0luw1zv" />
@@ -198,14 +188,6 @@
         <di:waypoint x="520" y="410" />
         <di:waypoint x="565" y="410" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10rd5v3_di" bpmnElement="Flow_10rd5v3">
-        <di:waypoint x="1650" y="210" />
-        <di:waypoint x="1650" y="123" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_083o5i2_di" bpmnElement="Flow_083o5i2">
-        <di:waypoint x="1675" y="98" />
-        <di:waypoint x="1870" y="98" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0wms0vt_di" bpmnElement="Flow_0wms0vt">
         <di:waypoint x="730" y="352" />
         <di:waypoint x="730" y="321" />
@@ -233,10 +215,6 @@
         <di:waypoint x="1478" y="168" />
         <di:waypoint x="1598" y="168" />
         <di:waypoint x="1598" y="228" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1teyq5o_di" bpmnElement="Flow_1teyq5o">
-        <di:waypoint x="1625" y="98" />
-        <di:waypoint x="1528" y="98" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xxzwtm_di" bpmnElement="Flow_1xxzwtm">
         <di:waypoint x="1518" y="268" />
@@ -299,6 +277,11 @@
         <di:waypoint x="148" y="410" />
         <di:waypoint x="180" y="410" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pj1te5_di" bpmnElement="Flow_1pj1te5">
+        <di:waypoint x="1650" y="210" />
+        <di:waypoint x="1650" y="98" />
+        <di:waypoint x="1528" y="98" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="112" y="392" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -349,9 +332,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1qjuqeo_di" bpmnElement="notification-service" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1418" y="228" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_16fd2cn_di" bpmnElement="Gateway_16fd2cn" isMarkerVisible="true">
-        <dc:Bounds x="1625" y="73" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0cioqcy_di" bpmnElement="get-notification-status" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
         <dc:Bounds x="1428" y="58" width="100" height="80" />
