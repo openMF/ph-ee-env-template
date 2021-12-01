@@ -71,7 +71,7 @@ kind: Ingress
 metadata:
   name: ph-ee-operations-app
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: "{{ .Values.ph_ee_operations_app.hostname }}"
@@ -87,7 +87,7 @@ kind: Ingress
 metadata:
   name: ph-ee-identity
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: "{{ .Values.ph_ee_identity.hostname }}"
