@@ -136,7 +136,7 @@
     <bpmn:boundaryEvent id="Event_1b36xu9" attachedToRef="notification-callback">
       <bpmn:outgoing>Flow_1pj1te5</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1dx654p">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT90S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="Gateway_1hsu2ep" default="Flow_03q232e">
