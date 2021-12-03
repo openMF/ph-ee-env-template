@@ -40,3 +40,18 @@ spec:
     app: ph-ee-connector-mpesa
   sessionAffinity: None
   type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ph-ee-connector-mpesa
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+    - host: "{{ .Values.ph-ee-connector-mpesa.hostname }}"
+      http:
+        paths:
+          - backend:
+              serviceName: ph-ee-connector-mpesa
+              servicePort: 80
