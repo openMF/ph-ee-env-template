@@ -17,8 +17,6 @@ spec:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
     spec:
-      imagePullSecrets:
-      - name: regcred
 
       containers:
         - name: ph-ee-operations-app

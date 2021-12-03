@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-bulk
-          image: us.icr.io/phee-ns/ph-ee-connector-bulk
+          image: us.icr.io/phee-ns/phee-bulk-processor
           ports:
             - containerPort: 5000
           env:

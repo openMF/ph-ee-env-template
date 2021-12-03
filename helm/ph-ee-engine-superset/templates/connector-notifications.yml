@@ -21,6 +21,11 @@ spec:
           image: us.icr.io/phee-ns/ph-ee-notifications
           ports:
            - containerPort: 5000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_notifications.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
 
 
 ---

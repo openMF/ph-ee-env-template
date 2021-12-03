@@ -16,8 +16,6 @@ spec:
       labels:
         app: ph-ee-operations-web
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
         - name: ph-ee-operations-web
           image: us.icr.io/phee-ns/ops-web

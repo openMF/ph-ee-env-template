@@ -16,8 +16,6 @@ spec:
       labels:
         app: ph-ee-importer-rdbms
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
         - name: ph-ee-importer-rdbms
           image: us.icr.io/phee-ns/importer-rdbms

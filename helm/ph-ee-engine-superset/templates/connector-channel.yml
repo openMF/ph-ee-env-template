@@ -16,8 +16,6 @@ spec:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
         - name: ph-ee-connector-channel
           image: us.icr.io/phee-ns/phee-connector-channel

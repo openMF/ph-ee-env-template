@@ -110,6 +110,10 @@ operations:
 operationsMysql:
   fullnameOverride: operations-mysql
 
+zeebe:
+    broker:
+      contactpoint: "zeebe-zeebe-gateway:26500"
+
 ph_ee_connector_ams_mifos:
   SPRING_PROFILES_ACTIVE: ""
 
@@ -132,4 +136,13 @@ ph_ee_identity:
     hostname: ""
 
 ph_ee_connector_gsma:
+  SPRING_PROFILES_ACTIVE: ""
+
+ph_ee_mpesa:
+  SPRING_PROFILES_ACTIVE: ""
+
+ph_ee_pesa:
+  SPRING_PROFILES_ACTIVE: ""
+
+ph_ee_notifications:
   SPRING_PROFILES_ACTIVE: ""

@@ -19,6 +19,7 @@ spec:
           image: us.icr.io/phee-ns/message-gateway
           ports:
             - containerPort: 9191
+          imagePullPolicy: Always
           env:
             - name: spring.datasource.url
               value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
@@ -26,11 +27,11 @@ spec:
               value: mifos
             - name: spring.datasource.password
               value: password
-          # volumeMounts:
-          #   - name: ph-ee-config
-          #     mountPath: "/config"
-      # volumes:
-      #   - name: ph-ee-config
-      #     configMap:
-      #       name: ph-ee-config
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
 
