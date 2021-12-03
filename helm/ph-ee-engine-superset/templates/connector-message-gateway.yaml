@@ -24,9 +24,9 @@ spec:
             - name: spring.datasource.url
               value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
             - name: spring.datasource.username
-              value: mifos
+              value: "mifos"
             - name: spring.datasource.password
-              value: password
+              value: "password"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
