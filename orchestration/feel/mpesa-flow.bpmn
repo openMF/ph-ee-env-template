@@ -129,14 +129,14 @@
     <bpmn:boundaryEvent id="Event_1ku0cyr" attachedToRef="transaction-callback">
       <bpmn:outgoing>Flow_0wms0vt</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_03qq1x4">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT90S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0wms0vt" sourceRef="Event_1ku0cyr" targetRef="get-transaction-status" />
     <bpmn:boundaryEvent id="Event_1b36xu9" attachedToRef="notification-callback">
       <bpmn:outgoing>Flow_1pj1te5</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1dx654p">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT90S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="Gateway_1hsu2ep" default="Flow_03q232e">
@@ -175,6 +175,11 @@
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mpesa-flow-v3">
+      <bpmndi:BPMNEdge id="Flow_1pj1te5_di" bpmnElement="Flow_1pj1te5">
+        <di:waypoint x="1650" y="210" />
+        <di:waypoint x="1650" y="98" />
+        <di:waypoint x="1528" y="98" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_03q232e_di" bpmnElement="Flow_03q232e">
         <di:waypoint x="615" y="410" />
         <di:waypoint x="650" y="410" />
@@ -276,11 +281,6 @@
       <bpmndi:BPMNEdge id="Flow_0pzfqw0_di" bpmnElement="Flow_0pzfqw0">
         <di:waypoint x="148" y="410" />
         <di:waypoint x="180" y="410" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1pj1te5_di" bpmnElement="Flow_1pj1te5">
-        <di:waypoint x="1650" y="210" />
-        <di:waypoint x="1650" y="98" />
-        <di:waypoint x="1528" y="98" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <dc:Bounds x="112" y="392" width="36" height="36" />
