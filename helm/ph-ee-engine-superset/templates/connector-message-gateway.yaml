@@ -34,4 +34,20 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: message-gateway
+  name: message-gateway
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 9191
+  selector:
+    app: message-gateway
+  sessionAffinity: None
+  type: ClusterIP

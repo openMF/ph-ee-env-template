@@ -26,6 +26,8 @@ spec:
               value: "{{ .Values.ph_ee_mpesa.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
+            - name: "MPESA_LOCAL_HOST"
+              value: "https://mpesa.ibank.financial"
 
 ---
 apiVersion: v1
@@ -45,3 +47,18 @@ spec:
     app: ph-ee-connector-mpesa
   sessionAffinity: None
   type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ph-ee-connector-mpesa
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: "{{ .Values.ph_ee_mpesa.hostname }}"
+      http:
+        paths:
+          - backend:
+              serviceName: ph-ee-connector-mpesa
+              servicePort: 80
