@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: message-gateway
-          image: us.icr.io/phee-ns/message-gateway
+          image: "{{ .Values.messagegateway.image }}"
           ports:
             - containerPort: 9191
           imagePullPolicy: Always

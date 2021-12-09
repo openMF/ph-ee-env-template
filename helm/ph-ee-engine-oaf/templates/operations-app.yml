@@ -17,12 +17,10 @@ spec:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
     spec:
-      imagePullSecrets:
-      - name: regcred
 
       containers:
         - name: ph-ee-operations-app
-          image: us.icr.io/phee-ns/ph-ee-ops-bk
+          image: "{{ .Values.operations_app.image }}"
           ports:
             - containerPort: 5000
           readinessProbe:
@@ -37,7 +35,7 @@ spec:
             - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
               value: "password"
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_operations_app.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -71,10 +69,10 @@ kind: Ingress
 metadata:
   name: ph-ee-operations-app
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_operations_app.hostname }}"
+    - host: "{{ .Values.operations_app.hostname }}"
       http:
         paths:
           - backend:
@@ -87,10 +85,10 @@ kind: Ingress
 metadata:
   name: ph-ee-identity
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_identity.hostname }}"
+    - host: "{{ .Values.identity.hostname }}"
       http:
         paths:
           - backend:

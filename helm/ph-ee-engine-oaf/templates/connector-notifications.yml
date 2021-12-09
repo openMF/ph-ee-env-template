@@ -18,10 +18,18 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-notifications
-          image: us.icr.io/phee-ns/ph-ee-notifications
+          image: "{{ .Values.notifications.image }}"
           ports:
            - containerPort: 5000
-
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "HOSTCONFIG_HOST"
+              value: "message-gateway"
+            - name: "HOSTCONFIG_PORT"
+              value: "80"
 
 ---
 apiVersion: v1

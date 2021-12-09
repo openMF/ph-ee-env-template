@@ -1,43 +1,5 @@
 apiVersion: apps/v1
 kind: Deployment
-spec:		
-  template:
-    spec:
-      containers:
-        - image: mysql:5.7
-          name: operations-mysql
-          volumeMounts:
-            - name: message-gateway-mysql-initdb
-              mountPath: /docker-entrypoint-initdb.d/
-            - name: message-gateway-mysql-persistent-storage
-              mountPath: /var/lib/mysql/
-        volumes:
-        - name: message-gateway-mysql-initdb
-          configMap:
-            name: message-gateway-mysql-initdb
-        - name: message-gateway-mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: message-gateway-mysql-pv-claim
-
----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: message-gateway-mysql-initdb
-  labels:
-    app: message-gateway-mysql
-data:
-  init.sql: |
-    # create databases
-    CREATE DATABASE IF NOT EXISTS `messagegateway`;
-    # create root user and grant rights
-    GRANT ALL ON *.* TO 'root'@'%';
-
----
-
-apiVersion: apps/v1
-kind: Deployment
 metadata:
   name: "message-gateway"
   labels:
@@ -54,21 +16,38 @@ spec:
     spec:
       containers:
         - name: message-gateway
-          image: us.icr.io/phee-ns/message-gateway
+          image: "{{ .Values.messagegateway.image }}"
           ports:
             - containerPort: 9191
+          imagePullPolicy: Always
           env:
             - name: spring.datasource.url
               value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
             - name: spring.datasource.username
-              value: mifos
+              value: "mifos"
             - name: spring.datasource.password
-              value: password
-          # volumeMounts:
-          #   - name: ph-ee-config
-          #     mountPath: "/config"
-      # volumes:
-      #   - name: ph-ee-config
-      #     configMap:
-      #       name: ph-ee-config
-
+              value: "password"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: message-gateway
+  name: message-gateway
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 9191
+  selector:
+    app: message-gateway
+  sessionAffinity: None
+  type: ClusterIP

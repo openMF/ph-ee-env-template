@@ -18,11 +18,11 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-ams-pesa
-          image: us.icr.io/phee-ns/phee-connector-ams-pesa
+          image: "{{ .Values.roster_connector.image }}"
           ports:
             - containerPort: 5000
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_pesa.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.roster_connector.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"

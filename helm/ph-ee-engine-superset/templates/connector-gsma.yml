@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-gsma-mm
-          image: us.icr.io/phee-ns/ph-ee-gsma
+          image: "{{ .Values.gsma.image }}"
           ports:
             - containerPort: 5000
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.gsma.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

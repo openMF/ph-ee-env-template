@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mpesa
-          image: us.icr.io/phee-ns/ph-ee-mpesa
+          image: "{{ .Values.mpesa.image }}"
           ports:
             - containerPort: 5000
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_mpesa.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
             - name: "MPESA_LOCAL_HOST"
@@ -56,7 +56,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_mpesa.hostname }}"
+    - host: "{{ .Values.mpesa.hostname }}"
       http:
         paths:
           - backend:

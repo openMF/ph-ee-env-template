@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-roster"
+  labels:
+    app: ph-ee-connector-ams-roster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-roster
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-roster
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+    spec:
+      containers:
+        - name: ph-ee-connector-ams-roster
+          image: "{{ .Values.roster_connector.image }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.roster_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"

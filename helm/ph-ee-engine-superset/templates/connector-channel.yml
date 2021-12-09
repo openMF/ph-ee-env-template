@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-channel
-          image: us.icr.io/phee-ns/phee-connector-channel
+          image: "{{ .Values.channel.image }}"
           ports:
             - containerPort: 5000
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_channel.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -41,7 +41,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_connector_channel.hostname }}"
+    - host: "{{ .Values.channel.hostname }}"
       http:
         paths:
         - backend:

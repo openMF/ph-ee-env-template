@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-bulk
-          image: us.icr.io/phee-ns/phee-bulk-processor
+          image: "{{ .Values.bulk_processor.image}}"
           ports:
             - containerPort: 5000
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.bulk_processor.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
