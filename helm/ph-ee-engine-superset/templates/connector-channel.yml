@@ -27,13 +27,16 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+          resources:
+            limits:
+              memory: "650M"
       volumes:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-channel

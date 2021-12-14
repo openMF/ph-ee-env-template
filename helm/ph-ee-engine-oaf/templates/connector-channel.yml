@@ -21,6 +21,9 @@ spec:
           image: "{{ .Values.channel.image }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "768M"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
@@ -33,7 +36,7 @@ spec:
             name: ph-ee-config
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-channel

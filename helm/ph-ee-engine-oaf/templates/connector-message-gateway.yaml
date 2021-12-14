@@ -20,6 +20,9 @@ spec:
           ports:
             - containerPort: 9191
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "512M"
           env:
             - name: spring.datasource.url
               value: jdbc:mysql:thin://operations-mysql:3306/messagegateway

@@ -21,6 +21,9 @@ spec:
           image: "{{ .Values.mpesa.image }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "512M"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"
@@ -36,7 +39,6 @@ metadata:
   labels:
     app: ph-ee-connector-mpesa
   name: ph-ee-connector-mpesa
-  namespace: default
 spec:
   ports:
     - name: port
@@ -48,7 +50,7 @@ spec:
   sessionAffinity: None
   type: ClusterIP
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-mpesa

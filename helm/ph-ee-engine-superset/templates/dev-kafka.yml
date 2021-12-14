@@ -9,6 +9,9 @@ spec:
   containers:
     - name: kafka
       image: spotify/kafka
+      resources:
+            limits:
+              memory: "1536M"
       ports:
         - containerPort: 2181
         - containerPort: 9092

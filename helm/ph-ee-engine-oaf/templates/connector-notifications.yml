@@ -19,6 +19,9 @@ spec:
       containers:
         - name: ph-ee-connector-notifications
           image: "{{ .Values.notifications.image }}"
+          resources:
+            limits:
+              memory: "512M"
           ports:
            - containerPort: 5000
           env:

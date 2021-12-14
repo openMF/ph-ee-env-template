@@ -19,5 +19,8 @@ spec:
       containers:
         - name: ph-ee-importer-es
           image: "{{ .Values.importer_es.image }}"
+          resources:
+            limits:
+              memory: "512M"
 
 {{- end }}

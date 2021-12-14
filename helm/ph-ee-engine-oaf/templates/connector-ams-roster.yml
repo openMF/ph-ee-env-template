@@ -26,3 +26,7 @@ spec:
               value: "{{ .Values.roster_connector.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
+          resources:
+            limits:
+              memory: "512M"
+

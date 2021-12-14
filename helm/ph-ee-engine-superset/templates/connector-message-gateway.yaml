@@ -30,6 +30,9 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+          resources:
+            limits:
+              memory: "400M"
       volumes:
         - name: ph-ee-config
           configMap:

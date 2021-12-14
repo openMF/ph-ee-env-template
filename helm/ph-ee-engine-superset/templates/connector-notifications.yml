@@ -21,6 +21,9 @@ spec:
           image: "{{ .Values.notifications.image }}"
           ports:
            - containerPort: 5000
+          resources:
+            limits:
+              memory: "512M"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"

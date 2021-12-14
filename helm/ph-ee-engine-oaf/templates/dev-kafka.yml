@@ -17,6 +17,9 @@ spec:
           value: "kafka"
         - name: "ADVERTISED_PORT"
           value: "9092"
+      resources:
+            limits:
+              memory: "1536M"
   restartPolicy: Always
 
 ---

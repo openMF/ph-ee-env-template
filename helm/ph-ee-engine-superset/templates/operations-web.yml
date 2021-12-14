@@ -19,6 +19,9 @@ spec:
       containers:
         - name: ph-ee-operations-web
           image: "{{ .Values.operations_web.image }}"
+          resources:
+            limits:
+              memory: "1536M"
           ports:
             - containerPort: 4200
           volumeMounts:
@@ -56,7 +59,7 @@ spec:
       port: 4200
 
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-operations-web

@@ -21,6 +21,9 @@ spec:
           image: "{{ .Values.roster_connector.image }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "400M"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.roster_connector.SPRING_PROFILES_ACTIVE }}"

@@ -23,6 +23,9 @@ spec:
           image: "{{ .Values.operations_app.image }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "512M"
           readinessProbe:
             httpGet:
               path: /oauth/token_key
@@ -51,7 +54,6 @@ metadata:
   labels:
     app: ph-ee-operations-app
   name: ph-ee-operations-app
-  namespace: default
 spec:
   ports:
     - name: port
@@ -64,7 +66,7 @@ spec:
   type: ClusterIP
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-operations-app
@@ -80,7 +82,7 @@ spec:
               servicePort: 80
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-identity

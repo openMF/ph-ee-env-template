@@ -27,6 +27,9 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+          resources:
+            limits:
+              memory: "650M"
       volumes:
         - name: ph-ee-config
           configMap:
@@ -39,7 +42,6 @@ metadata:
   labels:
     app: ph-ee-connector-bulk
   name: ph-ee-connector-bulk
-  namespace: default
 spec:
   ports:
     - name: port
