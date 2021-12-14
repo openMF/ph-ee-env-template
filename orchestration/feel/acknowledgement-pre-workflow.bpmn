@@ -17,8 +17,8 @@
       <bpmn:incoming>Flow_06z7r22</bpmn:incoming>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0biu2rr" sourceRef="bulk-processor" targetRef="check-transactions" />
-    <bpmn:sequenceFlow id="Flow_1ef22lf" sourceRef="sample-transactions" targetRef="Activity_13txsq9" />
-    <bpmn:sequenceFlow id="Flow_0mhw4ub" sourceRef="Activity_13txsq9" targetRef="Event_0vwo97f" />
+    <bpmn:sequenceFlow id="Flow_1ef22lf" sourceRef="sample-transactions" targetRef="invoke-ack-workers" />
+    <bpmn:sequenceFlow id="Flow_0mhw4ub" sourceRef="invoke-ack-workers" targetRef="Event_0vwo97f" />
     <bpmn:endEvent id="Event_0vwo97f" name="starts individual acknowledgement workflows">
       <bpmn:incoming>Flow_0mhw4ub</bpmn:incoming>
     </bpmn:endEvent>
@@ -32,7 +32,7 @@
       <bpmn:incoming>Flow_12ejntn</bpmn:incoming>
       <bpmn:outgoing>Flow_1ef22lf</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_13txsq9" name="Invoke Ack Workflows">
+    <bpmn:serviceTask id="invoke-ack-workers" name="Invoke Ack Workflows">
       <bpmn:incoming>Flow_1ef22lf</bpmn:incoming>
       <bpmn:outgoing>Flow_0mhw4ub</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -101,7 +101,7 @@
       <bpmndi:BPMNShape id="Activity_0tbqt5c_di" bpmnElement="sample-transactions" bioc:stroke="#1e88e5" bioc:fill="#bbdefb">
         <dc:Bounds x="650" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zgm6i3_di" bpmnElement="Activity_13txsq9" bioc:stroke="#1e88e5" bioc:fill="#bbdefb">
+      <bpmndi:BPMNShape id="Activity_0zgm6i3_di" bpmnElement="invoke-ack-workers" bioc:stroke="#1e88e5" bioc:fill="#bbdefb">
         <dc:Bounds x="780" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1vd9t90_di" bpmnElement="Gateway_1vd9t90" isMarkerVisible="true" bioc:stroke="black" bioc:fill="white">
