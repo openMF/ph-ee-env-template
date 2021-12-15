@@ -116,44 +116,48 @@ zeebe:
 
 channel:
   SPRING_PROFILES_ACTIVE: ""
-  hostname: ""
-  image: ""
+  hostname: "paymenthub.qa.oneacrfund.org"
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-channel"
 
 operations_app:
   SPRING_PROFILES_ACTIVE: ""
-  hostname: ""
-  image: ""
+  hostname: "paymenthub.qa.oneacrfund.org"
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-operations-app"
 
 operations_web:
-  hostname: ""
-  webhost: ""
-  image: ""
+  hostname: "paymenthub.qa.oneacrfund.org"
+  webhost: "paymenthub.qa.oneacrfund.org"
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-operations-web"
 
 identity:
-    hostname: ""
+    hostname: "paymenthub.qa.oneacrfund.org"
     image: ""
 
 mpesa:
   SPRING_PROFILES_ACTIVE: ""
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-mpesa"
+  hostname: "paymenthub.qa.oneacrfund.org"
 
 # pesa core connector
 roster_connector: 
   SPRING_PROFILES_ACTIVE: ""
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-pesa"
 
 notifications:
   SPRING_PROFILES_ACTIVE: ""
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-notifications"
+  hostname: "paymenthub.qa.oneacrfund.org"
 
 zeebe_ops:
   SPRING_PROFILES_ACTIVE: ""
+  hostname: "paymenthub.qa.oneacrfund.org"
 
 messagegateway:
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/message-gateway"
+  hostname: "paymenthub.qa.oneacrfund.org"
 
 importer_es:
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-es"
 
 importer_rdbms:
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-rdbms"

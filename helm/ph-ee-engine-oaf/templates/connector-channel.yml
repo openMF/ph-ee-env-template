@@ -21,6 +21,7 @@ spec:
           image: "{{ .Values.channel.image }}"
           ports:
             - containerPort: 5000
+          imagePullPolicy: Always
           resources:
             limits:
               memory: "768M"
@@ -47,9 +48,13 @@ spec:
     - host: "{{ .Values.channel.hostname }}"
       http:
         paths:
-        - backend:
-            serviceName: ph-ee-connector-channel
-            servicePort: 80
+        - path: /channel
+          pathType: Prefix
+          backend:
+            service:
+              name: ph-ee-connector-channel
+              port: 
+                number: 80
 
 ---
 apiVersion: v1

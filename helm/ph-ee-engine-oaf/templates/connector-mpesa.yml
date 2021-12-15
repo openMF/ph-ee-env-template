@@ -21,6 +21,7 @@ spec:
           image: "{{ .Values.mpesa.image }}"
           ports:
             - containerPort: 5000
+          imagePullPolicy: Always
           resources:
             limits:
               memory: "512M"
@@ -61,6 +62,10 @@ spec:
     - host: "{{ .Values.mpesa.hostname }}"
       http:
         paths:
-          - backend:
-              serviceName: ph-ee-connector-mpesa
-              servicePort: 80
+          - path: /mpesa
+            pathType: Prefix
+            backend:
+              service:
+                name: ph-ee-connector-mpesa
+                port: 
+                  number: 80

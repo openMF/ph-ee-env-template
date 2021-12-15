@@ -19,6 +19,7 @@ spec:
       containers:
         - name: ph-ee-importer-rdbms
           image: "{{ .Values.importer_rdbms.image }}"
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
