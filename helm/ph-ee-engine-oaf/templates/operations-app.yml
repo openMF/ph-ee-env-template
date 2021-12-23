@@ -40,6 +40,8 @@ spec:
               value: "password"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
+            - name: "token.client.channel.secret"
+              value: "p1234"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -72,7 +74,8 @@ kind: Ingress
 metadata:
   name: ph-ee-operations-app
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/strip-path: "true"
 spec:
   rules:
     - host: "{{ .Values.operations_app.hostname }}"
@@ -85,6 +88,10 @@ spec:
                 name: ph-ee-operations-app
                 port: 
                   number: 80
+  tls:
+    - hosts:
+        - "*.qa.oneacrefund.org"
+      secretName: oafqa-tls
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -92,7 +99,8 @@ kind: Ingress
 metadata:
   name: ph-ee-identity
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/strip-path: "true"
 spec:
   rules:
     - host: "{{ .Values.operations_app.hostname }}"
@@ -105,6 +113,9 @@ spec:
                 name: ph-ee-operations-app
                 port: 
                   number: 80
-
+  tls:
+    - hosts:
+        - "*.qa.oneacrefund.org"
+      secretName: oafqa-tls
 
 {{- end }}
