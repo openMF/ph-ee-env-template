@@ -8,10 +8,6 @@
       <bpmn:incoming>Flow_1w7vmx6</bpmn:incoming>
       <bpmn:incoming>Flow_1th9p1k</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:task id="send-ack-message" name="Send Ack Message">
-      <bpmn:incoming>Flow_0hik7am</bpmn:incoming>
-      <bpmn:outgoing>Flow_0cse45n</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0hik7am" sourceRef="StartEvent_1" targetRef="send-ack-message" />
     <bpmn:sequenceFlow id="Flow_0cse45n" sourceRef="send-ack-message" targetRef="delivery-callback" />
     <bpmn:boundaryEvent id="Event_0jkydn8" attachedToRef="delivery-callback">
@@ -20,19 +16,7 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT90S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:task id="get-message-state" name="Get message State">
-      <bpmn:incoming>Flow_1muu2qv</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wpqedg</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="fetch-response" name="Fetch response">
-      <bpmn:incoming>Flow_1l7ujpu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0gxs18c</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0gxs18c" sourceRef="fetch-response" targetRef="response-ack-callback" />
-    <bpmn:task id="validate-response" name="Validate Response">
-      <bpmn:incoming>Flow_1izyfow</bpmn:incoming>
-      <bpmn:outgoing>Flow_1w7vmx6</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1w7vmx6" sourceRef="validate-response" targetRef="Event_019jc3l" />
     <bpmn:sequenceFlow id="Flow_1wpqedg" sourceRef="get-message-state" targetRef="delivery-callback" />
     <bpmn:sequenceFlow id="Flow_0m8wbue" sourceRef="delivery-callback" targetRef="response-ack-callback" />
@@ -44,10 +28,6 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0rrma2a" sourceRef="response-ack-callback" targetRef="Gateway_031fjyh" />
     <bpmn:sequenceFlow id="Flow_1izyfow" sourceRef="Gateway_031fjyh" targetRef="validate-response" />
-    <bpmn:task id="set-response-no" name="set response as NO">
-      <bpmn:incoming>Flow_0v4yazg</bpmn:incoming>
-      <bpmn:outgoing>Flow_1th9p1k</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1th9p1k" sourceRef="set-response-no" targetRef="Event_019jc3l" />
     <bpmn:sequenceFlow id="Flow_0v4yazg" name="NO" sourceRef="Gateway_031fjyh" targetRef="set-response-no" />
     <bpmn:sequenceFlow id="Flow_075g5y3" name="YES" sourceRef="Gateway_031fjyh" targetRef="response-ack-callback" />
@@ -70,6 +50,26 @@
       <bpmn:incoming>Flow_1wpqedg</bpmn:incoming>
       <bpmn:outgoing>Flow_0m8wbue</bpmn:outgoing>
     </bpmn:receiveTask>
+    <bpmn:serviceTask id="send-ack-message" name="Send Ack Message">
+      <bpmn:incoming>Flow_0hik7am</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cse45n</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="validate-response" name="Validate Response">
+      <bpmn:incoming>Flow_1izyfow</bpmn:incoming>
+      <bpmn:outgoing>Flow_1w7vmx6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="set-response-no" name="set response as NO">
+      <bpmn:incoming>Flow_0v4yazg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1th9p1k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="get-message-state" name="Get message State">
+      <bpmn:incoming>Flow_1muu2qv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wpqedg</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="fetch-response" name="Fetch response">
+      <bpmn:incoming>Flow_1l7ujpu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gxs18c</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_eef64e09-37c9-41a6-a4fa-d7db0987375e">
@@ -146,32 +146,32 @@
           <dc:Bounds x="969" y="285" width="23" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_03wyk6o_di" bpmnElement="send-ack-message" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
-        <dc:Bounds x="240" y="220" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0otcv05_di" bpmnElement="get-message-state" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
-        <dc:Bounds x="380" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01bu32s_di" bpmnElement="fetch-response" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
-        <dc:Bounds x="530" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1q05d40_di" bpmnElement="validate-response" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
-        <dc:Bounds x="820" y="220" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_031fjyh_di" bpmnElement="Gateway_031fjyh" isMarkerVisible="true" bioc:stroke="#e53935" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#e53935">
         <dc:Bounds x="695" y="235" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="730" y="285" width="39" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bxtnho_di" bpmnElement="set-response-no" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
-        <dc:Bounds x="670" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1oh3nza_di" bpmnElement="response-ack-callback" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
         <dc:Bounds x="530" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0jhh0l8_di" bpmnElement="delivery-callback" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2">
         <dc:Bounds x="380" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_017ds2o_di" bpmnElement="send-ack-message" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2">
+        <dc:Bounds x="240" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1978872_di" bpmnElement="validate-response" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2">
+        <dc:Bounds x="820" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0khef8b_di" bpmnElement="set-response-no" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2">
+        <dc:Bounds x="670" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08seomx_di" bpmnElement="get-message-state" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2">
+        <dc:Bounds x="380" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11gbbmx_di" bpmnElement="fetch-response" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2">
+        <dc:Bounds x="530" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_06l1351_di" bpmnElement="Event_0rhqtqq" bioc:stroke="#fb8c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#fb8c00">
         <dc:Bounds x="582" y="202" width="36" height="36" />
