@@ -66,7 +66,7 @@ spec:
   type: ClusterIP
 
 ---
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: ph-ee-operations-app
@@ -82,7 +82,7 @@ spec:
               servicePort: 80
 
 ---
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: ph-ee-identity
