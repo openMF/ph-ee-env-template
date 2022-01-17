@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-channel
-          image: "{{ .Values.channel.image }}"
+          image: "{{ .Values.channel.image }}" 
           ports:
             - containerPort: 5000
           env:

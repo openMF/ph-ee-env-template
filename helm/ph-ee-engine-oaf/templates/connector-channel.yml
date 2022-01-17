@@ -44,8 +44,7 @@ kind: Ingress
 metadata:
   name: ph-ee-connector-channel
   annotations:
-    kubernetes.io/ingress.class: "kong"
-    konghq.com/strip-path: "true"
+    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
 spec:
   rules:
     - host: "{{ .Values.channel.hostname }}"
@@ -60,8 +59,8 @@ spec:
                 number: 80
   tls:
     - hosts:
-        - "*.qa.oneacrefund.org"
-      secretName: oafqa-tls
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
 
 ---
 apiVersion: v1

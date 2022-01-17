@@ -52,3 +52,28 @@ spec:
     app: ph-ee-connector-notifications
   sessionAffinity: None
   type: ClusterIP
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ph-ee-notifications
+  annotations:
+    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+spec:
+  rules:
+    - host: "{{ .Values.notifications.hostname }}"
+      http:
+        paths:
+          - path: /notifications
+            pathType: Prefix
+            backend:
+              service:
+                name: ph-ee-connector-notifications
+                port: 
+                  number: 80
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"

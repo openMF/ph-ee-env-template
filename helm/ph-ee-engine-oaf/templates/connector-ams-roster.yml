@@ -1,3 +1,5 @@
+{{- if .Values.roster_connector.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,3 +33,4 @@ spec:
             limits:
               memory: "512M"
 
+{{- end }}

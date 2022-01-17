@@ -1,3 +1,5 @@
+{{- if .Values.messagegateway.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,3 +56,29 @@ spec:
     app: message-gateway
   sessionAffinity: None
   type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: message-gateway
+  annotations:
+    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+spec:
+  rules:
+    - host: "{{ .Values.messagegateway.hostname }}"
+      http:
+        paths:
+          - path: /messages
+            pathType: Prefix
+            backend:
+              service:
+                name: message-gateway
+                port: 
+                  number: 80
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+
+{{- end }}

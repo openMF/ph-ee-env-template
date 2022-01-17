@@ -62,8 +62,7 @@ kind: Ingress
 metadata:
   name: ph-ee-operations-web
   annotations:
-    kubernetes.io/ingress.class: "kong"
-    konghq.com/strip-path: "true"
+    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
 spec:
   rules:
     - host: "{{ .Values.operations_web.hostname }}"
@@ -78,6 +77,6 @@ spec:
                   number: 4200
   tls:
     - hosts:
-        - "*.qa.oneacrefund.org"
-      secretName: oafqa-tls
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
 {{- end }}

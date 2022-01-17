@@ -119,28 +119,40 @@ channel:
   SPRING_PROFILES_ACTIVE: "med"
   hostname: "paymenthub.qa.oneacrfund.org"
   image: ""
+  ingress:
+    class: ""
 
 operations_app:
   SPRING_PROFILES_ACTIVE: "med"
   hostname: "paymenthub.qa.oneacrfund.org"
   image: ""
+  ingress:
+    class: ""
 
 operations_web:
   hostname: "paymenthub.qa.oneacrfund.org"
   webhost: "paymenthub.qa.oneacrfund.org"
   image: ""
+  ingress:
+    class: ""
 
 identity:
     hostname: "paymenthub.qa.oneacrfund.org"
     image: ""
+    ingress:
+      class: ""
 
 mpesa:
+  enabled: true
   SPRING_PROFILES_ACTIVE: "med"
   image: ""
   hostname: "paymenthub.qa.oneacrfund.org"
+  ingress:
+    class: ""
 
 # pesa core connector
 roster_connector: 
+  enabled: true
   SPRING_PROFILES_ACTIVE: "med"
   image: ""
 
@@ -148,17 +160,29 @@ notifications:
   SPRING_PROFILES_ACTIVE: "med"
   image: ""
   hostname: "paymenthub.qa.oneacrfund.org"
+  ingress:
+    class: ""
 
 zeebe_ops:
+  enabled: true
   SPRING_PROFILES_ACTIVE: ""
   hostname: "paymenthub.qa.oneacrfund.org"
+  ingress:
+    class: ""
 
 messagegateway:
+  enabled: true
   image: ""
   hostname: "paymenthub.qa.oneacrfund.org"
+  ingress:
+    class: ""
 
 importer_es:
   image: ""
 
 importer_rdbms:
   image: ""
+
+wildcardhostname: ""
+
+tls: ""  
