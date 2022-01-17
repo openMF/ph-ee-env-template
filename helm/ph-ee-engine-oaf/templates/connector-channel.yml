@@ -28,6 +28,8 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.channel.DFSPIDS }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

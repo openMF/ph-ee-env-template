@@ -115,6 +115,7 @@ zeebe:
       contactpoint: "zeebe-zeebe-gateway:26500"
 
 channel:
+  DFSPIDS: ""
   SPRING_PROFILES_ACTIVE: "med"
   hostname: "paymenthub.qa.oneacrfund.org"
   image: ""
