@@ -39,6 +39,8 @@ spec:
               value: "password"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
+            - name: "TENANTS"
+              value: "{{ .Values.operations_app.TENANTS }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
