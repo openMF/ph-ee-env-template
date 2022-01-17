@@ -42,6 +42,8 @@ spec:
               value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
             - name: "token.client.channel.secret"
               value: "p1234"
+            - name: "TENANTS"
+              value: "{{ .Values.operations_app.TENANTS }}"  
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
