@@ -43,7 +43,7 @@ spec:
             - name: "token.client.channel.secret"
               value: "p1234"
             - name: "TENANTS"
-              value: "{{ .Values.operations_app.TENANTS }}"  
+              value: "{{ .Values.operations_app.TENANTS }}" 
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
