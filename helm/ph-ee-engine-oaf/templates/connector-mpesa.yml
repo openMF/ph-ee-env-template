@@ -58,7 +58,10 @@ kind: Ingress
 metadata:
   name: ph-ee-connector-mpesa
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+{{- if .Values.mpesa.ingress.annotations }}
+{{ toYaml .Values.mpesa.ingress.annotations | indent 4 }}
+{{- end }}
+
 spec:
   rules:
     - host: "{{ .Values.mpesa.hostname }}"

@@ -60,7 +60,9 @@ kind: Ingress
 metadata:
   name: ph-ee-notifications
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+{{- if .Values.notifications.ingress.annotations }}
+{{ toYaml .Values.notifications.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
     - host: "{{ .Values.notifications.hostname }}"

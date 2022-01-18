@@ -76,7 +76,9 @@ kind: Ingress
 metadata:
   name: ph-ee-operations-app
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+{{- if .Values.operations_app.ingress.annotations }}
+{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
     - host: "{{ .Values.operations_app.hostname }}"
@@ -100,7 +102,9 @@ kind: Ingress
 metadata:
   name: ph-ee-identity
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+{{- if .Values.operations_app.ingress.annotations }}
+{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
     - host: "{{ .Values.operations_app.hostname }}"

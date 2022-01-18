@@ -120,27 +120,32 @@ channel:
   hostname: "paymenthub.qa.oneacrfund.org"
   image: ""
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 operations_app:
   SPRING_PROFILES_ACTIVE: "med"
   hostname: "paymenthub.qa.oneacrfund.org"
   image: ""
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 operations_web:
   hostname: "paymenthub.qa.oneacrfund.org"
+  path: "/"
   webhost: "paymenthub.qa.oneacrfund.org"
   image: ""
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 identity:
     hostname: "paymenthub.qa.oneacrfund.org"
     image: ""
     ingress:
-      class: ""
+      enabled: true
+      annotations: {}
 
 mpesa:
   enabled: true
@@ -148,7 +153,8 @@ mpesa:
   image: ""
   hostname: "paymenthub.qa.oneacrfund.org"
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 # pesa core connector
 roster_connector: 
@@ -161,21 +167,24 @@ notifications:
   image: ""
   hostname: "paymenthub.qa.oneacrfund.org"
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 zeebe_ops:
   enabled: true
   SPRING_PROFILES_ACTIVE: ""
   hostname: "paymenthub.qa.oneacrfund.org"
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 messagegateway:
   enabled: true
   image: ""
   hostname: "paymenthub.qa.oneacrfund.org"
   ingress:
-    class: ""
+    enabled: true
+    annotations: {}
 
 importer_es:
   image: ""

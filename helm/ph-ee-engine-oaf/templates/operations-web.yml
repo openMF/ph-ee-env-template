@@ -62,13 +62,15 @@ kind: Ingress
 metadata:
   name: ph-ee-operations-web
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+{{- if .Values.operations_web.ingress.annotations }}
+{{ toYaml .Values.operations_web.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
     - host: "{{ .Values.operations_web.hostname }}"
       http:
         paths:
-          - path: /opsweb
+          - path: "{{ .Values.operations_web.path }}"
             pathType: Prefix
             backend:
               service:

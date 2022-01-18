@@ -63,7 +63,9 @@ kind: Ingress
 metadata:
   name: message-gateway
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.messagegateway.ingress.class}}"
+{{- if .Values.messagegateway.ingress.annotations }}
+{{ toYaml .Values.messagegateway.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
     - host: "{{ .Values.messagegateway.hostname }}"
