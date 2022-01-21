@@ -34,6 +34,21 @@ spec:
               value: "zeebe-zeebe-gateway:26500"
             - name: "MPESA_LOCAL_HOST"
               value: "https://mpesa.ibank.financial"
+            - name: "MPESA_AUTH_CLIENT-KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.mpesa.secret.name }}"
+                  key: "{{ .Values.mpesa.secret.key.auth_client_key }}"
+            - name: "MPESA_AUTH_CLIENT-SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.mpesa.secret.name }}"
+                  key: "{{ .Values.mpesa.secret.key.auth_client_secret }}"
+            - name: "MPESA_API_PASS-KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.mpesa.secret.name }}"
+                  key: "{{ .Values.mpesa.secret.key.api_pass_key }}"
 
 ---
 apiVersion: v1
