@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b49055d7-dee4-445e-9120-3ee66029d45d",
+		"_postman_id": "815c9b90-eb6c-4fb1-81da-f5fc28111148",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1584,6 +1584,563 @@
 									"key": "grant_type",
 									"value": "password"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Zeebe Operations APIs",
+			"item": [
+				{
+					"name": "Start a workflow",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"var1\": \"val1\",\n    \"var2\": \"val2\",\n    \"var3\": \"val3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/workflow/{{BpmnProcessId}}",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"workflow",
+								"{{BpmnProcessId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload bpmn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/danishjamal/Documents/Fynarfin/testing/ph-ee-env-template/orchestration/feel/mpesa-flow-oaf.bpmn"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/zeebe/upload",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"zeebe",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk cancellation of active process",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"processId\": [123, 456, 789]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/workflow/",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"workflow",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bulk cancellation of active process",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"processId\": [123, 456, 789]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:5000/channel/workflow/",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"channel",
+										"workflow",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "9243b64b-7c57-443f-91fc-c1ec0ee18e68"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "87"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.28.4"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Oct 2021 18:54:34 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"cancellationSuccessful\": 0,\n    \"cancellationFailed\": 3,\n    \"success\": [],\n    \"failed\": [\n        123,\n        456,\n        789\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Check ES health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ChannelHostName}}/es/health",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"es",
+								"health"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Status-UP",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5000/es/health",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"es",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "685f2f41-459f-4d8d-aa3d-b6ecf5bf545f"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.28.4"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Oct 2021 18:55:51 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"UP\"}"
+						},
+						{
+							"name": "Status-Down",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5000/es/health",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"es",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "87609590-28a6-4713-b58a-329444239d6a"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.28.4"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Oct 2021 18:57:37 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"reason\":\"Connection refused\",\"status\":\"down\"}"
+						}
+					]
+				},
+				{
+					"name": "Get process definition key and name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/process",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"process"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get process definition key and name",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5000/channel/process",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"channel",
+										"process"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "80c6f388-c4c2-4774-afdb-6268bff4ebfd"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "Content-Length",
+									"value": "416"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.28.4"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Oct 2021 18:59:27 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"bulk_processor-ibank-usa\":[2251799813685998,2251799814125425],\"international_remittance_payee_process-ibank-india\":[2251799813686276,2251799814069864],\"international_remittance_payer_process-ibank-usa\":[2251799813686414,2251799814069794],\"international_remittance_payer_process-ibank-india\":[2251799813686138,2251799814070206],\"international_remittance_payee_process-ibank-usa\":[2251799813686068,2251799814070344]}"
+						}
+					]
+				},
+				{
+					"name": "Cancel a workflow by state and retires",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"state\": \"Activity_1m5hpl9\",\n    \"retries\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/workflow/cancel",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"workflow",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel a process by variable name and value",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"initiatorFspId\",\n    \"value\": \"\\\"ibank-usa\\\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/channel/workflow/cancelbyvalue",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"channel",
+								"workflow",
+								"cancelbyvalue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get process variable by process instance key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/process/variable/{{ProcessInstanceKey}}",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"process",
+								"variable",
+								"{{ProcessInstanceKey}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get process variable by process instance key",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5000/channel/process/variable/2251799813783649",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"channel",
+										"process",
+										"variable",
+										"2251799813783649"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "fa223624-7661-43b5-a525-ea5c3691bc09"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1416"
+								},
+								{
+									"key": "PROCESS_INSTANCE_KEY",
+									"value": "2251799813783649"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.28.4"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Oct 2021 19:06:47 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"transactionType\":\"\\\"inttransfer\\\"\",\"gsmaChannelRequest\":\"\\\"{\\\\\\\"amount\\\\\\\":\\\\\\\"54\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"USD\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"transfer\\\\\\\",\\\\\\\"debitParty\\\\\\\":[{\\\\\\\"key\\\\\\\":\\\\\\\"msisdn\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"7543010\\\\\\\"}],\\\\\\\"creditParty\\\\\\\":[{\\\\\\\"key\\\\\\\":\\\\\\\"msisdn\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"919900878571\\\\\\\"}],\\\\\\\"requestingLei\\\\\\\":\\\\\\\"ibank-usa\\\\\\\",\\\\\\\"receivingLei\\\\\\\":\\\\\\\"ibank-india\\\\\\\",\\\\\\\"internationalTransferInformation\\\\\\\":{\\\\\\\"originCountry\\\\\\\":\\\\\\\"US\\\\\\\",\\\\\\\"receivingCountry\\\\\\\":\\\\\\\"IN\\\\\\\",\\\\\\\"receivingCurrency\\\\\\\":\\\\\\\"INR\\\\\\\",\\\\\\\"senderCurrency\\\\\\\":\\\\\\\"USD\\\\\\\",\\\\\\\"currencyPair\\\\\\\":\\\\\\\"USD/INR\\\\\\\",\\\\\\\"currencyPairRate\\\\\\\":\\\\\\\"70\\\\\\\",\\\\\\\"receivingAmount\\\\\\\":\\\\\\\"3780\\\\\\\"}}\\\"\",\"partyLookupFspId\":\"\\\"ibank-india\\\"\",\"channelRequest\":\"\\\"{\\\\\\\"payer\\\\\\\":{\\\\\\\"partyIdInfo\\\\\\\":{\\\\\\\"partyIdType\\\\\\\":\\\\\\\"MSISDN\\\\\\\",\\\\\\\"partyIdentifier\\\\\\\":\\\\\\\"7543010\\\\\\\"}},\\\\\\\"payee\\\\\\\":{\\\\\\\"partyIdInfo\\\\\\\":{\\\\\\\"partyIdType\\\\\\\":\\\\\\\"MSISDN\\\\\\\",\\\\\\\"partyIdentifier\\\\\\\":\\\\\\\"919900878571\\\\\\\"}},\\\\\\\"amount\\\\\\\":{\\\\\\\"amount\\\\\\\":\\\\\\\"54\\\\\\\",\\\\\\\"currency\\\\\\\":\\\\\\\"USD\\\\\\\"},\\\\\\\"transactionType\\\\\\\":{\\\\\\\"scenario\\\\\\\":\\\\\\\"TRANSFER\\\\\\\",\\\\\\\"initiator\\\\\\\":\\\\\\\"PAYER\\\\\\\",\\\\\\\"initiatorType\\\\\\\":\\\\\\\"CONSUMER\\\\\\\"}}\\\"\",\"isRtpRequest\":\"false\",\"tenantId\":\"\\\"ibank-usa\\\"\",\"initiatorFspId\":\"\\\"ibank-usa\\\"\",\"partyIdType\":\"\\\"MSISDN\\\"\",\"partyId\":\"\\\"919900878571\\\"\",\"originDate\":\"1633441154238\",\"transactionId\":\"\\\"ae75a455-4a09-477f-8e5a-9c1ac4747a5f\\\"\"}"
+						}
+					]
+				},
+				{
+					"name": "Get list of task that are already executed by process definition key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/process/{{ProcessDefinitionKey}}/task/",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"process",
+								"{{ProcessDefinitionKey}}",
+								"task",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get process current state and variable by process instance id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/channel/process/{{ProcessInstanceId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"channel",
+								"process",
+								"{{ProcessInstanceId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel a workflow by workflow instance key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/workflow/{{WorkflowInstanceKey}}/cancel",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"workflow",
+								"{{WorkflowInstanceKey}}",
+								"cancel"
 							]
 						}
 					},
