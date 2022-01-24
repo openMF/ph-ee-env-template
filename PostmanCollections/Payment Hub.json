@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "815c9b90-eb6c-4fb1-81da-f5fc28111148",
+		"_postman_id": "eb30384d-d56f-41ab-8dd9-a75ec6a71c63",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1991,11 +1991,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:5000/channel/workflow/cancelbyvalue",
+							"raw": "{{ChannelHostName}}/channel/workflow/cancelbyvalue",
 							"host": [
-								"localhost"
+								"{{ChannelHostName}}"
 							],
-							"port": "5000",
 							"path": [
 								"channel",
 								"workflow",
@@ -2112,11 +2111,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:5000/channel/process/{{ProcessInstanceId}}",
+							"raw": "{{ChannelHostName}}/channel/process/{{ProcessInstanceId}}",
 							"host": [
-								"localhost"
+								"{{ChannelHostName}}"
 							],
-							"port": "5000",
 							"path": [
 								"channel",
 								"process",
