@@ -74,9 +74,9 @@ metadata:
   name: mpesa-secret
 type: Opaque
 data:
-  client-key: <replace this with client key>
-  client-secret: <replace this with client secret>
-  pass-key: <replace this with pass key>
+  client-key: cmVwbGFjZSB0aGlzIHdpdGggY2xpZW50IGtleQo=
+  client-secret: cmVwbGFjZSB0aGlzIHdpdGggY2xpZW50IHNlY3JldAo=
+  pass-key: cmVwbGFjZSB0aGlzIHdpdGggcGFzcyBrZXkK
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
