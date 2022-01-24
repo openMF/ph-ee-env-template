@@ -117,7 +117,7 @@ zeebe:
 channel:
   DFSPIDS: ""
   SPRING_PROFILES_ACTIVE: "med"
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   image: ""
   ingress:
     enabled: true
@@ -125,23 +125,23 @@ channel:
 
 operations_app:
   SPRING_PROFILES_ACTIVE: "med"
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   image: ""
   ingress:
     enabled: true
     annotations: {}
 
 operations_web:
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   path: "/"
-  webhost: "paymenthub.qa.oneacrfund.org"
+  webhost: "paymenthub.qa.oneacrefund.org"
   image: ""
   ingress:
     enabled: true
     annotations: {}
 
 identity:
-    hostname: "paymenthub.qa.oneacrfund.org"
+    hostname: "paymenthub.qa.oneacrefund.org"
     image: ""
     ingress:
       enabled: true
@@ -151,7 +151,7 @@ mpesa:
   enabled: true
   SPRING_PROFILES_ACTIVE: "med"
   image: ""
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   ingress:
     enabled: true
     annotations: {}
@@ -165,7 +165,7 @@ roster_connector:
 notifications:
   SPRING_PROFILES_ACTIVE: "med"
   image: ""
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   ingress:
     enabled: true
     annotations: {}
@@ -173,7 +173,7 @@ notifications:
 zeebe_ops:
   enabled: true
   SPRING_PROFILES_ACTIVE: ""
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   ingress:
     enabled: true
     annotations: {}
@@ -181,7 +181,7 @@ zeebe_ops:
 messagegateway:
   enabled: true
   image: ""
-  hostname: "paymenthub.qa.oneacrfund.org"
+  hostname: "paymenthub.qa.oneacrefund.org"
   ingress:
     enabled: true
     annotations: {}

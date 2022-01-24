@@ -27,6 +27,10 @@ spec:
               value: "mifos"
             - name: spring.datasource.password
               value: "password"
+            - name: "CALLBACKCONFIG_HOST"
+              value: "{{ .Values.messagegateway.CALLBACKCONFIG_HOST }}"
+            - name: "HOSTCONFIG_HOST"
+              value: "{{ .Values.messagegateway.HOSTCONFIG_HOST }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

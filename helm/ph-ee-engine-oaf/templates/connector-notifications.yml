@@ -25,6 +25,18 @@ spec:
               memory: "512M"
           ports:
            - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 180
+            periodSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 180
+            periodSeconds: 1
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"
@@ -34,8 +46,10 @@ spec:
               value: "message-gateway"
             - name: "HOSTCONFIG_PORT"
               value: "80"
-            - name: "CALLBACKCONFIG_HOST"
-              value: "{{ .Values.notifications.CALLBACKCONFIG_HOST }}"
+            - name: "MESSAGEGATEWAYCONFIG_HOST"
+              value: "{{ .Values.notifications.MESSAGEGATEWAYCONFIG_HOST }}"
+            - name: "NOTIFICATION_LOCAL_HOST"
+              value: "{{ .Values.notifications.NOTIFICATION_LOCAL_HOST }}"
 
 ---
 apiVersion: v1
