@@ -28,15 +28,15 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 180
-            periodSeconds: 1
+              port: 80
+            initialDelaySeconds: 120
+            periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
-            initialDelaySeconds: 180
-            periodSeconds: 1
+              port: 80
+            initialDelaySeconds: 120
+            periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"
