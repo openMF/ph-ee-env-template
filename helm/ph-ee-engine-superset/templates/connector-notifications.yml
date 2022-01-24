@@ -33,8 +33,10 @@ spec:
               value: "message-gateway"
             - name: "HOSTCONFIG_PORT"
               value: "80"
-            - name: "CALLBACKCONFIG_HOST"
-              value: "{{ .Values.notifications.CALLBACKCONFIG_HOST }}"
+            - name: "MESSAGEGATEWAYCONFIG_HOST"
+              value: "{{ .Values.notifications.MESSAGEGATEWAYCONFIG_HOST }}"
+            - name: "NOTIFICATION_LOCAL_HOST"
+              value: "{{ .Values.notifications.NOTIFICATION_LOCAL_HOST }}"
 
 ---
 apiVersion: v1
