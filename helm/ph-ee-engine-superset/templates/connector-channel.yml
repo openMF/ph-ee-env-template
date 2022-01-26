@@ -21,6 +21,19 @@ spec:
           image: "{{ .Values.channel.image }}" 
           ports:
             - containerPort: 5000
+          imagePullPolicy: Always
+            livenessProbe:
+              httpGet:
+                path: /actuator/health/liveness
+                port: 5000
+              initialDelaySeconds: 120
+              periodSeconds: 30
+            readinessProbe:
+              httpGet:
+                path: /actuator/health/readiness
+                port: 5000
+              initialDelaySeconds: 120
+              periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
