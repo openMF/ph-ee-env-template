@@ -45,7 +45,13 @@ spec:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
             - name: "MPESA_LOCAL_HOST"
-              value: "https://mpesa.ibank.financial"
+              value: "{{ .Values.mpesa.callback_host }}"
+            - name: "MPESA_BUSINESS-SHORT-CODE"
+              value: "{{ .Values.mpesa.business_short_code }}"
+            - name: "MPESA_AUTH_HOST"
+              value: "{{ .Values.mpesa.safaricom.auth_host }}"
+            - name: "MPESA_API_HOST"
+              value: "{{ .Values.mpesa.safaricom.api_host }}"
             - name: "MPESA_AUTH_CLIENT-KEY"
               valueFrom:
                 secretKeyRef:
@@ -86,9 +92,9 @@ metadata:
   name: mpesa-secret
 type: Opaque
 data:
-  client-key: cmVwbGFjZSB0aGlzIHdpdGggY2xpZW50IGtleQo=
-  client-secret: cmVwbGFjZSB0aGlzIHdpdGggY2xpZW50IHNlY3JldAo=
-  pass-key: cmVwbGFjZSB0aGlzIHdpdGggcGFzcyBrZXkK
+  client-key: "MHBMeGJOODNGck9sNU5kMEZoOVppNUJRbE14U0wybjUK"
+  client-secret: "WXp1R05vSnhldWI4WkM2ZAo="
+  pass-key: "YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOQo="
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
