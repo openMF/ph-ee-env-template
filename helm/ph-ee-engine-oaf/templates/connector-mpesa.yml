@@ -48,6 +48,8 @@ spec:
               value: "{{ .Values.mpesa.callback_host }}"
             - name: "MPESA_BUSINESS-SHORT-CODE"
               value: "{{ .Values.mpesa.business_short_code }}"
+            - name: "MPESA_TILL"
+              value: "{{ .Values.mpesa.till_number }}"
             - name: "MPESA_AUTH_HOST"
               value: "{{ .Values.mpesa.safaricom.auth_host }}"
             - name: "MPESA_API_HOST"
@@ -92,9 +94,9 @@ metadata:
   name: mpesa-secret
 type: Opaque
 data:
-  client-key: "MHBMeGJOODNGck9sNU5kMEZoOVppNUJRbE14U0wybjUK"
-  client-secret: "WXp1R05vSnhldWI4WkM2ZAo="
-  pass-key: "YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOQo="
+  client-key: "QnJ4UnZzUjBtSkdGbEgyWEdoTjQ0U3hEMnVaY2dBT1o="
+  client-secret: "NkU2eHNRTVAycWRjOEU1ZA=="
+  pass-key: "Yzk5NTYwYTZjYmM5MjBiMmE3MDk2ZmViNGE4Nzk4Y2JlNDkzMmJlZjFmZDNkYjA4ODBlNDAyMmE4ZWQ4ZmQyNw=="
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
