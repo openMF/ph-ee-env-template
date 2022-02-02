@@ -48,6 +48,8 @@ spec:
               value: "{{ .Values.mpesa.callback_host }}"
             - name: "MPESA_BUSINESS-SHORT-CODE"
               value: "{{ .Values.mpesa.business_short_code }}"
+            - name: "MPESA_TILL"
+              value: "{{ .Values.mpesa.till_number }}"
             - name: "MPESA_AUTH_HOST"
               value: "{{ .Values.mpesa.safaricom.auth_host }}"
             - name: "MPESA_API_HOST"
