@@ -48,6 +48,20 @@ spec:
               value: "{{ .Values.messagegateway.CALLBACKCONFIG_HOST }}"
             - name: "HOSTCONFIG_HOST"
               value: "{{ .Values.messagegateway.HOSTCONFIG_HOST }}"
+            - name: "PROVIDERSOURCE_FROMDATABASE"
+              value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMDATABASE }}"
+            - name: "PROVIDERSOURCE_FROMYML"
+              value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMYML }}"
+            - name: "PROVIDERKEYS_TELERIVETAPIKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.messagegateway.secret.name }}"
+                  key: "{{ .Values.messagegateway.secret.key.telerivet_api_key }}"
+            - name: "PROVIDERKEYS_TELERIVETPROJECTID"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.messagegateway.secret.name }}"
+                  key: "{{ .Values.messagegateway.secret.key.telerivet_project_id }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
