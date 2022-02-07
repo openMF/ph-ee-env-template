@@ -50,6 +50,8 @@ spec:
               value: "{{ .Values.notifications.MESSAGEGATEWAYCONFIG_HOST }}"
             - name: "NOTIFICATION_LOCAL_HOST"
               value: "{{ .Values.notifications.NOTIFICATION_LOCAL_HOST }}"
+            - name: "NOTIFICATION_ENABLED"
+              value: "{{ .Values.notifications.NOTIFICATION_ENABLED }}"
 
 ---
 apiVersion: v1
