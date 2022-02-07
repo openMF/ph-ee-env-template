@@ -42,6 +42,8 @@ spec:
               value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
             - name: "DFSPIDS"
               value: "{{ .Values.channel.DFSPIDS }}"
+            - name: "TRANSACTION-ID-LENGTH"
+              value: "{{ .Values.channel.transaction_id_length }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
