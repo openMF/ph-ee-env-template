@@ -57,6 +57,7 @@ spec:
       port: 4200
 
 ---
+{{- if .Values.operations_web.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -81,4 +82,5 @@ spec:
     - hosts:
         - "{{ .Values.wildcardhostname }}"
       secretName: "{{ .Values.tls }}"
+{{- end }}
 {{- end }}

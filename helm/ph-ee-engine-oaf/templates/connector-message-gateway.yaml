@@ -96,6 +96,7 @@ data:
   api-key: "STUyR2Zfd21xV2p3T2o2ZzZBa1BYMFZYbFNCQzV2V2Z6cXJU"
   project-id: "UEowYzYzOTZjOTdkYTQ5Nzc0"
 ---
+{{- if .Values.messagegateway.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -120,5 +121,6 @@ spec:
     - hosts:
         - "{{ .Values.wildcardhostname }}"
       secretName: "{{ .Values.tls }}"
+{{- end }}
 
 {{- end }}
