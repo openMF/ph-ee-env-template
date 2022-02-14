@@ -71,6 +71,7 @@ spec:
   type: ClusterIP
 
 ---
+{{- if .Values.operations_app.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -121,5 +122,6 @@ spec:
     - hosts:
         - "{{ .Values.wildcardhostname }}"
       secretName: "{{ .Values.tls }}"
+{{- end }}
 
 {{- end }}
