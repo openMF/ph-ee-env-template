@@ -155,12 +155,23 @@ mpesa:
   ingress:
     enabled: true
     annotations: {}
+  safaricom:
+    auth_host: ""
+  secret:
+    name: ""
+    key:
+      auth_client_key: ""
 
 # pesa core connector
 roster_connector: 
   enabled: true
   SPRING_PROFILES_ACTIVE: "med"
   image: ""
+  ams:
+    local:
+      enabled: ""
+  pesacore:
+    auth_header: ""
 
 notifications:
   SPRING_PROFILES_ACTIVE: "med"
@@ -185,6 +196,10 @@ messagegateway:
   ingress:
     enabled: true
     annotations: {}
+  secret:
+    name: ""
+    key:
+      telerivet_api_key: ""
 
 importer_es:
   image: ""
