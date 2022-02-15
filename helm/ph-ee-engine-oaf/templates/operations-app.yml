@@ -47,6 +47,14 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+      initContainers:
+        - name: wait-db
+          image: jwilder/dockerize
+          imagePullPolicy: IfNotPresent
+          args:
+            - -timeout=120s
+            - -wait
+            - tcp://operations-mysql:3306
       volumes:
         - name: ph-ee-config
           configMap:
