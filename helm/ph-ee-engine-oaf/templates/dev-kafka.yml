@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: bitnami/kafka
+          image: spotify/kafka
           ports:
             - containerPort: 2181
             - containerPort: 9092
