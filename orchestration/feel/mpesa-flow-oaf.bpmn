@@ -110,14 +110,14 @@
     <bpmn:boundaryEvent id="Event_1ku0cyr" attachedToRef="transaction-callback">
       <bpmn:outgoing>Flow_0wms0vt</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_03qq1x4">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT45S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression"> ${timer}</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0wms0vt" sourceRef="Event_1ku0cyr" targetRef="get-transaction-status" />
     <bpmn:boundaryEvent id="Event_1b36xu9" attachedToRef="notification-callback">
       <bpmn:outgoing>Flow_1pj1te5</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1dx654p">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT45S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression"> ${timer}</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="Gateway_1hsu2ep" default="Flow_03q232e">
@@ -128,17 +128,6 @@
     <bpmn:sequenceFlow id="Flow_1pz4ziy" sourceRef="init-transfer" targetRef="Gateway_1hsu2ep" />
     <bpmn:sequenceFlow id="Flow_03q232e" sourceRef="Gateway_1hsu2ep" targetRef="transaction-callback" />
     <bpmn:sequenceFlow id="Flow_1pj1te5" sourceRef="Event_1b36xu9" targetRef="get-notification-status" />
-    <bpmn:endEvent id="End" name="End">
-      <bpmn:incoming>Flow_136eckn</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="Gateway_1sxppw2">
-      <bpmn:incoming>Flow_0k1p4li</bpmn:incoming>
-      <bpmn:incoming>Flow_0v0sejv</bpmn:incoming>
-      <bpmn:incoming>Flow_0p3uki2</bpmn:incoming>
-      <bpmn:incoming>Flow_1c4vglu</bpmn:incoming>
-      <bpmn:outgoing>Flow_1f9c8i5</bpmn:outgoing>
-      <bpmn:outgoing>Flow_136eckn</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="Gateway_03djybn">
       <bpmn:incoming>Flow_1e07bww</bpmn:incoming>
       <bpmn:outgoing>Flow_1ysutq4</bpmn:outgoing>
@@ -146,32 +135,43 @@
       <bpmn:outgoing>Flow_1c4vglu</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1e07bww" sourceRef="transfer-settlement" targetRef="Gateway_03djybn" />
-    <bpmn:sequenceFlow id="Flow_0k1p4li" sourceRef="Gateway_0wsplm1" targetRef="Gateway_1sxppw2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transactionFailed = true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0v0sejv" sourceRef="Gateway_1hsu2ep" targetRef="Gateway_1sxppw2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transactionFailed = true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0p3uki2" sourceRef="Gateway_071nepp" targetRef="Gateway_1sxppw2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=partyLookupFailed = true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1bh40y1" name="End">
       <bpmn:incoming>Flow_1ysutq4</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1ysutq4" sourceRef="Gateway_03djybn" targetRef="Event_1bh40y1">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsEnabled = false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsSuccessEnabled = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1urs4q3" sourceRef="Gateway_03djybn" targetRef="transaction-success">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsEnabled = true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1f9c8i5" sourceRef="Gateway_1sxppw2" targetRef="transaction-failure">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsEnabled = true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_136eckn" sourceRef="Gateway_1sxppw2" targetRef="End">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsEnabled = false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsSuccessEnabled = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1c4vglu" sourceRef="Gateway_03djybn" targetRef="Gateway_1sxppw2">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transferSettlementFailed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0p3uki2" sourceRef="Gateway_071nepp" targetRef="Gateway_1sxppw2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=partyLookupFailed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0v0sejv" name="" sourceRef="Gateway_1hsu2ep" targetRef="Gateway_1sxppw2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transactionFailed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0k1p4li" sourceRef="Gateway_0wsplm1" targetRef="Gateway_1sxppw2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=transactionFailed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1sxppw2">
+      <bpmn:incoming>Flow_1c4vglu</bpmn:incoming>
+      <bpmn:incoming>Flow_0k1p4li</bpmn:incoming>
+      <bpmn:incoming>Flow_0v0sejv</bpmn:incoming>
+      <bpmn:incoming>Flow_0p3uki2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f9c8i5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_136eckn</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1f9c8i5" sourceRef="Gateway_1sxppw2" targetRef="transaction-failure">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsFailureEnabled = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="End" name="End">
+      <bpmn:incoming>Flow_136eckn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_136eckn" sourceRef="Gateway_1sxppw2" targetRef="End">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isNotificationsFailureEnabled = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:group id="Group_0ywm3xk" categoryValueRef="CategoryValue_1kx0jfq" />
     <bpmn:group id="Group_1kwcabs" categoryValueRef="CategoryValue_18pimjz" />
