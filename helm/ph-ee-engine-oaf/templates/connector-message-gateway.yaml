@@ -41,10 +41,10 @@ spec:
           env:
             - name: spring.datasource.url
               value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
-            - name: spring.datasource.username
-              value: "mifos"
-            - name: spring.datasource.password
-              value: "password"
+            - name: MYSQL_USERNAME
+              value: "{{ .Values.messagegateway.MYSQL_USERNAME }}"
+            - name: MYSQL_PASSWORD
+              value: "{{ .Values.messagegateway.MYSQL_PASSWORD }}"
             - name: "CALLBACKCONFIG_HOST"
               value: "{{ .Values.messagegateway.CALLBACKCONFIG_HOST }}"
             - name: "HOSTCONFIG_HOST"
