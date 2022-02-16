@@ -98,9 +98,9 @@ metadata:
   name: mpesa-secret
 type: Opaque
 data:
-  client-key: "MHBMeGJOODNGck9sNU5kMEZoOVppNUJRbE14U0wybjUK"
-  client-secret: "WXp1R05vSnhldWI4WkM2ZAo="
-  pass-key: "YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOQo="
+  client-key: "{{ .Values.mpesa.secret.value.client_key }}"
+  client-secret: "{{ .Values.mpesa.secret.value.client_secret }}"
+  pass-key: "{{ .Values.mpesa.secret.value.pass_key }}"
 ---
 {{- if .Values.mpesa.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
