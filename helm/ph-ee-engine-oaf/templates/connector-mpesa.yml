@@ -61,18 +61,18 @@ spec:
             - name: "MPESA_AUTH_CLIENT-KEY"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.mpesa.secret.name }}"
-                  key: "{{ .Values.mpesa.secret.key.auth_client_key }}"
+                  name: "mpesa-secret"
+                  key: "client-key"
             - name: "MPESA_AUTH_CLIENT-SECRET"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.mpesa.secret.name }}"
-                  key: "{{ .Values.mpesa.secret.key.auth_client_secret }}"
+                  name: "mpesa-secret"
+                  key: "client-secret"
             - name: "MPESA_API_PASS-KEY"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.mpesa.secret.name }}"
-                  key: "{{ .Values.mpesa.secret.key.api_pass_key }}"
+                  name: "mpesa-secret"
+                  key: "pass-key"
 
 ---
 apiVersion: v1
