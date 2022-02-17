@@ -44,9 +44,21 @@ spec:
             - name: "AMS_LOCAL_ENABLED"
               value: "{{ .Values.roster_connector.ams.local.enabled }}"
             - name: "PESACORE_AUTH-HEADER"
-              value: "{{ .Values.roster_connector.pesacore.auth_header }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "roster-secret"
+                  key: "auth-token"
+            - name: "PESACORE_BASE-URL"
+              value: "{{ .Values.roster_connector.pesacore.base_url }}"
           resources:
             limits:
               memory: "512M"
-
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: roster-secret
+type: Opaque
+data:
+  auth-token: {{ .Values.roster_connector.pesacore.auth_header | b64enc }}
 {{- end }}
