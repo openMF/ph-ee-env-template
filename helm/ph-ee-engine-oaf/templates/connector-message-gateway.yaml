@@ -56,13 +56,13 @@ spec:
             - name: "PROVIDERKEYS_TELERIVETAPIKEY"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.messagegateway.secret.name }}"
-                  key: "{{ .Values.messagegateway.secret.key.telerivet_api_key }}"
+                  name: "messagegateway-secret"
+                  key: "api-key"
             - name: "PROVIDERKEYS_TELERIVETPROJECTID"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.messagegateway.secret.name }}"
-                  key: "{{ .Values.messagegateway.secret.key.telerivet_project_id }}"
+                  name: "messagegateway-secret"
+                  key: "project-id"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -102,8 +102,8 @@ metadata:
   name: messagegateway-secret
 type: Opaque
 data:
-  api-key: "STUyR2Zfd21xV2p3T2o2ZzZBa1BYMFZYbFNCQzV2V2Z6cXJU"
-  project-id: "UEowYzYzOTZjOTdkYTQ5Nzc0"
+  api-key: "{{ .Values.messagegateway.secret.value.api_key }}"
+  project-id: "{{ .Values.messagegateway.secret.value.project_id }}"
 ---
 {{- if .Values.messagegateway.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
