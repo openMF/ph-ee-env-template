@@ -108,7 +108,21 @@ operations:
   enabled: true
 
 operationsMysql:
-  fullnameOverride: operations-mysql
+  image:
+      tag: "5.7"
+      debug: false
+  auth:
+    database: "tenants"
+    username: "mifos"
+    password: "password"
+    rootPassword: "4ET6ywqlGt"
+  initdbScripts:
+    setup.sql: |-
+      CREATE DATABASE IF NOT EXISTS oaf;
+      CREATE DATABASE IF NOT EXISTS messagegateway;
+      GRANT ALL ON *.* TO 'root'@'%';
+      GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
+      GRANT ALL PRIVILEGES ON oaf.* TO 'mifos';
 
 zeebe:
     broker:
