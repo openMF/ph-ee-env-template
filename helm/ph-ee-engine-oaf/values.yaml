@@ -126,6 +126,12 @@ channel:
 operations_app:
   SPRING_PROFILES_ACTIVE: "med"
   hostname: "paymenthub.qa.oneacrefund.org"
+  datasource:
+    username: "mifos"
+    password: "password"
+    host: "operations-mysql"
+    port: 3306
+    schema: "tenants"
   image: ""
   ingress:
     enabled: true

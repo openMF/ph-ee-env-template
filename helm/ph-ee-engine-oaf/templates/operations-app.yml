@@ -35,9 +35,18 @@ spec:
               memory: "512M"
           env:
             - name: "FINERACT_DATASOURCE_CORE_USERNAME"
-              value: "mifos"
+              value: "{{ .Values.operations_app.datasource.username }}" 
             - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  name: "operations-app-secret"
+                  key: "database-password"
+            - name: "FINERACT_DATASOURCE_CORE_HOST"
+              value: "{{ .Values.operations_app.datasource.host }}"
+            - name: "FINERACT_DATASOURCE_CORE_PORT"
+              value: "{{ .Values.operations_app.datasource.port }}"
+            - name: "FINERACT_DATASOURCE_CORE_SCHEMA"
+              value: "{{ .Values.operations_app.datasource.schema }}"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
             - name: "token.client.channel.secret"
@@ -78,6 +87,14 @@ spec:
   sessionAffinity: None
   type: ClusterIP
 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: operations-app-secret
+type: Opaque
+data:
+  database-password: {{ .Values.operations_app.datasource.password | b64enc }}
 ---
 {{- if .Values.operations_app.ingress.enabled }}
 apiVersion: networking.k8s.io/v1

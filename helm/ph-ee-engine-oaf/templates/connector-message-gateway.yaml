@@ -40,11 +40,14 @@ spec:
 
           env:
             - name: spring.datasource.url
-              value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
+              value: "{{ .Values.messagegateway.DATASOURCE_URL }}"
             - name: MYSQL_USERNAME
               value: "{{ .Values.messagegateway.MYSQL_USERNAME }}"
             - name: MYSQL_PASSWORD
-              value: "{{ .Values.messagegateway.MYSQL_PASSWORD }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "messagegateway-secret"
+                  key: "database-password"
             - name: "CALLBACKCONFIG_HOST"
               value: "{{ .Values.messagegateway.CALLBACKCONFIG_HOST }}"
             - name: "HOSTCONFIG_HOST"
@@ -104,6 +107,7 @@ type: Opaque
 data:
   api-key: "{{ .Values.messagegateway.secret.value.api_key | b64enc }}"
   project-id: "{{ .Values.messagegateway.secret.value.project_id | b64enc }}"
+  database-password: {{ .Values.messagegateway.MYSQL_PASSWORD | b64enc }}
 ---
 {{- if .Values.messagegateway.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
