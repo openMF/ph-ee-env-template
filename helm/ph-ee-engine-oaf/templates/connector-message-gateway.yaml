@@ -39,7 +39,7 @@ spec:
             periodSeconds: 30
 
           env:
-            - name: spring.datasource.url
+            - name: SPRING_DATASOURCE_URL
               value: "{{ .Values.messagegateway.DATASOURCE_URL }}"
             - name: MYSQL_USERNAME
               value: "{{ .Values.messagegateway.MYSQL_USERNAME }}"
