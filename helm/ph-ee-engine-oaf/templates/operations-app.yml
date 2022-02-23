@@ -63,7 +63,7 @@ spec:
           args:
             - -timeout=120s
             - -wait
-            - tcp://operationsmysql:3306
+            - tcp://{{ .Values.operations_app.datasource.host }}:3306
       volumes:
         - name: ph-ee-config
           configMap:
