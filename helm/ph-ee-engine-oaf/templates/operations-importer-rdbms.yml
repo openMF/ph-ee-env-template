@@ -25,6 +25,19 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.operations.SPRING_PROFILES_ACTIVE }}"
+            - name: "DATASOURCE_CORE_USERNAME"
+              value: "{{ .Values.importer_rdbms.datasource.username }}" 
+            - name: "DATASOURCE_CORE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "importer-rdbms-secret"
+                  key: "database-password"
+            - name: "DATASOURCE_CORE_HOST"
+              value: "{{ .Values.importer_rdbms.datasource.host }}"
+            - name: "DATASOURCE_CORE_PORT"
+              value: "{{ .Values.importer_rdbms.datasource.port }}"
+            - name: "DATASOURCE_CORE_SCHEMA"
+              value: "{{ .Values.importer_rdbms.datasource.schema }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -35,5 +48,12 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: importer-rdbms-secret
+type: Opaque
+data:
+  database-password: {{ .Values.importer_rdbms.datasource.password | b64enc }}
 {{- end }}

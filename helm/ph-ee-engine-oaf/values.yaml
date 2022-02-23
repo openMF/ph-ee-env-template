@@ -226,6 +226,12 @@ importer_es:
 
 importer_rdbms:
   image: ""
+  datasource:
+      username: "mifos"
+      password: "password"
+      host: "operationsmysql"
+      port: 3306
+      schema: "tenants"
 
 wildcardhostname: ""
 
