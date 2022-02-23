@@ -76,7 +76,7 @@ spec:
           args:
             - -timeout=120s
             - -wait
-            - tcp://operations-mysql:3306
+            - tcp://operationsmysql:3306
       volumes:
         - name: ph-ee-config
           configMap:
