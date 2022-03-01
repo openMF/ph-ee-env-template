@@ -25,18 +25,18 @@ spec:
             limits:
               memory: "512M"
           imagePullPolicy: Always
-            livenessProbe:
-              httpGet:
-                path: /actuator/health/liveness
-                port: 8080
-              initialDelaySeconds: 20
-              periodSeconds: 30
-            readinessProbe:
-              httpGet:
-                path: /actuator/health/readiness
-                port: 8080
-              initialDelaySeconds: 20
-              periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9191
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9191
+            initialDelaySeconds: 120
+            periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"
