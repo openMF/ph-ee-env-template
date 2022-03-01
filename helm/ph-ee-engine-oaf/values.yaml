@@ -175,6 +175,8 @@ mpesa:
   ingress:
     enabled: true
     annotations: {}
+  deployment:
+    annotations: {}
   safaricom:
     auth_host: ""
   secret:
