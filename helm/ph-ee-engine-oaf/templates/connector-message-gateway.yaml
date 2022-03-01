@@ -15,6 +15,10 @@ spec:
     metadata:
       labels:
         app: message-gateway
+      annotations:
+{{- if .Values.messagegateway.deployment.annotations }}
+{{ toYaml .Values.messagegateway.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: message-gateway

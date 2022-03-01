@@ -15,6 +15,10 @@ spec:
     metadata:
       labels:
         app: ph-ee-importer-rdbms
+      annotations:
+{{- if .Values.importer_rdbms.deployment.annotations }}
+{{ toYaml .Values.importer_rdbms.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-importer-rdbms

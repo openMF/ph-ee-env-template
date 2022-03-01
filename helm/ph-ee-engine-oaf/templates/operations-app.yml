@@ -15,9 +15,10 @@ spec:
       labels:
         app: ph-ee-operations-app
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.operations_app.deployment.annotations }}
+{{ toYaml .Values.operations_app.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
-
       containers:
         - name: ph-ee-operations-app
           image: "{{ .Values.operations_app.image }}"

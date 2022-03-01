@@ -136,6 +136,8 @@ channel:
   ingress:
     enabled: true
     annotations: {}
+  deployment:
+    annotations: {}
 
 operations_app:
   SPRING_PROFILES_ACTIVE: "med"
@@ -150,6 +152,8 @@ operations_app:
   ingress:
     enabled: true
     annotations: {}
+  deployment:
+    annotations: {}
 
 operations_web:
   hostname: "paymenthub.qa.oneacrefund.org"
@@ -158,6 +162,8 @@ operations_web:
   image: ""
   ingress:
     enabled: true
+    annotations: {}
+  deployment:
     annotations: {}
 
 identity:
@@ -194,6 +200,8 @@ roster_connector:
       enabled: ""
   pesacore:
     auth_header: ""
+  deployment:
+    annotations: {}
 
 notifications:
   SPRING_PROFILES_ACTIVE: "med"
@@ -202,6 +210,8 @@ notifications:
   ingress:
     enabled: true
     annotations: {}
+  deployment:
+    annotations: {}
 
 zeebe_ops:
   enabled: true
@@ -209,6 +219,8 @@ zeebe_ops:
   hostname: "paymenthub.qa.oneacrefund.org"
   ingress:
     enabled: true
+    annotations: {}
+  deployment:
     annotations: {}
 
 messagegateway:
@@ -222,6 +234,8 @@ messagegateway:
     name: ""
     key:
       telerivet_api_key: ""
+  deployment:
+    annotations: {}
 
 importer_es:
   image: ""
@@ -234,6 +248,8 @@ importer_rdbms:
       host: "operationsmysql"
       port: 3306
       schema: "tenants"
+  deployment:
+    annotations: {}
 
 wildcardhostname: ""
 

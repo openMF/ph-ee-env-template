@@ -16,7 +16,9 @@ spec:
       labels:
         app: ph-ee-connector-ams-roster
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.roster_connector.deployment.annotations }}
+{{ toYaml .Values.roster_connector.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-connector-ams-roster

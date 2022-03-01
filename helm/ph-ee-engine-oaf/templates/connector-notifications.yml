@@ -14,7 +14,9 @@ spec:
       labels:
         app: ph-ee-connector-notifications
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.notifications.deployment.annotations }}
+{{ toYaml .Values.notifications.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-connector-notifications

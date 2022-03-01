@@ -14,7 +14,9 @@ spec:
       labels:
         app: ph-ee-zeebe-ops
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.zeebe_ops.deployment.annotations }}
+{{ toYaml .Values.zeebe_ops.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-zeebe-ops
