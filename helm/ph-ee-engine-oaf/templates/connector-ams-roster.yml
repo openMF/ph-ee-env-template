@@ -52,6 +52,8 @@ spec:
                   key: "auth-token"
             - name: "PESACORE_BASE-URL"
               value: "{{ .Values.roster_connector.pesacore.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.roster_connector.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
               memory: "512M"

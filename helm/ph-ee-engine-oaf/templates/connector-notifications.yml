@@ -56,6 +56,8 @@ spec:
               value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
             - name: "NOTIFICATION_FAILURE_ENABLED"
               value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value:  "{{ .Values.notifications.LOGGING_LEVEL_ROOT }}"
 
 ---
 apiVersion: v1

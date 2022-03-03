@@ -60,6 +60,8 @@ spec:
               value: "{{ .Values.mpesa.safaricom.api_host }}"
             - name: "TENANT"
               value: "{{ .Values.mpesa.tenant }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
             - name: "MPESA_AUTH_CLIENT-KEY"
               valueFrom:
                 secretKeyRef:

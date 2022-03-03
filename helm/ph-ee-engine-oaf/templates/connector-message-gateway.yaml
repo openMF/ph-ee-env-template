@@ -60,6 +60,8 @@ spec:
               value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMDATABASE }}"
             - name: "PROVIDERSOURCE_FROMYML"
               value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMYML }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.messagegateway.LOGGING_LEVEL_ROOT }}"
             - name: "PROVIDERKEYS_TELERIVETAPIKEY"
               valueFrom:
                 secretKeyRef:
