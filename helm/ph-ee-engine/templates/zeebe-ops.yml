@@ -1,3 +1,5 @@
+{{- if .Values.mpesa.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,28 +16,50 @@ spec:
       labels:
         app: ph-ee-zeebe-ops
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.zeebe_ops.deployment.annotations }}
+{{ toYaml .Values.zeebe_ops.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-zeebe-ops
-          image: danishfynarfin/ph-ee-zeebe-ops
+          image: "{{ .Values.zeebe_ops.image }}"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "512M"
           ports:
             - containerPort: 5000
+          env:
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
 ---
-apiVersion: extensions/v1beta1
+{{- if .Values.zeebe_ops.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
 kind: Ingress
 metadata:
   name: ph-ee-zeebe-ops
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+{{- if .Values.zeebe_ops.ingress.annotations }}
+{{ toYaml .Values.zeebe_ops.ingress.annotations | indent 4 }}
+{{- end }}
+
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_connector_channel.hostname }}"
+    - host: "{{ .Values.zeebe_ops.hostname }}"
       http:
         paths:
-        - backend:
-            serviceName: ph-ee-zeebe-ops
-            servicePort: 80
+          - path: /zeebeops
+            pathType: Prefix
+            backend:
+              service:
+                name: ph-ee-zeebe-ops
+                port: 
+                  number: 80
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
 
 ---
 apiVersion: v1
@@ -54,3 +78,5 @@ spec:
     app: ph-ee-zeebe-ops
   sessionAffinity: None
   type: ClusterIP
+
+{{- end}}

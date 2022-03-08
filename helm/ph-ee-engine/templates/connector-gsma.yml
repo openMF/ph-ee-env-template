@@ -1,3 +1,5 @@
+{{- if .Values.ph_ee_connector_gsma.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +16,9 @@ spec:
       labels:
         app: ph-ee-connector-gsma
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
+{{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-connector-gsma-mm
@@ -50,3 +54,5 @@ spec:
     app: ph-ee-connector-gsma
   sessionAffinity: None
   type: ClusterIP
+
+{{- end }} 

@@ -18,6 +18,10 @@ spec:
     spec:
       containers:
         - name: ph-ee-importer-es
-          image: us.icr.io/phee-ns/phee-es-importer
+          image: "{{ .Values.importer_es.image }}"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "512M"
 
 {{- end }}

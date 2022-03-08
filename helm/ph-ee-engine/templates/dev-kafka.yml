@@ -1,26 +1,43 @@
-apiVersion: v1
-kind: Pod
+{{- if .Values.kafka.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: kafka
   labels:
     app: kafka
   annotations:
 spec:
-  containers:
-    - name: kafka
-      image: spotify/kafka
-      ports:
-        - containerPort: 2181
-        - containerPort: 9092
-      env:
-        - name: "ADVERTISED_HOST"
-          value: "kafka"
-        - name: "ADVERTISED_PORT"
-          value: "9092"
-  restartPolicy: Always
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+      annotations:
+{{- if .Values.kafka.deployment.annotations }}
+{{ toYaml .Values.kafka.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: kafka
+          image: spotify/kafka
+          ports:
+            - containerPort: 2181
+            - containerPort: 9092
+          env:
+            - name: "ADVERTISED_HOST"
+              value: "kafka"
+            - name: "ADVERTISED_PORT"
+              value: "9092"
+          resources:
+                limits:
+                  memory: "1536M"
+      restartPolicy: Always
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -34,3 +51,4 @@ spec:
     nodePort: 30092
   type: NodePort
 
+{{- end}}

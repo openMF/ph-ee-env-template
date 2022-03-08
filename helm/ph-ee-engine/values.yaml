@@ -50,7 +50,6 @@ zeebe-cluster-helm:
       - name: ZEEBE_GATEWAY_MONITORING_ENABLED
         value: "true"
 
-
   # zeebe's dependencies
   elasticsearch:
     enabled: false
@@ -77,18 +76,15 @@ zeebe-cluster-helm:
 # payment hub Operate, ES and Kibana
 zeebe-operate-helm:
   enabled: false
-
   image:
     repository: camunda/operate
     tag: 1.1.0
-
   fullnameOverride: "zeebe-operate"
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
       host: "zeebe-elasticsearch"
       clusterName: "zeebe-elasticsearch"
-
 
 elasticsearch:
   enabled: false
@@ -104,32 +100,170 @@ kibana:
   fullnameOverride: "ph-ee-kibana"
   elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
 
-operations:
-  enabled: true
+channel:
+  enabled: false
+  DFSPIDS: ""
+  SPRING_PROFILES_ACTIVE: ""
+  hostname: ""
+  image: ""
+  ingress:
+    enabled: true
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}
 
-operationsMysql:
-  fullnameOverride: operations-mysql
+operations:
+  enabled: false
+
+ingress:
+  apiversion: "networking.k8s.io/v1"
+
+operationsmysql:
+  fullnameOverride: "operationsmysql"
+  image:
+      tag: "5.7"
+      debug: false
+  auth:
+    database: ""
+    username: ""
+    password: ""
+    rootPassword: ""
 
 ph_ee_connector_ams_mifos:
+  enabled: false
   SPRING_PROFILES_ACTIVE: ""
 
 ph_ee_connector_mojaloop:
+  enabled: false
   SPRING_PROFILES_ACTIVE: ""
 
-ph_ee_connector_channel:
+operations_app:
+  enabled: false
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
+  datasource:
+    username: ""
+    password: ""
+    host: ""
+    port: 3306
+    schema: ""
+  image: ""
+  ingress:
+    enabled: true
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}
 
-ph_ee_operations_app:
-  SPRING_PROFILES_ACTIVE: ""
+operations_web:
+  enabled: false
   hostname: ""
-
-ph_ee_operations:
-  hostname: ""
+  path: "/"
   webhost: ""
+  image: ""
+  ingress:
+    enabled: true
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}
 
-ph_ee_identity:
-    hostname: ""
+mpesa:
+  enabled: false
+  SPRING_PROFILES_ACTIVE: ""
+  image: ""
+  hostname: ""
+  ingress:
+    enabled: true
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}
+  safaricom:
+    auth_host: ""
+  secret:
+    name: ""
+    key:
+      auth_client_key: ""
+
+roster_connector: 
+  enabled: false
+  SPRING_PROFILES_ACTIVE: ""
+  image: ""
+  ams:
+    local:
+      enabled: ""
+  pesacore:
+    auth_header: ""
+  deployment:
+    annotations: {}
+
+messagegateway:
+  enabled: false
+  image: ""
+  hostname: ""
+  ingress:
+    enabled: true
+    annotations: {}
+    backend: {}
+  secret:
+    name: ""
+    key:
+      telerivet_api_key: ""
+  deployment:
+    annotations: {}
+
+notifications:
+  enabled: false
+  SPRING_PROFILES_ACTIVE: ""
+  image: ""
+  hostname: ""
+  ingress:
+    enabled: true
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}
+
+zeebe_ops:
+  enabled: false
+  SPRING_PROFILES_ACTIVE: ""
+  hostname: ""
+  ingress:
+    enabled: true
+    annotations: {}
+  deployment:
+    annotations: {}
+
+importer_es:
+  image: ""
+
+kafka:
+  enabled: false
+  deployment:
+    annotations: {}
+
+importer_rdbms:
+  enabled: false
+  image: ""
+  datasource:
+      username: ""
+      password: ""
+      host: ""
+      port: 3306
+      schema: ""
+  deployment:
+    annotations: {}
+
+connector_bulk:
+  enabled: false
+  SPRING_PROFILES_ACTIVE: ""
+  deployment:
+    annotations: {}
 
 ph_ee_connector_gsma:
+  enabled: false
   SPRING_PROFILES_ACTIVE: ""
+  deployment:
+    annotations: {}

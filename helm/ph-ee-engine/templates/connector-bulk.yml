@@ -1,3 +1,5 @@
+{{- if .Values.connector_bulk.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +16,9 @@ spec:
       labels:
         app: ph-ee-connector-bulk
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.connector_bulk.deployment.annotations }}
+{{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-connector-bulk
@@ -23,7 +27,7 @@ spec:
             - containerPort: 5000
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -50,3 +54,5 @@ spec:
     app: ph-ee-connector-bulk
   sessionAffinity: None
   type: ClusterIP
+
+{{- end }}

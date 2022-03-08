@@ -1,3 +1,5 @@
+{{- if .Values.channel.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,18 +16,44 @@ spec:
       labels:
         app: ph-ee-connector-channel
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.channel.deployment.annotations }}
+{{ toYaml .Values.channel.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
         - name: ph-ee-connector-channel
-          image: us.icr.io/phee-ns/phee-connector-channel
+          image: "{{ .Values.channel.image }}"
           ports:
             - containerPort: 5000
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "768M"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_channel.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.channel.DFSPIDS }}"
+            - name: "TRANSACTION-ID-LENGTH"
+              value: "{{ .Values.channel.transaction_id_length }}"
+            - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
+              value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
+            - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
+              value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
+            - name:  "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -35,20 +63,32 @@ spec:
             name: ph-ee-config
 
 ---
-apiVersion: extensions/v1beta1
+{{- if .Values.channel.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
 kind: Ingress
 metadata:
   name: ph-ee-connector-channel
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+{{- if .Values.channel.ingress.annotations }}
+{{ toYaml .Values.channel.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_connector_channel.hostname }}"
+    - host: "{{ .Values.channel.hostname }}"
       http:
         paths:
-        - backend:
-            serviceName: ph-ee-connector-channel
-            servicePort: 80
+        - path: /channel
+          pathType: Prefix
+          backend:
+{{- if .Values.channel.ingress.backend }}
+{{ toYaml .Values.channel.ingress.backend | indent 14 }}
+{{- end }} 
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
 
 ---
 apiVersion: v1
@@ -67,3 +107,5 @@ spec:
     app: ph-ee-connector-channel
   sessionAffinity: None
   type: ClusterIP
+
+{{- end }}

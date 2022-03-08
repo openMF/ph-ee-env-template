@@ -15,14 +15,14 @@ spec:
       labels:
         app: ph-ee-operations-app
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.operations_app.deployment.annotations }}
+{{ toYaml .Values.operations_app.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
-      imagePullSecrets:
-      - name: regcred
-
       containers:
         - name: ph-ee-operations-app
-          image: us.icr.io/phee-ns/ph-ee-ops-bk
+          image: "{{ .Values.operations_app.image }}"
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           readinessProbe:
@@ -31,16 +31,42 @@ spec:
               port: 5000
             periodSeconds: 30
             timeoutSeconds: 5
+          resources:
+            limits:
+              memory: "512M"
           env:
             - name: "FINERACT_DATASOURCE_CORE_USERNAME"
-              value: "mifos"
+              value: "{{ .Values.operations_app.datasource.username }}" 
             - name: "FINERACT_DATASOURCE_CORE_PASSWORD"
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  name: "operations-app-secret"
+                  key: "database-password"
+            - name: "FINERACT_DATASOURCE_CORE_HOST"
+              value: "{{ .Values.operations_app.datasource.host }}"
+            - name: "FINERACT_DATASOURCE_CORE_PORT"
+              value: "{{ .Values.operations_app.datasource.port }}"
+            - name: "FINERACT_DATASOURCE_CORE_SCHEMA"
+              value: "{{ .Values.operations_app.datasource.schema }}"
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_operations_app.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
+            - name: "token.client.channel.secret"
+              value: "p1234"
+            - name: "TENANTS"
+              value: "{{ .Values.operations_app.TENANTS }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.operations_app.LOGGING_LEVEL_ROOT }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+      initContainers:
+        - name: wait-db
+          image: jwilder/dockerize
+          imagePullPolicy: IfNotPresent
+          args:
+            - -timeout=120s
+            - -wait
+            - tcp://{{ .Values.operations_app.datasource.host }}:3306
       volumes:
         - name: ph-ee-config
           configMap:
@@ -53,7 +79,6 @@ metadata:
   labels:
     app: ph-ee-operations-app
   name: ph-ee-operations-app
-  namespace: default
 spec:
   ports:
     - name: port
@@ -66,35 +91,65 @@ spec:
   type: ClusterIP
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: v1
+kind: Secret
+metadata:
+  name: operations-app-secret
+type: Opaque
+data:
+  database-password: {{ .Values.operations_app.datasource.password | b64enc }}
+---
+{{- if .Values.operations_app.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
 kind: Ingress
 metadata:
   name: ph-ee-operations-app
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+{{- if .Values.operations_app.ingress.annotations }}
+{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_operations_app.hostname }}"
+    - host: "{{ .Values.operations_app.hostname }}"
       http:
         paths:
-          - backend:
-              serviceName: ph-ee-operations-app
-              servicePort: 80
+          - path: /opsapp
+            pathType: Prefix
+            backend:
+{{- if .Values.operations_app.ingress.backend }}
+{{ toYaml .Values.operations_app.ingress.backend | indent 14 }}
+{{- end }}              
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: {{ .Values.ingress.apiversion }}
 kind: Ingress
 metadata:
   name: ph-ee-identity
   annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
+{{- if .Values.operations_app.ingress.annotations }}
+{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
-    - host: "{{ .Values.ph_ee_identity.hostname }}"
+    - host: "{{ .Values.operations_app.hostname }}"
       http:
         paths:
-          - backend:
-              serviceName: ph-ee-operations-app
-              servicePort: 80
+          - path: /identity
+            pathType: Prefix
+            backend:
+{{- if .Values.operations_app.ingress.backend }}
+{{ toYaml .Values.operations_app.ingress.backend | indent 14 }}
+{{- end }} 
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
 
 {{- end }}

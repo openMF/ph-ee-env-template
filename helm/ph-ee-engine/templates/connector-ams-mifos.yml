@@ -1,3 +1,5 @@
+{{- if .Values.ph_ee_connector_ams_mifos.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,3 +33,5 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+
+{{- end}}

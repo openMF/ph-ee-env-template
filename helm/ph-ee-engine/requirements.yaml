@@ -14,8 +14,8 @@ dependencies:
   version: 7.13.2
   condition: "kibana.enabled"
 - name: mysql
-  version: 1.6.2
-  repository: "https://charts.helm.sh/stable"
-  alias: operationsMysql
+  version: 8.8.23
+  repository: "https://charts.bitnami.com/bitnami"
+  alias: operationsmysql
   condition: "operations.enabled"
 
