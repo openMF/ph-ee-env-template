@@ -1,13 +1,13 @@
 {{- if .Values.mpesa.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-mpesa"
   labels:
     app: ph-ee-connector-mpesa
 spec:
-  replicas: 1
+  replicas: {{ .Values.mpesa.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-mpesa
@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.mpesa.image }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.mpesa.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -45,7 +45,7 @@ spec:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "zeebe-zeebe-gateway:26500"
+              value: "{{ .Values.mpesa.zeebe_broker_contactpoint }}"
             - name: "MPESA_LOCAL_HOST"
               value: "{{ .Values.mpesa.callback_host }}"
             - name: "MPESA_BUSINESS-SHORT-CODE"
@@ -79,7 +79,7 @@ spec:
                   key: "pass-key"
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
@@ -96,7 +96,7 @@ spec:
   sessionAffinity: None
   type: ClusterIP
 ---
-apiVersion: v1
+apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret
 metadata:
   name: mpesa-secret

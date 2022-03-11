@@ -1,13 +1,13 @@
 {{- if .Values.ph_ee_connector_ams_mifos.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-ams-mifos"
   labels:
     app: ph-ee-connector-ams-mifos
 spec:
-  replicas: 1
+  replicas: {{ .Values.ph_ee_connector_ams_mifos.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-ams-mifos
@@ -16,11 +16,14 @@ spec:
       labels:
         app: ph-ee-connector-ams-mifos
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.ph_ee_connector_ams_mifos.deployment.annotations }}
+{{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-connector-ams-mifos
-          image: us.icr.io/phee-ns/phee-connector-ams
+          image: "{{ .Values.ph_ee_connector_ams_mifos.image }}"
+          imagePullPolicy: "{{ .Values.ph_ee_connector_ams_mifos.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           env:

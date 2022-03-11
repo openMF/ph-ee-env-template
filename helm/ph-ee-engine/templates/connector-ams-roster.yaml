@@ -1,12 +1,13 @@
 {{- if .Values.roster_connector.enabled -}}
-apiVersion: apps/v1
+
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-ams-roster"
   labels:
     app: ph-ee-connector-ams-roster
 spec:
-  replicas: 1
+  replicas: {{ .Values.roster_connector.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-ams-roster
@@ -24,7 +25,7 @@ spec:
           image: "{{ .Values.roster_connector.image }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.roster_connector.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -57,7 +58,7 @@ spec:
             limits:
               memory: "512M"
 ---
-apiVersion: v1
+apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret
 metadata:
   name: roster-secret

@@ -1,13 +1,13 @@
 {{- if .Values.connector_bulk.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-bulk"
   labels:
     app: ph-ee-connector-bulk
 spec:
-  replicas: 1
+  replicas: {{ .Values.connector_bulk.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-bulk
@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-bulk
-          image: us.icr.io/phee-ns/ph-ee-connector-bulk
+          image: "{{ .Values.connector_bulk.image }}"
+          imagePullPolicy: "{{ .Values.connector_bulk.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           env:
@@ -37,7 +38,7 @@ spec:
             name: ph-ee-config
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:

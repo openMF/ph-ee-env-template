@@ -1,13 +1,13 @@
 {{- if .Values.operations.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: ph-ee-importer-rdbms
   labels:
     app: ph-ee-importer-rdbms
 spec:
-  replicas: 1
+  replicas: {{ .Values.importer_rdbms.replicas }}
   selector:
     matchLabels:
       app: ph-ee-importer-rdbms
@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-importer-rdbms
           image: "{{ .Values.importer_rdbms.image }}"
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.importer_rdbms.imagePullPolicy }}"
           ports:
             - containerPort: 8000
           env:
@@ -55,7 +55,7 @@ spec:
           configMap:
             name: ph-ee-config
 ---
-apiVersion: v1
+apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret
 metadata:
   name: importer-rdbms-secret

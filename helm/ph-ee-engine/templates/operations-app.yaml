@@ -1,12 +1,13 @@
 {{- if .Values.operations.enabled -}}
-apiVersion: apps/v1
+
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-operations-app"
   labels:
     app: ph-ee-operations-app
 spec:
-  replicas: 1
+  replicas: {{ .Values.operations_app.replicas }}
   selector:
     matchLabels:
       app: ph-ee-operations-app
@@ -22,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-operations-app
           image: "{{ .Values.operations_app.image }}"
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.operations_app.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           readinessProbe:
@@ -50,10 +51,10 @@ spec:
               value: "{{ .Values.operations_app.datasource.schema }}"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.operations_app.SPRING_PROFILES_ACTIVE }}"
-            - name: "token.client.channel.secret"
-              value: "p1234"
+            - name: "TOKEN_CLIENT_CHANNEL_SECRET"
+              value: "{{ .Values.operations_app.token_client_channel_secret }}"
             - name: "TENANTS"
-              value: "{{ .Values.operations_app.TENANTS }}"
+              value: "{{ .Values.operations_app.tenants }}"
             - name: "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.operations_app.LOGGING_LEVEL_ROOT }}"
           volumeMounts:
@@ -73,7 +74,7 @@ spec:
             name: ph-ee-config
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
@@ -91,7 +92,7 @@ spec:
   type: ClusterIP
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret
 metadata:
   name: operations-app-secret

@@ -1,0 +1,59 @@
+{{- if .Values.ph_ee_connector_slcb.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-slcb"
+  labels:
+    app: ph-ee-connector-slcb
+spec:
+  replicas: {{ .Values.ph_ee_connector_slcb.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-slcb
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-slcb
+      annotations:
+{{- if .Values.ph_ee_connector_slcb.deployment.annotations }}
+{{ toYaml .Values.ph_ee_connector_slcb.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-slcb-mm
+          image: "{{ .Values.ph_ee_connector_slcb.image }}"
+          imagePullPolicy: "{{ .Values.ph_ee_connector_slcb.imagePullPolicy }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_connector_slcb.SPRING_PROFILES_ACTIVE }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-slcb
+  name: ph-ee-connector-slcb
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-slcb
+  sessionAffinity: None
+  type: ClusterIP
+
+{{- end }} 

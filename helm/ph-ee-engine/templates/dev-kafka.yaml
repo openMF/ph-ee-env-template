@@ -1,6 +1,6 @@
 {{- if .Values.kafka.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: kafka
@@ -8,7 +8,7 @@ metadata:
     app: kafka
   annotations:
 spec:
-  replicas: 1
+  replicas: {{ .Values.kafka.replicas }}
   selector:
     matchLabels:
       app: kafka
@@ -23,23 +23,24 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: spotify/kafka
+          image: "{{ .Values.kafka.image }}"
+          imagePullPolicy: "{{ .Values.kafka.imagePullPolicy }}"
           ports:
             - containerPort: 2181
             - containerPort: 9092
           env:
             - name: "ADVERTISED_HOST"
-              value: "kafka"
+              value: "{{ .Values.kafka.advertised.host }}"
             - name: "ADVERTISED_PORT"
-              value: "9092"
+              value: "{{ .Values.kafka.advertised.port }}"
           resources:
                 limits:
                   memory: "1536M"
       restartPolicy: Always
 
 ---
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
-apiVersion: v1
 metadata:
   name: kafka
 spec:

@@ -1,13 +1,13 @@
 {{- if .Values.operations.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: ph-ee-importer-es
   labels:
     app: ph-ee-importer-es
 spec:
-  replicas: 1
+  replicas: {{ .Values.importer_es.replicas }}
   selector:
     matchLabels:
       app: ph-ee-importer-es
@@ -19,7 +19,7 @@ spec:
       containers:
         - name: ph-ee-importer-es
           image: "{{ .Values.importer_es.image }}"
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.importer_es.imagePullPolicy }}"
           resources:
             limits:
               memory: "512M"

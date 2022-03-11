@@ -1,13 +1,13 @@
 {{- if .Values.ph_ee_connector_gsma.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-gsma"
   labels:
     app: ph-ee-connector-gsma
 spec:
-  replicas: 1
+  replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-gsma
@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-gsma-mm
-          image: us.icr.io/phee-ns/ph-ee-gsma
+          image: "{{ .Values.ph_ee_connector_gsma.image }}"
+          imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           env:
@@ -37,7 +38,7 @@ spec:
             name: ph-ee-config
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:

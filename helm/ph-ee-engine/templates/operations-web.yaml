@@ -1,13 +1,13 @@
 {{- if .Values.operations.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: ph-ee-operations-web
   labels:
     app: ph-ee-operations-web
 spec:
-  replicas: 1
+  replicas: {{ .Values.operations_web.replicas }}
   selector:
     matchLabels:
       app: ph-ee-operations-web
@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-operations-web
           image: "{{ .Values.operations_web.image }}"
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.operations_web.imagePullPolicy }}"
           ports:
             - containerPort: 4200
           volumeMounts:
@@ -36,7 +36,8 @@ spec:
             name: ph-ee-operations-web-config
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.configmap.apiversion }}
+kind: ConfigMap
 data:
   configuration.properties: |
     oauth.enabled true
@@ -44,13 +45,12 @@ data:
     oauth.basicAuthToken Y2xpZW50Og==
     oauth.serverUrl http://{{ .Values.identity.hostname }}
     serverUrl http://{{ .Values.operations_app.hostname }}
-kind: ConfigMap
 metadata:
   name: ph-ee-operations-web-config
 
 ---
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
-apiVersion: v1
 metadata:
   name: ph-ee-operations-web
 spec:

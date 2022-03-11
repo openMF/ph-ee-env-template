@@ -102,10 +102,14 @@ kibana:
 
 channel:
   enabled: false
-  DFSPIDS: ""
-  SPRING_PROFILES_ACTIVE: ""
-  hostname: ""
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
+  TRANSACTION_ID_LENGTH: 20
+  DFSPIDS: ""
+  hostname: ""
   ingress:
     enabled: true
     annotations: {}
@@ -118,6 +122,18 @@ operations:
 
 ingress:
   apiversion: "networking.k8s.io/v1"
+
+deployment:
+  apiversion: "apps/v1"
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
 
 operationsmysql:
   fullnameOverride: "operationsmysql"
@@ -132,23 +148,38 @@ operationsmysql:
 
 ph_ee_connector_ams_mifos:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  deployment:
+    annotations: {}
 
 ph_ee_connector_mojaloop:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  deployment:
+    annotations: {}
 
 operations_app:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
+  tenants: ""
+  token_client_channel_secret: ""
   datasource:
     username: ""
     password: ""
     host: ""
     port: 3306
     schema: ""
-  image: ""
   ingress:
     enabled: true
     annotations: {}
@@ -158,10 +189,12 @@ operations_app:
 
 operations_web:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   hostname: ""
   path: "/"
   webhost: ""
-  image: ""
   ingress:
     enabled: true
     annotations: {}
@@ -169,11 +202,26 @@ operations_web:
   deployment:
     annotations: {}
 
+identity:
+  hostname: ""
+
 mpesa:
   enabled: false
-  SPRING_PROFILES_ACTIVE: ""
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
+  zeebe_broker_contactpoint: ""
+  tenant: ""
+  callback_host: ""
+  business_short_code: ""
+  till_number: ""
+  retry_count: 1
+  safaricom:
+    auth_host: ""
+    api_host: ""
   ingress:
     enabled: true
     annotations: {}
@@ -189,8 +237,11 @@ mpesa:
 
 roster_connector: 
   enabled: false
-  SPRING_PROFILES_ACTIVE: ""
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
   ams:
     local:
       enabled: ""
@@ -201,8 +252,18 @@ roster_connector:
 
 messagegateway:
   enabled: false
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
+  LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
+  CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
+  HOSTCONFIG_HOST: ""
+  MYSQL_USERNAME: "mifos"
+  MYSQL_PASSWORD: "password"
+  DATASOURCE_URL: ""
+  PROVIDERSOURCE_FROMDATABASE: ""
+  PROVIDERSOURCE_FROMYML: ""
   ingress:
     enabled: true
     annotations: {}
@@ -216,9 +277,20 @@ messagegateway:
 
 notifications:
   enabled: false
-  SPRING_PROFILES_ACTIVE: ""
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
+  zeebe_broker_contactpoint: ""
+  NOTIFICATION_LOCAL_HOST: ""
+  MESSAGEGATEWAYCONFIG_HOST: ""
+  NOTIFICATION_SUCCESS_ENABLED: false
+  NOTIFICATION_FAILURE_ENABLED: false
+  hostconfig:
+    host: ""
+    port: ""
   ingress:
     enabled: true
     annotations: {}
@@ -228,25 +300,41 @@ notifications:
 
 zeebe_ops:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
+  zeebe_broker_contactpoint: ""
   ingress:
     enabled: true
     annotations: {}
+    backend: {}
   deployment:
     annotations: {}
 
 importer_es:
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
 
 kafka:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
+  advertised:
+    host: ""
+    port: ""
   deployment:
     annotations: {}
 
 importer_rdbms:
   enabled: false
+  replicas: 1
   image: ""
+  imagePullPolicy: "Always"
+  LOGGING_LEVEL_ROOT: "INFO"
   datasource:
       username: ""
       password: ""
@@ -258,12 +346,31 @@ importer_rdbms:
 
 connector_bulk:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   deployment:
     annotations: {}
 
 ph_ee_connector_gsma:
   enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   deployment:
     annotations: {}
+
+ph_ee_connector_slcb:
+  enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  deployment:
+    annotations: {}
+
+wildcardhostname: ""
+
+tls: "" 

@@ -1,13 +1,13 @@
 {{- if .Values.mpesa.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-zeebe-ops"
   labels:
     app: ph-ee-zeebe-ops
 spec:
-  replicas: 1
+  replicas: {{ .Values.zeebe_ops.replicas }}
   selector:
     matchLabels:
       app: ph-ee-zeebe-ops
@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-zeebe-ops
           image: "{{ .Values.zeebe_ops.image }}"
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.zeebe_ops.imagePullPolicy }}"
           resources:
             limits:
               memory: "512M"
@@ -31,7 +31,7 @@ spec:
             - containerPort: 5000
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "zeebe-zeebe-gateway:26500"
+              value: "{{ .Values.zeebe_ops.zeebe_broker_contactpoint }}"
 ---
 {{- if .Values.zeebe_ops.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}
@@ -51,10 +51,10 @@ spec:
           - path: /zeebeops
             pathType: Prefix
             backend:
-              service:
-                name: ph-ee-zeebe-ops
-                port: 
-                  number: 80
+{{- if .Values.zeebe_ops.ingress.backend }}
+{{ toYaml .Values.zeebe_ops.ingress.backend | indent 14 }}
+{{- end }} 
+
   tls:
     - hosts:
         - "{{ .Values.wildcardhostname }}"
@@ -62,7 +62,7 @@ spec:
 {{- end }}
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:

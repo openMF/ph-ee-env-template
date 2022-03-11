@@ -1,13 +1,13 @@
 {{- if .Values.mpesa.enabled -}}
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-notifications"
   labels:
     app: ph-ee-connector-notifications
 spec:
-  replicas: 1
+  replicas: {{ .Values.notifications.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-notifications
@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-connector-notifications
           image: "{{ .Values.notifications.image }}"
-          imagePullPolicy: Always
+          imagePullPolicy: "{{ .Values.notifications.imagePullPolicy }}"
           resources:
             limits:
               memory: "512M"
@@ -45,11 +45,11 @@ spec:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "zeebe-zeebe-gateway:26500"
+              value: "{{ .Values.notifications.zeebe_broker_contactpoint }}"
             - name: "HOSTCONFIG_HOST"
-              value: "message-gateway"
+              value: "{{ .Values.notifications.hostconfig.host }}"
             - name: "HOSTCONFIG_PORT"
-              value: "80"
+              value: "{{ .Values.notifications.hostconfig.port }}"
             - name: "MESSAGEGATEWAYCONFIG_HOST"
               value: "{{ .Values.notifications.MESSAGEGATEWAYCONFIG_HOST }}"
             - name: "NOTIFICATION_LOCAL_HOST"
@@ -62,7 +62,7 @@ spec:
               value:  "{{ .Values.notifications.LOGGING_LEVEL_ROOT }}"
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
