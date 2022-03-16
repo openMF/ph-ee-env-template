@@ -1,4 +1,3 @@
-
 zeebe-cluster-helm:
   global:
     zeebe: "zeebe-zeebe"
@@ -306,6 +305,7 @@ zeebe_ops:
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
   zeebe_broker_contactpoint: ""
+  tenants: ""
   ingress:
     enabled: true
     annotations: {}

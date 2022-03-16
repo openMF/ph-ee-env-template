@@ -1,4 +1,4 @@
-{{- if .Values.mpesa.enabled -}}
+{{- if .Values.zeebe_ops.enabled -}}
 
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
@@ -32,6 +32,8 @@ spec:
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Values.zeebe_ops.zeebe_broker_contactpoint }}"
+            - name: "TENANTS"
+              value: "{{ .Values.zeebe_ops.tenants }}"
 ---
 {{- if .Values.zeebe_ops.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}
