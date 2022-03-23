@@ -303,6 +303,7 @@ zeebe_ops:
   image: ""
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   zeebe_broker_contactpoint: ""
   tenants: ""
