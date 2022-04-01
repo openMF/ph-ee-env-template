@@ -26,6 +26,13 @@ spec:
           imagePullPolicy: "{{ .Values.connector_bulk.imagePullPolicy }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "{{ .Values.connector_bulk.limits.memory }}"
+              cpu: "{{ .Values.connector_bulk.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.connector_bulk.requests.memory }}"
+              cpu: "{{ .Values.connector_bulk.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"

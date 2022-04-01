@@ -26,6 +26,13 @@ spec:
           imagePullPolicy: "{{ .Values.operations_web.imagePullPolicy }}"
           ports:
             - containerPort: 4200
+          resources:
+            limits:
+              memory: "{{ .Values.operations_web.limits.memory }}"
+              cpu: "{{ .Values.operations_web.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.operations_web.requests.memory }}"
+              cpu: "{{ .Values.operations_web.requests.cpu }}"
           volumeMounts:
             - name: ph-ee-operations-web-config
               mountPath: "/app/src/assets/configuration.properties"

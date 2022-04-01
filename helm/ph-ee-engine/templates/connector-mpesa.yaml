@@ -40,7 +40,11 @@ spec:
             periodSeconds: 30
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.mpesa.limits.memory }}"
+              cpu: "{{ .Values.mpesa.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.mpesa.requests.memory }}"
+              cpu: "{{ .Values.mpesa.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"

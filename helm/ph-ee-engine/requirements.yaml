@@ -5,7 +5,7 @@ dependencies:
 - name: zeebe-operate-helm
   repository: https://helm.camunda.io
   version: 1.0.0
-  condition: "zeebe-operate.enabled"
+  condition: "zeebe-operate-helm.enabled"
 - name: elasticsearch
   repository: http://helm.elastic.co
   version: 7.16.3

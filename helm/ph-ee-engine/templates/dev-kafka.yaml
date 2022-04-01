@@ -28,6 +28,13 @@ spec:
           ports:
             - containerPort: 2181
             - containerPort: 9092
+          resources:
+            limits:
+              memory: "{{ .Values.kafka.limits.memory }}"
+              cpu: "{{ .Values.kafka.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.kafka.requests.memory }}"
+              cpu: "{{ .Values.kafka.requests.cpu }}"
           env:
             - name: "ADVERTISED_HOST"
               value: "{{ .Values.kafka.advertised.host }}"

@@ -26,6 +26,13 @@ spec:
           imagePullPolicy: "{{ .Values.ph_ee_connector_slcb.imagePullPolicy }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "{{ .Values.ph_ee_connector_slcb.limits.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_slcb.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.ph_ee_connector_slcb.requests.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_slcb.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_slcb.SPRING_PROFILES_ACTIVE }}"

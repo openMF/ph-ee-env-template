@@ -28,7 +28,11 @@ spec:
           imagePullPolicy: "{{ .Values.messagegateway.imagePullPolicy }}"
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.messagegateway.limits.memory }}"
+              cpu: "{{ .Values.messagegateway.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.messagegateway.requests.memory }}"
+              cpu: "{{ .Values.messagegateway.requests.cpu }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

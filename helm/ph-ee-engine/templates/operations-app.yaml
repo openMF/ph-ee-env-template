@@ -34,7 +34,11 @@ spec:
             timeoutSeconds: 5
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.operations_app.limits.memory }}"
+              cpu: "{{ .Values.operations_app.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.operations_app.requests.memory }}"
+              cpu: "{{ .Values.operations_app.requests.cpu }}"
           env:
             - name: "FINERACT_DATASOURCE_CORE_USERNAME"
               value: "{{ .Values.operations_app.datasource.username }}" 

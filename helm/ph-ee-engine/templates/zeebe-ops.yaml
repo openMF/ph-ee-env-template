@@ -26,7 +26,11 @@ spec:
           imagePullPolicy: "{{ .Values.zeebe_ops.imagePullPolicy }}"
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.zeebe_ops.limits.memory }}"
+              cpu: "{{ .Values.zeebe_ops.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.zeebe_ops.requests.memory }}"
+              cpu: "{{ .Values.zeebe_ops.requests.cpu }}"
           ports:
             - containerPort: 5000
           env:

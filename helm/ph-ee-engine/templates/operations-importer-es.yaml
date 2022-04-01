@@ -22,6 +22,10 @@ spec:
           imagePullPolicy: "{{ .Values.importer_es.imagePullPolicy }}"
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.importer_es.limits.memory }}"
+              cpu: "{{ .Values.importer_es.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.importer_es.requests.memory }}"
+              cpu: "{{ .Values.importer_es.requests.cpu }}"
 
 {{- end }}

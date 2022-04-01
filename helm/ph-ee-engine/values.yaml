@@ -109,6 +109,12 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   DFSPIDS: ""
   hostname: ""
+  limits:
+    memory: "768M"
+    cpu: 4
+  requests:
+    memory: "768M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -151,6 +157,12 @@ ph_ee_connector_ams_mifos:
   image: ""
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 
@@ -160,6 +172,12 @@ ph_ee_connector_mojaloop:
   image: ""
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 
@@ -179,6 +197,12 @@ operations_app:
     host: ""
     port: 3306
     schema: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -194,6 +218,12 @@ operations_web:
   hostname: ""
   path: "/"
   webhost: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -221,6 +251,12 @@ mpesa:
   safaricom:
     auth_host: ""
     api_host: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -241,6 +277,12 @@ roster_connector:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   containerPort: 5000
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ams:
     local:
       enabled: ""
@@ -263,6 +305,12 @@ messagegateway:
   DATASOURCE_URL: ""
   PROVIDERSOURCE_FROMDATABASE: ""
   PROVIDERSOURCE_FROMYML: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -290,6 +338,12 @@ notifications:
   hostconfig:
     host: ""
     port: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -307,6 +361,12 @@ zeebe_ops:
   hostname: ""
   zeebe_broker_contactpoint: ""
   tenants: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   ingress:
     enabled: true
     annotations: {}
@@ -318,6 +378,12 @@ importer_es:
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
 
 kafka:
   enabled: false
@@ -327,6 +393,12 @@ kafka:
   advertised:
     host: ""
     port: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 
@@ -342,6 +414,12 @@ importer_rdbms:
       host: ""
       port: 3306
       schema: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 
@@ -351,6 +429,12 @@ connector_bulk:
   image: ""
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 
@@ -360,6 +444,12 @@ ph_ee_connector_gsma:
   image: ""
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 
@@ -369,6 +459,12 @@ ph_ee_connector_slcb:
   image: ""
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  limits:
+    memory: "512M"
+    cpu: 4
+  requests:
+    memory: "512M"
+    cpu: 4
   deployment:
     annotations: {}
 

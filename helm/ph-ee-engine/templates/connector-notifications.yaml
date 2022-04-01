@@ -26,7 +26,11 @@ spec:
           imagePullPolicy: "{{ .Values.notifications.imagePullPolicy }}"
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.notifications.limits.memory }}"
+              cpu: "{{ .Values.notifications.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.notifications.requests.memory }}"
+              cpu: "{{ .Values.notifications.requests.cpu }}"
           ports:
            - containerPort: 5000
           livenessProbe:

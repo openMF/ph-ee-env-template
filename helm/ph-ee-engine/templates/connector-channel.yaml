@@ -28,7 +28,11 @@ spec:
           imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
           resources:
             limits:
-              memory: "768M"
+              memory: "{{ .Values.channel.limits.memory }}"
+              cpu: "{{ .Values.channel.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.channel.requests.memory }}"
+              cpu: "{{ .Values.channel.requests.cpu }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

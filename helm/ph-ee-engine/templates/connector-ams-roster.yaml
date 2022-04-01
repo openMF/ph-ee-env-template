@@ -56,7 +56,11 @@ spec:
               value: "{{ .Values.roster_connector.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
-              memory: "512M"
+              memory: "{{ .Values.roster_connector.limits.memory }}"
+              cpu: "{{ .Values.roster_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.roster_connector.requests.memory }}"
+              cpu: "{{ .Values.roster_connector.requests.cpu }}"
 ---
 apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret
