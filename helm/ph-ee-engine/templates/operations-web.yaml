@@ -82,7 +82,7 @@ spec:
     - host: "{{ .Values.operations_web.hostname }}"
       http:
         paths:
-          - path: "{{ .Values.operations_web.path }}"
+          - path: "{{ .Values.operations_web.ingress.path }}"
             pathType: Prefix
             backend:
 {{- if .Values.operations_web.ingress.backend }}

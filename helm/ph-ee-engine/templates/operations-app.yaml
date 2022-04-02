@@ -118,7 +118,7 @@ spec:
     - host: "{{ .Values.operations_app.hostname }}"
       http:
         paths:
-          - path: /opsapp
+          - path: "{{ .Values.operations_app.ingress.path }}"
             pathType: Prefix
             backend:
 {{- if .Values.operations_app.ingress.backend }}

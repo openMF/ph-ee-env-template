@@ -81,7 +81,7 @@ spec:
     - host: "{{ .Values.channel.hostname }}"
       http:
         paths:
-        - path: /channel
+        - path: "{{ .Values.channel.ingress.path }}"
           pathType: Prefix
           backend:
 {{- if .Values.channel.ingress.backend }}

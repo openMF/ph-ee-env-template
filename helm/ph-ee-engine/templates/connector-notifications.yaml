@@ -99,7 +99,7 @@ spec:
     - host: "{{ .Values.notifications.hostname }}"
       http:
         paths:
-          - path: /notifications
+          - path: "{{ .Values.notifications.ingress.path }}"
             pathType: Prefix
             backend:
 {{- if .Values.notifications.ingress.backend }}

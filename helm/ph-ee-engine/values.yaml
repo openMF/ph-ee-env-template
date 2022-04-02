@@ -111,12 +111,13 @@ channel:
   hostname: ""
   limits:
     memory: "768M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "768M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/channel"
     annotations: {}
     backend: {}
   deployment:
@@ -159,10 +160,10 @@ ph_ee_connector_ams_mifos:
   SPRING_PROFILES_ACTIVE: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 
@@ -174,10 +175,10 @@ ph_ee_connector_mojaloop:
   SPRING_PROFILES_ACTIVE: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 
@@ -199,12 +200,13 @@ operations_app:
     schema: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/opsapp"
     annotations: {}
     backend: {}
   deployment:
@@ -216,16 +218,16 @@ operations_web:
   image: ""
   imagePullPolicy: "Always"
   hostname: ""
-  path: "/"
   webhost: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/"
     annotations: {}
     backend: {}
   deployment:
@@ -253,12 +255,13 @@ mpesa:
     api_host: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/mpesa"
     annotations: {}
     backend: {}
   deployment:
@@ -279,10 +282,10 @@ roster_connector:
   containerPort: 5000
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ams:
     local:
       enabled: ""
@@ -307,12 +310,13 @@ messagegateway:
   PROVIDERSOURCE_FROMYML: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/messages"
     annotations: {}
     backend: {}
   secret:
@@ -340,12 +344,13 @@ notifications:
     port: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/notifications"
     annotations: {}
     backend: {}
   deployment:
@@ -363,12 +368,13 @@ zeebe_ops:
   tenants: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   ingress:
     enabled: true
+    path: "/zeebeops"
     annotations: {}
     backend: {}
   deployment:
@@ -380,10 +386,10 @@ importer_es:
   imagePullPolicy: "Always"
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
 
 kafka:
   enabled: false
@@ -395,10 +401,10 @@ kafka:
     port: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 
@@ -416,10 +422,10 @@ importer_rdbms:
       schema: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 
@@ -431,10 +437,10 @@ connector_bulk:
   SPRING_PROFILES_ACTIVE: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 
@@ -446,10 +452,10 @@ ph_ee_connector_gsma:
   SPRING_PROFILES_ACTIVE: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 
@@ -461,10 +467,10 @@ ph_ee_connector_slcb:
   SPRING_PROFILES_ACTIVE: ""
   limits:
     memory: "512M"
-    cpu: 4
+    cpu: "500m"
   requests:
     memory: "512M"
-    cpu: 4
+    cpu: "200m"
   deployment:
     annotations: {}
 

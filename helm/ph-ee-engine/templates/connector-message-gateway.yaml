@@ -133,7 +133,7 @@ spec:
     - host: "{{ .Values.messagegateway.hostname }}"
       http:
         paths:
-          - path: /messages
+          - path: "{{ .Values.messagegateway.ingress.path }}"
             pathType: Prefix
             backend:
 {{- if .Values.messagegateway.ingress.backend }}

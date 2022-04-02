@@ -125,7 +125,7 @@ spec:
     - host: "{{ .Values.mpesa.hostname }}"
       http:
         paths:
-          - path: /mpesa
+          - path: "{{ .Values.mpesa.ingress.path }}"
             pathType: Prefix
             backend:
 {{- if .Values.mpesa.ingress.backend }}
