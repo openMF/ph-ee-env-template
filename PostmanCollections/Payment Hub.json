@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "370d1a66-2839-4620-b7d9-d812c19543e2",
+		"_postman_id": "c266557e-1f9f-4f9d-b768-a3e9b443b427",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1412,93 +1412,8 @@
 			]
 		},
 		{
-			"name": "OAF Ops",
+			"name": "Operations App APIs",
 			"item": [
-				{
-					"name": "Transfers",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "User-Agent",
-								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
-								"disabled": true
-							},
-							{
-								"key": "Accept",
-								"value": "application/json, text/plain, */*",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en-US,en;q=0.5",
-								"disabled": true
-							},
-							{
-								"key": "Platform-TenantId",
-								"value": "oaf"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJvYWYiXSwidXNlcl9uYW1lIjoibWlmb3MiLCJzY29wZSI6WyJpZGVudGl0eSJdLCJleHAiOjE2NDI2NzA0MTcsImF1dGhvcml0aWVzIjpbIlJFRlVORCIsIkFMTF9GVU5DVElPTlMiXSwianRpIjoiQStsajFsRVNsWW9YMU9uNjdyTlNRbFhHY05VPSIsImNsaWVudF9pZCI6ImNsaWVudCJ9.flZD_GlQJ2w8P_cU0DC2hojJLUA9WS_Bc3yy9X-1v8hR1xhJZjdHUKfBl-TqNdwPnWHEvuKNdsGSEzNCP8CYR71n3J33gzEpcKVZ0P7d2bOOLX6EgtSjDdjSLU_IGRxmOZEGES9p-UPAARbj24vIM3kugG6jBbVTJ08DksnLRXP0MdWjAmW6JNq0Y2VAJq_0LSCdab5XZT-vQsRL5PdrKvPT1w28jDFklWCrft6G-6SQbqkJPGR_oQPwYBmaZOx5ateE6JDMZN5CVmejExRVPYgE-tMxXRh7GZFTDaSW1DiMzNriBeDSu3NUkuwOCC4B4Z-XmzQJw36uE6pvqGT-Pg"
-							},
-							{
-								"key": "Origin",
-								"value": "http://localhost:4200",
-								"disabled": true
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"disabled": true
-							},
-							{
-								"key": "Referer",
-								"value": "http://localhost:4200/",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "https://paymenthub.qa.oneacrefund.org/opsapp/api/v1/transfers?size=10&page=1",
-							"protocol": "https",
-							"host": [
-								"paymenthub",
-								"qa",
-								"oneacrefund",
-								"org"
-							],
-							"path": [
-								"opsapp",
-								"api",
-								"v1",
-								"transfers"
-							],
-							"query": [
-								{
-									"key": "direction",
-									"value": "OUTGOING",
-									"description": "INCOMING or OUTGOING direction",
-									"disabled": true
-								},
-								{
-									"key": "status",
-									"value": "{{status}}",
-									"description": "Transaction Status. Values can be COMPLETED, FAILED, IN_PROGRESS and ALL. By default set to ALL.",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "page",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Authorization",
 					"request": {
@@ -1588,12 +1503,7 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Operations App APIs",
-			"item": [
+				},
 				{
 					"name": "Get all error codes",
 					"request": {
@@ -1868,7 +1778,7 @@
 					},
 					"response": [
 						{
-							"name": "Filter error code by errorCode",
+							"name": "Filter error code by transactionType",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -1879,7 +1789,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=errorCode&value=1037",
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=transactionType&value=COLLECTION-MPESA",
 									"host": [
 										"{{operationsAppIngress}}"
 									],
@@ -1892,11 +1802,11 @@
 									"query": [
 										{
 											"key": "by",
-											"value": "errorCode"
+											"value": "transactionType"
 										},
 										{
 											"key": "value",
-											"value": "1037"
+											"value": "COLLECTION-MPESA"
 										}
 									]
 								}
@@ -1943,7 +1853,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Mon, 07 Feb 2022 16:42:13 GMT"
+									"value": "Mon, 07 Feb 2022 16:43:34 GMT"
 								},
 								{
 									"key": "vary",
@@ -1955,11 +1865,11 @@
 								},
 								{
 									"key": "X-Kong-Upstream-Latency",
-									"value": "17"
+									"value": "10"
 								},
 								{
 									"key": "X-Kong-Proxy-Latency",
-									"value": "4"
+									"value": "3"
 								},
 								{
 									"key": "Via",
@@ -2072,7 +1982,7 @@
 							"body": "[\n    {\n        \"id\": 1,\n        \"transactionType\": \"COLLECTION-MPESA\",\n        \"errorMessage\": \"DS timeout.\",\n        \"errorCode\": \"1037\",\n        \"recoverable\": true\n    }\n]"
 						},
 						{
-							"name": "Filter error code by transactionType",
+							"name": "Filter error code by errorCode",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2083,7 +1993,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=transactionType&value=COLLECTION-MPESA",
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=errorCode&value=1037",
 									"host": [
 										"{{operationsAppIngress}}"
 									],
@@ -2096,11 +2006,11 @@
 									"query": [
 										{
 											"key": "by",
-											"value": "transactionType"
+											"value": "errorCode"
 										},
 										{
 											"key": "value",
-											"value": "COLLECTION-MPESA"
+											"value": "1037"
 										}
 									]
 								}
@@ -2147,7 +2057,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Mon, 07 Feb 2022 16:43:34 GMT"
+									"value": "Mon, 07 Feb 2022 16:42:13 GMT"
 								},
 								{
 									"key": "vary",
@@ -2159,11 +2069,11 @@
 								},
 								{
 									"key": "X-Kong-Upstream-Latency",
-									"value": "10"
+									"value": "17"
 								},
 								{
 									"key": "X-Kong-Proxy-Latency",
-									"value": "3"
+									"value": "4"
 								},
 								{
 									"key": "Via",
@@ -2311,6 +2221,91 @@
 							"body": "{\n    \"id\": 1,\n    \"transactionType\": \"COLLECTION-MPESA\",\n    \"errorMessage\": \"DS timeout.\",\n    \"errorCode\": \"1037\",\n    \"recoverable\": true\n}"
 						}
 					]
+				},
+				{
+					"name": "Transfers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.5",
+								"disabled": true
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "oaf"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJvYWYiXSwidXNlcl9uYW1lIjoibWlmb3MiLCJzY29wZSI6WyJpZGVudGl0eSJdLCJleHAiOjE2NDI2NzA0MTcsImF1dGhvcml0aWVzIjpbIlJFRlVORCIsIkFMTF9GVU5DVElPTlMiXSwianRpIjoiQStsajFsRVNsWW9YMU9uNjdyTlNRbFhHY05VPSIsImNsaWVudF9pZCI6ImNsaWVudCJ9.flZD_GlQJ2w8P_cU0DC2hojJLUA9WS_Bc3yy9X-1v8hR1xhJZjdHUKfBl-TqNdwPnWHEvuKNdsGSEzNCP8CYR71n3J33gzEpcKVZ0P7d2bOOLX6EgtSjDdjSLU_IGRxmOZEGES9p-UPAARbj24vIM3kugG6jBbVTJ08DksnLRXP0MdWjAmW6JNq0Y2VAJq_0LSCdab5XZT-vQsRL5PdrKvPT1w28jDFklWCrft6G-6SQbqkJPGR_oQPwYBmaZOx5ateE6JDMZN5CVmejExRVPYgE-tMxXRh7GZFTDaSW1DiMzNriBeDSu3NUkuwOCC4B4Z-XmzQJw36uE6pvqGT-Pg"
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:4200",
+								"disabled": true
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"disabled": true
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:4200/",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://paymenthub.qa.oneacrefund.org/opsapp/api/v1/transfers?size=10&page=1",
+							"protocol": "https",
+							"host": [
+								"paymenthub",
+								"qa",
+								"oneacrefund",
+								"org"
+							],
+							"path": [
+								"opsapp",
+								"api",
+								"v1",
+								"transfers"
+							],
+							"query": [
+								{
+									"key": "direction",
+									"value": "OUTGOING",
+									"description": "INCOMING or OUTGOING direction",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{status}}",
+									"description": "Transaction Status. Values can be COMPLETED, FAILED, IN_PROGRESS and ALL. By default set to ALL.",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Get Transaction Request",
@@ -2513,59 +2508,6 @@
 					},
 					"response": [
 						{
-							"name": "Status-UP",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:5000/es/health",
-									"host": [
-										"localhost"
-									],
-									"port": "5000",
-									"path": [
-										"es",
-										"health"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "plain",
-							"header": [
-								{
-									"key": "Accept",
-									"value": "*/*"
-								},
-								{
-									"key": "Postman-Token",
-									"value": "685f2f41-459f-4d8d-aa3d-b6ecf5bf545f"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Accept-Encoding",
-									"value": "gzip, deflate, br"
-								},
-								{
-									"key": "Content-Length",
-									"value": "15"
-								},
-								{
-									"key": "User-Agent",
-									"value": "PostmanRuntime/7.28.4"
-								},
-								{
-									"key": "Date",
-									"value": "Wed, 13 Oct 2021 18:55:51 GMT"
-								}
-							],
-							"cookie": [],
-							"body": "{\"status\":\"UP\"}"
-						},
-						{
 							"name": "Status-Down",
 							"originalRequest": {
 								"method": "GET",
@@ -2617,6 +2559,59 @@
 							],
 							"cookie": [],
 							"body": "{\"reason\":\"Connection refused\",\"status\":\"down\"}"
+						},
+						{
+							"name": "Status-UP",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5000/es/health",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"es",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "685f2f41-459f-4d8d-aa3d-b6ecf5bf545f"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.28.4"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Oct 2021 18:55:51 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"UP\"}"
 						}
 					]
 				},
