@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "eb30384d-d56f-41ab-8dd9-a75ec6a71c63",
+		"_postman_id": "370d1a66-2839-4620-b7d9-d812c19543e2",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1592,6 +1592,755 @@
 			]
 		},
 		{
+			"name": "Operations App APIs",
+			"item": [
+				{
+					"name": "Get all error codes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/errorcode/",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"errorcode",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all error codes 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/",
+									"host": [
+										"{{operationsAppIngress}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"errorcode",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 16:39:05 GMT"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "15"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "4"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"transactionType\": \"COLLECTION-MPESA\",\n        \"errorMessage\": \"DS timeout.\",\n        \"errorCode\": \"1037\",\n        \"recoverable\": true\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get error code by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/errorcode/1",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"errorcode",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get error code by id 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/1",
+									"host": [
+										"{{operationsAppIngress}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"errorcode",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 16:40:29 GMT"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "24"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "5"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"transactionType\": \"COLLECTION-MPESA\",\n    \"errorMessage\": \"DS timeout.\",\n    \"errorCode\": \"1037\",\n    \"recoverable\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Filter error codes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/errorcode/filter?value=1037&by=errorCode",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"errorcode",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "1037"
+								},
+								{
+									"key": "by",
+									"value": "errorCode"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Filter error code by errorCode",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=errorCode&value=1037",
+									"host": [
+										"{{operationsAppIngress}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"errorcode",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "by",
+											"value": "errorCode"
+										},
+										{
+											"key": "value",
+											"value": "1037"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 16:42:13 GMT"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "17"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "4"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"transactionType\": \"COLLECTION-MPESA\",\n        \"errorMessage\": \"DS timeout.\",\n        \"errorCode\": \"1037\",\n        \"recoverable\": true\n    }\n]"
+						},
+						{
+							"name": "Filter error code by is recoverable or not",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=recoverable&value=true",
+									"host": [
+										"{{operationsAppIngress}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"errorcode",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "by",
+											"value": "recoverable"
+										},
+										{
+											"key": "value",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 16:42:57 GMT"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "8"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "3"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"transactionType\": \"COLLECTION-MPESA\",\n        \"errorMessage\": \"DS timeout.\",\n        \"errorCode\": \"1037\",\n        \"recoverable\": true\n    }\n]"
+						},
+						{
+							"name": "Filter error code by transactionType",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/filter?by=transactionType&value=COLLECTION-MPESA",
+									"host": [
+										"{{operationsAppIngress}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"errorcode",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "by",
+											"value": "transactionType"
+										},
+										{
+											"key": "value",
+											"value": "COLLECTION-MPESA"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 16:43:34 GMT"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "10"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "3"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"transactionType\": \"COLLECTION-MPESA\",\n        \"errorMessage\": \"DS timeout.\",\n        \"errorCode\": \"1037\",\n        \"recoverable\": true\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Add error code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionType\": \"COLLECTION-MPESA\",\n    \"errorMessage\": \"Request cancelled by user\",\n    \"errorCode\": \"1031\",\n    \"recoverable\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/errorcode/",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"errorcode",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add error code 200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transactionType\": \"COLLECTION-MPESA\",\n    \"errorMessage\": \"DS timeout.\",\n    \"errorCode\": 1037,\n    \"recoverable\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{operationsAppIngress}}/api/v1/errorcode/",
+									"host": [
+										"{{operationsAppIngress}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"errorcode",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 16:38:38 GMT"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "136"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "23"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"transactionType\": \"COLLECTION-MPESA\",\n    \"errorMessage\": \"DS timeout.\",\n    \"errorCode\": \"1037\",\n    \"recoverable\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Transaction Request",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactionRequests",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Zeebe Operations APIs",
 			"item": [
 				{
@@ -1609,9 +2358,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/workflow/{{BpmnProcessId}}",
+							"raw": "{{ZeebeOpsHostName}}/channel/workflow/{{BpmnProcessId}}",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -1635,17 +2384,12 @@
 									"type": "file",
 									"src": "/Users/danishjamal/Documents/Fynarfin/testing/ph-ee-env-template/orchestration/feel/mpesa-flow-oaf.bpmn"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
-							"raw": "{{ChannelHostName}}/zeebe/upload",
+							"raw": "{{ZeebeOpsHostName}}/zeebe/upload",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"zeebe",
@@ -1670,9 +2414,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/workflow/",
+							"raw": "{{ZeebeOpsHostName}}/channel/workflow/",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -1757,9 +2501,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ChannelHostName}}/es/health",
+							"raw": "{{ZeebeOpsHostName}}/es/health",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"es",
@@ -1882,9 +2626,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/process",
+							"raw": "{{ZeebeOpsHostName}}/channel/process",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -1963,9 +2707,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/workflow/cancel",
+							"raw": "{{ZeebeOpsHostName}}/channel/workflow/cancel",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -1991,9 +2735,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/workflow/cancelbyvalue",
+							"raw": "{{ZeebeOpsHostName}}/channel/workflow/cancelbyvalue",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -2010,9 +2754,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/process/variable/{{ProcessInstanceKey}}",
+							"raw": "{{ZeebeOpsHostName}}/channel/process/variable/{{ProcessInstanceKey}}",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -2090,9 +2834,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/process/{{ProcessDefinitionKey}}/task/",
+							"raw": "{{ZeebeOpsHostName}}/channel/process/{{ProcessDefinitionKey}}/task/",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -2111,9 +2855,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/process/{{ProcessInstanceId}}",
+							"raw": "{{ZeebeOpsHostName}}/channel/process/{{ProcessInstanceId}}",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
@@ -2130,9 +2874,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/workflow/{{WorkflowInstanceKey}}/cancel",
+							"raw": "{{ZeebeOpsHostName}}/channel/workflow/{{WorkflowInstanceKey}}/cancel",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{ZeebeOpsHostName}}"
 							],
 							"path": [
 								"channel",
