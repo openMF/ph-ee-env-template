@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c266557e-1f9f-4f9d-b768-a3e9b443b427",
+		"_postman_id": "a021cee4-80e9-4b4c-80e1-37f0adf97bcf",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -338,6 +338,123 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payer\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27710101999\"\n        }\n    },\n    \"payee\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27710102999\"\n        }\n    },\n    \"amount\": {\n        \"amount\": 230,\n        \"currency\": \"TZS\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/transfer",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payer\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27710203999\"\n        }\n    },\n    \"payee\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27710305999\"\n        }\n    },\n    \"amount\": {\n        \"amount\": 77,\n        \"currency\": \"TZS\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/transactionRequest",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"transactionRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Party Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\":\"9062b90de19b43989005\",\n  \"idType\": \"EMAIL\",\n  \"idValue\": \"test@test.hu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/partyRegistration",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"partyRegistration"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Channel APIs",
+			"item": [
+				{
+					"name": "Transfer Query",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{PlatformTenant}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/transfer/{{transactionId}}",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"transfer",
+								"{{transactionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{PlatformTenant}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"payer\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27710101999\"\n        }\n    },\n    \"payee\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27710102999\"\n        }\n    },\n    \"amount\": {\n        \"amount\": 230,\n        \"currency\": \"TZS\"\n    }\n}",
