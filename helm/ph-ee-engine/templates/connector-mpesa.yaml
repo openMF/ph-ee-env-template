@@ -52,35 +52,14 @@ spec:
               value: "{{ .Values.mpesa.zeebe_broker_contactpoint }}"
             - name: "MPESA_LOCAL_HOST"
               value: "{{ .Values.mpesa.callback_host }}"
-            - name: "MPESA_BUSINESS-SHORT-CODE"
-              value: "{{ .Values.mpesa.business_short_code }}"
-            - name: "MPESA_TILL"
-              value: "{{ .Values.mpesa.till_number }}"
-            - name: "MPESA_AUTH_HOST"
-              value: "{{ .Values.mpesa.safaricom.auth_host }}"
             - name: "MPESA_MAX-RETRY-COUNT"
               value: "{{ .Values.mpesa.retry_count }}"
-            - name: "MPESA_API_HOST"
-              value: "{{ .Values.mpesa.safaricom.api_host }}"
             - name: "TENANT"
               value: "{{ .Values.mpesa.tenant }}"
             - name: "LOGGING_LEVEL_ROOT"
               value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
-            - name: "MPESA_AUTH_CLIENT-KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: "mpesa-secret"
-                  key: "client-key"
-            - name: "MPESA_AUTH_CLIENT-SECRET"
-              valueFrom:
-                secretKeyRef:
-                  name: "mpesa-secret"
-                  key: "client-secret"
-            - name: "MPESA_API_PASS-KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: "mpesa-secret"
-                  key: "pass-key"
+            - name: "amsgroup"
+              value: " {{ .Values.mpesa.amsgroup }}"
 
 ---
 apiVersion: {{ .Values.service.apiversion }}
@@ -103,12 +82,24 @@ spec:
 apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret
 metadata:
-  name: mpesa-secret
+  name: mpesa-secret-roster
 type: Opaque
 data:
   client-key: {{ .Values.mpesa.secret.value.client_key | b64enc }}
   client-secret: {{ .Values.mpesa.secret.value.client_secret | b64enc }}
   pass-key: {{ .Values.mpesa.secret.value.pass_key | b64enc }}
+
+---
+apiVersion: {{ .Values.secret.apiversion }}
+kind: Secret
+metadata:
+  name: mpesa-secret-paygops
+type: Opaque
+data:
+  client-key: {{ .Values.mpesa.secret.value.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.secret.value.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.secret.value.pass_key | b64enc }}
+
 ---
 {{- if .Values.mpesa.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}

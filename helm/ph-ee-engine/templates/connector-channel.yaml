@@ -58,8 +58,8 @@ spec:
               value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
             - name:  "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
-            - name: "AMS_GROUPS"
-              value: "{{ .Values.channel.AMS_GROUPS }}"
+            - name: "ams"
+              value: "{{ .Values.channel.ams }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -96,6 +96,17 @@ spec:
       secretName: "{{ .Values.tls }}"
 {{- end }}
 
+---
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: ConfigMap
+metadata:
+  name: ph-ee-connector-channel
+data:
+  ams:
+    groups:
+      {{ range .Values.channel.ams.groups}}
+      - {{ .identifier }}: {{ $v }}
+        {{ .value }}: {{ $v }}
 ---
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
