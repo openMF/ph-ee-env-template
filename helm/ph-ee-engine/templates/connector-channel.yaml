@@ -58,8 +58,8 @@ spec:
               value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
             - name:  "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
-            - name: "ams"
-              value: "{{ .Values.channel.ams }}"
+            - name: "AMS"
+              value: "{{ .Values.channel.AMS  }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -88,7 +88,7 @@ spec:
           backend:
 {{- if .Values.channel.ingress.backend }}
 {{ toYaml .Values.channel.ingress.backend | indent 14 }}
-{{- end }} 
+{{- end }}
 
   tls:
     - hosts:
@@ -96,17 +96,6 @@ spec:
       secretName: "{{ .Values.tls }}"
 {{- end }}
 
----
-apiVersion: {{ .Values.ingress.apiversion }}
-kind: ConfigMap
-metadata:
-  name: ph-ee-connector-channel
-data:
-  ams:
-    groups:
-      {{ range .Values.channel.ams.groups}}
-      - {{ .identifier }}: {{ $v }}
-        {{ .value }}: {{ $v }}
 ---
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
@@ -125,4 +114,4 @@ spec:
   sessionAffinity: None
   type: ClusterIP
 
-{{- end }}
+  {{- end }}

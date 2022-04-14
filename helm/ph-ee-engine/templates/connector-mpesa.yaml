@@ -60,6 +60,38 @@ spec:
               value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
             - name: "amsgroup"
               value: " {{ .Values.mpesa.amsgroup }}"
+            - name: "AMSGROUP_ROSTER_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-roster"
+                  key: "client-key"
+            - name: "AMSGROUP_ROSTER_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-roster"
+                  key: "client-secret"
+            - name: "AMSGROUP_ROSTER_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-roster"
+                  key: "pass-key"
+            - name: "AMSGROUP_PAYGOPS_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-paygops"
+                  key: "client-key"
+            - name: "AMSGROUP_PAYGOPS_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-paygops"
+                  key: "client-secret"
+            - name: "AMSGROUP_PAYGOPS_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-paygops"
+                  key: "pass-key"
+
+
 
 ---
 apiVersion: {{ .Values.service.apiversion }}
