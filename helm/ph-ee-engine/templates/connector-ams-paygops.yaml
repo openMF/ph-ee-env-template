@@ -19,48 +19,48 @@ spec:
   {{- if .Values.paygops_connector.deployment.annotations }}
   {{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
   {{- end }}
-spec:
-  containers:
-    - name: ph-ee-connector-ams-paygops
-      image: "{{ .Values.paygops_connector.image }}"
-      ports:
-        - containerPort: 5000
-      imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
-      livenessProbe:
-        httpGet:
-          path: /actuator/health/liveness
-          port: 8080
-        initialDelaySeconds: 20
-        periodSeconds: 30
-      readinessProbe:
-        httpGet:
-          path: /actuator/health/readiness
-          port: 8080
-        initialDelaySeconds: 20
-        periodSeconds: 30
-      env:
-        - name: "SPRING_PROFILES_ACTIVE"
-          value: "{{ .Values.paygops_connector.SPRING_PROFILES_ACTIVE }}"
-        - name: "ZEEBE_BROKER_CONTACTPOINT"
-          value: "zeebe-zeebe-gateway:26500"
-        - name: "AMS_LOCAL_ENABLED"
-          value: "{{ .Values.paygops_connector.ams.local.enabled }}"
-        - name: "PAYGOPS_AUTH-HEADER"
-          valueFrom:
-            secretKeyRef:
-              name: "paygops-secret"
-              key: "auth-token"
-        - name: "PAYGOPS_BASE-URL"
-          value: "{{ .Values.paygops_connector.paygops.base_url }}"
-        - name: "LOGGING_LEVEL_ROOT"
-          value: "{{ .Values.paygops_connector.LOGGING_LEVEL_ROOT }}"
-      resources:
-        limits:
-          memory: "{{ .Values.paygops_connector.limits.memory }}"
-          cpu: "{{ .Values.paygops_connector.limits.cpu }}"
-        requests:
-          memory: "{{ .Values.paygops_connector.requests.memory }}"
-          cpu: "{{ .Values.paygops_connector.requests.cpu }}"
+    spec:
+      containers:
+        - name: ph-ee-connector-ams-paygops
+          image: "{{ .Values.paygops_connector.image }}"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.paygops_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "AMS_LOCAL_ENABLED"
+              value: "{{ .Values.paygops_connector.ams.local.enabled }}"
+            - name: "PAYGOPS_AUTH-HEADER"
+              valueFrom:
+                secretKeyRef:
+                  name: "paygops-secret"
+                  key: "auth-token"
+            - name: "PAYGOPS_BASE-URL"
+              value: "{{ .Values.paygops_connector.paygops.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.paygops_connector.LOGGING_LEVEL_ROOT }}"
+          resources:
+            limits:
+              memory: "{{ .Values.paygops_connector.limits.memory }}"
+              cpu: "{{ .Values.paygops_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.paygops_connector.requests.memory }}"
+              cpu: "{{ .Values.paygops_connector.requests.cpu }}"
 ---
 apiVersion: {{ .Values.secret.apiversion }}
 kind: Secret

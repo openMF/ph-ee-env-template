@@ -58,34 +58,48 @@ spec:
               value: "{{ .Values.mpesa.tenant }}"
             - name: "LOGGING_LEVEL_ROOT"
               value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
-            - name: "amsgroup"
-              value: " {{ .Values.mpesa.amsgroup }}"
-            - name: "AMSGROUP_ROSTER_CLIENTKEY"
+            - name: "ACCOUNTS.ROSTER.SHORTCODE"
+              value: "{{ .Values.mpesa.accounts.roster.business_short_code }}"
+            - name: "ACCOUNTS.ROSTER.TILL"
+              value: "{{ .Values.mpesa.accounts.roster.till }}"
+            - name: "ACCOUNTS.ROSTER.AUTHHOST"
+              value: "{{ .Values.mpesa.accounts.roster.auth_host }}"
+            - name: "ACCOUNTS.ROSTER.APIHOST"
+              value: "{{ .Values.mpesa.accounts.roster.api_host }}"
+            - name: "ACCOUNTS.ROSTER.CLIENTKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "client-key"
-            - name: "AMSGROUP_ROSTER_CLIENTSECRET"
+            - name: "ACCOUNTS.ROSTER.CLIENTSECRET"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "client-secret"
-            - name: "AMSGROUP_ROSTER_PASSKEY"
+            - name: "ACCOUNTS.ROSTER.PASSKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "pass-key"
-            - name: "AMSGROUP_PAYGOPS_CLIENTKEY"
+            - name: "ACCOUNTS.PAYGOPS.SHORTCODE"
+              value: "{{ .Values.mpesa.accounts.paygops.business_short_code}}"
+            - name: "ACCOUNTS.PAYGOPS.TILL"
+              value: "{{ .Values.mpesa.accounts.paygops.till }}"
+            - name: "ACCOUNTS.PAYGOPS.AUTHHOST"
+              value: "{{ .Values.mpesa.accounts.paygops.auth_host }}"
+            - name: "ACCOUNTS.PAYGOPS.APIHOST"
+              value: "{{ .Values.mpesa.accounts.paygops.api_host }}"
+            - name: "ACCOUNTS.PAYGOPS.CLIENTKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
                   key: "client-key"
-            - name: "AMSGROUP_PAYGOPS_CLIENTSECRET"
+            - name: "ACCOUNTS.PAYGOPS.CLIENTSECRET"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
                   key: "client-secret"
-            - name: "AMSGROUP_PAYGOPS_PASSKEY"
+            - name: "ACCOUNTS.PAYGOPS.PASSKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
