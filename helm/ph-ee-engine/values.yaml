@@ -114,7 +114,7 @@ channel:
     cpu: "500m"
   requests:
     memory: "768M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/channel"
@@ -163,7 +163,7 @@ ph_ee_connector_ams_mifos:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -178,7 +178,7 @@ ph_ee_connector_mojaloop:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -203,7 +203,7 @@ operations_app:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/opsapp"
@@ -224,7 +224,7 @@ operations_web:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/"
@@ -258,7 +258,7 @@ mpesa:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/mpesa"
@@ -285,12 +285,33 @@ roster_connector:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ams:
     local:
       enabled: ""
   pesacore:
     auth_header: ""
+  deployment:
+    annotations: {}
+
+paygops_connector:
+  enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
+  limits:
+    memory: "512M"
+    cpu: "500m"
+  requests:
+    memory: "256M"
+    cpu: "50m"
+  ams:
+    local:
+      enabled: ""
+  paygops:
+    authheader: ""
   deployment:
     annotations: {}
 
@@ -313,7 +334,7 @@ messagegateway:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/messages"
@@ -347,7 +368,7 @@ notifications:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/notifications"
@@ -371,7 +392,7 @@ zeebe_ops:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   ingress:
     enabled: true
     path: "/zeebeops"
@@ -389,7 +410,7 @@ importer_es:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
 
 kafka:
   enabled: false
@@ -404,7 +425,7 @@ kafka:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -425,7 +446,7 @@ importer_rdbms:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -440,7 +461,7 @@ connector_bulk:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -455,7 +476,7 @@ ph_ee_connector_gsma:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -470,7 +491,7 @@ ph_ee_connector_slcb:
     cpu: "500m"
   requests:
     memory: "512M"
-    cpu: "200m"
+    cpu: "100m"
   deployment:
     annotations: {}
 

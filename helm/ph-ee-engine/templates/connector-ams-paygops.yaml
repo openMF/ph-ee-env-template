@@ -16,9 +16,9 @@ spec:
       labels:
         app: ph-ee-connector-ams-paygops
       annotations:
-  {{- if .Values.paygops_connector.deployment.annotations }}
-  {{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
-  {{- end }}
+{{- if .Values.paygops_connector.deployment.annotations }}
+{{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: ph-ee-connector-ams-paygops
@@ -45,7 +45,7 @@ spec:
               value: "zeebe-zeebe-gateway:26500"
             - name: "AMS_LOCAL_ENABLED"
               value: "{{ .Values.paygops_connector.ams.local.enabled }}"
-            - name: "PAYGOPS_AUTH-HEADER"
+            - name: "PAYGOPS_AUTHHEADER"
               valueFrom:
                 secretKeyRef:
                   name: "paygops-secret"
@@ -56,10 +56,10 @@ spec:
               value: "{{ .Values.paygops_connector.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
-              memory: "{{ .Values.paygops_connector.limits.memory }}"
+              memory: "{{ .Values.roster_connector.limits.memory }}"
               cpu: "{{ .Values.paygops_connector.limits.cpu }}"
             requests:
-              memory: "{{ .Values.paygops_connector.requests.memory }}"
+              memory: "{{ .Values.roster_connector.requests.memory }}"
               cpu: "{{ .Values.paygops_connector.requests.cpu }}"
 ---
 apiVersion: {{ .Values.secret.apiversion }}
@@ -68,5 +68,5 @@ metadata:
   name: paygops-secret
 type: Opaque
 data:
-  auth-token: {{ .Values.paygops_connector.paygops.auth_header | b64enc }}
-  {{- end }}
+  auth-token: {{ .Values.paygops_connector.paygops.authheader | b64enc }}
+{{- end }}
