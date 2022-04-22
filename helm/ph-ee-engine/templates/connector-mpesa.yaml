@@ -104,7 +104,8 @@ spec:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
                   key: "pass-key"
-
+            - name: "SKIP_ENABLED"
+              value: "{{ .Values.mpesa.skip.enabled }}"
 
 
 ---
@@ -131,9 +132,9 @@ metadata:
   name: mpesa-secret-roster
 type: Opaque
 data:
-  client-key: {{ .Values.mpesa.secret.value.client_key | b64enc }}
-  client-secret: {{ .Values.mpesa.secret.value.client_secret | b64enc }}
-  pass-key: {{ .Values.mpesa.secret.value.pass_key | b64enc }}
+  client-key: {{ .Values.mpesa.accounts.roster.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.accounts.roster.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.accounts.roster.pass_key | b64enc }}
 
 ---
 apiVersion: {{ .Values.secret.apiversion }}
@@ -142,9 +143,9 @@ metadata:
   name: mpesa-secret-paygops
 type: Opaque
 data:
-  client-key: {{ .Values.mpesa.secret.value.client_key | b64enc }}
-  client-secret: {{ .Values.mpesa.secret.value.client_secret | b64enc }}
-  pass-key: {{ .Values.mpesa.secret.value.pass_key | b64enc }}
+  client-key: {{ .Values.mpesa.accounts.paygops.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.accounts.paygops.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.accounts.paygops.pass_key | b64enc }}
 
 ---
 {{- if .Values.mpesa.ingress.enabled }}
