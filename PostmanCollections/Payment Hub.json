@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a021cee4-80e9-4b4c-80e1-37f0adf97bcf",
+		"_postman_id": "8e590493-34e0-4dbf-9901-62ca0bd7caaa",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1531,6 +1531,353 @@
 		{
 			"name": "Operations App APIs",
 			"item": [
+				{
+					"name": "Filter Transaction Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "oaf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=transactionid",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactionRequests",
+								"export"
+							],
+							"query": [
+								{
+									"key": "filterBy",
+									"value": "transactionid",
+									"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Filter By Transaction Id Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "oaf",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    \"70830851a2f3rPVoWj3U\"\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=transactionid",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "filterBy",
+											"value": "transactionid",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "433"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-04-24_11-56-18.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 Apr 2022 11:56:18 GMT"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "19"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO\r\n2251799815274522,70830851a2f3rPVoWj3U,Tue Apr 19 13:58:38 UTC 2022,Tue Apr 19 14:00:56 UTC 2022,FAILED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA\r\n"
+						},
+						{
+							"name": "Invalid Filter Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "oaf",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    \"70830851a2f3rPVoWj3U\"\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=abcd",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "filterBy",
+											"value": "abcd",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 Apr 2022 11:56:59 GMT"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "9"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"developerMessage\": \"Possible filter values are [TRANSACTIONID, PAYERID, PAYEEID, EXTERNALID, WORKFLOWINSTANCEKEY]\",\n    \"errorDescription\": \"Invalid filter value abcd\",\n    \"errorCode\": \"INVALID_FILTER\"\n}"
+						},
+						{
+							"name": "Empty Body Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "oaf",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=transactionid",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "filterBy",
+											"value": "transactionid",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 Apr 2022 11:57:32 GMT"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "12"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/2.2.1"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"developerMessage\": \"Provide list of ids as body which belongs to any one of these domains [TRANSACTIONID, PAYERID, PAYEEID, EXTERNALID, WORKFLOWINSTANCEKEY]\",\n    \"errorDescription\": \"List of ids can't be empty\",\n    \"errorCode\": \"FILTER_ID\"\n}"
+						}
+					]
+				},
 				{
 					"name": "Authorization",
 					"request": {
