@@ -386,6 +386,7 @@ zeebe_ops:
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   zeebe_broker_contactpoint: ""
+  elasticsearch_contactpoint: ""
   tenants: ""
   limits:
     memory: "512M"
