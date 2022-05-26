@@ -52,6 +52,8 @@ spec:
               value: "{{ .Values.mpesa.zeebe_broker_contactpoint }}"
             - name: "MPESA_LOCAL_HOST"
               value: "{{ .Values.mpesa.callback_host }}"
+            - name: "MPESA_API_TIMEOUT"
+              value: "{{ .Values.mpesa.api_timeout }}"
             - name: "MPESA_MAX-RETRY-COUNT"
               value: "{{ .Values.mpesa.retry_count }}"
             - name: "TENANT"

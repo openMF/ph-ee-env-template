@@ -250,6 +250,7 @@ mpesa:
   business_short_code: ""
   till_number: ""
   retry_count: 1
+  api_timeout: 60000
   safaricom:
     auth_host: ""
     api_host: ""
