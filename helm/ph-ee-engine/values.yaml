@@ -128,7 +128,7 @@ channel:
     annotations: {}
 
 operations:
-  enabled: false
+  enabled: true
 
 ingress:
   apiversion: "networking.k8s.io/v1"
@@ -157,7 +157,7 @@ operationsmysql:
     rootPassword: ""
 
 ph_ee_connector_ams_mifos:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -265,7 +265,7 @@ mpesa:
     memory: "512M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/mpesa"
     annotations: {}
     backend: {}
@@ -341,7 +341,7 @@ messagegateway:
     memory: "512M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/messages"
     annotations: {}
     backend: {}
@@ -375,7 +375,7 @@ notifications:
     memory: "512M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/notifications"
     annotations: {}
     backend: {}
@@ -400,7 +400,7 @@ zeebe_ops:
     memory: "512M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/zeebeops"
     annotations: {}
     backend: {}
