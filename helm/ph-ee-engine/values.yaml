@@ -1,8 +1,12 @@
+zeebe:
+    broker:
+      contactpoint: "zeebe-zeebe-gateway:26500"
+
 zeebe-cluster-helm:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
-      host: "zeebe-elasticsearch"
+      host: "ph-ee-elasticsearch"
 
   image:
     repository: camunda/zeebe
@@ -86,21 +90,21 @@ zeebe-operate-helm:
       clusterName: "zeebe-elasticsearch"
 
 elasticsearch:
-  enabled: false
-  imageTag: 7.13.2
+  enabled: true
+  imageTag: 7.16.3
   replicas: 1
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
   minimumMasterNodes: 1
 
 kibana:
-  enabled: false
-  imageTag: 7.13.2
+  enabled: true
+  imageTag: 7.16.3
   fullnameOverride: "ph-ee-kibana"
   elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
 
 channel:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -153,7 +157,7 @@ operationsmysql:
     rootPassword: ""
 
 ph_ee_connector_ams_mifos:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -183,7 +187,7 @@ ph_ee_connector_mojaloop:
     annotations: {}
 
 operations_app:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -205,7 +209,7 @@ operations_app:
     memory: "512M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/opsapp"
     annotations: {}
     backend: {}
@@ -213,7 +217,7 @@ operations_app:
     annotations: {}
 
 operations_web:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -226,7 +230,7 @@ operations_web:
     memory: "512M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/"
     annotations: {}
     backend: {}
@@ -379,7 +383,7 @@ notifications:
     annotations: {}
 
 zeebe_ops:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -404,6 +408,7 @@ zeebe_ops:
     annotations: {}
 
 importer_es:
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -415,7 +420,7 @@ importer_es:
     cpu: "100m"
 
 kafka:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
@@ -432,7 +437,7 @@ kafka:
     annotations: {}
 
 importer_rdbms:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
