@@ -255,13 +255,15 @@ mpesa:
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
-  zeebe_broker_contactpoint: ""
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenant: ""
   callback_host: ""
   business_short_code: ""
   till_number: ""
   retry_count: 1
   api_timeout: 60000
+  skip:
+    enabled: false
   safaricom:
     auth_host: ""
     api_host: ""
@@ -367,11 +369,11 @@ notifications:
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
-  zeebe_broker_contactpoint: ""
-  NOTIFICATION_LOCAL_HOST: ""
-  MESSAGEGATEWAYCONFIG_HOST: ""
-  NOTIFICATION_SUCCESS_ENABLED: false
-  NOTIFICATION_FAILURE_ENABLED: false
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+  MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
+  NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
+  NOTIFICATION_SUCCESS_ENABLED: "false"
+  NOTIFICATION_FAILURE_ENABLED: "true"
   hostconfig:
     host: ""
     port: ""
