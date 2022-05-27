@@ -422,11 +422,11 @@ importer_es:
 kafka:
   enabled: true
   replicas: 1
-  image: ""
+  image: "spotify/kafka"
   imagePullPolicy: "Always"
   advertised:
-    host: ""
-    port: ""
+      host: "kafka"
+      port: "9092"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -434,7 +434,8 @@ kafka:
     memory: "512M"
     cpu: "100m"
   deployment:
-    annotations: {}
+      annotations: 
+        deployTime: "{{ .Values.deployTime }}"
 
 importer_rdbms:
   enabled: true
