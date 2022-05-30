@@ -167,8 +167,8 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: "1.0.0"
-    tag:
+  image: 
+    tag: "1.0.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   limits:
