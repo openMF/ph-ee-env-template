@@ -256,7 +256,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "1.1.2"
+  imageTag: "1.1.3"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
