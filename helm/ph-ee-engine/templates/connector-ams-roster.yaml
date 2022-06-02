@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-ams-roster
-          image: "{{ .Values.roster_connector.image }}"
+          image: "{{ .Values.roster_connector.image }}:{{ Values.roster_connector.imageTag }}"
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.roster_connector.imagePullPolicy }}"

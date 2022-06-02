@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-bulk
-          image: "{{ .Values.connector_bulk.image }}"
+          image: "{{ .Values.connector_bulk.image }}:{{ Values.connector_bulk.imageTag }}"
           imagePullPolicy: "{{ .Values.connector_bulk.imagePullPolicy }}"
           ports:
             - containerPort: 5000

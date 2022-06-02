@@ -24,7 +24,7 @@ spec:
       - name: regcred
       containers:
         - name: ph-ee-connector-mojaloop-java
-          image: "{{ .Values.ph_ee_connector_mojaloop.image }}"
+          image: "{{ .Values.ph_ee_connector_mojaloop.image }}:{{ Values.ph_ee_connector_mojaloop.imageTag }}"
           imagePullPolicy: "{{ .Values.ph_ee_connector_mojaloop.imagePullPolicy }}"
           ports:
             - containerPort: 5000

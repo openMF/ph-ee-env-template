@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-ams-paygops
-          image: "{{ .Values.paygops_connector.image }}"
+          image: "{{ .Values.paygops_connector.image }}:{{ Values.paygops_connector.imageTag }}"
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"

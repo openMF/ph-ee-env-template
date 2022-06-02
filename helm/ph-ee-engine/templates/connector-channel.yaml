@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-channel
-          image: "{{ .Values.channel.image }}"
+          image: "{{ .Values.channel.image }}:{{ Values.channel.imageTag }}"
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
