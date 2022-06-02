@@ -264,15 +264,34 @@ mpesa:
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenant: ""
   callback_host: ""
-  business_short_code: ""
-  till_number: ""
-  retry_count: 1
-  api_timeout: 60000
-  skip:
-    enabled: false
-  safaricom:
-    auth_host: ""
-    api_host: ""
+  accounts:
+    default:
+      name: "default"
+      business_short_code: "7385028"
+      till: "1234567"
+      auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+      api_host: "https://sandbox.safaricom.co.ke"
+      client_key: "0pLxbN83FrOl5Nd0Fh9Zi5BQlMxSL2n5"
+      client_secret: "YzuGNoJxeub8ZC6d"
+      pass_key: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+    roster:
+      name: "roster"
+      business_short_code: "7385028"
+      till: "1234567"
+      auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+      api_host: "https://sandbox.safaricom.co.ke"
+      client_key: "0pLxbN83FrOl5Nd0Fh9Zi5BQlMxSL2n5"
+      client_secret: "YzuGNoJxeub8ZC6d"
+      pass_key: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+    paygops:
+      name: "paygops"
+      business_short_code: "174379"
+      till: "9347335"
+      auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+      api_host: "https://sandbox.safaricom.co.ke"
+      client_key: "0pLxbN83FrOl5Nd0Fh9Zi5BQlMxSL2n5"
+      client_secret: "YzuGNoJxeub8ZC6d"
+      pass_key: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -286,12 +305,6 @@ mpesa:
     backend: {}
   deployment:
     annotations: {}
-  safaricom:
-    auth_host: ""
-  secret:
-    name: ""
-    key:
-      auth_client_key: ""
 
 roster_connector: 
   enabled: false
