@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-importer-es
-          image: "{{ .Values.importer_es.image }}:{{ Values.importer_es.imageTag }}"
+          image: "{{ .Values.importer_es.image }}:{{ .Values.importer_es.imageTag }}"
           imagePullPolicy: "{{ .Values.importer_es.imagePullPolicy }}"
           resources:
             limits:

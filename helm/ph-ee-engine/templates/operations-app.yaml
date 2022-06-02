@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-operations-app
-          image: "{{ .Values.operations_app.image }}:{{ Values.operations_app.imageTag }}"
+          image: "{{ .Values.operations_app.image }}:{{ .Values.operations_app.imageTag }}"
           imagePullPolicy: "{{ .Values.operations_app.imagePullPolicy }}"
           ports:
             - containerPort: 5000

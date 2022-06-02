@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-notifications
-          image: "{{ .Values.notifications.image }}:{{ Values.notifications.imageTag }}"
+          image: "{{ .Values.notifications.image }}:{{ .Values.notifications.imageTag }}"
           imagePullPolicy: "{{ .Values.notifications.imagePullPolicy }}"
           resources:
             limits:
