@@ -60,48 +60,48 @@ spec:
               value: "{{ .Values.mpesa.tenant }}"
             - name: "LOGGING_LEVEL_ROOT"
               value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
-            - name: "ACCOUNTS.ROSTER.SHORTCODE"
+            - name: "ACCOUNTS_ROSTER_SHORTCODE"
               value: "{{ .Values.mpesa.accounts.roster.business_short_code }}"
-            - name: "ACCOUNTS.ROSTER.TILL"
+            - name: "ACCOUNTS_ROSTER_TILL"
               value: "{{ .Values.mpesa.accounts.roster.till }}"
-            - name: "ACCOUNTS.ROSTER.AUTHHOST"
+            - name: "ACCOUNTS_ROSTER_AUTHHOST"
               value: "{{ .Values.mpesa.accounts.roster.auth_host }}"
-            - name: "ACCOUNTS.ROSTER.APIHOST"
+            - name: "ACCOUNTS_ROSTER_APIHOST"
               value: "{{ .Values.mpesa.accounts.roster.api_host }}"
-            - name: "ACCOUNTS.ROSTER.CLIENTKEY"
+            - name: "ACCOUNTS_ROSTER_CLIENTKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "client-key"
-            - name: "ACCOUNTS.ROSTER.CLIENTSECRET"
+            - name: "ACCOUNTS_ROSTER_CLIENTSECRET"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "client-secret"
-            - name: "ACCOUNTS.ROSTER.PASSKEY"
+            - name: "ACCOUNTS_ROSTER_PASSKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "pass-key"
-            - name: "ACCOUNTS.PAYGOPS.SHORTCODE"
+            - name: "ACCOUNTS_PAYGOPS_SHORTCODE"
               value: "{{ .Values.mpesa.accounts.paygops.business_short_code}}"
-            - name: "ACCOUNTS.PAYGOPS.TILL"
+            - name: "ACCOUNTS_PAYGOPS_TILL"
               value: "{{ .Values.mpesa.accounts.paygops.till }}"
-            - name: "ACCOUNTS.PAYGOPS.AUTHHOST"
+            - name: "ACCOUNTS_PAYGOPS_AUTHHOST"
               value: "{{ .Values.mpesa.accounts.paygops.auth_host }}"
-            - name: "ACCOUNTS.PAYGOPS.APIHOST"
+            - name: "ACCOUNTS_PAYGOPS_APIHOST"
               value: "{{ .Values.mpesa.accounts.paygops.api_host }}"
-            - name: "ACCOUNTS.PAYGOPS.CLIENTKEY"
+            - name: "ACCOUNTS_PAYGOPS_CLIENTKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
                   key: "client-key"
-            - name: "ACCOUNTS.PAYGOPS.CLIENTSECRET"
+            - name: "ACCOUNTS_PAYGOPS_CLIENTSECRET"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
                   key: "client-secret"
-            - name: "ACCOUNTS.PAYGOPS.PASSKEY"
+            - name: "ACCOUNTS_PAYGOPS_PASSKEY"
               valueFrom:
                 secretKeyRef:
                   name: "mpesa-secret-paygops"
@@ -170,7 +170,7 @@ spec:
             backend:
 {{- if .Values.mpesa.ingress.backend }}
 {{ toYaml .Values.mpesa.ingress.backend | indent 14 }}
-{{- end }} 
+{{- end }}
 
   tls:
     - hosts:
