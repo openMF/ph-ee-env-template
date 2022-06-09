@@ -455,6 +455,8 @@ importer_es:
   requests:
     memory: "512M"
     cpu: "100m"
+  reporting:
+    enabled: false
 
 kafka:
   enabled: true
