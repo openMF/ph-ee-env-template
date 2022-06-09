@@ -335,7 +335,7 @@ paygops_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "1.0.0"
+  imageTag: "1.0.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
