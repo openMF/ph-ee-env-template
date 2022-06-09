@@ -17,5 +17,5 @@ dependencies:
   version: 8.8.23
   repository: "https://charts.bitnami.com/bitnami"
   alias: operationsmysql
-  condition: "operations.enabled"
+  condition: "operations.mysql.enabled"
 

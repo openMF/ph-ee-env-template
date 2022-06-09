@@ -130,6 +130,8 @@ channel:
 
 operations:
   enabled: true
+  mysql:
+    enabled: true
 
 ingress:
   apiversion: "networking.k8s.io/v1"
