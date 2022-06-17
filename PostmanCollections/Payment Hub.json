@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8e590493-34e0-4dbf-9901-62ca0bd7caaa",
+		"_postman_id": "6f72f3d4-1aa7-4ceb-8e91-2b3eb2348b95",
 		"name": "Payment Hub APIs",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17902615"
 	},
 	"item": [
 		{
@@ -1875,6 +1876,94 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"developerMessage\": \"Provide list of ids as body which belongs to any one of these domains [TRANSACTIONID, PAYERID, PAYEEID, EXTERNALID, WORKFLOWINSTANCEKEY]\",\n    \"errorDescription\": \"List of ids can't be empty\",\n    \"errorCode\": \"FILTER_ID\"\n}"
+						},
+						{
+							"name": "Filter Transaction Request By Error Description",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "ibank-india",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    \"AMS Local is disabled\"\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=errorDescription",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "filterBy",
+											"value": "errorDescription",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-06-16_12-40-54.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "561"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Jun 2022 12:40:54 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA\r\n"
 						}
 					]
 				},
