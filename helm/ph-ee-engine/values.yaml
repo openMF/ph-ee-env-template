@@ -202,7 +202,7 @@ operations_app:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.0.0"
+  imageTag: "v1.0.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -233,7 +233,7 @@ operations_web:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.1.1"
   imagePullPolicy: "Always"
   hostname: ""
   webhost: ""
@@ -448,7 +448,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.1.1"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   limits:
@@ -480,7 +480,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.0.1"
+  imageTag: "v1.0.2"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   datasource:
