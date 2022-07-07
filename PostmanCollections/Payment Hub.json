@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6f72f3d4-1aa7-4ceb-8e91-2b3eb2348b95",
+		"_postman_id": "bdd62795-d90c-4a2b-8791-274ce1096492",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17902615"
@@ -1539,13 +1539,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "oaf",
+								"value": "{{TenantName}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n]",
+							"raw": "{\n    \"transactionId\": [\"8c2358be640c4BtABNeY\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1553,7 +1553,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=transactionid",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -1567,7 +1567,8 @@
 								{
 									"key": "filterBy",
 									"value": "transactionid",
-									"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+									"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+									"disabled": true
 								}
 							]
 						}
@@ -2881,10 +2882,1758 @@
 								"v1",
 								"transactionRequests",
 								""
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": "8c2358be640c4BtABNeY",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "ACCEPTED",
+									"description": "IN_PROGRESS, RECEIVED, ACCEPTED, REJECTED, FAILED",
+									"disabled": true
+								},
+								{
+									"key": "amount",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "USD",
+									"disabled": true
+								},
+								{
+									"key": "direction",
+									"value": "INCOMING",
+									"disabled": true
+								},
+								{
+									"key": "payerPartyId",
+									"value": "254708374149",
+									"disabled": true
+								},
+								{
+									"key": "payeePartyId",
+									"value": "24450523",
+									"disabled": true
+								},
+								{
+									"key": "payeeDfspId",
+									"value": "null",
+									"disabled": true
+								},
+								{
+									"key": "payerDfspId",
+									"value": "null",
+									"disabled": true
+								},
+								{
+									"key": "startFrom",
+									"value": "2022-06-09 10:00:00",
+									"description": "yyyy-MM-dd HH:mm:ss",
+									"disabled": true
+								},
+								{
+									"key": "startTo",
+									"value": "2022-06-09 11:00:00",
+									"description": "yyyy-MM-dd HH:mm:ss",
+									"disabled": true
+								},
+								{
+									"key": "sortedBy",
+									"value": "currency",
+									"disabled": true
+								},
+								{
+									"key": "sortedOrder",
+									"value": "ASC",
+									"description": "DESC, ASC",
+									"disabled": true
+								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Transaction Request by transactionId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?transactionId=8c2358be640c4BtABNeY",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY"
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:00:23 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"last\": true,\n    \"numberOfElements\": 1,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by state",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?state=ACCEPTED",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:02:51 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by amount",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?amount=1",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:05:13 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by currency",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?currency=USD",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:06:00 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by direction",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?direction=INCOMING",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:07:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by payerPartyId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?payerPartyId=254708374149",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149"
+										},
+										{
+											"key": "payeePartyId",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "0",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:08:39 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by payeePartyId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?payeePartyId=24450523",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523"
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "0",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:09:53 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by payeeDfspId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?payeeDfspId=null",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null"
+										},
+										{
+											"key": "payerDfspId",
+											"value": "0",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:11:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [],\n    \"totalPages\": 0,\n    \"totalElements\": 0,\n    \"last\": true,\n    \"numberOfElements\": 0,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by payerDfspId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?payerDfspId=null",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "null"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Jul 2022 16:12:21 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [],\n    \"totalPages\": 0,\n    \"totalElements\": 0,\n    \"last\": true,\n    \"numberOfElements\": 0,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request before a date",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?startTo=2022-06-10 10:17:18",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"description": "IN_PROGRESS, RECEIVED, ACCEPTED, REJECTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-10 10:17:18",
+											"description": "yyyy-MM-dd HH:mm:ss",
+											"disabled": true
+										},
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "yyyy-MM-dd HH:mm:ss"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 06 Jul 2022 10:14:37 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"last\": true,\n    \"numberOfElements\": 1,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request after a date",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?startFrom=2022-06-10 10:17:18",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"description": "IN_PROGRESS, RECEIVED, ACCEPTED, REJECTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-10 10:17:18",
+											"description": "yyyy-MM-dd HH:mm:ss"
+										},
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "yyyy-MM-dd HH:mm:ss",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 06 Jul 2022 10:15:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"last\": true,\n    \"numberOfElements\": 1,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request between a date",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?startFrom=2022-06-09 10:00:00&startTo=2022-06-09 11:00:00",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"description": "IN_PROGRESS, RECEIVED, ACCEPTED, REJECTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-09 10:00:00",
+											"description": "yyyy-MM-dd HH:mm:ss"
+										},
+										{
+											"key": "startTo",
+											"value": "2022-06-09 11:00:00",
+											"description": "yyyy-MM-dd HH:mm:ss"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 06 Jul 2022 10:16:06 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"last\": true,\n    \"numberOfElements\": 1,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request by sortedBy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?sortedBy=currency",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"description": "IN_PROGRESS, RECEIVED, ACCEPTED, REJECTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-09 10:00:00",
+											"description": "yyyy-MM-dd HH:mm:ss",
+											"disabled": true
+										},
+										{
+											"key": "startTo",
+											"value": "2022-06-09 11:00:00",
+											"description": "yyyy-MM-dd HH:mm:ss",
+											"disabled": true
+										},
+										{
+											"key": "sortedBy",
+											"value": "currency"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 06 Jul 2022 10:20:16 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"currency\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						},
+						{
+							"name": "Get Transaction Request in ascending order",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?sortedOrder=ASC",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										""
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "8c2358be640c4BtABNeY",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"description": "IN_PROGRESS, RECEIVED, ACCEPTED, REJECTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "amount",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "payerPartyId",
+											"value": "254708374149",
+											"disabled": true
+										},
+										{
+											"key": "payeePartyId",
+											"value": "24450523",
+											"disabled": true
+										},
+										{
+											"key": "payeeDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "payerDfspId",
+											"value": "null",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-09 10:00:00",
+											"description": "yyyy-MM-dd HH:mm:ss",
+											"disabled": true
+										},
+										{
+											"key": "startTo",
+											"value": "2022-06-09 11:00:00",
+											"description": "yyyy-MM-dd HH:mm:ss",
+											"disabled": true
+										},
+										{
+											"key": "sortedBy",
+											"value": "currency",
+											"disabled": true
+										},
+										{
+											"key": "sortedOrder",
+											"value": "ASC",
+											"description": "DESC, ASC"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 06 Jul 2022 10:23:03 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"ASD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"ASC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": false,\n            \"ascending\": true\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
+						}
+					]
 				}
 			]
 		},
@@ -3437,6 +5186,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "TenantName",
+			"value": "ibank-india"
 		}
 	]
 }
