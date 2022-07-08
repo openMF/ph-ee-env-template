@@ -1545,7 +1545,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"transactionId\": [\"8c2358be640c4BtABNeY\"]\n}",
+							"raw": "{\n    \"errorDescription\": [\"Ams local is disabled\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1565,9 +1565,20 @@
 							],
 							"query": [
 								{
-									"key": "filterBy",
-									"value": "transactionid",
-									"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+									"key": "startTo",
+									"value": "2022-06-10 10:17:18",
+									"description": "YYYY:MM:DD HH:mm:ss",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "FAILED",
+									"disabled": true
+								},
+								{
+									"key": "startFrom",
+									"value": "2022-06-10 10:17:18",
+									"description": "YYYY:MM:DD HH:mm:ss",
 									"disabled": true
 								}
 							]
@@ -1575,19 +1586,19 @@
 					},
 					"response": [
 						{
-							"name": "Filter By Transaction Id Response",
+							"name": "Filter Transaction Request by transactionId and startTo",
 							"originalRequest": {
 								"method": "POST",
 								"header": [
 									{
 										"key": "Platform-TenantId",
-										"value": "oaf",
+										"value": "{{TenantName}}",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n    \"70830851a2f3rPVoWj3U\"\n]",
+									"raw": "{\n    \"transactionId\": [\"8c2358be640c4BtABNeY\", \"dd2183f3ac5d5leU5nz3\"]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1595,7 +1606,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=transactionid",
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?startTo=2022-06-10 10:17:18",
 									"host": [
 										"{{OperationsHostName}}"
 									],
@@ -1607,313 +1618,14 @@
 									],
 									"query": [
 										{
-											"key": "filterBy",
-											"value": "transactionid",
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
 											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "plain",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/csv;charset=ISO-8859-1"
-								},
-								{
-									"key": "Content-Length",
-									"value": "433"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Content-Disposition",
-									"value": "attachment; filename=transactionRequest_2022-04-24_11-56-18.csv"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 24 Apr 2022 11:56:18 GMT"
-								},
-								{
-									"key": "X-Kong-Upstream-Latency",
-									"value": "19"
-								},
-								{
-									"key": "X-Kong-Proxy-Latency",
-									"value": "1"
-								},
-								{
-									"key": "Via",
-									"value": "kong/2.2.1"
-								}
-							],
-							"cookie": [],
-							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO\r\n2251799815274522,70830851a2f3rPVoWj3U,Tue Apr 19 13:58:38 UTC 2022,Tue Apr 19 14:00:56 UTC 2022,FAILED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA\r\n"
-						},
-						{
-							"name": "Invalid Filter Response",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Platform-TenantId",
-										"value": "oaf",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "[\n    \"70830851a2f3rPVoWj3U\"\n]",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=abcd",
-									"host": [
-										"{{OperationsHostName}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"transactionRequests",
-										"export"
-									],
-									"query": [
+										},
 										{
-											"key": "filterBy",
-											"value": "abcd",
-											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json;charset=UTF-8"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 24 Apr 2022 11:56:59 GMT"
-								},
-								{
-									"key": "X-Kong-Upstream-Latency",
-									"value": "9"
-								},
-								{
-									"key": "X-Kong-Proxy-Latency",
-									"value": "1"
-								},
-								{
-									"key": "Via",
-									"value": "kong/2.2.1"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"developerMessage\": \"Possible filter values are [TRANSACTIONID, PAYERID, PAYEEID, EXTERNALID, WORKFLOWINSTANCEKEY]\",\n    \"errorDescription\": \"Invalid filter value abcd\",\n    \"errorCode\": \"INVALID_FILTER\"\n}"
-						},
-						{
-							"name": "Empty Body Response",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Platform-TenantId",
-										"value": "oaf",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "[\n]",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=transactionid",
-									"host": [
-										"{{OperationsHostName}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"transactionRequests",
-										"export"
-									],
-									"query": [
-										{
-											"key": "filterBy",
-											"value": "transactionid",
-											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json;charset=UTF-8"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 24 Apr 2022 11:57:32 GMT"
-								},
-								{
-									"key": "X-Kong-Upstream-Latency",
-									"value": "12"
-								},
-								{
-									"key": "X-Kong-Proxy-Latency",
-									"value": "1"
-								},
-								{
-									"key": "Via",
-									"value": "kong/2.2.1"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"developerMessage\": \"Provide list of ids as body which belongs to any one of these domains [TRANSACTIONID, PAYERID, PAYEEID, EXTERNALID, WORKFLOWINSTANCEKEY]\",\n    \"errorDescription\": \"List of ids can't be empty\",\n    \"errorCode\": \"FILTER_ID\"\n}"
-						},
-						{
-							"name": "Filter Transaction Request By Error Description",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Platform-TenantId",
-										"value": "ibank-india",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "[\n    \"AMS Local is disabled\"\n]",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?filterBy=errorDescription",
-									"host": [
-										"{{OperationsHostName}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"transactionRequests",
-										"export"
-									],
-									"query": [
-										{
-											"key": "filterBy",
-											"value": "errorDescription",
-											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY"
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
 										}
 									]
 								}
@@ -1924,7 +1636,7 @@
 							"header": [
 								{
 									"key": "Content-Disposition",
-									"value": "attachment; filename=transactionRequest_2022-06-16_12-40-54.csv"
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-09-02.csv"
 								},
 								{
 									"key": "X-Content-Type-Options",
@@ -1956,15 +1668,677 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "561"
+									"value": "450"
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 16 Jun 2022 12:40:54 GMT"
+									"value": "Fri, 08 Jul 2022 10:09:02 GMT"
 								}
 							],
 							"cookie": [],
-							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA\r\n"
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request by transactionId",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transactionId\": [\"8c2358be640c4BtABNeY\", \"dd2183f3ac5d5leU5nz3\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-10-36.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "637"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:10:36 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,ASD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request by transactionId and errorDescription",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transactionId\": [\"8c2358be640c4BtABNeY\"],\n    \"errorDescription\": [\"Ams local is disabled\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-11-51.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "824"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:11:51 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,ASD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request by state",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"state\": [\"ACCEPTED\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-12-40.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "637"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:12:40 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,ASD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request by workflowInstanceKey",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"workflowInstanceKey\": [\"2251799816099637\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "ACCEPTED",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-14-21.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "450"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:14:21 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request bu errorDescription",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"errorDescription\": [\"Ams local is disabled\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "FAILED",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-18-27.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "637"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:18:27 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,ASD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n2251799816099637,8c2358be640c4BtABNeY,Thu Jun 09 10:17:18 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,USD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request by errorDescription and startFrom",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"errorDescription\": [\"Ams local is disabled\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?startFrom=2022-06-10 10:17:18",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "Supported filter\nTRANSACTIONID\nPAYERID \nPAYEEID\nEXTERNALID\nWORKFLOWINSTANCEKEY",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "FAILED",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-10 10:17:18"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=transactionRequest_2022-07-08_10-19-18.csv"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv;charset=ISO-8859-1"
+								},
+								{
+									"key": "Content-Length",
+									"value": "450"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:19:18 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "WORKFLOWINSTANCEKEY,TRANSACTIONID,STARTEDAT,COMPLETEDAT,STATE,PAYEEDFSPID,PAYEEPARTYID,PAYEEPARTYIDTYPE,PAYEEFEE,PAYEEQUOTECODE,PAYERDFSPID,PAYERPARTYID,PAYERPARTYIDTYPE,PAYERFEE,PAYERQUOTECODE,AMOUNT,CURRENCY,DIRECTION,AUTHTYPE,INITIATORTYPE,SCENARIO,VARIABLES\r\n2251799816729405,dd2183f3ac5d5leU5nz3,Sun Jun 12 00:22:28 UTC 2022,,ACCEPTED,,24450523,ACCOUNTID,,,,254708374149,MSISDN,,,1,ASD,INCOMING,,BUSINESS,MPESA,{IndirectList: not instantiated}\r\n"
+						},
+						{
+							"name": "Filter Transaction Request empty response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"errorDescription\": [\"Ams local is disabled\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export?startTo=2022-06-10 10:17:18&startFrom=2022-06-10 10:17:18",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transactionRequests",
+										"export"
+									],
+									"query": [
+										{
+											"key": "startTo",
+											"value": "2022-06-10 10:17:18",
+											"description": "YYYY:MM:DD HH:mm:ss"
+										},
+										{
+											"key": "state",
+											"value": "FAILED",
+											"disabled": true
+										},
+										{
+											"key": "startFrom",
+											"value": "2022-06-10 10:17:18",
+											"description": "YYYY:MM:DD HH:mm:ss"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Jul 2022 10:20:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"developerMessage\": \"Empty response\",\n    \"errorDescription\": \"Empty response\",\n    \"errorCode\": \"404\"\n}"
 						}
 					]
 				},
