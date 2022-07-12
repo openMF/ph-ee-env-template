@@ -21,6 +21,13 @@ spec:
           image: danishfynarfin/ph-ee-connector-mpesa
           ports:
             - containerPort: 5000
+          env:
+            - name: spring.datasource.url
+              value: jdbc:mysql:thin://operations-mysql:3306/messagegateway
+            - name: spring.datasource.username
+              value: mifos
+            - name: spring.datasource.password
+              value: password
 
 ---
 apiVersion: v1
