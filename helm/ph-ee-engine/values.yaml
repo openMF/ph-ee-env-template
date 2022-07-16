@@ -264,6 +264,7 @@ mpesa:
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+  zeebe_init_transfer_wait_timer: 10
   tenant: ""
   callback_host: ""
   accounts:

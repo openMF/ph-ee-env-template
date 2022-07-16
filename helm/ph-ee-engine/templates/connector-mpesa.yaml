@@ -50,6 +50,8 @@ spec:
               value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Values.mpesa.zeebe_broker_contactpoint }}"
+            - name: "ZEEBE_INIT-TRANSFER_WAIT-TIMER"
+              value: "{{ .Values.mpesa.zeebe_init_transfer_wait_timer }}"
             - name: "MPESA_LOCAL_HOST"
               value: "{{ .Values.mpesa.callback_host }}"
             - name: "MPESA_API_TIMEOUT"
