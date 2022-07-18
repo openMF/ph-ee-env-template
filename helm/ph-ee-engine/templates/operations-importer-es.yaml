@@ -30,5 +30,7 @@ spec:
           env:
           - name: "reporting.enabled"
             value: "{{ .Values.importer_es.reporting.enabled }}"
+          - name: "logging_level_ROOT"
+            value: "{{ .Values.importer_es.logging.level.root }}"
 
 {{- end }}
