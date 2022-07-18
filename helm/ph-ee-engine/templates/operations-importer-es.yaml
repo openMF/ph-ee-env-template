@@ -27,5 +27,8 @@ spec:
             requests:
               memory: "{{ .Values.importer_es.requests.memory }}"
               cpu: "{{ .Values.importer_es.requests.cpu }}"
+          env:
+          - name: "reporting.enabled"
+            value: "{{ .Values.importer_es.reporting.enabled }}"
 
 {{- end }}
