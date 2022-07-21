@@ -29,8 +29,8 @@ zeebe-cluster-helm:
 #      value: "false"
     - name: ZEEBE_BROKER_EXECUTION_METRICS_EXPORTER_ENABLED
       value: "true"
-#    - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME
-#      value: "hu.dpc.rt.kafkastreamer.exporter.NoOpExporter"
+    - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME
+      value: "hu.dpc.rt.kafkastreamer.exporter.NoOpExporter"
     - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_JARPATH
       value: "/exporters/ph-ee-kafka-exporter.jar"
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
