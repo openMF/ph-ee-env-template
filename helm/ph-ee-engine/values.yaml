@@ -43,6 +43,29 @@ zeebe-cluster-helm:
       value: "2"
     - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_BETA
       value: "8"
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_EVENT
+      value: 'true'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_VARIABLE
+      value: 'true'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_PROCESSINSTANCE
+      value: 'true'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_PROCESS
+      value: 'true'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_INCIDENT
+      value: 'true'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_DEPLOYMENT
+      value: 'false'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_ERROR
+      value: 'false'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_JOB
+      value: 'false'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_VARIABLEDOCUMENT
+      value: 'false'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_WORKFLOWINSTANCE
+      value: 'false'
+    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_CREATETEMPLATE
+      value: 'false'
+
 
   gateway:
     replicas: 1
@@ -71,7 +94,7 @@ zeebe-cluster-helm:
     - name: init-ph-ee-kafka-exporter
       image: busybox:1.28
       command: ['/bin/sh', '-c']
-      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/jars/exporter-1.0.0-SNAPSHOT.jar"; ls -al /exporters/']
+      args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "https://fynarfin.io/images/exporter-1.1.0-SNAPSHOT.jar"; ls -al /exporters/']
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
