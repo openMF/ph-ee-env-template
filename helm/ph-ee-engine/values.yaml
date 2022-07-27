@@ -336,7 +336,7 @@ roster_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.0.1"
+  imageTag: "v1.0.2"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: ""
@@ -359,7 +359,7 @@ paygops_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.0.1"
+  imageTag: "v1.0.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -472,7 +472,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.1.4"
+  imageTag: "v1.2.0"
   imagePullPolicy: "Always"
   reporting:
     enabled: false
