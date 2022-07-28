@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bdd62795-d90c-4a2b-8791-274ce1096492",
+		"_postman_id": "d46153bb-8e95-4fb5-a30e-3a58d3545eb1",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17902615"
@@ -1545,7 +1545,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"errorDescription\": [\"Ams local is disabled\"]\n}",
+							"raw": "{\n    \"errorDescription\": [\"Ams local is disabled\"],\n    \"transactionId\": [],\n    \"payerId\": [],\n    \"payeeId\": [],\n    \"externalId\": [],\n    \"workflowInstanceKey\": [],\n    \"state\": []\n}",
 							"options": {
 								"raw": {
 									"language": "json"
