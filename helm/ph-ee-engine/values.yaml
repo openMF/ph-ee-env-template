@@ -485,6 +485,7 @@ importer_es:
   requests:
     memory: "512M"
     cpu: "100m"
+    javaToolOptions: "-Xmx256M"
 
 kafka:
   enabled: true
@@ -525,6 +526,7 @@ importer_rdbms:
     cpu: "100m"
   deployment:
     annotations: {}
+  javaToolOptions: "-Xmx256M"
 
 connector_bulk:
   enabled: false

@@ -32,5 +32,7 @@ spec:
             value: "{{ .Values.importer_es.reporting.enabled }}"
           - name: "logging_level_ROOT"
             value: "{{ .Values.importer_es.logging.level.root }}"
+          - name: "JAVA_TOOL_OPTIONS"
+            value: "{{ .Values.importer_es.javaToolOptions}}"
 
 {{- end }}

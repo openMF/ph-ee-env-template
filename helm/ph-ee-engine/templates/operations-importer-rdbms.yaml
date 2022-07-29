@@ -44,6 +44,8 @@ spec:
               value: "{{ .Values.importer_rdbms.datasource.schema }}"
             - name: "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.importer_rdbms.LOGGING_LEVEL_ROOT }}"
+            - name: "JAVA_TOOL_OPTIONS"
+              value: "{{ .Values.importer_rdbms.javaToolOptions}}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
