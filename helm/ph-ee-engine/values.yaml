@@ -130,7 +130,7 @@ channel:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.0.0"
+  imageTag: "v1.0.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -226,7 +226,7 @@ operations_app:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.0.2"
+  imageTag: "v1.0.3"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -258,7 +258,7 @@ operations_web:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.1.2"
+  imageTag: "v1.1.3"
   imagePullPolicy: "Always"
   hostname: ""
   webhost: ""
@@ -474,7 +474,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.2.0"
+  imageTag: "v1.2.1"
   imagePullPolicy: "Always"
   reporting:
     enabled: false
@@ -513,7 +513,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.0.3"
+  imageTag: "v1.0.4"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
