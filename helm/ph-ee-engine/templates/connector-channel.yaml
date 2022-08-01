@@ -60,6 +60,8 @@ spec:
               value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
             - name: "AMS"
               value: "{{ .Values.channel.AMS  }}"
+            - name: "LOGGING_PATTERN_CONSOLE"
+              value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

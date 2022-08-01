@@ -34,5 +34,7 @@ spec:
             value: "{{ .Values.importer_es.logging.level.root }}"
           - name: "JAVA_TOOL_OPTIONS"
             value: "{{ .Values.importer_es.javaToolOptions}}"
+          - name: "LOGGING_PATTERN_CONSOLE"
+            value: "{{ .Values.importer_es.logging.pattern.console}}"
 
 {{- end }}

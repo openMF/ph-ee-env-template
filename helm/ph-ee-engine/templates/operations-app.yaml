@@ -61,6 +61,8 @@ spec:
               value: "{{ .Values.operations_app.tenants }}"
             - name: "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.operations_app.LOGGING_LEVEL_ROOT }}"
+            - name: "LOGGING_PATTERN_CONSOLE"
+              value: "{{ .Values.operations_app.LOGGING_PATTERN_CONSOLE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

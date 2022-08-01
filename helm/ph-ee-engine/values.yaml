@@ -134,6 +134,7 @@ channel:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
   DFSPIDS: ""
   hostname: ""
@@ -229,6 +230,7 @@ operations_app:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   hostname: ""
   tenants: ""
   token_client_channel_secret: ""
@@ -479,6 +481,8 @@ importer_es:
   logging:
     level:
       root: "INFO"
+    pattern:
+      console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -512,6 +516,7 @@ importer_rdbms:
   imageTag: "v1.0.3"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   datasource:
       username: "mifos"
       password: "password"
