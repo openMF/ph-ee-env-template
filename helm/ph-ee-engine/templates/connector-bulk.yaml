@@ -62,9 +62,7 @@ spec:
     app: ph-ee-connector-bulk
   sessionAffinity: None
   type: ClusterIP
-
-{{- end }}
-
+              
 ---
 {{- if .Values.connector_bulk.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}
@@ -91,4 +89,5 @@ spec:
     - hosts:
         - "{{ .Values.wildcardhostname }}"
       secretName: "{{ .Values.tls }}"
+{{- end }}
 {{- end }}
