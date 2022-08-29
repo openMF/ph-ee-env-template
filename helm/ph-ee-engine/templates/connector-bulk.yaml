@@ -64,3 +64,31 @@ spec:
   type: ClusterIP
 
 {{- end }}
+
+---
+{{- if .Values.connector_bulk.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-bulk
+  annotations:
+{{- if .Values.connector_bulk.ingress.annotations }}
+{{ toYaml .Values.connector_bulk.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.connector_bulk.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.connector_bulk.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.connector_bulk.ingress.backend }}
+{{ toYaml .Values.connector_bulk.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
