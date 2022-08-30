@@ -36,5 +36,19 @@ spec:
             value: "{{ .Values.importer_es.javaToolOptions}}"
           - name: "LOGGING_PATTERN_CONSOLE"
             value: "{{ .Values.importer_es.logging.pattern.console}}"
+          - name: "ELASTICSEARCH_SECURITY_ENABLED"
+            value: "{{ .Values.importer_es.elasticsearch_security_enabled }}"
+          - name: "ELASTICSEARCH_SSLVERIFICATION"
+            value: "{{ .Values.importer_es.elasticsearch_sslverification }}"
+          - name: "ELASTICSEARCH_USERNAME"
+            valueFrom:
+              secretKeyRef:
+                name: elastic-credentials
+                key: username
+          - name: "ELASTICSEARCH_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: elastic-credentials
+                key: password
 
 {{- end }}

@@ -42,6 +42,20 @@ spec:
               value:  "{{ .Values.zeebe_ops.LOGGING_LEVEL_ROOT }}"
             - name: "SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS"
               value: "{{ .Values.zeebe_ops.elasticsearch_contactpoint }}"
+            - name: "ELASTICSEARCH_SECURITY_ENABLED"
+              value: "{{ .Values.zeebe_ops.elasticsearch_security_enabled }}"
+            - name: "ELASTICSEARCH_SSLVERIFICATION"
+              value: "{{ .Values.zeebe_ops.elasticsearch_sslverification }}"
+            - name: "ELASTICSEARCH_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-credentials
+                  key: username
+            - name: "ELASTICSEARCH_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-credentials
+                  key: password
 ---
 {{- if .Values.zeebe_ops.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}
