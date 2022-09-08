@@ -535,6 +535,32 @@ importer_es:
   imagePullPolicy: "Always"
   reporting:
     enabled: false
+    fields:
+      amount: false
+      accountId: false
+      errorCode: false
+      errorDescription: false
+      externalId: false
+      initiator: false
+      initiatorType: false
+      isNotificationsFailureEnabled: false
+      isNotificationsSuccessEnabled: false
+      mpesaTransactionId: false
+      mpesaTransactionStatusRetryCount: false
+      originDate: false
+      partyLookupFailed: false
+      phoneNumber: false
+      processDefinitionKey: false
+      processInstanceKey: false
+      scenario: false
+      tenantId: false
+      timer: false
+      timestamp: false
+      transactionFailed: false
+      transactionId: false
+      transferCreateFailed: false
+      transferSettlementFailed: false
+      transferResponseCREATE: false
   elasticsearch_sslverification: false
   elasticsearch_security_enabled: false
   logging:
