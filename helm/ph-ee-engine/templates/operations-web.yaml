@@ -50,8 +50,8 @@ data:
     oauth.enabled true
     oauth.basicAuth true
     oauth.basicAuthToken Y2xpZW50Og==
-    oauth.serverUrl http://{{ .Values.identity.hostname }}
-    serverUrl http://{{ .Values.operations_app.hostname }}
+    oauth.serverUrl https://{{ .Values.identity.hostname }}
+    serverUrl https://{{ .Values.operations_app.hostname }}
 metadata:
   name: ph-ee-operations-web-config
 
