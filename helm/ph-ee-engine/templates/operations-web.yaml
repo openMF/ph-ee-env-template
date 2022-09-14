@@ -35,7 +35,7 @@ spec:
               cpu: "{{ .Values.operations_web.requests.cpu }}"
           volumeMounts:
             - name: ph-ee-operations-web-config
-              mountPath: "/app/src/assets/configuration.properties"
+              mountPath: "/usr/share/nginx/html/assets/configuration.properties"
               subPath: "configuration.properties"
       volumes:
         - name: ph-ee-operations-web-config
