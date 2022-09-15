@@ -23,6 +23,8 @@ spec:
       containers:
         - name: message-gateway
           image: "{{ .Values.messagegateway.image }}:{{ .Values.messagegateway.imageTag }}"
+      imagePullSecrets:
+        - name: dockersecret    
           ports:
             - containerPort: 9191
           imagePullPolicy: "{{ .Values.messagegateway.imagePullPolicy }}"
