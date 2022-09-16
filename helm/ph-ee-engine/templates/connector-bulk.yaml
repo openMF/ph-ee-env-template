@@ -36,6 +36,52 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Values.connector_bulk.zeebe_broker_contactpoint }}"
+            - name: "TENANTS"
+              value: "{{ .Values.connector_bulk.tenants }}"
+            - name: "APPLICATION_BUCKET-NAME"
+              value: "{{ .Values.connector_bulk.bucket_name }}"
+            - name: "OPERATIONS-APP_CONTACTPOINT"
+              value: "{{ .Values.connector_bulk.operations_app.contactpoint }}"
+            - name: "OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION"
+              value: "{{ .Values.connector_bulk.operations_app.endpoints.batch_transaction }}"
+            - name: "CONFIG_PARTYLOOKUP_ENABLE"
+              value: "{{ .Values.connector_bulk.config.partylookup.enable }}"
+            - name: "CONFIG_APPROVAL_ENABLE"
+              value: "{{ .Values.connector_bulk.config.approval.enable }}"
+            - name: "CONFIG_ORDERING_ENABLE"
+              value: "{{ .Values.connector_bulk.config.ordering.enable }}"
+            - name: "CONFIG_ORDERING_FIELD"
+              value: "{{ .Values.connector_bulk.config.ordering.field }}"
+            - name: "CONFIG_SPLITTING_ENABLE"
+              value: "{{ .Values.connector_bulk.config.splitting.enable }}"
+            - name: "CONFIG_SPLITTING_SUB_BATCH_SIZE"
+              value: "{{ .Values.connector_bulk.config.splitting.sub_batch_size }}"
+            - name: "CONFIG_FORMATTING_ENABLE"
+              value: "{{ .Values.connector_bulk.config.formatting.enable }}"
+            - name: "CONFIG_FORMATTING_STANDARD"
+              value: "{{ .Values.connector_bulk.config.formatting.standard }}"
+            - name: "CONFIG_MERGEBACK_ENABLE"
+              value: "{{ .Values.connector_bulk.config.mergeback.enable }}"
+            - name: "CONFIG_BACKPRESSURE_ENABLE"
+              value: "{{ .Values.connector_bulk.config.backpressure.enable }}"
+            - name: "CONFIG_SUCCESS-THRESHOLD-CHECK_ENABLE"
+              value: "{{ .Values.connector_bulk.config.success_threshold_check.enable }}"
+            - name: "CONFIG_SUCCESS-THRESHOLD-CHECK_SUCCESS-RATE"
+              value: "{{ .Values.connector_bulk.config.success_threshold_check.success_rate }}"
+            - name: "CLOUD_AWS_REGION_STATIC"
+              value: "{{ .Values.connector_bulk.aws.region }}"
+            - name: "AWS_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-access-key"
+            - name: "AWS_SECRET_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-secret-key"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -44,6 +90,15 @@ spec:
           configMap:
             name: ph-ee-config
 
+---
+apiVersion: {{ .Values.secret.apiversion }}
+kind: Secret
+metadata:
+  name: bulk-processor-secret
+type: Opaque
+data:
+  aws-access-key: {{ .Values.connector_bulk.aws.access_key | b64enc }}
+  aws-secret-key: {{ .Values.connector_bulk.aws.secret_key | b64enc }}
 ---
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
