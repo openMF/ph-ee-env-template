@@ -627,7 +627,7 @@ connector_bulk:
   SPRING_PROFILES_ACTIVE: "default"
   hostname: "bulk-connector.sandbox.fynarfin.io"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
-  tenants: ""
+  tenants: "ibank-usa,ibank-india"
   bucket_name: "paymenthub-ee-dev"
   operations_app:
       contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
@@ -656,8 +656,8 @@ connector_bulk:
       success_rate: 95
   aws:
     region: "us-east-2"
-    access_key: "access-key"
-    secret_key: "secret-key"
+    access_key: "AKIAX32JM37TZOJ5AKFB"
+    secret_key: "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"
   limits:
     memory: "990M"
     cpu: "512m"
