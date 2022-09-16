@@ -659,8 +659,8 @@ connector_bulk:
     access_key: "access-key"
     secret_key: "secret-key"
   limits:
-    memory: "1024M"
-    cpu: "500m"
+    memory: "990M"
+    cpu: "512m"
   requests:
     memory: "512M"
     cpu: "100m"
