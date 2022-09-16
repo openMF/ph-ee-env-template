@@ -626,7 +626,7 @@ connector_bulk:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   limits:
-    memory: "512M"
+    memory: "1024M"
     cpu: "500m"
   requests:
     memory: "512M"
