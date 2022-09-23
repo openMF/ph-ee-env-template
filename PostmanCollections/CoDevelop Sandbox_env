@@ -27,6 +27,18 @@
 			"enabled": true
 		},
 		{
+			"key": "ZeebeOpsHostName",
+			"value": "https://zeebeops.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "PlatformTenant",
+			"value": "rhino",
+			"type": "default",
+			"enabled": true
+		},
+		{
 			"key": "pageNo",
 			"value": "1",
 			"type": "default",
@@ -35,12 +47,6 @@
 		{
 			"key": "status",
 			"value": "ALL",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "ZeebeOpsHostName",
-			"value": "https://zeebeops.mifos.g2pconnect.io",
 			"type": "default",
 			"enabled": true
 		},
@@ -57,13 +63,31 @@
 			"enabled": true
 		},
 		{
-			"key": "PlatformTenant",
-			"value": "ibank-usa",
+			"key": "messagegateway",
+			"value": "messagegateway.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "communityapp",
+			"value": "communityapp.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "kibana",
+			"value": "analytics.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "fineractserver",
+			"value": "rhino.mifos.g2pconnect.io",
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2022-09-21T06:08:35.896Z",
-	"_postman_exported_using": "Postman/9.31.6"
+	"_postman_exported_at": "2022-09-23T09:29:02.223Z",
+	"_postman_exported_using": "Postman/9.31.9"
 }
