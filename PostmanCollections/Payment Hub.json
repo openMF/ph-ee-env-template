@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d46153bb-8e95-4fb5-a30e-3a58d3545eb1",
+		"_postman_id": "3dc1aed9-d735-40c2-8a74-e9260526e94d",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17902615"
@@ -716,12 +716,24 @@
 			"item": [
 				{
 					"name": "Bulk Transfer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa"
+								"value": "{{TenantName}}"
 							}
 						],
 						"body": {
@@ -731,31 +743,34 @@
 									"key": "data",
 									"description": "CSV file conisiting of transaction details. CSV format: \"id\", \"request_id\", \"payment_mode\", \"account_number\", \"amount\", \"currency\", \"note\" in the given order. ",
 									"type": "file",
-									"src": "/Users/subhampramanik/Downloads/download.csv"
+									"src": "/Users/danishjamal/Documents/Fynarfin/bulk/new/ph-ee-bulk-demo-6.csv"
 								},
 								{
 									"key": "requestId",
 									"value": "3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8",
 									"description": "Request ID for client side batch correlation. ",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "purpose",
-									"value": "iliydufkgiku",
+									"value": "test payment",
 									"description": "Optional field stating purpose of the batch.",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/bulk/transfer",
+							"raw": "{{BulkHostName}}/bulk/transfer/{{$guid}}/ph-ee-bulk-demo-6.csv",
 							"host": [
-								"{{ChannelHostName}}"
+								"{{BulkHostName}}"
 							],
 							"path": [
-								"channel",
 								"bulk",
-								"transfer"
+								"transfer",
+								"{{$guid}}",
+								"ph-ee-bulk-demo-6.csv"
 							]
 						}
 					},
@@ -811,6 +826,72 @@
 							"body": "{\n    \"batch_id\": \"738bd830-3bd9-4511-bb42-3d0f5798e014\",\n    \"request_id\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n    \"status\": \"queued\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Batch Transactions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Purpose",
+								"value": "test payment",
+								"type": "text"
+							},
+							{
+								"key": "filename",
+								"value": "ph-ee-bulk-demo-6.csv",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "/Users/danishjamal/Desktop/ph-ee-bulk-demo-6.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BulkHostName}}/batchtransactions?type=csv",
+							"host": [
+								"{{BulkHostName}}"
+							],
+							"path": [
+								"batchtransactions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "csv"
+								}
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Bulk Account Lookup",
@@ -913,6 +994,16 @@
 				{
 					"name": "Batch Summary",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -932,7 +1023,7 @@
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "Authorization",
@@ -1069,6 +1160,16 @@
 				{
 					"name": "Batch Details",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -1237,6 +1338,16 @@
 				{
 					"name": "Batch Lookup Details",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -1387,6 +1498,248 @@
 							"body": "{\n    \"batchId\": \"c02a14f0-5e7e-44a1-88eb-5584a21e6f28\",\n    \"requestId\": \"dhgdfe-jiae-ugir-bsjf-ndsdfsdfdfd\",\n    \"totalTransactions\": 2,\n    \"ongoing\": 2,\n    \"failed\": 0,\n    \"completed\": 0,\n    \"result_file\": null,\n    \"resultGeneratedAt\": 1634955667187,\n    \"note\": \"Sample Response\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Get All Batches",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/batches?page=2&size=10&sortedBy=requestFile&sortedOrder=asc",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"batches"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sortedBy",
+									"value": "requestFile"
+								},
+								{
+									"key": "sortedOrder",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Batches",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "ibank-usa",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/batches?page=1&size=20",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"batches"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "sortedBy",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "sortedOrder",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 13 Sep 2022 06:12:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 160,\n            \"batchId\": \"589c4134-6739-4f54-b76d-567898c7e349\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662626306638_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662626353290_1662626353290_response.csv\",\n            \"resultGeneratedAt\": 1662626353000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816029127,\n            \"startedAt\": 1662626307000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 156,\n            \"batchId\": \"9dbf00f4-f8a0-48e5-908a-154e5662d86a\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662625625503_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662625671389_1662625671389_response.csv\",\n            \"resultGeneratedAt\": 1662625671000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816027861,\n            \"startedAt\": 1662625626000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 152,\n            \"batchId\": \"10a09f4a-61ba-4b54-ae39-ef2230f7748b\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662624970480_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662625016404_1662625016404_response.csv\",\n            \"resultGeneratedAt\": 1662625017000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816026682,\n            \"startedAt\": 1662624971000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 148,\n            \"batchId\": \"7052b36f-594c-4d09-ad90-a69b46e956c0\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662624716397_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662624764987_1662624764987_response.csv\",\n            \"resultGeneratedAt\": 1662624765000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816026063,\n            \"startedAt\": 1662624718000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 144,\n            \"batchId\": \"953d5a8f-d43a-4c08-801a-4f7cf9a2d5c4\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662624261785_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662624307703_1662624307703_response.csv\",\n            \"resultGeneratedAt\": 1662624423000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816025171,\n            \"startedAt\": 1662624262000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 140,\n            \"batchId\": \"1c4d2440-0d93-4978-9d4e-bdc1621ad294\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662623877478_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662623923610_1662623923610_response.csv\",\n            \"resultGeneratedAt\": 1662623924000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816024310,\n            \"startedAt\": 1662623878000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 136,\n            \"batchId\": \"47dfc101-6d16-4da2-b9d0-9af2a4200852\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662623418697_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662623467290_1662623467290_response.csv\",\n            \"resultGeneratedAt\": 1662623468000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799816023435,\n            \"startedAt\": 1662623421000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 132,\n            \"batchId\": \"e136647b-1fc1-481e-a187-587edada5776\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662555399110_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662555448112_e136647b-1fc1-481e-a187-587edada5776.csv\",\n            \"resultGeneratedAt\": 1662555513000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815940242,\n            \"startedAt\": 1662555401000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 128,\n            \"batchId\": \"2d50ade8-11e1-4909-ad89-b4e002eb8f51\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662555121105_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662555169739_1662555169739_response.csv\",\n            \"resultGeneratedAt\": 1662555170000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815939648,\n            \"startedAt\": 1662555123000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 124,\n            \"batchId\": \"0bcba65a-58d8-454b-8cb8-fab76d571309\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662554777301_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662554962405_0bcba65a-58d8-454b-8cb8-fab76d571309.csv\",\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815938865,\n            \"startedAt\": 1662554779000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 120,\n            \"batchId\": \"f89d2977-93e4-41a6-93c4-943920eacd96\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662554182323_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662554366184_f89d2977-93e4-41a6-93c4-943920eacd96.csv\",\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815937704,\n            \"startedAt\": 1662554182000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 116,\n            \"batchId\": \"f4148cfa-0d95-401d-8b4c-a5e52f93759e\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662553748996_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662553934532_f4148cfa-0d95-401d-8b4c-a5e52f93759e.csv\",\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815936764,\n            \"startedAt\": 1662553751000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 112,\n            \"batchId\": \"fa83813b-12b3-4dde-b094-631cc7557\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662551891704_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662552077613_fa83813b-12b3-4dde-b094-631cc7557b53.csv\",\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815933797,\n            \"startedAt\": 1662551894000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 108,\n            \"batchId\": \"3c937b39-0667-40af-8241-48c86da20e93\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662551457591_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662551502363_3c937b39-0667-40af-8241-48c86da20e93.csv\",\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815932902,\n            \"startedAt\": 1662551460000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 104,\n            \"batchId\": \"568d6284-5348-4007-a349-fdb161000ddc\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662551342791_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662551386540_568d6284-5348-4007-a349-fdb161000ddc.csv\",\n            \"resultGeneratedAt\": 1662551417000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815932415,\n            \"startedAt\": 1662551345000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 100,\n            \"batchId\": \"0756d07d-b4e3-44c8-aa88-ef593f6c7a79\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662551194305_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662551237558_0756d07d-b4e3-44c8-aa88-ef593f6c7a79.csv\",\n            \"resultGeneratedAt\": 1662551332000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815931913,\n            \"startedAt\": 1662551196000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 99,\n            \"batchId\": \"5df60ee5-1384-4fa2-9129-3ff97cdf291b\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662551072705_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": null,\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815931659,\n            \"startedAt\": 1662551075000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 95,\n            \"batchId\": \"34fb9b8c-0306-45e0-a79e-ec8483e884b2\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662483494135_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662483494861_34fb9b8c-0306-45e0-a79e-ec8483e884b2.csv\",\n            \"resultGeneratedAt\": 1662546592000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815848649,\n            \"startedAt\": 1662483494000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 91,\n            \"batchId\": \"7febdf5f-1755-4c93-9d9d-ec5437bcbba7\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662483121908_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": 11,\n            \"ongoing\": 0,\n            \"failed\": 0,\n            \"completed\": 11,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"\\\"https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/1662483124546_7febdf5f-1755-4c93-9d9d-ec5437bcbba7.csv\\\"\",\n            \"resultGeneratedAt\": 1662483239000,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815847922,\n            \"startedAt\": 1662483123000,\n            \"completedAt\": null\n        },\n        {\n            \"id\": 87,\n            \"batchId\": \"41d14ab5-a0f1-4509-868c-094941ebfb01\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": \"1662481892007_ph-ee-bulk-demo-6.csv\",\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": \"\\\"1662481894276_41d14ab5-a0f1-4509-868c-094941ebfb01\\\"\",\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799815846020,\n            \"startedAt\": 1662481894000,\n            \"completedAt\": null\n        }\n    ],\n    \"totalElements\": 79,\n    \"totalPages\": 4,\n    \"last\": false,\n    \"numberOfElements\": 20,\n    \"sort\": [\n        {\n            \"direction\": \"DESC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": true,\n            \"ascending\": false\n        }\n    ],\n    \"first\": false,\n    \"size\": 20,\n    \"number\": 1\n}"
+						},
+						{
+							"name": "Get All Batches all query param",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "ibank-usa",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/batches?page=2&size=2&sortedBy=requestFile&sortedOrder=asc",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"batches"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "size",
+											"value": "2"
+										},
+										{
+											"key": "sortedBy",
+											"value": "requestFile"
+										},
+										{
+											"key": "sortedOrder",
+											"value": "asc"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 13 Sep 2022 06:25:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 7,\n            \"batchId\": \"acea70d3-df71-431b-992b-e5f609c62ebf\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": null,\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": null,\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799819952265,\n            \"startedAt\": 1661784518000,\n            \"completedAt\": 1661784518000\n        },\n        {\n            \"id\": 8,\n            \"batchId\": \"b0a10f54-3efe-4ad5-aceb-700a3c831e60\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": null,\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": null,\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799819961213,\n            \"startedAt\": 1661785658000,\n            \"completedAt\": 1661785658000\n        }\n    ],\n    \"totalElements\": 79,\n    \"totalPages\": 40,\n    \"last\": false,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"ASC\",\n            \"property\": \"requestFile\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": false,\n            \"ascending\": true\n        }\n    ],\n    \"first\": false,\n    \"size\": 2,\n    \"number\": 2\n}"
+						}
+					]
 				}
 			]
 		},
@@ -1535,6 +1888,16 @@
 				{
 					"name": "Filter Transaction Request",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1553,22 +1916,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/export",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests?startTo=2022-08-19 16:16:33&command=export",
 							"host": [
 								"{{OperationsHostName}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"transactionRequests",
-								"export"
+								"transactionRequests"
 							],
 							"query": [
 								{
 									"key": "startTo",
-									"value": "2022-06-10 10:17:18",
-									"description": "YYYY:MM:DD HH:mm:ss",
-									"disabled": true
+									"value": "2022-08-19 16:16:33",
+									"description": "YYYY:MM:DD HH:mm:ss"
 								},
 								{
 									"key": "state",
@@ -1577,9 +1938,13 @@
 								},
 								{
 									"key": "startFrom",
-									"value": "2022-06-10 10:17:18",
+									"value": "2022-09-14 10:29:33",
 									"description": "YYYY:MM:DD HH:mm:ss",
 									"disabled": true
+								},
+								{
+									"key": "command",
+									"value": "export"
 								}
 							]
 						}
@@ -2344,6 +2709,18 @@
 				},
 				{
 					"name": "Authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -2369,7 +2746,7 @@
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "oaf"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "Authorization",
@@ -2401,16 +2778,11 @@
 							"raw": "{}"
 						},
 						"url": {
-							"raw": "https://paymenthub.qa.oneacrefund.org/opsapp/oauth/token?username=mifos&password=password&grant_type=password",
-							"protocol": "https",
+							"raw": "{{OperationsHostName}}/oauth/token?username=mifos&password=password&grant_type=password",
 							"host": [
-								"paymenthub",
-								"qa",
-								"oneacrefund",
-								"org"
+								"{{OperationsHostName}}"
 							],
 							"path": [
-								"opsapp",
 								"oauth",
 								"token"
 							],
@@ -3153,6 +3525,16 @@
 				{
 					"name": "Transfers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -3195,16 +3577,11 @@
 							}
 						],
 						"url": {
-							"raw": "https://paymenthub.qa.oneacrefund.org/opsapp/api/v1/transfers?size=10&page=1",
-							"protocol": "https",
+							"raw": "{{OperationsHostName}}/api/v1/transfers?size=10&page=1",
 							"host": [
-								"paymenthub",
-								"qa",
-								"oneacrefund",
-								"org"
+								"{{OperationsHostName}}"
 							],
 							"path": [
-								"opsapp",
 								"api",
 								"v1",
 								"transfers"
@@ -3238,6 +3615,16 @@
 				{
 					"name": "Get Transaction Request",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
