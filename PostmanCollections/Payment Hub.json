@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "e4383349-cde3-463e-b995-e8cd7e0bff6b",
-		"name": "Payment Hub APIs Copy",
+		"_postman_id": "e3c899a6-092d-4f42-9e81-5706db8e7cc8",
+		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "4940958"
 	},
@@ -4776,7 +4776,7 @@
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "Authorization",
@@ -4979,7 +4979,7 @@
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "Authorization",
