@@ -193,6 +193,7 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   DFSPIDS: ""
   hostname: ""
+  stub_hostname: ""
   limits:
     memory: "768M"
     cpu: "500m"
@@ -204,6 +205,7 @@ channel:
     path: "/channel"
     annotations: {}
     backend: {}
+    stub_backend: {}
   deployment:
     annotations: {}
 

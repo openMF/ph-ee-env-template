@@ -97,7 +97,33 @@ spec:
         - "{{ .Values.wildcardhostname }}"
       secretName: "{{ .Values.tls }}"
 {{- end }}
+---
+{{- if .Values.channel.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-channel-gsma
+  annotations:
+{{- if .Values.channel.ingress.annotations }}
+{{ toYaml .Values.channel.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.channel.stub_hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.channel.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.channel.ingress.backend }}
+{{ toYaml .Values.channel.ingress.stub_backend | indent 14 }}
+{{- end }}
 
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
 ---
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
@@ -111,6 +137,10 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 5000
+    - name: port
+      port: 82
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: ph-ee-connector-channel
   sessionAffinity: None
