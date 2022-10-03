@@ -42954,7 +42954,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "/Users/danishjamal/Desktop/ph-ee-bulk-demo-6.csv"
+									"src": "https://raw.githubusercontent.com/fynarfin/ph-ee-env-template/master/PostmanCollections/ph-ee-bulk-demo-6.csv"
 								}
 							]
 						},
