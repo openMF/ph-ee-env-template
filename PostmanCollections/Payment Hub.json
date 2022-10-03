@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "db25d42a-3f4e-44e8-aedd-770f13c892b6",
+		"_postman_id": "75953391-6e28-4527-9a7f-5b7740949e72",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17902615"
+		"_exporter_id": "20754341"
 	},
 	"item": [
 		{
@@ -18,6 +18,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
@@ -42787,8 +42788,24 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
+									"});",
 									"var jsonData = JSON.parse(responseBody);",
-									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);"
+									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);",
+									"",
+									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
+									"    var nextTextIndex = Number(postman.getEnvironmentVariable(\"NextTestIndex\"));",
+									"    var apis = pm.environment.get('TestApiList');",
+									"    var testList = JSON.parse(apis);",
+									"    if(testList.length>nextTextIndex){",
+									"        postman.setEnvironmentVariable(\"NextTestIndex\", 1+ nextTextIndex);",
+									"        postman.setNextRequest(testList[nextTextIndex]); ",
+									"    }else{",
+									"        postman.setNextRequest(null); ",
+									"    }",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -43066,6 +43083,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
@@ -43257,6 +43275,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
@@ -43460,6 +43479,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
@@ -43649,6 +43669,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
