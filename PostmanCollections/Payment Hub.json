@@ -42826,7 +42826,7 @@
 									"key": "data",
 									"description": "CSV file conisiting of transaction details. CSV format: \"id\", \"request_id\", \"payment_mode\", \"account_number\", \"amount\", \"currency\", \"note\" in the given order. ",
 									"type": "file",
-									"src": "/Users/danishjamal/Documents/Fynarfin/bulk/new/ph-ee-bulk-demo-6.csv"
+									"src": "https://raw.githubusercontent.com/fynarfin/ph-ee-env-template/master/PostmanCollections/ph-ee-bulk-demo-6.csv"
 								},
 								{
 									"key": "requestId",
