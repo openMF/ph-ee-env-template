@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "75953391-6e28-4527-9a7f-5b7740949e72",
+		"_postman_id": "71d705cc-2d53-41aa-82a6-619972e06082",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20754341"
+		"_exporter_id": "17902615"
 	},
 	"item": [
 		{
@@ -42576,7 +42576,13 @@
 					"name": "Party Registration",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"accountId\":\"9062b90de19b43989005\",\n  \"idType\": \"EMAIL\",\n  \"idValue\": \"test@test.hu\"\n}",
@@ -43278,6 +43284,33 @@
 									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
+									"pm.test(\"Empty Content test\", () => {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content).to.be.an(\"array\");",
+									"    pm.expect(jsonData.content).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Party and payee null data check\", () => {",
+									"    var jsonData = pm.response.json();",
+									"    var contentArray = jsonData.content;",
+									"    console.log(contentArray)",
+									"    contentArray.forEach( (transfer) => {",
+									"        let payeeDfspId = transfer.payeeDfspId;",
+									"        let payeePartyId = transfer.payeePartyId;",
+									"        let payeePartyIdType = transfer.payeePartyIdType;",
+									"        let payerDfspId = transfer.payerDfspId;",
+									"        let payerPartyId = transfer.payerPartyId;",
+									"        let payerPartyIdType = transfer.payerPartyIdType;",
+									"",
+									"        pm.expect(payeeDfspId).not.equal(null);",
+									"        pm.expect(payeePartyId).not.equal(null);",
+									"        pm.expect(payeePartyIdType).not.equal(null);",
+									"        pm.expect(payerDfspId).not.equal(null);",
+									"        pm.expect(payerPartyId).not.equal(null);",
+									"        pm.expect(payerPartyIdType).not.equal(null);",
+									"    })",
+									"});",
+									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
 									"    var nextTextIndex = Number(postman.getEnvironmentVariable(\"NextTestIndex\"));",
 									"    var apis = pm.environment.get('TestApiList');",
@@ -43341,7 +43374,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageNo={{pageNo}}&pageSize={{pageSize}}",
+							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageSize={{pageSize}}",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43366,7 +43399,8 @@
 								{
 									"key": "pageNo",
 									"value": "{{pageNo}}",
-									"description": "Page Number"
+									"description": "Page Number",
+									"disabled": true
 								},
 								{
 									"key": "pageSize",
