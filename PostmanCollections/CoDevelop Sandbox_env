@@ -1,0 +1,93 @@
+{
+	"id": "f03f5d87-7f98-42c7-98c4-3e49c6b9edc1",
+	"name": "CoDevelop Sandbox",
+	"values": [
+		{
+			"key": "ChannelHostName",
+			"value": "channel.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "OperationsHostName",
+			"value": "ops-bk.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "BulkHostName",
+			"value": "bulk-connector.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "batchId",
+			"value": "d7a87db1-e925-4ac0-b8ec-6af87c6110d4",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ZeebeOpsHostName",
+			"value": "https://zeebeops.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "PlatformTenant",
+			"value": "rhino",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "pageNo",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "status",
+			"value": "ALL",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "TenantName",
+			"value": "gorilla",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "pageSize",
+			"value": "20",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "messagegateway",
+			"value": "messagegateway.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "communityapp",
+			"value": "communityapp.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "kibana",
+			"value": "analytics.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "fineractserver",
+			"value": "rhino.mifos.g2pconnect.io",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-09-23T09:29:02.223Z",
+	"_postman_exported_using": "Postman/9.31.9"
+}

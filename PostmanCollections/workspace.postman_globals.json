@@ -1,0 +1,34 @@
+{
+	"id": "cf8daf1c-c37b-4729-8366-97af3fd1d7a3",
+	"values": [
+		{
+			"key": "NotificationsHostName",
+			"value": "paymenthub.qa.oneacrefund.org/notifications",
+			"enabled": true
+		},
+		{
+			"key": "ChannelHostName",
+			"value": "paymenthub.qa.oneacrefund.org/channel/",
+			"enabled": true
+		},
+		{
+			"key": "MpesaHostName",
+			"value": "paymenthub.qa.oneacrefund.org/mpesa",
+			"enabled": true
+		},
+		{
+			"key": "MessagegatewayHostName",
+			"value": "paymenthub.qa.oneacrefund.org/messages",
+			"enabled": true
+		},
+		{
+			"key": "TenantName",
+			"value": "oaf",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2022-01-20T11:28:24.614Z",
+	"_postman_exported_using": "Postman/9.5.0"
+}

@@ -12,4 +12,6 @@ Payment Hub Enterprise Edition middleware for integration to real-time payment s
 - [Swagger](https://app.swaggerhub.com/apis/rrkas/mobile-money_simulator_api/1.0)
 
 
-#Auto-Trigger
+## Auto-Trigger ph-ee-env-template
+- trigger pipeline on commit/push (check)
+

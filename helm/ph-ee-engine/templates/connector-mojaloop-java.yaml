@@ -1,11 +1,13 @@
-apiVersion: apps/v1
+{{- if .Values.ph_ee_connector_mojaloop.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
   name: "ph-ee-connector-mojaloop-java"
   labels:
     app: ph-ee-connector-mojaloop-java
 spec:
-  replicas: 1
+  replicas: {{ .Values.ph_ee_connector_mojaloop.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-mojaloop-java
@@ -14,15 +16,25 @@ spec:
       labels:
         app: ph-ee-connector-mojaloop-java
       annotations:
-        deployTime: "{{ .Values.deployTime }}"
+{{- if .Values.ph_ee_connector_mojaloop.deployment.annotations }}
+{{ toYaml .Values.ph_ee_connector_mojaloop.deployment.annotations | indent 8 }}
+{{- end }}
     spec:
       imagePullSecrets:
       - name: regcred
       containers:
         - name: ph-ee-connector-mojaloop-java
-          image: shanidkh/ph-ee:ph-ee-connector-mojaloop-java
+          image: "{{ .Values.ph_ee_connector_mojaloop.image }}:{{ .Values.ph_ee_connector_mojaloop.imageTag }}"
+          imagePullPolicy: "{{ .Values.ph_ee_connector_mojaloop.imagePullPolicy }}"
           ports:
             - containerPort: 5000
+          resources:
+            limits:
+              memory: "{{ .Values.ph_ee_connector_mojaloop.limits.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_mojaloop.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.ph_ee_connector_mojaloop.requests.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_mojaloop.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_mojaloop.SPRING_PROFILES_ACTIVE }}"
@@ -35,7 +47,7 @@ spec:
             name: ph-ee-config
 
 ---
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
@@ -52,3 +64,5 @@ spec:
     app: ph-ee-connector-mojaloop-java
   sessionAffinity: None
   type: ClusterIP
+
+{{- end}}

@@ -1,0 +1,182 @@
+{
+	"id": "2e96d191-bdf9-431c-9b7b-417895cc08a5",
+	"name": "SIT",
+	"values": [
+		{
+			"key": "ChannelHostName",
+			"value": "channel.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "OperationsHostName",
+			"value": "ops-bk.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "BulkHostName",
+			"value": "bulk-connector.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "batchId",
+			"value": "6bdd4e23-9357-481b-b814-b678b146a01b",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "pageNo",
+			"value": "1",
+			"enabled": true
+		},
+		{
+			"key": "pageSize",
+			"value": "20",
+			"enabled": true
+		},
+		{
+			"key": "status",
+			"value": "ALL",
+			"enabled": true
+		},
+		{
+			"key": "ZeebeOpsHostName",
+			"value": "https://zeebeops.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "TenantName",
+			"value": "ibank-usa",
+			"enabled": true
+		},
+		{
+			"key": "access_token",
+			"value": "operations-app access token",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "transactionId",
+			"value": "123",
+			"enabled": true
+		},
+		{
+			"key": "MpesaHostName",
+			"value": "https://mpesa.sandbox.fynarfin.io",
+			"enabled": true
+		},
+		{
+			"key": "MessagegatewayHostName",
+			"value": "https://messagegateway.sandbox.fynarfin.io",
+			"enabled": true
+		},
+		{
+			"key": "TestApiList",
+			"value": "[\"Authorization\",\"Batch Transactions\",\"Batch Summary\",\"Batch Details\",\"Batch Lookup Details\",\"Get All Batches\"]",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "NextTestIndex",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "AutoTest",
+			"value": "true",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "accountId",
+			"value": "organisationid@1234$accountid@3333",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "billReference",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "identifierType",
+			"value": "msisdn",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "identifier",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "debitMandateReference",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "linkReference",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "authorisationCode",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "transactionReference",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "clientCorrelationId",
+			"value": "12345678-6897-6798-6798-098765432134",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "serverCorrelationId",
+			"value": "12345678-6897-6798-6798-098765432134",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "quotationReference",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "serviceProvider",
+			"value": "provider",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ChannelGSMAHostName",
+			"value": "https://channel-gsma.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "batchFilePath",
+			"value": "ph-ee-bulk-demo-6.csv",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-10-03T12:47:37.702Z",
+	"_postman_exported_using": "Postman/9.31.14"
+}

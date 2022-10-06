@@ -1,0 +1,66 @@
+{{- if .Values.ph_ee_connector_gsma.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-gsma"
+  labels:
+    app: ph-ee-connector-gsma
+spec:
+  replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-gsma
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-gsma
+      annotations:
+{{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
+{{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-gsma-mm
+          image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
+          imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "{{ .Values.ph_ee_connector_gsma.limits.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_gsma.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.ph_ee_connector_gsma.requests.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_gsma.requests.cpu }}"
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-gsma
+  name: ph-ee-connector-gsma
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-gsma
+  sessionAffinity: None
+  type: ClusterIP
+
+{{- end }} 
