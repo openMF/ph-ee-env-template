@@ -137,7 +137,7 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 5000
-    - name: port
+    - name: http
       port: 82
       protocol: TCP
       targetPort: 8080
