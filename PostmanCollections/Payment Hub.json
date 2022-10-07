@@ -42788,6 +42788,152 @@
 			"name": "Bulk APIs",
 			"item": [
 				{
+					"name": "Bulk transfer older",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"batchId\", responseBody);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BulkHostName}}/channel/bulk/transfer/ph-ee-bulk-demo-8.csv",
+							"host": [
+								"{{BulkHostName}}"
+							],
+							"path": [
+								"channel",
+								"bulk",
+								"transfer",
+								"ph-ee-bulk-demo-8.csv"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bulk transfer older success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BulkHostName}}/channel/bulk/transfer/ph-ee-bulk-demo-8.csv",
+									"host": [
+										"{{BulkHostName}}"
+									],
+									"path": [
+										"channel",
+										"bulk",
+										"transfer",
+										"ph-ee-bulk-demo-8.csv"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 07 Oct 2022 10:12:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Real-IP",
+									"value": "172.31.21.123"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "X-Forwarded-Scheme",
+									"value": "https"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "14c2dd56ee9a222f75b8969e7e7bdefd"
+								},
+								{
+									"key": "X-Scheme",
+									"value": "https"
+								},
+								{
+									"key": "X-Forwarded-Port",
+									"value": "443"
+								},
+								{
+									"key": "X-Forwarded-For",
+									"value": "172.31.21.123"
+								},
+								{
+									"key": "Referer",
+									"value": "http://bulk-connector.sandbox.fynarfin.io/channel/bulk/transfer/ph-ee-bulk-demo-8.csv"
+								},
+								{
+									"key": "X-Forwarded-Host",
+									"value": "bulk-connector.sandbox.fynarfin.io"
+								},
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "f8abf77b-694f-417e-a127-0b33caff7aff"
+								},
+								{
+									"key": "fileName",
+									"value": "ph-ee-bulk-demo-8.csv"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.29.2"
+								},
+								{
+									"key": "X-Forwarded-Proto",
+									"value": "https"
+								},
+								{
+									"key": "Platform-TenantId",
+									"value": "ibank-usa"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								}
+							],
+							"cookie": [],
+							"body": "d981b089-514b-4400-a7c7-499b56ed1c37"
+						}
+					]
+				},
+				{
 					"name": "Bulk Transfer",
 					"event": [
 						{
