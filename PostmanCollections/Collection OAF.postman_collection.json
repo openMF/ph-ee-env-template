@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "ca4a575d-03b8-4873-898d-8a7cf6e2e46e",
+		"name": "Collection OAF",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18201748"
+	},
+	"item": [
+		{
+			"name": "channel request",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "api-key",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{channelApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Platform-TenantId",
+						"value": "{{TenantName}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payer\": [\n        {\n            \"key\": \"MSISDN\",\n            \"value\": \"254708374149\"\n        },\n        {\n            \"key\": \"ACCOUNTID\",\n            \"value\": \"24450523\"\n        }\n    ],\n    \"amount\": {\n        \"amount\": \"1\",\n        \"currency\": \"USD\"\n    },\n    \"transactionType\": {\n        \"scenario\": \"MPESA\",\n        \"subScenario\": \"BUYGOODS\",\n        \"initiator\": \"PAYEE\",\n        \"initiatorType\": \"BUSINESS\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ChannelHostName}}/channel/collection",
+					"host": [
+						"{{ChannelHostName}}"
+					],
+					"path": [
+						"channel",
+						"collection"
+					]
+				},
+				"description": "Cloud API"
+			},
+			"response": []
+		}
+	]
+}
