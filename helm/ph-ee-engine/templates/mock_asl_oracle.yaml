@@ -1,0 +1,89 @@
+{{- if .Values.mock-oracle.enabled -}}
+
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: "mock-oracle"
+  labels:
+    app: mock-oracle
+spec:
+  replicas: {{ .Values.mock-oracle.replicas }}
+  selector:
+    matchLabels:
+      app: mock-oracle
+  template:
+    metadata:
+      labels:
+        app: mock-oracle
+      annotations:
+{{- if .Values.mock-oracle.deployment.annotations }}
+{{ toYaml .Values.mock-oracle.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: mock-oracle
+          image: "{{ .Values.mock-oracle.image }}"
+          imagePullPolicy: "{{ .Values.mock-oracle.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.mock-oracle.limits.memory }}"
+              cpu: "{{ .Values.mock-oracle.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.mock-oracle.requests.memory }}"
+              cpu: "{{ .Values.mock-oracle.requests.cpu }}"
+          ports:
+            - containerPort: 4100
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: mock-oracle
+  name: mock-oracle
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: {{ .Values.mock-oracle.service.targetport}}
+  selector:
+    app: mock-oracle
+  sessionAffinity: None
+  type: ClusterIP
+---
+{{- if .Values.mock-oracle.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: mock-oracle
+  annotations:
+{{- if .Values.mock-oracle.ingress.annotations }}
+{{ toYaml .Values.mock-oracle.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.mock-oracle.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.mock-oracle.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.mock-oracle.ingress.backend }}
+{{ toYaml .Values.mock-oracle.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
+
+{{- end }}

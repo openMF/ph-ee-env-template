@@ -723,6 +723,29 @@ ph_ee_connector_slcb:
   deployment:
     annotations: {}
 
+mock-oracle:
+  enabled: false
+  replicas: 1
+  image: ""
+  imagePullPolicy: "Always"
+  hostname: ""
+  service:
+    targetport: 4100
+  limits:
+    memory: "512M"
+    cpu: "500m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  ingress:
+    enabled: true
+    path: "/"
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}
+
+
 wildcardhostname: ""
 
 tls: ""
