@@ -1,4 +1,4 @@
-{{- if .Values.mock-oracle.enabled -}}
+{{- if .Values.mock_oracle.enabled -}}
 
 apiVersion: "apps/v1"
 kind: Deployment
@@ -7,7 +7,7 @@ metadata:
   labels:
     app: mock-oracle
 spec:
-  replicas: {{ .Values.mock-oracle.replicas }}
+  replicas: {{ .Values.mock_oracle.replicas }}
   selector:
     matchLabels:
       app: mock-oracle
@@ -16,21 +16,21 @@ spec:
       labels:
         app: mock-oracle
       annotations:
-{{- if .Values.mock-oracle.deployment.annotations }}
-{{ toYaml .Values.mock-oracle.deployment.annotations | indent 8 }}
+{{- if .Values.mock_oracle.deployment.annotations }}
+{{ toYaml .Values.mock_oracle.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: mock-oracle
-          image: "{{ .Values.mock-oracle.image }}"
-          imagePullPolicy: "{{ .Values.mock-oracle.imagePullPolicy }}"
+          image: "{{ .Values.mock_oracle.image }}"
+          imagePullPolicy: "{{ .Values.mock_oracle.imagePullPolicy }}"
           resources:
             limits:
-              memory: "{{ .Values.mock-oracle.limits.memory }}"
-              cpu: "{{ .Values.mock-oracle.limits.cpu }}"
+              memory: "{{ .Values.mock_oracle.limits.memory }}"
+              cpu: "{{ .Values.mock_oracle.limits.cpu }}"
             requests:
-              memory: "{{ .Values.mock-oracle.requests.memory }}"
-              cpu: "{{ .Values.mock-oracle.requests.cpu }}"
+              memory: "{{ .Values.mock_oracle.requests.memory }}"
+              cpu: "{{ .Values.mock_oracle.requests.cpu }}"
           ports:
             - containerPort: 4100
           volumeMounts:
@@ -53,31 +53,31 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: {{ .Values.mock-oracle.service.targetport}}
+      targetPort: {{ .Values.mock_oracle.service.targetport}}
   selector:
     app: mock-oracle
   sessionAffinity: None
   type: ClusterIP
 ---
-{{- if .Values.mock-oracle.ingress.enabled }}
+{{- if .Values.mock_oracle.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}
 kind: Ingress
 metadata:
   name: mock-oracle
   annotations:
-{{- if .Values.mock-oracle.ingress.annotations }}
-{{ toYaml .Values.mock-oracle.ingress.annotations | indent 4 }}
+{{- if .Values.mock_oracle.ingress.annotations }}
+{{ toYaml .Values.mock_oracle.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
-    - host: "{{ .Values.mock-oracle.hostname }}"
+    - host: "{{ .Values.mock_oracle.hostname }}"
       http:
         paths:
-        - path: "{{ .Values.mock-oracle.ingress.path }}"
+        - path: "{{ .Values.mock_oracle.ingress.path }}"
           pathType: Prefix
           backend:
-{{- if .Values.mock-oracle.ingress.backend }}
-{{ toYaml .Values.mock-oracle.ingress.backend | indent 14 }}
+{{- if .Values.mock_oracle.ingress.backend }}
+{{ toYaml .Values.mock_oracle.ingress.backend | indent 14 }}
 {{- end }}
 
   tls:

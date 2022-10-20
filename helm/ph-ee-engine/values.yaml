@@ -729,7 +729,7 @@ ph_ee_connector_slcb:
   deployment:
     annotations: {}
 
-mock-oracle:
+mock_oracle:
   enabled: false
   replicas: 1
   image: ""
