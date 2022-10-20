@@ -49,7 +49,7 @@
 		},
 		{
 			"key": "TenantName",
-			"value": "ibank-usa",
+			"value": "gorilla",
 			"enabled": true
 		},
 		{
@@ -75,7 +75,7 @@
 		},
 		{
 			"key": "TestApiList",
-			"value": "[\"Authorization\",\"Batch Transactions\",\"Batch Summary\",\"Batch Details\",\"Batch Lookup Details\",\"Get All Batches\"]",
+			"value": "[\"Authorization\",\"Batch Summary\",\"Batch Details\",\"Batch Lookup Details\",\"Get All Batches\"]",
 			"type": "default",
 			"enabled": true
 		},

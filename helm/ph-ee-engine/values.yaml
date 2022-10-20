@@ -7,6 +7,11 @@ zeebe-cluster-helm:
     zeebe: "zeebe-zeebe"
     elasticsearch:
       host: "ph-ee-elasticsearch"
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port: '9600'
+      prometheus.io/path: '/metrics'    
+
 
   image:
     repository: camunda/zeebe
