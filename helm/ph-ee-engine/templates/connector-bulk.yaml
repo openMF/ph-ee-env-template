@@ -36,6 +36,8 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"
+            - name: "CAMEL_DISABLE-SSL"
+              value: "{{ .Values.connector_bulk.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Values.connector_bulk.zeebe_broker_contactpoint }}"
             - name: "TENANTS"

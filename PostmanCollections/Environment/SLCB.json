@@ -1,0 +1,93 @@
+{
+	"id": "ed531699-3016-462b-a9c3-c5915082d4eb",
+	"name": "SLCB",
+	"values": [
+		{
+			"key": "test-host",
+			"value": "https://g2p-test.slcb.com:8443",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "auth-endpoint",
+			"value": "api/auth",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "txnrequest-endpoint",
+			"value": "api/transactionRequest",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "auth-url",
+			"value": "{{test-host}}/{{auth-endpoint}}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "txnrequest-url",
+			"value": "{{test-host}}/{{txnrequest-endpoint}}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "accountbalance-endpoint",
+			"value": "api/accountBalance",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "accountbalance-url",
+			"value": "{{test-host}}/{{accountbalance-endpoint}}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "recon-endpoint",
+			"value": "api/ReconciliationRequest",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "recon-url",
+			"value": "{{test-host}}/{{recon-endpoint}}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "micr-base-url",
+			"value": "http://localhost:5001",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "micr-txn-request-endpoint",
+			"value": "test/transferRequest",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "micr-txn-request-url",
+			"value": "{{micr-base-url}}/{{micr-txn-request-endpoint}}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "access_token",
+			"value": "<auto fill>",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-10-04T07:38:34.072Z",
+	"_postman_exported_using": "Postman/9.31.13"
+}

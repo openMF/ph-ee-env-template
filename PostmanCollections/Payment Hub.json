@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "db25d42a-3f4e-44e8-aedd-770f13c892b6",
+		"_postman_id": "71d705cc-2d53-41aa-82a6-619972e06082",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17902615"
@@ -18,6 +18,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
@@ -42575,7 +42576,13 @@
 					"name": "Party Registration",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"accountId\":\"9062b90de19b43989005\",\n  \"idType\": \"EMAIL\",\n  \"idValue\": \"test@test.hu\"\n}",
@@ -42781,14 +42788,176 @@
 			"name": "Bulk APIs",
 			"item": [
 				{
+					"name": "Bulk transfer older",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"batchId\", responseBody);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BulkHostName}}/channel/bulk/transfer/ph-ee-bulk-demo-8.csv",
+							"host": [
+								"{{BulkHostName}}"
+							],
+							"path": [
+								"channel",
+								"bulk",
+								"transfer",
+								"ph-ee-bulk-demo-8.csv"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bulk transfer older success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BulkHostName}}/channel/bulk/transfer/ph-ee-bulk-demo-8.csv",
+									"host": [
+										"{{BulkHostName}}"
+									],
+									"path": [
+										"channel",
+										"bulk",
+										"transfer",
+										"ph-ee-bulk-demo-8.csv"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 07 Oct 2022 10:12:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Real-IP",
+									"value": "172.31.21.123"
+								},
+								{
+									"key": "Accept-Encoding",
+									"value": "gzip, deflate, br"
+								},
+								{
+									"key": "X-Forwarded-Scheme",
+									"value": "https"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "14c2dd56ee9a222f75b8969e7e7bdefd"
+								},
+								{
+									"key": "X-Scheme",
+									"value": "https"
+								},
+								{
+									"key": "X-Forwarded-Port",
+									"value": "443"
+								},
+								{
+									"key": "X-Forwarded-For",
+									"value": "172.31.21.123"
+								},
+								{
+									"key": "Referer",
+									"value": "http://bulk-connector.sandbox.fynarfin.io/channel/bulk/transfer/ph-ee-bulk-demo-8.csv"
+								},
+								{
+									"key": "X-Forwarded-Host",
+									"value": "bulk-connector.sandbox.fynarfin.io"
+								},
+								{
+									"key": "Accept",
+									"value": "*/*"
+								},
+								{
+									"key": "Postman-Token",
+									"value": "f8abf77b-694f-417e-a127-0b33caff7aff"
+								},
+								{
+									"key": "fileName",
+									"value": "ph-ee-bulk-demo-8.csv"
+								},
+								{
+									"key": "User-Agent",
+									"value": "PostmanRuntime/7.29.2"
+								},
+								{
+									"key": "X-Forwarded-Proto",
+									"value": "https"
+								},
+								{
+									"key": "Platform-TenantId",
+									"value": "ibank-usa"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								}
+							],
+							"cookie": [],
+							"body": "d981b089-514b-4400-a7c7-499b56ed1c37"
+						}
+					]
+				},
+				{
 					"name": "Bulk Transfer",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
+									"});",
 									"var jsonData = JSON.parse(responseBody);",
-									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);"
+									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);",
+									"",
+									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
+									"    var nextTextIndex = Number(postman.getEnvironmentVariable(\"NextTestIndex\"));",
+									"    var apis = pm.environment.get('TestApiList');",
+									"    var testList = JSON.parse(apis);",
+									"    if(testList.length>nextTextIndex){",
+									"        postman.setEnvironmentVariable(\"NextTestIndex\", 1+ nextTextIndex);",
+									"        postman.setNextRequest(testList[nextTextIndex]); ",
+									"    }else{",
+									"        postman.setNextRequest(null); ",
+									"    }",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -42809,7 +42978,7 @@
 									"key": "data",
 									"description": "CSV file conisiting of transaction details. CSV format: \"id\", \"request_id\", \"payment_mode\", \"account_number\", \"amount\", \"currency\", \"note\" in the given order. ",
 									"type": "file",
-									"src": "/Users/danishjamal/Documents/Fynarfin/bulk/new/ph-ee-bulk-demo-6.csv"
+									"src": "{{batchFilePath}}"
 								},
 								{
 									"key": "requestId",
@@ -42937,7 +43106,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "/Users/danishjamal/Desktop/ph-ee-bulk-demo-6.csv"
+									"src": "{{batchFilePath}}"
 								}
 							]
 						},
@@ -43066,6 +43235,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
@@ -43257,6 +43427,34 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
+									"});",
+									"",
+									"pm.test(\"Empty Content test\", () => {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content).to.be.an(\"array\");",
+									"    pm.expect(jsonData.content).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Party and payee null data check\", () => {",
+									"    var jsonData = pm.response.json();",
+									"    var contentArray = jsonData.content;",
+									"    console.log(contentArray)",
+									"    contentArray.forEach( (transfer) => {",
+									"        let payeeDfspId = transfer.payeeDfspId;",
+									"        let payeePartyId = transfer.payeePartyId;",
+									"        let payeePartyIdType = transfer.payeePartyIdType;",
+									"        let payerDfspId = transfer.payerDfspId;",
+									"        let payerPartyId = transfer.payerPartyId;",
+									"        let payerPartyIdType = transfer.payerPartyIdType;",
+									"",
+									"        pm.expect(payeeDfspId).not.equal(null);",
+									"        pm.expect(payeePartyId).not.equal(null);",
+									"        pm.expect(payeePartyIdType).not.equal(null);",
+									"        pm.expect(payerDfspId).not.equal(null);",
+									"        pm.expect(payerPartyId).not.equal(null);",
+									"        pm.expect(payerPartyIdType).not.equal(null);",
+									"    })",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
@@ -43322,7 +43520,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageNo={{pageNo}}&pageSize={{pageSize}}",
+							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageSize={{pageSize}}",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43347,7 +43545,8 @@
 								{
 									"key": "pageNo",
 									"value": "{{pageNo}}",
-									"description": "Page Number"
+									"description": "Page Number",
+									"disabled": true
 								},
 								{
 									"key": "pageSize",
@@ -43460,6 +43659,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
@@ -43649,6 +43849,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
 									"});",
 									"",
 									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
