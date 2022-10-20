@@ -2,4 +2,4 @@ apiVersion: v1
 appVersion: "1.2.0"
 description: PaymentHub EE Engine
 name: ph-ee-engine
-version: 1.1.15-SNAPSHOT
+version: 1.2.0-SNAPSHOT
