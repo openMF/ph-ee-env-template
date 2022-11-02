@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "71d705cc-2d53-41aa-82a6-619972e06082",
+		"_postman_id": "945210eb-1b66-4c01-9c86-22c04d1185db",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17902615"
+		"_exporter_id": "18201748"
 	},
 	"item": [
 		{
@@ -42488,6 +42488,89 @@
 					]
 				},
 				{
+					"name": "GSMA API",
+					"item": [
+						{
+							"name": "GSMA P2P",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestingOrganisationTransactionReference\": \"string\",\n  \"originalTransactionReference\": \"string\",\n  \"subType\": \"string\",\n  \"type\": \"transfer\",\n  \"amount\": \"11.00\",\n  \"currency\": \"USD\",\n  \"descriptionText\": \"string\",\n  \"fees\": [\n    {\n      \"feeType\": \"string\",\n      \"feeAmount\": \"11\",\n      \"feeCurrency\": \"USD\"\n    }\n  ],\n  \"geoCode\": \"37.423825,-122.082900\",\n  \"internationalTransferInformation\": {\n    \"quotationReference\": \"string\",\n    \"quoteId\": \"string\",\n    \"originCountry\": \"USA\",\n    \"deliveryMethod\": \"directtoaccount\",\n    \"receivingCountry\": \"USA\",\n    \"relationshipSender\": \"string\",\n    \"remittancePurpose\": \"string\"\n  },\n  \"oneTimeCode\": \"string\",\n  \"receiverKyc\": {\n    \"birthCountry\": \"USA\",\n    \"contactPhone\": \"string\",\n    \"dateOfBirth\": \"2000-11-20\",\n    \"emailAddress\": \"string\",\n    \"employerName\": \"string\",\n    \"gender\": \"m\",\n    \"idDocument\": [\n      {\n        \"idType\": \"passport\",\n        \"idNumber\": \"string\",\n        \"issueDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"expiryDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"issuer\": \"string\",\n        \"issuerPlace\": \"string\",\n        \"issuerCountry\": \"USA\"\n      }\n    ],\n    \"nationality\": \"USA\",\n    \"occupation\": \"string\",\n    \"postalAddress\": {\n      \"addressLine1\": \"string\",\n      \"addressLine2\": \"string\",\n      \"addressLine3\": \"string\",\n      \"city\": \"string\",\n      \"stateProvince\": \"string\",\n      \"postalCode\": \"string\",\n      \"country\": \"USA\"\n    },\n    \"subjectName\": {\n      \"title\": \"string\",\n      \"firstName\": \"string\",\n      \"middleName\": \"string\",\n      \"lastName\": \"string\",\n      \"nativeName\": \"string\"\n    }\n  },\n  \"senderKyc\": {\n    \"birthCountry\": \"USA\",\n    \"contactPhone\": \"string\",\n    \"dateOfBirth\": \"2022-09-28T12:51:19.260+00:00\",\n    \"emailAddress\": \"string\",\n    \"employerName\": \"string\",\n    \"gender\": \"m\",\n    \"idDocument\": [\n      {\n        \"idType\": \"passport\",\n        \"idNumber\": \"string\",\n        \"issueDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"expiryDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"issuer\": \"string\",\n        \"issuerPlace\": \"string\",\n        \"issuerCountry\": \"USA\"\n      }\n    ],\n    \"nationality\": \"USA\",\n    \"occupation\": \"string\",\n    \"postalAddress\": {\n      \"addressLine1\": \"string\",\n      \"addressLine2\": \"string\",\n      \"addressLine3\": \"string\",\n      \"city\": \"string\",\n      \"stateProvince\": \"string\",\n      \"postalCode\": \"string\",\n      \"country\": \"USA\"\n    },\n    \"subjectName\": {\n      \"title\": \"string\",\n      \"firstName\": \"string\",\n      \"middleName\": \"string\",\n      \"lastName\": \"string\",\n      \"nativeName\": \"string\"\n    }\n  },\n  \"servicingIdentity\": \"string\",\n  \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n  \"metadata\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"creditParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+449999112\"\n    }\n  ],\n  \"debitParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+449999999\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ChannelHostName}}/channel/gsma/transfer",
+									"host": [
+										"{{ChannelHostName}}"
+									],
+									"path": [
+										"channel",
+										"gsma",
+										"transfer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "International Remmitance Payee",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestingOrganisationTransactionReference\": \"string\",\n  \"originalTransactionReference\": \"string\",\n  \"subType\": \"string\",\n  \"type\": \"transfer\",\n  \"amount\": \"11.00\",\n  \"currency\": \"USD\",\n  \"descriptionText\": \"string\",\n  \"fees\": [\n    {\n      \"feeType\": \"string\",\n      \"feeAmount\": \"11\",\n      \"feeCurrency\": \"USD\"\n    }\n  ],\n  \"geoCode\": \"37.423825,-122.082900\",\n  \"internationalTransferInformation\": {\n    \"quotationReference\": \"string\",\n    \"quoteId\": \"string\",\n    \"originCountry\": \"USA\",\n    \"deliveryMethod\": \"directtoaccount\",\n    \"receivingCountry\": \"USA\",\n    \"relationshipSender\": \"string\",\n    \"remittancePurpose\": \"string\"\n  },\n  \"oneTimeCode\": \"string\",\n  \"receiverKyc\": {\n    \"birthCountry\": \"USA\",\n    \"contactPhone\": \"string\",\n    \"dateOfBirth\": \"2000-11-20\",\n    \"emailAddress\": \"string\",\n    \"employerName\": \"string\",\n    \"gender\": \"m\",\n    \"idDocument\": [\n      {\n        \"idType\": \"passport\",\n        \"idNumber\": \"string\",\n        \"issueDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"expiryDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"issuer\": \"string\",\n        \"issuerPlace\": \"string\",\n        \"issuerCountry\": \"USA\"\n      }\n    ],\n    \"nationality\": \"USA\",\n    \"occupation\": \"string\",\n    \"postalAddress\": {\n      \"addressLine1\": \"string\",\n      \"addressLine2\": \"string\",\n      \"addressLine3\": \"string\",\n      \"city\": \"string\",\n      \"stateProvince\": \"string\",\n      \"postalCode\": \"string\",\n      \"country\": \"USA\"\n    },\n    \"subjectName\": {\n      \"title\": \"string\",\n      \"firstName\": \"string\",\n      \"middleName\": \"string\",\n      \"lastName\": \"string\",\n      \"nativeName\": \"string\"\n    }\n  },\n  \"senderKyc\": {\n    \"birthCountry\": \"USA\",\n    \"contactPhone\": \"string\",\n    \"dateOfBirth\": \"2022-09-28T12:51:19.260+00:00\",\n    \"emailAddress\": \"string\",\n    \"employerName\": \"string\",\n    \"gender\": \"m\",\n    \"idDocument\": [\n      {\n        \"idType\": \"passport\",\n        \"idNumber\": \"string\",\n        \"issueDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"expiryDate\": \"2022-09-28T12:51:19.260+00:00\",\n        \"issuer\": \"string\",\n        \"issuerPlace\": \"string\",\n        \"issuerCountry\": \"USA\"\n      }\n    ],\n    \"nationality\": \"USA\",\n    \"occupation\": \"string\",\n    \"postalAddress\": {\n      \"addressLine1\": \"string\",\n      \"addressLine2\": \"string\",\n      \"addressLine3\": \"string\",\n      \"city\": \"string\",\n      \"stateProvince\": \"string\",\n      \"postalCode\": \"string\",\n      \"country\": \"USA\"\n    },\n    \"subjectName\": {\n      \"title\": \"string\",\n      \"firstName\": \"string\",\n      \"middleName\": \"string\",\n      \"lastName\": \"string\",\n      \"nativeName\": \"string\"\n    }\n  },\n  \"servicingIdentity\": \"string\",\n  \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n  \"metadata\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"creditParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+449999112\"\n    }\n  ],\n  \"debitParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+449999999\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ChannelHostName}}/channel/gsma/deposit",
+									"host": [
+										"{{ChannelHostName}}"
+									],
+									"path": [
+										"channel",
+										"gsma",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Transfer Query",
 					"request": {
 						"method": "GET",
@@ -42807,6 +42890,11 @@
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}",
 								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -42969,6 +43057,11 @@
 							{
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -43135,7 +43228,12 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa"
+								"value": "{{TenantName}}"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -43307,7 +43405,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/batch?batchId={{batchId}}",
+							"raw": "{{OperationsHostName}}/api/v1/batch?batchId={{batchId}}&X-CorrelationID={{clientCorrelationId}}",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43332,6 +43430,10 @@
 								{
 									"key": "batchId",
 									"value": "{{batchId}}"
+								},
+								{
+									"key": "X-CorrelationID",
+									"value": "{{clientCorrelationId}}"
 								}
 							]
 						}
@@ -43520,7 +43622,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageSize={{pageSize}}",
+							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageSize={{pageSize}}&X-CorrelationID={{clientCorrelationId}}",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43558,6 +43660,10 @@
 									"value": "{{status}}",
 									"description": "Transaction Status. Values can be COMPLETED, FAILED, IN_PROGRESS and ALL. By default set to ALL.",
 									"disabled": true
+								},
+								{
+									"key": "X-CorrelationID",
+									"value": "{{clientCorrelationId}}"
 								}
 							]
 						}
@@ -43725,7 +43831,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageNo={{pageNo}}&pageSize={{pageSize}}&status={{status}}",
+							"raw": "{{OperationsHostName}}/api/v1/batch/detail?batchId={{batchId}}&pageNo={{pageNo}}&pageSize={{pageSize}}&status={{status}}&X-CorrelationID={{clientCorrelationId}}",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43755,6 +43861,10 @@
 									"key": "status",
 									"value": "{{status}}",
 									"description": "Transaction Status. Values can be COMPLETED, FAILED, IN_PROGRESS and ALL. By default set to ALL."
+								},
+								{
+									"key": "X-CorrelationID",
+									"value": "{{clientCorrelationId}}"
 								}
 							]
 						}
@@ -43888,7 +43998,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/batches?page=2&size=10&sortedBy=requestFile&sortedOrder=asc",
+							"raw": "{{OperationsHostName}}/api/v1/batches?page=2&size=10&sortedBy=requestFile&sortedOrder=asc&X-CorrelationID={{clientCorrelationId}}",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43913,6 +44023,10 @@
 								{
 									"key": "sortedOrder",
 									"value": "asc"
+								},
+								{
+									"key": "X-CorrelationID",
+									"value": "{{clientCorrelationId}}"
 								}
 							]
 						}
@@ -44122,6 +44236,11 @@
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}",
 								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -44188,10 +44307,16 @@
 					"name": "Notifications Callback",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n    \"id\": \"20\",\n    \"externalId\": \"SM7b1b75ffa3f5737a\",\n    \"deliveredOnDate\": \"2022-01-11\",\n    \"deliveryStatus\": 300,\n    \"hasError\": false,\n    \"errorMessage\": null,\n    \"bridgeId\": 2,\n    \"tenantId\": 1\n  }\n]",
+							"raw": "[\n  {\n    \"id\": \"201\",\n    \"externalId\": \"SM7b1b75ffa3f5737a\",\n    \"deliveredOnDate\": \"2022-01-11\",\n    \"deliveryStatus\": 300,\n    \"hasError\": false,\n    \"errorMessage\": null,\n    \"bridgeId\": 2,\n    \"tenantId\": 1\n  }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44199,8 +44324,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{NotificationsHostName}}/sms/callback",
-							"protocol": "http",
+							"raw": "{{NotificationsHostName}}/sms/callback",
 							"host": [
 								"{{NotificationsHostName}}"
 							],
@@ -44210,6 +44334,48 @@
 							]
 						},
 						"description": "Callback from message gateway"
+					},
+					"response": []
+				},
+				{
+					"name": "Send Message to Message Gateway",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fineract-Platform-TenantId",
+								"value": "default",
+								"type": "text"
+							},
+							{
+								"key": "Fineract-Tenant-App-Key",
+								"value": "123456543234abdkdkdkd",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"internalId\": \"20\",\n    \"mobileNumber\": \"+15005550012\",\n    \"message\": \"Random Message\",\n    \"providerId\": 2\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{MessagegatewayHostName}}/sms",
+							"host": [
+								"{{MessagegatewayHostName}}"
+							],
+							"path": [
+								"sms"
+							]
+						}
 					},
 					"response": []
 				}
@@ -44222,7 +44388,18 @@
 					"name": "Message gateway provider callback",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"contact_id\": \"CT190322d3246e0a2f\",\n  \"contact[conversation_status]\": \"closed\",\n  \"contact[id]\": \"CT190322d3246e0a2f\",\n  \"contact[incoming_message_count]\": 0,\n  \"contact[last_message_id]\": \"SM8edad9e1caf03b04\",\n  \"contact[last_message_time]\": 1641306324,\n  \"contact[last_outgoing_message_time]\": 1641306324,\n  \"contact[message_count]\": 17,\n  \"contact[name]\": \"+15005550012\",\n  \"contact[outgoing_message_count]\": 17,\n  \"contact[phone_number]\": \"+15005550012\",\n  \"contact[project_id]\": \"PJ5ff552ce01d2978c\",\n  \"contact[send_blocked]\": 0,\n  \"contact[time_created]\": 1641227864,\n  \"contact[time_updated]\": 1641227864,\n  \"content\": \"The transaction for account number:$account for amount:$amount has failed on $date with following transaction id: $transactionid\",\n  \"direction\": \"outgoing\",\n  \"error_message\": \" \",\n  \"event\": \"send_status\",\n  \"from_number\": \"555-1212\",\n  \"id\": \"SM8edad9e1caf03b04\",\n  \"message_type\": \"sms\",\n  \"phone_id\": \"PNa2d2c147eb96c34d\",\n  \"priority\": 1,\n  \"project_id\": \"PJ5ff552ce01d2978c\",\n  \"secret\": \" \",\n  \"simulated\": 1,\n  \"source\": \"api\",\n  \"starred\": 0,\n  \"status\": \"delivered\",\n  \"time_created\": 1641306324,\n  \"time_sent\": 1641306324,\n  \"time_updated\": 1641306324,\n  \"to_number\": \"+15005550012\",\n  \"track_clicks\": 0,\n  \"user_id\": \"URfabcdb9eb26ca257\"\n}",
@@ -44233,8 +44410,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://{{MessagegatewayHostName}}/telerivet/report/",
-							"protocol": "https",
+							"raw": "{{MessagegatewayHostName}}/telerivet/report/",
 							"host": [
 								"{{MessagegatewayHostName}}"
 							],
