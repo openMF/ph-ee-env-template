@@ -1,0 +1,594 @@
+{
+	"info": {
+		"_postman_id": "c78d870c-1fde-445a-bade-b6d06c7590b7",
+		"name": "External APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17902615"
+	},
+	"item": [
+		{
+			"name": "Payment Schema",
+			"item": [
+				{
+					"name": "SLCB",
+					"item": [
+						{
+							"name": "Auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"access_token\", jsonData.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"DSTI01\",\n    \"password\": \"y,T$XG4\",\n    \"expiresIn\": 0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{auth-url}}",
+									"host": [
+										"{{auth-url}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Sucessful Auth",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \"Username\":\"DSTI01\", \"Password\":\"Cuu)!!7\" }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://g2p-test.slcb.com:8443/api/auth",
+											"protocol": "https",
+											"host": [
+												"g2p-test",
+												"slcb",
+												"com"
+											],
+											"port": "8443",
+											"path": [
+												"api",
+												"auth"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 May 2022 11:10:39 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"username\": \"DSTI01\",\n    \"token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjdBQjQ5NjgxMDdBMzAyQjcxQzc3QTU1MDdENEM5NjQ5IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2NTMwNDUwMzksImV4cCI6MTY1NjY0NTAzOSwiaXNzIjoiaHR0cHM6Ly9nMnAtdGVzdC5zbGNiLmNvbTo4NDQzIiwiYXVkIjoiZVRyYXgiLCJjbGllbnRfaWQiOiJlVHJheF9BcHAiLCJzdWIiOiI5NjVlNzA4ZC1hN2I2LTQ5Y2YtOGEzOC1jMGM4MzExMDhhNmMiLCJhdXRoX3RpbWUiOjE2NTMwNDUwMzksImlkcCI6ImxvY2FsIiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjoiRmFsc2UiLCJlbWFpbCI6ImF2aWtAZnluYXJmaW4uaW8iLCJlbWFpbF92ZXJpZmllZCI6IkZhbHNlIiwibmFtZSI6IkRTVEkwMSIsImlhdCI6MTY1MzA0NTAzOSwic2NvcGUiOlsiZVRyYXgiXSwiYW1yIjpbInB3ZCJdfQ.HVihulps0nJgS1Gsg4O_7m2FoFI3nFpnQR9MtFcZmokkZ_5qWR5FtFtGsMb1Hn68Qaj3HHTaXUVVHfNQSDNIFrmlwW_EN1UreojM7imB2CWTNWiM2TZDnmItPBaMvB2pH1fraLANqm9KuryzeNbNbGhFi19eCB1e2cLWPUlufnjHsWMbAB2hweahbVNsIVCNvZLInKSP339X45RxsTp7SHNvw56VbDyTDL-MrCjZTUN0fxJS38r91wO-IkcwzfmpAS-OJJXSusByilnLphRQvIJq4ianX8p15IxWSIF5RpBigJklZzC3N5pp6SkyYy_0VXYOayzqSkDK5mXg0d9vvQ\",\n    \"expiresIn\": 3600000\n}"
+								}
+							]
+						},
+						{
+							"name": "Transaction Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ID\": null,\n    \"AccountType\": 0,\n    \"AuthorizationCode\": \"yoWYLKjSPl4C746p+pzEFl9hQ6ZZpq2JcvNItmC9ZowWRTB1V4Cx+bk0YkTLBSHc\",\n    \"BatchID\": \"987\",\n    \"InstitutionCode\": \"SLCB\",\n    \"Purpose\": \"Test Payment\",\n    \"RequestDate\": \"2022-10-03T06:03:30.45+05:30\",\n    \"SourceAccount\": \"003001003879112168\",\n    \"Status\": null,\n    \"TotalAmountPaid\": 0.0,\n    \"TotalAmountToBePaid\": 500.00,\n    \"Payees\": [\n        {\n            \"ID\": null,\n            \"Account\": \"003001003873110196\",\n            \"AccountType\": 0,\n            \"Amount\": 250.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account 4\",\n            \"Purpose\": \"Test Payee Payment\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        },\n        {\n            \"ID\": null,\n            \"Account\": \"003001003874120160\",\n            \"AccountType\": 0,\n            \"Amount\": 250.00,\n            \"ExternalTransactionId\": 1,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account\",\n            \"Purpose\": \"Test Payee Payment 2\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{txnrequest-url}}",
+									"host": [
+										"{{txnrequest-url}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Transaction Request Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ID\": null,\n    \"AccountType\": 0,\n    \"AuthorizationCode\": \"y7mDYZ34xLUzuIifRa7B/2CRoETLOoSb+QIQlVHPqwQGGLYL9hWY61oS1hooXMz4TuhG8HtrHxEevOr9Dio+kSfoJZFxroYNmm5Icww3rIfonMPIH5ovYYXdOAP8wy/ISN7HLor0pV/rhmCPMmpMROByid4+EFK85rXH6pXr5tzF6RyRYAcu1wCiASGMTiIZedpV11VJp1vH3whmBHWhfE5fo2NP7FiJ8Uv3Aw3sCcCj7hQ1OKkq9lMLV1F8YrjoKbMbdBEnTPWxwdTrGN8MWTS/j0ofiE3Thyog/fmAwfsDNN2MNEz/GvVGABZALkQ9tc/4UACx4iQBu0JqfKVT9wYKd3LojvEFXDaeLXORyRH/gdxhG+UQq+2JtUjNNOP6fs/VrBwizMRkuG3qg/wDhoOeVnq1mtIcTUCPEO54t2caMGvHnvMcPK1kBlYryliIbcfRTsoserCsg5clZWfs0IBB6evmWDSN+PXJ9+VDvBheecaXLHeTgv7vZPjVp00oGJDGA63pH1XONWRBSZKo5FnidTzQs6/53QthEFfJSmPY45NV/e7OLjp2FVoV7Lutuc+aT4m5AsuYISsNX+Zlqm8K/KcnODokrP/gCjNWnAOvlRiUKfMw1tp2PxtFqDDUC1Sr25w8E0qhMd/HwfuRc7NHZYy+ez4tpFVRj2EvqRGA76G+tl/hMMCpsr0dZavEjBSOInGcDxhDdzT+QMLYtjgOEzLTn+6AFxwMC0FU+7Srxg3f8ljkYH5US2Pn0+oZ05OmDSgefsYRhjcKmU96owCPSNXdEfTT6PYz9JMBBPhoCGTAzlnK3lU4GawtT7fLI5QD+wS3OYYKOrjubRQ4tFx4Qlb3amqri/FckS9GMfnk1wUwhjdPhxC+7W6UvfHrXrfe4QmC8fWzOENUWXA4JlRxezylEG7wUHB7+d9c90cgqAzOEEHL1FGEB+uPqfljI6NjE2VFFahskD3mFEEuUprsmNyvAzTBN2LLt11nwjPku3IMoHj9NZcMTexlr9HyJUjC5xEPui3rQ5FUdLM5mcOm9NQQBGSkGgwHGVInoXdWUH/oVwhWBPwB+dnR9gMrP29rkJ1JlOsNDDmHdxRJQRlSQe937CiSzL4T5d/uZvFxqbTl/GFFxv65TCGsxGVNM64Nyp0xZtGh/jafhcwvSRq/xDuWss0Uin3c5nSkoOb8IwS01uNO4J1/j2vFXDCBHRRYSmh8HtFuOvaRVQcX6bSxd6d3Indsy//T+IsFZmk/wMOPM3fnLUeFhDx57LpP72/qonB0XZspNUN4tif2vORWUEU3DpP8bzw5saaSk2RqBDNeosMaqAAPo9lwrYeyfPIJ69F2iqiaP0XUNpzaQqSGhP50fL92DfXiHpJxRfBhXdH5Eu8OjqdqwewZEZHkqi20vQm02yGfXJZ8peQPmLIJQg84v8TVbEqM9KWHJrSjaIjTFxxAaIqDVkjElSSz8uDMr40HbDUlKnwNJUoMIwTKfypr60em3k1lDoOs4bFbG2Zl+NXt5WmyhBJNPHKuAyUdaQBEx7eDR7fptLjo8oo9W29EIlridVSPO1scH5Q9xECjs4GwfcfWp2Optk/g\",\n    \"BatchID\": \"1\",\n    \"InstitutionCode\": \"SLCB\",\n    \"Purpose\": \"Test Payment\",\n    \"RequestDate\": \"2022-05-30T07:20:09.9260323-04:00\",\n    \"SourceAccount\": \"003001003878112195\",\n    \"Status\": null,\n    \"TotalAmountPaid\": 0.0,\n    \"TotalAmountToBePaid\": 350000.00,\n    \"Payees\": [\n        {\n            \"ID\": null,\n            \"Account\": \"003001003873110196\",\n            \"AccountType\": 0,\n            \"Amount\": 100000.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account 4\",\n            \"Purpose\": \"Test Payee Payment\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        },\n        {\n            \"ID\": null,\n            \"Account\": \"003001003874120160\",\n            \"AccountType\": 0,\n            \"Amount\": 250000.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account\",\n            \"Purpose\": \"Test Payee Payment 2\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        }\n \n    ]\n}\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{txnrequest-url}}",
+											"host": [
+												"{{txnrequest-url}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 24 May 2022 15:03:35 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": null,\n    \"accountType\": 0,\n    \"authorizationCode\": \"y7mDYZ34xLUzuIifRa7B/2CRoETLOoSb+QIQlVHPqwQGGLYL9hWY61oS1hooXMz4TuhG8HtrHxEevOr9Dio+kSfoJZFxroYNmm5Icww3rIfonMPIH5ovYYXdOAP8wy/ISN7HLor0pV/rhmCPMmpMROByid4+EFK85rXH6pXr5tzF6RyRYAcu1wCiASGMTiIZedpV11VJp1vH3whmBHWhfE5fo2NP7FiJ8Uv3Aw3sCcCj7hQ1OKkq9lMLV1F8YrjoKbMbdBEnTPWxwdTrGN8MWTS/j0ofiE3Thyog/fmAwfsDNN2MNEz/GvVGABZALkQ9tc/4UACx4iQBu0JqfKVT9wYKd3LojvEFXDaeLXORyRH/gdxhG+UQq+2JtUjNNOP6fs/VrBwizMRkuG3qg/wDhoOeVnq1mtIcTUCPEO54t2caMGvHnvMcPK1kBlYryliIbcfRTsoserCsg5clZWfs0IBB6evmWDSN+PXJ9+VDvBheecaXLHeTgv7vZPjVp00oGJDGA63pH1XONWRBSZKo5FnidTzQs6/53QthEFfJSmPY45NV/e7OLjp2FVoV7Lutuc+aT4m5AsuYISsNX+Zlqm8K/KcnODokrP/gCjNWnAOvlRiUKfMw1tp2PxtFqDDUC1Sr25w8E0qhMd/HwfuRc7NHZYy+ez4tpFVRj2EvqRGA76G+tl/hMMCpsr0dZavEjBSOInGcDxhDdzT+QMLYtjgOEzLTn+6AFxwMC0FU+7Srxg3f8ljkYH5US2Pn0+oZ05OmDSgefsYRhjcKmU96owCPSNXdEfTT6PYz9JMBBPhoCGTAzlnK3lU4GawtT7fLI5QD+wS3OYYKOrjubRQ4tFx4Qlb3amqri/FckS9GMfnk1wUwhjdPhxC+7W6UvfHrXrfe4QmC8fWzOENUWXA4JlRxezylEG7wUHB7+d9c90cgqAzOEEHL1FGEB+uPqfljI6NjE2VFFahskD3mFEEuUprsmNyvAzTBN2LLt11nwjPku3IMoHj9NZcMTexlr9HyJUjC5xEPui3rQ5FUdLM5mcOm9NQQBGSkGgwHGVInoXdWUH/oVwhWBPwB+dnR9gMrP29rkJ1JlOsNDDmHdxRJQRlSQe937CiSzL4T5d/uZvFxqbTl/GFFxv65TCGsxGVNM64Nyp0xZtGh/jafhcwvSRq/xDuWss0Uin3c5nSkoOb8IwS01uNO4J1/j2vFXDCBHRRYSmh8HtFuOvaRVQcX6bSxd6d3Indsy//T+IsFZmk/wMOPM3fnLUeFhDx57LpP72/qonB0XZspNUN4tif2vORWUEU3DpP8bzw5saaSk2RqBDNeosMaqAAPo9lwrYeyfPIJ69F2iqiaP0XUNpzaQqSGhP50fL92DfXiHpJxRfBhXdH5Eu8OjqdqwewZEZHkqi20vQm02yGfXJZ8peQPmLIJQg84v8TVbEqM9KWHJrSjaIjTFxxAaIqDVkjElSSz8uDMr40HbDUlKnwNJUoMIwTKfypr60em3k1lDoOs4bFbG2Zl+NXt5WmyhBJNPHKuAyUdaQBEx7eDR7fptLjo8oo9W29EIlridVSPO1scH5Q9xECjs4GwfcfWp2Optk/g\",\n    \"batchID\": \"1\",\n    \"institutionCode\": \"SLCB\",\n    \"purpose\": \"Test Payment\",\n    \"requestDate\": \"2022-05-30T11:20:09.9260323+00:00\",\n    \"sourceAccount\": \"003001003878112195\",\n    \"status\": {\n        \"code\": 0,\n        \"description\": \"The operation completed successfully\"\n    },\n    \"totalAmountPaid\": 350000,\n    \"totalAmountToBePaid\": 350000,\n    \"payees\": [\n        {\n            \"id\": \"50\",\n            \"account\": \"003001003873110196\",\n            \"accountType\": 0,\n            \"amount\": 100000,\n            \"externalTransactionId\": 0,\n            \"firstName\": \"Test\",\n            \"lastName\": \"Account 4\",\n            \"purpose\": \"Test Payee Payment\",\n            \"status\": {\n                \"code\": 0,\n                \"description\": \"The operation completed successfully\"\n            },\n            \"statusMessage\": \"The operation completed successfully\",\n            \"transactionId\": \"1847142054\"\n        },\n        {\n            \"id\": \"52\",\n            \"account\": \"003001003874120160\",\n            \"accountType\": 0,\n            \"amount\": 250000,\n            \"externalTransactionId\": 0,\n            \"firstName\": \"Test\",\n            \"lastName\": \"Account\",\n            \"purpose\": \"Test Payee Payment 2\",\n            \"status\": {\n                \"code\": 0,\n                \"description\": \"The operation completed successfully\"\n            },\n            \"statusMessage\": \"The operation completed successfully\",\n            \"transactionId\": \"2468598674\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "Transaction Request strange 003001003879112168",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ID\": null,\n    \"AccountType\": 0,\n    \"AuthorizationCode\": \"NoXFMivy98TASCZOhVUidG75uCM3N+/l3+7FkxH8BZjZYysROYSdRMgQ0vATHP5rK8c8w0BRw9mbBS3cX1X7wYz5teSzZ75P5IS+kWsrAO+ZGKIhi60SL5eICFfees47bVCHwxm5jDiLn1eN/PgM6GTpGK0OwtxxLDkm79wcjyTHZHaxHpezmmuJWbziWTo84zFHuHxREtX/6mI6sRh1qOrC9P0az0IrgeNNrG7CLgBKjgTI5bIAqfU2Eer4hE7hCBVfFFEIF+JxGcVneNujubB2gcVhLNLVQK+AqfJWaVrOZydIlYa6G70a745J1DiAnmNOIdGHdN6Ad8WWFUwJ2g==\",\n    \"BatchID\": \"1\",\n    \"InstitutionCode\": \"SLCB\",\n    \"Purpose\": \"Test Payment\",\n    \"RequestDate\": \"2022-07-26T07:20:09.9260323-04:00\",\n    \"SourceAccount\": \"003001003879112168\",\n    \"Status\": null,\n    \"TotalAmountPaid\": 0.0,\n    \"TotalAmountToBePaid\": 350000.00,\n    \"Payees\": [\n        {\n            \"ID\": null,\n            \"Account\": \"003001003873110196\",\n            \"AccountType\": 0,\n            \"Amount\": 100000.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account 4\",\n            \"Purpose\": \"Test Payee Payment\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        },\n        {\n            \"ID\": null,\n            \"Account\": \"003001003874120160\",\n            \"AccountType\": 0,\n            \"Amount\": 250000.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account\",\n            \"Purpose\": \"Test Payee Payment 2\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{txnrequest-url}}",
+											"host": [
+												"{{txnrequest-url}}"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Expires",
+											"value": "-1"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Jul 2022 10:42:01 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\"Message\":\"Error Code:-23 - Description: Insufficient funds\",\"StatusCode\":\"400\"}{\"Message\":\"Insufficient funds\",\"StatusCode\":\"-23\"}"
+								},
+								{
+									"name": "Transaction Request Internal error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ID\": null,\n    \"AccountType\": 0,\n    \"AuthorizationCode\": \"yoWYLKjSPl4C746p+pzEFl9hQ6ZZpq2JcvNItmC9ZowWRTB1V4Cx+bk0YkTLBSHc\",\n    \"BatchID\": \"1\",\n    \"InstitutionCode\": \"SLCB\",\n    \"Purpose\": \"Test Payment\",\n    \"RequestDate\": \"2022-08-08T05:56:48+05:30\",\n    \"SourceAccount\": \"003001003873110196\",\n    \"Status\": null,\n    \"TotalAmountPaid\": 0.0,\n    \"TotalAmountToBePaid\": 500.00,\n    \"Payees\": [\n        {\n            \"ID\": null,\n            \"Account\": \"003001003873110196\",\n            \"AccountType\": 0,\n            \"Amount\": 250.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account 4\",\n            \"Purpose\": \"Test Payee Payment\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        },\n        {\n            \"ID\": null,\n            \"Account\": \"003001003874120160\",\n            \"AccountType\": 0,\n            \"Amount\": 250.00,\n            \"ExternalTransactionId\": 1,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account\",\n            \"Purpose\": \"Test Payee Payment 2\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{txnrequest-url}}",
+											"host": [
+												"{{txnrequest-url}}"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "_AbpErrorFormat",
+											"value": "true"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 Sep 2022 11:03:52 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"error\": {\n        \"code\": null,\n        \"message\": \"An internal error occurred during your request!\",\n        \"details\": null,\n        \"data\": {},\n        \"validationErrors\": null\n    }\n}"
+								},
+								{
+									"name": "Transaction Request -999",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ID\": null,\n    \"AccountType\": 0,\n    \"AuthorizationCode\": \"yoWYLKjSPl4C746p+pzEFl9hQ6ZZpq2JcvNItmC9ZowWRTB1V4Cx+bk0YkTLBSHc\",\n    \"BatchID\": \"1\",\n    \"InstitutionCode\": \"SLCB\",\n    \"Purpose\": \"Test Payment\",\n    \"RequestDate\": \"2022-08-08T05:56:48+05:30\",\n    \"SourceAccount\": \"003001003873110196\",\n    \"Status\": null,\n    \"TotalAmountPaid\": 0.0,\n    \"TotalAmountToBePaid\": 500.00,\n    \"Payees\": [\n        {\n            \"ID\": null,\n            \"Account\": \"003001003873110196\",\n            \"AccountType\": 0,\n            \"Amount\": 250.00,\n            \"ExternalTransactionId\": 0,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account 4\",\n            \"Purpose\": \"Test Payee Payment\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        },\n        {\n            \"ID\": null,\n            \"Account\": \"003001003874120160\",\n            \"AccountType\": 0,\n            \"Amount\": 250.00,\n            \"ExternalTransactionId\": 1,\n            \"FirstName\": \"Test\",\n            \"LastName\": \"Account\",\n            \"Purpose\": \"Test Payee Payment 2\",\n            \"Status\": {\n                \"Code\": 0,\n                \"Description\": null\n            },\n            \"StatusMessage\": null,\n            \"TransactionId\": null\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{txnrequest-url}}",
+											"host": [
+												"{{txnrequest-url}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 02 Sep 2022 11:14:06 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": null,\n    \"accountType\": 0,\n    \"authorizationCode\": \"yoWYLKjSPl4C746p+pzEFl9hQ6ZZpq2JcvNItmC9ZowWRTB1V4Cx+bk0YkTLBSHc\",\n    \"batchID\": \"1\",\n    \"institutionCode\": \"SLCB\",\n    \"purpose\": \"Test Payment\",\n    \"requestDate\": \"2022-08-08T00:26:48+00:00\",\n    \"sourceAccount\": \"003001003873110196\",\n    \"status\": {\n        \"code\": -999,\n        \"description\": \"There was an error while processing the request. Processing aborted.\"\n    },\n    \"totalAmountPaid\": 0,\n    \"totalAmountToBePaid\": 500,\n    \"payees\": [\n        {\n            \"id\": null,\n            \"account\": \"003001003873110196\",\n            \"accountType\": 0,\n            \"amount\": 250,\n            \"externalTransactionId\": 0,\n            \"firstName\": \"Test\",\n            \"lastName\": \"Account 4\",\n            \"purpose\": \"Test Payee Payment\",\n            \"status\": {\n                \"code\": 0,\n                \"description\": null\n            },\n            \"statusMessage\": null,\n            \"transactionId\": null\n        },\n        {\n            \"id\": null,\n            \"account\": \"003001003874120160\",\n            \"accountType\": 0,\n            \"amount\": 250,\n            \"externalTransactionId\": 1,\n            \"firstName\": \"Test\",\n            \"lastName\": \"Account\",\n            \"purpose\": \"Test Payee Payment 2\",\n            \"status\": {\n                \"code\": 0,\n                \"description\": null\n            },\n            \"statusMessage\": null,\n            \"transactionId\": null\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Reconcoliation",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "from",
+											"value": "2022-09-21T05:56:47+05:30",
+											"description": "2022-09-21T15:03:47.9773109",
+											"type": "text"
+										},
+										{
+											"key": "to",
+											"value": "2022-09-22T05:56:48+05:30",
+											"description": "2022-09-21T15:03:47.9793763",
+											"type": "text"
+										},
+										{
+											"key": "authorizationCode",
+											"value": "yoWYLKjSPl4C746p+pzEFl9hQ6ZZpq2JcvNItmC9ZowWRTB1V4Cx+bk0YkTLBSHc",
+											"type": "text"
+										},
+										{
+											"key": "bban",
+											"value": "003001003879112168",
+											"type": "text"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "pageSize",
+											"value": "20",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{recon-url}}",
+									"host": [
+										"{{recon-url}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Reconconciliation Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{recon-url}}",
+											"host": [
+												"{{recon-url}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 07 Aug 2022 16:59:09 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"from\": \"2022-07-26T11:20:09.9260323Z\",\n    \"to\": \"2022-07-27T11:20:09.9260323Z\",\n    \"pageSize\": 200,\n    \"pageCount\": 1,\n    \"pageNumber\": 0,\n    \"totalCount\": 12,\n    \"bban\": \"003001003879112168\",\n    \"transactions\": [\n        {\n            \"id\": 220,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-05T20:21:37.7514429\",\n            \"credit\": 1000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"7a9e783c-0756-4754-9753-fb3c10c4bff9\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"7a9e783c-0756-4754-9753-fb3c10c4bff9\",\n            \"username\": \"falcoln\"\n        },\n        {\n            \"id\": 218,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-05T20:05:05.3600922\",\n            \"credit\": 1000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"7a9e783c-0756-4754-9753-fb3c10c4bff9\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"7a9e783c-0756-4754-9753-fb3c10c4bff9\",\n            \"username\": \"falcoln\"\n        },\n        {\n            \"id\": 214,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-05T16:52:25.0407673\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 212,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-05T16:52:24.7821909\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 210,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-01T13:40:33.9013463\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 208,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-01T13:40:33.8874229\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 206,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-01T13:40:14.810255\",\n            \"credit\": 0,\n            \"debit\": 250000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 204,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-08-01T13:40:14.6400784\",\n            \"credit\": 0,\n            \"debit\": 100000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 202,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-07-29T14:48:04.4982544\",\n            \"credit\": 0,\n            \"debit\": 250000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 200,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-07-29T14:48:04.2474515\",\n            \"credit\": 0,\n            \"debit\": 100000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"postedFrom\": \"103.121.204.133\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"103.121.204.133\",\n            \"notes\": \"eTrax: Transaction Request\",\n            \"userId\": \"965e708d-a7b6-49cf-8a38-c0c831108a6c\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 199,\n            \"batchId\": null,\n            \"transactionDate\": \"2022-07-29T11:38:49.0708892\",\n            \"credit\": 5000000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"eb85fa53-0d7e-a585-b2b3-3a03a6a76323\",\n            \"postedFrom\": null,\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": null,\n            \"notes\": null,\n            \"userId\": \"eb85fa53-0d7e-a585-b2b3-3a03a6a76323\",\n            \"username\": \"admin\"\n        },\n        {\n            \"id\": 197,\n            \"batchId\": null,\n            \"transactionDate\": \"2022-07-29T11:37:36.2823965\",\n            \"credit\": 5000000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": null,\n            \"crossReferenceNumber\": 0,\n            \"postedBy\": \"eb85fa53-0d7e-a585-b2b3-3a03a6a76323\",\n            \"postedFrom\": null,\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": null,\n            \"notes\": null,\n            \"userId\": \"eb85fa53-0d7e-a585-b2b3-3a03a6a76323\",\n            \"username\": \"admin\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "Reconcoliation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{recon-url}}",
+											"host": [
+												"{{recon-url}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 02 Sep 2022 12:01:21 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"from\": \"2022-08-08T00:00:00\",\n    \"to\": \"2022-09-08T00:00:00\",\n    \"pageSize\": 20,\n    \"pageCount\": 2,\n    \"pageNumber\": 1,\n    \"totalCount\": 32,\n    \"bban\": \"003001003879112168\",\n    \"comment\": null,\n    \"isError\": false,\n    \"transactions\": [\n        {\n            \"id\": 60,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:35:16.9948387\",\n            \"credit\": 2000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 59,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003874120160\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 59,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:35:16.9920637\",\n            \"credit\": 0,\n            \"debit\": 2000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 59,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 59,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:35:16.9920637\",\n            \"credit\": 0,\n            \"debit\": 2000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 59,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 58,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:34:58.1952072\",\n            \"credit\": 1000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 57,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003874120160\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 57,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:34:58.1918194\",\n            \"credit\": 0,\n            \"debit\": 1000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 57,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 57,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:34:58.1918194\",\n            \"credit\": 0,\n            \"debit\": 1000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 57,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 56,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:30:43.9429779\",\n            \"credit\": 1000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 55,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 56,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:30:43.9429779\",\n            \"credit\": 1000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 55,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 55,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:30:43.9397666\",\n            \"credit\": 0,\n            \"debit\": 1000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 55,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 55,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:30:43.9397666\",\n            \"credit\": 0,\n            \"debit\": 1000,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 55,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 54,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:20:40.7743261\",\n            \"credit\": 250,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 53,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"203.81.242.121\",\n            \"accountNumber\": \"003001003874120160\",\n            \"ipAddress\": \"203.81.242.121\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 53,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:20:40.7719825\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 53,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"203.81.242.121\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"203.81.242.121\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 53,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:20:40.7719825\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 53,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"203.81.242.121\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"203.81.242.121\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 52,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:20:40.7170309\",\n            \"credit\": 250,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 51,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"203.81.242.121\",\n            \"accountNumber\": \"003001003873110196\",\n            \"ipAddress\": \"203.81.242.121\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 51,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:20:40.5814167\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 51,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"203.81.242.121\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"203.81.242.121\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 51,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T11:20:40.5814167\",\n            \"credit\": 0,\n            \"debit\": 250,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 51,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"203.81.242.121\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"203.81.242.121\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 50,\n            \"batchId\": \"1\",\n            \"transactionDate\": \"2022-09-02T02:46:18.9079563\",\n            \"credit\": 1000,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 49,\n            \"postedBy\": \"7a9e783c-0756-4754-9753-fb3c10c4bff9\",\n            \"postedFrom\": \"102.176.189.6\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.176.189.6\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7a9e783c-0756-4754-9753-fb3c10c4bff9\",\n            \"username\": \"falcoln\"\n        },\n        {\n            \"id\": 48,\n            \"batchId\": \"13340d58-a2f3-4641-869d-5edf74fb6cf9\",\n            \"transactionDate\": \"2022-08-31T13:44:02.5427481\",\n            \"credit\": 100,\n            \"debit\": 0,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 47,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.223.155.55\",\n            \"accountNumber\": \"003001003873110196\",\n            \"ipAddress\": \"102.223.155.55\",\n            \"notes\": \"eTrax: Internal Transaction Request (CREDIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 47,\n            \"batchId\": \"13340d58-a2f3-4641-869d-5edf74fb6cf9\",\n            \"transactionDate\": \"2022-08-31T13:44:02.3553769\",\n            \"credit\": 0,\n            \"debit\": 100,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 47,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.223.155.55\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.223.155.55\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        },\n        {\n            \"id\": 47,\n            \"batchId\": \"13340d58-a2f3-4641-869d-5edf74fb6cf9\",\n            \"transactionDate\": \"2022-08-31T13:44:02.3553769\",\n            \"credit\": 0,\n            \"debit\": 100,\n            \"eTraxReferenceNumber\": 0,\n            \"externalReferenceNumber\": 0,\n            \"cbsDocumentNumber\": \"N/A\",\n            \"crossReferenceNumber\": 47,\n            \"postedBy\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"postedFrom\": \"102.223.155.55\",\n            \"accountNumber\": \"003001003879112168\",\n            \"ipAddress\": \"102.223.155.55\",\n            \"notes\": \"eTrax: Internal Transaction Request (DEBIT)\",\n            \"userId\": \"7f95c766-6681-4cff-acde-8f4aab6bed53\",\n            \"username\": \"DSTI01\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Auth Code",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\n    \"SimplePhrase\":\"This is a test\",\n\n    \"PublicKey\":\"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA50JDuWUMXEyyE0a6PdOVFLU7xRv9lOrWQXKj1K/eseoFMU1jgrx5rdQOVeNmU0N4cbd7h02Ml++As1VzhW2xeArbsdrtXiPFXEBeHvywdLHD7oF2Ox0FqiO7VMbLm+eAc1URh2yveo7VWxOqB1f8maj2rdcguVsR29ccOKqY+rgJ85EN77/hJE6WH7De4MFI/gn3aXz9mBcmg7O+CRGFqRH4IiIEhXQ5XEaj2LWs/LkQSmrZA5J+uonUqIWsuqUCG0JuErbEXCXffMyjb4kxSaE3CW7y1cYznmcC2dyWTCNcfYpM0hyqXQGQl5eVPnvr9mJVc1KH51M4uJ5wYvDOOwIDAQAB-----END PUBLIC KEY-----\",\n\n    \"AuthorizationCode\":\"\"\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authCodeUrl}}",
+									"host": [
+										"{{authCodeUrl}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Auth Code 200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\n    \"SimplePhrase\":\"This is a test\",\n\n    \"PublicKey\":\"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA50JDuWUMXEyyE0a6PdOVFLU7xRv9lOrWQXKj1K/eseoFMU1jgrx5rdQOVeNmU0N4cbd7h02Ml++As1VzhW2xeArbsdrtXiPFXEBeHvywdLHD7oF2Ox0FqiO7VMbLm+eAc1URh2yveo7VWxOqB1f8maj2rdcguVsR29ccOKqY+rgJ85EN77/hJE6WH7De4MFI/gn3aXz9mBcmg7O+CRGFqRH4IiIEhXQ5XEaj2LWs/LkQSmrZA5J+uonUqIWsuqUCG0JuErbEXCXffMyjb4kxSaE3CW7y1cYznmcC2dyWTCNcfYpM0hyqXQGQl5eVPnvr9mJVc1KH51M4uJ5wYvDOOwIDAQAB-----END PUBLIC KEY-----\",\n\n    \"AuthorizationCode\":\"\"\n\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{authCodeUrl}}",
+											"host": [
+												"{{authCodeUrl}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 28 Oct 2022 10:19:50 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"simplePhrase\": \"This is a test\",\n    \"publicKey\": \"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA50JDuWUMXEyyE0a6PdOVFLU7xRv9lOrWQXKj1K/eseoFMU1jgrx5rdQOVeNmU0N4cbd7h02Ml++As1VzhW2xeArbsdrtXiPFXEBeHvywdLHD7oF2Ox0FqiO7VMbLm+eAc1URh2yveo7VWxOqB1f8maj2rdcguVsR29ccOKqY+rgJ85EN77/hJE6WH7De4MFI/gn3aXz9mBcmg7O+CRGFqRH4IiIEhXQ5XEaj2LWs/LkQSmrZA5J+uonUqIWsuqUCG0JuErbEXCXffMyjb4kxSaE3CW7y1cYznmcC2dyWTCNcfYpM0hyqXQGQl5eVPnvr9mJVc1KH51M4uJ5wYvDOOwIDAQAB-----END PUBLIC KEY-----\",\n    \"authorizationCode\": \"D9A1A0042DBFB0E4011535095C4975D2FA27BAF6E1FE3BDC7E05F11D2A9D9C732ABFCD9384703993E3A33F44B1F255786F44CEFE2C15BA37FC4921DB9D94AE31955BA60F85F01ACCC3BA1E3C367AE093707311B4CBC3B940174EBE07DE302DBBB53FC7CD637BE6C46C8CD3539B58DCF919D85245BA6995285D3DE851E263F20A06FDDEA45EA1D74429FAC7506C061AB894BCC9CB893122675F2BBB42764DF286A85C0B926CEBA51441FAD5034EBA053E1BC9AA259A014ADEBCBF0189C465B0C67B56F925A7F41D29515C01BE49AFEE968BC3E9DE84F460874661E881CA786ED794646990CFABFF14E45A9854A95CF2EB5E3EF02837BE31B084F87F14125678F7\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "MPESA",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "AMS",
+			"item": [
+				{
+					"name": "Paygops",
+					"item": []
+				},
+				{
+					"name": "Roaster",
+					"item": []
+				}
+			]
+		}
+	]
+}
