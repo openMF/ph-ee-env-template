@@ -18,4 +18,7 @@ dependencies:
   repository: "https://charts.bitnami.com/bitnami"
   alias: operationsmysql
   condition: "operations.mysql.enabled"
-
+- name: kong
+  version: 2.13.1
+  repository: https://charts.konghq.com
+  condition: "kong.enabled"
