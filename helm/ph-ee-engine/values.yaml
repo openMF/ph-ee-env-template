@@ -333,7 +333,9 @@ operations_web:
   ingress:
     enabled: false
     path: "/"
-    annotations: {}
+    annotations:
+      konghq.com/plugins: request-transformer,oidc
+      kubernetes.io/ingress.class: kong
     backend: {}
   deployment:
     annotations: {}
