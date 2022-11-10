@@ -824,3 +824,11 @@ kong:
         discovery: https://keycloak.localhost/auth/realms/kong-oidc/.well-known/openid-configuration
         scope: openid
 
+keycloak:
+  enabled: false
+  ingress:
+    enabled: false
+    ingressClassName: "kong"
+    rules:
+      - host: 'keycloak.mifos.io'
+    tls: []
