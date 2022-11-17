@@ -418,7 +418,13 @@ roster_connector:
     auth_header: ""
   deployment:
     annotations: {}
-
+  hostname: ""
+  ingress:
+    enabled: true
+    path: "/"
+    annotations: {}
+    backend: {}
+  
 paygops_connector:
   enabled: false
   replicas: 1
@@ -441,6 +447,12 @@ paygops_connector:
     authheader: ""
   deployment:
     annotations: {}
+  hostname: ""
+  ingress:
+    enabled: true
+    path: "/"
+    annotations: {}
+    backend: {}
 
 messagegateway:
   enabled: false

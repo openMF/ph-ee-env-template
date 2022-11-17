@@ -70,3 +70,53 @@ type: Opaque
 data:
   auth-token: {{ .Values.roster_connector.pesacore.auth_header | b64enc }}
 {{- end }}
+
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-ams-roster
+  name: ph-ee-connector-ams-roster
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+    - name: http
+      port: 82
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ph-ee-connector-ams-roster
+  sessionAffinity: None
+  type: ClusterIP
+---
+
+{{- if .Values.roster_connector.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-ams-roster
+  annotations:
+{{- if .Values.roster_connector.ingress.annotations }}
+{{ toYaml .Values.roster_connector.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.roster_connector.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.roster_connector.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.roster_connector.ingress.backend }}
+{{ toYaml .Values.roster_connector.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
