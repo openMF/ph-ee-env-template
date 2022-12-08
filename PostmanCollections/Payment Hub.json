@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "945210eb-1b66-4c01-9c86-22c04d1185db",
+		"_postman_id": "b71c04b6-94ec-4ea5-a79f-b69ea27ed863",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18201748"
+		"_exporter_id": "22669462"
 	},
 	"item": [
 		{
@@ -43215,6 +43215,81 @@
 								{
 									"key": "type",
 									"value": "csv"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch Transactions JSON",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);",
+									"",
+									"pm.test(\"Response value check\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.batch_id)!=null;",
+									"    pm.expect(jsonData.status)!=null;",
+									"    pm.expect(jsonData.request_id)!=null;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Purpose",
+								"value": "test payment",
+								"type": "text"
+							},
+							{
+								"key": "filename",
+								"value": "ph-ee-bulk-demo-6.csv",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"creditParty\": [\n            {\n                \"key\": \"msisdn\",\n                \"value\": \"8837461856\"\n            }\n        ],\n        \"debitParty\": [\n            {\n                \"key\": \"accountnumber\",\n                \"value\": \"003001003874120160\"\n            }\n        ],\n        \"subType\": \"SLCB\",\n        \"amount\": \"820.00\",\n        \"currency\": \"RWF\",\n        \"descriptionText\": \"Test Payment\"\n    },\n    {\n        \"creditParty\": [\n            {\n                \"key\": \"msisdn\",\n                \"value\": \"32131461856\"\n            }\n        ],\n        \"debitParty\": [\n            {\n                \"key\": \"accountnumber\",\n                \"value\": \"21314556003874120160\"\n            }\n        ],\n        \"subType\": \"SLCB\",\n        \"amount\": \"20.00\",\n        \"currency\": \"RWF\",\n        \"descriptionText\": \"Test Payment\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BulkHostName}}/batchtransactions?type=raw",
+							"host": [
+								"{{BulkHostName}}"
+							],
+							"path": [
+								"batchtransactions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "raw"
 								}
 							]
 						}

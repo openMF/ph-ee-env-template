@@ -75,7 +75,7 @@
 		},
 		{
 			"key": "TestApiList",
-			"value": "[\"Authorization\",\"Batch Summary\",\"Batch Details\",\"Batch Lookup Details\",\"Get All Batches\"]",
+			"value": "[\"Authorization\",\"Batch Summary\",\"Batch Details\",\"Batch Lookup Details\",\"Get All Batches\",\"Batch Transactions JSON\"]",
 			"type": "default",
 			"enabled": true
 		},
