@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2a61c6e9-e17f-4355-a589-912fc0bc2984",
-		"name": "Payment Hub APIs Copy",
+		"_postman_id": "b71c04b6-94ec-4ea5-a79f-b69ea27ed863",
+		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18201748"
+		"_exporter_id": "22669462"
 	},
 	"item": [
 		{
@@ -45126,6 +45126,638 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Paybill APIs",
+			"item": [
+				{
+					"name": "Validation",
+					"item": [
+						{
+							"name": "MPESA-Connector Validiate Webhook",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.expect(pm.response.text).not.equal(null)",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"RKTQDM7W6S\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"10\",\n   \"BusinessShortCode\":\"24322607\",\n   \"BillRefNumber\":\"24322607\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"254797668592\",\n   \"FirstName\":\"John\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{MpesaHostName}}/validation?amsName={{amsName}}",
+									"host": [
+										"{{MpesaHostName}}"
+									],
+									"path": [
+										"validation"
+									],
+									"query": [
+										{
+											"key": "amsName",
+											"value": "{{amsName}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "MPESA-Connector Validiate Webhook",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"RKTQDM7W6S\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"10\",\n   \"BusinessShortCode\":\"24322607\",\n   \"BillRefNumber\":\"24322607\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"254797668592\",\n   \"FirstName\":\"John\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/validation?amsName={{amsName}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"validation"
+											],
+											"query": [
+												{
+													"key": "amsName",
+													"value": "{{amsName}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "*/*"
+										},
+										{
+											"key": "Postman-Token",
+											"value": "71c134c7-75f1-4796-b7af-eb61abe5b108"
+										},
+										{
+											"key": "amsName",
+											"value": "paygops"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "7723fd5a5e127a12-PAT"
+										},
+										{
+											"key": "Accept-Encoding",
+											"value": "gzip;q=1.0, identity; q=0.5"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=rfDl%2B481iQ5JFyYiBXGYhURE4kigNsq78%2FACbxfaHJ9EoSYT1qpBK%2Bmi%2BDa1UzgpFUXPIARPGoghnQdi8pYOrnyvckPXcewlkbVNEeffem%2BHEIDDmF87nIM67j2JjeZu6xbMK1jN%2BVdPBNM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 30 Nov 2022 13:39:32 GMT"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Authorization",
+											"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTb2xhcmlzIE9mZmdyaWQiLCJleHAiOjE2ODAyNzcwNDcsImlhdCI6MTY0ODcyMDA5NSwic3ViIjo2MDUsInBlcm1pc3Npb25zIjpbIkRlbGV0ZURldmljZXMiLCJIYW5kbGVSZXZlcnNlZFBheW1lbnRzIiwiVmlld0Rhc2hib2FyZHMiLCJDaGFuZ2VQQVlHTW9kZURldmljZXMiLCJWaWV3R2xvYmFsRGFzaGJvYXJkcyIsIkVkaXRBY2NvdW50cyIsIk1hbmFnZUFsbEFjY291bnRzIiwiRm9yY2VQQVlHTW9kZURldmljZXMiLCJHb2dsYURhc2hib2FyZHMiLCJXaXRoTWVWaWV3U3RvY2siLCJEb3dubG9hZEdsb2JhbEFjY291bnRzIiwiRGVsZXRlUGhvbmVOdW1iZXJzIiwiTWFuYWdlQWNjb3VudHMiLCJXaXRoQ2xpZW50c1ZpZXdTdG9jayIsIkxpc3RQb3J0Zm9saW9zIiwiT3JwaGFuZWRWaWV3U3RvY2siLCJWaWV3UG9ydGZvbGlvcyIsIkVkaXRNYWRlVHJhbnNmZXJzIiwiRnJvbU9ycGhhbmVkTW92ZVN0b2NrIiwiUmVxdWVzdFRyYW5zZmVycyIsIkVkaXRQb3J0Zm9saW9zIiwiRGVsZXRlUG9ydGZvbGlvcyIsIkFwcHJvdmVUcmFuc2ZlcnMiLCJGcm9tV2l0aE1lTW92ZVN0b2NrIiwiQ3JlYXRlUG9ydGZvbGlvcyIsIkNvbmZpcm1UcmFuc2ZlcnMiLCJUb09ycGhhbmVkTW92ZVN0b2NrIiwiVG9XaXRoTWVNb3ZlU3RvY2siLCJWaWV3VHJhbnNmZXJzIiwiQXBwcm92ZUFkZE9ucyIsIlZpZXdTZXR0aW5nc0ludGVyZmFjZUFkbWluIiwiRGVsZXRlVHJhbnNmZXJzIiwiRWRpdFBsYW5uZWREZWxpdmVyeURhdGVMZWFkcyIsIkNyZWF0ZUFQSVRva2VuQWRtaW4iLCJWaWV3QmFkZ2VUcmFuc2ZlcnMiLCJDb25maWd1cmVNb2JpbGVBcHBTZXR0aW5nc0FkbWluIiwiU3luY0NvbXBsZXRlZENsaWVudHNNb2JpbGUiLCJWaWV3QWN0aXZpdHlMb2dBZG1pbiIsIlZpZXdFeHBlbnNlcyIsIkFkZEV4cGVuc2VzIiwiRXhwb3J0RGF0YUFkbWluIiwiRWRpdE9mZmVyUGFydGlhbGx5UGFpZExlYWRzIiwiRWRpdEV4cGVuc2VzIiwiRWRpdE9mZmVyQXdhaXRpbmdEZWxpdmVyeUxlYWRzIiwiRWRpdE93bkV4cGVuc2VzIiwiQ29uZmlndXJlQXV0b21hdGVkTWVzc2FnZXNBZG1pbiIsIlN5bmNMZWFkc01vYmlsZSIsIkNvbmZpZ3VyZVNhbGVzTWFuYWdlbWVudEFkbWluIiwiRWRpdE90aGVyc0V4cGVuc2VzIiwiUmVtb3ZlTGFzdFBob25lTnVtYmVycyIsIkNvbmZpZ3VyZVBheW1lbnRNYW5hZ2VtZW50QWRtaW4iLCJFZGl0QW1vdW50RXhwZW5zZXMiLCJEZWxldGVFeHBlbnNlcyIsIkNvbmZpZ3VyZUxvY2FsU2V0dGluZ3NBZG1pbiIsIkZpbGxDdXN0b21Gb3Jtc0NsaWVudHMiLCJBZGRWaWxsYWdlcyIsIkNvbmZpZ3VyZUdlbmVyYWxTZXR0aW5nc0FkbWluIiwiQWRkVG9Db250cmFjdEFkZE9ucyIsIkNvbmZpZ3VyZUxhbmd1YWdlU2V0dGluZ3NBZG1pbiIsIkVkaXRWaWxsYWdlcyIsIlN5bmNBY3RpdmF0aW9uQWN0aW9ucyIsIkVkaXRDdXN0b21TTVNBZG1pbiIsIkRlbGV0ZVZpbGxhZ2VzIiwiRmlsbEN1c3RvbUZvcm1zTGVhZHMiLCJWaWV3U2hvcHMiLCJDdXN0b21pemVQbGF0Zm9ybUFkbWluIiwiQWRkQ2x1c3RlcnMiLCJTZWVBbGxOb3RpZmljYXRpb25zQWRtaW4iLCJTZWVIdWJOb3RpZmljYXRpb25zQWRtaW4iLCJFZGl0Q2x1c3RlcnMiLCJWaWV3T2ZmZXJzIiwiVmlld0FjY291bnRzIiwiVmlld093blVzZXJzIiwiRWRpdFVzZXJzIiwiQWRkT2ZmZXJzIiwiRWRpdE9mZmVycyIsIkFkZFVzZXJzIiwiQWRkSHVicyIsIkVkaXRIdWJzIiwiVmlld0FkZG9uT2ZmZXJzIiwiQ3JlYXRlUm9sZXMiLCJEZWxldGVIdWJzIiwiQWRkQWRkb25PZmZlcnMiLCJBc3NpZ25Sb2xlcyIsIkFkZERldmljZXMiLCJFZGl0QWRkb25PZmZlcnMiLCJBZGRab25lcyIsIlZpZXdMb2dzIiwiVmlld0xlYWRHZW5lcmF0b3JzIiwiRWRpdFpvbmVzIiwiU2V0Q29tbWlzc2lvbkxlYWRzIiwiVmlld0ZhdWx0c0xvZ3MiLCJEZWxldGVab25lcyIsIlZpZXdVc2VycyIsIkFkZE1lc3NhZ2VzIiwiVmlld0xlYWRzIiwiQWRkUmVnaW9ucyIsIkFwcHJvdmVMZWFkcyIsIkFkZE1hbnVhbE1lc3NhZ2VzIiwiRWRpdFJlZ2lvbnMiLCJWaWV3QWxsTWVzc2FnZXMiLCJEZWxldGVSZWdpb25zIiwiVmlld01lc3NhZ2VzIiwiQWRkQ2xpZW50R3JvdXBzIiwiVmlld09ycGhhbmVkTWVzc2FnZXMiLCJFZGl0Q2xpZW50R3JvdXBzIiwiQWRkT3V0Z29pbmdNZXNzYWdlcyIsIkFkZExlYWRzIiwiRGVsZXRlQ2xpZW50R3JvdXBzIiwiVmlld0JhZGdlTGVhZHMiLCJBZGRBUElIb29rIiwiSW5TdG9ja1ZpZXdTdG9jayIsIldpdGhVc2Vyc1ZpZXdTdG9jayIsIkRlbGV0ZUFQSUhvb2siLCJGcm9tSW5TdG9ja01vdmVTdG9jayIsIlZpZXdGb3JtcyIsIkZyb21Vc2Vyc01vdmVTdG9jayIsIkFkZEZvcm1zIiwiVG9JblN0b2NrTW92ZVN0b2NrIiwiR2l2ZUNvbW1pc3Npb25Ub0xlYWRHZW5lcmF0b3JzIiwiRWRpdEZvcm1zIiwiRGVsZXRlRm9ybXMiLCJFZGl0Q2xpZW50cyIsIlRvVXNlcnNNb3ZlU3RvY2siLCJWaWV3SXNzdWVzIiwiQWRkSXNzdWVzIiwiRWRpdEludGVyYWN0aW9uc1NldHRpbmdzRm9ybXMiLCJDb25maWd1cmVPcGVyYXRpb25hbEVudGl0aWVzQWRtaW4iLCJWaWV3Q2xpZW50cyIsIkVkaXRJc3N1ZXMiLCJFZGl0Q2xpZW50TGVhZERhdGFTZXR0aW5nc0Zvcm1zIiwiQ29uZmlndXJlRGV2aWNlQVBJQWRtaW4iLCJNYWtlT25TdG9ja091dHNpZGVWaWV3QWN0aW9ucyIsIlZpZXdJbnRlcmFjdGlvbnMiLCJWaWV3QWN0aW9ucyIsIkFkZEludGVyYWN0aW9ucyIsIlN5bmNBbGxDcmVhdGVkTGVhZHNNb2JpbGUiLCJEb0NoYW5nZU9mZmVyQWN0aW9ucyIsIkVkaXRJbnRlcmFjdGlvbnMiLCJTeW5jQWxsR2VuZXJhdGVkTGVhZHNNb2JpbGUiLCJEZVJlZ2lzdGVyQWN0aW9ucyIsIkRlbGV0ZUludGVyYWN0aW9ucyIsIlN5bmNJbnN0YWxsZWRMYXN0MldlZWtzTGVhZHNNb2JpbGUiLCJWaWV3UGxhbm5pbmciLCJHaXZlRGlzY291bnRBY3Rpb25zIiwiU3luY0luc3RhbGxlZExhc3QyTW9udGhzTGVhZHNNb2JpbGUiLCJWaWV3Q3JlYXRlZExlYWRzIiwiR2l2ZURpc2NvdW50T3ZlcjJEYXlzQWN0aW9ucyIsIkFkZFBsYW5uaW5nIiwiU3luY0xlYWRHZW5lcmF0b3JzTW9iaWxlIiwiRWRpdFBsYW5uaW5nIiwiUmVnaXN0ZXJBY3Rpb25zIiwiTWVyZ2VMZWFkR2VuZXJhdG9ycyIsIlN5bmNDbGllbnRzTW9iaWxlIiwiRWRpdExlYWRzIiwiQ29sbGVjdENhc2hBY3Rpb25zIiwiRGVsZXRlUGxhbm5pbmciLCJTeW5jQWxsQ3JlYXRlZENsaWVudHNNb2JpbGUiLCJTd2FwRGV2aWNlQWN0aW9ucyIsIkVkaXRMZWFkR2VuZXJhdG9ycyIsIlZpZXdQYXltZW50cyIsIlN5bmNBbGxHZW5lcmF0ZWRDbGllbnRzTW9iaWxlIiwiVmlld09ycGhhbmVkUGF5bWVudHMiLCJHaXZlRGVsYXlBY3Rpb25zIiwiU3luY0ludGVyYWN0aW9uc01vYmlsZSIsIkFkZFBheW1lbnRzIiwiR2l2ZURlbGF5T3ZlcjJEYXlzQWN0aW9ucyIsIlN5bmNQbGFubmluZ01vYmlsZSIsIkFkZExlYWRHZW5lcmF0b3JzIiwiR2l2ZU5lZ2F0aXZlRGlzY291bnRUb0NvbXBsZXRlZEFjdGlvbnMiLCJBZGp1c3RCYWxhbmNlUGF5bWVudHMiLCJTeW5jRGV2aWNlc01vYmlsZSIsIkVkaXRXYWxsZXRQYXltZW50cyIsIk1hcmtDb250cmFjdERlZmF1bHRlZEFjdGlvbnMiLCJWaWV3UmV2ZXJzZWRQYXltZW50cyIsIlVuZG9Db250cmFjdERlZmF1bHRlZEFjdGlvbnMiLCJFZGl0SW5zdGFsbGVkTGVhZHMiLCJWaWV3QmFkZ2VJc3N1ZXMiLCJHaXZlVG9rZW5zT2ZmbGluZUFjdGlvbnMiLCJBZGRSZXZlcnNlZFBheW1lbnRzIl19.msQFoIe1htXINxp82s2K0jEXFBE_QMdd0U5LnQzVNa4"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "65"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"transaction_id\": \"RKTQDM7W6S\",\n    \"reconciled\": true,\n    \"AMS\": \"paygops\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Account Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.expect(pm.response.text).not.equal(null)",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"primaryIdentifier\": {\n        \"key\": \"foundationalID\",\n        \"value\": \"24322607\"\n    },\n    \"secondaryIdentifier\": {\n        \"key\": \"MSISDN\",\n        \"value\": \"254797668592\"\n    },\n    \"customData\": [\n        {\n            \"key\": \"transactionId\",\n            \"value\": \"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\"\n        },\n        {\n            \"key\": \"currency\",\n            \"value\": \"KES\"\n        },\n        {\n            \"key\": \"memo\",\n            \"value\": \"24322607\"\n        },\n        {\n            \"key\": \"wallet_name\",\n            \"value\": \"254797668592\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ChannelHostName}}/accounts/validate/{{identifierType}}/{{identifier}}?amsName={{amsName}}",
+									"host": [
+										"{{ChannelHostName}}"
+									],
+									"path": [
+										"accounts",
+										"validate",
+										"{{identifierType}}",
+										"{{identifier}}"
+									],
+									"query": [
+										{
+											"key": "amsName",
+											"value": "{{amsName}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Account Status",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"primaryIdentifier\": {\n        \"key\": \"foundationalID\",\n        \"value\": \"24322607\"\n    },\n    \"secondaryIdentifier\": {\n        \"key\": \"MSISDN\",\n        \"value\": \"254797668592\"\n    },\n    \"customData\": [\n        {\n            \"key\": \"transactionId\",\n            \"value\": \"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\"\n        },\n        {\n            \"key\": \"currency\",\n            \"value\": \"KES\"\n        },\n        {\n            \"key\": \"memo\",\n            \"value\": \"24322607\"\n        },\n        {\n            \"key\": \"wallet_name\",\n            \"value\": \"254797668592\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5001/accounts/validate/{{identifierType}}/{{identifier}}?amsName={{amsName}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"accounts",
+												"validate",
+												"{{identifierType}}",
+												"{{identifier}}"
+											],
+											"query": [
+												{
+													"key": "amsName",
+													"value": "{{amsName}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "CF-RAY",
+											"value": "7723fcbf2bba7a12-PAT"
+										},
+										{
+											"key": "Accept-Encoding",
+											"value": "gzip;q=1.0, identity; q=0.5"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=PfxwgU6MVYfxvKnfRm%2Fnl%2Bn4odRvGcAXKNxQtdlJMtsTmfC34uVuMoepLU%2BY0eBlfMqhCWkdaxuOF97KWcV8B5%2Bmm7t2rDbrCecihYUMYe%2BItwonNQT8e%2Fqhw9WNlQJ2tNoljpJFHJcr2RE%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 30 Nov 2022 13:39:06 GMT"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Authorization",
+											"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTb2xhcmlzIE9mZmdyaWQiLCJleHAiOjE2ODAyNzcwNDcsImlhdCI6MTY0ODcyMDA5NSwic3ViIjo2MDUsInBlcm1pc3Npb25zIjpbIkRlbGV0ZURldmljZXMiLCJIYW5kbGVSZXZlcnNlZFBheW1lbnRzIiwiVmlld0Rhc2hib2FyZHMiLCJDaGFuZ2VQQVlHTW9kZURldmljZXMiLCJWaWV3R2xvYmFsRGFzaGJvYXJkcyIsIkVkaXRBY2NvdW50cyIsIk1hbmFnZUFsbEFjY291bnRzIiwiRm9yY2VQQVlHTW9kZURldmljZXMiLCJHb2dsYURhc2hib2FyZHMiLCJXaXRoTWVWaWV3U3RvY2siLCJEb3dubG9hZEdsb2JhbEFjY291bnRzIiwiRGVsZXRlUGhvbmVOdW1iZXJzIiwiTWFuYWdlQWNjb3VudHMiLCJXaXRoQ2xpZW50c1ZpZXdTdG9jayIsIkxpc3RQb3J0Zm9saW9zIiwiT3JwaGFuZWRWaWV3U3RvY2siLCJWaWV3UG9ydGZvbGlvcyIsIkVkaXRNYWRlVHJhbnNmZXJzIiwiRnJvbU9ycGhhbmVkTW92ZVN0b2NrIiwiUmVxdWVzdFRyYW5zZmVycyIsIkVkaXRQb3J0Zm9saW9zIiwiRGVsZXRlUG9ydGZvbGlvcyIsIkFwcHJvdmVUcmFuc2ZlcnMiLCJGcm9tV2l0aE1lTW92ZVN0b2NrIiwiQ3JlYXRlUG9ydGZvbGlvcyIsIkNvbmZpcm1UcmFuc2ZlcnMiLCJUb09ycGhhbmVkTW92ZVN0b2NrIiwiVG9XaXRoTWVNb3ZlU3RvY2siLCJWaWV3VHJhbnNmZXJzIiwiQXBwcm92ZUFkZE9ucyIsIlZpZXdTZXR0aW5nc0ludGVyZmFjZUFkbWluIiwiRGVsZXRlVHJhbnNmZXJzIiwiRWRpdFBsYW5uZWREZWxpdmVyeURhdGVMZWFkcyIsIkNyZWF0ZUFQSVRva2VuQWRtaW4iLCJWaWV3QmFkZ2VUcmFuc2ZlcnMiLCJDb25maWd1cmVNb2JpbGVBcHBTZXR0aW5nc0FkbWluIiwiU3luY0NvbXBsZXRlZENsaWVudHNNb2JpbGUiLCJWaWV3QWN0aXZpdHlMb2dBZG1pbiIsIlZpZXdFeHBlbnNlcyIsIkFkZEV4cGVuc2VzIiwiRXhwb3J0RGF0YUFkbWluIiwiRWRpdE9mZmVyUGFydGlhbGx5UGFpZExlYWRzIiwiRWRpdEV4cGVuc2VzIiwiRWRpdE9mZmVyQXdhaXRpbmdEZWxpdmVyeUxlYWRzIiwiRWRpdE93bkV4cGVuc2VzIiwiQ29uZmlndXJlQXV0b21hdGVkTWVzc2FnZXNBZG1pbiIsIlN5bmNMZWFkc01vYmlsZSIsIkNvbmZpZ3VyZVNhbGVzTWFuYWdlbWVudEFkbWluIiwiRWRpdE90aGVyc0V4cGVuc2VzIiwiUmVtb3ZlTGFzdFBob25lTnVtYmVycyIsIkNvbmZpZ3VyZVBheW1lbnRNYW5hZ2VtZW50QWRtaW4iLCJFZGl0QW1vdW50RXhwZW5zZXMiLCJEZWxldGVFeHBlbnNlcyIsIkNvbmZpZ3VyZUxvY2FsU2V0dGluZ3NBZG1pbiIsIkZpbGxDdXN0b21Gb3Jtc0NsaWVudHMiLCJBZGRWaWxsYWdlcyIsIkNvbmZpZ3VyZUdlbmVyYWxTZXR0aW5nc0FkbWluIiwiQWRkVG9Db250cmFjdEFkZE9ucyIsIkNvbmZpZ3VyZUxhbmd1YWdlU2V0dGluZ3NBZG1pbiIsIkVkaXRWaWxsYWdlcyIsIlN5bmNBY3RpdmF0aW9uQWN0aW9ucyIsIkVkaXRDdXN0b21TTVNBZG1pbiIsIkRlbGV0ZVZpbGxhZ2VzIiwiRmlsbEN1c3RvbUZvcm1zTGVhZHMiLCJWaWV3U2hvcHMiLCJDdXN0b21pemVQbGF0Zm9ybUFkbWluIiwiQWRkQ2x1c3RlcnMiLCJTZWVBbGxOb3RpZmljYXRpb25zQWRtaW4iLCJTZWVIdWJOb3RpZmljYXRpb25zQWRtaW4iLCJFZGl0Q2x1c3RlcnMiLCJWaWV3T2ZmZXJzIiwiVmlld0FjY291bnRzIiwiVmlld093blVzZXJzIiwiRWRpdFVzZXJzIiwiQWRkT2ZmZXJzIiwiRWRpdE9mZmVycyIsIkFkZFVzZXJzIiwiQWRkSHVicyIsIkVkaXRIdWJzIiwiVmlld0FkZG9uT2ZmZXJzIiwiQ3JlYXRlUm9sZXMiLCJEZWxldGVIdWJzIiwiQWRkQWRkb25PZmZlcnMiLCJBc3NpZ25Sb2xlcyIsIkFkZERldmljZXMiLCJFZGl0QWRkb25PZmZlcnMiLCJBZGRab25lcyIsIlZpZXdMb2dzIiwiVmlld0xlYWRHZW5lcmF0b3JzIiwiRWRpdFpvbmVzIiwiU2V0Q29tbWlzc2lvbkxlYWRzIiwiVmlld0ZhdWx0c0xvZ3MiLCJEZWxldGVab25lcyIsIlZpZXdVc2VycyIsIkFkZE1lc3NhZ2VzIiwiVmlld0xlYWRzIiwiQWRkUmVnaW9ucyIsIkFwcHJvdmVMZWFkcyIsIkFkZE1hbnVhbE1lc3NhZ2VzIiwiRWRpdFJlZ2lvbnMiLCJWaWV3QWxsTWVzc2FnZXMiLCJEZWxldGVSZWdpb25zIiwiVmlld01lc3NhZ2VzIiwiQWRkQ2xpZW50R3JvdXBzIiwiVmlld09ycGhhbmVkTWVzc2FnZXMiLCJFZGl0Q2xpZW50R3JvdXBzIiwiQWRkT3V0Z29pbmdNZXNzYWdlcyIsIkFkZExlYWRzIiwiRGVsZXRlQ2xpZW50R3JvdXBzIiwiVmlld0JhZGdlTGVhZHMiLCJBZGRBUElIb29rIiwiSW5TdG9ja1ZpZXdTdG9jayIsIldpdGhVc2Vyc1ZpZXdTdG9jayIsIkRlbGV0ZUFQSUhvb2siLCJGcm9tSW5TdG9ja01vdmVTdG9jayIsIlZpZXdGb3JtcyIsIkZyb21Vc2Vyc01vdmVTdG9jayIsIkFkZEZvcm1zIiwiVG9JblN0b2NrTW92ZVN0b2NrIiwiR2l2ZUNvbW1pc3Npb25Ub0xlYWRHZW5lcmF0b3JzIiwiRWRpdEZvcm1zIiwiRGVsZXRlRm9ybXMiLCJFZGl0Q2xpZW50cyIsIlRvVXNlcnNNb3ZlU3RvY2siLCJWaWV3SXNzdWVzIiwiQWRkSXNzdWVzIiwiRWRpdEludGVyYWN0aW9uc1NldHRpbmdzRm9ybXMiLCJDb25maWd1cmVPcGVyYXRpb25hbEVudGl0aWVzQWRtaW4iLCJWaWV3Q2xpZW50cyIsIkVkaXRJc3N1ZXMiLCJFZGl0Q2xpZW50TGVhZERhdGFTZXR0aW5nc0Zvcm1zIiwiQ29uZmlndXJlRGV2aWNlQVBJQWRtaW4iLCJNYWtlT25TdG9ja091dHNpZGVWaWV3QWN0aW9ucyIsIlZpZXdJbnRlcmFjdGlvbnMiLCJWaWV3QWN0aW9ucyIsIkFkZEludGVyYWN0aW9ucyIsIlN5bmNBbGxDcmVhdGVkTGVhZHNNb2JpbGUiLCJEb0NoYW5nZU9mZmVyQWN0aW9ucyIsIkVkaXRJbnRlcmFjdGlvbnMiLCJTeW5jQWxsR2VuZXJhdGVkTGVhZHNNb2JpbGUiLCJEZVJlZ2lzdGVyQWN0aW9ucyIsIkRlbGV0ZUludGVyYWN0aW9ucyIsIlN5bmNJbnN0YWxsZWRMYXN0MldlZWtzTGVhZHNNb2JpbGUiLCJWaWV3UGxhbm5pbmciLCJHaXZlRGlzY291bnRBY3Rpb25zIiwiU3luY0luc3RhbGxlZExhc3QyTW9udGhzTGVhZHNNb2JpbGUiLCJWaWV3Q3JlYXRlZExlYWRzIiwiR2l2ZURpc2NvdW50T3ZlcjJEYXlzQWN0aW9ucyIsIkFkZFBsYW5uaW5nIiwiU3luY0xlYWRHZW5lcmF0b3JzTW9iaWxlIiwiRWRpdFBsYW5uaW5nIiwiUmVnaXN0ZXJBY3Rpb25zIiwiTWVyZ2VMZWFkR2VuZXJhdG9ycyIsIlN5bmNDbGllbnRzTW9iaWxlIiwiRWRpdExlYWRzIiwiQ29sbGVjdENhc2hBY3Rpb25zIiwiRGVsZXRlUGxhbm5pbmciLCJTeW5jQWxsQ3JlYXRlZENsaWVudHNNb2JpbGUiLCJTd2FwRGV2aWNlQWN0aW9ucyIsIkVkaXRMZWFkR2VuZXJhdG9ycyIsIlZpZXdQYXltZW50cyIsIlN5bmNBbGxHZW5lcmF0ZWRDbGllbnRzTW9iaWxlIiwiVmlld09ycGhhbmVkUGF5bWVudHMiLCJHaXZlRGVsYXlBY3Rpb25zIiwiU3luY0ludGVyYWN0aW9uc01vYmlsZSIsIkFkZFBheW1lbnRzIiwiR2l2ZURlbGF5T3ZlcjJEYXlzQWN0aW9ucyIsIlN5bmNQbGFubmluZ01vYmlsZSIsIkFkZExlYWRHZW5lcmF0b3JzIiwiR2l2ZU5lZ2F0aXZlRGlzY291bnRUb0NvbXBsZXRlZEFjdGlvbnMiLCJBZGp1c3RCYWxhbmNlUGF5bWVudHMiLCJTeW5jRGV2aWNlc01vYmlsZSIsIkVkaXRXYWxsZXRQYXltZW50cyIsIk1hcmtDb250cmFjdERlZmF1bHRlZEFjdGlvbnMiLCJWaWV3UmV2ZXJzZWRQYXltZW50cyIsIlVuZG9Db250cmFjdERlZmF1bHRlZEFjdGlvbnMiLCJFZGl0SW5zdGFsbGVkTGVhZHMiLCJWaWV3QmFkZ2VJc3N1ZXMiLCJHaXZlVG9rZW5zT2ZmbGluZUFjdGlvbnMiLCJBZGRSZXZlcnNlZFBheW1lbnRzIl19.msQFoIe1htXINxp82s2K0jEXFBE_QMdd0U5LnQzVNa4"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "91"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"transaction_id\": \"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\",\n    \"reconciled\": true,\n    \"AMS\": \"paygops\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Paygops Connector Account Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.expect(pm.response.text).not.equal(null)",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"primaryIdentifier\": {\n        \"key\": \"foundationalID\",\n        \"value\": \"24322607\"\n    },\n    \"secondaryIdentifier\": {\n        \"key\": \"MSISDN\",\n        \"value\": \"254797668592\"\n    },\n    \"customData\": [\n        {\n            \"key\": \"transactionId\",\n            \"value\": \"8335b60090979AvUefSR\"\n        },\n        {\n            \"key\": \"currency\",\n            \"value\": \"KES\"\n        },\n        {\n            \"key\": \"memo\",\n            \"value\": \"24322607\"\n        },\n        {\n            \"key\": \"wallet_name\",\n            \"value\": \"254797668592\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PaygopsHostName}}/api/v1/paybill/validate/paygops",
+									"host": [
+										"{{PaygopsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paybill",
+										"validate",
+										"paygops"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Paygops Connector Account Status",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"primaryIdentifier\": {\n        \"key\": \"foundationalID\",\n        \"value\": \"24322607\"\n    },\n    \"secondaryIdentifier\": {\n        \"key\": \"MSISDN\",\n        \"value\": \"254797668592\"\n    },\n    \"customData\": [\n        {\n            \"key\": \"transactionId\",\n            \"value\": \"8335b60090979AvUefSR\"\n        },\n        {\n            \"key\": \"currency\",\n            \"value\": \"KES\"\n        },\n        {\n            \"key\": \"memo\",\n            \"value\": \"24322607\"\n        },\n        {\n            \"key\": \"wallet_name\",\n            \"value\": \"254797668592\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://0.0.0.0:5002/api/v1/paybill/validate/paygops",
+											"protocol": "http",
+											"host": [
+												"0",
+												"0",
+												"0",
+												"0"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"paybill",
+												"validate",
+												"paygops"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "*/*"
+										},
+										{
+											"key": "Postman-Token",
+											"value": "63c69958-8c43-476a-a5f7-cef74f025e87"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "7723fc2619db7a12-PAT"
+										},
+										{
+											"key": "Accept-Encoding",
+											"value": "gzip;q=1.0, identity; q=0.5"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=uWVrQbmAE4Wa9G8n82%2BAflkBeQ5xaIepyMYMTgazR6sQjyo7lKYWDN03RMX%2Fzczl%2F%2FOyhf2%2Fq8hQGDgcUaJ%2B%2FQ7tgrBiN5xMOydPs6790SKn6adwC%2FfUqLkwO%2FUmij3o0KN5IpjDNFZ0OHw%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 30 Nov 2022 13:38:42 GMT"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Authorization",
+											"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTb2xhcmlzIE9mZmdyaWQiLCJleHAiOjE2ODAyNzcwNDcsImlhdCI6MTY0ODcyMDA5NSwic3ViIjo2MDUsInBlcm1pc3Npb25zIjpbIkRlbGV0ZURldmljZXMiLCJIYW5kbGVSZXZlcnNlZFBheW1lbnRzIiwiVmlld0Rhc2hib2FyZHMiLCJDaGFuZ2VQQVlHTW9kZURldmljZXMiLCJWaWV3R2xvYmFsRGFzaGJvYXJkcyIsIkVkaXRBY2NvdW50cyIsIk1hbmFnZUFsbEFjY291bnRzIiwiRm9yY2VQQVlHTW9kZURldmljZXMiLCJHb2dsYURhc2hib2FyZHMiLCJXaXRoTWVWaWV3U3RvY2siLCJEb3dubG9hZEdsb2JhbEFjY291bnRzIiwiRGVsZXRlUGhvbmVOdW1iZXJzIiwiTWFuYWdlQWNjb3VudHMiLCJXaXRoQ2xpZW50c1ZpZXdTdG9jayIsIkxpc3RQb3J0Zm9saW9zIiwiT3JwaGFuZWRWaWV3U3RvY2siLCJWaWV3UG9ydGZvbGlvcyIsIkVkaXRNYWRlVHJhbnNmZXJzIiwiRnJvbU9ycGhhbmVkTW92ZVN0b2NrIiwiUmVxdWVzdFRyYW5zZmVycyIsIkVkaXRQb3J0Zm9saW9zIiwiRGVsZXRlUG9ydGZvbGlvcyIsIkFwcHJvdmVUcmFuc2ZlcnMiLCJGcm9tV2l0aE1lTW92ZVN0b2NrIiwiQ3JlYXRlUG9ydGZvbGlvcyIsIkNvbmZpcm1UcmFuc2ZlcnMiLCJUb09ycGhhbmVkTW92ZVN0b2NrIiwiVG9XaXRoTWVNb3ZlU3RvY2siLCJWaWV3VHJhbnNmZXJzIiwiQXBwcm92ZUFkZE9ucyIsIlZpZXdTZXR0aW5nc0ludGVyZmFjZUFkbWluIiwiRGVsZXRlVHJhbnNmZXJzIiwiRWRpdFBsYW5uZWREZWxpdmVyeURhdGVMZWFkcyIsIkNyZWF0ZUFQSVRva2VuQWRtaW4iLCJWaWV3QmFkZ2VUcmFuc2ZlcnMiLCJDb25maWd1cmVNb2JpbGVBcHBTZXR0aW5nc0FkbWluIiwiU3luY0NvbXBsZXRlZENsaWVudHNNb2JpbGUiLCJWaWV3QWN0aXZpdHlMb2dBZG1pbiIsIlZpZXdFeHBlbnNlcyIsIkFkZEV4cGVuc2VzIiwiRXhwb3J0RGF0YUFkbWluIiwiRWRpdE9mZmVyUGFydGlhbGx5UGFpZExlYWRzIiwiRWRpdEV4cGVuc2VzIiwiRWRpdE9mZmVyQXdhaXRpbmdEZWxpdmVyeUxlYWRzIiwiRWRpdE93bkV4cGVuc2VzIiwiQ29uZmlndXJlQXV0b21hdGVkTWVzc2FnZXNBZG1pbiIsIlN5bmNMZWFkc01vYmlsZSIsIkNvbmZpZ3VyZVNhbGVzTWFuYWdlbWVudEFkbWluIiwiRWRpdE90aGVyc0V4cGVuc2VzIiwiUmVtb3ZlTGFzdFBob25lTnVtYmVycyIsIkNvbmZpZ3VyZVBheW1lbnRNYW5hZ2VtZW50QWRtaW4iLCJFZGl0QW1vdW50RXhwZW5zZXMiLCJEZWxldGVFeHBlbnNlcyIsIkNvbmZpZ3VyZUxvY2FsU2V0dGluZ3NBZG1pbiIsIkZpbGxDdXN0b21Gb3Jtc0NsaWVudHMiLCJBZGRWaWxsYWdlcyIsIkNvbmZpZ3VyZUdlbmVyYWxTZXR0aW5nc0FkbWluIiwiQWRkVG9Db250cmFjdEFkZE9ucyIsIkNvbmZpZ3VyZUxhbmd1YWdlU2V0dGluZ3NBZG1pbiIsIkVkaXRWaWxsYWdlcyIsIlN5bmNBY3RpdmF0aW9uQWN0aW9ucyIsIkVkaXRDdXN0b21TTVNBZG1pbiIsIkRlbGV0ZVZpbGxhZ2VzIiwiRmlsbEN1c3RvbUZvcm1zTGVhZHMiLCJWaWV3U2hvcHMiLCJDdXN0b21pemVQbGF0Zm9ybUFkbWluIiwiQWRkQ2x1c3RlcnMiLCJTZWVBbGxOb3RpZmljYXRpb25zQWRtaW4iLCJTZWVIdWJOb3RpZmljYXRpb25zQWRtaW4iLCJFZGl0Q2x1c3RlcnMiLCJWaWV3T2ZmZXJzIiwiVmlld0FjY291bnRzIiwiVmlld093blVzZXJzIiwiRWRpdFVzZXJzIiwiQWRkT2ZmZXJzIiwiRWRpdE9mZmVycyIsIkFkZFVzZXJzIiwiQWRkSHVicyIsIkVkaXRIdWJzIiwiVmlld0FkZG9uT2ZmZXJzIiwiQ3JlYXRlUm9sZXMiLCJEZWxldGVIdWJzIiwiQWRkQWRkb25PZmZlcnMiLCJBc3NpZ25Sb2xlcyIsIkFkZERldmljZXMiLCJFZGl0QWRkb25PZmZlcnMiLCJBZGRab25lcyIsIlZpZXdMb2dzIiwiVmlld0xlYWRHZW5lcmF0b3JzIiwiRWRpdFpvbmVzIiwiU2V0Q29tbWlzc2lvbkxlYWRzIiwiVmlld0ZhdWx0c0xvZ3MiLCJEZWxldGVab25lcyIsIlZpZXdVc2VycyIsIkFkZE1lc3NhZ2VzIiwiVmlld0xlYWRzIiwiQWRkUmVnaW9ucyIsIkFwcHJvdmVMZWFkcyIsIkFkZE1hbnVhbE1lc3NhZ2VzIiwiRWRpdFJlZ2lvbnMiLCJWaWV3QWxsTWVzc2FnZXMiLCJEZWxldGVSZWdpb25zIiwiVmlld01lc3NhZ2VzIiwiQWRkQ2xpZW50R3JvdXBzIiwiVmlld09ycGhhbmVkTWVzc2FnZXMiLCJFZGl0Q2xpZW50R3JvdXBzIiwiQWRkT3V0Z29pbmdNZXNzYWdlcyIsIkFkZExlYWRzIiwiRGVsZXRlQ2xpZW50R3JvdXBzIiwiVmlld0JhZGdlTGVhZHMiLCJBZGRBUElIb29rIiwiSW5TdG9ja1ZpZXdTdG9jayIsIldpdGhVc2Vyc1ZpZXdTdG9jayIsIkRlbGV0ZUFQSUhvb2siLCJGcm9tSW5TdG9ja01vdmVTdG9jayIsIlZpZXdGb3JtcyIsIkZyb21Vc2Vyc01vdmVTdG9jayIsIkFkZEZvcm1zIiwiVG9JblN0b2NrTW92ZVN0b2NrIiwiR2l2ZUNvbW1pc3Npb25Ub0xlYWRHZW5lcmF0b3JzIiwiRWRpdEZvcm1zIiwiRGVsZXRlRm9ybXMiLCJFZGl0Q2xpZW50cyIsIlRvVXNlcnNNb3ZlU3RvY2siLCJWaWV3SXNzdWVzIiwiQWRkSXNzdWVzIiwiRWRpdEludGVyYWN0aW9uc1NldHRpbmdzRm9ybXMiLCJDb25maWd1cmVPcGVyYXRpb25hbEVudGl0aWVzQWRtaW4iLCJWaWV3Q2xpZW50cyIsIkVkaXRJc3N1ZXMiLCJFZGl0Q2xpZW50TGVhZERhdGFTZXR0aW5nc0Zvcm1zIiwiQ29uZmlndXJlRGV2aWNlQVBJQWRtaW4iLCJNYWtlT25TdG9ja091dHNpZGVWaWV3QWN0aW9ucyIsIlZpZXdJbnRlcmFjdGlvbnMiLCJWaWV3QWN0aW9ucyIsIkFkZEludGVyYWN0aW9ucyIsIlN5bmNBbGxDcmVhdGVkTGVhZHNNb2JpbGUiLCJEb0NoYW5nZU9mZmVyQWN0aW9ucyIsIkVkaXRJbnRlcmFjdGlvbnMiLCJTeW5jQWxsR2VuZXJhdGVkTGVhZHNNb2JpbGUiLCJEZVJlZ2lzdGVyQWN0aW9ucyIsIkRlbGV0ZUludGVyYWN0aW9ucyIsIlN5bmNJbnN0YWxsZWRMYXN0MldlZWtzTGVhZHNNb2JpbGUiLCJWaWV3UGxhbm5pbmciLCJHaXZlRGlzY291bnRBY3Rpb25zIiwiU3luY0luc3RhbGxlZExhc3QyTW9udGhzTGVhZHNNb2JpbGUiLCJWaWV3Q3JlYXRlZExlYWRzIiwiR2l2ZURpc2NvdW50T3ZlcjJEYXlzQWN0aW9ucyIsIkFkZFBsYW5uaW5nIiwiU3luY0xlYWRHZW5lcmF0b3JzTW9iaWxlIiwiRWRpdFBsYW5uaW5nIiwiUmVnaXN0ZXJBY3Rpb25zIiwiTWVyZ2VMZWFkR2VuZXJhdG9ycyIsIlN5bmNDbGllbnRzTW9iaWxlIiwiRWRpdExlYWRzIiwiQ29sbGVjdENhc2hBY3Rpb25zIiwiRGVsZXRlUGxhbm5pbmciLCJTeW5jQWxsQ3JlYXRlZENsaWVudHNNb2JpbGUiLCJTd2FwRGV2aWNlQWN0aW9ucyIsIkVkaXRMZWFkR2VuZXJhdG9ycyIsIlZpZXdQYXltZW50cyIsIlN5bmNBbGxHZW5lcmF0ZWRDbGllbnRzTW9iaWxlIiwiVmlld09ycGhhbmVkUGF5bWVudHMiLCJHaXZlRGVsYXlBY3Rpb25zIiwiU3luY0ludGVyYWN0aW9uc01vYmlsZSIsIkFkZFBheW1lbnRzIiwiR2l2ZURlbGF5T3ZlcjJEYXlzQWN0aW9ucyIsIlN5bmNQbGFubmluZ01vYmlsZSIsIkFkZExlYWRHZW5lcmF0b3JzIiwiR2l2ZU5lZ2F0aXZlRGlzY291bnRUb0NvbXBsZXRlZEFjdGlvbnMiLCJBZGp1c3RCYWxhbmNlUGF5bWVudHMiLCJTeW5jRGV2aWNlc01vYmlsZSIsIkVkaXRXYWxsZXRQYXltZW50cyIsIk1hcmtDb250cmFjdERlZmF1bHRlZEFjdGlvbnMiLCJWaWV3UmV2ZXJzZWRQYXltZW50cyIsIlVuZG9Db250cmFjdERlZmF1bHRlZEFjdGlvbnMiLCJFZGl0SW5zdGFsbGVkTGVhZHMiLCJWaWV3QmFkZ2VJc3N1ZXMiLCJHaXZlVG9rZW5zT2ZmbGluZUFjdGlvbnMiLCJBZGRSZXZlcnNlZFBheW1lbnRzIl19.msQFoIe1htXINxp82s2K0jEXFBE_QMdd0U5LnQzVNa4"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "75"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"transaction_id\": \"8335b60090979AvUefSR\",\n    \"reconciled\": true,\n    \"AMS\": \"paygops\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Pesacore Connector Account Status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "51f56774-8ef6-11ec-b909-0242ac120002",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"primaryIdentifier\": {\n        \"key\": \"accountId\",\n        \"value\": \"33272035\"\n    },  \n    \"secondaryIdentifier\": {\n        \"key\": \"MSISDN\",\n        \"value\": \"2540726839144\"\n    },\n    \"customData\": [\n        {\n            \"key\": \"transactionId\",\n            \"value\": \"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\"\n        },\n        {\n            \"key\": \"currency\",\n            \"value\": \"KES\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{PesacoreHostName}}/api/v1/paybill/validate/roster",
+									"host": [
+										"{{PesacoreHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paybill",
+										"validate",
+										"roster"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Pesacore Connector Account Status",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "51f56774-8ef6-11ec-b909-0242ac120002",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"primaryIdentifier\": {\n        \"key\": \"accountId\",\n        \"value\": \"33272035\"\n    },  \n    \"secondaryIdentifier\": {\n        \"key\": \"MSISDN\",\n        \"value\": \"2540726839144\"\n    },\n    \"customData\": [\n        {\n            \"key\": \"transactionId\",\n            \"value\": \"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\"\n        },\n        {\n            \"key\": \"currency\",\n            \"value\": \"KES\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5005/api/v1/paybill/validate/roster",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5005",
+											"path": [
+												"api",
+												"v1",
+												"paybill",
+												"validate",
+												"roster"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "*/*"
+										},
+										{
+											"key": "Expires",
+											"value": "-1"
+										},
+										{
+											"key": "Postman-Token",
+											"value": "f770db0c-c129-4b65-8ee3-a372d1f7e02d"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Accept-Encoding",
+											"value": "gzip, deflate, br"
+										},
+										{
+											"key": "Server",
+											"value": "Microsoft-IIS/10.0"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 16 Nov 2022 08:34:53 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Authorization",
+											"value": "Token 51f56774-8ef6-11ec-b909-0242ac120002"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "X-AspNet-Version",
+											"value": "4.0.30319"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "90"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"transaction_id\": \"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\",\n    \"reconciled\": true,\n    \"AMS\": \"roster\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Confirmation",
+					"item": [
+						{
+							"name": "MPESA-Connector Confirmation Webhook",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.expect(pm.response.text).not.equal(null)",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"RKTQDM7W6S\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"10\",\n   \"BusinessShortCode\":\"600638\",\n   \"BillRefNumber\":\"A123\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"254797668592\",\n   \"FirstName\":\"John\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{MpesaHostName}}/confirmation?amsName={{amsName}}",
+									"host": [
+										"{{MpesaHostName}}"
+									],
+									"path": [
+										"confirmation"
+									],
+									"query": [
+										{
+											"key": "amsName",
+											"value": "{{amsName}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Design Document: [https://www.notion.so/PayBill-Design-2670e8fac37a485eaac659ba942683ce](https://www.notion.so/PayBill-Design-2670e8fac37a485eaac659ba942683ce)"
 		}
 	],
 	"variable": [
