@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b71c04b6-94ec-4ea5-a79f-b69ea27ed863",
+		"_postman_id": "45030f67-0244-497d-a84d-a9593b73705f",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22669462"
+		"_exporter_id": "4940958"
 	},
 	"item": [
 		{
@@ -42524,6 +42524,45 @@
 										"channel",
 										"gsma",
 										"transfer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GSMA Transaction",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestingOrganisationTransactionReference\": \"string\",\n  \"originalTransactionReference\": \"string\",\n  \"subType\": \"string\",\n  \"type\": \"transfer\",\n  \"amount\": \"15.21\",\n  \"currency\": \"AED\",\n  \"descriptionText\": \"string\",\n  \"fees\": [\n    {\n      \"feeType\": \"string\",\n      \"feeAmount\": \"15.21\",\n      \"feeCurrency\": \"AED\"\n    }\n  ],\n  \"geoCode\": \"37.423825,-122.082900\",\n  \"oneTimeCode\": \"string\",\n  \"requestingOrganisation\": {\n    \"requestingOrganisationIdentifierType\": \"lei\",\n    \"requestingOrganisationIdentifier\": \"string\"\n  },\n  \"servicingIdentity\": \"string\",\n  \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n  \"customData\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"creditParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+33555123456\"\n    }\n  ],\n  \"debitParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+33555987456\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ChannelHostName}}/channel/gsma/transaction",
+									"host": [
+										"{{ChannelHostName}}"
+									],
+									"path": [
+										"channel",
+										"gsma",
+										"transaction"
 									]
 								}
 							},
