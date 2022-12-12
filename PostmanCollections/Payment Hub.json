@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "45030f67-0244-497d-a84d-a9593b73705f",
-		"name": "Payment Hub APIs",
+		"_postman_id": "2a61c6e9-e17f-4355-a589-912fc0bc2984",
+		"name": "Payment Hub APIs Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "4940958"
+		"_exporter_id": "18201748"
 	},
 	"item": [
 		{
@@ -1703,7 +1703,7 @@
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "oaf"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "Authorization",
@@ -1726,7 +1726,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transfers?size=10&page=1",
+							"raw": "{{OperationsHostName}}/api/v1/transfers?size=1&page=0&clientCorrelationId=123456789",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -1750,11 +1750,15 @@
 								},
 								{
 									"key": "size",
-									"value": "10"
+									"value": "1"
 								},
 								{
 									"key": "page",
-									"value": "1"
+									"value": "0"
+								},
+								{
+									"key": "clientCorrelationId",
+									"value": "123456789"
 								}
 							]
 						}
@@ -1872,6 +1876,10 @@
 									"value": "ASC",
 									"description": "DESC, ASC",
 									"disabled": true
+								},
+								{
+									"key": "clientCorrelationId",
+									"value": "123"
 								}
 							]
 						}
@@ -42722,6 +42730,36 @@
 							"path": [
 								"channel",
 								"partyRegistration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Txn by Client Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "requestType",
+								"value": "transfers",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ChannelHostName}}/channel/txnState/{{clientCorrelationId}}",
+							"host": [
+								"{{ChannelHostName}}"
+							],
+							"path": [
+								"channel",
+								"txnState",
+								"{{clientCorrelationId}}"
 							]
 						}
 					},
