@@ -62,6 +62,10 @@ spec:
               value: "{{ .Values.channel.AMS  }}"
             - name: "LOGGING_PATTERN_CONSOLE"
               value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+            - name: "PAYGOPS_HOST"
+              value: "{{ .Values.channel.paygops.host }}"
+            - name: "ROSTER_HOST"
+              value: "{{ .Values.channel.roster.host }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
