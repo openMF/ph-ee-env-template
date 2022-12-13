@@ -104,7 +104,7 @@ zeebe-cluster-helm:
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
-        
+
 # payment hub Operate, ES and Kibana
 zeebe-operate-helm:
   enabled: false
