@@ -98,7 +98,7 @@ zeebe-cluster-helm:
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
-
+        
 # payment hub Operate, ES and Kibana
 zeebe-operate-helm:
   enabled: false
@@ -200,6 +200,10 @@ channel:
   requests:
     memory: "768M"
     cpu: "100m"
+  paygops:
+    host: ""
+  roster:
+    host: ""
   ingress:
     enabled: true
     path: "/channel"
@@ -349,6 +353,12 @@ mpesa:
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   callback_host: ""
+  channel:
+    host: ""
+  paygops:
+    host: ""
+  roster:
+    host: ""
   accounts:
     default:
       name: "default"
@@ -413,7 +423,7 @@ roster_connector:
     auth_header: ""
   deployment:
     annotations: {}
-
+  
 paygops_connector:
   enabled: false
   replicas: 1
@@ -725,4 +735,4 @@ ph_ee_connector_slcb:
 
 wildcardhostname: ""
 
-tls: ""
+- tls: ""
