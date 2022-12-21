@@ -69,4 +69,22 @@ metadata:
 type: Opaque
 data:
   auth-token: {{ .Values.paygops_connector.paygops.authheader | b64enc }}
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-ams-paygops
+  name: ph-ee-connector-ams-paygops
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-ams-paygops
+  sessionAffinity: None
+  type: ClusterIP
 {{- end }}
