@@ -62,6 +62,8 @@ spec:
               value: "{{ .Values.channel.AMS  }}"
             - name: "LOGGING_PATTERN_CONSOLE"
               value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+            - name: "gsma_payee_tenant"
+              value: "{{ .Values.channel.gsma_payee_tenant }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
