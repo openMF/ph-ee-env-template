@@ -196,6 +196,7 @@ channel:
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
+  gsma_payee_tenant: ""
   DFSPIDS: ""
   hostname: ""
   stub_hostname: ""
@@ -259,6 +260,11 @@ ph_ee_connector_ams_mifos:
   imageTag: "v1.1.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  ams_local_enabled: false
+  ams_local_interop_host: ""
+  ams_local_account_host: ""
+  ams_local_customer_host: ""
+  ams_local_auth_host: ""
   limits:
     memory: "512M"
     cpu: "500m"
