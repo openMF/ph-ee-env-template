@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2a61c6e9-e17f-4355-a589-912fc0bc2984",
+		"_postman_id": "a98a08ca-3c4a-4c84-8919-970baf6ceae7",
 		"name": "Payment Hub APIs Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18201748"
+		"_exporter_id": "4940958"
 	},
 	"item": [
 		{
@@ -42555,7 +42555,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"requestingOrganisationTransactionReference\": \"string\",\n  \"originalTransactionReference\": \"string\",\n  \"subType\": \"string\",\n  \"type\": \"transfer\",\n  \"amount\": \"15.21\",\n  \"currency\": \"AED\",\n  \"descriptionText\": \"string\",\n  \"fees\": [\n    {\n      \"feeType\": \"string\",\n      \"feeAmount\": \"15.21\",\n      \"feeCurrency\": \"AED\"\n    }\n  ],\n  \"geoCode\": \"37.423825,-122.082900\",\n  \"oneTimeCode\": \"string\",\n  \"requestingOrganisation\": {\n    \"requestingOrganisationIdentifierType\": \"lei\",\n    \"requestingOrganisationIdentifier\": \"string\"\n  },\n  \"servicingIdentity\": \"string\",\n  \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n  \"customData\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"creditParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+33555123456\"\n    }\n  ],\n  \"debitParty\": [\n    {\n      \"key\": \"msisdn\",\n      \"value\": \"+33555987456\"\n    }\n  ]\n}\n",
+									"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"15.21\",\n    \"currency\": \"AED\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"msisdn\",\n            \"partyIdIdentifier\": \"+33555123456\"\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountid\",\n            \"partyIdIdentifier\": \"L7741025618\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
