@@ -779,7 +779,7 @@ kong:
     tls:
       enabled: false
     ingress:
-      enabled: false
+      enabled: true
       ingressClassName: "kong"
       hostname: kong-admin.mifos.io
   extraObjects:
@@ -841,3 +841,14 @@ keycloak:
     rules:
       - host: 'keycloak.mifos.io'
     tls: []
+  extraVolumes: |
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+  extraVolumeMounts: |
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+  extraEnv: |
+    - name: KEYCLOAK_IMPORT
+      value: /realm/realm.json

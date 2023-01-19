@@ -14,7 +14,7 @@ dependencies:
   version: 7.16.3
   condition: "kibana.enabled"
 - name: mysql
-  version: 8.8.23
+  version: 9.4.5
   repository: "https://charts.bitnami.com/bitnami"
   alias: operationsmysql
   condition: "operations.mysql.enabled"
@@ -23,6 +23,6 @@ dependencies:
   repository: https://charts.konghq.com
   condition: "kong.enabled"
 - name: keycloak
-  version: 18.3.0
+  version: 18.1.1
   repository: https://codecentric.github.io/helm-charts
   condition: "keycloak.enabled"
