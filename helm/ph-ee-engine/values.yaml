@@ -121,6 +121,7 @@ elasticsearch:
   enabled: true
   imageTag: 7.16.3
   replicas: 1
+  protocol: http
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
   minimumMasterNodes: 1
@@ -151,7 +152,7 @@ kibana:
   imageTag: 7.16.3
   fullnameOverride: "ph-ee-kibana"
   elasticsearchHosts: "https://ph-ee-elasticsearch:9200/"
-  protocol: https
+  protocol: http
   kibanaConfig:
     kibana.yml: |
       monitoring.enabled: false
