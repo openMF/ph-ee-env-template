@@ -20,6 +20,8 @@ spec:
 {{ toYaml .Values.messagegateway.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: dockersecret
       containers:
         - name: message-gateway
           image: "{{ .Values.messagegateway.image }}:{{ .Values.messagegateway.imageTag }}"  
