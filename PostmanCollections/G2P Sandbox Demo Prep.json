@@ -1,0 +1,1641 @@
+{
+	"info": {
+		"_postman_id": "18200217-0dfb-4014-9abe-f01eb4a78a68",
+		"name": "G2P Sandbox Demo Prep",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20754341"
+	},
+	"item": [
+		{
+			"name": "Tenant1",
+			"item": [
+				{
+					"name": "Create payer Clients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"payerClientId\", jsonData.resourceId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function randomString(minValue, maxValue, dataSet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {",
+									"    if (!minValue) {",
+									"        minValue = 1;",
+									"        maxValue = 4;",
+									"    }",
+									"",
+									"    if (!maxValue) {",
+									"        maxValue = minValue;",
+									"    }",
+									"",
+									"    let length = _.random(minValue, maxValue),",
+									"        randomString = \"\";",
+									"",
+									"    for (let i = 0; i < length; i++)",
+									"        randomString += dataSet.charAt(Math.floor(Math.random() * dataSet.length));",
+									"    return randomString;",
+									"}",
+									"",
+									"pm.variables.replaceIn('{{$randomFirstName}}');",
+									"pm.environment.set('lastname', randomString());",
+									"",
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"activationDate\", date);",
+									"pm.environment.set(\"submissionDate\", date);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant1}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": [],\n    \"familyMembers\": [],\n    \"officeId\": 1,\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"active\": true,\n    \"legalFormId\": 1,\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"activationDate\": \"{{activationDate}}\",\n    \"submittedOnDate\": \"{{submissionDate}}\",\n    \"savingsProductId\": null\n}"
+						},
+						"url": {
+							"raw": "https://{{Host1}}/clients",
+							"protocol": "https",
+							"host": [
+								"{{Host1}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "savingsaccounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"savingsAccId\", jsonData.savingsId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"submissionDate\", date);",
+									"",
+									"function randomString(minValue, maxValue, dataSet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {",
+									"    if (!minValue) {",
+									"        minValue = 1;",
+									"        maxValue = 4;",
+									"    }",
+									"",
+									"    if (!maxValue) {",
+									"        maxValue = minValue;",
+									"    }",
+									"",
+									"    let length = _.random(minValue, maxValue),",
+									"        randomString = \"\";",
+									"",
+									"    for (let i = 0; i < length; i++)",
+									"        randomString += dataSet.charAt(Math.floor(Math.random() * dataSet.length));",
+									"    return randomString;",
+									"}",
+									"pm.environment.set('externalId1', randomString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant1}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": \"{{savingsProductId1}}\",\n    \"nominalAnnualInterestRate\": 5,\n    \"withdrawalFeeForTransfers\": false,\n    \"allowOverdraft\": false,\n    \"lienAllowed\": false,\n    \"enforceMinRequiredBalance\": false,\n    \"withHoldTax\": false,\n    \"interestCompoundingPeriodType\": 1,\n    \"interestPostingPeriodType\": 4,\n    \"interestCalculationType\": 1,\n    \"interestCalculationDaysInYearType\": 365,\n    \"submittedOnDate\": \"{{submissionDate}}\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"monthDayFormat\": \"dd MMM\",\n    \"charges\": [],\n    \"clientId\": \"{{payerClientId}}\",\n    \"externalId\": \"{{externalId1}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host1}}/savingsaccounts",
+							"protocol": "https",
+							"host": [
+								"{{Host1}}"
+							],
+							"path": [
+								"savingsaccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"approvedDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant1}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"approvedOnDate\": \"{{approvedDate}}\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host1}}/savingsaccounts/{{savingsAccId}}?command=approve",
+							"protocol": "https",
+							"host": [
+								"{{Host1}}"
+							],
+							"path": [
+								"savingsaccounts",
+								"{{savingsAccId}}"
+							],
+							"query": [
+								{
+									"key": "command",
+									"value": "approve"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"activationDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant1}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"activatedOnDate\": \"{{activationDate}}\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host1}}/savingsaccounts/{{savingsAccId}}?command=activate",
+							"protocol": "https",
+							"host": [
+								"{{Host1}}"
+							],
+							"path": [
+								"savingsaccounts",
+								"{{savingsAccId}}"
+							],
+							"query": [
+								{
+									"key": "command",
+									"value": "activate"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "savingsaccounts deposit",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"transactionDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant1}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dateFormat\": \"dd MMMM yyyy\",\n  \"locale\": \"en\",\n  \"paymentTypeId\": 1,\n  \"transactionAmount\": 1000,\n  \"transactionDate\": \"{{transactionDate}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host1}}/savingsaccounts/{{savingsAccId}}/transactions?command=deposit",
+							"protocol": "https",
+							"host": [
+								"{{Host1}}"
+							],
+							"path": [
+								"savingsaccounts",
+								"{{savingsAccId}}",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "command",
+									"value": "deposit"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "interop Identifier",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant1}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": \"{{externalId1}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host1}}/interoperation/parties/MSISDN/{{payer_identifier}}",
+							"protocol": "https",
+							"host": [
+								"{{Host1}}"
+							],
+							"path": [
+								"interoperation",
+								"parties",
+								"MSISDN",
+								"{{payer_identifier}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tenant2",
+			"item": [
+				{
+					"name": "Create payee Clients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"payeeClientId\", jsonData.resourceId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"activationDate\", date);",
+									"pm.environment.set(\"submissionDate\", date);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant2}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": [],\n    \"familyMembers\": [],\n    \"officeId\": 1,\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"active\": true,\n    \"legalFormId\": 1,\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"activationDate\": \"{{activationDate}}\",\n    \"submittedOnDate\": \"{{submissionDate}}\",\n    \"savingsProductId\": null\n}"
+						},
+						"url": {
+							"raw": "https://{{Host2}}/clients",
+							"protocol": "https",
+							"host": [
+								"{{Host2}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "savingsaccounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"savingsAccId2\", jsonData.resourceId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"submissionDate\", date);",
+									"",
+									"function randomString(minValue, maxValue, dataSet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {",
+									"    if (!minValue) {",
+									"        minValue = 1;",
+									"        maxValue = 4;",
+									"    }",
+									"",
+									"    if (!maxValue) {",
+									"        maxValue = minValue;",
+									"    }",
+									"",
+									"    let length = _.random(minValue, maxValue),",
+									"        randomString = \"\";",
+									"",
+									"    for (let i = 0; i < length; i++)",
+									"        randomString += dataSet.charAt(Math.floor(Math.random() * dataSet.length));",
+									"    return randomString;",
+									"}",
+									"pm.environment.set('externalId2', randomString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant2}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": \"{{savingsProductId2}}\",\n    \"nominalAnnualInterestRate\": 5,\n    \"withdrawalFeeForTransfers\": false,\n    \"allowOverdraft\": false,\n    \"lienAllowed\": false,\n    \"enforceMinRequiredBalance\": false,\n    \"withHoldTax\": false,\n    \"interestCompoundingPeriodType\": 1,\n    \"interestPostingPeriodType\": 4,\n    \"interestCalculationType\": 1,\n    \"interestCalculationDaysInYearType\": 365,\n    \"submittedOnDate\": \"{{submissionDate}}\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"monthDayFormat\": \"dd MMM\",\n    \"charges\": [],\n    \"clientId\": \"{{payeeClientId}}\",\n    \"externalId\": \"{{externalId2}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host2}}/savingsaccounts",
+							"protocol": "https",
+							"host": [
+								"{{Host2}}"
+							],
+							"path": [
+								"savingsaccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"approvedDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"approvedDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant2}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"approvedOnDate\": \"{{approvedDate}}\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host2}}/savingsaccounts/{{savingsAccId2}}?command=approve",
+							"protocol": "https",
+							"host": [
+								"{{Host2}}"
+							],
+							"path": [
+								"savingsaccounts",
+								"{{savingsAccId2}}"
+							],
+							"query": [
+								{
+									"key": "command",
+									"value": "approve"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"activationDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant2}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"activatedOnDate\": \"{{activationDate}}\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host2}}/savingsaccounts/{{savingsAccId2}}?command=activate",
+							"protocol": "https",
+							"host": [
+								"{{Host2}}"
+							],
+							"path": [
+								"savingsaccounts",
+								"{{savingsAccId2}}"
+							],
+							"query": [
+								{
+									"key": "command",
+									"value": "activate"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "savingsaccounts deposit 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const monthNames = [\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",]",
+									"today = new Date();",
+									"day = today.getDate();",
+									"month = monthNames[new Date().getMonth()];",
+									"year = today.getFullYear();",
+									"date = day + ' ' + month + ' ' + year",
+									"pm.environment.set(\"transactionDate\", date);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant2}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dateFormat\": \"dd MMMM yyyy\",\n  \"locale\": \"en\",\n  \"paymentTypeId\": 1,\n  \"transactionAmount\": 1000,\n  \"transactionDate\": \"{{transactionDate}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host2}}/savingsaccounts/{{savingsAccId2}}/transactions?command=deposit",
+							"protocol": "https",
+							"host": [
+								"{{Host2}}"
+							],
+							"path": [
+								"savingsaccounts",
+								"{{savingsAccId2}}",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "command",
+									"value": "deposit"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "interop Identifier Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "fynams.mifos.g2pconnect.io"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+							},
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "fineract-platform-tenantid",
+								"value": "{{Tenant2}}"
+							},
+							{
+								"key": "origin",
+								"value": "https://65.0.42.17:8443"
+							},
+							{
+								"key": "referer",
+								"value": "https://65.0.42.17:8443/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "cross-site"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": \"{{externalId2}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{Host2}}/interoperation/parties/MSISDN/{{payee_identifier}}",
+							"protocol": "https",
+							"host": [
+								"{{Host2}}"
+							],
+							"path": [
+								"interoperation",
+								"parties",
+								"MSISDN",
+								"{{payee_identifier}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "savings Products 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(minValue, maxValue, dataSet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {",
+							"    if (!minValue) {",
+							"        minValue = 1;",
+							"        maxValue = 4;",
+							"    }",
+							"",
+							"    if (!maxValue) {",
+							"        maxValue = minValue;",
+							"    }",
+							"",
+							"    let length = _.random(minValue, maxValue),",
+							"        randomString = \"\";",
+							"",
+							"    for (let i = 0; i < length; i++)",
+							"        randomString += dataSet.charAt(Math.floor(Math.random() * dataSet.length));",
+							"    return randomString;",
+							"}",
+							"",
+							"pm.variables.replaceIn('{{$randomFirstName}}');",
+							"pm.environment.set('shortName', randomString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"savingsProductId1\", jsonData.resourceId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.mifos.g2pconnect.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{Tenant1}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://65.0.42.17:8443",
+						"disabled": true
+					},
+					{
+						"key": "referer",
+						"value": "https://65.0.42.17:8443/",
+						"disabled": true
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyCode\": \"USD\",\n    \"digitsAfterDecimal\": 2,\n    \"interestCompoundingPeriodType\": 1,\n    \"interestPostingPeriodType\": 4,\n    \"interestCalculationType\": 1,\n    \"interestCalculationDaysInYearType\": 365,\n    \"accountingRule\": \"1\",\n    \"name\": \"{{name}}\",\n    \"shortName\": \"{{shortName}}\",\n    \"inMultiplesOf\": \"1\",\n    \"nominalAnnualInterestRate\": 5,\n    \"paymentChannelToFundSourceMappings\": [],\n    \"feeToIncomeAccountMappings\": [],\n    \"penaltyToIncomeAccountMappings\": [],\n    \"charges\": [],\n    \"locale\": \"en\"\n}"
+				},
+				"url": {
+					"raw": "https://{{Host1}}/savingsproducts",
+					"protocol": "https",
+					"host": [
+						"{{Host1}}"
+					],
+					"path": [
+						"savingsproducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savings Products 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(minValue, maxValue, dataSet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {",
+							"    if (!minValue) {",
+							"        minValue = 1;",
+							"        maxValue = 4;",
+							"    }",
+							"",
+							"    if (!maxValue) {",
+							"        maxValue = minValue;",
+							"    }",
+							"",
+							"    let length = _.random(minValue, maxValue),",
+							"        randomString = \"\";",
+							"",
+							"    for (let i = 0; i < length; i++)",
+							"        randomString += dataSet.charAt(Math.floor(Math.random() * dataSet.length));",
+							"    return randomString;",
+							"}",
+							"",
+							"pm.variables.replaceIn('{{$randomFirstName}}');",
+							"pm.environment.set('shortName2', randomString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"savingsProductId2\", jsonData.resourceId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.mifos.g2pconnect.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{Tenant2}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://65.0.42.17:8443",
+						"disabled": true
+					},
+					{
+						"key": "referer",
+						"value": "https://65.0.42.17:8443/",
+						"disabled": true
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyCode\": \"USD\",\n    \"digitsAfterDecimal\": 2,\n    \"interestCompoundingPeriodType\": 1,\n    \"interestPostingPeriodType\": 4,\n    \"interestCalculationType\": 1,\n    \"interestCalculationDaysInYearType\": 365,\n    \"accountingRule\": \"1\",\n    \"name\": \"{{name2}}\",\n    \"shortName\": \"{{shortName2}}\",\n    \"inMultiplesOf\": \"1\",\n    \"nominalAnnualInterestRate\": 5,\n    \"paymentChannelToFundSourceMappings\": [],\n    \"feeToIncomeAccountMappings\": [],\n    \"penaltyToIncomeAccountMappings\": [],\n    \"charges\": [],\n    \"locale\": \"en\"\n}"
+				},
+				"url": {
+					"raw": "https://{{Host2}}/savingsproducts",
+					"protocol": "https",
+					"host": [
+						"{{Host2}}"
+					],
+					"path": [
+						"savingsproducts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

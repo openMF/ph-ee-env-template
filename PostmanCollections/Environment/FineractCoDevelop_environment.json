@@ -1,0 +1,177 @@
+{
+	"id": "3fac2892-b718-45bd-9637-71f3b675182e",
+	"name": "FineractCoDevelop Sandbox",
+	"values": [
+		{
+			"key": "fineract-provider",
+			"value": "",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "Host1",
+			"value": "fynams.mifos.g2pconnect.io/fineract-provider/api/v1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Host2",
+			"value": "fynams.mifos.g2pconnect.io/fineract-provider/api/v1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Tenant1",
+			"value": "rhino",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Tenant2",
+			"value": "gorilla",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "authToken",
+			"value": "Basic bWlmb3M6cGFzc3dvcmQ=",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "submissionDate",
+			"value": "02 January 2023",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "approvedDate",
+			"value": "01 December 2022",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "activationDate",
+			"value": "01 December 2022",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "savingsProductId1",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "savingsProductId2",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "firstname",
+			"value": "Geetha",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lastname",
+			"value": "bai",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "payerClientId",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "payeeClientId",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "savingsAccId",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "savingsAccId2",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "identifierType",
+			"value": "MSISDN",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "payer_identifier",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "payee_identifier",
+			"value": "123",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "transactionDate",
+			"value": "01 December 2022",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "name",
+			"value": "meera",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "shortName",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "externalId1",
+			"value": "s",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "externalId2",
+			"value": "s",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "name2",
+			"value": "jack",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "shortName2",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "{{externalId1}}",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-01-23T12:28:57.929Z",
+	"_postman_exported_using": "Postman/10.8.3"
+}
