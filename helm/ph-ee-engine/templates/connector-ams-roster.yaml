@@ -20,6 +20,8 @@ spec:
 {{ toYaml .Values.roster_connector.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-ams-roster
           image: "{{ .Values.roster_connector.image }}:{{ .Values.roster_connector.imageTag }}"
