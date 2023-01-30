@@ -21,6 +21,8 @@ spec:
 {{- end }}
     spec:
       imagePullSecrets:
+        - name: "{{ .Values.imagePullSecrets }}"
+      imagePullSecrets:
       - name: regcred
       containers:
         - name: ph-ee-connector-mojaloop-java

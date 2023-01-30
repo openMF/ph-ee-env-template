@@ -20,6 +20,8 @@ spec:
 {{ toYaml .Values.mpesa.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-mpesa
           image: "{{ .Values.mpesa.image }}:{{ .Values.mpesa.imageTag }}"

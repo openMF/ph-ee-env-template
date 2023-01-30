@@ -20,6 +20,8 @@ spec:
 {{ toYaml .Values.channel.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-channel
           image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"

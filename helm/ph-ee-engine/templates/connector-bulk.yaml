@@ -20,6 +20,8 @@ spec:
 {{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-bulk
           image: "{{ .Values.connector_bulk.image }}:{{ .Values.connector_bulk.imageTag }}"

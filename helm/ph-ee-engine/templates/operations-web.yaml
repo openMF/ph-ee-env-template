@@ -20,6 +20,8 @@ spec:
 {{ toYaml .Values.operations_web.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-operations-web
           image: "{{ .Values.operations_web.image }}:{{ .Values.operations_web.imageTag }}"
