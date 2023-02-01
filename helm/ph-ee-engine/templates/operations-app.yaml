@@ -24,6 +24,8 @@ spec:
         - name: ph-ee-operations-app
           image: "{{ .Values.operations_app.image }}:{{ .Values.operations_app.imageTag }}"
           imagePullPolicy: "{{ .Values.operations_app.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           ports:
             - containerPort: 5000
           readinessProbe:

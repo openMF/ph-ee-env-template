@@ -24,6 +24,8 @@ spec:
         - name: ph-ee-connector-notifications
           image: "{{ .Values.notifications.image }}:{{ .Values.notifications.imageTag }}"
           imagePullPolicy: "{{ .Values.notifications.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.notifications.limits.memory }}"

@@ -26,6 +26,8 @@ spec:
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

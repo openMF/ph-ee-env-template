@@ -24,6 +24,8 @@ spec:
         - name: ph-ee-operations-web
           image: "{{ .Values.operations_web.image }}:{{ .Values.operations_web.imageTag }}"
           imagePullPolicy: "{{ .Values.operations_web.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           ports:
             - containerPort: 4200
           resources:

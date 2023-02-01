@@ -20,6 +20,8 @@ spec:
         - name: ph-ee-importer-es
           image: "{{ .Values.importer_es.image }}:{{ .Values.importer_es.imageTag }}"
           imagePullPolicy: "{{ .Values.importer_es.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.importer_es.limits.memory }}"

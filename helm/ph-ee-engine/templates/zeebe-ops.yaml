@@ -24,6 +24,8 @@ spec:
         - name: ph-ee-zeebe-ops
           image: "{{ .Values.zeebe_ops.image }}:{{ .Values.zeebe_ops.imageTag }}"
           imagePullPolicy: "{{ .Values.zeebe_ops.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.zeebe_ops.limits.memory }}"

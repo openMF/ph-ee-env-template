@@ -26,6 +26,8 @@ spec:
         - name: ph-ee-connector-mojaloop-java
           image: "{{ .Values.ph_ee_connector_mojaloop.image }}:{{ .Values.ph_ee_connector_mojaloop.imageTag }}"
           imagePullPolicy: "{{ .Values.ph_ee_connector_mojaloop.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           ports:
             - containerPort: 5000
           resources:

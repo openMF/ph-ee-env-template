@@ -24,6 +24,8 @@ spec:
         - name: ph-ee-connector-gsma-mm
           image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
           imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           ports:
             - containerPort: 5000
           resources:

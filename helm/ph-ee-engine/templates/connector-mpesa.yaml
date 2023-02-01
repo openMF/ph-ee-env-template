@@ -26,6 +26,8 @@ spec:
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.mpesa.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

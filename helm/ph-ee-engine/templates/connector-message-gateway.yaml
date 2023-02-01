@@ -26,6 +26,8 @@ spec:
           ports:
             - containerPort: 9191
           imagePullPolicy: "{{ .Values.messagegateway.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.messagegateway.limits.memory }}"
