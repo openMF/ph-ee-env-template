@@ -20,14 +20,14 @@ spec:
 {{ toYaml .Values.channel.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "dockersecret"
       containers:
         - name: ph-ee-connector-channel
           image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
+          imagePullSecrets:
+            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.channel.limits.memory }}"
