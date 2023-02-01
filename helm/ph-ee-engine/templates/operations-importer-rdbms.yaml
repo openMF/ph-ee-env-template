@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.importer_rdbms.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-importer-rdbms
           image: "{{ .Values.importer_rdbms.image }}:{{ .Values.importer_rdbms.imageTag }}"
