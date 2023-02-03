@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.notifications.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-notifications
           image: "{{ .Values.notifications.image }}:{{ .Values.notifications.imageTag }}"
