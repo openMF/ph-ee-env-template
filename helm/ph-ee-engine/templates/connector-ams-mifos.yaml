@@ -26,6 +26,7 @@ spec:
         - name: ph-ee-connector-ams-mifos
           image: "{{ .Values.ph_ee_connector_ams_mifos.image }}:{{ .Values.ph_ee_connector_ams_mifos.imageTag }}"
           imagePullPolicy: "{{ .Values.ph_ee_connector_ams_mifos.imagePullPolicy }}"
+           
           ports:
             - containerPort: 5000
           resources:
@@ -48,8 +49,8 @@ spec:
               value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_account_host}}"
             - name: "ams_local_auth_host"
               value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_auth_host }}"
-            - name: "AMS_local_tenant"
-              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants }}"
+            - name: "ams_local_tenants"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants }}"              
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
