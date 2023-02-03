@@ -1,6 +1,7 @@
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
+      
 
 zeebe-cluster-helm:
   global:
