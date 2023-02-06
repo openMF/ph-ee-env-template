@@ -201,6 +201,28 @@ data:
   pass-key: {{ .Values.mpesa.accounts.paygops.pass_key | b64enc }}
 
 ---
+apiVersion: {{ .Values.secret.apiversion }}
+kind: Secret
+metadata:
+  name: mpesa-secret-erply
+type: Opaque
+data:
+  client-key: {{ .Values.mpesa.accounts.paygops.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.accounts.paygops.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.accounts.paygops.pass_key | b64enc }}
+
+---
+apiVersion: {{ .Values.secret.apiversion }}
+kind: Secret
+metadata:
+  name: mpesa-secret-tupande
+type: Opaque
+data:
+  client-key: {{ .Values.mpesa.accounts.paygops.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.accounts.paygops.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.accounts.paygops.pass_key | b64enc }}
+
+---
 {{- if .Values.mpesa.ingress.enabled }}
 apiVersion: {{ .Values.ingress.apiversion }}
 kind: Ingress
