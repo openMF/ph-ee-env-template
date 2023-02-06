@@ -219,7 +219,7 @@ kibana:
           name: kibana
           key: encryptionkey
     - name: 'KIBANA_PUBLIC_BASEURL'
-      value: "${PROXY_REDIRECTION_URL}"
+      value: "https://ph-kibana.test.oneacrefund.org"
 
 channel:
   enabled: true
