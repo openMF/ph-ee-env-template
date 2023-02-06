@@ -1,3 +1,30 @@
+mtn_rwanda_connector:
+  enabled: true
+  tenants: "oaf"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+  camel_server_port: 5000
+  mtnrw_callback:
+  mtnrw_subscriptionkey:
+  mtnrw_environment:
+  mtnrw_api_host: 
+  mtnrw_auth_host: 
+  mtnrw_client_secret:
+  mtnrw_client_key:
+  spring_profiles_active: "bb"
+  mtn_max_retry_count: 3
+  mtn_api_timeout: 6000
+  deployment:
+    annotations: {}
+    resources:
+      limits:
+        memory: 256Mi
+        cpu: 200m
+      requests:
+        memory: 128Mi
+        cpu: 100m
+  replicas: 3
+  env: 
+
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
@@ -6,12 +33,12 @@ zeebe-cluster-helm:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
+      disableExporter: true
       host: "ph-ee-elasticsearch"
   annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/port: '9600'
-      prometheus.io/path: '/metrics'    
-
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '9600'
+    prometheus.io/path: '/metrics'    
 
   image:
     repository: camunda/zeebe
@@ -71,7 +98,6 @@ zeebe-cluster-helm:
     - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_CREATETEMPLATE
       value: 'false'
 
-
   gateway:
     replicas: 1
     logLevel: warn
@@ -104,6 +130,12 @@ zeebe-cluster-helm:
       - name: exporters
         mountPath: /exporters/
 
+  podAnnotations:
+    co.elastic.logs/enabled: "true"
+    co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
+    co.elastic.logs/multiline.negate: "true"
+    co.elastic.logs/multiline.match: 'after'
+
 # payment hub Operate, ES and Kibana
 zeebe-operate-helm:
   enabled: false
@@ -116,6 +148,8 @@ zeebe-operate-helm:
     elasticsearch:
       host: "zeebe-elasticsearch"
       clusterName: "zeebe-elasticsearch"
+  ingress:
+    enabled: false
 
 elasticsearch:
   enabled: true
@@ -126,12 +160,13 @@ elasticsearch:
   minimumMasterNodes: 1
   esConfig:
     elasticsearch.yml: |
-      xpack.security.enabled: false
-      xpack.security.transport.ssl.enabled: false
+      xpack.security.enabled: true
+      xpack.monitoring.collection.enabled: true
+      xpack.security.transport.ssl.enabled: true
       xpack.security.transport.ssl.verification_mode: certificate
       xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
       xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
-      xpack.security.http.ssl.enabled: false
+      xpack.security.http.ssl.enabled: true
       xpack.security.http.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
       xpack.security.http.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
   secretMounts:
@@ -155,11 +190,11 @@ kibana:
   kibanaConfig:
     kibana.yml: |
       monitoring.enabled: false
-      xpack.encryptedSavedObjects.encryptionKey: 5f4dcc3b5aa765d61d8327deb882cf99
       server.ssl:
-        enabled: false
+        enabled: true
         key: /usr/share/kibana/config/certs/elastic-certificate.pem
         certificate: /usr/share/kibana/config/certs/elastic-certificate.pem
+      server.publicBaseUrl: ${KIBANA_PUBLIC_BASEURL}
       xpack.security.encryptionKey: ${KIBANA_ENCRYPTION_KEY}
       elasticsearch.ssl:
         certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem
@@ -185,18 +220,17 @@ kibana:
           name: kibana
           key: encryptionkey
 
-
 channel:
   enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.1.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-channel"
+  imageTag: "v1.1.1"
+  imagePullPolicy: IfNotPresent
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
-  DFSPIDS: ""
+  DFSPIDS: "oaf"
   hostname: ""
   stub_hostname: ""
   limits:
@@ -206,13 +240,21 @@ channel:
     memory: "768M"
     cpu: "100m"
   ingress:
-    enabled: true
+    enabled: false
     path: "/channel"
     annotations: {}
     backend: {}
     stub_backend: {}
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      deployTime: "{{ .Values.deployTime }}"
+  ams:
+    groups:
+      - identifier: "ACCOUNTID"
+        value: "paygops"
+      - identifier: "FOUNDATIONALID"
+        value: "roster"
 
 operations:
   enabled: true
@@ -237,8 +279,8 @@ configmap:
 operationsmysql:
   fullnameOverride: "operationsmysql"
   image:
-      tag: "5.7"
-      debug: false
+    tag: "5.7"
+    debug: false
   auth:
       database: "tenants"
       username: "mifos"
@@ -246,55 +288,29 @@ operationsmysql:
       rootPassword: "4ET6ywqlGt"
   initdbScripts:
       setup.sql: |-
-        CREATE DATABASE IF NOT EXISTS phdefault;
+        CREATE DATABASE IF NOT EXISTS oaf;
         CREATE DATABASE IF NOT EXISTS messagegateway;
         GRANT ALL ON *.* TO 'root'@'%';
         GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
+        GRANT ALL PRIVILEGES ON oaf.* TO 'mifos';
 
 ph_ee_connector_ams_mifos:
   enabled: false
-  replicas: 1
-  image: ""
-  imageTag: "v1.1.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  limits:
-    memory: "512M"
-    cpu: "500m"
-  requests:
-    memory: "512M"
-    cpu: "100m"
-  deployment:
-    annotations: {}
 
 ph_ee_connector_mojaloop:
   enabled: false
-  replicas: 1
-  image: ""
-  imageTag: "v1.0.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  limits:
-    memory: "512M"
-    cpu: "500m"
-  requests:
-    memory: "512M"
-    cpu: "100m"
-  deployment:
-    annotations: {}
 
 operations_app:
   enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.1.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-operations-app"
+  imagePullPolicy: IfNotPresent
+  imageTag: "v1.0.6"
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   hostname: ""
-  tenants: ""
+  tenants: "oaf"
   token_client_channel_secret: ""
   datasource:
       username: "mifos"
@@ -314,14 +330,16 @@ operations_app:
     annotations: {}
     backend: {}
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      deployTime: "{{ .Values.deployTime }}"
 
 operations_web:
   enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.3.0"
-  imagePullPolicy: "Always"
+  image: "oaftech.azurecr.io/phee-ns/ops-web"
+  imageTag: "v1.2.0"
+  imagePullPolicy: IfNotPresent
   hostname: ""
   webhost: ""
   limits:
@@ -338,24 +356,35 @@ operations_web:
       kubernetes.io/ingress.class: kong
     backend: {}
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      co.elastic.logs/multiline.pattern: '^(\d\d:){2}\d{2}.\d{3}\s'
+      co.elastic.logs/multiline.negate: 'true'
+      co.elastic.logs/multiline.match: after
+      deployTime: "{{ .Values.deployTime }}"
 
 identity:
   hostname: ""
+  ingress:
+    enabled: false
 
 mpesa:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.2.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-mpesa"
+  imageTag: "v1.2.1"
+  imagePullPolicy: IfNotPresent
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
-  zeebe_init_transfer_wait_timer: 10
-  tenant: ""
+  tenant: "oaf"
   callback_host: ""
+  retry_count: 3
+  api_timeout: 60000
+  zeebe_init_transfer_wait_timer: 15
+  skip:
+    enabled: false
   accounts:
     default:
       name: "default"
@@ -396,38 +425,49 @@ mpesa:
     annotations: {}
     backend: {}
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
+      co.elastic.logs/multiline.negate: 'true'
+      co.elastic.logs/multiline.match: after
+      deployTime: "{{ .Values.deployTime }}"
 
 roster_connector:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.0.2"
-  imagePullPolicy: "Always"
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-pesa"
+  imageTag: "v1.0.3"
+  imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
-  SPRING_PROFILES_ACTIVE: ""
+  SPRING_PROFILES_ACTIVE: "bb"
   containerPort: 5000
+  pesacore:
+    base_url: "https://qaoperations01.oneacrefund.org"
+    auth_header: "PaymentHubTest"
+  ams:
+    local:
+      enabled: true
   limits:
     memory: "512M"
     cpu: "500m"
   requests:
     memory: "512M"
     cpu: "100m"
-  ams:
-    local:
-      enabled: ""
-  pesacore:
-    auth_header: ""
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
+      co.elastic.logs/multiline.negate: 'true'
+      co.elastic.logs/multiline.match: after
+      deployTime: "{{ .Values.deployTime }}"
 
 paygops_connector:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.2.1"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-paygops"
+  imageTag: "v1.2.3"
+  imagePullPolicy: IfNotPresent
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   containerPort: 5000
   limits:
@@ -438,18 +478,21 @@ paygops_connector:
     cpu: "50m"
   ams:
     local:
-      enabled: ""
+      enabled: true
   paygops:
-    authheader: ""
+    base_url: "https://feature-test1.paygops.com/"
+    authheader: "PaymentHubTest"
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      deployTime: "{{ .Values.deployTime }}"
 
 messagegateway:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: ""
+  image: oaftech.azurecr.io/phee-ns/message-gateway
   imageTag: "v1.0.0"
-  imagePullPolicy: "Always"
+  imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
@@ -475,15 +518,20 @@ messagegateway:
     key:
       telerivet_api_key: ""
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
+      co.elastic.logs/multiline.negate: 'true'
+      co.elastic.logs/multiline.match: after
+      deployTime: "{{ .Values.deployTime }}"
 
 notifications:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-notifications"
+  imagePullPolicy: IfNotPresent
   imageTag: "v1.0.1"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
@@ -506,15 +554,20 @@ notifications:
     annotations: {}
     backend: {}
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "false"
+      co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
+      co.elastic.logs/multiline.negate: 'true'
+      co.elastic.logs/multiline.match: after
+      deployTime: "{{ .Values.deployTime }}"
 
 zeebe_ops:
   enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.0.1"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  image: "oaftech.azurecr.io/phee-ns/phee-zeebe-ops"
+  imageTag: "v1.0.2"
+  imagePullPolicy: IfNotPresent
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
@@ -534,22 +587,24 @@ zeebe_ops:
     annotations: {}
     backend: {}
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      deployTime: "{{ .Values.deployTime }}"
 
 importer_es:
   enabled: true
   replicas: 1
-  image: ""
-  imageTag: "v1.2.1"
-  imagePullPolicy: "Always"
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-es"
+  imageTag: "v1.2.4"
+  imagePullPolicy: IfNotPresent
   reporting:
-    enabled: false
+    enabled: "true"
     fields:
-      amount: false
-      accountId: false
+      amount: true
+      accountId: true
       errorCode: false
-      errorDescription: false
-      externalId: false
+      errorDescription: true
+      externalId: true
       initiator: false
       initiatorType: false
       isNotificationsFailureEnabled: false
@@ -557,21 +612,21 @@ importer_es:
       mpesaTransactionId: false
       mpesaTransactionStatusRetryCount: false
       originDate: false
-      partyLookupFailed: false
-      phoneNumber: false
+      partyLookupFailed: true
+      phoneNumber: true
       processDefinitionKey: false
-      processInstanceKey: false
+      processInstanceKey: true
       scenario: false
       tenantId: false
       timer: false
-      timestamp: false
-      transactionFailed: false
+      timestamp: true
+      transactionFailed: true
       transactionId: false
-      transferCreateFailed: false
-      transferSettlementFailed: false
+      transferCreateFailed: true
+      transferSettlementFailed: true
       transferResponseCREATE: false
-  elasticsearch_sslverification: false
-  elasticsearch_security_enabled: false
+  elasticsearch_sslverification: "true"
+  elasticsearch_security_enabled: "true"
   logging:
     level:
       root: "INFO"
@@ -589,7 +644,7 @@ kafka:
   enabled: true
   replicas: 1
   image: "spotify/kafka"
-  imagePullPolicy: "Always"
+  imagePullPolicy: "IfNotPresent"
   advertised:
       host: "kafka"
       port: "9092"
@@ -606,9 +661,9 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: ""
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-rdbms"
   imageTag: "v1.0.8"
-  imagePullPolicy: "Always"
+  imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   datasource:
@@ -624,7 +679,12 @@ importer_rdbms:
     memory: "512M"
     cpu: "100m"
   deployment:
-    annotations: {}
+    annotations:
+      co.elastic.logs/enabled: "true"
+      co.elastic.logs/multiline.pattern: '^(\d\d:){2}\d{2}.\d{3}\s'
+      co.elastic.logs/multiline.negate: 'true'
+      co.elastic.logs/multiline.match: after
+      deployTime: "{{ .Values.deployTime }}"
   javaToolOptions: "-Xmx256M"
 
 connector_bulk:
