@@ -26,8 +26,6 @@ spec:
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
-          imagePullSecrets:
-            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.channel.limits.memory }}"
