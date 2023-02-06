@@ -180,7 +180,6 @@ elasticsearch:
           name: elastic-credentials
           key: password
 
-
 kibana:
   enabled: true
   imageTag: 7.16.3
