@@ -218,6 +218,8 @@ kibana:
         secretKeyRef:
           name: kibana
           key: encryptionkey
+    - name: 'KIBANA_PUBLIC_BASEURL'
+      value: "${PROXY_REDIRECTION_URL}"
 
 channel:
   enabled: true
