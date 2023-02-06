@@ -514,9 +514,9 @@ messagegateway:
     annotations: {}
     backend: {}
   secret:
-    name: ""
-    key:
-      telerivet_api_key: ""
+    value:
+      api_key: "eKiC1_JWdKy7eaTGQFHxXXjXjacr60W9Zntl"
+      project_id: "PJ5ff552ce01d2978c"
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"
