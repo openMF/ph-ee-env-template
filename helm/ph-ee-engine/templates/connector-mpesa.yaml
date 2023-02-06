@@ -62,6 +62,7 @@ spec:
               value: "{{ .Values.mpesa.tenant }}"
             - name: "LOGGING_LEVEL_ROOT"
               value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
+            # roster
             - name: "ACCOUNTS_ROSTER_SHORTCODE"
               value: "{{ .Values.mpesa.accounts.roster.business_short_code }}"
             - name: "ACCOUNTS_ROSTER_TILL"
@@ -85,6 +86,7 @@ spec:
                 secretKeyRef:
                   name: "mpesa-secret-roster"
                   key: "pass-key"
+            # paygops
             - name: "ACCOUNTS_PAYGOPS_SHORTCODE"
               value: "{{ .Values.mpesa.accounts.paygops.business_short_code}}"
             - name: "ACCOUNTS_PAYGOPS_TILL"
@@ -110,7 +112,54 @@ spec:
                   key: "pass-key"
             - name: "SKIP_ENABLED"
               value: "{{ .Values.mpesa.skip.enabled }}"
-
+            # erply
+            - name: "ACCOUNTS_ERPLY_SHORTCODE"
+              value: "{{ .Values.mpesa.accounts.erply.business_short_code}}"
+            - name: "ACCOUNTS_ERPLY_TILL"
+              value: "{{ .Values.mpesa.accounts.erply.till }}"
+            - name: "ACCOUNTS_ERPLY_AUTHHOST"
+              value: "{{ .Values.mpesa.accounts.erply.auth_host }}"
+            - name: "ACCOUNTS_ERPLY_APIHOST"
+              value: "{{ .Values.mpesa.accounts.erply.api_host }}"
+            - name: "ACCOUNTS_ERPLY_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-erply"
+                  key: "client-key"
+            - name: "ACCOUNTS_ERPLY_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-erply"
+                  key: "client-secret"
+            - name: "ACCOUNTS_ERPLY_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-erply"
+                  key: "pass-key"
+            # tupande
+            - name: "ACCOUNTS_TUPANDE_SHORTCODE"
+              value: "{{ .Values.mpesa.accounts.tupande.business_short_code}}"
+            - name: "ACCOUNTS_TUPANDE_TILL"
+              value: "{{ .Values.mpesa.accounts.tupande.till }}"
+            - name: "ACCOUNTS_TUPANDE_AUTHHOST"
+              value: "{{ .Values.mpesa.accounts.tupande.auth_host }}"
+            - name: "ACCOUNTS_TUPANDE_APIHOST"
+              value: "{{ .Values.mpesa.accounts.tupande.api_host }}"
+            - name: "ACCOUNTS_TUPANDE_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-tupande"
+                  key: "client-key"
+            - name: "ACCOUNTS_TUPANDE_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-tupande"
+                  key: "client-secret"
+            - name: "ACCOUNTS_TUPANDE_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-tupande"
+                  key: "pass-key"
 
 ---
 apiVersion: {{ .Values.service.apiversion }}
@@ -161,7 +210,6 @@ metadata:
 {{- if .Values.mpesa.ingress.annotations }}
 {{ toYaml .Values.mpesa.ingress.annotations | indent 4 }}
 {{- end }}
-
 spec:
   rules:
     - host: "{{ .Values.mpesa.hostname }}"
