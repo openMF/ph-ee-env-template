@@ -218,8 +218,6 @@ kibana:
         secretKeyRef:
           name: kibana
           key: encryptionkey
-    - name: 'KIBANA_PUBLIC_BASEURL'
-      value: "https://ph-kibana.test.oneacrefund.org"
 
 channel:
   enabled: true
