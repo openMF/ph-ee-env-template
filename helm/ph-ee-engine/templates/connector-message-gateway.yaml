@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.messagegateway.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: message-gateway
           image: "{{ .Values.messagegateway.image }}:{{ .Values.messagegateway.imageTag }}"  
@@ -149,3 +147,4 @@ spec:
 {{- end }}
 
 {{- end }}
+

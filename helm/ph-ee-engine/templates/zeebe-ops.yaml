@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.zeebe_ops.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-zeebe-ops
           image: "{{ .Values.zeebe_ops.image }}:{{ .Values.zeebe_ops.imageTag }}"
