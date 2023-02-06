@@ -1,0 +1,39 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+
+pr:
+  - main
+  - develop
+
+pool:
+  vmImage: "ubuntu-latest"
+
+name: PaymentHub_$(Date:yyyyMMdd)$(Rev:.r)
+
+steps:
+
+  - script: |
+      # Lint
+      helm dependency update helm/ph-ee-engine
+      helm lint helm/ph-ee-engine
+    displayName: Helm lint
+
+  - task: HelmDeploy@0
+    displayName: Package Helm Chart
+    inputs:
+      command: package
+      chartPath: $(System.DefaultWorkingDirectory)/helm/ph-ee-engine
+      destination: $(Build.ArtifactStagingDirectory)
+      updatedependency: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Helm chart
+    # Only publish develop branch
+    # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "paymenthub"
+      publishLocation: "Container"
