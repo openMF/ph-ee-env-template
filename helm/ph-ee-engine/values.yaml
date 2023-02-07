@@ -289,6 +289,11 @@ ph_ee_connector_mojaloop:
   requests:
     memory: "512M"
     cpu: "100m"
+  ingress:
+    enabled: true
+    path: "/"
+    annotations: {}
+    backend: {}
   deployment:
     annotations: {}
 
