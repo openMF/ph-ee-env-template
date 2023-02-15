@@ -158,6 +158,7 @@ elasticsearch:
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
   minimumMasterNodes: 1
+  protocol: https
   esConfig:
     elasticsearch.yml: |
       xpack.security.enabled: true
