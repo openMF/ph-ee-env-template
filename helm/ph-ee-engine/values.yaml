@@ -1,6 +1,7 @@
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
+      
 
 zeebe-cluster-helm:
   global:
@@ -121,6 +122,7 @@ elasticsearch:
   enabled: true
   imageTag: 7.16.3
   replicas: 1
+  protocol: http
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
   minimumMasterNodes: 1
@@ -150,8 +152,8 @@ kibana:
   enabled: true
   imageTag: 7.16.3
   fullnameOverride: "ph-ee-kibana"
-  elasticsearchHosts: "https://ph-ee-elasticsearch:9200/"
-  protocol: https
+  elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
+  protocol: http
   kibanaConfig:
     kibana.yml: |
       monitoring.enabled: false
@@ -287,6 +289,11 @@ ph_ee_connector_mojaloop:
   requests:
     memory: "512M"
     cpu: "100m"
+  ingress:
+    enabled: true
+    path: "/"
+    annotations: {}
+    backend: {}
   deployment:
     annotations: {}
 
@@ -525,6 +532,7 @@ zeebe_ops:
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
+  elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   elasticsearch_sslverification: false
   elasticsearch_security_enabled: false
   tenants: ""
@@ -548,6 +556,7 @@ importer_es:
   image: ""
   imageTag: "v1.2.1"
   imagePullPolicy: "Always"
+  importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
     enabled: false
     fields:
