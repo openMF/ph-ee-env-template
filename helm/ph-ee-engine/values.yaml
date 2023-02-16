@@ -352,6 +352,10 @@ operations_web:
     backend: {}
   deployment:
     annotations: {}
+    config:
+      - name: ph-ee-operations-web-config
+        mountPath: "/usr/share/nginx/html/assets/configuration.properties"
+        subPath: "configuration.properties"
 
 identity:
   hostname: ""
