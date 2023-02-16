@@ -20,6 +20,14 @@ spec:
 {{ toYaml .Values.ph_ee_connector_mojaloop.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+      imagePullSecrets:
+      - name: regcred
+>>>>>>> 6a02818 (removed imagePullSecret)
+=======
+>>>>>>> 515ac5c (removed imagePullSecret)
       containers:
         - name: ph-ee-connector-mojaloop-java
           image: "{{ .Values.ph_ee_connector_mojaloop.image }}:{{ .Values.ph_ee_connector_mojaloop.imageTag }}"
