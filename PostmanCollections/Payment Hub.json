@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "15d27a72-d972-400b-bf42-5316e1a9f8ce",
-		"name": "Payment Hub APIs New",
+		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22669462"
 	},
@@ -1787,7 +1787,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?clientCorrelationId=123",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/",
 							"host": [
 								"{{OperationsHostName}}"
 							],
