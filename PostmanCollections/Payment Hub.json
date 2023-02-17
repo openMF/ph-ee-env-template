@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a98a08ca-3c4a-4c84-8919-970baf6ceae7",
-		"name": "Payment Hub APIs Copy",
+		"_postman_id": "15d27a72-d972-400b-bf42-5316e1a9f8ce",
+		"name": "Payment Hub APIs New",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "4940958"
+		"_exporter_id": "22669462"
 	},
 	"item": [
 		{
@@ -1787,7 +1787,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?clientCorrelationId=123",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -45126,6 +45126,51 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "GSMA Dev APIs",
+			"item": [
+				{
+					"name": "GSMA Transfer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"requestingOrganisationTransactionReference\": \"RKTQDM7W6S\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"11\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": \"+449999112\"\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": \"z\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ChannelGSMAHostName}}/api/v1/gsma/transaction?amsName=mifos&accountHoldingInstitutionId=gorilla",
+							"host": [
+								"{{ChannelGSMAHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gsma",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "amsName",
+									"value": "mifos"
+								},
+								{
+									"key": "accountHoldingInstitutionId",
+									"value": "gorilla"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Design Document: [https://www.notion.so/PayBill-Design-2670e8fac37a485eaac659ba942683ce](https://www.notion.so/PayBill-Design-2670e8fac37a485eaac659ba942683ce)"
 		}
 	],
 	"variable": [
