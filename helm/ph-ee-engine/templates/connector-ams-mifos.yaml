@@ -47,7 +47,11 @@ spec:
             - name: "ams_local_auth_host"
               value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_auth_host }}"
             - name: "ams_local_tenants"
-              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants }}"              
+              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants.name }}"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants.user }}"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants.password }}"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants.authtype }}"
+              value: "{{ .Values.ph_ee_connector_ams_mifos.ams_local_tenants.fspId }}"             
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
