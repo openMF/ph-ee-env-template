@@ -285,19 +285,19 @@ ph_ee_connector_mojaloop:
   SPRING_PROFILES_ACTIVE: ""
   switch:
     quotes:
-      host: "http://3.6.25.92"
-      service: "quoting-service.local"
+      host: ""
+      service: ""
     als:
-      host: "http://3.6.25.92"
-      service: "account-lookup-service.local"
+      host: ""
+      service: ""
     transfer:
-      host: "http://3.6.25.92"
-      service: "ml-api-adapter.local"
+      host: ""
+      service: ""
     transactions:
-      host: "http://3.6.25.92"
-      service: "transaction-request-service.local"
+      host: ""
+      service: ""
     oracle:
-      host: "http://account-oracle.mifos.io:4100"
+      host: ""
   limits:
     memory: "512M"
     cpu: "500m"
