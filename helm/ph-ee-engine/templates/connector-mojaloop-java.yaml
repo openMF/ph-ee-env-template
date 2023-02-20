@@ -36,8 +36,36 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_mojaloop.SPRING_PROFILES_ACTIVE }}"
+
             - name: "DFSPIDS"
               value: "{{ .Values.ph_ee_connector_mojaloop.DFSPIDS }}"
+
+            - name: "SWITCH_quotes-host"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.quotes.host }}"
+
+            - name: "SWITCH_quote-service"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.quotes.service }}"
+
+            - name: "SWITCH_als-host"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.als.host }}"
+
+            - name: "SWITCH_account-lookup-service"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.als.service }}"
+
+            - name: "SWITCH_transfers-host"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transfers.host }}"
+
+            - name: "SWITCH_transfers-service"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transfers.service }}"
+
+            - name: "SWITCH_transactions-host"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transactions.host }}"
+
+            - name: "SWITCH_transaction-request-service"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transactions.service }}"
+
+            - name: "SWITCH_oracle-host"
+              value: "{{ .Values.ph_ee_connector_mojaloop.switch.oracle.host }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
