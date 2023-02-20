@@ -274,6 +274,13 @@ ph_ee_connector_ams_mifos:
   requests:
     memory: "512M"
     cpu: "100m"
+  ingress:
+    enabled: false
+    path: "/"
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}    
   deployment:
     annotations: {}
 
