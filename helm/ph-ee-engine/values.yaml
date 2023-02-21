@@ -439,7 +439,7 @@ roster_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-pesa"
-  imageTag: "v1.1.1"
+  imageTag: "v1.1.0"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: "bb"
