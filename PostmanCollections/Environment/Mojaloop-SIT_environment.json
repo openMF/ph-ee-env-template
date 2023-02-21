@@ -1,5 +1,5 @@
 {
-	"id": "b3dedd98-9a68-4031-bc3a-fc59c00d88b5",
+	"id": "42580f76-98d3-40d3-a4e5-531a1f1b3f23",
 	"name": "Mojaloop-Local",
 	"values": [
 		{
@@ -932,9 +932,33 @@
 			"value": "application/vnd.interoperability.transfers+json;version=1.0",
 			"type": "default",
 			"enabled": true
+		},
+		{
+			"key": "payerMSISDN",
+			"value": "449999999",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "payeeMSISDN",
+			"value": "27713803912",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "txnId",
+			"value": "cf1f9731-d248-4cc9-be4c-7937f2ed6c18",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "PAYER_CALLBACK_HOST",
+			"value": "http://mojaloop.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2023-01-30T11:13:57.254Z",
-	"_postman_exported_using": "Postman/10.8.7"
+	"_postman_exported_at": "2023-02-21T10:25:31.028Z",
+	"_postman_exported_using": "Postman/10.10.5"
 }
