@@ -208,7 +208,7 @@ channel:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-channel"
-  imageTag: "v1.1.1"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -289,7 +289,7 @@ operations_app:
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-operations-app"
   imagePullPolicy: IfNotPresent
-  imageTag: "v1.0.6"
+  imageTag: "v1.3.0"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
@@ -322,7 +322,7 @@ operations_web:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ops-web"
-  imageTag: "v1.2.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: IfNotPresent
   hostname: ""
   webhost: ""
@@ -356,7 +356,7 @@ mpesa:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-mpesa"
-  imageTag: "v1.2.1"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -439,7 +439,7 @@ roster_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-pesa"
-  imageTag: "v1.0.3"
+  imageTag: "v1.1.1"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: "bb"
@@ -468,7 +468,7 @@ paygops_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-paygops"
-  imageTag: "v1.2.3"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -598,7 +598,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-es"
-  imageTag: "v1.2.4"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   reporting:
     enabled: "true"
@@ -665,7 +665,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-rdbms"
-  imageTag: "v1.0.8"
+  imageTag: "v1.2.0"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
@@ -760,7 +760,7 @@ ph_ee_connector_slcb:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.1.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
