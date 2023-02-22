@@ -1787,7 +1787,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?clientCorrelationId=123",
 							"host": [
 								"{{OperationsHostName}}"
 							],
