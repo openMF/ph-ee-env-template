@@ -268,6 +268,7 @@ ph_ee_connector_ams_mifos:
   ams_local_customer_host: ""
   ams_local_auth_host: ""
   ams_local_tenants: ""
+  ams_local_loan_host: ""
   limits:
     memory: "512M"
     cpu: "500m"
