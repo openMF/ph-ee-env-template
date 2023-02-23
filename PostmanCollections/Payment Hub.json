@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "7d74225f-05da-449d-becb-977bd19c5c1d",
-		"name": "Payment Hub APIs Copy",
+		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22669462"
 	},
@@ -1787,7 +1787,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?clientCorrelationId=123",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -42555,7 +42555,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"15.21\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": \"+44999911\"\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": \"L000000003\"\n        }\n    ]\n}",
+									"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"11\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": {{MSISDN}}\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": {{accountId}}\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -42563,7 +42563,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{ChannelHostName}}/channel/gsma/transaction?amsName=mifos&accountHoldingInstitutionId=gorilla",
+									"raw": "{{ChannelHostName}}/channel/gsma/transaction?amsName={{amsName}}&accountHoldingInstitutionId={{accountHoldingInstitutionId}}",
 									"host": [
 										"{{ChannelHostName}}"
 									],
@@ -42575,11 +42575,11 @@
 									"query": [
 										{
 											"key": "amsName",
-											"value": "mifos"
+											"value": "{{amsName}}"
 										},
 										{
 											"key": "accountHoldingInstitutionId",
-											"value": "gorilla"
+											"value": "{{accountHoldingInstitutionId}}"
 										}
 									]
 								}
@@ -44629,7 +44629,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/danishjamal/Documents/Fynarfin/testing/ph-ee-env-template/orchestration/feel/mpesa-flow-oaf.bpmn"
+									"src": "/Users/ishan/fynarfin/phee/ph-ee-env-labs/orchestration/feel/inbound_transfer-mifos-DFSPID.bpmn"
 								}
 							]
 						},

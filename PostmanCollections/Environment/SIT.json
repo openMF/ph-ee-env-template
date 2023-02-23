@@ -1,5 +1,5 @@
 {
-	"id": "31291671-4e90-4a7a-83e4-d1bde9927af8",
+	"id": "5bbbe9f6-0347-427a-8f24-668e0b1c7ffb",
 	"name": "SIT",
 	"values": [
 		{
@@ -186,9 +186,27 @@
 			"value": "https://notifications.sandbox.fynarfin.io",
 			"type": "default",
 			"enabled": true
+		},
+		{
+			"key": "MSISDN",
+			"value": "+44999911",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "accountHoldingInstitutionId",
+			"value": "gorilla",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "amsName",
+			"value": "mifos",
+			"type": "default",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2022-11-02T13:43:35.695Z",
-	"_postman_exported_using": "Postman/9.31.18"
+	"_postman_exported_at": "2023-02-23T13:53:40.164Z",
+	"_postman_exported_using": "Postman/10.9.4"
 }
