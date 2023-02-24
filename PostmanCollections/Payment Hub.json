@@ -42543,19 +42543,24 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Platform-TenantId",
-										"value": "{{TenantName}}",
+										"key": "X-CorrelationID",
+										"value": "{{clientCorrelationId}}",
 										"type": "text"
 									},
 									{
-										"key": "X-CorrelationID",
-										"value": "{{clientCorrelationId}}",
+										"key": "accountHoldingInstitutionId",
+										"value": "{{accountHoldingInstitutionId}}",
+										"type": "text"
+									},
+									{
+										"key": "amsName",
+										"value": "{{amsName}}",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"11\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": {{MSISDN}}\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": {{accountId}}\n        }\n    ]\n}",
+									"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"11\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": \"{{MSISDN}}\"\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": \"{{accountId}}\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -42563,7 +42568,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{ChannelHostName}}/channel/gsma/transaction?amsName={{amsName}}&accountHoldingInstitutionId={{accountHoldingInstitutionId}}",
+									"raw": "{{ChannelHostName}}/channel/gsma/transaction",
 									"host": [
 										"{{ChannelHostName}}"
 									],
@@ -42571,16 +42576,6 @@
 										"channel",
 										"gsma",
 										"transaction"
-									],
-									"query": [
-										{
-											"key": "amsName",
-											"value": "{{amsName}}"
-										},
-										{
-											"key": "accountHoldingInstitutionId",
-											"value": "{{accountHoldingInstitutionId}}"
-										}
 									]
 								}
 							},
