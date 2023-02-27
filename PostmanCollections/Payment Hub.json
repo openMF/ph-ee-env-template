@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d37fdce1-a9bb-4e47-a341-6151d86eeb00",
-		"name": "Payment Hub APIs Copy",
+		"_postman_id": "db6b2ca1-add6-483c-ad35-6c8d1c5ec9c5",
+		"name": "Payment Hub APIs Copy 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22669462"
+		"_exporter_id": "4940958"
 	},
 	"item": [
 		{
@@ -1787,7 +1787,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/",
+							"raw": "{{OperationsHostName}}/api/v1/transactionRequests/?clientCorrelationId=123",
 							"host": [
 								"{{OperationsHostName}}"
 							],
@@ -43321,7 +43321,20 @@
 									"    pm.expect(jsonData.batch_id)!=null;",
 									"    pm.expect(jsonData.status)!=null;",
 									"    pm.expect(jsonData.request_id)!=null;",
-									"});"
+									"});",
+									"",
+									"",
+									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
+									"    var nextTextIndex = Number(postman.getEnvironmentVariable(\"NextTestIndex\"));",
+									"    var apis = pm.environment.get('TestApiList');",
+									"    var testList = JSON.parse(apis);",
+									"    if(testList.length>nextTextIndex){",
+									"        postman.setEnvironmentVariable(\"NextTestIndex\", 1+ nextTextIndex);",
+									"        postman.setNextRequest(testList[nextTextIndex]); ",
+									"    }else{",
+									"        postman.setNextRequest(null); ",
+									"    }",
+									"}"
 								],
 								"type": "text/javascript"
 							}
