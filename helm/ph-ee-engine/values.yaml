@@ -363,7 +363,14 @@ mpesa:
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenant: "oaf"
-  callback_host: ""
+  callback_host: $(MPESA_CALLBACK_HOST)
+  channel:
+    host: $(MPESA_CHANNEL_HOST)
+  hostname: $(PH_API_HOST_NAME)
+  paygops:
+    host: $(MPESA_PAYGOPS_HOST)
+  roster:
+    host: $(MPESA_ROSTER_HOST)
   retry_count: 3
   api_timeout: 60000
   zeebe_init_transfer_wait_timer: 15
