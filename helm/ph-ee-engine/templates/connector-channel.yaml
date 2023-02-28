@@ -64,6 +64,10 @@ spec:
               value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
             - name: "gsma_payee_tenant"
               value: "{{ .Values.channel.gsma_payee_tenant }}"
+            - name: "PAYGOPS_HOST"
+              value: "{{ .Values.channel.paygops.host }}"
+            - name: "ROSTER_HOST"
+              value: "{{ .Values.channel.roster.host }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
