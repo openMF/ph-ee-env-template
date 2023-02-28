@@ -1,79 +1,74 @@
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
-      
 
-zeebe-cluster-helm:
+
+camunda-platform:
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
       host: "ph-ee-elasticsearch"
-  annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/port: '9600'
-      prometheus.io/path: '/metrics'    
 
+  zeebe:
+    enabled: true
 
-  image:
-    repository: camunda/zeebe
-    tag: 1.1.0
+    env:
+      #    - name: ZEEBE_BROKER_BACKPRESSURE_ENABLED
+      #      value: "false"
+      - name: ZEEBE_BROKER_EXECUTION_METRICS_EXPORTER_ENABLED
+        value: "true"
+      - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME
+        value: "hu.dpc.rt.kafkastreamer.exporter.NoOpExporter"
+      - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_JARPATH
+        value: "/exporters/ph-ee-kafka-exporter.jar"
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
+        value: "/exporters/ph-ee-kafka-exporter.jar"
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
+        value: "hu.dpc.rt.kafkastreamer.exporter.KafkaExporter"
+      - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_INITIALLIMIT
+        value: "1000"
+      - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_ALPHA
+        value: "2"
+      - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_BETA
+        value: "8"
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_EVENT
+        value: 'true'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_VARIABLE
+        value: 'true'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_PROCESSINSTANCE
+        value: 'true'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_PROCESS
+        value: 'true'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_INCIDENT
+        value: 'true'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_DEPLOYMENT
+        value: 'false'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_ERROR
+        value: 'false'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_JOB
+        value: 'false'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_VARIABLEDOCUMENT
+        value: 'false'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_WORKFLOWINSTANCE
+        value: 'false'
+      - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_CREATETEMPLATE
+        value: 'false'
 
-  clusterSize: "1"
-  partitionCount: "1"
-  replicationFactor: "1"
-  cpuThreadCount: "2"
-  ioThreadCount: "2"
-  pvcSize: "10Gi"
-  pvcAccessModes: [ "ReadWriteOnce" ]
+    image:
+      repository: camunda/zeebe
+      tag: 8.1.1
+    clusterSize: "1"
+    partitionCount: "1"
+    replicationFactor: "1"
+    cpuThreadCount: "2"
+    ioThreadCount: "2"
+    pvcSize: "10Gi"
 
-  resources:
-    requests:
-      cpu: 100m
+    resources:
+      requests:
+        cpu: 100m
 
-  env:
-#    - name: ZEEBE_BROKER_BACKPRESSURE_ENABLED
-#      value: "false"
-    - name: ZEEBE_BROKER_EXECUTION_METRICS_EXPORTER_ENABLED
-      value: "true"
-    - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME
-      value: "hu.dpc.rt.kafkastreamer.exporter.NoOpExporter"
-    - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_JARPATH
-      value: "/exporters/ph-ee-kafka-exporter.jar"
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_JARPATH
-      value: "/exporters/ph-ee-kafka-exporter.jar"
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_CLASSNAME
-      value: "hu.dpc.rt.kafkastreamer.exporter.KafkaExporter"
-    - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_INITIALLIMIT
-      value: "1000"
-    - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_ALPHA
-      value: "2"
-    - name: ZEEBE_BROKER_BACKPRESSURE_VEGAS_BETA
-      value: "8"
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_EVENT
-      value: 'true'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_VARIABLE
-      value: 'true'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_PROCESSINSTANCE
-      value: 'true'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_PROCESS
-      value: 'true'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_INCIDENT
-      value: 'true'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_DEPLOYMENT
-      value: 'false'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_ERROR
-      value: 'false'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_JOB
-      value: 'false'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_VARIABLEDOCUMENT
-      value: 'false'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_WORKFLOWINSTANCE
-      value: 'false'
-    - name: ZEEBE_BROKER_EXPORTERS_KAFKA_ARGS_INDEX_CREATETEMPLATE
-      value: 'false'
-
-
-  gateway:
+  zeebe-gateway:
     replicas: 1
     logLevel: warn
     env:
@@ -82,18 +77,25 @@ zeebe-cluster-helm:
       - name: ZEEBE_GATEWAY_MONITORING_ENABLED
         value: "true"
 
-  # zeebe's dependencies
   elasticsearch:
     enabled: false
     fullnameOverride: "zeebe-elasticsearch"
     clusterName: "zeebe-elasticsearch"
 
-  kibana:
-    enabled: false
-    fullnameOverride: "zeebee-kibana"
-    elasticsearchHosts: "http://zeebe-elasticsearch:9200/"
+  operate:
+    enabled: true
+    image:
+      repository: camunda/operate
+      tag: 8.1.1
+    fullnameOverride: "zeebe-operate"
 
-  prometheus:
+  tasklist:
+    enabled: false
+  optimize:
+    enabled: false
+  prometheusServiceMonitor:
+    enabled: false
+  identity:
     enabled: false
 
   extraInitContainers: |
@@ -104,19 +106,7 @@ zeebe-cluster-helm:
       volumeMounts:
       - name: exporters
         mountPath: /exporters/
-
-# payment hub Operate, ES and Kibana
-zeebe-operate-helm:
-  enabled: false
-  image:
-    repository: camunda/operate
-    tag: 1.1.0
-  fullnameOverride: "zeebe-operate"
-  global:
-    zeebe: "zeebe-zeebe"
-    elasticsearch:
-      host: "zeebe-elasticsearch"
-      clusterName: "zeebe-elasticsearch"
+  
 
 elasticsearch:
   enabled: true
