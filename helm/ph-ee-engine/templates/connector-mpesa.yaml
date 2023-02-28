@@ -110,6 +110,12 @@ spec:
                   key: "pass-key"
             - name: "SKIP_ENABLED"
               value: "{{ .Values.mpesa.skip.enabled }}"
+            - name: "PAYGOPS_HOST"
+              value: "{{ .Values.mpesa.paygops.host }}"
+            - name: "ROSTER_HOST"
+              value: "{{ .Values.mpesa.roster.host }}"
+            - name: "CHANNEL_HOST"
+              value: "{{ .Values.mpesa.channel.host }}"
 
 
 ---
