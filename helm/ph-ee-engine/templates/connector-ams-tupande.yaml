@@ -1,0 +1,93 @@
+{{- if .Values.tupande_connector.enabled -}}
+
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-tupande"
+  labels:
+    app: ph-ee-connector-ams-tupande
+spec:
+  replicas: {{ .Values.tupande_connector.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-tupande
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-tupande
+      annotations:
+{{- if .Values.tupande_connector.deployment.annotations }}
+{{ toYaml .Values.tupande_connector.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      imagePullSecrets:
+        - name: imagecred
+      containers:
+        - name: ph-ee-connector-ams-tupande
+          image: "{{ .Values.tupande_connector.image }}:{{ .Values.tupande_connector.imageTag }}"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: "{{ .Values.tupande_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.tupande_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "AMS_LOCAL_ENABLED"
+              value: "{{ .Values.tupande_connector.ams.local.enabled }}"
+            - name: "TUPANDE_AUTH-HEADER"
+              valueFrom:
+                secretKeyRef:
+                  name: "tupande-secret"
+                  key: "auth-token"
+            - name: "TUPANDE_BASE-URL"
+              value: "{{ .Values.tupande_connector.tupande.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.tupande_connector.LOGGING_LEVEL_ROOT }}"
+          resources:
+            limits:
+              memory: "{{ .Values.tupande_connector.limits.memory }}"
+              cpu: "{{ .Values.tupande_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.tupande_connector.requests.memory }}"
+              cpu: "{{ .Values.tupande_connector.requests.cpu }}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tupande-secret
+type: Opaque
+data:
+  auth-token: {{ .Values.tupande_connector.tupande.auth_header | b64enc }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-ams-tupande
+  name: ph-ee-connector-ams-tupande
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-ams-tupande
+  sessionAffinity: None
+  type: ClusterIP
+
+{{- end }}

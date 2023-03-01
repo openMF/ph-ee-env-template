@@ -62,6 +62,12 @@ spec:
               value: "{{ .Values.channel.AMS  }}"
             - name: "LOGGING_PATTERN_CONSOLE"
               value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+            {{- range $key, $value := .Values.channel.ams.groups }}
+            - name: "{{ cat "AMS_GROUPS_" $key "__IDENTIFIER" | nospace }}"
+              value: "{{ $value.identifier }}"
+            - name: "{{ cat "AMS_GROUPS_" $key "__VALUE" | nospace }}"
+              value: "{{ $value.value }}"
+            {{- end }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

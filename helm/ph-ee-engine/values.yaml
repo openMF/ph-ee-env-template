@@ -235,9 +235,15 @@ channel:
   ams:
     groups:
       - identifier: "ACCOUNTID"
-        value: "paygops"
-      - identifier: "FOUNDATIONALID"
         value: "roster"
+      - identifier: "FOUNDATIONALID"
+        value: "paygops"
+      - identifier: TUPANDEACCOUNTID
+        value: "tupande"
+      - identifier: WALLETID
+        value: "erply"
+      - identifier: "default"
+        value: "paygops"
 
 operations:
   enabled: true
@@ -897,3 +903,55 @@ keycloak:
     rules:
       - host: 'keycloak.mifos.io'
     tls: []
+
+tupande_connector:
+  enabled: true
+  replicas: 1
+  image: "oaftech.azurecr.io/oneacrefund/tupande-connector"
+  imageTag: "0.0.1"
+  imagePullPolicy: "Always"
+  LOGGING_LEVEL_ROOT: "INFO"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
+  limits:
+    memory: "512M"
+    cpu: "500m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  ams:
+    local:
+      enabled: true
+  tupande:
+    base_url: "https://us-central1-tupandeonline-qa.cloudfunctions.net"
+    auth_header: ""
+  deployment:
+    annotations:
+      co.elastic.logs/enabled: "true"
+      deployTime: "{{ .Values.deployTime }}"
+
+erply_connector:
+  enabled: true
+  replicas: 1
+  image: "oaftech.azurecr.io/oneacrefund/erply-connector"
+  imageTag: "0.0.1"
+  imagePullPolicy: "Always"
+  LOGGING_LEVEL_ROOT: "INFO"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
+  limits:
+    memory: "512M"
+    cpu: "500m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  ams:
+    local:
+      enabled: true
+  erply:
+    base_url: "https://secure-api.qa.oneacrefund.org/erply"
+    auth_header: ""
+  deployment:
+    annotations:
+      co.elastic.logs/enabled: "true"
+      deployTime: "{{ .Values.deployTime }}"
