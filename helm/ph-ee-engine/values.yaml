@@ -652,7 +652,7 @@ kafka:
   imagePullPolicy: "Always"
   advertised:
       host: "kafka"
-      port: "9092"
+      port: "9093"
   limits:
     memory: "512M"
     cpu: "500m"
