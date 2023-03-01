@@ -8,6 +8,9 @@ camunda-platform:
     zeebe: "zeebe-zeebe"
     elasticsearch:
       host: "ph-ee-elasticsearch"
+    identity:
+      auth:
+        enabled: false
 
   zeebe:
     enabled: true
@@ -88,6 +91,9 @@ camunda-platform:
       repository: camunda/operate
       tag: 8.1.1
     fullnameOverride: "zeebe-operate"
+    env:
+      - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
+        value:
 
   tasklist:
     enabled: false
