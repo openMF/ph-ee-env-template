@@ -200,6 +200,17 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   DFSPIDS: ""
+  operations:
+    url: ""
+    authEnabled: false
+  tenantPrimary:
+    clientId: ""
+    clientSecret: ""
+    tenant: ""
+  tenantSecondary:
+    clientId: ""
+    clientSecret: ""
+    tenant: ""
   hostname: ""
   stub_hostname: ""
   limits:

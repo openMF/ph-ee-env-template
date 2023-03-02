@@ -51,7 +51,6 @@ metadata:
   labels:
     app: ph-ee-connector-gsma
   name: ph-ee-connector-gsma
-  namespace: default
 spec:
   ports:
     - name: port

@@ -1,5 +1,5 @@
 {
-	"id": "5bbbe9f6-0347-427a-8f24-668e0b1c7ffb",
+	"id": "a8189129-66c0-4d0a-a32a-12fe79a6e13b",
 	"name": "SIT",
 	"values": [
 		{
@@ -140,7 +140,7 @@
 			"enabled": true
 		},
 		{
-			"key": "clientCorrelationId",
+			"key": "X-CorrelationID",
 			"value": "12345678-6897-6798-6798-098765432134",
 			"type": "default",
 			"enabled": true
@@ -207,6 +207,6 @@
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2023-02-24T06:07:01.493Z",
-	"_postman_exported_using": "Postman/10.9.4"
+	"_postman_exported_at": "2023-03-02T09:14:05.040Z",
+	"_postman_exported_using": "Postman/10.9.1"
 }

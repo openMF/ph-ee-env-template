@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "db6b2ca1-add6-483c-ad35-6c8d1c5ec9c5",
+		"_postman_id": "85147e9c-c674-47e7-8479-16aee4dbc9fa",
 		"name": "Payment Hub APIs Copy 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "4940958"
+		"_exporter_id": "18201748"
 	},
 	"item": [
 		{
@@ -42757,14 +42757,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{ChannelHostName}}/channel/txnState/{{clientCorrelationId}}",
+							"raw": "{{ChannelHostName}}/channel/txnState/{{X-CorrelationID}}",
 							"host": [
 								"{{ChannelHostName}}"
 							],
 							"path": [
 								"channel",
 								"txnState",
-								"{{clientCorrelationId}}"
+								"{{X-CorrelationID}}"
 							]
 						}
 					},
