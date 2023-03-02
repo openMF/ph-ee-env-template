@@ -116,7 +116,6 @@ metadata:
   labels:
     app: ph-ee-connector-slcb
   name: ph-ee-connector-slcb
-  namespace: default
 spec:
   ports:
     - name: port
