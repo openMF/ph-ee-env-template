@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.erply_connector.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: imagecred
       containers:
         - name: ph-ee-connector-ams-erply
           image: "{{ .Values.erply_connector.image }}:{{ .Values.erply_connector.imageTag }}"

@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.tupande_connector.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: imagecred
       containers:
         - name: ph-ee-connector-ams-tupande
           image: "{{ .Values.tupande_connector.image }}:{{ .Values.tupande_connector.imageTag }}"
