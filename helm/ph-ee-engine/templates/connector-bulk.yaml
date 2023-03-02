@@ -108,7 +108,6 @@ metadata:
   labels:
     app: ph-ee-connector-bulk
   name: ph-ee-connector-bulk
-  namespace: default
 spec:
   ports:
     - name: port

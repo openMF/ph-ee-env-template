@@ -192,7 +192,7 @@ channel:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -208,6 +208,10 @@ channel:
   requests:
     memory: "768M"
     cpu: "100m"
+  paygops:
+    host: ""
+  roster:
+    host: ""
   ingress:
     enabled: true
     path: "/channel"
@@ -259,7 +263,7 @@ ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.2.0"
+  imageTag: "v1.2.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: false
@@ -397,6 +401,12 @@ mpesa:
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   callback_host: ""
+  channel:
+    host: ""
+  paygops:
+    host: ""
+  roster:
+    host: ""
   accounts:
     default:
       name: "default"
@@ -461,12 +471,12 @@ roster_connector:
     auth_header: ""
   deployment:
     annotations: {}
-
+  
 paygops_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.4.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -674,7 +684,7 @@ connector_bulk:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.4.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "default"
   camel_disable_ssl: true

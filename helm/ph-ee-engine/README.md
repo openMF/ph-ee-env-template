@@ -30,7 +30,6 @@ PaymentHub EE Engine
 | channel.imagePullPolicy | string | `"Always"` | Always enforce image force pull to avoid unexpected issues |
 | channel.imageTag | string | `"v1.1.0"` | versioned latest image |
 | channel.ingress.annotations | object | `{}` | nginx |
-
 | connector_bulk.SPRING_PROFILES_ACTIVE | string | `"default"` | application-bb.properties |
 | connector_bulk.aws.access_key | string | `"AKIAX32JM37TZOJ5AKFB"` | AWS Access key   |
 | connector_bulk.aws.region | string | `"us-east-2"` | AWS available zone |
@@ -39,59 +38,49 @@ PaymentHub EE Engine
 | connector_bulk.operations_app.contactpoint | string | `""` | DNS hostname |
 | connector_bulk.operations_app.endpoints.batch_transaction | string | "/api/v1/batch/transactions" |  |
 | connector_bulk.tenants | string | `"ibank-usa,ibank-india"` | Tenants Configuration |
-
 | messagegateway.DATASOURCE_URL | string | `"jdbc:mysql:thin://operationsmysql:3306/messagegateway"` | database for the message gateway |
 | messagegateway.MYSQL_PASSWORD | string | `"*****"` | Password |
 | messagegateway.MYSQL_USERNAME | string | `"mifos"` | Username |
 | messagegateway.image | string | `""` | Image to use for deploying AWS ECR/phee-message-gateway |
 | messagegateway.imagePullPolicy | string | `"Always"` | Always enforce image force pull to avoid unexpected issues |
 | messagegateway.imageTag | string | `"v1.0.0"` | version Tag image |
-
 | notifications.MESSAGEGATEWAYCONFIG_HOST | string | `"message-gateway"` |  |
 | notifications.NOTIFICATION_LOCAL_HOST | string | `"ph-ee-connector-notifications"` |  |
 | notifications.hostname | string | `""` | DNS hostname |
 | notifications.image | string | `""` | Image to use for deploying AWS ECR/ph-ee-notifications |
 | notifications.imageTag | string | `"v1.0.1"` |  |
 | notifications.zeebe_broker_contactpoint | string | `"zeebe-zeebe-gateway:26500"` |  |
-
 | operations_app.datasource.host | string | `"operationsmysql"` | database for the Operations |
 | operations_app.datasource.password | string | `"****"` | password |
 | operations_app.datasource.schema | string | `"tenants"` | DB tenants |
 | operations_app.datasource.username | string | `"mifos"` | Username |
 | operations_app.imageTag | string | `"v1.1.0"` |  |
 | operations_app.token_client_channel_secret | string | `""` |  |
-
 | operations_web.ingress.annotations."konghq.com/plugins" | string | `"request-transformer,oidc"` | kong OIDC |
 | operations_web.ingress.annotations."kubernetes.io/ingress.class" | string | `"kong"` | Kong ingress |
-
 | ph_ee_connector_ams_mifos.SPRING_PROFILES_ACTIVE | string | `""` |  |
 | ph_ee_connector_ams_mifos.ams_local_account_host | string | `""` | account are the ams apis like fineract, used in ams-mifos for account with ams |
 | ph_ee_connector_ams_mifos.ams_local_auth_host | string | `""` | auth are the ams apis like fineract, used in ams-mifos for authentication with ams |
 | ph_ee_connector_ams_mifos.ams_local_customer_host | string | `""` |  |
 | ph_ee_connector_ams_mifos.ams_local_interop_host | string | `""` | Interop are the ams apis like fineract, used in ams-mifos for interacting with ams |
-
 | ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE | string | `""` | application-bb.properties |
 | ph_ee_connector_gsma.deployment.annotations | object | `{}` |  |
-
 | importer_es.elasticsearch_security_enabled | bool | `false` |  |
 | importer_es.elasticsearch_sslverification | bool | `false` |  |
 | importer_es.imagePullPolicy | string | `"Always"` |  |
 | importer_es.imageTag | string | `"v1.2.1"` |  |
 | importer_es.importer_elasticsearch_url | string | `"http://ph-ee-elasticsearch:9200/"` |  |
 | importer_es.logging.pattern.console | string | `"%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"` |  |
-
 | importer_rdbms.LOGGING_LEVEL_ROOT | string | `"INFO"` |  |
 | importer_rdbms.LOGGING_PATTERN_CONSOLE | string | `"%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"` |  |
 | importer_rdbms.datasource.host | string | `"operationsmysql"` |  |
 | importer_rdbms.datasource.password | string | `"password"` |  |
 | importer_rdbms.datasource.username | string | `"mifos"` |  |
 
-
 ## Solution
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-
 | mpesa.accounts.default.api_host | string | `"https://sandbox.safaricom.co.ke"` |  |
 | mpesa.accounts.default.auth_host | string | `"https://sandbox.safaricom.co.ke/oauth/v1/generate"` |  |
 | mpesa.accounts.default.business_short_code | string | `"7385028"` |  |
@@ -102,9 +91,7 @@ PaymentHub EE Engine
 | mpesa.accounts.paygops.business_short_code | string | `"174379"` |  |
 | mpesa.accounts.paygops.pass_key | string | `"bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"` |  |
 | mpesa.accounts.paygops.till | string | `"9347335"` |  |
-
 | paygops_connector.paygops.authheader | string | `""` |  |
-
 | ph_ee_connector_slcb.auth_host | string | `"https://g2p-test.slcb.com:8443"` |  |
 | ph_ee_connector_slcb.aws.access_key | string | `"access-key"` | acess-key |
 | ph_ee_connector_slcb.aws.secret_key | string | `"secret-key"` | Secret-key |
@@ -118,7 +105,6 @@ PaymentHub EE Engine
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-
 | zeebe-cluster-helm.elasticsearch.fullnameOverride | string | `"zeebe-elasticsearch"` |  |
 | zeebe-cluster-helm.env[0].name | string | `"ZEEBE_BROKER_EXECUTION_METRICS_EXPORTER_ENABLED"` |  |
 | zeebe-cluster-helm.env[0].value | string | `"true"` |  |
@@ -148,36 +134,30 @@ PaymentHub EE Engine
 | zeebe-cluster-helm.gateway.env[1].name | string | `"ZEEBE_GATEWAY_MONITORING_ENABLED"` |  |
 | zeebe-cluster-helm.image.repository | string | `"camunda/zeebe"` |  |
 | zeebe-cluster-helm.kibana.elasticsearchHosts | string | `"http://zeebe-elasticsearch:9200/"` |  |
-
 | kafka.advertised.host | string | `"kafka"` |  |
 | kafka.advertised.port | string | `"9092"` |  |
 | kafka.deployment.annotations.deployTime | string | `"{{ .Values.deployTime }}"` |  |
-
 | elasticsearch.clusterName | string | `"ph-ee-elasticsearch"` |  |
 | elasticsearch.esConfig."elasticsearch.yml" | string | `"xpack.security.enabled: false\nxpack.security.transport.ssl.enabled: false\nxpack.security.transport.ssl.verification_mode: certificate\nxpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12\nxpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12\nxpack.security.http.ssl.enabled: false\nxpack.security.http.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12\nxpack.security.http.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12\n"` |  |
 | elasticsearch.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"******"` | password |
 | elasticsearch.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"elastic-credentials"` | auth Credentials |
 | elasticsearch.secretMounts[0].name | string | `"elastic-certificates"` | https://docs.google.com/document/d/1Pk4fHdAONAwZ9j65YuI8qA8MgDmv_oMnlvqNUQGsMTA/edit#  |
-
 | kibana.extraEnvs[2].valueFrom.secretKeyRef.name | string | `"kibana"` | kibana secret |
 | kibana.kibanaConfig."kibana.yml" | string | `"monitoring.enabled: false\nxpack.encryptedSavedObjects.encryptionKey: 5f4dcc3b5aa765d61d8327deb882cf99\nserver.ssl:\n  enabled: false\n  key: /usr/share/kibana/config/certs/elastic-certificate.pem\n  certificate: /usr/share/kibana/config/certs/elastic-certificate.pem\nxpack.security.encryptionKey: ${KIBANA_ENCRYPTION_KEY}\nelasticsearch.ssl:\n  certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem\n  verificationMode: certificate\n"` | xpack security for Elasticsearch |
 | kibana.secretMounts[0].name | string | `"elastic-certificate-pem"` | https://docs.google.com/document/d/1Pk4fHdAONAwZ9j65YuI8qA8MgDmv_oMnlvqNUQGsMTA/edit# |
 | kibana.secretMounts[0].secretName | string | `"elastic-certificate-pem"` | https://docs.google.com/document/d/1Pk4fHdAONAwZ9j65YuI8qA8MgDmv_oMnlvqNUQGsMTA/edit# |
-
 | keycloak.extraEnv | string | `"- name: KEYCLOAK_IMPORT\n  value: /realm/kong-keycloak-realm.json\n"` |  |
 | keycloak.extraVolumeMounts | string | `"- name: realm-secret\n  mountPath: \"/realm/\"\n  readOnly: true\n"` |  |
 | keycloak.extraVolumes | string | `"- name: realm-secret\n  secret:\n    secretName: realm-secret\n"` | https://docs.google.com/document/d/1SC5vM5YEYpCEqyrhxgsWfnzISuBuzi40fH00mggbCgY/edit#heading=h.4o1zohqpauvf |
 | keycloak.ingress.ingressClassName | string | `"kong"` | Defined ingress Class name  |
 | keycloak.ingress.rules[0].host | string | `"keycloak.mifos.io"` |  |
 | keycloak.ingress.tls | list | `[]` |  |
-
 | kong.admin.ingress.hostname | string | `"kong-admin.mifos.io"` |  |
 | kong.extraObjects[0].metadata.name | string | `"request-transformer"` |  |
 | kong.extraObjects[1].metadata.name | string | `"cors"` | Cross-Origin Resource Sharing |
 | kong.extraObjects[2].config.client_id | string | `"kong-oidc"` | OpenID Connect- https://docs.google.com/document/d/1SC5vM5YEYpCEqyrhxgsWfnzISuBuzi40fH00mggbCgY/edit#heading=h.4o1zohqpauvf |
 | kong.extraObjects[2].config.client_secret | string | `"xxxxxxxx"` | client secret- Secret generated from Kong-OIDC client |
 | kong.extraObjects[2].config.discovery | string | `"https://keycloak.localhost/auth/realms/kong-oidc/.well-known/openid-configuration"` |  |
-
 | operationsmysql.auth.database | string | `"tenants"` | databse name |
 | operationsmysql.auth.password | string | `"*****"` | password |
 | operationsmysql.auth.rootPassword | string | `"*******"` | Root Password |
