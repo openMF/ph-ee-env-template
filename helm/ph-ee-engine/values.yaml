@@ -909,13 +909,13 @@ tupande_connector:
   replicas: 1
   image: "oaftech.azurecr.io/oneacrefund/tupande-connector"
   imageTag: "0.0.1"
-  imagePullPolicy: "Always"
+  imagePullPolicy: "IfNotPresent"
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: ""
   containerPort: 5000
   limits:
-    memory: "512M"
-    cpu: "500m"
+    memory: "1Gi"
+    cpu: "200m"
   requests:
     memory: "512M"
     cpu: "100m"
@@ -935,13 +935,13 @@ erply_connector:
   replicas: 1
   image: "oaftech.azurecr.io/oneacrefund/erply-connector"
   imageTag: "0.0.1"
-  imagePullPolicy: "Always"
+  imagePullPolicy: "IfNotPresent"
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: ""
   containerPort: 5000
   limits:
-    memory: "512M"
-    cpu: "500m"
+    memory: "1Gi"
+    cpu: "200m"
   requests:
     memory: "512M"
     cpu: "100m"
