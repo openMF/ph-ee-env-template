@@ -1,0 +1,91 @@
+{{- if .Values.erply_connector.enabled -}}
+
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-erply"
+  labels:
+    app: ph-ee-connector-ams-erply
+spec:
+  replicas: {{ .Values.erply_connector.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-erply
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-erply
+      annotations:
+{{- if .Values.erply_connector.deployment.annotations }}
+{{ toYaml .Values.erply_connector.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-ams-erply
+          image: "{{ .Values.erply_connector.image }}:{{ .Values.erply_connector.imageTag }}"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: "{{ .Values.erply_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.erply_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "AMS_LOCAL_ENABLED"
+              value: "{{ .Values.erply_connector.ams.local.enabled }}"
+            - name: "ERPLY_AUTH-HEADER"
+              valueFrom:
+                secretKeyRef:
+                  name: "erply-secret"
+                  key: "auth-token"
+            - name: "ERPLY_BASE-URL"
+              value: "{{ .Values.erply_connector.erply.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.erply_connector.LOGGING_LEVEL_ROOT }}"
+          resources:
+            limits:
+              memory: "{{ .Values.erply_connector.limits.memory }}"
+              cpu: "{{ .Values.erply_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.erply_connector.requests.memory }}"
+              cpu: "{{ .Values.erply_connector.requests.cpu }}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: erply-secret
+type: Opaque
+data:
+  auth-token: {{ .Values.erply_connector.erply.auth_header | b64enc }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-ams-erply
+  name: ph-ee-connector-ams-erply
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-ams-erply
+  sessionAffinity: None
+  type: ClusterIP
+
+{{- end }}
