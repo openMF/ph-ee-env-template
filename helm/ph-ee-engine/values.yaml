@@ -3,13 +3,13 @@ mtn_rwanda_connector:
   tenants: "oaf"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   camel_server_port: 5000
-  mtnrw_callback:
-  mtnrw_subscriptionkey:
-  mtnrw_environment:
-  mtnrw_api_host: 
-  mtnrw_auth_host: 
-  mtnrw_client_secret:
-  mtnrw_client_key:
+  mtnrw_callback: ""
+  mtnrw_subscriptionkey: ""
+  mtnrw_environment: ""
+  mtnrw_api_host: ""
+  mtnrw_auth_host: ""
+  mtnrw_client_secret: ""
+  mtnrw_client_key: ""
   spring_profiles_active: "bb"
   mtn_max_retry_count: 3
   mtn_api_timeout: 6000
@@ -23,11 +23,11 @@ mtn_rwanda_connector:
         memory: 128Mi
         cpu: 100m
   replicas: 3
-  env: 
+  env: []
 
 zeebe:
-    broker:
-      contactpoint: "zeebe-zeebe-gateway:26500"
+  broker:
+    contactpoint: "zeebe-zeebe-gateway:26500"
 
 zeebe-cluster-helm:
   global:
@@ -38,7 +38,7 @@ zeebe-cluster-helm:
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '9600'
-    prometheus.io/path: '/metrics'    
+    prometheus.io/path: '/metrics'
 
   image:
     repository: camunda/zeebe
@@ -50,15 +50,16 @@ zeebe-cluster-helm:
   cpuThreadCount: "2"
   ioThreadCount: "2"
   pvcSize: "10Gi"
-  pvcAccessModes: [ "ReadWriteOnce" ]
+  pvcAccessModes:
+    - "ReadWriteOnce"
 
   resources:
     requests:
       cpu: 100m
 
   env:
-#    - name: ZEEBE_BROKER_BACKPRESSURE_ENABLED
-#      value: "false"
+    # - name: ZEEBE_BROKER_BACKPRESSURE_ENABLED
+    #   value: "false"
     - name: ZEEBE_BROKER_EXECUTION_METRICS_EXPORTER_ENABLED
       value: "true"
     - name: ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME
@@ -266,17 +267,17 @@ operationsmysql:
     tag: "5.7"
     debug: false
   auth:
-      database: "tenants"
-      username: "mifos"
-      password: "password"
-      rootPassword: "4ET6ywqlGt"
+    database: "tenants"
+    username: "mifos"
+    password: "password"
+    rootPassword: "4ET6ywqlGt"
   initdbScripts:
-      setup.sql: |-
-        CREATE DATABASE IF NOT EXISTS oaf;
-        CREATE DATABASE IF NOT EXISTS messagegateway;
-        GRANT ALL ON *.* TO 'root'@'%';
-        GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON oaf.* TO 'mifos';
+    setup.sql: |-
+      CREATE DATABASE IF NOT EXISTS oaf;
+      CREATE DATABASE IF NOT EXISTS messagegateway;
+      GRANT ALL ON *.* TO 'root'@'%';
+      GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
+      GRANT ALL PRIVILEGES ON oaf.* TO 'mifos';
 
 ph_ee_connector_ams_mifos:
   enabled: false
@@ -297,11 +298,11 @@ operations_app:
   tenants: "oaf"
   token_client_channel_secret: ""
   datasource:
-      username: "mifos"
-      password: "password"
-      host: "operationsmysql"
-      port: 3306
-      schema: "tenants"
+    username: "mifos"
+    password: "password"
+    host: "operationsmysql"
+    port: 3306
+    schema: "tenants"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -363,14 +364,13 @@ mpesa:
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenant: "oaf"
-  callback_host: $(MPESA_CALLBACK_HOST)
+  callback_host: ""
   channel:
-    host: $(MPESA_CHANNEL_HOST)
-  hostname: $(PH_API_HOST_NAME)
+    host: ""
   paygops:
-    host: $(MPESA_PAYGOPS_HOST)
+    host: ""
   roster:
-    host: $(MPESA_ROSTER_HOST)
+    host: ""
   retry_count: 3
   api_timeout: 60000
   zeebe_init_transfer_wait_timer: 15
@@ -422,7 +422,7 @@ mpesa:
       client_key: "0pLxbN83FrOl5Nd0Fh9Zi5BQlMxSL2n5"
       client_secret: "YzuGNoJxeub8ZC6d"
       pass_key: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
-  
+
   limits:
     memory: "512M"
     cpu: "500m"
@@ -656,8 +656,8 @@ kafka:
   image: "spotify/kafka"
   imagePullPolicy: "IfNotPresent"
   advertised:
-      host: "kafka"
-      port: "9092"
+    host: "kafka"
+    port: "9092"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -665,8 +665,8 @@ kafka:
     memory: "512M"
     cpu: "100m"
   deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"
 
 importer_rdbms:
   enabled: true
@@ -677,11 +677,11 @@ importer_rdbms:
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   datasource:
-      username: "mifos"
-      password: "password"
-      host: "operationsmysql"
-      port: 3306
-      schema: "tenants"
+    username: "mifos"
+    password: "password"
+    host: "operationsmysql"
+    port: 3306
+    schema: "tenants"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -710,9 +710,9 @@ connector_bulk:
   tenants: "ibank-usa,ibank-india"
   bucket_name: "paymenthub-ee-dev"
   operations_app:
-      contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
-      endpoints:
-        batch_transaction: "/api/v1/batch/transactions"
+    contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
+    endpoints:
+      batch_transaction: "/api/v1/batch/transactions"
   config:
     partylookup:
       enable: false
@@ -824,7 +824,6 @@ mock_oracle:
   deployment:
     annotations: {}
 
-
 wildcardhostname: ""
 
 tls: ""
@@ -855,13 +854,13 @@ kong:
           kubernetes.io/ingress.class: "kong"
         labels:
           global: "false"
-      disabled: false # optionally disable the plugin in Kong
+      disabled: false  # optionally disable the plugin in Kong
       plugin: request-transformer
       config:
         remove:
           headers:
-          - cookie
-          - x-id-token
+            - cookie
+            - x-id-token
     - apiVersion: configuration.konghq.com/v1
       kind: KongClusterPlugin
       metadata:
@@ -869,15 +868,15 @@ kong:
         annotations:
           kubernetes.io/ingress.class: "kong"
         labels:
-          global: "true"    
-      disabled: false # optionally disable the plugin in Kong
+          global: "true"
+      disabled: false  # optionally disable the plugin in Kong
       plugin: cors
-      config: 
-        origins: 
+      config:
+        origins:
           - "*"
         credentials: true
         max_age: 3600
-        exposed_headers : 
+        exposed_headers:
           - "X-Auth-Token"
         preflight_continue: false
     - apiVersion: configuration.konghq.com/v1
@@ -888,10 +887,10 @@ kong:
           kubernetes.io/ingress.class: "kong"
         labels:
           global: "false"
-      disabled: false # optionally disable the plugin in Kong
+      disabled: false  # optionally disable the plugin in Kong
       plugin: oidc
-      config: # configuration for the plugin
-        client_id: kong-oidc 
+      config:  # configuration for the plugin
+        client_id: kong-oidc
         client_secret: xxxxxxxx  # Generated on keyCloak
         realm: kong
         discovery: https://keycloak.localhost/auth/realms/kong-oidc/.well-known/openid-configuration

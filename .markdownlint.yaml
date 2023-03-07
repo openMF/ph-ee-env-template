@@ -1,0 +1,6 @@
+default: true
+
+# MD013/line-length - Line length
+MD013:
+  line_length: 130
+  tables: false
