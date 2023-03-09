@@ -725,9 +725,9 @@ connector_bulk:
       enable: true
     backpressure:
       enable: false
-    success_threshold_check:
+    completion_threshold_check:
       enable: true
-      success_rate: 95
+      completion_rate: 95
   aws:
     region: "us-east-2"
     access_key: "AKIAX32JM37TZOJ5AKFB"
