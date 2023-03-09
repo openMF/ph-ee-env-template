@@ -910,3 +910,6 @@ keycloak:
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json
+
+redis:
+  enabled: true
