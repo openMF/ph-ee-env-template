@@ -418,6 +418,9 @@ mpesa:
     host: ""
   roster:
     host: ""
+  redis:
+    host: ""
+    port: ""
   accounts:
     default:
       name: "default"
@@ -446,6 +449,14 @@ mpesa:
       client_key: "0pLxbN83FrOl5Nd0Fh9Zi5BQlMxSL2n5"
       client_secret: "YzuGNoJxeub8ZC6d"
       pass_key: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+  paybill:
+    accountHoldingInstitutionId: "default"
+    paygops:
+      business_short_code: 24322607
+      currency: "KES"
+    roster:
+      business_short_code: 12345678
+      currency: "KES"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -910,3 +921,6 @@ keycloak:
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json
+
+redis:
+  enabled: true
