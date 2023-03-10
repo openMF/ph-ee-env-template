@@ -209,7 +209,7 @@ channel:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-channel"
-  imageTag: "v1.3.0"
+  imageTag: "v1.4.0"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -611,7 +611,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-es"
-  imageTag: "v1.3.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: IfNotPresent
   reporting:
     enabled: "true"
@@ -706,8 +706,8 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: ""
-  imageTag: "v1.3.0"
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-bulk-processor"
+  imageTag: "v1.4.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "default"
   camel_disable_ssl: true
