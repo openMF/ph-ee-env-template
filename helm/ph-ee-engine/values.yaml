@@ -913,3 +913,8 @@ keycloak:
 
 redis:
   enabled: true
+  replicas: 1
+  imagePullPolicy: "Always"
+  voulumeMountName: redis-data
+  voulumeMountPath: /data
+  volumeName: redis-data
