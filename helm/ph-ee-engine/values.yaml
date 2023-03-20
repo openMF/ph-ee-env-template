@@ -106,7 +106,7 @@ camunda-platform:
 
   extraInitContainers: |
     - name: init-ph-ee-kafka-exporter
-      image: busybox:1.28
+      image: busybox:1.36
       command: ['/bin/sh', '-c']
       args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "https://fynarfin.io/images/exporter-1.2.0-SNAPSHOT.jar"; ls -al /exporters/']
       volumeMounts:
