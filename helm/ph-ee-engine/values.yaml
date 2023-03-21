@@ -63,7 +63,7 @@ camunda-platform:
         command:
           - '/bin/sh'
           - '-c'
-          - 'mkdir -p /exporters'
+          - 'ls -al /exporters/'
           - 'wget -O /exporters/ph-ee-kafka-exporter.jar "https://fynarfin.io/images/exporter-1.2.0-SNAPSHOT.jar"'
           - 'ls -al /exporters/'
         volumeMounts:
