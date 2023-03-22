@@ -912,3 +912,16 @@ keycloak:
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json
+
+ph_ee_integration_test:
+  enabled: false
+  replicas: 1
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
+  imageTag: latest
+  imagePullPolicy: "Always"
+  limits:
+    cpu: "500m"
+    memory: "3Gi"
+  requests:
+    cpu: "100m"
+    memory: "2Gi"

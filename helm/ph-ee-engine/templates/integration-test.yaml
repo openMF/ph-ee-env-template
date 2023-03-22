@@ -1,0 +1,32 @@
+{{- if .Values.ph_ee_integration_test.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-integration-test"
+  labels:
+    app: ph-ee-integration-test
+spec:
+  replicas: {{ .Values.ph_ee_integration_test.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-integration-test
+  template:
+    metadata:
+      labels:
+        app: ph-ee-integration-test
+
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: ph-ee-integration-test
+          image: "{{ .Values.ph_ee_integration_test.image }}:{{ .Values.ph_ee_integration_test.imageTag }}"
+          imagePullPolicy: "{{ .Values.ph_ee_integration_test.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.ph_ee_integration_test.limits.memory }}"
+              cpu: "{{ .Values.ph_ee_integration_test.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.ph_ee_integration_test.requests.memory }}"
+              cpu: "{{ .Values.ph_ee_integration_test.requests.cpu }}"
+  {{- end }}
