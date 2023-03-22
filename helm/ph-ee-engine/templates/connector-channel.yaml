@@ -24,7 +24,7 @@ spec:
         - name: ph-ee-connector-channel
           image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
           imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
           resources:
             limits:
@@ -142,7 +142,7 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 5000
+      targetPort: 8080
     - name: http
       port: 82
       protocol: TCP
