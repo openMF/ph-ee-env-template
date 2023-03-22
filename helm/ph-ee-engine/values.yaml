@@ -290,12 +290,6 @@ ph_ee_connector_ams_mifos:
   
 ph_ee_connector_mojaloop:
   enabled: false
-
-ph_ee_connector_slcb:
-  enabled: true
-  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-slcb"
-  imageTag: "v1.1.1"
-  imagePullPolicy: IfNotPresent
  
 
 operations_app:
@@ -777,7 +771,7 @@ ph_ee_connector_gsma:
     annotations: {}
 
 ph_ee_connector_slcb:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.1.1"
