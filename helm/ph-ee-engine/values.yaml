@@ -771,7 +771,7 @@ ph_ee_connector_gsma:
     annotations: {}
 
 ph_ee_connector_slcb:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.1.1"
