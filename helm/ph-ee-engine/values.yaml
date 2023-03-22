@@ -209,7 +209,7 @@ channel:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-channel"
-  imageTag: "v1.4.0"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -287,9 +287,16 @@ operationsmysql:
 
 ph_ee_connector_ams_mifos:
   enabled: false
-
+  
 ph_ee_connector_mojaloop:
   enabled: false
+
+ph_ee_connector_slcb:
+  enabled: true
+  image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-slcb"
+  imageTag: "v1.1.1"
+  imagePullPolicy: IfNotPresent
+ 
 
 operations_app:
   enabled: true
@@ -611,7 +618,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-es"
-  imageTag: "v1.3.1"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   reporting:
     enabled: "true"
