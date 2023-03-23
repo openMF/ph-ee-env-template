@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "85147e9c-c674-47e7-8479-16aee4dbc9fa",
+		"_postman_id": "c841e243-76ce-49e1-8035-af1c26fbbdd3",
 		"name": "Payment Hub APIs Copy 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18201748"
@@ -43143,6 +43143,11 @@
 							{
 								"key": "X-CorrelationID",
 								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Callback-URL",
+								"value": "{{BulkHostName}}/simulate",
 								"type": "text"
 							}
 						],
