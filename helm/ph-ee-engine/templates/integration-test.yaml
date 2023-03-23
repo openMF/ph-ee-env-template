@@ -17,7 +17,6 @@ spec:
         app: ph-ee-integration-test
 
     spec:
-      restartPolicy: Never
       containers:
         - name: ph-ee-integration-test
           image: "{{ .Values.ph_ee_integration_test.image }}:{{ .Values.ph_ee_integration_test.imageTag }}"
