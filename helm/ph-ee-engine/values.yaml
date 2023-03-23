@@ -314,7 +314,7 @@ ph_ee_connector_mojaloop:
     als:
       host: ""
       service: ""
-    transfer:
+    transfers:
       host: ""
       service: ""
     transactions:
