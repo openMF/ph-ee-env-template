@@ -914,7 +914,7 @@ keycloak:
       value: /realm/kong-keycloak-realm.json
 
 ph_ee_integration_test:
-  enabled: false
+  enabled: true
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
   imageTag: latest
