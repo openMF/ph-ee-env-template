@@ -28,5 +28,5 @@ dependencies:
     condition: "keycloak.enabled"
   - name: redis
     version: 17.8.6
-    repository: https://charts.bitnami.com/bitnami
+    repository: "https://charts.bitnami.com/bitnami"
     condition: "redis.enabled"

@@ -413,14 +413,14 @@ mpesa:
   tenant: ""
   callback_host: ""
   channel:
-    host: ""
+    host: "https://channel.sandbox.fynarfin.io"
   paygops:
-    host: ""
+    host: "http://ph-ee-connector-ams-paygops"
   roster:
-    host: ""
+    host: "http://ph-ee-connector-ams-roster"
   redis:
     host: ""
-    port: ""
+    port: "6379"
   accounts:
     default:
       name: "default"
@@ -924,3 +924,5 @@ keycloak:
 
 redis:
   enabled: true
+  containerPorts:
+    redis: 6379
