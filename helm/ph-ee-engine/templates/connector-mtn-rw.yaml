@@ -48,9 +48,9 @@ spec:
               value: "{{ .Values.mtn_rwanda_connector.mtnrw_auth_host }}"
             - name: "MTNRW_CLIENT_KEY"
               valueFrom:
-              secretKeyRef:
-                name: "mtn-rw-secret"
-                key: "client-key"
+                secretKeyRef:
+                  name: "mtn-rw-secret"
+                  key: "client-key"
             - name: "MTNRW_CLIENT_SECRET"
               valueFrom:
                 secretKeyRef:
