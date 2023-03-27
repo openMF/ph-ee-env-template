@@ -418,9 +418,6 @@ mpesa:
     host: "http://ph-ee-connector-ams-paygops"
   roster:
     host: "http://ph-ee-connector-ams-roster"
-  redis:
-    host: "redis"
-    port: "6379"
   accounts:
     default:
       name: "default"
@@ -921,8 +918,3 @@ keycloak:
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json
-
-redis:
-  enabled: true
-  containerPorts:
-    redis: 6379
