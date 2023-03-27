@@ -42471,6 +42471,28 @@
 								}
 							]
 						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
 					]
 				},
 				{
@@ -44620,7 +44642,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/danishjamal/Documents/Fynarfin/testing/ph-ee-env-template/orchestration/feel/mpesa-flow-oaf.bpmn"
+									"src": "/Users/ishan/fynarfin/phee/ph-ee-env-labs/orchestration/feel/inbound_transfer_roster-DFSPID.bpmn"
 								}
 							]
 						},
@@ -45141,7 +45163,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"1\",\n   \"BusinessShortCode\":\"12345678\",\n   \"BillRefNumber\":\"33272035\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"2540726839144\",\n   \"FirstName\":\"John\"\n}",
+									"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"8335b60090979AvUefSR\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"1\",\n   \"BusinessShortCode\":\"24322607\",\n   \"BillRefNumber\":\"24322607\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"254797668592\",\n   \"FirstName\":\"John\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -45159,86 +45181,7 @@
 								},
 								"description": "BillRefNo : (primaryIdentifier)  \n Paygops - foundationalId - 24322607  \n Roster - accountId - 33272035\n\nMSISDN :  \nPaygops - 254797668592  \nRoster - 2540726839144\n\nTransactionID:  \nPaygops - “8335b60090979AvUefSR”  \nRoster - “670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\""
 							},
-							"response": [
-								{
-									"name": "MPESA-Connector Validiate Webhook",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"1\",\n   \"BusinessShortCode\":\"12345678\",\n   \"BillRefNumber\":\"33272035\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"2540726839144\",\n   \"FirstName\":\"John\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "http://localhost:5001/validation",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "5001",
-											"path": [
-												"validation"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "amsName",
-											"value": "roster"
-										},
-										{
-											"key": "Keep-Alive",
-											"value": "timeout=60"
-										},
-										{
-											"key": "accountHoldingInstitutionId",
-											"value": "gorilla"
-										},
-										{
-											"key": "mpesaTxnId",
-											"value": "670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 27 Mar 2023 06:29:38 GMT"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
-										},
-										{
-											"key": "X-CorrelationID",
-											"value": "670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60"
-										},
-										{
-											"key": "reconciled",
-											"value": "true"
-										},
-										{
-											"key": "Platform-TenantId",
-											"value": "gorilla"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Content-Length",
-											"value": "40"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"ResultDesc\": \"Accepted\",\n    \"ResultCode\": 0\n}"
-								}
-							]
+							"response": []
 						}
 					]
 				},
