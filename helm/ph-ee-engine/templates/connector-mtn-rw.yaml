@@ -1,0 +1,101 @@
+{{- if .Values.mtn_rwanda_connector.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "mtn-rw-connector"
+  labels:
+    app: mtn-rwanda-connector
+spec:
+  replicas: {{ .Values.mtn_rwanda_connector.replicas }}
+  selector:
+    matchLabels:
+      app: mtn-rwanda-connector
+  template:
+    metadata:
+      labels:
+        app: mtn-rwanda-connector
+      annotations:
+{{- if .Values.mtn_rwanda_connector.deployment.annotations }}
+{{ toYaml .Values.mtn_rwanda_connector.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: mtn-rw-connector
+          image: "{{ .Values.mtn_rwanda_connector.image }}:{{ .Values.mtn_rwanda_connector.imageTag }}"
+          imagePullPolicy: "{{ .Values.mtn_rwanda_connector.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.mtn_rwanda_connector.deployment.resources.limits.memory }}"
+              cpu: "{{ .Values.mtn_rwanda_connector.deployment.resources.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.mtn_rwanda_connector.deployment.resources.requests.memory }}"
+              cpu: "{{ .Values.mtn_rwanda_connector.deployment.resources.requests.cpu }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Values.mtn_rwanda_connector.zeebe_broker_contactpoint }}"
+            - name: "TENANTS"
+              value: "{{ .Values.mtn_rwanda_connector.tenants }}"
+            - name: "MTN_API_TIMEOUT"
+              value: "{{ .Values.mtn_rwanda_connector.mtn_api_timeout }}"
+            - name: "MTN_MAX_RETRY_COUNT"
+              value: "{{ .Values.mtn_rwanda_connector.mtn_max_retry_count }}"
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.mtn_rwanda_connector.spring_profiles_active }}"
+            - name: "MTNRW_AUTH_HOST"
+              value: "{{ .Values.mtn_rwanda_connector.mtnrw_auth_host }}"
+            - name: "MTNRW_CLIENT_KEY"
+              valueFrom:
+              secretKeyRef:
+                name: "mtn-rw-secret"
+                key: "client-key"
+            - name: "MTNRW_CLIENT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mtn-rw-secret"
+                  key: "client-secret"
+            - name: "MTNRW_API_HOST"
+              value: "{{ .Values.mtn_rwanda_connector.mtnrw_api_host }}"
+            - name: "MTNRW_ENVIRONMENT"
+              value: "{{ .Values.mtn_rwanda_connector.mtnrw_environment}}"
+            - name: "MTNRW_SUBSCRIPTIONKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mtn-rw-secret"
+                  key: "subscription-key"
+            - name: "MTNRW_CALLBACK"
+              value: "{{ .Values.mtn_rwanda_connector.mtnrw_callback }}"
+            - name: "CAMEL_SERVER_PORT"
+              value: "{{ .Values.mtn_rwanda_connector.camel_server_port }}"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mtn-rw-secret
+type: Opaque
+data:
+  client-key: {{ .Values.mtn_rwanda_connector.mtnrw_client_key | b64enc}}
+  client-secret: {{ .Values.mtn_rwanda_connector.mtnrw_client_secret | b64enc }}
+  subscription-key : {{ .Values.mtn_rwanda_connector.mtnrw_subscription_key | b64enc }}
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mtn-rwanda-connector
+  name: mtn-rw-connector
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: mtn-rwanda-connector
+  sessionAffinity: None
+  type: ClusterIP
+{{- end}}

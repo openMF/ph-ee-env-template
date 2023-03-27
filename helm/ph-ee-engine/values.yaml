@@ -1,10 +1,13 @@
 mtn_rwanda_connector:
   enabled: true
-  tenants: "oaf"
+  image: "oaftech.azurecr.io/oneacrefund/mtn-connector"
+  imageTag: "1.0.0"
+  tenants: "rw-oaf"
+  imagePullPolicy: "IfNotPresent"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   camel_server_port: 5000
   mtnrw_callback: ""
-  mtnrw_subscriptionkey: ""
+  mtnrw_subscription_key: ""
   mtnrw_environment: ""
   mtnrw_api_host: ""
   mtnrw_auth_host: ""
@@ -17,7 +20,7 @@ mtn_rwanda_connector:
     annotations: {}
     resources:
       limits:
-        memory: 256Mi
+        memory: 1Gi
         cpu: 200m
       requests:
         memory: 128Mi
@@ -215,7 +218,7 @@ channel:
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
-  DFSPIDS: "oaf"
+  DFSPIDS: "oaf,rw-oaf"
   hostname: ""
   stub_hostname: ""
   limits:
