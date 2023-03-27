@@ -5,7 +5,7 @@ import json
 
 _logger = logging.getLogger(__name__)
 
-KIBANA_URL = "https://analytics.sandbox.fynarfin.io/"
+KIBANA_URL = os.environ.get("KIBANA_URL")
 
 VERIFY = False
 
@@ -24,7 +24,7 @@ def get_saved_objects(type):
     params = {"type": type}
     headers = {
         "kbn-xsrf": "true",
-        "Authorization": "Basic dW5kZWZpbmVkOiRLSUJBTkFQQVNT",
+        "Authorization": "Basic " + os.environ.get("AUTH"),
     }
     try:
         response = requests.request(
