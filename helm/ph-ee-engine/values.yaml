@@ -232,6 +232,63 @@ channel:
   deployment:
     annotations: {}
 
+gsmachannel:
+  enabled: true
+  replicas: 1
+  image: ""
+  imageTag: "v1.0.0"
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+  TRANSACTION_ID_LENGTH: 20
+  gsma_payee_tenant: ""
+  DFSPIDS: ""
+  hostname: ""
+  stub_hostname: ""
+  limits:
+    memory: "768M"
+    cpu: "500m"
+  requests:
+    memory: "768M"
+    cpu: "100m"
+  ingress:
+    enabled: true
+    path: "/gsmachannel"
+    annotations: {}
+    backend: {}
+    stub_backend: {}
+  deployment:
+    annotations: {}
+
+gsmachannelsimulator:
+  enabled: true
+  replicas: 1
+  image: ""
+  imageTag: "v1.0.0"
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+  TRANSACTION_ID_LENGTH: 20
+  DFSPIDS: ""
+  hostname: ""
+  stub_hostname: ""
+  limits:
+    memory: "768M"
+    cpu: "500m"
+  requests:
+    memory: "768M"
+    cpu: "100m"
+  ingress:
+    enabled: true
+    path: "/gsmachannelsimulator"
+    annotations: {}
+    backend: {}
+    stub_backend: {}
+  deployment:
+    annotations: {}
+
 operations:
   enabled: true
   mysql:
@@ -699,6 +756,8 @@ connector_bulk:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "default"
   camel_disable_ssl: true
+  channel:
+    hostname: ""
   hostname: "bulk-connector.sandbox.fynarfin.io"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: "ibank-usa,ibank-india"
@@ -748,6 +807,8 @@ ph_ee_connector_gsma:
   imageTag: "v1.0.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  api:
+    channel: ""
   limits:
     memory: "512M"
     cpu: "500m"

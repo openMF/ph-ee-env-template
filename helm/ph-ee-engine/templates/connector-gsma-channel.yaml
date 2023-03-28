@@ -1,0 +1,146 @@
+{{- if .Values.gsmachannel.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-gsma-channel"
+  labels:
+    app: ph-ee-connector-gsma-channel
+spec:
+  replicas: {{ .Values.gsmachannel.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-gsma-channel
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-gsma-channel
+      annotations:
+{{- if .Values.gsmachannel.deployment.annotations }}
+{{ toYaml .Values.gsmachannel.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-gsma-channel
+          image: "{{ .Values.gsmachannel.image }}:{{ .Values.gsmachannel.imageTag }}"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.gsmachannel.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.gsmachannel.limits.memory }}"
+              cpu: "{{ .Values.gsmachannel.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.gsmachannel.requests.memory }}"
+              cpu: "{{ .Values.gsmachannel.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.gsmachannel.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.gsmachannel.DFSPIDS }}"
+            - name: "TRANSACTION-ID-LENGTH"
+              value: "{{ .Values.gsmachannel.TRANSACTION_ID_LENGTH }}"
+            - name:  "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+            - name: "LOGGING_PATTERN_CONSOLE"
+              value: "{{ .Values.gsmachannel.LOGGING_PATTERN_CONSOLE }}"
+            - name: "gsma_payee_tenant"
+              value: "{{ .Values.gsmachannel.gsma_payee_tenant }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+
+---
+{{- if .Values.gsmachannel.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-gsma-channel
+  annotations:
+{{- if .Values.gsmachannel.ingress.annotations }}
+{{ toYaml .Values.gsmachannel.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.gsmachannel.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.gsmachannel.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.gsmachannel.ingress.backend }}
+{{ toYaml .Values.gsmachannel.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
+---
+{{- if .Values.gsmachannel.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-gsma-channel-gsma
+  annotations:
+{{- if .Values.gsmachannel.ingress.annotations }}
+{{ toYaml .Values.gsmachannel.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.gsmachannel.stub_hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.gsmachannel.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.gsmachannel.ingress.backend }}
+{{ toYaml .Values.gsmachannel.ingress.stub_backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-gsma-channel
+  name: ph-ee-connector-gsma-channel
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: http
+      port: 82
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ph-ee-connector-gsma-channel
+  sessionAffinity: None
+  type: ClusterIP
+
+  {{- end }}
+

@@ -1,0 +1,146 @@
+{{- if .Values.gsmachannelsimulator.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-gsma-channel-simulator"
+  labels:
+    app: ph-ee-connector-gsma-channel-simulator
+spec:
+  replicas: {{ .Values.gsmachannelsimulator.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-gsma-channel-simulator
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-gsma-channel-simulator
+      annotations:
+{{- if .Values.gsmachannelsimulator.deployment.annotations }}
+{{ toYaml .Values.gsmachannelsimulator.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-gsma-channel-simulator
+          image: "{{ .Values.gsmachannelsimulator.image }}:{{ .Values.gsmachannelsimulator.imageTag }}"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.gsmachannelsimulator.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.gsmachannelsimulator.limits.memory }}"
+              cpu: "{{ .Values.gsmachannelsimulator.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.gsmachannelsimulator.requests.memory }}"
+              cpu: "{{ .Values.gsmachannelsimulator.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.gsmachannelsimulator.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.gsmachannelsimulator.DFSPIDS }}"
+            - name: "TRANSACTION-ID-LENGTH"
+              value: "{{ .Values.gsmachannelsimulator.TRANSACTION_ID_LENGTH }}"
+            - name:  "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+            - name: "LOGGING_PATTERN_CONSOLE"
+              value: "{{ .Values.gsmachannelsimulator.LOGGING_PATTERN_CONSOLE }}"
+            - name: "gsma_payee_tenant"
+              value: "{{ .Values.gsmachannelsimulator.gsma_payee_tenant }}"
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+
+---
+{{- if .Values.gsmachannelsimulator.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-gsma-channel-simulator
+  annotations:
+{{- if .Values.gsmachannelsimulator.ingress.annotations }}
+{{ toYaml .Values.gsmachannelsimulator.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.gsmachannelsimulator.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.gsmachannelsimulator.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.gsmachannelsimulator.ingress.backend }}
+{{ toYaml .Values.gsmachannelsimulator.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
+---
+{{- if .Values.gsmachannelsimulator.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-gsma-channel-simulator-gsma
+  annotations:
+{{- if .Values.gsmachannelsimulator.ingress.annotations }}
+{{ toYaml .Values.gsmachannelsimulator.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.gsmachannelsimulator.stub_hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.gsmachannelsimulator.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.gsmachannelsimulator.ingress.backend }}
+{{ toYaml .Values.gsmachannelsimulator.ingress.stub_backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
+---
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-gsma-channel-simulator
+  name: ph-ee-connector-gsma-channel-simulator
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: http
+      port: 82
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ph-ee-connector-gsma-channel-simulator
+  sessionAffinity: None
+  type: ClusterIP
+
+  {{- end }}
+
