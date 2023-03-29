@@ -2,8 +2,12 @@ import requests
 import logging
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 _logger = logging.getLogger(__name__)
+
 
 KIBANA_URL = os.environ.get("KIBANA_URL")
 
