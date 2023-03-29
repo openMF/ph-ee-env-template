@@ -611,8 +611,15 @@ importer_es:
     fields:
       amount: false
       accountId: false
+      ams: false
+      clientCorrelationId: false
+      currency: false
+      customData:
+        enabled: false
+        confirmationReceived: false
       errorCode: false
       errorDescription: false
+      errorInformation: false
       externalId: false
       initiator: false
       initiatorType: false
