@@ -413,11 +413,11 @@ mpesa:
   tenant: ""
   callback_host: ""
   channel:
-    host: "https://channel.sandbox.fynarfin.io"
+    host: ""
   paygops:
-    host: "http://ph-ee-connector-ams-paygops"
+    host: ""
   roster:
-    host: "http://ph-ee-connector-ams-roster"
+    host: ""
   accounts:
     default:
       name: "default"
