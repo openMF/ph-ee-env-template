@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c841e243-76ce-49e1-8035-af1c26fbbdd3",
-		"name": "Payment Hub APIs Copy 2",
+		"_postman_id": "0def6e99-d16c-4636-a9c0-d9875f59cb17",
+		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18201748"
+		"_exporter_id": "22669462"
 	},
 	"item": [
 		{
@@ -44642,7 +44642,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/danishjamal/Documents/Fynarfin/testing/ph-ee-env-template/orchestration/feel/mpesa-flow-oaf.bpmn"
+									"src": "/Users/ishan/fynarfin/phee/ph-ee-env-labs/orchestration/feel/inbound_transfer_roster-DFSPID.bpmn"
 								}
 							]
 						},
@@ -45149,6 +45149,90 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Paybill APIs",
+			"item": [
+				{
+					"name": "Validation",
+					"item": [
+						{
+							"name": "MPESA-Connector Validiate Webhook",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"8335b60090979AvUefSR\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"1\",\n   \"BusinessShortCode\":\"24322607\",\n   \"BillRefNumber\":\"24322607\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197.00\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"254797668592\",\n   \"FirstName\":\"John\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{MpesaHostName}}/validation",
+									"host": [
+										"{{MpesaHostName}}"
+									],
+									"path": [
+										"validation"
+									]
+								},
+								"description": "BillRefNo : (primaryIdentifier)  \n Paygops - foundationalId - 24322607  \n Roster - accountId - 33272035\n\nMSISDN :  \nPaygops - 254797668592  \nRoster - 2540726839144\n\nTransactionID:  \nPaygops - “8335b60090979AvUefSR”  \nRoster - “670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Confirmation",
+					"item": [
+						{
+							"name": "MPESA-Connector Confirmation Webhook",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.expect(pm.response.text).not.equal(null)",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"TransactionType\":\"Pay Bill\",\n   \"TransID\":\"8335b60090979AvUefSR\",\n   \"TransTime\":\"20191122063845\",\n   \"TransAmount\":\"1\",\n   \"BusinessShortCode\":\"24322607\",\n   \"BillRefNumber\":\"24322607\",\n   \"InvoiceNumber\":\"\",\n   \"OrgAccountBalance\":\"49197\",\n   \"ThirdPartyTransID\":\"\",\n   \"MSISDN\":\"254797668592\",\n   \"FirstName\":\"John\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{MpesaHostName}}/confirmation",
+									"host": [
+										"{{MpesaHostName}}"
+									],
+									"path": [
+										"confirmation"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Design Document: [https://www.notion.so/PayBill-Design-2670e8fac37a485eaac659ba942683ce](https://www.notion.so/PayBill-Design-2670e8fac37a485eaac659ba942683ce)"
 		}
 	],
 	"variable": [
