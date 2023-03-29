@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "62127860-07e0-4a6a-895b-dddf31db4810",
+		"_postman_id": "0f06e33a-12a2-49ed-8b9c-6ba059f6a42e",
 		"name": "Mojaloop Setup",
 		"description": "Setup the mojaloop environment in any cluster with mojaloop chart already deployed. Use Mojaloop-Local environment along with this collection.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -433,7 +433,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"DEFERREDNET\",\n  \"settlementGranularity\": \"NET\",\n  \"settlementInterchange\": \"MULTILATERAL\",\n  \"settlementDelay\": \"DEFERRED\",\n  \"requireLiquidityCheck\": true,\n  \"ledgerAccountType\": \"POSITION\",\n  \"autoPositionReset\": true\n}"
+							"raw": "{\n  \"name\": \"DEFERREDNET\",\n  \"settlementGranularity\": \"NET\",\n  \"settlementInterchange\": \"MULTILATERAL\",\n  \"settlementDelay\": \"DEFERRED\",\n  \"requireLiquidityCheck\": true,\n  \"ledgerAccountType\": \"POSITION\",\n  \"autoPositionReset\": true,\n  \"settlementAccountType\" : \"SETTLEMENT\"\n}"
 						},
 						"url": {
 							"raw": "{{HOST_CENTRAL_LEDGER}}/settlementModels",
@@ -460,7 +460,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"DEFERREDNETUSD\",\n  \"settlementGranularity\": \"NET\",\n  \"settlementInterchange\": \"MULTILATERAL\",\n  \"settlementDelay\": \"DEFERRED\",\n  \"currency\": \"USD\",\n  \"requireLiquidityCheck\": true,\n  \"ledgerAccountType\": \"POSITION\",\n  \"autoPositionReset\": true\n}"
+							"raw": "{\n  \"name\": \"DEFERREDNETUSD\",\n  \"settlementGranularity\": \"NET\",\n  \"settlementInterchange\": \"MULTILATERAL\",\n  \"settlementDelay\": \"DEFERRED\",\n  \"currency\": \"USD\",\n  \"requireLiquidityCheck\": true,\n  \"ledgerAccountType\": \"POSITION\",\n  \"autoPositionReset\": true,\n  \"settlementAccountType\" : \"SETTLEMENT\"\n}"
 						},
 						"url": {
 							"raw": "{{HOST_CENTRAL_LEDGER}}/settlementModels",
@@ -765,7 +765,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_GET\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_GET\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
@@ -851,7 +851,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
@@ -937,7 +937,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_POST\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/transfers\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_POST\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/transfers\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
@@ -980,7 +980,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/transfers/{{transferId}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/transfers/{{transferId}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
@@ -1023,7 +1023,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/transfers/{{transferId}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/transfers/{{transferId}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
@@ -1609,7 +1609,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1652,7 +1652,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1695,7 +1695,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/participants/{{requestId}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{requestId}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1738,7 +1738,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/participants/{{requestId}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{requestId}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1781,7 +1781,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_GET\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_GET\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1812,11 +1812,8 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
@@ -1827,7 +1824,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1870,7 +1867,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1913,7 +1910,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_QUOTES\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_QUOTES\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1956,7 +1953,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_POST\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/transfers\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_POST\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/transfers\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -1999,7 +1996,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_PUT\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/transfers/{{transferId}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/transfers/{{transferId}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -2042,7 +2039,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_ERROR\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/transfers/{{transferId}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/transfers/{{transferId}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -2085,7 +2082,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -2128,7 +2125,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -2171,7 +2168,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -2214,7 +2211,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
@@ -2257,7 +2254,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
 								},
 								"url": {
 									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
