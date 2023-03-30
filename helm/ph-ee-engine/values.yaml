@@ -192,7 +192,7 @@ channel:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.4.0"
+  imageTag: "v1.4.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -372,7 +372,7 @@ operations_web:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.3.1"
+  imageTag: "v1.3.2"
   imagePullPolicy: "Always"
   hostname: ""
   webhost: ""
@@ -403,7 +403,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -472,7 +472,7 @@ roster_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.2.0"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: ""
@@ -495,7 +495,7 @@ paygops_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.4.0"
+  imageTag: "v1.5.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
