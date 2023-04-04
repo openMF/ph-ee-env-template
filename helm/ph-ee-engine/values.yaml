@@ -449,10 +449,10 @@ mpesa:
   paybill:
     accountHoldingInstitutionId: "default"
     paygops:
-      business_short_code: 24322607
+      business_short_code: "24322607"
       currency: "KES"
     roster:
-      business_short_code: 12345678
+      business_short_code: "12345678"
       currency: "KES"
   limits:
     memory: "512M"
