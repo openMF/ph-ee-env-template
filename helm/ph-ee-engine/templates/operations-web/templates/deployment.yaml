@@ -3,7 +3,7 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: ph-ee-operations-web
+  name: "ph-ee-operations-web"
   labels:
     app: ph-ee-operations-web
 spec:

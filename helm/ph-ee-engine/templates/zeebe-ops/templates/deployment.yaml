@@ -1,21 +1,4 @@
-{{- if .Values.zeebe_ops.enabled -}}
-
-apiVersion: {{ .Values.deployment.apiversion }}
-kind: Deployment
-metadata:
-  name: "ph-ee-zeebe-ops"
-  labels:
-    app: ph-ee-zeebe-ops
-spec:
-  replicas: {{ .Values.zeebe_ops.replicas }}
-  selector:
-    matchLabels:
-      app: ph-ee-zeebe-ops
-  template:
-    metadata:
-      labels:
-        app: ph-ee-zeebe-ops
-      annotations:
+notations:
 {{- if .Values.zeebe_ops.deployment.annotations }}
 {{ toYaml .Values.zeebe_ops.deployment.annotations | indent 8 }}
 {{- end }}
@@ -58,4 +41,4 @@ spec:
                 secretKeyRef:
                   name: elastic-credentials
                   key: password
-{{- end }}
+{{- end }}                  
