@@ -219,10 +219,6 @@ channel:
   requests:
     memory: "768M"
     cpu: "100m"
-  paygops:
-    host: ""
-  roster:
-    host: ""
   ingress:
     enabled: true
     path: "/channel"
