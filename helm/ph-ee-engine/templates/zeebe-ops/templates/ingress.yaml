@@ -1,0 +1,27 @@
+{{- if .Values.zeebe_ops.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-zeebe-ops
+  annotations:
+{{- if .Values.zeebe_ops.ingress.annotations }}
+{{ toYaml .Values.zeebe_ops.ingress.annotations | indent 4 }}
+{{- end }}
+
+spec:
+  rules:
+    - host: "{{ .Values.zeebe_ops.hostname }}"
+      http:
+        paths:
+          - path: "{{ .Values.zeebe_ops.ingress.path }}"
+            pathType: Prefix
+            backend:
+{{- if .Values.zeebe_ops.ingress.backend }}
+{{ toYaml .Values.zeebe_ops.ingress.backend | indent 14 }}
+{{- end }} 
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
