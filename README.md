@@ -14,4 +14,6 @@ Payment Hub Enterprise Edition middleware for integration to real-time payment s
 
 ## Auto-Trigger ph-ee-env-template
 
+## MojaloopHub_Setup.postman_collection.json
+- [Mojaloop postman collection ] (https://github.com/mojaloop/postman)
 - trigger pipeline on commit/push (check)
