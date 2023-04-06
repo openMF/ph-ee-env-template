@@ -131,7 +131,7 @@ spec:
 
             # erply
             - name: "ACCOUNTS_ERPLY_SHORTCODE"
-              value: "{{ .Values.mpesa.accounts.erply.business_short_code}}"
+              value: "{{ .Values.mpesa.accounts.erply.business_short_code }}"
             - name: "ACCOUNTS_ERPLY_TILL"
               value: "{{ .Values.mpesa.accounts.erply.till }}"
             - name: "ACCOUNTS_ERPLY_AUTHHOST"
