@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.operations_web.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-operations-web
           image: "{{ .Values.operations_web.image }}:{{ .Values.operations_web.imageTag }}"
@@ -36,9 +34,9 @@ spec:
               memory: "{{ .Values.operations_web.requests.memory }}"
               cpu: "{{ .Values.operations_web.requests.cpu }}"
           volumeMounts:
-            - name: ph-ee-operations-web-config
-              mountPath: "/usr/share/nginx/html/assets/configuration.properties"
-              subPath: "configuration.properties"
+{{- if .Values.operations_web.deployment.config }}
+{{ toYaml .Values.operations_web.deployment.config | indent 12 }}
+{{- end }}
       volumes:
         - name: ph-ee-operations-web-config
           configMap:
@@ -49,11 +47,13 @@ apiVersion: {{ .Values.configmap.apiversion }}
 kind: ConfigMap
 data:
   configuration.properties: |
-    oauth.enabled true
+    oauth.enabled false
     oauth.basicAuth true
     oauth.basicAuthToken Y2xpZW50Og==
     oauth.serverUrl https://{{ .Values.identity.hostname }}
     serverUrl https://{{ .Values.operations_app.hostname }}
+    auth.enabled false
+    auth.tenant phdefault
 metadata:
   name: ph-ee-operations-web-config
 

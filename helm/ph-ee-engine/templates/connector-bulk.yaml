@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-bulk
           image: "{{ .Values.connector_bulk.image }}:{{ .Values.connector_bulk.imageTag }}"
@@ -70,10 +68,10 @@ spec:
               value: "{{ .Values.connector_bulk.config.mergeback.enable }}"
             - name: "CONFIG_BACKPRESSURE_ENABLE"
               value: "{{ .Values.connector_bulk.config.backpressure.enable }}"
-            - name: "CONFIG_SUCCESS-THRESHOLD-CHECK_ENABLE"
-              value: "{{ .Values.connector_bulk.config.success_threshold_check.enable }}"
-            - name: "CONFIG_SUCCESS-THRESHOLD-CHECK_SUCCESS-RATE"
-              value: "{{ .Values.connector_bulk.config.success_threshold_check.success_rate }}"
+            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_ENABLE"
+              value: "{{ .Values.connector_bulk.config.completion_threshold_check.enable }}"
+            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
+              value: "{{ .Values.connector_bulk.config.completion_threshold_check.completion_rate }}"
             - name: "CLOUD_AWS_REGION_STATIC"
               value: "{{ .Values.connector_bulk.aws.region }}"
             - name: "AWS_ACCESS_KEY"
@@ -110,7 +108,6 @@ metadata:
   labels:
     app: ph-ee-connector-bulk
   name: ph-ee-connector-bulk
-  namespace: default
 spec:
   ports:
     - name: port

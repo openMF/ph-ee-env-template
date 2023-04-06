@@ -24,10 +24,8 @@ spec:
         - name: ph-ee-connector-channel
           image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
           imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
-          imagePullSecrets:
-            - name: "{{ .Values.imagePullSecrets }}"
           resources:
             limits:
               memory: "{{ .Values.channel.limits.memory }}"
@@ -66,6 +64,22 @@ spec:
               value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
             - name: "gsma_payee_tenant"
               value: "{{ .Values.channel.gsma_payee_tenant }}"
+            - name: "operations_url"
+              value: "{{ .Values.channel.operations.url }}"
+            - name: "operations_auth-enabled"
+              value: "{{ .Values.channel.operations.authEnabled }}"
+            - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
+              value: "{{ .Values.channel.tenantPrimary.clientId }}"
+            - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
+              value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
+            - name: "CHANNEL_TENANTPRIMARY_TENANT"
+              value: "{{ .Values.channel.tenantPrimary.tenant }}"
+            - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
+              value: "{{ .Values.channel.tenantSecondary.clientId }}"
+            - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
+              value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
+            - name: "CHANNEL_TENANTSECONDARY_TENANT"
+              value: "{{ .Values.channel.tenantSecondary.tenant }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -140,7 +154,7 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 5000
+      targetPort: 8080
     - name: http
       port: 82
       protocol: TCP
@@ -151,3 +165,4 @@ spec:
   type: ClusterIP
 
   {{- end }}
+

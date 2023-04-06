@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-ams-paygops
           image: "{{ .Values.paygops_connector.image }}:{{ .Values.paygops_connector.imageTag }}"
@@ -48,6 +46,7 @@ spec:
             - name: "AMS_LOCAL_ENABLED"
               value: "{{ .Values.paygops_connector.ams.local.enabled }}"
             - name: "PAYGOPS_AUTHHEADER"
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: "paygops-secret"

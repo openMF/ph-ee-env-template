@@ -20,8 +20,6 @@ spec:
 {{ toYaml .Values.ph_ee_connector_slcb.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      imagePullSecrets:
-        - name: "{{ .Values.imagePullSecrets }}"
       containers:
         - name: ph-ee-connector-slcb-mm
           image: "{{ .Values.ph_ee_connector_slcb.image }}"
@@ -118,7 +116,6 @@ metadata:
   labels:
     app: ph-ee-connector-slcb
   name: ph-ee-connector-slcb
-  namespace: default
 spec:
   ports:
     - name: port

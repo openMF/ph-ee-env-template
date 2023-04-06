@@ -1,6 +1,7 @@
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
+      
 
 zeebe-cluster-helm:
   global:
@@ -151,7 +152,7 @@ kibana:
   enabled: true
   imageTag: 7.16.3
   fullnameOverride: "ph-ee-kibana"
-  elasticsearchHosts: "https://ph-ee-elasticsearch:9200/"
+  elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
   protocol: http
   kibanaConfig:
     kibana.yml: |
@@ -191,7 +192,7 @@ channel:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.4.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -199,6 +200,17 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   DFSPIDS: ""
+  operations:
+    url: ""
+    authEnabled: false
+  tenantPrimary:
+    clientId: ""
+    clientSecret: ""
+    tenant: ""
+  tenantSecondary:
+    clientId: ""
+    clientSecret: ""
+    tenant: ""
   hostname: ""
   stub_hostname: ""
   limits:
@@ -258,7 +270,7 @@ ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.2.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: false
@@ -266,12 +278,21 @@ ph_ee_connector_ams_mifos:
   ams_local_account_host: ""
   ams_local_customer_host: ""
   ams_local_auth_host: ""
+  ams_local_tenants: ""
+  ams_local_loan_host: ""
   limits:
     memory: "512M"
     cpu: "500m"
   requests:
     memory: "512M"
     cpu: "100m"
+  ingress:
+    enabled: false
+    path: "/"
+    annotations: {}
+    backend: {}
+  deployment:
+    annotations: {}    
   deployment:
     annotations: {}
 
@@ -282,12 +303,32 @@ ph_ee_connector_mojaloop:
   imageTag: "v1.0.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  switch:
+    quotes:
+      host: ""
+      service: ""
+    als:
+      host: ""
+      service: ""
+    transfers:
+      host: ""
+      service: ""
+    transactions:
+      host: ""
+      service: ""
+    oracle:
+      host: ""
   limits:
     memory: "512M"
     cpu: "500m"
   requests:
     memory: "512M"
     cpu: "100m"
+  ingress:
+    enabled: true
+    path: "/"
+    annotations: {}
+    backend: {}
   deployment:
     annotations: {}
 
@@ -295,7 +336,7 @@ operations_app:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.3.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -327,7 +368,7 @@ operations_web:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.3.2"
   imagePullPolicy: "Always"
   hostname: ""
   webhost: ""
@@ -346,6 +387,10 @@ operations_web:
     backend: {}
   deployment:
     annotations: {}
+    config:
+      - name: ph-ee-operations-web-config
+        mountPath: "/usr/share/nginx/html/assets/configuration.properties"
+        subPath: "configuration.properties"
 
 identity:
   hostname: ""
@@ -354,7 +399,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.2.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -363,6 +408,12 @@ mpesa:
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   callback_host: ""
+  channel:
+    host: ""
+  paygops:
+    host: ""
+  roster:
+    host: ""
   accounts:
     default:
       name: "default"
@@ -391,6 +442,15 @@ mpesa:
       client_key: "0pLxbN83FrOl5Nd0Fh9Zi5BQlMxSL2n5"
       client_secret: "YzuGNoJxeub8ZC6d"
       pass_key: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+  
+  paybill:
+    accountHoldingInstitutionId: "default"
+    paygops:
+      business_short_code: "24322607"
+      currency: "KES"
+    roster:
+      business_short_code: "12345678"
+      currency: "KES"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -409,7 +469,7 @@ roster_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.0.2"
+  imageTag: "v1.2.0"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: ""
@@ -427,12 +487,12 @@ roster_connector:
     auth_header: ""
   deployment:
     annotations: {}
-
+  
 paygops_connector:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.2.1"
+  imageTag: "v1.5.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -488,7 +548,7 @@ notifications:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.0.1"
+  imageTag: "v1.0.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -526,6 +586,7 @@ zeebe_ops:
   hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
+  elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   elasticsearch_sslverification: false
   elasticsearch_security_enabled: false
   tenants: ""
@@ -547,15 +608,22 @@ importer_es:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.2.1"
+  imageTag: "v1.3.2"
   imagePullPolicy: "Always"
+  importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
     enabled: false
     fields:
       amount: false
       accountId: false
+      ams: false
+      clientCorrelationId: false
+      currency: false
+      customData: false
+      confirmationReceived: false
       errorCode: false
       errorDescription: false
+      errorInformation: false
       externalId: false
       initiator: false
       initiatorType: false
@@ -614,7 +682,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.0.8"
+  imageTag: "v1.2.0"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
@@ -638,7 +706,7 @@ connector_bulk:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.4.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "default"
   camel_disable_ssl: true
@@ -668,9 +736,9 @@ connector_bulk:
       enable: true
     backpressure:
       enable: false
-    success_threshold_check:
+    completion_threshold_check:
       enable: true
-      success_rate: 95
+      completion_rate: 95
   aws:
     region: "us-east-2"
     access_key: "AKIAX32JM37TZOJ5AKFB"
@@ -704,7 +772,7 @@ ph_ee_connector_slcb:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.1.0"
+  imageTag: "v1.1.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
@@ -852,4 +920,4 @@ keycloak:
       readOnly: true
   extraEnv: |
     - name: KEYCLOAK_IMPORT
-      value: /realm/realm.json
+      value: /realm/kong-keycloak-realm.json
