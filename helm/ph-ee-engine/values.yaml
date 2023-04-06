@@ -611,38 +611,38 @@ importer_es:
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
-    enabled: true
+    enabled: false
     fields:
-      amount: true
-      accountId: true
-      ams: true
-      clientCorrelationId: true
-      currency: true
+      amount: false
+      accountId: false
+      ams: false
+      clientCorrelationId: false
+      currency: false
       customData: false
-      confirmationReceived: true
+      confirmationReceived: false
       errorCode: false
-      errorDescription: true
-      errorInformation: true
+      errorDescription: false
+      errorInformation: false
       externalId: false
       initiator: false
       initiatorType: false
       isNotificationsFailureEnabled: false
       isNotificationsSuccessEnabled: false
-      mpesaTransactionId: true
+      mpesaTransactionId: false
       mpesaTransactionStatusRetryCount: false
       originDate: false
-      partyLookupFailed: true
-      phoneNumber: true
+      partyLookupFailed: false
+      phoneNumber: false
       processDefinitionKey: false
       processInstanceKey: false
       scenario: false
-      tenantId: true
+      tenantId: false
       timer: false
-      timestamp: true
-      transactionFailed: true
-      transactionId: true
+      timestamp: false
+      transactionFailed: false
+      transactionId: false
       transferCreateFailed: false
-      transferSettlementFailed: true
+      transferSettlementFailed: false
       transferResponseCREATE: false
   elasticsearch_sslverification: false
   elasticsearch_security_enabled: false
