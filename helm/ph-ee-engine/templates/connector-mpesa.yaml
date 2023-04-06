@@ -125,7 +125,7 @@ spec:
             - name: "ACCOUNTS_ROSTER_CURRENCY"
               value: "{{ .Values.mpesa.paybill.roster.currency }}"
             - name: "ACCOUNT_HOLDING_INSTITUTION_ID"
-              value: "{{ .Values.mpesa.paybill.accountHoldingInstitutionId }}"
+              value: "{{ .Values.mpesa.paybill_accountHoldingInstitutionId }}"
 
 
 ---
