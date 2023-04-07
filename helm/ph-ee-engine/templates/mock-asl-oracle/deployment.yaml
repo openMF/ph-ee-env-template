@@ -3,7 +3,7 @@
 apiVersion: "apps/v1"
 kind: Deployment
 metadata:
-  name: "mock-oracle"
+  name: "mock_oracle"
   labels:
     app: mock-oracle
 spec:

@@ -1,7 +1,12 @@
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
-      
+# Whether this chart should self-manage its service account, role, and associated role binding.
+managedServiceAccount: true
+# Custom service account override that the pod will use
+serviceAccount: ""    
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+serviceAccountAnnotations: {}      
 
 zeebe-cluster-helm:
   global:
@@ -541,6 +546,9 @@ messagegateway:
     name: ""
     key:
       telerivet_api_key: ""
+    value:
+      api_key: ""
+      project_id: ""  
   deployment:
     annotations: {}
 
@@ -749,6 +757,8 @@ connector_bulk:
   requests:
     memory: "512M"
     cpu: "100m"
+  ingress:
+      enabled: false 
   deployment:
     annotations: {}
 

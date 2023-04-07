@@ -10,7 +10,7 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: {{ .Values.mock_oracle.service.targetport}}
+      targetPort: {{ .Values.mock_oracle.service.targetport }}
   selector:
     app: mock-oracle
   sessionAffinity: None
