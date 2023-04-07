@@ -3,7 +3,7 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: ph-ee-importer-rdbms
+  name: "ph-ee-importer-rdbms"
   labels:
     app: ph-ee-importer-rdbms
 spec:

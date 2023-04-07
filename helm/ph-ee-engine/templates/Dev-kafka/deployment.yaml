@@ -44,3 +44,5 @@ spec:
                 limits:
                   memory: "1536M"
       restartPolicy: Always
+      
+{{- end }}
