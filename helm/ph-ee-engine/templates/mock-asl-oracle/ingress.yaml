@@ -1,0 +1,26 @@
+{{- if .Values.mock_oracle.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: mock-oracle
+  annotations:
+{{- if .Values.mock_oracle.ingress.annotations }}
+{{ toYaml .Values.mock_oracle.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.mock_oracle.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.mock_oracle.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.mock_oracle.ingress.backend }}
+{{ toYaml .Values.mock_oracle.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+        - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}
