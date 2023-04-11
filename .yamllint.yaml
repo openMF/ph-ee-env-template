@@ -5,6 +5,7 @@ rules:
     max: 500
     level: error
   document-start: disable
+  key-duplicates: disable
   empty-lines:
     max: 1
 
