@@ -232,7 +232,7 @@ channel:
     clientSecret: ""
     tenant: ""
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-channel"
-  imageTag: "v1.4.1"
+  imageTag: "v1.4.2"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
