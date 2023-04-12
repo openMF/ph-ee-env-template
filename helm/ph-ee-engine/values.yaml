@@ -650,10 +650,10 @@ importer_es:
     fields:
       amount: false
       accountId: false
-      ams: true
-      clientCorrelationId: false
-      currency: true
-      customData: true
+      ams: "true"
+      clientCorrelationId: "true"
+      currency: "true"
+      customData: "true"
       confirmationReceived: false
       errorCode: false
       errorDescription: false
@@ -716,7 +716,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-rdbms"
-  imageTag: "v1.2.0"
+  imageTag: "v1.2.1"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
