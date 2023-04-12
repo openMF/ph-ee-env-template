@@ -646,13 +646,19 @@ importer_es:
   imageTag: "v1.3.2"
   imagePullPolicy: IfNotPresent
   reporting:
-    enabled: "true"
+    enabled: false
     fields:
-      amount: true
-      accountId: true
+      amount: false
+      accountId: false
+      ams: true
+      clientCorrelationId: false
+      currency: true
+      customData: true
+      confirmationReceived: false
       errorCode: false
-      errorDescription: true
-      externalId: true
+      errorDescription: false
+      errorInformation: false
+      externalId: false
       initiator: false
       initiatorType: false
       isNotificationsFailureEnabled: false
@@ -660,18 +666,18 @@ importer_es:
       mpesaTransactionId: false
       mpesaTransactionStatusRetryCount: false
       originDate: false
-      partyLookupFailed: true
-      phoneNumber: true
+      partyLookupFailed: false
+      phoneNumber: false
       processDefinitionKey: false
-      processInstanceKey: true
+      processInstanceKey: false
       scenario: false
       tenantId: false
       timer: false
-      timestamp: true
-      transactionFailed: true
+      timestamp: false
+      transactionFailed: false
       transactionId: false
-      transferCreateFailed: true
-      transferSettlementFailed: true
+      transferCreateFailed: false
+      transferSettlementFailed: false
       transferResponseCREATE: false
   elasticsearch_sslverification: "true"
   elasticsearch_security_enabled: "true"
