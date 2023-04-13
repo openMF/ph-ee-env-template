@@ -648,8 +648,8 @@ importer_es:
   reporting:
     enabled: true
     fields:
-      amount: false
-      accountId: false
+      amount: true
+      accountId: true
       ams: true
       clientCorrelationId: true
       currency: true
