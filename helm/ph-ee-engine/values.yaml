@@ -716,7 +716,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-rdbms"
-  imageTag: "v1.2.1"
+  imageTag: "v1.3.0"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
