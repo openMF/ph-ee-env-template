@@ -646,14 +646,14 @@ importer_es:
   imageTag: "v1.3.2"
   imagePullPolicy: IfNotPresent
   reporting:
-    enabled: false
+    enabled: true
     fields:
       amount: false
       accountId: false
-      ams: "true"
-      clientCorrelationId: "true"
-      currency: "true"
-      customData: "true"
+      ams: true
+      clientCorrelationId: true
+      currency: true
+      customData: true
       confirmationReceived: false
       errorCode: false
       errorDescription: false
