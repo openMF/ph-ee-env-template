@@ -643,7 +643,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-importer-es"
-  imageTag: "v1.3.2"
+  imageTag: "v1.4.0"
   imagePullPolicy: IfNotPresent
   reporting:
     enabled: true
