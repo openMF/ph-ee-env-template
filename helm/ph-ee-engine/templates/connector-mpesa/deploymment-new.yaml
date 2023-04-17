@@ -1,0 +1,214 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
+{{- if .Values.mpesa.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ph-ee-connector-mpesa.fullname" . }}
+  labels:
+    app: "{{ template "ph-ee-connector-mpesa.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
+
+  {{- if .Values.mpesa.deployment.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.mpesa.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ template "ph-ee-connector-mpesa.fullname" . }}"
+  template:
+    metadata:
+      annotations:
+{{- if .Values.mpesa.deployment.annotations }}
+{{ toYaml .Values.mpesa.deployment.annotations | indent 8 }}
+{{- end }}
+        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+      labels:
+        app: '{{ template "ph-ee-connector-mpesa.fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    spec:
+      affinity: {{ toYaml .Values.mpesa.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.mpesa.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.mpesa.tolerations | default .Values.mpesa.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.mpesa.priorityClassName }}
+      priorityClassName: {{ .Values.mpesa.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-connector-mpesa.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .Values.mpesa.terminationGracePeriod }}
+      {{- if .Values.mpesa.deployment.hostAliases }}
+      hostAliases: {{ toYaml .Values.mpesa.deployment.hostAliases | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- range .Values.mpesa.secretMounts | default .Values.mpesa.deployment.secretMounts }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- if .Values.ph-ee-connector-mpesaConfig }}
+      - name: ph-ee-connector-mpesa-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "ph-ee-connector-mpesa.fullname" . }}-config
+      {{- if .Values.mpesa.extraVolumes | default .Values.mpesa.deployment.extraVolumes }}
+{{ toYaml ( .Values.mpesa.extraVolumes | default .Values.mpesa.deployment.extraVolumes ) | indent 6 }}
+      {{- end }}
+
+      {{- if .Values.mpesa.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.mpesa.imagePullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .Values.mpesa.extraInitContainers }}
+      initContainers:
+      # All the other beats accept a string here while
+      # ph-ee-connector-mpesa accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: "ph-ee-connector-mpesa"
+        image: "{{ .Values.mpesa.image }}:{{ .Values.mpesa.imageTag }}"
+        imagePullPolicy: "{{ .Values.mpesa.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000        
+        resources:
+            limits:
+              memory: "{{ .Values.mpesa.limits.memory }}"
+              cpu: "{{ .Values.mpesa.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.mpesa.requests.memory }}"
+              cpu: "{{ .Values.mpesa.requests.cpu }}"
+        args:
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
+        livenessProbe:
+{{ toYaml .Values.mpesa.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.mpesa.readinessProbe | indent 10 }}        
+        env:
+          - name: "SPRING_PROFILES_ACTIVE"
+            value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"
+          - name: "ZEEBE_BROKER_CONTACTPOINT"
+            value: "{{ .Values.mpesa.zeebe_broker_contactpoint }}"
+          - name: "ZEEBE_INIT-TRANSFER_WAIT-TIMER"
+            value: "{{ .Values.mpesa.zeebe_init_transfer_wait_timer }}"
+          - name: "MPESA_LOCAL_HOST"
+            value: "{{ .Values.mpesa.callback_host }}"
+          - name: "MPESA_API_TIMEOUT"
+            value: "{{ .Values.mpesa.api_timeout }}"
+          - name: "MPESA_MAX-RETRY-COUNT"
+            value: "{{ .Values.mpesa.retry_count }}"
+          - name: "TENANT"
+            value: "{{ .Values.mpesa.tenant }}"
+          - name: "LOGGING_LEVEL_ROOT"
+            value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
+          - name: "ACCOUNTS_ROSTER_SHORTCODE"
+            value: "{{ .Values.mpesa.accounts.roster.business_short_code }}"
+          - name: "ACCOUNTS_ROSTER_TILL"
+            value: "{{ .Values.mpesa.accounts.roster.till }}"
+          - name: "ACCOUNTS_ROSTER_AUTHHOST"
+            value: "{{ .Values.mpesa.accounts.roster.auth_host }}"
+          - name: "ACCOUNTS_ROSTER_APIHOST"
+            value: "{{ .Values.mpesa.accounts.roster.api_host }}"
+          - name: "ACCOUNTS_ROSTER_CLIENTKEY"
+            valueFrom:
+              secretKeyRef:
+                name: "mpesa-secret-roster"
+                key: "client-key"
+          - name: "ACCOUNTS_ROSTER_CLIENTSECRET"
+            valueFrom:
+              secretKeyRef:
+                name: "mpesa-secret-roster"
+                key: "client-secret"
+          - name: "ACCOUNTS_ROSTER_PASSKEY"
+            valueFrom:
+              secretKeyRef:
+                name: "mpesa-secret-roster"
+                key: "pass-key"
+          - name: "ACCOUNTS_PAYGOPS_SHORTCODE"
+            value: "{{ .Values.mpesa.accounts.paygops.business_short_code}}"
+          - name: "ACCOUNTS_PAYGOPS_TILL"
+            value: "{{ .Values.mpesa.accounts.paygops.till }}"
+          - name: "ACCOUNTS_PAYGOPS_AUTHHOST"
+            value: "{{ .Values.mpesa.accounts.paygops.auth_host }}"
+          - name: "ACCOUNTS_PAYGOPS_APIHOST"
+            value: "{{ .Values.mpesa.accounts.paygops.api_host }}"
+          - name: "ACCOUNTS_PAYGOPS_CLIENTKEY"
+            valueFrom:
+              secretKeyRef:
+                name: "mpesa-secret-paygops"
+                key: "client-key"
+          - name: "ACCOUNTS_PAYGOPS_CLIENTSECRET"
+            valueFrom:
+              secretKeyRef:
+                name: "mpesa-secret-paygops"
+                key: "client-secret"
+          - name: "ACCOUNTS_PAYGOPS_PASSKEY"
+            valueFrom:
+              secretKeyRef:
+                name: "mpesa-secret-paygops"
+                key: "pass-key"
+          - name: "SKIP_ENABLED"
+            value: "{{ .Values.mpesa.skip.enabled }}"
+          - name: "PAYGOPS_HOST"
+            value: "{{ .Values.mpesa.paygops.host }}"
+          - name: "ROSTER_HOST"
+            value: "{{ .Values.mpesa.roster.host }}"
+          - name: "CHANNEL_HOST"
+            value: "{{ .Values.mpesa.channel.host }}"
+          - name: "ACCOUNTS_PAYGOPS_PAYBILL_SHORTCODE"
+            value: "{{ .Values.mpesa.paybill.paygops.business_short_code }}"
+          - name: "ACCOUNTS_PAYGOPS_CURRENCY"
+            value: "{{ .Values.mpesa.paybill.paygops.currency }}"
+          - name: "ACCOUNTS_ROSTER_PAYBILL_SHORTCODE"
+            value: "{{ .Values.mpesa.paybill.roster.business_short_code }}"
+          - name: "ACCOUNTS_ROSTER_CURRENCY"
+            value: "{{ .Values.mpesa.paybill.roster.currency }}"
+          - name: "paybill_accountHoldingInstitutionId"
+            value: "{{ .Values.mpesa.paybill.accountHoldingInstitutionId }}"
+{{- if .Values.mpesa.extraEnvs | default .Values.mpesa.deployment.extraEnvs }}
+{{ toYaml ( .Values.mpesa.extraEnvs | default .Values.mpesa.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+        envFrom: {{ toYaml ( .Values.mpesa.envFrom | default .Values.mpesa.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.mpesa.podSecurityContext | default .Values.mpesa.deployment.securityContext ) | nindent 10 }}
+        volumeMounts:
+        {{- range .Values.secretMounts | default .Values.mpesa.deployment.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- range $path, $config := .Values.ph-ee-connector-mpesaConfig }}
+        - name: ph-ee-connector-mpesa-config
+          mountPath: /usr/share/ph-ee-connector-mpesa/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.mpesa.deployment.ph-ee-connector-mpesaConfig }}
+        - name: ph-ee-connector-mpesa-config
+          mountPath: /usr/share/ph-ee-connector-mpesa/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.mpesa.extraVolumeMounts | default .Values.mpesa.deployment.extraVolumeMounts }}
+{{ toYaml ( .Values.mpesa.extraVolumeMounts | default .Values.mpesa.deployment.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
+      {{- if .Values.mpesa.extraContainers }}
+{{ tpl .Values.mpesa.extraContainers . | indent 6 }}
+      {{- end }}
+{{- end }}

@@ -1,0 +1,189 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
+{{- if .Values.ph_ee_connector_slcb.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ph-ee-connector-slcb.fullname" . }}
+  labels:
+    app: "{{ template "ph-ee-connector-slcb.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
+
+  {{- if .Values.ph_ee_connector_slcb.deployment.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.ph_ee_connector_slcb.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ template "ph-ee-connector-slcb.fullname" . }}"
+  template:
+    metadata:
+      annotations:
+{{- if .Values.ph_ee_connector_slcb.deployment.annotations }}
+{{ toYaml .Values.ph_ee_connector_slcb.deployment.annotations | indent 8 }}
+{{- end }}
+        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+      labels:
+        app: '{{ template "ph-ee-connector-slcb.fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    spec:
+      affinity: {{ toYaml .Values.ph_ee_connector_slcb.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.ph_ee_connector_slcb.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.ph_ee_connector_slcb.tolerations | default .Values.ph_ee_connector_slcb.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.ph_ee_connector_slcb.priorityClassName }}
+      priorityClassName: {{ .Values.ph_ee_connector_slcb.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-connector-slcb.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .Values.ph_ee_connector_slcb.terminationGracePeriod }}
+      {{- if .Values.ph_ee_connector_slcb.deployment.hostAliases }}
+      hostAliases: {{ toYaml .Values.ph_ee_connector_slcb.deployment.hostAliases | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- range .Values.ph_ee_connector_slcb.secretMounts | default .Values.ph_ee_connector_slcb.deployment.secretMounts }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- if .Values.ph-ee-connector-slcbConfig }}
+      - name: ph-ee-connector-slcb-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "ph-ee-connector-slcb.fullname" . }}-config
+      {{- if .Values.ph_ee_connector_slcb.extraVolumes | default .Values.ph_ee_connector_slcb.deployment.extraVolumes }}
+{{ toYaml ( .Values.ph_ee_connector_slcb.extraVolumes | default .Values.ph_ee_connector_slcb.deployment.extraVolumes ) | indent 6 }}
+      {{- end }}
+
+      {{- if .Values.ph_ee_connector_slcb.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.ph_ee_connector_slcb.imagePullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .Values.ph_ee_connector_slcb.extraInitContainers }}
+      initContainers:
+      # All the other beats accept a string here while
+      # ph-ee-connector-slcb accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: ph-ee-connector-slcb-mm
+        image: "{{ .Values.ph_ee_connector_slcb.image }}:{{ .Values.ph_ee_connector_slcb.imageTag }}"
+        imagePullPolicy: "{{ .Values.ph_ee_connector_slcb.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000        
+        resources:
+            limits:
+              memory: "{{ .Values.ph_ee_connector_slcb.limits.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_slcb.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.ph_ee_connector_slcb.requests.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_slcb.requests.cpu }}"
+        args:
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
+        livenessProbe:
+{{ toYaml .Values.ph_ee_connector_slcb.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.ph_ee_connector_slcb.readinessProbe | indent 10 }}        
+        env:
+          - name: "SPRING_PROFILES_ACTIVE"
+            value: "{{ .Values.ph_ee_connector_slcb.SPRING_PROFILES_ACTIVE }}"
+          - name: "ZEEBE_BROKER_CONTACTPOINT"
+            value: "{{ .Values.ph_ee_connector_slcb.zeebe_broker_contactpoint }}"
+          - name: "SLCB_AUTH_HOST"
+            value: "{{ .Values.ph_ee_connector_slcb.auth_host }}"
+          - name: "SLCB_AUTH_AUTH-ENDPOINT"
+            value: "{{ .Values.ph_ee_connector_slcb.endpoint.auth }}"
+          - name: "SLCB_API_HOST"
+            value: "{{ .Values.ph_ee_connector_slcb.api_host }}"
+          - name: "SLCB_API_TRANSACTION-REQUEST-ENDPOINT"
+            value: "{{ .Values.ph_ee_connector_slcb.endpoint.transaction_request }}"
+          - name: "SLCB_API_RECONCILIATION-ENDPOINT"
+            value: "{{ .Values.ph_ee_connector_slcb.endpoint.reconciliation }}"
+          - name: "SLCB_API_ACCOUNT-BALANCE-ENDPOINT"
+            value: "{{ .Values.ph_ee_connector_slcb.endpoint.account_balance }}"
+          - name: "SLCB_CONFIG_DATE-FROMAT"
+            value: "{{ .Values.ph_ee_connector_slcb.config.date_format }}"
+          - name: "SLCB_CONFIG_RECONCILIATION_ENABLE"
+            value: "{{ .Values.ph_ee_connector_slcb.config.reconciliation.enable }}"
+          - name: "SLCB_ACCOUNT_NUMBER"
+            value: "{{ .Values.ph_ee_connector_slcb.account_number }}"
+          - name: "SLCB_ACCOUNT_TYPE"
+            value: "{{ .Values.ph_ee_connector_slcb.account_type }}"
+          - name: "SLCB_INSTITUTIONCODE"
+            value: "{{ .Values.ph_ee_connector_slcb.institutioncode }}"
+          - name: "AWS_BUCKET_NAME"
+            value: "{{ .Values.ph_ee_connector_slcb.aws.bucket_name }}"
+          - name: "CLOUD_AWS_REGION_STATIC"
+            value: "{{ .Values.ph_ee_connector_slcb.aws.region }}"
+          - name: "AWS_ACCESS_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "slcb-secret"
+                key: "aws-access-key"
+          - name: "AWS_SECRET_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "slcb-secret"
+                key: "aws-secret-key"
+          - name: "SLCB_AUTH_USERNAME"
+            valueFrom:
+              secretKeyRef:
+                name: "slcb-secret"
+                key: "slcb-username"  
+          - name: "SLCB_AUTH_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: "slcb-secret"
+                key: "slcb-password"
+          - name: "SLCB_SIGNATURE_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "slcb-secret"
+                key: "slcb-signature-key"
+{{- if .Values.ph_ee_connector_slcb.extraEnvs | default .Values.ph_ee_connector_slcb.deployment.extraEnvs }}
+{{ toYaml ( .Values.ph_ee_connector_slcb.extraEnvs | default .Values.ph_ee_connector_slcb.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+        envFrom: {{ toYaml ( .Values.ph_ee_connector_slcb.envFrom | default .Values.ph_ee_connector_slcb.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.ph_ee_connector_slcb.podSecurityContext | default .Values.ph_ee_connector_slcb.deployment.securityContext ) | nindent 10 }}
+        volumeMounts:
+        {{- range .Values.secretMounts | default .Values.ph_ee_connector_slcb.deployment.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- range $path, $config := .Values.ph-ee-connector-slcbConfig }}
+        - name: ph-ee-connector-slcb-config
+          mountPath: /usr/share/ph-ee-connector-slcb/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.ph_ee_connector_slcb.deployment..Values.notificationsConfig }}
+        - name: .Values.notifications-config
+          mountPath: /usr/share/ph-ee-connector-slcb/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.ph_ee_connector_slcb.extraVolumeMounts | default .Values.ph_ee_connector_slcb.deployment.extraVolumeMounts }}
+{{ toYaml ( .Values.ph_ee_connector_slcb.extraVolumeMounts | default .Values.ph_ee_connector_slcb.deployment.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
+      {{- if .Values.ph_ee_connector_slcb.extraContainers }}
+{{ tpl .Values.ph_ee_connector_slcb.extraContainers . | indent 6 }}
+      {{- end }}
+{{- end }}
