@@ -1,0 +1,184 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
+{{- if .values.connector_bulk.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ph-ee-connector-ams-mifos.fullname" . }}
+  labels:
+    app: "{{ template "ph-ee-connector-ams-mifos.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
+
+  {{- if .values.connector_bulk.deployment.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  replicas: {{ .values.connector_bulk.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ template "ph-ee-connector-ams-mifos.fullname" . }}"
+  template:
+    metadata:
+      annotations:
+{{- if .values.connector_bulk.deployment.annotations }}
+{{ toYaml .values.connector_bulk.deployment.annotations | indent 8 }}
+{{- end }}
+        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+      labels:
+        app: '{{ template "ph-ee-connector-ams-mifos.fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    spec:
+      affinity: {{ toYaml .values.connector_bulk.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .values.connector_bulk.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .values.connector_bulk.tolerations | default .values.connector_bulk.deployment.tolerations ) | nindent 8 }}
+      {{- if .values.connector_bulk.priorityClassName }}
+      priorityClassName: {{ .values.connector_bulk.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-connector-ams-mifos.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .values.connector_bulk.terminationGracePeriod }}
+      {{- if .values.connector_bulk.deployment.hostAliases }}
+      hostAliases: {{ toYaml .values.connector_bulk.deployment.hostAliases | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- range .values.connector_bulk.secretMounts | default .values.connector_bulk.deployment.secretMounts }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- if .Values.ph-ee-connector-ams-mifosConfig }}
+      - name: ph-ee-connector-ams-mifos-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "ph-ee-connector-ams-mifos.fullname" . }}-config
+      {{- if .values.connector_bulk.extraVolumes | default .values.connector_bulk.deployment.extraVolumes }}
+{{ toYaml ( .values.connector_bulk.extraVolumes | default .values.connector_bulk.deployment.extraVolumes ) | indent 6 }}
+      {{- end }}
+
+      {{- if .values.connector_bulk.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .values.connector_bulk.imagePullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .values.connector_bulk.extraInitContainers }}
+      initContainers:
+      # All the other beats accept a string here while
+      # ph-ee-connector-ams-mifos accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: "ph-ee-connector-ams-mifos"
+        image: "{{ .values.connector_bulk.image }}:{{ .values.connector_bulk.imageTag }}"
+        imagePullPolicy: "{{ .values.connector_bulk.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000        
+        resources:
+            limits:
+              memory: "{{ .values.connector_bulk.limits.memory }}"
+              cpu: "{{ .values.connector_bulk.limits.cpu }}"
+            requests:
+              memory: "{{ .values.connector_bulk.requests.memory }}"
+              cpu: "{{ .values.connector_bulk.requests.cpu }}"
+        args:
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
+        livenessProbe:
+{{ toYaml .values.connector_bulk.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .values.connector_bulk.readinessProbe | indent 10 }}        
+        env:
+          - name: "SPRING_PROFILES_ACTIVE"
+            value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"
+          - name: "CAMEL_DISABLE-SSL"
+            value: "{{ .Values.connector_bulk.camel_disable_ssl }}"
+          - name: "ZEEBE_BROKER_CONTACTPOINT"
+            value: "{{ .Values.connector_bulk.zeebe_broker_contactpoint }}"
+          - name: "TENANTS"
+            value: "{{ .Values.connector_bulk.tenants }}"
+          - name: "APPLICATION_BUCKET-NAME"
+            value: "{{ .Values.connector_bulk.bucket_name }}"
+          - name: "OPERATIONS-APP_CONTACTPOINT"
+            value: "{{ .Values.connector_bulk.operations_app.contactpoint }}"
+          - name: "OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION"
+            value: "{{ .Values.connector_bulk.operations_app.endpoints.batch_transaction }}"
+          - name: "CONFIG_PARTYLOOKUP_ENABLE"
+            value: "{{ .Values.connector_bulk.config.partylookup.enable }}"
+          - name: "CONFIG_APPROVAL_ENABLE"
+            value: "{{ .Values.connector_bulk.config.approval.enable }}"
+          - name: "CONFIG_ORDERING_ENABLE"
+            value: "{{ .Values.connector_bulk.config.ordering.enable }}"
+          - name: "CONFIG_ORDERING_FIELD"
+            value: "{{ .Values.connector_bulk.config.ordering.field }}"
+          - name: "CONFIG_SPLITTING_ENABLE"
+            value: "{{ .Values.connector_bulk.config.splitting.enable }}"
+          - name: "CONFIG_SPLITTING_SUB_BATCH_SIZE"
+            value: "{{ .Values.connector_bulk.config.splitting.sub_batch_size }}"
+          - name: "CONFIG_FORMATTING_ENABLE"
+            value: "{{ .Values.connector_bulk.config.formatting.enable }}"
+          - name: "CONFIG_FORMATTING_STANDARD"
+            value: "{{ .Values.connector_bulk.config.formatting.standard }}"
+          - name: "CONFIG_MERGEBACK_ENABLE"
+            value: "{{ .Values.connector_bulk.config.mergeback.enable }}"
+          - name: "CONFIG_BACKPRESSURE_ENABLE"
+            value: "{{ .Values.connector_bulk.config.backpressure.enable }}"
+          - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_ENABLE"
+            value: "{{ .Values.connector_bulk.config.completion_threshold_check.enable }}"
+          - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
+            value: "{{ .Values.connector_bulk.config.completion_threshold_check.completion_rate }}"
+          - name: "CLOUD_AWS_REGION_STATIC"
+            value: "{{ .Values.connector_bulk.aws.region }}"
+          - name: "AWS_ACCESS_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "bulk-processor-secret"
+                key: "aws-access-key"
+          - name: "AWS_SECRET_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "bulk-processor-secret"
+                key: "aws-secret-key"
+{{- if .values.connector_bulk.extraEnvs | default .values.connector_bulk.deployment.extraEnvs }}
+{{ toYaml ( .values.connector_bulk.extraEnvs | default .values.connector_bulk.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+        envFrom: {{ toYaml ( .values.connector_bulk.envFrom | default .values.connector_bulk.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .values.connector_bulk.podSecurityContext | default .values.connector_bulk.deployment.securityContext ) | nindent 10 }}
+        volumeMounts:
+        {{- range .Values.secretMounts | default .values.connector_bulk.deployment.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- range $path, $config := .Values.ph-ee-connector-ams-mifosConfig }}
+        - name: ph-ee-connector-ams-mifos-config
+          mountPath: /usr/share/ph-ee-connector-ams-mifos/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .values.connector_bulk.deployment.ph-ee-connector-ams-mifosConfig }}
+        - name: ph-ee-connector-ams-mifos-config
+          mountPath: /usr/share/ph-ee-connector-ams-mifos/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
+        {{- end }}
+        {{- if .values.connector_bulk.extraVolumeMounts | default .values.connector_bulk.deployment.extraVolumeMounts }}
+{{ toYaml ( .values.connector_bulk.extraVolumeMounts | default .values.connector_bulk.deployment.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
+      {{- if .values.connector_bulk.extraContainers }}
+{{ tpl .values.connector_bulk.extraContainers . | indent 6 }}
+      {{- end }}
+{{- end }}

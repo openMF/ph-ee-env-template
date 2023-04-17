@@ -1,0 +1,168 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
+{{- if .values.channel.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ph-ee-connector-channel.fullname" . }}
+  labels:
+    app: "{{ template "ph-ee-connector-channel.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
+
+  {{- if .values.channel.deployment.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.channel.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  replicas: {{ .values.channel.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ template "ph-ee-connector-channel.fullname" . }}"
+  template:
+    metadata:
+      annotations:
+{{- if .values.channel.deployment.annotations }}
+{{ toYaml .values.channel.deployment.annotations | indent 8 }}
+{{- end }}
+        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+      labels:
+        app: '{{ template "ph-ee-connector-channel.fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    spec:
+      affinity: {{ toYaml .values.channel.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .values.channel.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .values.channel.tolerations | default .values.channel.deployment.tolerations ) | nindent 8 }}
+      {{- if .values.channel.priorityClassName }}
+      priorityClassName: {{ .values.channel.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-connector-channel.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .values.channel.terminationGracePeriod }}
+      {{- if .values.channel.deployment.hostAliases }}
+      hostAliases: {{ toYaml .values.channel.deployment.hostAliases | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- range .values.channel.secretMounts | default .values.channel.deployment.secretMounts }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- if .Values.channelConfig }}
+      - name: ph-ee-connector-channel-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "ph-ee-connector-channel.fullname" . }}-config
+      {{- if .values.channel.extraVolumes | default .values.channel.deployment.extraVolumes }}
+{{ toYaml ( .values.channel.extraVolumes | default .values.channel.deployment.extraVolumes ) | indent 6 }}
+      {{- end }}
+
+      {{- if .values.channel.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .values.channel.imagePullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .values.channel.extraInitContainers }}
+      initContainers:
+      # All the other beats accept a string here while
+      # ph-ee-connector-channel accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: "ph-ee-connector-channel"
+        image: "{{ .values.channel.image }}:{{ .values.channel.imageTag }}"
+        imagePullPolicy: "{{ .values.channel.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000        
+        resources:
+          limits:
+            memory: "{{ .values.channel.limits.memory }}"
+            cpu: "{{ .values.channel.limits.cpu }}"
+          requests:
+            memory: "{{ .values.channel.requests.memory }}"
+            cpu: "{{ .values.channel.requests.cpu }}"
+        args:
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
+        livenessProbe:
+{{ toYaml .values.channel.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .values.channel.readinessProbe | indent 10 }}       
+        env:
+          - name: "SPRING_PROFILES_ACTIVE"
+            value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+          - name: "DFSPIDS"
+            value: "{{ .Values.channel.DFSPIDS }}"
+          - name: "TRANSACTION-ID-LENGTH"
+            value: "{{ .Values.channel.TRANSACTION_ID_LENGTH }}"
+          - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
+            value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
+          - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
+            value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
+          - name:  "LOGGING_LEVEL_ROOT"
+            value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+          - name: "AMS"
+            value: "{{ .Values.channel.AMS  }}"
+          - name: "LOGGING_PATTERN_CONSOLE"
+            value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+          - name: "gsma_payee_tenant"
+            value: "{{ .Values.channel.gsma_payee_tenant }}"
+          - name: "operations_url"
+            value: "{{ .Values.channel.operations.url }}"
+          - name: "operations_auth-enabled"
+            value: "{{ .Values.channel.operations.authEnabled }}"
+          - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
+            value: "{{ .Values.channel.tenantPrimary.clientId }}"
+          - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
+            value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
+          - name: "CHANNEL_TENANTPRIMARY_TENANT"
+            value: "{{ .Values.channel.tenantPrimary.tenant }}"
+          - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
+            value: "{{ .Values.channel.tenantSecondary.clientId }}"
+          - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
+            value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
+          - name: "CHANNEL_TENANTSECONDARY_TENANT"
+            value: "{{ .Values.channel.tenantSecondary.tenant }}"
+{{- if .values.channel.extraEnvs | default .values.channel.deployment.extraEnvs }}
+{{ toYaml ( .values.channel.extraEnvs | default .values.channel.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+        envFrom: {{ toYaml ( .values.channel.envFrom | default .values.channel.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .values.channel.podSecurityContext | default .values.channel.deployment.securityContext ) | nindent 10 }}
+        volumeMounts:
+        {{- range .Values.secretMounts | default .values.channel.deployment.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- range $path, $config := .Values.ph-ee-connector-channelConfig }}
+        - name: ph-ee-connector-channel-config
+          mountPath: /usr/share/ph-ee-connector-channel/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .values.channel.deployment.ph-ee-connector-channelConfig }}
+        - name: ph-ee-connector-channel-config
+          mountPath: /usr/share/ph-ee-connector-channel/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
+        {{- end }}
+        {{- if .values.channel.extraVolumeMounts | default .values.channel.deployment.extraVolumeMounts }}
+{{ toYaml ( .values.channel.extraVolumeMounts | default .values.channel.deployment.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
+      {{- if .values.channel.extraContainers }}
+{{ tpl .values.channel.extraContainers . | indent 6 }}
+      {{- end }}
+{{- end }}

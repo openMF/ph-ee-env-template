@@ -57,4 +57,4 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-{{- end }}            
+{{- end }}

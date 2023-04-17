@@ -1,0 +1,150 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
+{{- if .Values.paygops_connectors.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
+  labels:
+    app: "{{ template "ph-ee-connector-ams-paygops.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
+
+  {{- if .Values.paygops_connectors.deployment.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.paygops_connectors.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ template "ph-ee-connector-ams-paygops.fullname" . }}"
+  template:
+    metadata:
+      annotations:
+{{- if .Values.paygops_connectors.deployment.annotations }}
+{{ toYaml .Values.paygops_connectors.deployment.annotations | indent 8 }}
+{{- end }}
+        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+      labels:
+        app: '{{ template "ph-ee-connector-ams-paygops.fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    spec:
+      affinity: {{ toYaml .Values.paygops_connectors.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.paygops_connectors.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.paygops_connectors.tolerations | default .Values.paygops_connectors.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.paygops_connectors.priorityClassName }}
+      priorityClassName: {{ .Values.paygops_connectors.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-connector-ams-paygops.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .Values.paygops_connectors.terminationGracePeriod }}
+      {{- if .Values.paygops_connectors.deployment.hostAliases }}
+      hostAliases: {{ toYaml .Values.paygops_connectors.deployment.hostAliases | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- range .Values.paygops_connectors.secretMounts | default .Values.paygops_connectors.deployment.secretMounts }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- if .Values.ph-ee-connector-ams-paygopsConfig }}
+      - name: ph-ee-connector-ams-paygops-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "ph-ee-connector-ams-paygops.fullname" . }}-config
+      {{- if .Values.paygops_connectors.extraVolumes | default .Values.paygops_connectors.deployment.extraVolumes }}
+{{ toYaml ( .Values.paygops_connectors.extraVolumes | default .Values.paygops_connectors.deployment.extraVolumes ) | indent 6 }}
+      {{- end }}
+
+      {{- if .Values.paygops_connectors.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.paygops_connectors.imagePullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .Values.paygops_connectors.extraInitContainers }}
+      initContainers:
+      # All the other beats accept a string here while
+      # ph-ee-connector-ams-paygops accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: "ph-ee-connector-ams-paygops"
+        image: "{{ .Values.paygops_connectors.image }}:{{ .Values.paygops_connectors.imageTag }}"
+        imagePullPolicy: "{{ .Values.paygops_connectors.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000        
+        resources:
+            limits:
+              memory: "{{ .Values.paygops_connectors.limits.memory }}"
+              cpu: "{{ .Values.paygops_connectors.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.paygops_connectors.requests.memory }}"
+              cpu: "{{ .Values.paygops_connectors.requests.cpu }}"
+        args:
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
+        livenessProbe:
+{{ toYaml .Values.paygops_connectors.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.paygops_connectors.readinessProbe | indent 10 }}        
+        env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.paygops_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "AMS_LOCAL_ENABLED"
+              value: "{{ .Values.paygops_connector.ams.local.enabled }}"
+            - name: "PAYGOPS_AUTHHEADER"
+              value: null
+              valueFrom:
+                secretKeyRef:
+                  name: "paygops-secret"
+                  key: "auth-token"
+            - name: "PAYGOPS_BASE-URL"
+              value: "{{ .Values.paygops_connector.paygops.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.paygops_connector.LOGGING_LEVEL_ROOT }}"
+{{- if .Values.paygops_connectors.extraEnvs | default .Values.paygops_connectors.deployment.extraEnvs }}
+{{ toYaml ( .Values.paygops_connectors.extraEnvs | default .Values.paygops_connectors.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+        envFrom: {{ toYaml ( .Values.paygops_connectors.envFrom | default .Values.paygops_connectors.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.paygops_connectors.podSecurityContext | default .Values.paygops_connectors.deployment.securityContext ) | nindent 10 }}
+        volumeMounts:
+        {{- range .Values.secretMounts | default .Values.paygops_connectors.deployment.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- range $path, $config := .Values.ph-ee-connector-ams-paygopsConfig }}
+        - name: ph-ee-connector-ams-paygops-config
+          mountPath: /usr/share/ph-ee-connector-ams-paygops/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.paygops_connectors.deployment.ph-ee-connector-ams-paygopsConfig }}
+        - name: ph-ee-connector-ams-paygops-config
+          mountPath: /usr/share/ph-ee-connector-ams-paygops/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.paygops_connectors.extraVolumeMounts | default .Values.paygops_connectors.deployment.extraVolumeMounts }}
+{{ toYaml ( .Values.paygops_connectors.extraVolumeMounts | default .Values.paygops_connectors.deployment.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
+      {{- if .Values.paygops_connectors.extraContainers }}
+{{ tpl .Values.paygops_connectors.extraContainers . | indent 6 }}
+      {{- end }}
+{{- end }}
