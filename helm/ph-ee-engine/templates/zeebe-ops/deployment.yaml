@@ -137,7 +137,7 @@ spec:
           subPath: {{ .subPath }}
           {{- end }}
         {{- end }}
-        {{- range $path, $config := .Values.ph-ee-zeebe-opsConfig }}
+        {{- range $path, $config := .values.zeebe_opsConfig }}
         - name: ph-ee-zeebe-ops-config
           mountPath: /usr/share/ph-ee-zeebe-ops/{{ $path }}
           readOnly: true
