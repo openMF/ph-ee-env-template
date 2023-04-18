@@ -1,61 +1,158 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.zeebe_ops.enabled -}}
-
-apiVersion: {{ .Values.deployment.apiversion }}
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-zeebe-ops"
+  name: {{ template "ph-ee-zeebe-ops.fullname" . }}
   labels:
-    app: ph-ee-zeebe-ops
+    app: "{{ template "ph-ee-zeebe-ops.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
+
+  {{- if .Values.zeebe_ops.deployment.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   replicas: {{ .Values.zeebe_ops.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-zeebe-ops
+      app: "{{ template "ph-ee-zeebe-ops.fullname" . }}"
   template:
     metadata:
-      labels:
-        app: ph-ee-zeebe-ops
       annotations:
 {{- if .Values.zeebe_ops.deployment.annotations }}
 {{ toYaml .Values.zeebe_ops.deployment.annotations | indent 8 }}
 {{- end }}
+        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+      labels:
+        app: '{{ template "ph-ee-zeebe-ops.fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
     spec:
+      affinity: {{ toYaml .Values.zeebe_ops.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.zeebe_ops.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.zeebe_ops.tolerations | default .Values.zeebe_ops.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.zeebe_ops.priorityClassName }}
+      priorityClassName: {{ .Values.zeebe_ops.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-zeebe-ops.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .Values.zeebe_ops.terminationGracePeriod }}
+      {{- if .Values.zeebe_ops.deployment.hostAliases }}
+      hostAliases: {{ toYaml .Values.zeebe_ops.deployment.hostAliases | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- range .Values.zeebe_ops.secretMounts | default .Values.zeebe_ops.deployment.secretMounts }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- if .Values.ph-ee-zeebe-opsConfig }}
+      - name: ph-ee-zeebe-ops-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "ph-ee-zeebe-ops.fullname" . }}-config
+      {{- if .Values.zeebe_ops.extraVolumes | default .Values.zeebe_ops.deployment.extraVolumes }}
+{{ toYaml ( .Values.zeebe_ops.extraVolumes | default .Values.zeebe_ops.deployment.extraVolumes ) | indent 6 }}
+      {{- end }}
+
+      {{- if .Values.zeebe_ops.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.zeebe_ops.imagePullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .Values.zeebe_ops.extraInitContainers }}
+      initContainers:
+      # All the other beats accept a string here while
+      # ph-ee-zeebe-ops accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
+      {{- end }}
       containers:
-        - name: ph-ee-zeebe-ops
-          image: "{{ .Values.zeebe_ops.image }}:{{ .Values.zeebe_ops.imageTag }}"
-          imagePullPolicy: "{{ .Values.zeebe_ops.imagePullPolicy }}"
-          resources:
+      - name: "ph-ee-zeebe-ops"
+        image: "{{ .Values.zeebe_ops.image }}:{{ .Values.zeebe_ops.imageTag }}"
+        imagePullPolicy: "{{ .Values.zeebe_ops.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000        
+        resources:
             limits:
               memory: "{{ .Values.zeebe_ops.limits.memory }}"
               cpu: "{{ .Values.zeebe_ops.limits.cpu }}"
             requests:
               memory: "{{ .Values.zeebe_ops.requests.memory }}"
               cpu: "{{ .Values.zeebe_ops.requests.cpu }}"
-          ports:
-            - containerPort: 5000
-          env:
-            - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.zeebe_ops.zeebe_broker_contactpoint }}"
-            - name: "TENANTS"
-              value: "{{ .Values.zeebe_ops.tenants }}"
-            - name: "elasticsearch_url"
-              value: "{{ .Values.zeebe_ops.elasticsearch_url }}"
-            - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.zeebe_ops.LOGGING_LEVEL_ROOT }}"
-            - name: "SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS"
-              value: "{{ .Values.zeebe_ops.elasticsearch_contactpoint }}"
-            - name: "ELASTICSEARCH_SECURITY_ENABLED"
-              value: "{{ .Values.zeebe_ops.elasticsearch_security_enabled }}"
-            - name: "ELASTICSEARCH_SSLVERIFICATION"
-              value: "{{ .Values.zeebe_ops.elasticsearch_sslverification }}"
-            - name: "ELASTICSEARCH_USERNAME"
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-credentials
-                  key: username
-            - name: "ELASTICSEARCH_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-credentials
-                  key: password
+        args:
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
+        livenessProbe:
+{{ toYaml .Values.zeebe_ops.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.zeebe_ops.readinessProbe | indent 10 }}        
+        env:
+        - name: "ZEEBE_BROKER_CONTACTPOINT"
+          value: "{{ .Values.zeebe_ops.zeebe_broker_contactpoint }}"
+        - name: "TENANTS"
+          value: "{{ .Values.zeebe_ops.tenants }}"
+        - name: "elasticsearch_url"
+          value: "{{ .Values.zeebe_ops.elasticsearch_url }}"
+        - name: "LOGGING_LEVEL_ROOT"
+          value:  "{{ .Values.zeebe_ops.LOGGING_LEVEL_ROOT }}"
+        - name: "SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS"
+          value: "{{ .Values.zeebe_ops.elasticsearch_contactpoint }}"
+        - name: "ELASTICSEARCH_SECURITY_ENABLED"
+          value: "{{ .Values.zeebe_ops.elasticsearch_security_enabled }}"
+        - name: "ELASTICSEARCH_SSLVERIFICATION"
+          value: "{{ .Values.zeebe_ops.elasticsearch_sslverification }}"
+        - name: "ELASTICSEARCH_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              name: elastic-credentials
+              key: username
+        - name: "ELASTICSEARCH_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: elastic-credentials
+              key: password
+{{- if .Values.zeebe_ops.extraEnvs | default .Values.zeebe_ops.deployment.extraEnvs }}
+{{ toYaml ( .Values.zeebe_ops.extraEnvs | default .Values.zeebe_ops.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+        envFrom: {{ toYaml ( .Values.zeebe_ops.envFrom | default .Values.zeebe_ops.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.zeebe_ops.podSecurityContext | default .Values.zeebe_ops.deployment.securityContext ) | nindent 10 }}
+        volumeMounts:
+        {{- range .Values.secretMounts | default .Values.zeebe_ops.deployment.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- range $path, $config := .Values.ph-ee-zeebe-opsConfig }}
+        - name: ph-ee-zeebe-ops-config
+          mountPath: /usr/share/ph-ee-zeebe-ops/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.zeebe_ops.deployment.ph-ee-zeebe-opsConfig }}
+        - name: ph-ee-zeebe-ops-config
+          mountPath: /usr/share/ph-ee-zeebe-ops/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.zeebe_ops.extraVolumeMounts | default .Values.zeebe_ops.deployment.extraVolumeMounts }}
+{{ toYaml ( .Values.zeebe_ops.extraVolumeMounts | default .Values.zeebe_ops.deployment.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
+      {{- if .Values.zeebe_ops.extraContainers }}
+{{ tpl .Values.zeebe_ops.extraContainers . | indent 6 }}
+      {{- end }}
 {{- end }}
