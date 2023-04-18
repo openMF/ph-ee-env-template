@@ -636,7 +636,10 @@ zeebe_ops:
   #      - chart-example.local
   deployment:
     annotations: {}
-
+    zeebe_opsConfig:
+        - type: log
+          paths: {}
+          
 importer_es:
   enabled: true
   replicas: 1
