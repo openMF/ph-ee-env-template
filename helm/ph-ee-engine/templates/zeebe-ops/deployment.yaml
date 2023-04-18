@@ -50,7 +50,7 @@ spec:
         secret:
           secretName: {{ .secretName }}
       {{- end }}
-      {{- if .Values.ph-ee-zeebe-opsConfig }}
+      {{- if .Values.zeebe_opsConfig }}
       - name: ph-ee-zeebe-ops-config
         configMap:
           defaultMode: 0600
