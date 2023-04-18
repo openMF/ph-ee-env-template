@@ -637,9 +637,9 @@ zeebe_ops:
   deployment:
     annotations: {}
     zeebe_opsConfig:
-        - type: log
-          paths: {}
-          
+      - type: log
+        paths: {}
+
 importer_es:
   enabled: true
   replicas: 1
