@@ -143,7 +143,7 @@ spec:
           readOnly: true
           subPath: {{ $path }}
         {{ else }}
-        {{- range $path, $config := .Values.zeebe_ops.deployment.ph-ee-zeebe-opsConfig }}
+        {{- range $path, $config := .Values.zeebe_ops.deployment.zeebe_opsConfig }}
         - name: ph-ee-zeebe-ops-config
           mountPath: /usr/share/ph-ee-zeebe-ops/{{ $path }}
           readOnly: true
