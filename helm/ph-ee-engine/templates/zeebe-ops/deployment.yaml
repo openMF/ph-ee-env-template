@@ -141,13 +141,13 @@ spec:
         {{- end }}
         {{- range $path, $config := .values.zeebe_opsConfig }}
         - name: ph-ee-zeebe-ops-config
-          mountPath: /usr/share/ph-ee-zeebe-ops/{{ $path }}
+          mountPath: {}
           readOnly: true
           subPath: {{ $path }}
         {{ else }}
         {{- range $path, $config := .Values.zeebe_ops.deployment.zeebe_opsConfig }}
         - name: ph-ee-zeebe-ops-config
-          mountPath: /usr/share/ph-ee-zeebe-ops/{{ $path }}
+          mountPath: {}
           readOnly: true
           subPath: {{ $path }}
         {{- end }}
