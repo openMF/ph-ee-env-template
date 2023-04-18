@@ -687,12 +687,12 @@ importer_es:
     pattern:
       console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   limits:
-    memory: "512M"
+    memory: "1Gi"
     cpu: "500m"
   requests:
-    memory: "512M"
+    memory: "512Mi"
     cpu: "100m"
-    javaToolOptions: "-Xmx256M"
+  javaToolOptions: "-Xmx256M"
 
 kafka:
   enabled: true
