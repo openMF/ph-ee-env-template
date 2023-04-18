@@ -52,15 +52,15 @@ spec:
         secret:
           secretName: {{ .secretName }}
       {{- end }}
-      {{- if .Values.zeebe_opsConfig }}
-      - name: ph-ee-zeebe-ops-config
-        configMap:
-          defaultMode: 0600
-          name: {{ template "ph-ee-zeebe-ops.fullname" . }}-config
-      {{- end }}    
-      {{- if .Values.zeebe_ops.extraVolumes | default .Values.zeebe_ops.deployment.extraVolumes }}
-{{ toYaml ( .Values.zeebe_ops.extraVolumes | default .Values.zeebe_ops.deployment.extraVolumes ) | indent 6 }}
-      {{- end }}
+#       {{- if .Values.zeebe_opsConfig }}
+#       - name: ph-ee-zeebe-ops-config
+#         configMap:
+#           defaultMode: 0600
+#           name: {{ template "ph-ee-zeebe-ops.fullname" . }}-config
+#       {{- end }}    
+#       {{- if .Values.zeebe_ops.extraVolumes | default .Values.zeebe_ops.deployment.extraVolumes }}
+# {{ toYaml ( .Values.zeebe_ops.extraVolumes | default .Values.zeebe_ops.deployment.extraVolumes ) | indent 6 }}
+#       {{- end }}
 
       {{- if .Values.zeebe_ops.imagePullSecrets }}
       imagePullSecrets:
