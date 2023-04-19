@@ -28,9 +28,9 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if or  .Values.zeebe_opsConfig .Values.zeebe_ops.deployment.zeebe_opsConfig }}
-        configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        {{- end }}
+        # {{- if or  .Values.zeebe_opsConfig .Values.zeebe_ops.deployment.zeebe_opsConfig }}
+        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        # {{- end }}
       labels:
         app: '{{ template "ph-ee-zeebe-ops.fullname" . }}'
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
