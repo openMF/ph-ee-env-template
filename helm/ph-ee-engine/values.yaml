@@ -242,7 +242,7 @@ ingress:
   apiversion: networking.k8s.io/v1
 
 deployment:
-  two: "apps/v1"
+  apiVersion: "apps/v1"
 
 service:
   apiversion: "v1"
