@@ -610,7 +610,6 @@ zeebe_ops:
     annotations: {}
     backend: {}
   deployment:
-    apiVersion: apps/v1
     annotations: {}
 
 importer_es:
