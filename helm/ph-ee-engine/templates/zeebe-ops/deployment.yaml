@@ -1,7 +1,7 @@
 # Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.zeebe_ops.enabled -}}
 
-apiVersion: {{ .Values.zeebe_ops.deployment.apiversion }}
+apiVersion: {{ .Values.zeebe_ops.deployment.apiVersion }}
 kind: Deployment
 metadata:
   name: {{ template "ph-ee-zeebe-ops.fullname" . }}
