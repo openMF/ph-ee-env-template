@@ -1,20 +1,21 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.zeebe_ops.enabled -}}
 
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: "ph-ee-zeebe-ops"
+  name: {{ template "ph-ee-zeebe-ops.fullname" . }}
   labels:
-    app: ph-ee-zeebe-ops
+    app: {{ template "ph-ee-zeebe-ops.fullname" . }}
 spec:
   replicas: {{ .Values.zeebe_ops.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-zeebe-ops
+      app: {{ template "ph-ee-zeebe-ops.fullname" . }}
   template:
     metadata:
       labels:
-        app: ph-ee-zeebe-ops
+        app: {{ template "ph-ee-zeebe-ops.fullname" . }}
       annotations:
 {{- if .Values.zeebe_ops.deployment.annotations }}
 {{ toYaml .Values.zeebe_ops.deployment.annotations | indent 8 }}
