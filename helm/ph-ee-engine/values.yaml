@@ -584,6 +584,7 @@ notifications:
     annotations: {}
 
 zeebe_ops:
+  apiVersion: apps/v1
   enabled: true
   replicas: 1
   image: ""
