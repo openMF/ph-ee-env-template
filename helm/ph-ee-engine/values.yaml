@@ -242,16 +242,16 @@ ingress:
   apiversion: networking.k8s.io/v1
 
 deployment:
-  apiVersion: apps/v1
+  apiVersion: "apps/v1"
 
 service:
-  apiersion: v1
+  apiversion: "v1"
 
 secret:
-  apiversion: v1
+  apiversion: "v1"
 
 configmap:
-  apiversion: v1
+  apiversion: "v1"
 
 operationsmysql:
   fullnameOverride: "operationsmysql"
