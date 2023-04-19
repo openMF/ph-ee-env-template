@@ -604,16 +604,13 @@ zeebe_ops:
   serviceAccount: ""
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
   serviceAccountAnnotations: {}
-
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
   priorityClassName: ""
-
 # Override various naming aspects of this chart
 # Only edit these if you know what you're doing
   nameOverride: ""
   fullnameOverride: ""
-
   limits:
     memory: "512M"
     cpu: "500m"
@@ -636,9 +633,9 @@ zeebe_ops:
   #      - chart-example.local
   deployment:
     annotations: {}
-    # zeebe_opsConfig:
-    #   - type: log
-    #     paths: {}
+    zeebe_opsConfig:
+      - type: log
+        paths: {}
 
 importer_es:
   enabled: true
