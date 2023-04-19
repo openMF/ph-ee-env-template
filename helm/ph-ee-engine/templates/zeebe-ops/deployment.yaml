@@ -9,7 +9,7 @@ metadata:
     app: "{{ template "ph-ee-zeebe-ops.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: '{{ .Release.Service }}'
-
+    release: {{ .Release.Name }}
   {{- if .Values.zeebe_ops.deployment.annotations }}
   annotations:
     {{- range $key, $value := .Values.deployment.annotations }}
