@@ -220,6 +220,14 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   DFSPIDS: ""
+  redis:
+    host: "127.0.0.1"
+    port: 6379
+    password: ""
+    idempotency:
+      enabled: true
+      keyFormat: "clientCorrelationId_tenant_api"
+      apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
   operations:
     url: ""
     authEnabled: false
