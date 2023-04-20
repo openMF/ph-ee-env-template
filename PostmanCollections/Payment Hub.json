@@ -42959,7 +42959,7 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "postman.setEnvironmentVariable(\"batchId\", responseBody);"
+                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);",
                 ],
                 "type": "text/javascript"
               }
@@ -43115,7 +43115,7 @@
                   "    pm.expect(pm.response.text).not.equal(null)",
                   "});",
                   "var jsonData = JSON.parse(responseBody);",
-                  "postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);",
+                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);",
                   "",
                   "if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
                   "    var nextTextIndex = Number(postman.getEnvironmentVariable(\"NextTestIndex\"));",
@@ -43250,7 +43250,7 @@
               "script": {
                 "exec": [
                   "var jsonData = JSON.parse(responseBody);",
-                  "postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);"
+                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);",
                 ],
                 "type": "text/javascript"
               }
@@ -43319,7 +43319,7 @@
                   "    pm.response.to.have.status(200);",
                   "});",
                   "var jsonData = JSON.parse(responseBody);",
-                  "postman.setEnvironmentVariable(\"batchId\", jsonData.batch_id);",
+                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);",
                   "",
                   "pm.test(\"Response value check\", function () {",
                   "    var jsonData = pm.response.json();",
