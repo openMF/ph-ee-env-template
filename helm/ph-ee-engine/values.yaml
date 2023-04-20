@@ -399,7 +399,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.3.1"
+  imageTag: "v1.4.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -608,7 +608,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.3.2"
+  imageTag: "v1.4.0"
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
@@ -682,7 +682,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.2.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
