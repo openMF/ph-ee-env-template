@@ -1,0 +1,17 @@
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: mock-oracle
+  name: mock-oracle
+  namespace: default
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: {{ .Values.mock_oracle.service.targetport }}
+  selector:
+    app: mock-oracle
+  sessionAffinity: None
+  type: ClusterIP
