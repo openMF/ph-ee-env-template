@@ -726,6 +726,10 @@ connector_bulk:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "default"
   camel_disable_ssl: true
+  channel:
+    hostname: ""
+  pollingApi:
+    timer: "180"
   hostname: "bulk-connector.sandbox.fynarfin.io"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: "ibank-usa,ibank-india"
