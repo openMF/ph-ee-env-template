@@ -1,3 +1,9 @@
+# Steps to run the script
+# 1. Create virtual environment using `python<version> -m venv <virtual-environment-name>`
+# 2. Activate virtual environment using `source <virtual-environment-name>/bin/activate`
+# 3. Run `pip install requests logger python-dotenv`
+# 4. Add auth Token and Kibana URL in .env file
+# 5. Run `python export-saved-objects.py`
 import requests
 import logging
 import os
