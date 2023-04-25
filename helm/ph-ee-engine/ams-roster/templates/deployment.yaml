@@ -1,13 +1,13 @@
-{{- if .Values.roster_connector.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-ams-roster"
+  name: ph-ee-connector-ams-roster
   labels:
     app: ph-ee-connector-ams-roster
 spec:
-  replicas: {{ .Values.roster_connector.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-ams-roster
@@ -16,16 +16,16 @@ spec:
       labels:
         app: ph-ee-connector-ams-roster
       annotations:
-{{- if .Values.roster_connector.deployment.annotations }}
-{{ toYaml .Values.roster_connector.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-ams-roster
-          image: "{{ .Values.roster_connector.image }}:{{ .Values.roster_connector.imageTag }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: "{{ .Values.roster_connector.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -40,25 +40,25 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.roster_connector.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
             - name: "AMS_LOCAL_ENABLED"
-              value: "{{ .Values.roster_connector.ams.local.enabled }}"
+              value: "{{ .Values.ams.local.enabled }}"
             - name: "PESACORE_AUTH-HEADER"
               valueFrom:
                 secretKeyRef:
                   name: "roster-secret"
                   key: "auth-token"
             - name: "PESACORE_BASE-URL"
-              value: "{{ .Values.roster_connector.pesacore.base_url }}"
+              value: "{{ .Values.pesacore.base_url }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.roster_connector.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
-              memory: "{{ .Values.roster_connector.limits.memory }}"
-              cpu: "{{ .Values.roster_connector.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.roster_connector.requests.memory }}"
-              cpu: "{{ .Values.roster_connector.requests.cpu }}"
-{{- end }}              
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+{{- end }}

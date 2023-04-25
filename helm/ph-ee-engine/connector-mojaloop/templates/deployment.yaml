@@ -1,13 +1,13 @@
-{{- if .Values.ph_ee_connector_mojaloop.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-mojaloop-java"
+  name: ph-ee-connector-mojaloop-java
   labels:
     app: ph-ee-connector-mojaloop-java
 spec:
-  replicas: {{ .Values.ph_ee_connector_mojaloop.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-mojaloop-java
@@ -16,56 +16,56 @@ spec:
       labels:
         app: ph-ee-connector-mojaloop-java
       annotations:
-{{- if .Values.ph_ee_connector_mojaloop.deployment.annotations }}
-{{ toYaml .Values.ph_ee_connector_mojaloop.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-mojaloop-java
-          image: "{{ .Values.ph_ee_connector_mojaloop.image }}:{{ .Values.ph_ee_connector_mojaloop.imageTag }}"
-          imagePullPolicy: "{{ .Values.ph_ee_connector_mojaloop.imagePullPolicy }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           resources:
             limits:
-              memory: "{{ .Values.ph_ee_connector_mojaloop.limits.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_mojaloop.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.ph_ee_connector_mojaloop.requests.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_mojaloop.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_mojaloop.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
 
             - name: "DFSPIDS"
-              value: "{{ .Values.ph_ee_connector_mojaloop.DFSPIDS }}"
+              value: "{{ .Values.DFSPIDS }}"
 
             - name: "SWITCH_quotes-host"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.quotes.host }}"
+              value: "{{ .Values.switch.quotes.host }}"
 
             - name: "SWITCH_quote-service"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.quotes.service }}"
+              value: "{{ .Values.switch.quotes.service }}"
 
             - name: "SWITCH_als-host"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.als.host }}"
+              value: "{{ .Values.switch.als.host }}"
 
             - name: "SWITCH_account-lookup-service"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.als.service }}"
+              value: "{{ .Values.switch.als.service }}"
 
             - name: "SWITCH_transfers-host"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transfers.host }}"
+              value: "{{ .Values.switch.transfers.host }}"
 
             - name: "SWITCH_transfers-service"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transfers.service }}"
+              value: "{{ .Values.switch.transfers.service }}"
 
             - name: "SWITCH_transactions-host"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transactions.host }}"
+              value: "{{ .Values.switch.transactions.host }}"
 
             - name: "SWITCH_transaction-request-service"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.transactions.service }}"
+              value: "{{ .Values.switch.transactions.service }}"
 
             - name: "SWITCH_oracle-host"
-              value: "{{ .Values.ph_ee_connector_mojaloop.switch.oracle.host }}"
+              value: "{{ .Values.switch.oracle.host }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

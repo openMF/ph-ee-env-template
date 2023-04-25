@@ -1,41 +1,53 @@
-{{- if .Values.ph_ee_connector_gsma.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "ph-ee-connector-gsma"
   labels:
-    app: ph-ee-connector-gsma
+    app: "ph-ee-connector-gsma"
 spec:
-  replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-gsma
+      app: "ph-ee-connector-gsma"
   template:
     metadata:
       labels:
-        app: ph-ee-connector-gsma
+        app: "ph-ee-connector-gsma"
       annotations:
-{{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
-{{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
-        - name: ph-ee-connector-gsma-mm
-          image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
-          imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
+        - name: "ph-ee-connector-gsma-mm"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 5000 
           resources:
             limits:
-              memory: "{{ .Values.ph_ee_connector_gsma.limits.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_gsma.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.ph_ee_connector_gsma.requests.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_gsma.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"              
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -43,4 +55,4 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-{{- end }}
+{{- end }}            

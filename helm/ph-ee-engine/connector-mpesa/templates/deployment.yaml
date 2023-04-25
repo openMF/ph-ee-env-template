@@ -1,13 +1,13 @@
-{{- if .Values.mpesa.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-mpesa"
+  name: ph-ee-connector-mpesa
   labels:
     app: ph-ee-connector-mpesa
 spec:
-  replicas: {{ .Values.mpesa.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-mpesa
@@ -16,16 +16,16 @@ spec:
       labels:
         app: ph-ee-connector-mpesa
       annotations:
-{{- if .Values.mpesa.deployment.annotations }}
-{{ toYaml .Values.mpesa.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-mpesa
-          image: "{{ .Values.mpesa.image }}:{{ .Values.mpesa.imageTag }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: "{{ .Values.mpesa.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -40,36 +40,36 @@ spec:
             periodSeconds: 30
           resources:
             limits:
-              memory: "{{ .Values.mpesa.limits.memory }}"
-              cpu: "{{ .Values.mpesa.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.mpesa.requests.memory }}"
-              cpu: "{{ .Values.mpesa.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.mpesa.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.mpesa.zeebe_broker_contactpoint }}"
+              value: "{{ .Values.zeebe_broker_contactpoint }}"
             - name: "ZEEBE_INIT-TRANSFER_WAIT-TIMER"
-              value: "{{ .Values.mpesa.zeebe_init_transfer_wait_timer }}"
+              value: "{{ .Values.zeebe_init_transfer_wait_timer }}"
             - name: "MPESA_LOCAL_HOST"
-              value: "{{ .Values.mpesa.callback_host }}"
+              value: "{{ .Values.callback_host }}"
             - name: "MPESA_API_TIMEOUT"
-              value: "{{ .Values.mpesa.api_timeout }}"
+              value: "{{ .Values.api_timeout }}"
             - name: "MPESA_MAX-RETRY-COUNT"
-              value: "{{ .Values.mpesa.retry_count }}"
+              value: "{{ .Values.retry_count }}"
             - name: "TENANT"
-              value: "{{ .Values.mpesa.tenant }}"
+              value: "{{ .Values.tenant }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.mpesa.LOGGING_LEVEL_ROOT }}"
+              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "ACCOUNTS_ROSTER_SHORTCODE"
-              value: "{{ .Values.mpesa.accounts.roster.business_short_code }}"
+              value: "{{ .Values.accounts.roster.business_short_code }}"
             - name: "ACCOUNTS_ROSTER_TILL"
-              value: "{{ .Values.mpesa.accounts.roster.till }}"
+              value: "{{ .Values.accounts.roster.till }}"
             - name: "ACCOUNTS_ROSTER_AUTHHOST"
-              value: "{{ .Values.mpesa.accounts.roster.auth_host }}"
+              value: "{{ .Values.accounts.roster.auth_host }}"
             - name: "ACCOUNTS_ROSTER_APIHOST"
-              value: "{{ .Values.mpesa.accounts.roster.api_host }}"
+              value: "{{ .Values.accounts.roster.api_host }}"
             - name: "ACCOUNTS_ROSTER_CLIENTKEY"
               valueFrom:
                 secretKeyRef:
@@ -86,13 +86,13 @@ spec:
                   name: "mpesa-secret-roster"
                   key: "pass-key"
             - name: "ACCOUNTS_PAYGOPS_SHORTCODE"
-              value: "{{ .Values.mpesa.accounts.paygops.business_short_code}}"
+              value: "{{ .Values.accounts.paygops.business_short_code}}"
             - name: "ACCOUNTS_PAYGOPS_TILL"
-              value: "{{ .Values.mpesa.accounts.paygops.till }}"
+              value: "{{ .Values.accounts.paygops.till }}"
             - name: "ACCOUNTS_PAYGOPS_AUTHHOST"
-              value: "{{ .Values.mpesa.accounts.paygops.auth_host }}"
+              value: "{{ .Values.accounts.paygops.auth_host }}"
             - name: "ACCOUNTS_PAYGOPS_APIHOST"
-              value: "{{ .Values.mpesa.accounts.paygops.api_host }}"
+              value: "{{ .Values.accounts.paygops.api_host }}"
             - name: "ACCOUNTS_PAYGOPS_CLIENTKEY"
               valueFrom:
                 secretKeyRef:
@@ -109,22 +109,21 @@ spec:
                   name: "mpesa-secret-paygops"
                   key: "pass-key"
             - name: "SKIP_ENABLED"
-              value: "{{ .Values.mpesa.skip.enabled }}"
+              value: "{{ .Values.skip.enabled }}"
             - name: "PAYGOPS_HOST"
-              value: "{{ .Values.mpesa.paygops.host }}"
+              value: "{{ .Values.paygops.host }}"
             - name: "ROSTER_HOST"
-              value: "{{ .Values.mpesa.roster.host }}"
+              value: "{{ .Values.roster.host }}"
             - name: "CHANNEL_HOST"
-              value: "{{ .Values.mpesa.channel.host }}"
+              value: "{{ .Values.channel.host }}"
             - name: "ACCOUNTS_PAYGOPS_PAYBILL_SHORTCODE"
-              value: "{{ .Values.mpesa.paybill.paygops.business_short_code }}"
+              value: "{{ .Values.paybill.paygops.business_short_code }}"
             - name: "ACCOUNTS_PAYGOPS_CURRENCY"
-              value: "{{ .Values.mpesa.paybill.paygops.currency }}"
+              value: "{{ .Values.paybill.paygops.currency }}"
             - name: "ACCOUNTS_ROSTER_PAYBILL_SHORTCODE"
-              value: "{{ .Values.mpesa.paybill.roster.business_short_code }}"
+              value: "{{ .Values.paybill.roster.business_short_code }}"
             - name: "ACCOUNTS_ROSTER_CURRENCY"
-              value: "{{ .Values.mpesa.paybill.roster.currency }}"
+              value: "{{ .Values.paybill.roster.currency }}"
             - name: "paybill_accountHoldingInstitutionId"
-              value: "{{ .Values.mpesa.paybill.accountHoldingInstitutionId }}"
-
+              value: "{{ .Values.paybill.accountHoldingInstitutionId }}"
 {{- end }}

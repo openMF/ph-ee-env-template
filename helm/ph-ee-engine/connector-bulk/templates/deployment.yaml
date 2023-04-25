@@ -1,13 +1,13 @@
-{{- if .Values.connector_bulk.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-bulk"
+  name: ph-ee-connector-bulk
   labels:
     app: ph-ee-connector-bulk
 spec:
-  replicas: {{ .Values.connector_bulk.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-bulk
@@ -16,64 +16,64 @@ spec:
       labels:
         app: ph-ee-connector-bulk
       annotations:
-{{- if .Values.connector_bulk.deployment.annotations }}
-{{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-bulk
-          image: "{{ .Values.connector_bulk.image }}:{{ .Values.connector_bulk.imageTag }}"
-          imagePullPolicy: "{{ .Values.connector_bulk.imagePullPolicy }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           resources:
             limits:
-              memory: "{{ .Values.connector_bulk.limits.memory }}"
-              cpu: "{{ .Values.connector_bulk.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.connector_bulk.requests.memory }}"
-              cpu: "{{ .Values.connector_bulk.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "CAMEL_DISABLE-SSL"
-              value: "{{ .Values.connector_bulk.camel_disable_ssl }}"
+              value: "{{ .Values.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.connector_bulk.zeebe_broker_contactpoint }}"
+              value: "{{ .Values.zeebe_broker_contactpoint }}"
             - name: "TENANTS"
-              value: "{{ .Values.connector_bulk.tenants }}"
+              value: "{{ .Values.tenants }}"
             - name: "APPLICATION_BUCKET-NAME"
-              value: "{{ .Values.connector_bulk.bucket_name }}"
+              value: "{{ .Values.bucket_name }}"
             - name: "OPERATIONS-APP_CONTACTPOINT"
-              value: "{{ .Values.connector_bulk.operations_app.contactpoint }}"
+              value: "{{ .Values.operations_app.contactpoint }}"
             - name: "OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION"
-              value: "{{ .Values.connector_bulk.operations_app.endpoints.batch_transaction }}"
+              value: "{{ .Values.operations_app.endpoints.batch_transaction }}"
             - name: "CONFIG_PARTYLOOKUP_ENABLE"
-              value: "{{ .Values.connector_bulk.config.partylookup.enable }}"
+              value: "{{ .Values.config.partylookup.enable }}"
             - name: "CONFIG_APPROVAL_ENABLE"
-              value: "{{ .Values.connector_bulk.config.approval.enable }}"
+              value: "{{ .Values.config.approval.enable }}"
             - name: "CONFIG_ORDERING_ENABLE"
-              value: "{{ .Values.connector_bulk.config.ordering.enable }}"
+              value: "{{ .Values.config.ordering.enable }}"
             - name: "CONFIG_ORDERING_FIELD"
-              value: "{{ .Values.connector_bulk.config.ordering.field }}"
+              value: "{{ .Values.config.ordering.field }}"
             - name: "CONFIG_SPLITTING_ENABLE"
-              value: "{{ .Values.connector_bulk.config.splitting.enable }}"
+              value: "{{ .Values.config.splitting.enable }}"
             - name: "CONFIG_SPLITTING_SUB_BATCH_SIZE"
-              value: "{{ .Values.connector_bulk.config.splitting.sub_batch_size }}"
+              value: "{{ .Values.config.splitting.sub_batch_size }}"
             - name: "CONFIG_FORMATTING_ENABLE"
-              value: "{{ .Values.connector_bulk.config.formatting.enable }}"
+              value: "{{ .Values.config.formatting.enable }}"
             - name: "CONFIG_FORMATTING_STANDARD"
-              value: "{{ .Values.connector_bulk.config.formatting.standard }}"
+              value: "{{ .Values.config.formatting.standard }}"
             - name: "CONFIG_MERGEBACK_ENABLE"
-              value: "{{ .Values.connector_bulk.config.mergeback.enable }}"
+              value: "{{ .Values.config.mergeback.enable }}"
             - name: "CONFIG_BACKPRESSURE_ENABLE"
-              value: "{{ .Values.connector_bulk.config.backpressure.enable }}"
+              value: "{{ .Values.config.backpressure.enable }}"
             - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_ENABLE"
-              value: "{{ .Values.connector_bulk.config.completion_threshold_check.enable }}"
+              value: "{{ .Values.config.completion_threshold_check.enable }}"
             - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
-              value: "{{ .Values.connector_bulk.config.completion_threshold_check.completion_rate }}"
+              value: "{{ .Values.config.completion_threshold_check.completion_rate }}"
             - name: "CLOUD_AWS_REGION_STATIC"
-              value: "{{ .Values.connector_bulk.aws.region }}"
+              value: "{{ .Values.aws.region }}"
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
