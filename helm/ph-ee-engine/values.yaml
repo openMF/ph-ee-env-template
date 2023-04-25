@@ -655,27 +655,27 @@ importer_es:
       currency: true
       customData: true
       confirmationReceived: false
-      errorCode: false
-      errorDescription: false
+      errorCode: true
+      errorDescription: true
       errorInformation: false
-      externalId: false
+      externalId: true
       initiator: false
       initiatorType: false
       isNotificationsFailureEnabled: false
       isNotificationsSuccessEnabled: false
-      mpesaTransactionId: false
+      mpesaTransactionId: true
       mpesaTransactionStatusRetryCount: false
-      originDate: false
+      originDate: true
       partyLookupFailed: false
-      phoneNumber: false
+      phoneNumber: true
       processDefinitionKey: false
       processInstanceKey: false
       scenario: false
       tenantId: false
       timer: false
-      timestamp: false
+      timestamp: true
       transactionFailed: false
-      transactionId: false
+      transactionId: true
       transferCreateFailed: false
       transferSettlementFailed: false
       transferResponseCREATE: false
