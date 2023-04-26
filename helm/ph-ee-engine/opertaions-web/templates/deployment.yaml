@@ -1,38 +1,60 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.operations.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: {{ .Values.operations_web.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: "ph-ee-operations-web"
+  name: {{ template "ph-ee-operations-web.fullname" . }}
   labels:
-    app: ph-ee-operations-web
+    app: {{ template "ph-ee-operations-web.fullname" . }}
+
 spec:
   replicas: {{ .Values.operations_web.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-operations-web
+      app: {{ template "ph-ee-operations-web.fullname" . }}
   template:
     metadata:
       labels:
-        app: ph-ee-operations-web
+        app: {{ template "ph-ee-operations-web.fullname" . }}
       annotations:
 {{- if .Values.operations_web.deployment.annotations }}
 {{ toYaml .Values.operations_web.deployment.annotations | indent 8 }}
 {{- end }}
+
     spec:
+      affinity: {{ toYaml .Values.operations_web.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.operations_web.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.operations_web.tolerations | default .Values.operations_web.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.operations_web.priorityClassName }}
+      priorityClassName: {{ .Values.operations_web.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: {{ template "ph-ee-operations-web.serviceAccount" . }}
+      terminationGracePeriodSeconds: {{ .Values.operations_web.terminationGracePeriod }}      
+
       containers:
         - name: ph-ee-operations-web
           image: "{{ .Values.operations_web.image }}:{{ .Values.operations_web.imageTag }}"
           imagePullPolicy: "{{ .Values.operations_web.imagePullPolicy }}"
+          resources: {{ toYaml ( .Values.operations_web.resources | default .Values.operations_web.deployment.resources ) | nindent 10 }}          
           ports:
             - containerPort: 4200
-          resources:
-            limits:
-              memory: "{{ .Values.operations_web.limits.memory }}"
-              cpu: "{{ .Values.operations_web.limits.cpu }}"
-            requests:
-              memory: "{{ .Values.operations_web.requests.memory }}"
-              cpu: "{{ .Values.operations_web.requests.cpu }}"
+    {{- if .Values.operations_web.imagePullSecrets }}
+          imagePullSecrets:
+    {{ toYaml .Values.operations_web.imagePullSecrets | indent 8 }}
+        {{- end }}           
+
+          livenessProbe:
+{{ toYaml .Values.operations_web.livenessProbe | indent 10 }}
+          readinessProbe:
+{{ toYaml .Values.operations_web.readinessProbe | indent 10 }}   
+
+          env: {{ .Values.operations_web.replicas }}
+{{- if .Values.operations_web.extraEnvs | default .Values.operations_web.deployment.extraEnvs }}
+{{ toYaml ( .Values.operations_web.extraEnvs | default .Values.operations_web.deployment.extraEnvs ) | indent 8 }}
+{{- end }}
+          envFrom: {{ toYaml ( .Values.operations_web.envFrom | default .Values.operations_web.deployment.envFrom ) | nindent 10 }}
+          securityContext: {{ toYaml ( .Values.operations_web.podSecurityContext | default .Values.operations_web.deployment.securityContext ) | nindent 10 }}
           volumeMounts:
 {{- if .Values.operations_web.deployment.config }}
 {{ toYaml .Values.operations_web.deployment.config | indent 12 }}
@@ -41,4 +63,11 @@ spec:
         - name: ph-ee-operations-web-config
           configMap:
             name: ph-ee-operations-web-config
+    {{- if .Values.operations_web.extraVolumeMounts | default .Values.operations_web.deployment.extraVolumeMounts }}
+  {{ toYaml ( .Values.operations_web.extraVolumeMounts | default .Values.operations_web.deployment.extraVolumeMounts ) | indent 8 }}
+          {{- end }}
+        {{- if .Values.operations_web.extraContainers }}
+  {{ tpl .Values.operations_web.extraContainers . | indent 6 }}
+        {{- end }}       
+
 {{- end }}
