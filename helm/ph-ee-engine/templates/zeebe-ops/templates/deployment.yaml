@@ -75,16 +75,8 @@ spec:
 {{- end }}
           envFrom: {{ toYaml ( .Values.zeebe_ops.envFrom | default .Values.zeebe_ops.deployment.envFrom ) | nindent 10 }}
           securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}
-          volumeMounts:
-          {{- range .Values.zeebe_op.secretMounts | default .Values.zeebe_op.deployment.secretMounts }}
-          - name: {{ .name }}
-            mountPath: {{ .path }}
-            {{- if .subPath }}
-            subPath: {{ .subPath }}
-            {{- end }}
-          {{- end }}
           
-          {{- if .Values.zeebe_op.extraVolumeMounts | default .Values.zeebe_op.deployment.extraVolumeMounts }}
+        {{- if .Values.zeebe_op.extraVolumeMounts | default .Values.zeebe_op.deployment.extraVolumeMounts }}
   {{ toYaml ( .Values.zeebe_op.extraVolumeMounts | default .Values.zeebe_op.deployment.extraVolumeMounts ) | indent 8 }}
           {{- end }}
         {{- if .Values.zeebe_op.extraContainers }}
