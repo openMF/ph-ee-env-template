@@ -97,9 +97,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.ph_ee_connector_ams_mifos.extraVolumeMounts | default .Values.ph_ee_connector_ams_mifos.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.ph_ee_connector_ams_mifos.extraVolumeMounts | default .Values.ph_ee_connector_ams_mifos.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.ph_ee_connector_ams_mifos.extraContainers }}
   {{ tpl .Values.ph_ee_connector_ams_mifos.extraContainers . | indent 6 }}
         {{- end }}

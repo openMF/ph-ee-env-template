@@ -155,9 +155,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.mpesa.extraVolumeMounts | default .Values.mpesa.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.mpesa.extraVolumeMounts | default .Values.mpesa.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.mpesa.extraContainers }}
   {{ tpl .Values.mpesa.extraContainers . | indent 6 }}
         {{- end }}

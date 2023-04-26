@@ -132,9 +132,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.connector_bulk.extraVolumeMounts | default .Values.connector_bulk.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.connector_bulk.extraVolumeMounts | default .Values.connector_bulk.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.connector_bulk.extraContainers }}
   {{ tpl .Values.connector_bulk.extraContainers . | indent 6 }}
         {{- end }}            

@@ -99,9 +99,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-      {{- if .Values.operations_app.extraVolumeMounts | default .Values.operations_app.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.operations_app.extraVolumeMounts | default .Values.operations_app.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.operations_app.extraContainers }}
   {{ tpl .Values.operations_app.extraContainers . | indent 6 }}
         {{- end }}          

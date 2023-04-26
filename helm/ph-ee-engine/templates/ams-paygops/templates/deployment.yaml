@@ -91,9 +91,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.paygops_connector.extraVolumeMounts | default .Values.paygops_connector.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.paygops_connector.extraVolumeMounts | default .Values.paygops_connector.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.paygops_connector.extraContainers }}
   {{ tpl .Values.paygops_connector.extraContainers . | indent 6 }}
         {{- end }}            

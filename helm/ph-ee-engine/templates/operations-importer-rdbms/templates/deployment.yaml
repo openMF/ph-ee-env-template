@@ -83,9 +83,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.importer_rdbms.extraVolumeMounts | default .Values.importer_rdbms.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.importer_rdbms.extraVolumeMounts | default .Values.importer_rdbms.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.importer_rdbms.extraContainers }}
   {{ tpl .Values.importer_rdbms.extraContainers . | indent 6 }}
         {{- end }} 

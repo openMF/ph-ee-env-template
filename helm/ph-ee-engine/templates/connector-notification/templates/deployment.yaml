@@ -93,9 +93,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.notifications.extraVolumeMounts | default .Values.notifications.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.notifications.extraVolumeMounts | default .Values.notifications.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.notifications.extraContainers }}
   {{ tpl .Values.notifications.extraContainers . | indent 6 }}
         {{- end }}              

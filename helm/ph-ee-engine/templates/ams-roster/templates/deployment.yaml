@@ -90,9 +90,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.roster_connector.extraVolumeMounts | default .Values.roster_connector.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.roster_connector.extraVolumeMounts | default .Values.roster_connector.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.roster_connector.extraContainers }}
   {{ tpl .Values.roster_connector.extraContainers . | indent 6 }}
         {{- end }}              

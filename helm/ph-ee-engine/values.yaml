@@ -280,14 +280,7 @@ channel:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m" 
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true       
+      cpu: "100m"       
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -319,13 +312,6 @@ channel:
         memory: "512M"
         cpu: "100m"
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-channel.yml for deployment  
     # ph-ee-connector-channelConfig: {}
     #   ph-ee-connector-channel.yml: |        
@@ -415,14 +401,7 @@ ph_ee_connector_ams_mifos:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true       
+      cpu: "100m"     
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -453,13 +432,6 @@ ph_ee_connector_ams_mifos:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-ams-mifos.yml for deployment  
     # ph-ee-connector-ams-mifosConfig: {}
     #   ph-ee-connector-ams-mifos.yml: | 
@@ -532,14 +504,7 @@ ph_ee_connector_mojaloop:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true            
+      cpu: "100m"           
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -570,13 +535,6 @@ ph_ee_connector_mojaloop:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-mojaloop-java.yml for deployment  
     # ph-ee-connector-mojaloop-javaConfig: {}
     #   ph-ee-connector-mojaloop-java.yml: |
@@ -645,14 +603,7 @@ operations_app:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m" 
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true        
+      cpu: "100m"         
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -683,13 +634,6 @@ operations_app:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as operations_app.yml for deployment
 
 operations_web:
@@ -747,14 +691,7 @@ operations_web:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true       
+      cpu: "100m"       
 # Enabling this will publicly expose your operations_web instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -791,13 +728,6 @@ operations_web:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-operations-web.yml for deployment
     # ph-ee-operations-webConfig: {}
     #   ph-ee-operations-web.yml: |          
@@ -907,14 +837,7 @@ mpesa:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true         
+      cpu: "100m"       
 # Enabling this will publicly expose your mpesa instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -945,13 +868,6 @@ mpesa:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-mpesa.yml for deployment  
     # ph-ee-connector-mpesaConfig: {}
     #   ph-ee-connector-mpesa.yml: |
@@ -1016,14 +932,7 @@ roster_connector:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true         
+      cpu: "100m"        
   deployment:
     annotations: {}
     affinity: {}
@@ -1047,13 +956,6 @@ roster_connector:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-ams-roster.yml for deployment  
     # ph-ee-connector-ams-rosterConfig: {}
     #   ph-ee-connector-ams-roster.yml: |
@@ -1118,14 +1020,7 @@ paygops_connector:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true         
+      cpu: "100m"       
   deployment:
     annotations: {}
     affinity: {}
@@ -1149,13 +1044,6 @@ paygops_connector:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-ams-paygops.yml for deployment  
     # ph-ee-connector-ams-paygopsConfig: {}
     #   ph-ee-connector-ams-paygops.yml: |
@@ -1221,14 +1109,7 @@ messagegateway:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true     
+      cpu: "100m"   
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1266,13 +1147,6 @@ messagegateway:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as message-gateway.yml for deployment  
     # message-gatewayConfig: {}
     #   message-gateway.yml: |
@@ -1340,14 +1214,7 @@ notifications:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true     
+      cpu: "100m"  
 # Enabling this will publicly expose your notifications instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1378,13 +1245,6 @@ notifications:
         memory: "512"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-notifications.yml for deployment  
     # ph-ee-connector-notificationsConfig: {}
     #   ph-ee-connector-notifications.yml: |
@@ -1451,14 +1311,7 @@ zeebe_ops:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true    
+      cpu: "100m" 
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1489,13 +1342,6 @@ zeebe_ops:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
     #   ph-ee-zeebe-ops.yml: |
@@ -1595,14 +1441,7 @@ importer_es:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true  
+      cpu: "100m"  
   javaToolOptions: "-Xmx256M"
 
 kafka:
@@ -1683,14 +1522,7 @@ importer_rdbms:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true        
+      cpu: "100m"      
   deployment:
     annotations: {}
     affinity: {}
@@ -1714,13 +1546,6 @@ importer_rdbms:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-importer_rdbms.yml for deployment  
     # ph-ee-importer_rdbmsConfig: {}
     #   ph-ee-importer_rdbms.yml: |
@@ -1817,14 +1642,7 @@ connector_bulk:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true        
+      cpu: "100m"       
 # Enabling this will publicly expose your connector_bulk instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1852,13 +1670,6 @@ connector_bulk:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-bulk.yml for deployment  
     # ph-ee-connector-bulkConfig: {}
     #   ph-ee-connector-bulk.yml: |
@@ -1916,14 +1727,7 @@ ph_ee_connector_gsma:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true    
+      cpu: "100m"  
   deployment:
     annotations: {}
     affinity: {}
@@ -1947,13 +1751,6 @@ ph_ee_connector_gsma:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
     #   ph_ee_connector_gsma.yml: |
@@ -2034,14 +1831,7 @@ ph_ee_connector_slcb:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m" 
-  extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-  extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true         
+      cpu: "100m"          
   deployment:
     annotations: {}
     affinity: {}
@@ -2065,13 +1855,6 @@ ph_ee_connector_slcb:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph_ee_connector_slcb.yml for deployment  
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
@@ -2185,14 +1968,6 @@ keycloak:
     rules:
       - host: 'keycloak.mifos.io'
     tls: []
-  extraVolumes: |
-    - name: realm-secret
-      secret:
-        secretName: realm-secret
-  extraVolumeMounts: |
-    - name: realm-secret
-      mountPath: "/realm/"
-      readOnly: true
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json

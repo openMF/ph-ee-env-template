@@ -84,9 +84,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.ph_ee_connector_gsma.extraVolumeMounts | default .Values.ph_ee_connector_gsma.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.ph_ee_connector_gsma.extraVolumeMounts | default .Values.ph_ee_connector_gsma.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.ph_ee_connector_gsma.extraContainers }}
   {{ tpl .Values.ph_ee_connector_gsma.extraContainers . | indent 6 }}
         {{- end }}            

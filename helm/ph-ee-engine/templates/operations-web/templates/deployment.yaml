@@ -63,9 +63,6 @@ spec:
         - name: ph-ee-operations-web-config
           configMap:
             name: ph-ee-operations-web-config
-    {{- if .Values.operations_web.extraVolumeMounts | default .Values.operations_web.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.operations_web.extraVolumeMounts | default .Values.operations_web.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.operations_web.extraContainers }}
   {{ tpl .Values.operations_web.extraContainers . | indent 6 }}
         {{- end }}       

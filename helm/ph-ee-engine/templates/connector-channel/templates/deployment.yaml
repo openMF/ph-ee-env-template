@@ -133,9 +133,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.channel.extraVolumeMounts | default .Values.channel.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.channel.extraVolumeMounts | default .Values.channel.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.channel.extraContainers }}
   {{ tpl .Values.channel.extraContainers . | indent 6 }}
         {{- end }}

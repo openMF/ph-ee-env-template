@@ -104,9 +104,6 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.messagegateway.extraVolumeMounts | default .Values.messagegateway.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.messagegateway.extraVolumeMounts | default .Values.messagegateway.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
         {{- if .Values.messagegateway.extraContainers }}
   {{ tpl .Values.messagegateway.extraContainers . | indent 6 }}
         {{- end }}
