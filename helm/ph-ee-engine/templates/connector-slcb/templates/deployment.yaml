@@ -20,9 +20,6 @@ spec:
 {{- if .Values.ph_ee_connector_slcb.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_slcb.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.ph_ee_connector_slcbConfig .Values.deployment.ph-ee-connector-slcbConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
 
     spec:
       affinity: {{ toYaml .Values.ph_ee_connector_slcb.deployment.affinity | nindent 8 }}

@@ -20,9 +20,6 @@ spec:
 {{- if .Values.mpesa.deployment.annotations }}
 {{ toYaml .Values.mpesa.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.mpesaConfig .Values.deployment.ph-ee-connector-mpesaConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
       affinity: {{ toYaml .Values.mpesa.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.mpesa.deployment.nodeSelector | nindent 8 }}

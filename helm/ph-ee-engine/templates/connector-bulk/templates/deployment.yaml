@@ -20,9 +20,6 @@ spec:
 {{- if .Values.connector_bulk.deployment.annotations }}
 {{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.connector_bulkConfig .Values.deployment.ph-ee-connector-bulkConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
       affinity: {{ toYaml .Values.connector_bulk.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.connector_bulk.deployment.nodeSelector | nindent 8 }}

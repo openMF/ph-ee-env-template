@@ -19,10 +19,7 @@ spec:
       annotations:
 {{- if .Values.importer_es.deployment.annotations }}
 {{ toYaml .Values.importer_es.deployment.annotations | indent 8 }}
-{{- end }}
-        # {{- if or  .Values.importer_esConfig .Values.deployment.ph-ee-importer-esConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}  
+{{- end }}  
     spec:
       affinity: {{ toYaml .Values.importer_es.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.importer_es.deployment.nodeSelector | nindent 8 }}

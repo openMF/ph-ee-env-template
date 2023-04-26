@@ -20,9 +20,6 @@ spec:
 {{- if .Values.importer_rdbms.deployment.annotations }}
 {{ toYaml .Values.importer_rdbms.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.ph-ee-importer-rdbmsConfig .Values.deployment.ph-ee-importer-rdbmsConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
       affinity: {{ toYaml .Values.importer_rdbms.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.importer_rdbms.deployment.nodeSelector | nindent 8 }}

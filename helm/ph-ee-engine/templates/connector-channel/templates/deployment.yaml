@@ -20,9 +20,6 @@ spec:
 {{- if .Values.channel.deployment.annotations }}
 {{ toYaml .Values.channel.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.channelConfig .Values.deployment.ph-ee-connector-channelConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
       affinity: {{ toYaml .Values.channel.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.channel.deployment.nodeSelector | nindent 8 }}

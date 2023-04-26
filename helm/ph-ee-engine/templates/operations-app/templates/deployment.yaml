@@ -20,9 +20,6 @@ spec:
 {{- if .Values.operations_app.deployment.annotations }}
 {{ toYaml .Values.operations_app.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.operations_appConfig .Values.operations_app.deployment.ph-ee-zeebe-opsConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
       affinity: {{ toYaml .Values.operations_app.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.operations_app.deployment.nodeSelector | nindent 8 }}

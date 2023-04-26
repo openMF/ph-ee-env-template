@@ -20,9 +20,6 @@ spec:
 {{- if .Values.ph_ee_connector_ams_mifos.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.ph_ee_connector_ams_mifosConfig .Values.deployment.ph-ee-connector-ams-mifosConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec: 
       affinity: {{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.nodeSelector | nindent 8 }}

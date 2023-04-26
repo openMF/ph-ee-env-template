@@ -20,9 +20,6 @@ spec:
 {{- if .Values.roster_connector.deployment.annotations }}
 {{ toYaml .Values.roster_connector.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.roster_connectorConfig .Values.deployment.ph-ee-connector-ams-rosterConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
       affinity: {{ toYaml .Values.roster_connector.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.roster_connector.deployment.nodeSelector | nindent 8 }}
