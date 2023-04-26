@@ -1443,6 +1443,9 @@ importer_es:
       memory: "512M"
       cpu: "100m"  
   javaToolOptions: "-Xmx256M"
+  deployment:
+    annotations: {}
+
 
 kafka:
   enabled: true
