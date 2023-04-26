@@ -85,7 +85,6 @@ spec:
     {{ tpl .Values.extraInitContainers . | indent 6 }}
           {{- else }}
     {{ toYaml .Values.extraInitContainers | indent 6 }}
-          {{- end }}
           {{- end }}          
       volumes:
         - name: ph-ee-config
