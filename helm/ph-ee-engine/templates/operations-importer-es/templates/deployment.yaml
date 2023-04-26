@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-importer-es.fullname" . }}
+  name: {{ template "ph-ee-importer-es.fullname" . }}
   labels:
-    app: {{ template " ph-ee-importer-es.fullname" . }}
+    app: {{ template "ph-ee-importer-es.fullname" . }}
 spec:
   replicas: {{ .Values.importer_es.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-importer-es.fullname" . }}
+      app: {{ template "ph-ee-importer-es.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-importer-es.fullname" . }}
+        app: {{ template "ph-ee-importer-es.fullname" . }}
       annotations:
 {{- if .Values.importer_es.deployment.annotations }}
 {{ toYaml .Values.importer_es.deployment.annotations | indent 8 }}
