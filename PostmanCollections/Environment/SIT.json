@@ -1,5 +1,5 @@
 {
-	"id": "d3d08e53-d4e8-4229-8675-972947d89a57",
+	"id": "cb50522f-640c-41de-9f33-ca8a8f29e4c9",
 	"name": "SIT",
 	"values": [
 		{
@@ -204,9 +204,21 @@
 			"value": "mifos",
 			"type": "default",
 			"enabled": true
+		},
+		{
+			"key": "IdentityAccountMapperHostName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "X-CallbackURL",
+			"value": "",
+			"type": "default",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2023-03-23T12:36:46.087Z",
-	"_postman_exported_using": "Postman/10.9.1"
+	"_postman_exported_at": "2023-04-10T08:08:08.566Z",
+	"_postman_exported_using": "Postman/10.12.8"
 }

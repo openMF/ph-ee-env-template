@@ -1,8 +1,9 @@
-ingress:
-  apiversion: "networking.k8s.io/v1"
-
 deployment:
-  apiversion: "apps/v1"
+  apiVersion: "apps/v1"
+  
+ingress:
+  apiversion: networking.k8s.io/v1
+
 
 service:
   apiversion: "v1"
@@ -12,7 +13,7 @@ secret:
 
 configmap:
   apiversion: "v1"
-  
+
 zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
@@ -212,7 +213,7 @@ channel:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.4.2"
+  imageTag: "v1.5.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -220,6 +221,14 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   DFSPIDS: ""
+  redis:
+    host: "127.0.0.1"
+    port: 6379
+    password: ""
+    idempotency:
+      enabled: true
+      keyFormat: "clientCorrelationId_tenant_api"
+      apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
   operations:
     url: ""
     authEnabled: false
@@ -275,7 +284,7 @@ ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.2.1"
+  imageTag: "v1.2.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: false
@@ -297,15 +306,13 @@ ph_ee_connector_ams_mifos:
     annotations: {}
     backend: {}
   deployment:
-    annotations: {}    
-  deployment:
-    annotations: {}
+    annotations: {} 
 
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.0.0"
+  imageTag: "v1.1.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   switch:
@@ -341,7 +348,7 @@ operations_app:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.3.0"
+  imageTag: "v1.4.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -404,7 +411,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.3.1"
+  imageTag: "v1.4.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -556,7 +563,7 @@ notifications:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.0.2"
+  imageTag: "v1.1.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -616,7 +623,7 @@ importer_es:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.3.2"
+  imageTag: "v1.4.0"
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
@@ -690,7 +697,7 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: ""
-  imageTag: "v1.2.0"
+  imageTag: "v1.3.1"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
@@ -714,10 +721,14 @@ connector_bulk:
   enabled: false
   replicas: 1
   image: ""
-  imageTag: "v1.4.1"
+  imageTag: "v1.5.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "default"
   camel_disable_ssl: true
+  channel:
+    hostname: ""
+  pollingApi:
+    timer: "180"
   hostname: "bulk-connector.sandbox.fynarfin.io"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: "ibank-usa,ibank-india"
@@ -931,3 +942,8 @@ keycloak:
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json
+
+redis:
+  enabled: false
+  replica:
+    replicaCount: 0

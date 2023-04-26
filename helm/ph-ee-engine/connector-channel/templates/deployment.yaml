@@ -1,0 +1,107 @@
+{{- if .Values.channel.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-channel"
+  labels:
+    app: ph-ee-connector-channel
+spec:
+  replicas: {{ .Values.channel.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-channel
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-channel
+      annotations:
+{{- if .Values.channel.deployment.annotations }}
+{{ toYaml .Values.channel.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-channel
+          image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.channel.limits.memory }}"
+              cpu: "{{ .Values.channel.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.channel.requests.memory }}"
+              cpu: "{{ .Values.channel.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.channel.DFSPIDS }}"
+            - name: "TRANSACTION-ID-LENGTH"
+              value: "{{ .Values.channel.TRANSACTION_ID_LENGTH }}"
+            - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
+              value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
+            - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
+              value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
+            - name:  "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+            - name: "AMS"
+              value: "{{ .Values.channel.AMS  }}"
+            - name: "LOGGING_PATTERN_CONSOLE"
+              value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+            - name: "gsma_payee_tenant"
+              value: "{{ .Values.channel.gsma_payee_tenant }}"
+            - name: "operations_url"
+              value: "{{ .Values.channel.operations.url }}"
+            - name: "operations_auth-enabled"
+              value: "{{ .Values.channel.operations.authEnabled }}"
+            - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
+              value: "{{ .Values.channel.tenantPrimary.clientId }}"
+            - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
+              value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
+            - name: "CHANNEL_TENANTPRIMARY_TENANT"
+              value: "{{ .Values.channel.tenantPrimary.tenant }}"
+            - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
+              value: "{{ .Values.channel.tenantSecondary.clientId }}"
+            - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
+              value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
+            - name: "CHANNEL_TENANTSECONDARY_TENANT"
+              value: "{{ .Values.channel.tenantSecondary.tenant }}"
+            - name: "redis_idempotency_enabled"
+              value: "{{ .Values.channel.redis.idempotency.enabled }}"
+            - name: "redis_host"
+              value: "{{ .Values.channel.redis.host }}"
+            - name: "redis_port"
+              value: "{{ .Values.channel.redis.port }}"
+            - name: "redis_idempotency_keyFormat"
+              value: "{{ .Values.channel.redis_idempotency_keyFormat }}"
+            - name: "redis_idempotency_apiList"
+              value: "{{ .Values.channel.redis_idempotency_apiList }}"
+            - name: "redis_password"
+              valueFrom:
+                  secretKeyRef:
+                    name: "zeebetest-redis" # tobe changed to sit ingress
+                    key: redis-password
+
+
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}
