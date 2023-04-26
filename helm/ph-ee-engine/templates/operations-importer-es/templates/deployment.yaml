@@ -27,7 +27,7 @@ spec:
       {{- if .Values.importer_es.priorityClassName }}
       priorityClassName: {{ .Values.importer_es.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-importer-es.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-importer-es.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.importer_es.terminationGracePeriod }} 
       containers:
         - name: ph-ee-importer-es
