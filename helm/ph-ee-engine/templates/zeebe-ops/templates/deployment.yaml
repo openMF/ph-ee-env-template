@@ -76,8 +76,8 @@ spec:
           envFrom: {{ toYaml ( .Values.zeebe_ops.envFrom | default .Values.zeebe_ops.deployment.envFrom ) | nindent 10 }}
           securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}
           
-        {{- if .Values.zeebe_op.extraContainers }}
-  {{ tpl .Values.zeebe_op.extraContainers . | indent 6 }}
+        {{- if .Values.zeebe_ops.extraContainers }}
+  {{ tpl .Values.zeebe_ops.extraContainers . | indent 6 }}
         {{- end }}
 
 {{- end }}                  
