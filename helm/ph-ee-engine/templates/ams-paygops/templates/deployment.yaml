@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-ams-paygops.fullname" . }}
+  name: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-ams-paygops.fullname" . }}
+    app: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
 spec:
   replicas: {{ .Values.paygops_connector.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-ams-paygops.fullname" . }}
+      app: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-ams-paygops.fullname" . }}
+        app: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
       annotations:
 {{- if .Values.paygops_connector.deployment.annotations }}
 {{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.paygops_connector.priorityClassName }}
       priorityClassName: {{ .Values.paygops_connector.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-ams-paygops.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-ams-paygops.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.paygops_connector.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-ams-paygops

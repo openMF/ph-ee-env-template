@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-gsma.fullname" . }}
+  name: {{ template "ph-ee-connector-gsma.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-gsma.fullname" . }}
+    app: {{ template "ph-ee-connector-gsma.fullname" . }}
 spec:
   replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-gsma.fullname" . }}
+      app: {{ template "ph-ee-connector-gsma.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-gsma.fullname" . }}
+        app: {{ template "ph-ee-connector-gsma.fullname" . }}
       annotations:
 {{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.ph_ee_connector_gsma.priorityClassName }}
       priorityClassName: {{ .Values.ph_ee_connector_gsma.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-gsma.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-gsma.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.ph_ee_connector_gsma.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-gsma-mm

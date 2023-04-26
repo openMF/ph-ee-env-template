@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-channel.fullname" . }}
+  name: {{ template "ph-ee-connector-channel.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-channel.fullname" . }}
+    app: {{ template "ph-ee-connector-channel.fullname" . }}
 spec:
   replicas: {{ .Values.channel.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-channel.fullname" . }}
+      app: {{ template "ph-ee-connector-channel.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-channel.fullname" . }}
+        app: {{ template "ph-ee-connector-channel.fullname" . }}
       annotations:
 {{- if .Values.channel.deployment.annotations }}
 {{ toYaml .Values.channel.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.channel.priorityClassName }}
       priorityClassName: {{ .Values.channel.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-channel.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-channel.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.channel.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-channel

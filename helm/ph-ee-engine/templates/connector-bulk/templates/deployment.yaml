@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-bulk.fullname" . }}
+  name: {{ template "ph-ee-connector-bulk.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-bulk.fullname" . }}
+    app: {{ template "ph-ee-connector-bulk.fullname" . }}
 spec:
   replicas: {{ .Values.connector_bulk.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-bulk.fullname" . }}
+      app: {{ template "ph-ee-connector-bulk.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-bulk.fullname" . }}
+        app: {{ template "ph-ee-connector-bulk.fullname" . }}
       annotations:
 {{- if .Values.connector_bulk.deployment.annotations }}
 {{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.connector_bulk.priorityClassName }}
       priorityClassName: {{ .Values.connector_bulk.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-bulk.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-bulk.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.connector_bulk.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-bulk

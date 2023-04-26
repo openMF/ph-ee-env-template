@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-notifications.fullname" . }}
+  name: {{ template "ph-ee-connector-notifications.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-notifications.fullname" . }}
+    app: {{ template "ph-ee-connector-notifications.fullname" . }}
 spec:
   replicas: {{ .Values.notifications.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-notifications.fullname" . }}
+      app: {{ template "ph-ee-connector-notifications.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-notifications.fullname" . }}
+        app: {{ template "ph-ee-connector-notifications.fullname" . }}
       annotations:
 {{- if .Values.notifications.deployment.annotations }}
 {{ toYaml .Values.notifications.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.notifications.priorityClassName }}
       priorityClassName: {{ .Values.notifications.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-notifications.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-notifications.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.notifications.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-notifications

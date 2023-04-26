@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-mpesa.fullname" . }}
+  name: {{ template "ph-ee-connector-mpesa.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-mpesa.fullname" . }}
+    app: {{ template "ph-ee-connector-mpesa.fullname" . }}
 spec:
   replicas: {{ .Values.mpesa.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-mpesa.fullname" . }}
+      app: {{ template "ph-ee-connector-mpesa.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-mpesa.fullname" . }}
+        app: {{ template "ph-ee-connector-mpesa.fullname" . }}
       annotations:
 {{- if .Values.mpesa.deployment.annotations }}
 {{ toYaml .Values.mpesa.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.mpesa.priorityClassName }}
       priorityClassName: {{ .Values.mpesa.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-mpesa.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-mpesa.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.mpesa.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-mpesa

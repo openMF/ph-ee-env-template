@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " message-gateway.fullname" . }}
+  name: {{ template "message-gateway.fullname" . }}
   labels:
-    app: {{ template " message-gateway.fullname" . }}
+    app: {{ template "message-gateway.fullname" . }}
 spec:
   replicas: {{ .Values.messagegateway.replicas }}
   selector:
     matchLabels:
-      app: {{ template " message-gateway.fullname" . }}
+      app: {{ template "message-gateway.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " message-gateway.fullname" . }}
+        app: {{ template "message-gateway.fullname" . }}
       annotations:
 {{- if .Values.messagegateway.deployment.annotations }}
 {{ toYaml .Values.messagegateway.deployment.annotations | indent 8 }}
@@ -28,7 +28,7 @@ spec:
       {{- if .Values.messagegateway.priorityClassName }}
       priorityClassName: {{ .Values.messagegateway.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " message-gateway.serviceAccount" . }}
+      serviceAccountName: {{ template "message-gateway.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.messagegateway.terminationGracePeriod }}
       containers:
         - name: message-gateway

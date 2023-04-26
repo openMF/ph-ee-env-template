@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-mojaloop-java.fullname" . }}
+  name: {{ template "ph-ee-connector-mojaloop-java.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-mojaloop-java.fullname" . }}
+    app: {{ template "ph-ee-connector-mojaloop-java.fullname" . }}
 spec:
   replicas: {{ .Values.ph_ee_connector_mojaloop.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-mojaloop-java.fullname" . }}
+      app: {{ template "ph-ee-connector-mojaloop-java.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-mojaloop-java.fullname" . }}
+        app: {{ template "ph-ee-connector-mojaloop-java.fullname" . }}
       annotations:
 {{- if .Values.ph_ee_connector_mojaloop.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_mojaloop.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.ph_ee_connector_mojaloop.priorityClassName }}
       priorityClassName: {{ .Values.ph_ee_connector_mojaloop.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-mojaloop-java.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-mojaloop-java.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.ph_ee_connector_mojaloop.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-mojaloop-java

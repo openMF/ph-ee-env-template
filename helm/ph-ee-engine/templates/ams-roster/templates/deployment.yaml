@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-ams-roster.fullname" . }}
+  name: {{ template "ph-ee-connector-ams-roster.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-ams-roster.fullname" . }}
+    app: {{ template "ph-ee-connector-ams-roster.fullname" . }}
 spec:
   replicas: {{ .Values.roster_connector.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-ams-roster.fullname" . }}
+      app: {{ template "ph-ee-connector-ams-roster.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-ams-roster.fullname" . }}
+        app: {{ template "ph-ee-connector-ams-roster.fullname" . }}
       annotations:
 {{- if .Values.roster_connector.deployment.annotations }}
 {{ toYaml .Values.roster_connector.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.roster_connector.priorityClassName }}
       priorityClassName: {{ .Values.roster_connector.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-ams-roster.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-ams-roster.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.roster_connector.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-ams-roster

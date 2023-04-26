@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-slcb.fullname" . }}
+  name: {{ template "ph-ee-connector-slcb.fullname" . }}
   labels:
-    app: {{ template " ph-ee-connector-slcb.fullname" . }}
+    app: {{ template "ph-ee-connector-slcb.fullname" . }}
 spec:
   replicas: {{ .Values.ph_ee_connector_slcb.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-slcb.fullname" . }}
+      app: {{ template "ph-ee-connector-slcb.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-slcb.fullname" . }}
+        app: {{ template "ph-ee-connector-slcb.fullname" . }}
       annotations:
 {{- if .Values.ph_ee_connector_slcb.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_slcb.deployment.annotations | indent 8 }}
@@ -28,7 +28,7 @@ spec:
       {{- if .Values.ph_ee_connector_slcb.priorityClassName }}
       priorityClassName: {{ .Values.ph_ee_connector_slcb.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-slcb.serviceAccount" . }}
+      serviceAccountName: {{ template "ph-ee-connector-slcb.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.ph_ee_connector_slcb.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-slcb-mm
