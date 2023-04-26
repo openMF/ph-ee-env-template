@@ -280,7 +280,14 @@ channel:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m" 
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true       
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -408,7 +415,14 @@ ph_ee_connector_ams_mifos:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"  
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true       
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -518,7 +532,14 @@ ph_ee_connector_mojaloop:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"       
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true            
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -624,7 +645,14 @@ operations_app:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m" 
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true        
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -719,7 +747,14 @@ operations_web:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"  
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true       
 # Enabling this will publicly expose your operations_web instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -872,7 +907,14 @@ mpesa:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true         
 # Enabling this will publicly expose your mpesa instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -974,7 +1016,14 @@ roster_connector:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true         
   deployment:
     annotations: {}
     affinity: {}
@@ -1069,7 +1118,14 @@ paygops_connector:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true         
   deployment:
     annotations: {}
     affinity: {}
@@ -1166,6 +1222,13 @@ messagegateway:
     requests:
       memory: "512M"
       cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true     
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1278,6 +1341,13 @@ notifications:
     requests:
       memory: "512M"
       cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true     
 # Enabling this will publicly expose your notifications instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1382,6 +1452,13 @@ zeebe_ops:
     requests:
       memory: "512M"
       cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true    
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1472,13 +1549,61 @@ importer_es:
       root: "INFO"
     pattern:
       console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-  limits:
-    memory: "512M"
-    cpu: "500m"
-  requests:
-    memory: "512M"
-    cpu: "100m"
-    javaToolOptions: "-Xmx256M"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5 
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+# Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true 
+# Custom service account override that the pod will use
+  serviceAccount: "" 
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {} 
+# How long to wait for Zeebe-ops pods to stop gracefully
+  terminationGracePeriod: 30 
+# Extra environment variables for Zeebe-ops container.
+  envFrom: [] 
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: ""
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
+  priorityClassName: "" 
+  # ph-ee-zeebe-opsConfig: ""
+  #   ph-ee-zeebe-ops.yml: |
+  # - User that the container will execute as.
+  # Not necessary to run as root (0) as the Zeebe-ops Deployment use cases do not need access to Kubernetes Node internals
+  # - Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:    
+    limits:
+      memory: "512M"
+      cpu: "500m"
+    requests:
+      memory: "512M"
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true  
+  javaToolOptions: "-Xmx256M"
 
 kafka:
   enabled: true
@@ -1558,7 +1683,14 @@ importer_rdbms:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true        
   deployment:
     annotations: {}
     affinity: {}
@@ -1685,7 +1817,14 @@ connector_bulk:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true        
 # Enabling this will publicly expose your connector_bulk instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1778,6 +1917,13 @@ ph_ee_connector_gsma:
     requests:
       memory: "512M"
       cpu: "100m"
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true    
   deployment:
     annotations: {}
     affinity: {}
@@ -1888,7 +2034,14 @@ ph_ee_connector_slcb:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"      
+      cpu: "100m" 
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true         
   deployment:
     annotations: {}
     affinity: {}
