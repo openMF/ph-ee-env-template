@@ -21,7 +21,7 @@ spec:
 {{- end }}
     spec:
       affinity: {{ toYaml .Values.ph_ee_connector_gsma.deployment.affinity | nindent 8 }} 
-     
+      serviceAccountName: ph-ee-connector-gsm
       containers:
         - name: ph-ee-connector-gsma-mm
           image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
