@@ -1,0 +1,5 @@
+apiVersion: v2
+description: ph-ee-connector-ams-mifos
+name: ams-mifos
+version: 1.0.0.
+appVersion: "1.0.0"
