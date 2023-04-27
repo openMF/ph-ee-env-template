@@ -1,19 +1,19 @@
+deployment:
+  apiVersion: "apps/v1"
+  
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1" 
+
 ph_ee_connector_gsma:
-  deployment:
-    apiVersion: "apps/v1"
-    
-  ingress:
-    apiversion: networking.k8s.io/v1
-
-  service:
-    apiversion: "v1"
-
-  secret:
-    apiversion: "v1"
-
-  configmap:
-    apiversion: "v1" 
-
   enabled: true
   replicas: 1
   serviceAccountName: ph-ee-connector-gsma
@@ -24,7 +24,6 @@ ph_ee_connector_gsma:
   SPRING_PROFILES_ACTIVE: "bb"
   api:
     channel: ""
-   
   limits:
     cpu: "500m"
     memory: "512M"
