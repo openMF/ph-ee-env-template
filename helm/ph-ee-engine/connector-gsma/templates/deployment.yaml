@@ -16,14 +16,14 @@ spec:
     metadata:
       labels:
         app: {{ template "ph-ee-connector-gsma.fullname" . }}
-      annotations:
-{{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
-{{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
-{{- end }}
+      # annotations:
+# {{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
+# {{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
+# {{- end }}
     spec:
-      affinity: {{ toYaml .Values.ph_ee_connector_gsma.deployment.affinity | nindent 8 }}
-      nodeSelector: {{ toYaml .Values.ph_ee_connector_gsma.deployment.nodeSelector | nindent 8 }}
-      tolerations: {{ toYaml ( .Values.ph_ee_connector_gsma.tolerations | default .Values.ph_ee_connector_gsma.deployment.tolerations ) | nindent 8 }}
+      # affinity: {{ toYaml .Values.ph_ee_connector_gsma.deployment.affinity | nindent 8 }}
+      # nodeSelector: {{ toYaml .Values.ph_ee_connector_gsma.deployment.nodeSelector | nindent 8 }}
+      # tolerations: {{ toYaml ( .Values.ph_ee_connector_gsma.tolerations | default .Values.ph_ee_connector_gsma.deployment.tolerations ) | nindent 8 }}
       {{- if .Values.ph_ee_connector_gsma.priorityClassName }}
       priorityClassName: {{ .Values.ph_ee_connector_gsma.priorityClassName  }}
       {{- end }}
@@ -36,10 +36,10 @@ spec:
           ports:
             - containerPort: 5000
           resources: {{ toYaml ( .Values.ph_ee_connector_gsma.resources | default .Values.ph_ee_connector_gsma.deployment.resources ) | nindent 10 }}
-      {{- if .Values.ph_ee_connector_gsma.imagePullSecrets }}
-          imagePullSecrets:
-    {{ toYaml .Values.ph_ee_connector_gsma.imagePullSecrets | indent 8 }}
-        {{- end }}
+    #   {{- if .Values.ph_ee_connector_gsma.imagePullSecrets }}
+    #       imagePullSecrets:
+    # {{ toYaml .Values.ph_ee_connector_gsma.imagePullSecrets | indent 8 }}
+    #     {{- end }}
           livenessProbe:
 {{ toYaml .Values.ph_ee_connector_gsma.livenessProbe | indent 10 }}
           readinessProbe:
@@ -58,7 +58,7 @@ spec:
 # {{- if .Values.ph_ee_connector_gsma.extraEnvs | default .Values.ph_ee_connector_gsma.deployment.extraEnvs }}
 # {{ toYaml ( .Values.ph_ee_connector_gsma.extraEnvs | default .Values.ph_ee_connector_gsma.deployment.extraEnvs ) | indent 8 }}
 # {{- end }}
-          envFrom: {{ toYaml ( .Values.ph_ee_connector_gsma.envFrom | default .Values.ph_ee_connector_gsma.deployment.envFrom ) | nindent 10 }}
+          # envFrom: {{ toYaml ( .Values.ph_ee_connector_gsma.envFrom | default .Values.ph_ee_connector_gsma.deployment.envFrom ) | nindent 10 }}
           securityContext: {{ toYaml ( .Values.ph_ee_connector_gsma.podSecurityContext | default .Values.ph_ee_connector_gsma.deployment.securityContext ) | nindent 10 }}
 
           volumeMounts:
@@ -67,24 +67,24 @@ spec:
 # {{- if .Values.ph_ee_connector_gsma.deployment.config }}
 # {{ toYaml .Values.ph_ee_connector_gsma.deployment.config | indent 12 }}
 # {{- end }}            
-    #   initContainers:
-    #     - name: wait-db
-    #       image: jwilder/dockerize
-    #       imagePullPolicy: IfNotPresent
-    #       args:
-    #         - -timeout=120s
-    #         - -wait
-    #         - tcp://{{ .Values.operations_app.datasource.host }}:3306
+      # initContainers:
+      #   - name: wait-db
+      #     image: jwilder/dockerize
+      #     imagePullPolicy: IfNotPresent
+      #     args:
+      #       - -timeout=120s
+      #       - -wait
+      #       - tcp://{{ .Values.operations_app.datasource.host }}:3306
     #   {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
     # {{ tpl .Values.extraInitContainers . | indent 6 }}
     #       {{- else }}
     # {{ toYaml .Values.extraInitContainers | indent 6 }}
     #       {{- end }}          
-      volumes:
-        - name: ph-ee-config
-          configMap:
-            name: ph-ee-config
-        {{- if .Values.ph_ee_connector_gsma.extraContainers }}
-  {{ tpl .Values.ph_ee_connector_gsma.extraContainers . | indent 6 }}
-        {{- end }}            
+  #     volumes:
+  #       - name: ph-ee-config
+  #         configMap:
+  #           name: ph-ee-config
+  #       {{- if .Values.ph_ee_connector_gsma.extraContainers }}
+  # {{ tpl .Values.ph_ee_connector_gsma.extraContainers . | indent 6 }}
+  #       {{- end }}            
 {{- end }}

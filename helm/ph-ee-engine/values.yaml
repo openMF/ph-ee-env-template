@@ -1677,7 +1677,9 @@ connector_bulk:
     # ph-ee-connector-bulkConfig: {}
     #   ph-ee-connector-bulk.yml: |
 
-ph_ee_connector_gsma:
+chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true 
+# Custom service accph_ee_connector_gsma:
   enabled: true
   replicas: 1
   image: ""
@@ -1700,9 +1702,7 @@ ph_ee_connector_gsma:
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
-# Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
-# Custom service account override that the pod will use
+# Whether this ount override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
   serviceAccountAnnotations: {} 
