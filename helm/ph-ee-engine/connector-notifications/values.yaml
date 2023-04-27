@@ -38,8 +38,8 @@ notifications:
     annotations:
       kubernetes.io/ingress.class: "nginx"
     wildcardhostname: notifications.sandbox.fynarfin.io  
-    # tls:
-    #   - secretName: sandbox-secret
+    tls:
+    - secretName: sandbox_secret
     path: "/"
     backend:
       service:
