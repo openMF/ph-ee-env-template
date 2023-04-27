@@ -33,8 +33,13 @@ spec:
           imagePullSecrets:
     {{ toYaml .Values.ph_ee_connector_gsma.imagePullSecrets | indent 8 }}
         {{- end }}  
-          resources: {{ toYaml ( .Values.ph_ee_connector_gsma.resources | default .Values.ph_ee_connector_gsma.deployment.resources ) | nindent 10 }}
-              
+          resources:
+            limits:
+              memory: "{{ .Values.ph_ee_connector_gsma.limits.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_gsma.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.ph_ee_connector_gsma.requests.memory }}"
+              cpu: "{{ .Values.ph_ee_connector_gsma.requests.cpu }}"              
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
