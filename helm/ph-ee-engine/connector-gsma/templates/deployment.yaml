@@ -3,36 +3,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-gsma"
+  name: {{ template "ph-ee-connector-gsma.fullname" . }}
   labels:
-    app: ph-ee-connector-gsma
+    app: {{ template "ph-ee-connector-gsma.fullname" . }}
 spec:
   replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-gsma
+      app: {{ template "ph-ee-connector-gsma.fullname" . }}
   template:
     metadata:
       labels:
-        app: ph-ee-connector-gsma
+        app: {{ template "ph-ee-connector-gsma.fullname" . }}
       annotations:
 {{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      affinity: {{ toYaml .Values.ph_ee_connector_gsma.deployment.affinity | nindent 8 }} 
+      serviceAccountName: {{ template "ph-ee-connector-gsma.serviceAccount" . }}
+    
       containers:
         - name: ph-ee-connector-gsma-mm
-          image:  "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
+          image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
           imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
           ports:
             - containerPort: 5000
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "512M"
-            requests:
-              cpu: "100m"
-              memory: "256M"
+          {{- if .Values.ph_ee_connector_gsma.imagePullSecrets }}
+          imagePullSecrets:
+    {{ toYaml .Values.ph_ee_connector_gsma.imagePullSecrets | indent 8 }}
+        {{- end }}  
+          resources: {{ toYaml ( .Values.ph_ee_connector_gsma.resources | default .Values.ph_ee_connector_gsma.deployment.resources ) | nindent 10 }}
+              
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
