@@ -67,19 +67,19 @@ spec:
 # {{- if .Values.ph_ee_connector_gsma.deployment.config }}
 # {{ toYaml .Values.ph_ee_connector_gsma.deployment.config | indent 12 }}
 # {{- end }}            
-      initContainers:
-        - name: wait-db
-          image: jwilder/dockerize
-          imagePullPolicy: IfNotPresent
-          args:
-            - -timeout=120s
-            - -wait
-            - tcp://{{ .Values.operations_app.datasource.host }}:3306
-      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
-    {{ tpl .Values.extraInitContainers . | indent 6 }}
-          {{- else }}
-    {{ toYaml .Values.extraInitContainers | indent 6 }}
-          {{- end }}          
+    #   initContainers:
+    #     - name: wait-db
+    #       image: jwilder/dockerize
+    #       imagePullPolicy: IfNotPresent
+    #       args:
+    #         - -timeout=120s
+    #         - -wait
+    #         - tcp://{{ .Values.operations_app.datasource.host }}:3306
+    #   {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+    # {{ tpl .Values.extraInitContainers . | indent 6 }}
+    #       {{- else }}
+    # {{ toYaml .Values.extraInitContainers | indent 6 }}
+    #       {{- end }}          
       volumes:
         - name: ph-ee-config
           configMap:
