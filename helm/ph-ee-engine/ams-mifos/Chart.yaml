@@ -1,4 +1,4 @@
-apiVersion: v2
+apiVersion: v1
 description: ph-ee-connector-ams-mifos
 name: ams-mifos
 version: 1.0.0.
