@@ -55,18 +55,18 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-{{- if .Values.ph_ee_connector_gsma.extraEnvs | default .Values.ph_ee_connector_gsma.deployment.extraEnvs }}
-{{ toYaml ( .Values.ph_ee_connector_gsma.extraEnvs | default .Values.ph_ee_connector_gsma.deployment.extraEnvs ) | indent 8 }}
-{{- end }}
+# {{- if .Values.ph_ee_connector_gsma.extraEnvs | default .Values.ph_ee_connector_gsma.deployment.extraEnvs }}
+# {{ toYaml ( .Values.ph_ee_connector_gsma.extraEnvs | default .Values.ph_ee_connector_gsma.deployment.extraEnvs ) | indent 8 }}
+# {{- end }}
           envFrom: {{ toYaml ( .Values.ph_ee_connector_gsma.envFrom | default .Values.ph_ee_connector_gsma.deployment.envFrom ) | nindent 10 }}
           securityContext: {{ toYaml ( .Values.ph_ee_connector_gsma.podSecurityContext | default .Values.ph_ee_connector_gsma.deployment.securityContext ) | nindent 10 }}
 
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
-{{- if .Values.ph_ee_connector_gsma.deployment.config }}
-{{ toYaml .Values.ph_ee_connector_gsma.deployment.config | indent 12 }}
-{{- end }}            
+# {{- if .Values.ph_ee_connector_gsma.deployment.config }}
+# {{ toYaml .Values.ph_ee_connector_gsma.deployment.config | indent 12 }}
+# {{- end }}            
       initContainers:
         - name: wait-db
           image: jwilder/dockerize
