@@ -1,5 +1,5 @@
 {{- if .Values.notifications.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-notifications

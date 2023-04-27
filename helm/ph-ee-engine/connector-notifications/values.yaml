@@ -18,7 +18,7 @@ notifications:
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
   imageTag: latest
   SPRING_PROFILES_ACTIVE: "bb"
-  hostname: "notifications.sandbox.fynarfin.io"
+  hostname: notifications.sandbox.fynarfin.io
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -37,6 +37,7 @@ notifications:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: "nginx"
+    wildcardhostname: notifications.sandbox.fynarfin.io  
     # tls:
     #   - secretName: sandbox-secret
     path: "/"
