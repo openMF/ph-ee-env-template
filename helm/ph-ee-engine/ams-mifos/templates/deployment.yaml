@@ -77,9 +77,9 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
-{{- if .Values.ph_ee_connector_ams_mifos.deployment.config }}
-{{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.config | indent 12 }}
-{{- end }}            
+# {{- if .Values.ph_ee_connector_ams_mifos.deployment.config }}
+# {{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.config | indent 12 }}
+# {{- end }}            
       initContainers:
         - name: wait-db
           image: jwilder/dockerize
