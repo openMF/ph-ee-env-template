@@ -1,6 +1,6 @@
 {{- if .Values.ph_ee_connector_gsma.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "ph-ee-connector-gsma"
@@ -22,17 +22,17 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-gsma-mm
-          image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
+          image:  "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
           imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
           ports:
             - containerPort: 5000
           resources:
             limits:
-              memory: "{{ .Values.ph_ee_connector_gsma.limits.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_gsma.limits.cpu }}"
+              cpu: "500m"
+              memory: "512M"
             requests:
-              memory: "{{ .Values.ph_ee_connector_gsma.requests.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_gsma.requests.cpu }}"
+              cpu: "100m"
+              memory: "256M"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
