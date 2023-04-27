@@ -15,8 +15,11 @@ configmap:
 
 ph_ee_connector_gsma:
   enabled: true
+  serviceAccountName: ph-ee-connector-gsma
+  affinity: ""
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
   imageTag: latest
+  imagePullSecrets: ""
   SPRING_PROFILES_ACTIVE: "bb"
   api:
     channel: ""
