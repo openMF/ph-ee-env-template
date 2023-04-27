@@ -23,13 +23,13 @@ ph_ee_connector_gsma:
   SPRING_PROFILES_ACTIVE: "bb"
   api:
     channel: ""
-  resources:  
-    limits:
-      cpu: "500m"
-      memory: "512M"
-    requests:
-      cpu: "100m"
-      memory: "256M"
+   
+  limits:
+    cpu: "500m"
+    memory: "512M"
+  requests:
+    cpu: "100m"
+    memory: "256M"
   deployment:
     annotations:
       deployTime: "{{ .Values.deployTime }}"
