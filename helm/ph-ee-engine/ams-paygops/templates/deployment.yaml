@@ -57,9 +57,9 @@ spec:
               value: "{{ .Values.paygops_connector.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
-              memory: "{{ .Values.roster_connector.limits.memory }}"
+              memory: "{{ .Values.paygops_connector.limits.memory }}"
               cpu: "{{ .Values.paygops_connector.limits.cpu }}"
             requests:
-              memory: "{{ .Values.roster_connector.requests.memory }}"
+              memory: "{{ .Values.paygops_connector.requests.memory }}"
               cpu: "{{ .Values.paygops_connector.requests.cpu }}"
 {{- end }}
