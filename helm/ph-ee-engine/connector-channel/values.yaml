@@ -12,50 +12,52 @@ secret:
 
 configmap:
   apiversion: "v1" 
-  
+
 channel:
+  enabled: true
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
+  imageTag: latest
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: "bb,tenants"
+  hostname: "channel.sandbox.mifos.io"
+  stub_hostname: "channel-gsma.sandbox.mifos.io"
+  DFSPIDS: "gorilla,lion"
+  operations:
+    url: "http://ops-bk.sandbox.mifos.io/api/v1"
+    authEnabled: false
+    
+  tenantPrimary:
+    clientId: "mifos"
+    clientSecret: "password"
+    tenant: "rhino"
+  tenantSecondary:
+    clientId: "mifos"
+    clientSecret: "password"
+    tenant: "gorilla"
+  limits:
+    cpu: "500m"
+    memory: "512M"
+  requests:
+    cpu: "100m"
+    memory: "256M"
+  ingress:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
-    imageTag: latest
-    SPRING_PROFILES_ACTIVE: "bb,tenants"
-    hostname: "channel.sandbox.mifos.io"
-    stub_hostname: "channel-gsma.sandbox.mifos.io"
-    DFSPIDS: "gorilla,lion"
-    operations:
-      url: "http://ops-bk.sandbox.mifos.io/api/v1"
-      authEnabled: false
-    tenantPrimary:
-      clientId: "mifos"
-      clientSecret: "password"
-      tenant: "rhino"
-    tenantSecondary:
-      clientId: "mifos"
-      clientSecret: "password"
-      tenant: "gorilla"
-    limits:
-      cpu: "500m"
-      memory: "512M"
-    requests:
-      cpu: "100m"
-      memory: "256M"
-    ingress:
-      enabled: true
-      className: "nginx"
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-      tls:
-        - secretName: sandbox-secret
-      path: "/"
-      backend:
-        service:
-          name: ph-ee-connector-channel
-          port:
-            number: 80
-      stub_backend:
-        service:
-          name: ph-ee-connector-channel
-          port:
-            number: 82
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+    tls:
+      - secretName: sandbox-secret
+    path: "/"
+    backend:
+      service:
+        name: ph-ee-connector-channel
+        port:
+          number: 80
+    stub_backend:
+      service:
+        name: ph-ee-connector-channel
+        port:
+          number: 82
+  deployment:
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"
