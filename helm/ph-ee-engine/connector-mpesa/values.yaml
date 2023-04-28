@@ -24,7 +24,6 @@ mpesa:
   callback_host: "https://mpesa.sandbox.mifos.io/"
   retry_count: 3
   api_timeout: 60000
-  serviceAccountName: ""
   channel:
     host: "http://ph-ee-connector-channel"
   paygops:
@@ -64,6 +63,7 @@ mpesa:
   requests:
     cpu: "100m"
     memory: "256M"
+  wildcardhostname: mpesa.sandbox.mifos.io  
   ingress:
     enabled: true
     className: "nginx"
