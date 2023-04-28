@@ -18,6 +18,12 @@ ph_ee_connector_slcb:
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
   imageTag: latest
   SPRING_PROFILES_ACTIVE: "bb"
+  limits:
+    cpu: "500m"
+    memory: "512M"
+  requests:
+    cpu: "100m"
+    memory: "256M"
   deployment:
     annotations:
       deployTime: "{{ .Values.deployTime }}"
