@@ -3,35 +3,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ph-ee-connector-gsm
+  name: "ph-ee-connector-gsm"
   labels:
-    app: ph-ee-connector-gsm
+    app: "ph-ee-connector-gsm"
 spec:
   replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-gsm
+      app: "ph-ee-connector-gsm"
   template:
     metadata:
       labels:
-        app: ph-ee-connector-gsm
+        app: "ph-ee-connector-gsm"
       annotations:
 {{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      affinity: affinity: {{ toYaml .Values.ph_ee_connector_gsma.deployment.affinity | nindent 8 }} 
-     
       containers:
-        - name: ph-ee-connector-gsma-mm
+        - name: "ph-ee-connector-gsma-mm"
           image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
           imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
           ports:
-            - containerPort: 5000
-          {{- if .Values.ph_ee_connector_gsma.imagePullSecrets }}
-          imagePullSecrets:
-    {{ toYaml .Values.ph_ee_connector_gsma.imagePullSecrets | indent 8 }}
-        {{- end }}  
+            - containerPort: 5000 
           resources:
             limits:
               memory: "{{ .Values.ph_ee_connector_gsma.limits.memory }}"
@@ -39,6 +33,18 @@ spec:
             requests:
               memory: "{{ .Values.ph_ee_connector_gsma.requests.memory }}"
               cpu: "{{ .Values.ph_ee_connector_gsma.requests.cpu }}"              
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"

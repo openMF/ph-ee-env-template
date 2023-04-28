@@ -5,23 +5,23 @@ kind: Deployment
 metadata:
   name: "ph-ee-connector-notifications"
   labels:
-    app: ph-ee-connector-notifications
+    app: "ph-ee-connector-notifications"
 spec:
   replicas: {{ .Values.notifications.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-notifications
+      app: "ph-ee-connector-notifications"
   template:
     metadata:
       labels:
-        app: ph-ee-connector-notifications
+        app: "ph-ee-connector-notifications"
       annotations:
 {{- if .Values.notifications.deployment.annotations }}
 {{ toYaml .Values.notifications.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
-        - name: ph-ee-connector-notifications
+        - name: "ph-ee-connector-notifications"
           image: "{{ .Values.notifications.image }}:{{ .Values.notifications.imageTag }}"
           imagePullPolicy: "{{ .Values.notifications.imagePullPolicy }}"
           resources:

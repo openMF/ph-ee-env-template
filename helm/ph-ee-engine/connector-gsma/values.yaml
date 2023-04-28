@@ -18,7 +18,6 @@ ph_ee_connector_gsma:
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
   imageTag: latest
-  imagePullSecrets: ""
   SPRING_PROFILES_ACTIVE: "bb"
   api:
     channel: ""
