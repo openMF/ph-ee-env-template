@@ -18,4 +18,7 @@ dependencies:
     repository: "file://./ams-roster"  
   - name: mpesa
     version: 1.0.0
-    repository: "file://./connector-mpesa"   
+    repository: "file://./connector-mpesa" 
+  - name: operations-app
+    version: 1.0.0
+    repository: "file://./operations-app"

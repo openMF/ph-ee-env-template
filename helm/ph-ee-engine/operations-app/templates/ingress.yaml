@@ -1,5 +1,5 @@
 {{- if .Values.operations_app.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-operations-app
@@ -20,12 +20,12 @@ spec:
 {{- end }}              
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  - hosts:
+    - "{{ .Values.operations_app.wildcardhostname }}"
+    secretName: "{{ .Values.operations_app.tls }}"
 
 ---
-apiVersion: {{ .Values.ingress.apiversion }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-identity
@@ -46,8 +46,8 @@ spec:
 {{- end }} 
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-{{- end }}
+  - hosts:
+    - "{{ .Values.operations_app.wildcardhostname }}"
+    secretName: "{{ .Values.operations_app.tls }}"
 
+{{- end }}
