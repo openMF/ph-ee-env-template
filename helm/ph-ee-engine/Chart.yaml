@@ -4,6 +4,6 @@ description: PaymentHub EE Engine
 name: ph-ee-engine
 version: 0.0.0-SNAPSHOT
 dependencies:
-  - name: notifications
+  - name: mpesa
     version: 1.0.0
-    repository: "file://./connector-notifications"
+    repository: "file://./connector-mpesa"
