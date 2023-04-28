@@ -1,21 +1,21 @@
 # Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.channel.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "ph-ee-connector-channel.fullname" . }}
+  name: "ph-ee-connector-channel"
   labels:
-    app: {{ template "ph-ee-connector-channel.fullname" . }}
+    app: "ph-ee-connector-channel"
 spec:
   replicas: {{ .Values.channel.replicas }}
   selector:
     matchLabels:
-      app: {{ template "ph-ee-connector-channel.fullname" . }}
+      app: "ph-ee-connector-channel"
   template:
     metadata:
       labels:
-        app: {{ template "ph-ee-connector-channel.fullname" . }}
+        app: "ph-ee-connector-channel"
       annotations:
 {{- if .Values.channel.deployment.annotations }}
 {{ toYaml .Values.channel.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.channel.priorityClassName }}
       priorityClassName: {{ .Values.channel.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template "ph-ee-connector-channel.serviceAccount" . }}
+      serviceAccountName: "ph-ee-connector-channel"
       terminationGracePeriodSeconds: {{ .Values.channel.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-channel

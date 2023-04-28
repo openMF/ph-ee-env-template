@@ -1153,7 +1153,7 @@ messagegateway:
     #   message-gateway.yml: |
 
 notifications:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.1.0"
