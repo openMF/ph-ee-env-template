@@ -24,20 +24,22 @@ spec:
         - name: ph-ee-connector-ams-tupande
           image: "{{ .Values.tupande_connector.image }}:{{ .Values.tupande_connector.imageTag }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
           imagePullPolicy: "{{ .Values.tupande_connector.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.tupande_connector.SPRING_PROFILES_ACTIVE }}"
@@ -82,7 +84,7 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 5000
+      targetPort: 8080
   selector:
     app: ph-ee-connector-ams-tupande
   sessionAffinity: None

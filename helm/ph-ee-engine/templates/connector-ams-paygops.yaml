@@ -24,20 +24,22 @@ spec:
         - name: ph-ee-connector-ams-paygops
           image: "{{ .Values.paygops_connector.image }}:{{ .Values.paygops_connector.imageTag }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
           imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.paygops_connector.SPRING_PROFILES_ACTIVE }}"
@@ -81,7 +83,7 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 5000
+      targetPort: 8080
     - name: http
       port: 82
       protocol: TCP
