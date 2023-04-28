@@ -4,6 +4,6 @@ description: PaymentHub EE Engine
 name: ph-ee-engine
 version: 0.0.0-SNAPSHOT
 dependencies:
-  - name: slcb
+  - name: gsma
     version: 1.0.0
-    repository: "file://./connector-slcb"
+    repository: "file://./connector-gsma"
