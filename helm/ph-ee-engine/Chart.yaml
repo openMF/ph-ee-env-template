@@ -13,3 +13,6 @@ dependencies:
   - name: paygops
     version: 1.0.0
     repository: "file://./ams-paygops"
+  - name: roster
+    version: 1.0.0
+    repository: "file://./ams-roster"  
