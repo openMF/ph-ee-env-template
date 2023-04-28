@@ -10,7 +10,7 @@ dependencies:
   - name: notifications
     version: 1.0.0
     repository: "file://./connector-notifications"
-  - name: channel
+  - name: paygops
     version: 1.0.0
-    repository: "file://./connector-channel"  
+    repository: "file://./ams-paygops 
   

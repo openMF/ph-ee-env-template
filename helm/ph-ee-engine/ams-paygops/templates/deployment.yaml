@@ -1,21 +1,21 @@
 # Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.paygops_connector.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
+  name: ph-ee-connector-ams-paygops
   labels:
-    app: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
+    app: ph-ee-connector-ams-paygops
 spec:
   replicas: {{ .Values.paygops_connector.replicas }}
   selector:
     matchLabels:
-      app: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
+      app: ph-ee-connector-ams-paygops
   template:
     metadata:
       labels:
-        app: {{ template "ph-ee-connector-ams-paygops.fullname" . }}
+        app: ph-ee-connector-ams-paygops
       annotations:
 {{- if .Values.paygops_connector.deployment.annotations }}
 {{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.paygops_connector.priorityClassName }}
       priorityClassName: {{ .Values.paygops_connector.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template "ph-ee-connector-ams-paygops.serviceAccount" . }}
+      serviceAccountName: "ph-ee-connector-ams-paygops"
       terminationGracePeriodSeconds: {{ .Values.paygops_connector.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-ams-paygops
