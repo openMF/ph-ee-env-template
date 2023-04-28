@@ -24,8 +24,8 @@ connector_bulk:
     access_key: "AKIAX32JM37TZOJ5AKFB"
     secret_key: "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"
   operations_app: 
-    OPERATIONS-APP_CONTACTPOINT: ""
-    OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION: ""  
+    contactpoint: "abc"
+    batch_transaction: "xyz"  
   limits:
     cpu: "500m"
     memory: "512M"
