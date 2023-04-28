@@ -20,7 +20,7 @@ spec:
 {{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      affinity: {{ toYaml .Values.ph_ee_connector_gsma.affinity: ph-ee-connector-gsma.deployment.affinity | nindent 8 }} 
+      affinity: affinity: {{ toYaml .Values.ph_ee_connector_gsma.deployment.affinity | nindent 8 }} 
      
       containers:
         - name: ph-ee-connector-gsma-mm

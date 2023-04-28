@@ -16,7 +16,6 @@ configmap:
 ph_ee_connector_gsma:
   enabled: true
   replicas: 1
-  affinity: ""
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
   imageTag: latest
   imagePullSecrets: ""
@@ -30,5 +29,6 @@ ph_ee_connector_gsma:
     cpu: "100m"
     memory: "256M"
   deployment:
+    affinity: ""
     annotations:
       deployTime: "{{ .Values.deployTime }}"
