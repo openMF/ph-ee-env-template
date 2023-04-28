@@ -1,0 +1,23 @@
+deployment:
+  apiVersion: "apps/v1"
+  
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+ph_ee_connector_slcb:
+  enabled: true
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
+  imageTag: latest
+  SPRING_PROFILES_ACTIVE: "bb"
+  deployment:
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"
