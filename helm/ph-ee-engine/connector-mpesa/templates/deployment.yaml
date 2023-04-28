@@ -145,7 +145,7 @@ spec:
           args:
             - -timeout=120s
             - -wait
-            - tcp://{{ .Values.operations_app.datasource.host }}:3306
+            # - tcp://{{ .Values.operations_app.datasource.host }}:3306
       {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
     {{ tpl .Values.extraInitContainers . | indent 6 }}
           {{- else }}
