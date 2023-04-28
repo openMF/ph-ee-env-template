@@ -1,6 +1,6 @@
 {{- if .Values.paygops_connector.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "ph-ee-connector-ams-paygops"
