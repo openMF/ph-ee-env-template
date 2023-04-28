@@ -12,5 +12,4 @@ dependencies:
     repository: "file://./connector-notifications"
   - name: paygops
     version: 1.0.0
-    repository: "file://./ams-paygops 
-  
+    repository: "file://./ams-paygops"
