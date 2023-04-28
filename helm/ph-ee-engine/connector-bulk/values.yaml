@@ -20,6 +20,9 @@ connector_bulk:
     imageTag: latest
     tenants: "gorilla,lion"
     hostname: "bulk-connector.sandbox.fynarfin.io"
+    aws: 
+      access_key: ""
+      secret_key: ""
     limits:
       cpu: "500m"
       memory: "512M"
