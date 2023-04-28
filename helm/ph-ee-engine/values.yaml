@@ -747,6 +747,7 @@ mpesa:
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
+  serviceAccountName: ""
   callback_host: ""
   channel:
     host: ""

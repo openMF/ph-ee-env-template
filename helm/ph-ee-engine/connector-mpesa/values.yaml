@@ -12,6 +12,7 @@ secret:
 
 configmap:
   apiversion: "v1"
+
 mpesa:
   enabled: true
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-mpesa"
@@ -23,6 +24,7 @@ mpesa:
   callback_host: "https://mpesa.sandbox.fynarfin.io/"
   retry_count: 3
   api_timeout: 60000
+  serviceAccountName: ""
   channel:
     host: "http://ph-ee-connector-channel"
   paygops:
