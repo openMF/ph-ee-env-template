@@ -27,6 +27,9 @@ ph_ee_connector_slcb:
   account_number: "003001003879112168"
   account_type: 0
   institutioncode: "SLCB"
+  aws: 
+    bucket_name: ""
+    region: ""
   endpoint:
     auth: "/api/auth"
     transaction_request: "/api/transactionRequest"
