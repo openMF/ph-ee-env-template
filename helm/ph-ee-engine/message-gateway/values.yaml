@@ -1,0 +1,51 @@
+deployment:
+  apiVersion: "apps/v1"
+  
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+messagegateway:
+  enabled: true
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
+  imageTag: latest
+  secret:
+    value:
+      api_key: "eKiC1_JWdKy7eaTGQFHxXXjXjacr60W9Zntl"
+      project_id: "PJ5ff552ce01d2978c"
+  hostname: "messagegateway.sandbox.fynarfin.io"
+  CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
+  HOSTCONFIG_HOST: "message-gateway"
+  MYSQL_USERNAME: "mifos"
+  MYSQL_PASSWORD: "password"
+  DATASOURCE_URL: jdbc:mysql:thin://operationsmysql:3306/messagegateway
+  PROVIDERSOURCE_FROMDATABASE: "disabled"
+  PROVIDERSOURCE_FROMYML: "enabled"
+  limits:
+    cpu: "500m"
+    memory: "512M"
+  requests:
+    cpu: "100m"
+    memory: "256M"
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+    tls:
+    - hosts: "notifications.sandbox.mifos.io"
+    - secretName: sandbox-secret
+    path: "/"
+    backend:
+      service:
+        name: message-gateway
+        port:
+          number: 80
