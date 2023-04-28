@@ -2,7 +2,7 @@
 
 apiVersion: apps/v1
 metadata:
-  name: "ph-ee-connector-bulk"
+  name: ph-ee-connector-bulk
   labels:
     app: ph-ee-connector-bulk
 spec:
