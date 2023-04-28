@@ -1,50 +1,37 @@
-# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.connector_bulk.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
-kind: Deployment
+apiVersion: apps/v1
 metadata:
-  name: {{ template "ph-ee-connector-bulk.fullname" . }}
+  name: "ph-ee-connector-bulk"
   labels:
-    app: {{ template "ph-ee-connector-bulk.fullname" . }}
+    app: ph-ee-connector-bulk
 spec:
   replicas: {{ .Values.connector_bulk.replicas }}
   selector:
     matchLabels:
-      app: {{ template "ph-ee-connector-bulk.fullname" . }}
+      app: ph-ee-connector-bulk
   template:
     metadata:
       labels:
-        app: {{ template "ph-ee-connector-bulk.fullname" . }}
+        app: ph-ee-connector-bulk
       annotations:
 {{- if .Values.connector_bulk.deployment.annotations }}
 {{ toYaml .Values.connector_bulk.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-      affinity: {{ toYaml .Values.connector_bulk.deployment.affinity | nindent 8 }}
-      nodeSelector: {{ toYaml .Values.connector_bulk.deployment.nodeSelector | nindent 8 }}
-      tolerations: {{ toYaml ( .Values.connector_bulk.tolerations | default .Values.connector_bulk.deployment.tolerations ) | nindent 8 }}
-      {{- if .Values.connector_bulk.priorityClassName }}
-      priorityClassName: {{ .Values.connector_bulk.priorityClassName  }}
-      {{- end }}
-      serviceAccountName: {{ template "ph-ee-connector-bulk.serviceAccount" . }}
-      terminationGracePeriodSeconds: {{ .Values.connector_bulk.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-bulk
           image: "{{ .Values.connector_bulk.image }}:{{ .Values.connector_bulk.imageTag }}"
           imagePullPolicy: "{{ .Values.connector_bulk.imagePullPolicy }}"
           ports:
             - containerPort: 5000
-          resources: {{ toYaml ( .Values.connector_bulk.resources | default .Values.connector_bulk.deployment.resources ) | nindent 10 }}
-      {{- if .Values.connector_bulk.imagePullSecrets }}
-          imagePullSecrets:
-    {{ toYaml .Values.connector_bulk.imagePullSecrets | indent 8 }}
-        {{- end }}
-          livenessProbe:
-{{ toYaml .Values.connector_bulk.livenessProbe | indent 10 }}
-          readinessProbe:
-{{ toYaml .Values.connector_bulk.readinessProbe | indent 10 }}
-
+          resources:
+            limits:
+              memory: "{{ .Values.connector_bulk.limits.memory }}"
+              cpu: "{{ .Values.connector_bulk.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.connector_bulk.requests.memory }}"
+              cpu: "{{ .Values.connector_bulk.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.connector_bulk.SPRING_PROFILES_ACTIVE }}"
@@ -103,36 +90,3 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-{{- if .Values.connector_bulk.extraEnvs | default .Values.connector_bulk.deployment.extraEnvs }}
-{{ toYaml ( .Values.connector_bulk.extraEnvs | default .Values.connector_bulk.deployment.extraEnvs ) | indent 8 }}
-{{- end }}
-          envFrom: {{ toYaml ( .Values.connector_bulk.envFrom | default .Values.connector_bulk.deployment.envFrom ) | nindent 10 }}
-          securityContext: {{ toYaml ( .Values.connector_bulk.podSecurityContext | default .Values.connector_bulk.deployment.securityContext ) | nindent 10 }}
-
-          volumeMounts:
-            - name: ph-ee-config
-              mountPath: "/config"
-{{- if .Values.connector_bulk.deployment.config }}
-{{ toYaml .Values.connector_bulk.deployment.config | indent 12 }}
-{{- end }}            
-      initContainers:
-        - name: wait-db
-          image: jwilder/dockerize
-          imagePullPolicy: IfNotPresent
-          args:
-            - -timeout=120s
-            - -wait
-            - tcp://{{ .Values.operations_app.datasource.host }}:3306
-      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
-    {{ tpl .Values.extraInitContainers . | indent 6 }}
-          {{- else }}
-    {{ toYaml .Values.extraInitContainers | indent 6 }}
-          {{- end }}          
-      volumes:
-        - name: ph-ee-config
-          configMap:
-            name: ph-ee-config
-        {{- if .Values.connector_bulk.extraContainers }}
-  {{ tpl .Values.connector_bulk.extraContainers . | indent 6 }}
-        {{- end }}            
-{{- end }}

@@ -16,3 +16,6 @@ dependencies:
   - name: roster
     version: 1.0.0
     repository: "file://./ams-roster"  
+  - name: bulk
+    version: 1.0.0
+    repository: "file://./connector-bulk"   
