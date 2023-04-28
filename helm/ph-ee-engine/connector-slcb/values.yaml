@@ -39,11 +39,6 @@ ph_ee_connector_slcb:
     date_format: "yyyy-MM-dd'T'hh:mm:ssXXX"
     reconciliation:
       enable: false
-  aws:
-    bucket_name: "paymenthub-ee-dev"
-    region: "us-east-2"
-    access_key: "access-key"
-    secret_key: "secret-key"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
