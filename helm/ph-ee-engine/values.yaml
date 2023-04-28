@@ -1760,7 +1760,7 @@ ph_ee_connector_gsma:
     #   ph_ee_connector_gsma.yml: |
 
 ph_ee_connector_slcb:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.1.1"

@@ -1,0 +1,119 @@
+deployment:
+  apiVersion: "apps/v1"
+  
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+ph_ee_connector_slcb:
+  enabled: true
+  replicas: 1
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
+  imageTag: latest
+  imagePullPolicy: "Always"
+  imagePullSecrets: ""
+  SPRING_PROFILES_ACTIVE: "bb"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+  username: "username"
+  password: "password"
+  signature_key: "long_segnature_key"
+  auth_host: "https://g2p-test.slcb.com:8443"
+  api_host: "https://g2p-test.slcb.com:8443"
+  account_number: "003001003879112168"
+  account_type: 0
+  institutioncode: "SLCB"
+  endpoint:
+    auth: "/api/auth"
+    transaction_request: "/api/transactionRequest"
+    reconciliation: "/reconciliation"
+    account_balance: "/accountBalance"
+  config:
+    date_format: "yyyy-MM-dd'T'hh:mm:ssXXX"
+    reconciliation:
+      enable: false
+  aws:
+    bucket_name: "paymenthub-ee-dev"
+    region: "us-east-2"
+    access_key: "access-key"
+    secret_key: "secret-key"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5 
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+# Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true 
+# Custom service account override that the pod will use
+  serviceAccount: "" 
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {} 
+# How long to wait for ph_ee_connector_slcb pods to stop gracefully
+  terminationGracePeriod: 30 
+# Extra environment variables for ph_ee_connector_slcb container.
+  envFrom: [] 
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: ""
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
+  priorityClassName: "" 
+  # ph_ee_connector_slcbConfig: ""
+  #   ph_ee_connector_slcb.yml: |
+  # - User that the container will execute as.
+  # Not necessary to run as root (0) as the ph_ee_connector_slcb Deployment use cases do not need access to Kubernetes Node internals
+  # - Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:    
+    limits:
+      memory: "512M"
+      cpu: "500m"
+    requests:
+      memory: "512M"
+      cpu: "100m"          
+  deployment:
+    annotations: {}
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+    extraEnvs: ""
+  # - User that the container will execute as.
+  # Not necessary to run as root (0) as the ph_ee_connector_slcb Deployment use cases do not need access to Kubernetes Node internals
+  # - Typically not necessarily unless running within environments such as OpenShift.
+    securityContext:
+      runAsUser: 0
+      privileged: false
+    resources:    
+      limits:
+        memory: "512M"
+        cpu: "500m"
+      requests:
+        memory: "512M"
+        cpu: "100m"    
+# Allows you to add any config files in /usr/share/
+    # such as ph_ee_connector_slcb.yml for deployment  
+    # ph_ee_connector_slcbConfig: {}
+    #   ph_ee_connector_slcb.yml: |
