@@ -1,7 +1,7 @@
 # Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.mpesa.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "ph-ee-connector-mpesa.fullname" . }}
