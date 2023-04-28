@@ -7,3 +7,7 @@ dependencies:
   - name: gsma
     version: 1.0.0
     repository: "file://./connector-gsma"
+  - name: notifications
+    version: 1.0.0
+    repository: "file://./connector-notifications"
+  
