@@ -6,7 +6,7 @@ data:
     oauth.basicAuth true
     oauth.basicAuthToken Y2xpZW50Og==
     oauth.serverUrl https://{{ .Values.identity.hostname }}
-    serverUrl https://{{ .Values.operations_app.hostname }}
+    serverUrl https://{{ .Values.operations_web.hostname }}
     auth.enabled false
     auth.tenant phdefault
 metadata:
