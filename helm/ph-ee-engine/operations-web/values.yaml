@@ -26,6 +26,7 @@ operations_web:
   requests:
     cpu: "100m"
     memory: "256M"
+  wildcardhostname: notifications.sandbox.mifos.io   
   ingress:
     className: "kong"
     enabled: true
@@ -33,7 +34,8 @@ operations_web:
       kubernetes.io/ingress.class: "nginx"
       konghq.com/plugins: request-transformer,oidc,cors
     tls:
-      - secretName: sandbox-secret 
+    - hosts: "ops.sandbox.mifos.io"
+    - secretName: sandbox-secret 
     path: "/"
     backend:
       service:
