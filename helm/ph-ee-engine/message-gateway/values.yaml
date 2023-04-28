@@ -49,3 +49,7 @@ messagegateway:
         name: message-gateway
         port:
           number: 80
+  deployment:
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"
+
