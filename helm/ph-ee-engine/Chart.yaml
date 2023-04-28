@@ -22,3 +22,6 @@ dependencies:
   - name: operations-app
     version: 1.0.0
     repository: "file://./operations-app"
+  - name: operations-web
+    version: 1.0.0
+    repository: "file://./operations-web"  

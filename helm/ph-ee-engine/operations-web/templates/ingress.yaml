@@ -20,7 +20,7 @@ spec:
 {{- end }}
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  - hosts:
+    - "{{ .Values.operations_web.wildcardhostname }}"
+    secretName: "{{ .Values.operations_web.tls }}"
 {{- end }}
