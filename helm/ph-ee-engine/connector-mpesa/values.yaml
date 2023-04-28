@@ -18,10 +18,10 @@ mpesa:
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-mpesa"
   imageTag: latest
   SPRING_PROFILES_ACTIVE: "bb"
-  hostname: "mpesa.sandbox.fynarfin.io"
+  hostname: "mpesa.sandbox.mifos.io"
   tenant: "lion"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
-  callback_host: "https://mpesa.sandbox.fynarfin.io/"
+  callback_host: "https://mpesa.sandbox.mifos.io/"
   retry_count: 3
   api_timeout: 60000
   serviceAccountName: ""
@@ -70,7 +70,9 @@ mpesa:
     annotations:
       kubernetes.io/ingress.class: "nginx"
     tls:
-      - secretName: sandbox-secret 
+      - hosts:
+          wildcardhostname: "*.sandbox.mifos.io"
+        secretName: sandbox-secret 
     path: "/"
     backend:
       service:
