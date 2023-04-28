@@ -21,8 +21,8 @@ connector_bulk:
     tenants: "gorilla,lion"
     hostname: "bulk-connector.sandbox.fynarfin.io"
     aws: 
-      access_key: ""
-      secret_key: ""
+      access_key: "AKIAX32JM37TZOJ5AKFB"
+      secret_key: "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"
     limits:
       cpu: "500m"
       memory: "512M"
