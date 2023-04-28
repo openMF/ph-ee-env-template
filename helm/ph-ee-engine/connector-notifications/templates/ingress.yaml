@@ -21,7 +21,7 @@ spec:
 
   tls:
   - hosts:
-      - "{{ .Values.notifications.wildcardhostname }}"
+    - "{{ .Values.notifications.wildcardhostname }}"
     secretName: "{{ .Values.notifications.tls }}"
 {{- end }}
 
