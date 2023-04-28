@@ -18,6 +18,24 @@ ph_ee_connector_slcb:
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
   imageTag: latest
   SPRING_PROFILES_ACTIVE: "bb"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+  username: "username"
+  password: "password"
+  signature_key: "long_segnature_key"
+  auth_host: "https://g2p-test.slcb.com:8443"
+  api_host: "https://g2p-test.slcb.com:8443"
+  account_number: "003001003879112168"
+  account_type: 0
+  institutioncode: "SLCB"
+  endpoint:
+    auth: "/api/auth"
+    transaction_request: "/api/transactionRequest"
+    reconciliation: "/reconciliation"
+    account_balance: "/accountBalance"
+  config:
+    date_format: "yyyy-MM-dd'T'hh:mm:ssXXX"
+    reconciliation:
+      enable: false  
   limits:
     cpu: "500m"
     memory: "512M"
