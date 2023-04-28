@@ -25,7 +25,14 @@ channel:
   operations:
     url: "http://ops-bk.sandbox.mifos.io/api/v1"
     authEnabled: false
-    
+  redis:
+    host: "127.0.0.1"
+    port: 6379
+    password: ""
+    idempotency:
+      enabled: true
+      keyFormat: "clientCorrelationId_tenant_api"
+      apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest" 
   tenantPrimary:
     clientId: "mifos"
     clientSecret: "password"
