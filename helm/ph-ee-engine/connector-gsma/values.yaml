@@ -20,7 +20,7 @@ ph_ee_connector_gsma:
   imageTag: latest
   SPRING_PROFILES_ACTIVE: "bb"
   api:
-    channel: ""
+    channel: "http://ph-ee-connector-channel"
   limits:
     cpu: "500m"
     memory: "512M"
@@ -28,6 +28,5 @@ ph_ee_connector_gsma:
     cpu: "100m"
     memory: "256M"
   deployment:
-    affinity: ""
     annotations:
       deployTime: "{{ .Values.deployTime }}"
