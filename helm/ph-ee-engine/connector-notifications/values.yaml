@@ -33,11 +33,11 @@ notifications:
   requests:
     cpu: "100m"
     memory: "256M"
+  wildcardhostname: notifications.sandbox.mifos.io      
   ingress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: "nginx"
-    wildcardhostname: notifications.sandbox.mifos.io  
     tls:
     - hosts: "notifications.sandbox.mifos.io"
     - secretName: sandbox-secret
