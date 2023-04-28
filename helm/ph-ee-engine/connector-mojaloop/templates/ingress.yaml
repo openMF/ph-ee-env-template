@@ -20,7 +20,7 @@ spec:
 {{- end }}
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  - hosts:
+    - "{{ .Values.ph_ee_connector_mojaloop.wildcardhostname }}"
+    secretName: "{{ .Values.ph_ee_connector_mojaloop.tls }}"
 {{- end }}
