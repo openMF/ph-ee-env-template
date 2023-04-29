@@ -219,7 +219,7 @@ channel:
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
-  DFSPIDS: ""
+  DFSPIDS: "oaf,rw-oaf"
   operations:
     url: ""
     authEnabled: false
