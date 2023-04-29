@@ -24,7 +24,7 @@ spec:
         - name: ph-ee-connector-ams-paygops
           image: "{{ .Values.paygops_connector.image }}:{{ .Values.paygops_connector.imageTag }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
           imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
           livenessProbe:
             httpGet:
@@ -80,8 +80,12 @@ metadata:
   name: ph-ee-connector-ams-paygops
 spec:
   ports:
-    - name: http
+    - name: port
       port: 80
+      protocol: TCP
+      targetPort: 5000
+    - name: http
+      port: 82
       protocol: TCP
       targetPort: 8080
   selector:
