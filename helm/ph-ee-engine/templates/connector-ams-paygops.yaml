@@ -25,6 +25,9 @@ spec:
           image: "{{ .Values.paygops_connector.image }}:{{ .Values.paygops_connector.imageTag }}"
           ports:
             - containerPort: 8080
+              protocol: TCP
+            - containerPort: 5000
+              protocol: TCP
           imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
           livenessProbe:
             httpGet:
