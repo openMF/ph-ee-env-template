@@ -33,4 +33,7 @@ dependencies:
     repository: "file://./connector-slcb"
   - name: message-gateway
     version: 1.0.0
-    repository: "file://./message-gateway"     
+    repository: "file://./message-gateway" 
+  - name: importer-es
+    version: 1.0.0
+    repository: "file://./operations-importer-es"      
