@@ -34,3 +34,6 @@ dependencies:
   - name: importer-es
     version: 1.0.0
     repository: "file://./operations-importer-es"      
+  - name: message-gateway
+    version: 1.0.0
+    repository: "file://./message-gateway" 
