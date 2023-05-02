@@ -30,10 +30,7 @@ dependencies:
     repository: "file://./connector-mojaloop"  
   - name: slcb
     version: 1.0.0
-    repository: "file://./connector-slcb"
-  - name: message-gateway
-    version: 1.0.0
-    repository: "file://./message-gateway" 
+    repository: "file://./connector-slcb" 
   - name: importer-es
     version: 1.0.0
     repository: "file://./operations-importer-es"      
