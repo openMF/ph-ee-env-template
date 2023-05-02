@@ -1,4 +1,4 @@
-{{- if .Values.operations.enabled -}}
+{{- if .Values.importer_es.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
