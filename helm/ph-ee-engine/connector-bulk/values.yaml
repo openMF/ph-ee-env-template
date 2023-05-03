@@ -26,7 +26,32 @@ connector_bulk:
   operations_app: 
     contactpoint: "abc"
     endpoints:
-      batch_transaction: "12345"  
+      batch_transaction: "12345"
+  config:
+    partylookup:
+      enable: false
+    approval:
+      enable: false
+    ordering:
+      enable: false
+      field: ""
+    splitting:
+      enable: true
+      sub_batch_size: 5
+    formatting:
+      enable: false
+      standard: "DEFAULT"
+    mergeback:
+      enable: true
+    backpressure:
+      enable: false
+    completion_threshold_check:
+      enable: true
+      completion_rate: 95
+  aws:
+    region: "us-east-2"
+    access_key: "AKIAX32JM37TZOJ5AKFB"
+    secret_key: "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"      
   limits:
     cpu: "500m"
     memory: "512M"
