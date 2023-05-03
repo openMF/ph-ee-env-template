@@ -30,3 +30,6 @@ importer_rdbms:
     host: "operationsmysql"
     port: 3306
     schema: "tenants"
+  deployment:
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"    
