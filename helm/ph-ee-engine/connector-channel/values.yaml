@@ -50,6 +50,18 @@ channel:
   requests:
     cpu: "100m"
     memory: "256M"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 30
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 30  
   wildcardhostname: channel.sandbox.mifos.io   
   
   ingress:
