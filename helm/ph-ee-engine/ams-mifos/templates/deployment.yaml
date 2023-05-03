@@ -7,7 +7,7 @@ metadata:
   labels:
     app: ph-ee-connector-ams-mifos
 spec:
-  replicas: ph-ee-connector-ams-mifos
+  replicas: {{ .Values.ph_ee_connector_ams_mifos.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-ams-mifos
