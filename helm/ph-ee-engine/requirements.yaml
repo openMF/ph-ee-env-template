@@ -30,3 +30,51 @@ dependencies:
     version: 17.9.3
     repository: "https://charts.bitnami.com/bitnami"
     condition: "redis.enabled"
+  - name: operations-app
+    version: 1.0.0
+    repository: "file://./operations-app"
+  - name: gsma
+    version: 1.0.0
+    repository: "file://./connector-gsma"
+  - name: notifications
+    version: 1.0.0
+    repository: "file://./connector-notifications"
+  - name: paygops
+    version: 1.0.0
+    repository: "file://./ams-paygops"
+  - name: roster
+    version: 1.0.0
+    repository: "file://./ams-roster"  
+  - name: mpesa
+    version: 1.0.0
+    repository: "file://./connector-mpesa" 
+  - name: operations-web
+    version: 1.0.0
+    repository: "file://./operations-web" 
+  - name: mojaloop
+    version: 1.0.0
+    repository: "file://./connector-mojaloop"  
+  - name: slcb
+    version: 1.0.0
+    repository: "file://./connector-slcb" 
+  - name: importer-es
+    version: 1.0.0
+    repository: "file://./operations-importer-es"   
+  - name: message-gateway
+    version: 1.0.0
+    repository: "file://./message-gateway"     
+  - name: ams-mifos
+    version: 1.0.0
+    repository: "file://./ams-mifos"  
+  - name: bulk
+    version: 1.0.0
+    repository: "file://./connector-bulk"    
+  - name: channel
+    version: 1.0.0
+    repository: "file://./connector-channel"  
+  - name: importer-rdbms
+    version: 1.0.0
+    repository: "file://./operations-importer-rdbms"      
+  - name: zeebe-ops
+    version: 1.0.0
+    repository: "file://./zeebe-ops"    
