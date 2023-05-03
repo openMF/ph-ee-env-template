@@ -49,3 +49,6 @@ dependencies:
   - name: importer-rdbms
     version: 1.0.0
     repository: "file://./operations-importer-rdbms"      
+  - name: zeebe-ops
+    version: 1.0.0
+    repository: "file://./zeebe-ops"    
