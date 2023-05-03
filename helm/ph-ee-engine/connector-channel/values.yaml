@@ -42,8 +42,8 @@ channel:
     clientSecret: "password"
     tenant: "gorilla"
   notifications: 
-    NOTIFICATION_SUCCESS_ENABLED: "false"
-    NOTIFICATION_FAILURE_ENABLED: "false"  
+  - NOTIFICATION_SUCCESS_ENABLED: "false"
+  - NOTIFICATION_FAILURE_ENABLED: "false"  
   limits:
     cpu: "500m"
     memory: "512M"
