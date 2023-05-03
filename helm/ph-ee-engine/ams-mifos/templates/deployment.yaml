@@ -71,12 +71,12 @@ spec:
 # {{- if .Values.ph_ee_connector_ams_mifos.extraEnvs | default .Values.ph_ee_connector_ams_mifos.deployment.extraEnvs }}
 # {{ toYaml ( .Values.ph_ee_connector_ams_mifos.extraEnvs | default .Values.ph_ee_connector_ams_mifos.deployment.extraEnvs ) | indent 8 }}
 # {{- end }}
-          envFrom: {{ toYaml ( .Values.ph_ee_connector_ams_mifos.envFrom | default .Values.ph_ee_connector_ams_mifos.deployment.envFrom ) | nindent 10 }}
-          securityContext: {{ toYaml ( .Values.ph_ee_connector_ams_mifos.podSecurityContext | default .Values.ph_ee_connector_ams_mifos.deployment.securityContext ) | nindent 10 }}
+        envFrom: {{ toYaml ( .Values.ph_ee_connector_ams_mifos.envFrom | default .Values.ph_ee_connector_ams_mifos.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.ph_ee_connector_ams_mifos.podSecurityContext | default .Values.ph_ee_connector_ams_mifos.deployment.securityContext ) | nindent 10 }}
 
-          volumeMounts:
-          - name: ph-ee-config
-            mountPath: "/config"
+        volumeMounts:
+        - name: ph-ee-config
+          mountPath: "/config"
 # {{- if .Values.ph_ee_connector_ams_mifos.deployment.config }}
 # {{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.config | indent 12 }}
 # {{- end }}            
