@@ -41,74 +41,73 @@ spec:
         readinessProbe:
 {{ toYaml .Values.channel.readinessProbe | indent 10 }}
 
-          env:
-          - name: "SPRING_PROFILES_ACTIVE"
-            value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
-          - name: "DFSPIDS"
-            value: "{{ .Values.channel.DFSPIDS }}"
-          - name: "TRANSACTION-ID-LENGTH"
-            value: "{{ .Values.channel.TRANSACTION_ID_LENGTH }}"
-          - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
-            value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
-          - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
-            value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
-          - name:  "LOGGING_LEVEL_ROOT"
-            value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
-          - name: "AMS"
-            value: "{{ .Values.channel.AMS  }}"
-          - name: "LOGGING_PATTERN_CONSOLE"
-            value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
-          - name: "gsma_payee_tenant"
-            value: "{{ .Values.channel.gsma_payee_tenant }}"
-          - name: "operations_url"
-            value: "{{ .Values.channel.operations.url }}"
-          - name: "operations_auth-enabled"
-            value: "{{ .Values.channel.operations.authEnabled }}"
-          - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
-            value: "{{ .Values.channel.tenantPrimary.clientId }}"
-          - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
-            value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
-          - name: "CHANNEL_TENANTPRIMARY_TENANT"
-            value: "{{ .Values.channel.tenantPrimary.tenant }}"
-          - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
-            value: "{{ .Values.channel.tenantSecondary.clientId }}"
-          - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
-            value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
-          - name: "CHANNEL_TENANTSECONDARY_TENANT"
-            value: "{{ .Values.channel.tenantSecondary.tenant }}"
-          - name: "redis_idempotency_enabled"
-            value: "{{ .Values.channel.redis.idempotency.enabled }}"
-          - name: "redis_host"
-            value: "{{ .Values.channel.redis.host }}"
-          - name: "redis_port"
-            value: "{{ .Values.channel.redis.port }}"
-          - name: "redis_idempotency_keyFormat"
-            value: "{{ .Values.channel.redis_idempotency_keyFormat }}"
-          - name: "redis_idempotency_apiList"
-            value: "{{ .Values.channel.redis_idempotency_apiList }}"
-          - name: "redis_password"
-            valueFrom:
-              secretKeyRef:
-                name: "zeebetest-redis" # tobe changed to sit ingress
-                key: redis-password
+        env:
+        - name: "SPRING_PROFILES_ACTIVE"
+          value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+        - name: "DFSPIDS"
+          value: "{{ .Values.channel.DFSPIDS }}"
+        - name: "TRANSACTION-ID-LENGTH"
+          value: "{{ .Values.channel.TRANSACTION_ID_LENGTH }}"
+        - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
+          value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
+        - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
+          value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
+        - name:  "LOGGING_LEVEL_ROOT"
+          value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+        - name: "AMS"
+          value: "{{ .Values.channel.AMS  }}"
+        - name: "LOGGING_PATTERN_CONSOLE"
+          value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+        - name: "gsma_payee_tenant"
+          value: "{{ .Values.channel.gsma_payee_tenant }}"
+        - name: "operations_url"
+          value: "{{ .Values.channel.operations.url }}"
+        - name: "operations_auth-enabled"
+          value: "{{ .Values.channel.operations.authEnabled }}"
+        - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
+          value: "{{ .Values.channel.tenantPrimary.clientId }}"
+        - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
+          value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
+        - name: "CHANNEL_TENANTPRIMARY_TENANT"
+          value: "{{ .Values.channel.tenantPrimary.tenant }}"
+        - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
+          value: "{{ .Values.channel.tenantSecondary.clientId }}"
+        - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
+          value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
+        - name: "CHANNEL_TENANTSECONDARY_TENANT"
+          value: "{{ .Values.channel.tenantSecondary.tenant }}"
+        - name: "redis_idempotency_enabled"
+          value: "{{ .Values.channel.redis.idempotency.enabled }}"
+        - name: "redis_host"
+          value: "{{ .Values.channel.redis.host }}"
+        - name: "redis_port"
+          value: "{{ .Values.channel.redis.port }}"
+        - name: "redis_idempotency_keyFormat"
+          value: "{{ .Values.channel.redis_idempotency_keyFormat }}"
+        - name: "redis_idempotency_apiList"
+          value: "{{ .Values.channel.redis_idempotency_apiList }}"
+        - name: "redis_password"
+          valueFrom:
+            secretKeyRef:
+              name: "zeebetest-redis" # tobe changed to sit ingress
+              key: redis-password
 
 
-          volumeMounts:
-          - name: ph-ee-config
-            mountPath: "/config"
-      volumes:
-      - name: ph-ee-config
-        configMap:
-          name: ph-ee-config
+        volumeMounts:
+        - name: ph-ee-config
+          mountPath: "/config"
+    volumes:
+    - name: ph-ee-config
+      configMap:
+        name: ph-ee-config
 {{- if .Values.channel.extraEnvs | default .Values.channel.deployment.extraEnvs }}
 {{ toYaml ( .Values.channel.extraEnvs | default .Values.channel.deployment.extraEnvs ) | indent 8 }}
 {{- end }}
-          envFrom: {{ toYaml ( .Values.channel.envFrom | default .Values.channel.deployment.envFrom ) | nindent 10 }}
-          securityContext: {{ toYaml ( .Values.channel.podSecurityContext | default .Values.channel.deployment.securityContext ) | nindent 10 }}
-
-          volumeMounts:
-          - name: ph-ee-config
-            mountPath: "/config"
+        envFrom: {{ toYaml ( .Values.channel.envFrom | default .Values.channel.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.channel.podSecurityContext | default .Values.channel.deployment.securityContext ) | nindent 10 }}
+      volumeMounts:
+      - name: ph-ee-config
+        mountPath: "/config"
 {{- if .Values.channel.deployment.config }}
 {{ toYaml .Values.channel.deployment.config | indent 12 }}
 {{- end }}            
