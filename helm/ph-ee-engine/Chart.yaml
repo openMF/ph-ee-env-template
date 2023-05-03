@@ -4,6 +4,9 @@ description: PaymentHub EE Engine
 name: ph-ee-engine
 version: 0.0.0-SNAPSHOT
 dependencies:
+  - name: operations-app
+    version: 1.0.0
+    repository: "file://./operations-app"
   - name: gsma
     version: 1.0.0
     repository: "file://./connector-gsma"
@@ -19,9 +22,6 @@ dependencies:
   - name: mpesa
     version: 1.0.0
     repository: "file://./connector-mpesa" 
-  - name: operations-app
-    version: 1.0.0
-    repository: "file://./operations-app"
   - name: operations-web
     version: 1.0.0
     repository: "file://./operations-web" 
@@ -45,4 +45,7 @@ dependencies:
     repository: "file://./connector-bulk"    
   - name: channel
     version: 1.0.0
-    repository: "file://./connector-channel"     
+    repository: "file://./connector-channel"  
+  - name: importer-rdbms
+    version: 1.0.0
+    repository: "file://./operations-importer-rdbms"      
