@@ -33,7 +33,6 @@ notifications:
   requests:
     cpu: "100m"
     memory: "256M"
-  wildcardhostname: notifications.sandbox.mifos.io      
   ingress:
     enabled: true
     annotations:
