@@ -1,8 +1,8 @@
 {{- if .Values.messagegateway.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: message_gateway
+  name: message-gateway
   annotations:
 {{- if .Values.messagegateway.ingress.annotations }}
 {{ toYaml .Values.messagegateway.ingress.annotations | indent 4 }}
