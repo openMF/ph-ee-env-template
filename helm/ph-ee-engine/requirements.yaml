@@ -1,7 +1,4 @@
 dependencies:
-  - name: ph-ee-engine
-    repository: https://fynarfin.io/images
-    version: 0.0.0-SNAPSHOT
   - name: zeebe-cluster-helm
     repository: https://helm.camunda.io
     version: 1.0.0
