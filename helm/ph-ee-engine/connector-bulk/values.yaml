@@ -25,7 +25,8 @@ connector_bulk:
     secret_key: "SC71XxyRMqObXttOX63bRv6mIOMZwVgBX1QU7vha"
   operations_app: 
     contactpoint: "abc"
-    batch_transaction: "12345"  
+    endpoints:
+      batch_transaction: "12345"  
   limits:
     cpu: "500m"
     memory: "512M"
