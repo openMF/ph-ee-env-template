@@ -22,6 +22,6 @@ spec:
 
   tls:
     - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+      - "{{ .Values.zeebe_ops.wildcardhostname }}"
+      secretName: "{{ .Values.zeebe_ops.tls }}"
 {{- end }}
