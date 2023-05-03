@@ -1,4 +1,3 @@
-# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
 {{- if .Values.channel.enabled -}}
 
 apiVersion: apps/v1
