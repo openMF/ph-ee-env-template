@@ -21,6 +21,6 @@ spec:
 
   tls:
     - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+      - "{{ .Values.connector_bulk.wildcardhostname }}"
+      secretName: "{{ .Values.connector_bulk.tls }}"
 {{- end }}

@@ -32,6 +32,7 @@ connector_bulk:
   requests:
     cpu: "100m"
     memory: "256M"
+  wildcardhostname: bulk-connector.sandbox.mifos.io   
   ingress:
     enabled: true
     className: "kong"
@@ -39,7 +40,8 @@ connector_bulk:
       kubernetes.io/ingress.class: "nginx"
       konghq.com/plugins: cors
     tls:
-      - secretName: sandbox-secret
+    - hosts: "bulk-connector.sandbox.mifos.io"
+    - secretName: sandbox-secret
     path: "/"
     backend:
       service:
