@@ -124,10 +124,10 @@ spec:
           {{- else }}
     {{ toYaml .Values.extraInitContainers | indent 6 }}
           {{- end }}          
-      volumes:
-      - name: ph-ee-config
-        configMap:
-          name: ph-ee-config
+    volumes:
+    - name: ph-ee-config
+      configMap:
+        name: ph-ee-config
         {{- if .Values.channel.extraContainers }}
   {{ tpl .Values.channel.extraContainers . | indent 6 }}
         {{- end }}
