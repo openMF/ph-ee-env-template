@@ -4,18 +4,18 @@
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
 metadata:
-  name: {{ template "ph-ee-connector-ams-mifos.fullname" . }}
+  name: ph-ee-connector-ams-mifos
   labels:
-    app: {{ template "ph-ee-connector-ams-mifos.fullname" . }}
+    app: ph-ee-connector-ams-mifos
 spec:
-  replicas: {{ .Values.ph_ee_connector_ams_mifos.replicas }}
+  replicas: ph-ee-connector-ams-mifos
   selector:
     matchLabels:
-      app: {{ template "ph-ee-connector-ams-mifos.fullname" . }}
+      app: ph-ee-connector-ams-mifos
   template:
     metadata:
       labels:
-        app: {{ template "ph-ee-connector-ams-mifos.fullname" . }}
+        app: ph-ee-connector-ams-mifos
       annotations:
 {{- if .Values.ph_ee_connector_ams_mifos.deployment.annotations }}
 {{ toYaml .Values.ph_ee_connector_ams_mifos.deployment.annotations | indent 8 }}
@@ -27,7 +27,7 @@ spec:
       {{- if .Values.ph_ee_connector_ams_mifos.priorityClassName }}
       priorityClassName: {{ .Values.ph_ee_connector_ams_mifos.priorityClassName  }}
       {{- end }}
-      serviceAccountName: {{ template "ph-ee-connector-ams-mifos.serviceAccount" . }}
+      serviceAccountName: ph-ee-connector-ams-mifos
       terminationGracePeriodSeconds: {{ .Values.ph_ee_connector_ams_mifos.terminationGracePeriod }}  
       containers:
         - name: ph-ee-connector-ams-mifos
