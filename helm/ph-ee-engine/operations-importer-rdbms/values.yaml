@@ -32,4 +32,7 @@ importer_rdbms:
     schema: "tenants"
   deployment:
     annotations:
-      deployTime: "{{ .Values.deployTime }}"    
+      deployTime: "{{ .Values.deployTime }}"
+
+operations:
+  SPRING_PROFILES_ACTIVE: "bb"
