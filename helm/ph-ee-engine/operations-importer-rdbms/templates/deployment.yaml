@@ -1,6 +1,6 @@
 {{- if .Values.importer_rdbms.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ph-ee-importer-rdbms
