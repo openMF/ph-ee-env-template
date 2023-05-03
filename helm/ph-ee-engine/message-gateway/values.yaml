@@ -53,3 +53,6 @@ messagegateway:
     annotations:
       deployTime: "{{ .Values.deployTime }}"
 
+operations_app:
+  datasource:
+    host: "operationmysql"
