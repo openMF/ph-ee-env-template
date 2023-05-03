@@ -76,5 +76,5 @@ channel:
       deployTime: "{{ .Values.deployTime }}"
 
 notifications: 
-  - NOTIFICATION_SUCCESS_ENABLED: "false"
-  - NOTIFICATION_FAILURE_ENABLED: "false"       
+  NOTIFICATION_SUCCESS_ENABLED: "false"
+  NOTIFICATION_FAILURE_ENABLED: "false"       
