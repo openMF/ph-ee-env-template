@@ -41,8 +41,9 @@ channel:
     clientId: "mifos"
     clientSecret: "password"
     tenant: "gorilla"
-  NOTIFICATION_SUCCESS_ENABLED: "false"
-  NOTIFICATION_FAILURE_ENABLED: "false"  
+  notifications: 
+    NOTIFICATION_SUCCESS_ENABLED: "false"
+    NOTIFICATION_FAILURE_ENABLED: "false"  
   limits:
     cpu: "500m"
     memory: "512M"
