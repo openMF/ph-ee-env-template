@@ -18,6 +18,7 @@ channel:
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
   imageTag: latest
   imagePullPolicy: "Always"
+  imagePullSecrets: ""
   SPRING_PROFILES_ACTIVE: "bb,tenants"
   hostname: "channel.sandbox.mifos.io"
   stub_hostname: "channel-gsma.sandbox.mifos.io"
