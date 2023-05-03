@@ -37,3 +37,6 @@ dependencies:
   - name: message-gateway
     version: 1.0.0
     repository: "file://./message-gateway"     
+  - name: ams-mifos
+    version: 1.0.0
+    repository: "file://./ams-mifos"    

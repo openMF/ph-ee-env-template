@@ -1,6 +1,6 @@
-iVersion: v1
-description: message-gateway
-name: message-gateway
+apiVersion: v1
+description: ams-mifos
+name: ams-mifos
 version: 1.0.0
 appVersion: "1.0.0"
 dependencies:
