@@ -77,4 +77,8 @@ channel:
 
 notifications: 
   NOTIFICATION_SUCCESS_ENABLED: "false"
-  NOTIFICATION_FAILURE_ENABLED: "false"       
+  NOTIFICATION_FAILURE_ENABLED: "false"  
+
+operations_app:
+  datasource:
+    host: "operationmysql"       
