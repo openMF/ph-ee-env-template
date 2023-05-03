@@ -117,13 +117,12 @@ spec:
         - -timeout=120s
         - -wait
         - tcp://{{ .Values.operations_app.datasource.host }}:3306
-      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}          
-    volumes:
+      volumes:
     - name: ph-ee-config
       configMap:
         name: ph-ee-config
         {{- if .Values.channel.extraContainers }}
   {{ tpl .Values.channel.extraContainers . | indent 6 }}
         {{- end }}
-
+       
 {{- end }}
