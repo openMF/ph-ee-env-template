@@ -36,10 +36,6 @@ spec:
         - containerPort: 8080
         imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
         resources: {{ toYaml ( .Values.channel.resources | default .Values.channel.deployment.resources ) | nindent 10 }}
-    {{- if .Values.channel.imagePullSecrets }}
-        imagePullSecrets:
-  {{ toYaml .Values.channel.imagePullSecrets | indent 8 }}
-      {{- end }}
         livenessProbe:
 {{ toYaml .Values.channel.livenessProbe | indent 10 }}
         readinessProbe:
