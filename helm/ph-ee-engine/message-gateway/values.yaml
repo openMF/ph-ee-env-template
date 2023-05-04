@@ -48,5 +48,4 @@ deployment:
     deployTime: "{{ .Values.deployTime }}"
 
 operations_app:
-  datasource:
-    host: "operationmysql"
+  datasource: {}
