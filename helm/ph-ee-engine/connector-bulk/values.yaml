@@ -16,10 +16,14 @@ configmap:
 connector_bulk:
   enabled: true
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
-  SPRING_PROFILES_ACTIVE: "bb"
   imageTag: latest
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: "bb"
+  camel_disable_ssl: true
   tenants: "gorilla,lion"
+  bucket_name: "paymenthub-ee-dev"
   hostname: "bulk-connector.sandbox.fynarfin.io"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   aws: 
     access_key: "AKIAX32JM37TZOJ5AKFB"
     secret_key: "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"
