@@ -22,9 +22,9 @@ importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
 javaToolOptions: 
 logging:
   level:
-    root: ""
+    root: "INFO"
   pattern:
-    console: ""
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
 reporting:
   enabled: true
   fields:
