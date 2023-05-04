@@ -45,6 +45,9 @@ deployment:
 
 secret: 
   apiversion: "v1"
+  username: "username"
+  password: "password"
+  signature_key: "long_segnature_key" 
   connector_bulk: 
     aws: 
       access_key: "AKIAX32JM37TZOJ5AKFB"
