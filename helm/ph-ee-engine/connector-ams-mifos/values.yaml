@@ -49,6 +49,6 @@ deployment:
 
 operations_app:
   datasource:
-    host: "operationmysql"
+    host: "operationsmysql"
 keycloak:
   enabled: true     
