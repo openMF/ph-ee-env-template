@@ -4,9 +4,6 @@ ingress:
 service:
   apiversion: "v1"
 
-secret:
-  apiversion: "v1"
-
 configmap:
   apiversion: "v1"
 
@@ -46,7 +43,9 @@ deployment:
   annotations:
     deployTime: "{{ .Values.deployTime }}"
 
-connector_bulk: 
-aws: 
-  access_key: "AKIAX32JM37TZOJ5AKFB"
-  secret_key: "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"      
+secret: 
+  apiversion: "v1"
+  connector_bulk: 
+    aws: 
+      access_key: "AKIAX32JM37TZOJ5AKFB"
+      secret_key: "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"      
