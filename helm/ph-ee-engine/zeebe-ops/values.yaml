@@ -7,7 +7,6 @@ secret:
 configmap:
   apiversion: "v1"
 
-
 enabled: true
 image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
 imageTag: latest
