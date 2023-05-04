@@ -1,8 +1,5 @@
-deployment:
-  apiVersion: "apps/v1"
+
   
-ingress:
-  apiversion: networking.k8s.io/v1
 
 service:
   apiversion: "v1"
@@ -13,83 +10,81 @@ secret:
 configmap:
   apiversion: "v1" 
 
-channel:
-  enabled: true
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
-  imageTag: latest
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: "bb,tenants"
-  hostname: "channel.sandbox.mifos.io"
-  stub_hostname: "channel-gsma.sandbox.mifos.io"
-  DFSPIDS: "gorilla,lion"
-  operations:
-    url: "http://ops-bk.sandbox.mifos.io/api/v1"
-    authEnabled: false
-  redis:
-    host: "127.0.0.1"
-    port: 6379
-    password: ""
-    idempotency:
-      enabled: true
-      keyFormat: "clientCorrelationId_tenant_api"
-      apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest" 
-  tenantPrimary:
-    clientId: "mifos"
-    clientSecret: "password"
-    tenant: "rhino"
-  tenantSecondary:
-    clientId: "mifos"
-    clientSecret: "password"
-    tenant: "gorilla"
-  notifications: 
-  - NOTIFICATION_SUCCESS_ENABLED: "false"
-  - NOTIFICATION_FAILURE_ENABLED: "false"  
-  limits:
-    cpu: "500m"
-    memory: "512M"
-  requests:
-    cpu: "100m"
-    memory: "256M"
-  livenessProbe:
-    httpGet:
-      path: /actuator/health/liveness
-      port: 8080
-    initialDelaySeconds: 20
-    periodSeconds: 30
-  readinessProbe:
-    httpGet:
-      path: /actuator/health/readiness
-      port: 8080
-    initialDelaySeconds: 20
-    periodSeconds: 30  
-  wildcardhostname: channel.sandbox.mifos.io   
-  
-  ingress:
-    enabled: true
-    className: "nginx"
-    annotations:
-      kubernetes.io/ingress.class: "nginx"
-    tls:
-    - hosts: "notifications.sandbox.mifos.io"
-    - secretName: sandbox-secret
-    path: "/"
-    backend:
-      service:
-        name: ph-ee-connector-channel
-        port:
-          number: 80
-    stub_backend:
-      service:
-        name: ph-ee-connector-channel
-        port:
-          number: 82
-  deployment:
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
 
+enabled: true
+image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
+imageTag: latest
+imagePullPolicy: "Always"
+SPRING_PROFILES_ACTIVE: "bb,tenants"
+hostname: "channel.sandbox.mifos.io"
+stub_hostname: "channel-gsma.sandbox.mifos.io"
+DFSPIDS: "gorilla,lion"
+operations:
+  url: "http://ops-bk.sandbox.mifos.io/api/v1"
+  authEnabled: false
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+  idempotency:
+    enabled: true
+    keyFormat: "clientCorrelationId_tenant_api"
+    apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest" 
+tenantPrimary:
+  clientId: "mifos"
+  clientSecret: "password"
+  tenant: "rhino"
+tenantSecondary:
+  clientId: "mifos"
+  clientSecret: "password"
+  tenant: "gorilla"
 notifications: 
-  NOTIFICATION_SUCCESS_ENABLED: "false"
-  NOTIFICATION_FAILURE_ENABLED: "false"  
+- NOTIFICATION_SUCCESS_ENABLED: "false"
+- NOTIFICATION_FAILURE_ENABLED: "false"  
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 30
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 30  
+wildcardhostname: channel.sandbox.mifos.io   
+
+ingress:
+  apiversion: networking.k8s.io/v1
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  tls:
+  - hosts: "notifications.sandbox.mifos.io"
+  - secretName: sandbox-secret
+  path: "/"
+  backend:
+    service:
+      name: ph-ee-connector-channel
+      port:
+        number: 80
+  stub_backend:
+    service:
+      name: ph-ee-connector-channel
+      port:
+        number: 82
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
 
 operations_app:
   datasource:

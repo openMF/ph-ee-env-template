@@ -1,4 +1,4 @@
-{{- if .Values.channel.enabled -}}
+{{- if .Values.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +7,7 @@ metadata:
   labels:
     app: ph-ee-connector-channel
 spec:
-  replicas: {{ .Values.channel.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-channel
@@ -16,23 +16,23 @@ spec:
       labels:
         app: ph-ee-connector-channel
       annotations:
-{{- if .Values.channel.deployment.annotations }}
-{{ toYaml .Values.channel.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-channel
-          image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: 8080
-          imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           resources:
             limits:
-              memory: "{{ .Values.channel.limits.memory }}"
-              cpu: "{{ .Values.channel.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.channel.requests.memory }}"
-              cpu: "{{ .Values.channel.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -47,39 +47,39 @@ spec:
             periodSeconds: 30 
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "DFSPIDS"
-              value: "{{ .Values.channel.DFSPIDS }}"
+              value: "{{ .Values.DFSPIDS }}"
             - name: "TRANSACTION-ID-LENGTH"
-              value: "{{ .Values.channel.TRANSACTION_ID_LENGTH }}"
+              value: "{{ .Values.TRANSACTION_ID_LENGTH }}"
             - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
               value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
             - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
               value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
             - name:  "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "AMS"
-              value: "{{ .Values.channel.AMS  }}"
+              value: "{{ .Values.AMS  }}"
             - name: "LOGGING_PATTERN_CONSOLE"
-              value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+              value: "{{ .Values.LOGGING_PATTERN_CONSOLE }}"
             - name: "gsma_payee_tenant"
-              value: "{{ .Values.channel.gsma_payee_tenant }}"
+              value: "{{ .Values.gsma_payee_tenant }}"
             - name: "operations_url"
-              value: "{{ .Values.channel.operations.url }}"
+              value: "{{ .Values.operations.url }}"
             - name: "operations_auth-enabled"
-              value: "{{ .Values.channel.operations.authEnabled }}"
+              value: "{{ .Values.operations.authEnabled }}"
             - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
-              value: "{{ .Values.channel.tenantPrimary.clientId }}"
+              value: "{{ .Values.tenantPrimary.clientId }}"
             - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
-              value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
+              value: "{{ .Values.tenantPrimary.clientSecret }}"
             - name: "CHANNEL_TENANTPRIMARY_TENANT"
-              value: "{{ .Values.channel.tenantPrimary.tenant }}"
+              value: "{{ .Values.tenantPrimary.tenant }}"
             - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
-              value: "{{ .Values.channel.tenantSecondary.clientId }}"
+              value: "{{ .Values.tenantSecondary.clientId }}"
             - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
-              value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
+              value: "{{ .Values.tenantSecondary.clientSecret }}"
             - name: "CHANNEL_TENANTSECONDARY_TENANT"
-              value: "{{ .Values.channel.tenantSecondary.tenant }}"
+              value: "{{ .Values.tenantSecondary.tenant }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
