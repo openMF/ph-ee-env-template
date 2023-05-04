@@ -255,7 +255,7 @@ ph-ee-engine:
   # Whether this chart should self-manage its service account, role, and associated role binding.
     managedServiceAccount: true 
   # Custom service account override that the pod will use
-    serviceAccount: "" 
+    serviceAccount: "channel" 
   # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
     serviceAccountAnnotations: {} 
   # How long to wait for channel pods to stop gracefully
