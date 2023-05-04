@@ -1557,7 +1557,7 @@ ph-ee-engine:
       #   ph-ee-importer_rdbms.yml: |
     javaToolOptions: "-Xmx256M"
 
-  connector_bulk:
+  connector-bulk:
     enabled: false
     replicas: 1
     image: ""

@@ -66,7 +66,7 @@ dependencies:
   - name: ams-mifos
     version: 1.0.0
     repository: "file://./ams-mifos"  
-  - name: bulk
+  - name: connector-bulk
     version: 1.0.0
     repository: "file://./connector-bulk"    
   - name: channel
