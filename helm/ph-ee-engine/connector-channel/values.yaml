@@ -18,6 +18,7 @@ imagePullPolicy: "Always"
 SPRING_PROFILES_ACTIVE: "bb,tenants"
 LOGGING_LEVEL_ROOT: "INFO"
 LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+TRANSACTION_ID_LENGTH: 20
 hostname: "channel.sandbox.mifos.io"
 stub_hostname: "channel-gsma.sandbox.mifos.io"
 DFSPIDS: "gorilla,lion"
