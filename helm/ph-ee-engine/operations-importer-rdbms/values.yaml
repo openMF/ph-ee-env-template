@@ -1,6 +1,3 @@
-deployment:
-  apiVersion: "apps/v1"
-  
 ingress:
   apiversion: networking.k8s.io/v1
 
@@ -13,26 +10,26 @@ secret:
 configmap:
   apiversion: "v1"
 
-importer_rdbms:
-  enabled: true
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
-  imageTag: latest
-  LOGGING_LEVEL_ROOT: "DEBUG"
-  limits:
-    cpu: "500m"
-    memory: "512M"
-  requests:
-    cpu: "100m"
-    memory: "256M"
-  datasource:
-    username: "mifos"
-    password: "password"
-    host: "operationsmysql"
-    port: 3306
-    schema: "tenants"
-  deployment:
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
+enabled: true
+image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
+imageTag: latest
+LOGGING_LEVEL_ROOT: "DEBUG"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+datasource:
+  username: "mifos"
+  password: "password"
+  host: "operationsmysql"
+  port: 3306
+  schema: "tenants"
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
 
 operations:
-  SPRING_PROFILES_ACTIVE: "bb"
+SPRING_PROFILES_ACTIVE: "bb"

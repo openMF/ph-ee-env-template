@@ -1,4 +1,4 @@
-{{- if .Values.paygops_connector.enabled -}}
+{{- if .Values.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +7,7 @@ metadata:
   labels:
     app: ph-ee-connector-ams-paygops
 spec:
-  replicas: {{ .Values.paygops_connector.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-ams-paygops
@@ -16,16 +16,16 @@ spec:
       labels:
         app: ph-ee-connector-ams-paygops
       annotations:
-{{- if .Values.paygops_connector.deployment.annotations }}
-{{ toYaml .Values.paygops_connector.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-ams-paygops
-          image: "{{ .Values.paygops_connector.image }}:{{ .Values.paygops_connector.imageTag }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: "{{ .Values.paygops_connector.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -40,11 +40,11 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.paygops_connector.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
             - name: "AMS_LOCAL_ENABLED"
-              value: "{{ .Values.paygops_connector.ams.local.enabled }}"
+              value: "{{ .Values.ams.local.enabled }}"
             - name: "PAYGOPS_AUTHHEADER"
               value: null
               valueFrom:
@@ -52,14 +52,14 @@ spec:
                   name: "paygops-secret"
                   key: "auth-token"
             - name: "PAYGOPS_BASE-URL"
-              value: "{{ .Values.paygops_connector.paygops.base_url }}"
+              value: "{{ .Values.paygops.base_url }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.paygops_connector.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
-              memory: "{{ .Values.paygops_connector.limits.memory }}"
-              cpu: "{{ .Values.paygops_connector.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.paygops_connector.requests.memory }}"
-              cpu: "{{ .Values.paygops_connector.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
 {{- end }}

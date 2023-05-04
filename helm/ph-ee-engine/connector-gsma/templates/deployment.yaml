@@ -1,4 +1,4 @@
-{{- if .Values.ph_ee_connector_gsma.enabled -}}
+{{- if .Values.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +7,7 @@ metadata:
   labels:
     app: "ph-ee-connector-gsma"
 spec:
-  replicas: {{ .Values.ph_ee_connector_gsma.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: "ph-ee-connector-gsma"
@@ -16,23 +16,23 @@ spec:
       labels:
         app: "ph-ee-connector-gsma"
       annotations:
-{{- if .Values.ph_ee_connector_gsma.deployment.annotations }}
-{{ toYaml .Values.ph_ee_connector_gsma.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: "ph-ee-connector-gsma-mm"
-          image: "{{ .Values.ph_ee_connector_gsma.image }}:{{ .Values.ph_ee_connector_gsma.imageTag }}"
-          imagePullPolicy: "{{ .Values.ph_ee_connector_gsma.imagePullPolicy }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000 
           resources:
             limits:
-              memory: "{{ .Values.ph_ee_connector_gsma.limits.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_gsma.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.ph_ee_connector_gsma.requests.memory }}"
-              cpu: "{{ .Values.ph_ee_connector_gsma.requests.cpu }}"              
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"              
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -47,7 +47,7 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.ph_ee_connector_gsma.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

@@ -1,6 +1,3 @@
-deployment:
-  apiVersion: "apps/v1"
-  
 ingress:
   apiversion: networking.k8s.io/v1
 
@@ -13,24 +10,25 @@ secret:
 configmap:
   apiversion: "v1" 
   
-paygops_connector:
-  enabled: true
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-connector-ams-paygops"
-  imageTag: latest
-  SPRING_PROFILES_ACTIVE: "bb"
-  LOGGING_LEVEL_ROOT: "INFO"
-  ams:
-    local:
-      enabled: false
-  paygops:
-    authheader: "PaymentHubTest"
-    base_url: "https://feature-test1.paygops.com/"
-  limits:
-    cpu: "500m"
-    memory: "512M"
-  requests:
-    cpu: "100m"
-    memory: "256M"
-  deployment:
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
+
+enabled: true
+image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-connector-ams-paygops"
+imageTag: latest
+SPRING_PROFILES_ACTIVE: "bb"
+LOGGING_LEVEL_ROOT: "INFO"
+ams:
+  local:
+    enabled: false
+paygops:
+  authheader: "PaymentHubTest"
+  base_url: "https://feature-test1.paygops.com/"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

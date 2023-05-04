@@ -1,4 +1,4 @@
-{{- if .Values.notifications.enabled -}}
+{{- if .Values.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +7,7 @@ metadata:
   labels:
     app: "ph-ee-connector-notifications"
 spec:
-  replicas: {{ .Values.notifications.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: "ph-ee-connector-notifications"
@@ -16,21 +16,21 @@ spec:
       labels:
         app: "ph-ee-connector-notifications"
       annotations:
-{{- if .Values.notifications.deployment.annotations }}
-{{ toYaml .Values.notifications.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: "ph-ee-connector-notifications"
-          image: "{{ .Values.notifications.image }}:{{ .Values.notifications.imageTag }}"
-          imagePullPolicy: "{{ .Values.notifications.imagePullPolicy }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           resources:
             limits:
-              memory: "{{ .Values.notifications.limits.memory }}"
-              cpu: "{{ .Values.notifications.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.notifications.requests.memory }}"
-              cpu: "{{ .Values.notifications.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           ports:
            - containerPort: 5000
           livenessProbe:
@@ -47,21 +47,21 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.notifications.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.notifications.zeebe_broker_contactpoint }}"
+              value: "{{ .Values.zeebe_broker_contactpoint }}"
             - name: "HOSTCONFIG_HOST"
-              value: "{{ .Values.notifications.hostconfig.host }}"
+              value: "{{ .Values.hostconfig.host }}"
             - name: "HOSTCONFIG_PORT"
-              value: "{{ .Values.notifications.hostconfig.port }}"
+              value: "{{ .Values.hostconfig.port }}"
             - name: "MESSAGEGATEWAYCONFIG_HOST"
-              value: "{{ .Values.notifications.MESSAGEGATEWAYCONFIG_HOST }}"
+              value: "{{ .Values.MESSAGEGATEWAYCONFIG_HOST }}"
             - name: "NOTIFICATION_LOCAL_HOST"
-              value: "{{ .Values.notifications.NOTIFICATION_LOCAL_HOST }}"
+              value: "{{ .Values.NOTIFICATION_LOCAL_HOST }}"
             - name: "NOTIFICATION_SUCCESS_ENABLED"
-              value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
+              value: "{{ .Values.NOTIFICATION_SUCCESS_ENABLED }}"
             - name: "NOTIFICATION_FAILURE_ENABLED"
-              value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
+              value: "{{ .Values.NOTIFICATION_FAILURE_ENABLED }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.notifications.LOGGING_LEVEL_ROOT }}"
+              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
 {{- end }}

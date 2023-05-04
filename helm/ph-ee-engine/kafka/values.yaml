@@ -7,7 +7,6 @@ secret:
 configmap:
   apiversion: "v1"
   
-
 enabled: true
 image: "spotify/kafka"
 advertised:

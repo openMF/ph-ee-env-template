@@ -1,6 +1,6 @@
 apiVersion: v1
-description: ph-ee-connector-ams-mifos
-name: connector-ams-mifos
+description: ph_ee_connector_ams_mifos
+name: ph_ee_connector_ams_mifos
 version: 1.0.0
 appVersion: "1.0.0"
     

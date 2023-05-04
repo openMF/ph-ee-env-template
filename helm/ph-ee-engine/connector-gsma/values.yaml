@@ -1,6 +1,3 @@
-deployment:
-  apiVersion: "apps/v1"
-  
 ingress:
   apiversion: networking.k8s.io/v1
 
@@ -13,20 +10,20 @@ secret:
 configmap:
   apiversion: "v1" 
 
-ph_ee_connector_gsma:
-  enabled: true
-  replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
-  imageTag: latest
-  SPRING_PROFILES_ACTIVE: "bb"
-  api:
-    channel: "http://ph-ee-connector-channel"
-  limits:
-    cpu: "500m"
-    memory: "512M"
-  requests:
-    cpu: "100m"
-    memory: "256M"
-  deployment:
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
+enabled: true
+replicas: 1
+image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
+imageTag: latest
+SPRING_PROFILES_ACTIVE: "bb"
+api:
+  channel: "http://ph-ee-connector-channel"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

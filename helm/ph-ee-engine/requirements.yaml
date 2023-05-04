@@ -30,16 +30,16 @@ dependencies:
     version: 17.9.3
     repository: "https://charts.bitnami.com/bitnami"
     condition: "redis.enabled"
-  - name: operations-app
+  - name: operations_app
     version: 1.0.0
     repository: "file://./operations-app"
-  - name: gsma
+  - name: ph_ee_connector_gsma
     version: 1.0.0
     repository: "file://./connector-gsma"
   - name: notifications
     version: 1.0.0
     repository: "file://./connector-notifications"
-  - name: paygops
+  - name: paygops_connector
     version: 1.0.0
     repository: "file://./ams-paygops"
   - name: roster
@@ -48,34 +48,34 @@ dependencies:
   - name: mpesa
     version: 1.0.0
     repository: "file://./connector-mpesa" 
-  - name: operations-web
+  - name: operations_web
     version: 1.0.0
     repository: "file://./operations-web" 
-  - name: mojaloop
+  - name: ph_ee_connector_mojaloop
     version: 1.0.0
     repository: "file://./connector-mojaloop"  
-  - name: slcb
+  - name: ph_ee_connector_slcb
     version: 1.0.0
     repository: "file://./connector-slcb" 
-  - name: importer-es
+  - name: importer_es
     version: 1.0.0
     repository: "file://./operations-importer-es"   
-  - name: message-gateway
+  - name: messagegateway
     version: 1.0.0
     repository: "file://./message-gateway"     
-  - name: connector-ams-mifos
+  - name: ph_ee_connector_ams_mifos
     version: 1.0.0
     repository: "file://./connector-ams-mifos"  
-  - name: connector-bulk
+  - name: connector_bulk
     version: 1.0.0
     repository: "file://./connector-bulk"    
-  - name: connector-channel
+  - name: channel
     version: 1.0.0
     repository: "file://./connector-channel"  
-  - name: importer-rdbms
+  - name: importer_rdbms
     version: 1.0.0
     repository: "file://./operations-importer-rdbms"      
-  - name: zeebe-ops
+  - name: zeebe_ops
     version: 1.0.0
     repository: "file://./zeebe-ops" 
   - name: kafka

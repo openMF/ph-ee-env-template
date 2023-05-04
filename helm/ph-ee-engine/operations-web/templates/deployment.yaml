@@ -1,4 +1,4 @@
-{{- if .Values.operations_web.enabled -}}
+{{- if .Values.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +7,7 @@ metadata:
   labels:
     app: ph-ee-operations-web
 spec:
-  replicas: {{ .Values.operations_web.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-operations-web
@@ -16,26 +16,26 @@ spec:
       labels:
         app: ph-ee-operations-web
       annotations:
-{{- if .Values.operations_web.deployment.annotations }}
-{{ toYaml .Values.operations_web.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-operations-web
-          image: "{{ .Values.operations_web.image }}:{{ .Values.operations_web.imageTag }}"
-          imagePullPolicy: "{{ .Values.operations_web.imagePullPolicy }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 4200
           resources:
             limits:
-              memory: "{{ .Values.operations_web.limits.memory }}"
-              cpu: "{{ .Values.operations_web.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.operations_web.requests.memory }}"
-              cpu: "{{ .Values.operations_web.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           volumeMounts:
-{{- if .Values.operations_web.deployment.config }}
-{{ toYaml .Values.operations_web.deployment.config | indent 12 }}
+{{- if .Values.deployment.config }}
+{{ toYaml .Values.deployment.config | indent 12 }}
 {{- end }}
       volumes:
         - name: ph-ee-operations-web-config
