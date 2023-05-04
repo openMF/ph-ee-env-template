@@ -20,6 +20,6 @@ kafka:
     cpu: "100m"
     memory: "512M"
   deployment:
-    apiVersion: "apps/v1"
+    apiVersion: apps/v1
     annotations:
       deployTime: "{{ .Values.deployTime }}"
