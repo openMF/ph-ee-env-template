@@ -1,9 +1,3 @@
-deployment:
-  apiVersion: "apps/v1"
-  
-ingress:
-  apiversion: networking.k8s.io/v1
-
 service:
   apiversion: "v1"
 
@@ -26,5 +20,6 @@ kafka:
     cpu: "100m"
     memory: "512M"
   deployment:
+    apiVersion: "apps/v1"
     annotations:
       deployTime: "{{ .Values.deployTime }}"
