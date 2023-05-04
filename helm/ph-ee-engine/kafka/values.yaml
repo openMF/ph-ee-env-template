@@ -7,19 +7,19 @@ secret:
 configmap:
   apiversion: "v1"
   
-kafka:
-  enabled: true
-  image: "spotify/kafka"
-  advertised:
-    host: "kafka"
-    port: "9092"
-  limits:
-    cpu: "500m"
-    memory: "1G"
-  requests:
-    cpu: "100m"
-    memory: "512M"
-  deployment:
-    apiVersion: apps/v1
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
+
+enabled: true
+image: "spotify/kafka"
+advertised:
+  host: "kafka"
+  port: "9092"
+limits:
+  cpu: "500m"
+  memory: "1G"
+requests:
+  cpu: "100m"
+  memory: "512M"
+deployment:
+  apiVersion: apps/v1
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

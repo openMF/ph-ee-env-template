@@ -1,4 +1,4 @@
-{{- if .Values.kafka.enabled -}}
+{{- if .Values.enabled -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -8,7 +8,7 @@ metadata:
     app: kafka
   annotations:
 spec:
-  replicas: {{ .Values.kafka.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: kafka
@@ -17,32 +17,32 @@ spec:
       labels:
         app: kafka
       annotations:
-{{- if .Values.kafka.deployment.annotations }}
-{{ toYaml .Values.kafka.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: kafka
-          image: "{{ .Values.kafka.image }}"
-          imagePullPolicy: "{{ .Values.kafka.imagePullPolicy }}"
+          image: "{{ .Values.image }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 2181
             - containerPort: 9092
           resources:
             limits:
-              memory: "{{ .Values.kafka.limits.memory }}"
-              cpu: "{{ .Values.kafka.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.kafka.requests.memory }}"
-              cpu: "{{ .Values.kafka.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           env:
             - name: "ADVERTISED_HOST"
-              value: "{{ .Values.kafka.advertised.host }}"
+              value: "{{ .Values.advertised.host }}"
             - name: "ADVERTISED_PORT"
-              value: "{{ .Values.kafka.advertised.port }}"
+              value: "{{ .Values.advertised.port }}"
           resources:
                 limits:
                   memory: "1536M"
       restartPolicy: Always
-      
+
 {{- end }}
