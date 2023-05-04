@@ -6,7 +6,7 @@ metadata:
   name: ph-ee-importer-es
   labels:
     app: ph-ee-importer-es
-      annotations:
+  annotations:
 {{- if .Values.importer_es.deployment.annotations }}
 {{ toYaml .Values.importer_es.deployment.annotations | indent 8 }}
 {{- end }}
