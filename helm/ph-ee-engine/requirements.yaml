@@ -77,4 +77,7 @@ dependencies:
     repository: "file://./operations-importer-rdbms"      
   - name: zeebe-ops
     version: 1.0.0
-    repository: "file://./zeebe-ops"    
+    repository: "file://./zeebe-ops" 
+  - name: kafka
+    version: 1.0.0
+    repository: "file://./kafka"      
