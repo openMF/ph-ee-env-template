@@ -52,3 +52,6 @@ dependencies:
   - name: zeebe-ops
     version: 1.0.0
     repository: "file://./zeebe-ops"    
+  - name: kafka
+    version: 1.0.0
+    repository: "file://./kafka"  

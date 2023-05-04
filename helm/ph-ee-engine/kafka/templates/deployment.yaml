@@ -1,0 +1,47 @@
+{{- if .Values.kafka.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  labels:
+    app: kafka
+  annotations:
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+      annotations:
+{{- if .Values.kafka.deployment.annotations }}
+{{ toYaml .Values.kafka.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: kafka
+          image: "{{ .Values.kafka.image }}"
+          imagePullPolicy: "{{ .Values.kafka.imagePullPolicy }}"
+          ports:
+            - containerPort: 2181
+            - containerPort: 9092
+          resources:
+            limits:
+              memory: "{{ .Values.kafka.limits.memory }}"
+              cpu: "{{ .Values.kafka.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.kafka.requests.memory }}"
+              cpu: "{{ .Values.kafka.requests.cpu }}"
+          env:
+            - name: "ADVERTISED_HOST"
+              value: "{{ .Values.kafka.advertised.host }}"
+            - name: "ADVERTISED_PORT"
+              value: "{{ .Values.kafka.advertised.port }}"
+          resources:
+                limits:
+                  memory: "1536M"
+      restartPolicy: Always
+{{- end }}
