@@ -42,7 +42,7 @@ dependencies:
   - name: paygops_connector
     version: 1.0.0
     repository: "file://./ams-paygops"
-  - name: roster
+  - name: roster_connector
     version: 1.0.0
     repository: "file://./ams-roster"  
   - name: mpesa
