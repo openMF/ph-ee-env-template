@@ -19,6 +19,12 @@ imageTag: latest
 elasticsearch_sslverification: false
 elasticsearch_security_enabled: false
 importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
+javaToolOptions: 
+logging:
+  level:
+    root: ""
+  pattern:
+    console: ""
 reporting:
   enabled: true
   fields:
