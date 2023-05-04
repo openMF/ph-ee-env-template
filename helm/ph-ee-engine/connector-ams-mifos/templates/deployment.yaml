@@ -1,0 +1,103 @@
+{{- if .Values.connector-ams-mifos.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph-ee-connector-ams-mifos
+  labels:
+    app: ph-ee-connector-ams-mifos
+spec:
+  replicas: {{ .Values.connector-ams-mifos.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-mifos
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-mifos
+      annotations:
+{{- if .Values.connector-ams-mifos.deployment.annotations }}
+{{ toYaml .Values.connector-ams-mifos.deployment.annotations | indent 8 }}
+{{- end }}
+    spec: 
+      affinity: {{ toYaml .Values.connector-ams-mifos.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.connector-ams-mifos.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.connector-ams-mifos.tolerations | default .Values.connector-ams-mifos.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.connector-ams-mifos.priorityClassName }}
+      priorityClassName: {{ .Values.connector-ams-mifos.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: ph-ee-connector-ams-mifos
+      terminationGracePeriodSeconds: {{ .Values.connector-ams-mifos.terminationGracePeriod }}  
+      containers:
+      - name: ph-ee-connector-ams-mifos
+        image: "{{ .Values.connector-ams-mifos.image }}:{{ .Values.connector-ams-mifos.imageTag }}"
+        imagePullPolicy: "{{ .Values.connector-ams-mifos.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000
+        resources: {{ toYaml ( .Values.connector-ams-mifos.resources | default .Values.connector-ams-mifos.deployment.resources ) | nindent 10 }}
+    {{- if .Values.connector-ams-mifos.imagePullSecrets }}
+        imagePullSecrets:
+  {{ toYaml .Values.connector-ams-mifos.imagePullSecrets | indent 8 }}
+      {{- end }}
+        livenessProbe:
+{{ toYaml .Values.connector-ams-mifos.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.connector-ams-mifos.readinessProbe | indent 10 }}  
+        env:
+        - name: "SPRING_PROFILES_ACTIVE"
+          value: "{{ .Values.connector-ams-mifos.SPRING_PROFILES_ACTIVE }}"
+        - name: "ams_local_enabled"
+          value: "{{ .Values.connector-ams-mifos.ams_local_enabled }}"
+        - name: "ams_local_interop_host"
+          value: "{{ .Values.connector-ams-mifos.ams_local_interop_host }}"
+        - name: "ams_local_customer_host"
+          value: "{{ .Values.connector-ams-mifos.ams_local_customer_host }}"
+        - name: "ams_local_account_host"
+          value: "{{ .Values.connector-ams-mifos.ams_local_account_host }}"
+        - name: "ams_local_auth_host"
+          value: "{{ .Values.connector-ams-mifos.ams_local_auth_host }}"
+        - name: "ams_local_loan_host"
+          value: "{{ .Values.connector-ams-mifos.ams_local_loan_host }}"
+        - name: "dfspids"
+          value: "{{ .Values.connector-ams-mifos.dfspids }}"
+        volumeMounts:
+        - name: ph-ee-config
+          mountPath: "/config"
+      volumes:
+      - name: ph-ee-config
+        configMap:
+          name: ph-ee-config
+# {{- if .Values.connector-ams-mifos.extraEnvs | default .Values.connector-ams-mifos.deployment.extraEnvs }}
+# {{ toYaml ( .Values.connector-ams-mifos.extraEnvs | default .Values.connector-ams-mifos.deployment.extraEnvs ) | indent 8 }}
+# {{- end }}
+        envFrom: {{ toYaml ( .Values.connector-ams-mifos.envFrom | default .Values.connector-ams-mifos.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.connector-ams-mifos.podSecurityContext | default .Values.connector-ams-mifos.deployment.securityContext ) | nindent 10 }}
+
+        volumeMounts:
+        - name: ph-ee-config
+          mountPath: "/config"
+# {{- if .Values.connector-ams-mifos.deployment.config }}
+# {{ toYaml .Values.connector-ams-mifos.deployment.config | indent 12 }}
+# {{- end }}            
+      initContainers:
+      - name: wait-db
+        image: jwilder/dockerize
+        imagePullPolicy: IfNotPresent
+        args:
+        - -timeout=120s
+        - -wait
+        - tcp://{{ .Values.operations_app.datasource.host }}:3306
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+    {{ tpl .Values.extraInitContainers . | indent 6 }}
+          {{- else }}
+    {{ toYaml .Values.extraInitContainers | indent 6 }}
+          {{- end }}          
+      volumes:
+      - name: ph-ee-config
+        configMap:
+          name: ph-ee-config
+        {{- if .Values.connector-ams-mifos.extraContainers }}
+  {{ tpl .Values.connector-ams-mifos.extraContainers . | indent 6 }}
+        {{- end }}
+
+{{- end }}            

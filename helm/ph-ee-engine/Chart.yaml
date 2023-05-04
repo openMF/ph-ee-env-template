@@ -37,13 +37,13 @@ dependencies:
   - name: message-gateway
     version: 1.0.0
     repository: "file://./message-gateway"     
-  - name: ams-mifos
+  - name: connector-ams-mifos
     version: 1.0.0
-    repository: "file://./ams-mifos"  
+    repository: "file://./connector-ams-mifos"  
   - name: connector-bulk
     version: 1.0.0
     repository: "file://./connector-bulk"    
-  - name: channel
+  - name: connector-channel
     version: 1.0.0
     repository: "file://./connector-channel"  
   - name: importer-rdbms

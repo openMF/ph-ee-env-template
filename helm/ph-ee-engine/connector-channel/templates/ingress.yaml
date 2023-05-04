@@ -1,53 +1,53 @@
-{{- if .Values.channel.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-channel
   annotations:
-{{- if .Values.channel.ingress.annotations }}
-{{ toYaml .Values.channel.ingress.annotations | indent 4 }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
-    - host: "{{ .Values.channel.hostname }}"
+    - host: "{{ .Values.hostname }}"
       http:
         paths:
-        - path: "{{ .Values.channel.ingress.path }}"
+        - path: "{{ .Values.ingress.path }}"
           pathType: Prefix
           backend:
-{{- if .Values.channel.ingress.backend }}
-{{ toYaml .Values.channel.ingress.backend | indent 14 }}
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.backend | indent 14 }}
 {{- end }}
 
   tls:
     - hosts:
-      - "{{ .Values.channel.wildcardhostname }}"
-      secretName: "{{ .Values.channel.tls }}"
+      - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
 {{- end }}
 ---
-{{- if .Values.channel.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-channel-gsma
   annotations:
-{{- if .Values.channel.ingress.annotations }}
-{{ toYaml .Values.channel.ingress.annotations | indent 4 }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
-    - host: "{{ .Values.channel.stub_hostname }}"
+    - host: "{{ .Values.stub_hostname }}"
       http:
         paths:
-        - path: "{{ .Values.channel.ingress.path }}"
+        - path: "{{ .Values.ingress.path }}"
           pathType: Prefix
           backend:
-{{- if .Values.channel.ingress.backend }}
-{{ toYaml .Values.channel.ingress.stub_backend | indent 14 }}
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.stub_backend | indent 14 }}
 {{- end }}
 
   tls:
     - hosts:
-      - "{{ .Values.channel.wildcardhostname }}"
-      secretName: "{{ .Values.channel.tls }}"
+      - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
 {{- end }}

@@ -1,0 +1,26 @@
+{{- if .Values.connector-ams-mifos.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ph-ee-connector-ams-mifos
+  annotations:
+{{- if .Values.connector-ams-mifos.ingress.annotations }}
+{{ toYaml .Values.connector-ams-mifos.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.connector-ams-mifos.hostname }}"
+      http:
+        paths:
+          - path: "{{ .Values.connector-ams-mifos.ingress.path }}"
+            pathType: Prefix
+            backend:
+{{- if .Values.connector-ams-mifos.ingress.backend }}
+{{ toYaml .Values.connector-ams-mifos.ingress.backend | indent 14 }}
+{{- end }} 
+
+  tls:
+  - hosts:
+    - "{{ .Values.connector-ams-mifos.wildcardhostname }}"
+    secretName: "{{ .Values.connector-ams-mifos.tls }}"
+{{- end }}
