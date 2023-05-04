@@ -15,6 +15,7 @@ image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
 imageTag: latest
 LOGGING_LEVEL_ROOT: "INFO"
 LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+javaToolOptions: "-Xmx256M"
 limits:
   cpu: "500m"
   memory: "512M"
@@ -32,6 +33,5 @@ deployment:
   annotations:
     deployTime: "{{ .Values.deployTime }}"
 
-
-SPRING_PROFILES_ACTIVE: "bb"
-javaToolOptions: "-Xmx256M"
+operations:
+  SPRING_PROFILES_ACTIVE: "bb"
