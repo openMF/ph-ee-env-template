@@ -3,9 +3,5 @@ description: ph-ee-connector-ams-mifos
 name: connector-ams-mifos
 version: 1.0.0
 appVersion: "1.0.0"
-dependencies:
-  - name: operations-app
-    version: 1.0.0
-    repository: "file://../operations-app"
     
     

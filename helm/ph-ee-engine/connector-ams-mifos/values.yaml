@@ -7,7 +7,6 @@ secret:
 configmap:
   apiversion: "v1"
 
-
 enabled: true
 image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ams"
 imageTag: latest
@@ -44,6 +43,7 @@ ingress:
       port:
         number: 80      
 deployment:
+  apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
 
