@@ -2,9 +2,6 @@ dependencies:
   - name: zeebe-cluster-helm
     repository: https://helm.camunda.io
     version: 1.0.0
-    tags: 
-      - zeebe-zeebe-gateway
-      - zeebe-zeebe
   - name: zeebe-operate-helm
     repository: https://helm.camunda.io
     version: 1.2.0
