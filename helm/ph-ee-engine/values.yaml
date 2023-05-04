@@ -571,7 +571,6 @@ messagegateway:
       co.elastic.logs/multiline.match: after
       instrumentation.opentelemetry.io/inject-java: 'true'
       sidecar.opentelemetry.io/inject: 'sidecar'
-      deployTime: "{{ .Values.deployTime }}"
 
 notifications:
   enabled: true
@@ -607,7 +606,8 @@ notifications:
       co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 zeebe_ops:
   enabled: true
