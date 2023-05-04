@@ -39,5 +39,6 @@ deployment:
 
 configmap:
   apiversion: "v1"
+  hostname: "ops.sandbox.fynarfin.io"
   identity:
-  hostname: "ops-bk.sandbox.fynarfin.io"
+    hostname: "ops-bk.sandbox.fynarfin.io"
