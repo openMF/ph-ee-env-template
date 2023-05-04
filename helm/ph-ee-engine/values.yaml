@@ -139,6 +139,8 @@ zeebe-cluster-helm:
     co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
     co.elastic.logs/multiline.negate: "true"
     co.elastic.logs/multiline.match: 'after'
+    instrumentation.opentelemetry.io/inject-java: 'true'
+    sidecar.opentelemetry.io/inject: 'sidecar'
 
 # payment hub Operate, ES and Kibana
 zeebe-operate-helm:
@@ -248,7 +250,8 @@ channel:
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
   ams:
     groups:
       - identifier: "ACCOUNTID"
@@ -338,7 +341,8 @@ operations_app:
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 operations_web:
   enabled: true
@@ -367,7 +371,6 @@ operations_web:
       co.elastic.logs/multiline.pattern: '^(\d\d:){2}\d{2}.\d{3}\s'
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
-      deployTime: "{{ .Values.deployTime }}"
 
 identity:
   hostname: ""
@@ -470,7 +473,8 @@ mpesa:
       co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 roster_connector:
   enabled: true
@@ -499,7 +503,8 @@ roster_connector:
       co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 paygops_connector:
   enabled: true
@@ -525,7 +530,8 @@ paygops_connector:
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 messagegateway:
   enabled: true
@@ -563,6 +569,8 @@ messagegateway:
       co.elastic.logs/multiline.pattern: '^\d{4}-\d{2}-\d{2}\s(\d\d:){2}\d{2}.\d{3}\s'
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
       deployTime: "{{ .Values.deployTime }}"
 
 notifications:
@@ -685,6 +693,11 @@ importer_es:
     memory: "512Mi"
     cpu: "100m"
   javaToolOptions: "-Xmx256M"
+  deployment:
+    annotations:
+      co.elastic.logs/enabled: "true"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 kafka:
   enabled: true
@@ -730,7 +743,8 @@ importer_rdbms:
       co.elastic.logs/multiline.pattern: '^(\d\d:){2}\d{2}.\d{3}\s'
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
   javaToolOptions: "-Xmx256M"
 
 connector_bulk:
@@ -976,7 +990,8 @@ tupande_connector:
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
 
 erply_connector:
   enabled: true
@@ -1002,4 +1017,5 @@ erply_connector:
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"
-      deployTime: "{{ .Values.deployTime }}"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
