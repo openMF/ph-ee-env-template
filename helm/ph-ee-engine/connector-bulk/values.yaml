@@ -24,9 +24,9 @@ connector_bulk:
     access_key: "AKIAX32JM37TZOJ5AKFB"
     secret_key: "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"
   operations_app: 
-    contactpoint: "abc"
+    contactpoint: ""
     endpoints:
-      batch_transaction: "12345"
+      batch_transaction: ""
   config:
     partylookup:
       enable: false
