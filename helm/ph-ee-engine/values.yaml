@@ -358,7 +358,7 @@ ph_ee_connector_ams_mifos:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -366,7 +366,7 @@ ph_ee_connector_ams_mifos:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1562,13 +1562,13 @@ connector_bulk:
   imageTag: "v1.5.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
-  camel_disable_ssl: ""
+  camel_disable_ssl: true
   channel:
     hostname: ""
   pollingApi:
     timer: "180"
   hostname: ""
-  zeebe_broker_contactpoint: ""
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: ""
   bucket_name: "paymenthub-ee-dev"
   operations_app:
