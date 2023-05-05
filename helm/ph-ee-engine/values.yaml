@@ -1012,7 +1012,7 @@ erply_connector:
     local:
       enabled: true
   erply:
-    base_url: "https://secure-api.qa.oneacrefund.org/erply"
+    base_url: "https://secure-api.oneacrefund.org/erply"
     auth_header: ""
   deployment:
     annotations:
