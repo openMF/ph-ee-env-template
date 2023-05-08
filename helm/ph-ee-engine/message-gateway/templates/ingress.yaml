@@ -1,26 +1,26 @@
-{{- if .Values.messagegateway.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: message-gateway
   annotations:
-{{- if .Values.messagegateway.ingress.annotations }}
-{{ toYaml .Values.messagegateway.ingress.annotations | indent 4 }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
-    - host: "{{ .Values.messagegateway.hostname }}"
+    - host: "{{ .Values.hostname }}"
       http:
         paths:
-          - path: "{{ .Values.messagegateway.ingress.path }}"
+          - path: "{{ .Values.ingress.path }}"
             pathType: Prefix
             backend:
-{{- if .Values.messagegateway.ingress.backend }}
-{{ toYaml .Values.messagegateway.ingress.backend | indent 14 }}
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.backend | indent 14 }}
 {{- end }} 
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  - hosts:
+    - "{{ .Values.wildcardhostname }}"
+    secretName: "{{ .Values.tls }}"
 {{- end }}

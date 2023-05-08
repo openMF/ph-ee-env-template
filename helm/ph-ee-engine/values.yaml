@@ -14,8 +14,8 @@ configmap:
   apiversion: "v1"
 
 zeebe:
-    broker:
-      contactpoint: "zeebe-zeebe-gateway:26500"      
+  broker:
+    contactpoint: "zeebe-zeebe-gateway:26500"      
 
 zeebe-cluster-helm:
   global:
@@ -253,7 +253,7 @@ channel:
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
-  serviceAccount: "" 
+  serviceAccount: "channel" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
   serviceAccountAnnotations: {} 
 # How long to wait for channel pods to stop gracefully
@@ -280,7 +280,7 @@ channel:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"       
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -312,13 +312,6 @@ channel:
         memory: "512M"
         cpu: "100m"
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-channel.yml for deployment  
     # ph-ee-connector-channelConfig: {}
     #   ph-ee-connector-channel.yml: |        
@@ -349,7 +342,7 @@ operationsmysql:
         GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
 
 ph_ee_connector_ams_mifos:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.2.2"
@@ -362,22 +355,6 @@ ph_ee_connector_ams_mifos:
   ams_local_auth_host: ""
   ams_local_tenants: ""
   ams_local_loan_host: ""
-  livenessProbe:
-    httpGet:
-      path: /actuator/health/liveness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5 
-  readinessProbe:
-    httpGet:
-      path: /actuator/health/readiness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -408,7 +385,7 @@ ph_ee_connector_ams_mifos:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"  
+      cpu: "100m"     
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -439,13 +416,6 @@ ph_ee_connector_ams_mifos:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-ams-mifos.yml for deployment  
     # ph-ee-connector-ams-mifosConfig: {}
     #   ph-ee-connector-ams-mifos.yml: | 
@@ -518,7 +488,7 @@ ph_ee_connector_mojaloop:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"       
+      cpu: "100m"           
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -549,13 +519,6 @@ ph_ee_connector_mojaloop:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-mojaloop-java.yml for deployment  
     # ph-ee-connector-mojaloop-javaConfig: {}
     #   ph-ee-connector-mojaloop-java.yml: |
@@ -624,7 +587,7 @@ operations_app:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"         
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -655,13 +618,6 @@ operations_app:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as operations_app.yml for deployment
 
 operations_web:
@@ -719,7 +675,7 @@ operations_web:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"  
+      cpu: "100m"       
 # Enabling this will publicly expose your operations_web instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -756,13 +712,6 @@ operations_web:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-operations-web.yml for deployment
     # ph-ee-operations-webConfig: {}
     #   ph-ee-operations-web.yml: |          
@@ -782,6 +731,7 @@ mpesa:
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
+  serviceAccountName: ""
   callback_host: ""
   channel:
     host: ""
@@ -872,7 +822,7 @@ mpesa:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"       
 # Enabling this will publicly expose your mpesa instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -903,13 +853,6 @@ mpesa:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-mpesa.yml for deployment  
     # ph-ee-connector-mpesaConfig: {}
     #   ph-ee-connector-mpesa.yml: |
@@ -974,7 +917,7 @@ roster_connector:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"        
   deployment:
     annotations: {}
     affinity: {}
@@ -998,13 +941,6 @@ roster_connector:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-ams-roster.yml for deployment  
     # ph-ee-connector-ams-rosterConfig: {}
     #   ph-ee-connector-ams-roster.yml: |
@@ -1069,7 +1005,7 @@ paygops_connector:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"       
   deployment:
     annotations: {}
     affinity: {}
@@ -1093,13 +1029,6 @@ paygops_connector:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-ams-paygops.yml for deployment  
     # ph-ee-connector-ams-paygopsConfig: {}
     #   ph-ee-connector-ams-paygops.yml: |
@@ -1165,7 +1094,7 @@ messagegateway:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
+      cpu: "100m"   
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1203,19 +1132,12 @@ messagegateway:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as message-gateway.yml for deployment  
     # message-gatewayConfig: {}
     #   message-gateway.yml: |
 
 notifications:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.1.0"
@@ -1277,7 +1199,7 @@ notifications:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
+      cpu: "100m"  
 # Enabling this will publicly expose your notifications instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1305,16 +1227,9 @@ notifications:
         memory: "512M"
         cpu: "500m"
       requests:
-        memory: "512M"
+        memory: "512"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-notifications.yml for deployment  
     # ph-ee-connector-notificationsConfig: {}
     #   ph-ee-connector-notifications.yml: |
@@ -1381,7 +1296,7 @@ zeebe_ops:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
+      cpu: "100m" 
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1412,13 +1327,6 @@ zeebe_ops:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
     #   ph-ee-zeebe-ops.yml: |
@@ -1472,32 +1380,56 @@ importer_es:
       root: "INFO"
     pattern:
       console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-  limits:
-    memory: "512M"
-    cpu: "500m"
-  requests:
-    memory: "512M"
-    cpu: "100m"
-    javaToolOptions: "-Xmx256M"
-
-
-mockpayment:
-  enabled: true
-  replicas: 1
-  image: ""
-  imageTag: "v1.1.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  LOGGING_LEVEL_ROOT: "INFO"
-  DFSPIDS: ""
-  limits:
-    memory: "512M"
-    cpu: "500m"
-  requests:
-    memory: "512M"
-    cpu: "100m"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5 
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+# Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true 
+# Custom service account override that the pod will use
+  serviceAccount: "" 
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {} 
+# How long to wait for Zeebe-ops pods to stop gracefully
+  terminationGracePeriod: 30 
+# Extra environment variables for Zeebe-ops container.
+  envFrom: [] 
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: ""
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
+  priorityClassName: "" 
+  # ph-ee-zeebe-opsConfig: ""
+  #   ph-ee-zeebe-ops.yml: |
+  # - User that the container will execute as.
+  # Not necessary to run as root (0) as the Zeebe-ops Deployment use cases do not need access to Kubernetes Node internals
+  # - Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:    
+    limits:
+      memory: "512M"
+      cpu: "500m"
+    requests:
+      memory: "512M"
+      cpu: "100m"  
+  javaToolOptions: "-Xmx256M"
   deployment:
-    annotations: { }
+    annotations: {}
 
 
 kafka:
@@ -1578,7 +1510,7 @@ importer_rdbms:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"      
   deployment:
     annotations: {}
     affinity: {}
@@ -1602,13 +1534,6 @@ importer_rdbms:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-importer_rdbms.yml for deployment  
     # ph-ee-importer_rdbmsConfig: {}
     #   ph-ee-importer_rdbms.yml: |
@@ -1620,18 +1545,18 @@ connector_bulk:
   image: ""
   imageTag: "v1.5.0"
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: "default"
+  SPRING_PROFILES_ACTIVE: ""
   camel_disable_ssl: true
   channel:
     hostname: ""
   pollingApi:
     timer: "180"
-  hostname: "bulk-connector.sandbox.fynarfin.io"
+  hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
-  tenants: "ibank-usa,ibank-india"
+  tenants: ""
   bucket_name: "paymenthub-ee-dev"
   operations_app:
-      contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
+      contactpoint: "https://ops-bk.sandbox.mifos.io/"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
   config:
@@ -1656,9 +1581,9 @@ connector_bulk:
       enable: true
       completion_rate: 95
   aws:
-    region: "us-east-2"
-    access_key: "AKIAX32JM37TZOJ5AKFB"
-    secret_key: "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"
+    region: "<region>"
+    access_key: "<access key>"
+    secret_key: "<secret key>"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1705,7 +1630,7 @@ connector_bulk:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"    
+      cpu: "100m"       
 # Enabling this will publicly expose your connector_bulk instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1733,40 +1658,17 @@ connector_bulk:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph-ee-connector-bulk.yml for deployment  
     # ph-ee-connector-bulkConfig: {}
     #   ph-ee-connector-bulk.yml: |
 
 ph_ee_connector_gsma:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.0.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
-  livenessProbe:
-    httpGet:
-      path: /actuator/health/liveness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5 
-  readinessProbe:
-    httpGet:
-      path: /actuator/health/readiness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -1797,7 +1699,7 @@ ph_ee_connector_gsma:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"
+      cpu: "100m"  
   deployment:
     annotations: {}
     affinity: {}
@@ -1821,19 +1723,12 @@ ph_ee_connector_gsma:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
     #   ph_ee_connector_gsma.yml: |
 
 ph_ee_connector_slcb:
-  enabled: false
+  enabled: true
   replicas: 1
   image: ""
   imageTag: "v1.1.1"
@@ -1857,11 +1752,6 @@ ph_ee_connector_slcb:
     date_format: "yyyy-MM-dd'T'hh:mm:ssXXX"
     reconciliation:
       enable: false
-  aws:
-    bucket_name: "paymenthub-ee-dev"
-    region: "us-east-2"
-    access_key: "access-key"
-    secret_key: "secret-key"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1908,7 +1798,7 @@ ph_ee_connector_slcb:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"      
+      cpu: "100m"          
   deployment:
     annotations: {}
     affinity: {}
@@ -1932,13 +1822,6 @@ ph_ee_connector_slcb:
         memory: "512M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
-    extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
-    extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
     # such as ph_ee_connector_slcb.yml for deployment  
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
@@ -2043,7 +1926,7 @@ kong:
         scope: openid
 
 keycloak:
-  enabled: false
+  enabled: true
 # Enabling this will publicly expose your keycloak instance.
 # Only enable this if you have security enabled on your cluster  
   ingress:
@@ -2052,14 +1935,6 @@ keycloak:
     rules:
       - host: 'keycloak.mifos.io'
     tls: []
-  extraVolumes: |
-    - name: realm-secret
-      secret:
-        secretName: realm-secret
-  extraVolumeMounts: |
-    - name: realm-secret
-      mountPath: "/realm/"
-      readOnly: true
   extraEnv: |
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json

@@ -1,0 +1,12 @@
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  name: kafka
+spec:
+  selector:
+    app: kafka
+  ports:
+  - protocol: TCP
+    port: 9092
+    nodePort: 30095
+  type: NodePort

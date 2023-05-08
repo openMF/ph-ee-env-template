@@ -1,0 +1,67 @@
+{{- if .Values.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph-ee-connector-notifications
+  labels:
+    app: ph-ee-connector-notifications
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-notifications
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-notifications
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: "ph-ee-connector-notifications"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          ports:
+           - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Values.zeebe_broker_contactpoint }}"
+            - name: "HOSTCONFIG_HOST"
+              value: "{{ .Values.hostconfig.host }}"
+            - name: "HOSTCONFIG_PORT"
+              value: "{{ .Values.hostconfig.port }}"
+            - name: "MESSAGEGATEWAYCONFIG_HOST"
+              value: "{{ .Values.MESSAGEGATEWAYCONFIG_HOST }}"
+            - name: "NOTIFICATION_LOCAL_HOST"
+              value: "{{ .Values.NOTIFICATION_LOCAL_HOST }}"
+            - name: "NOTIFICATION_SUCCESS_ENABLED"
+              value: "{{ .Values.NOTIFICATION_SUCCESS_ENABLED }}"
+            - name: "NOTIFICATION_FAILURE_ENABLED"
+              value: "{{ .Values.NOTIFICATION_FAILURE_ENABLED }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
+{{- end }}

@@ -1,27 +1,27 @@
-{{- if .Values.mpesa.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-mpesa
   annotations:
-{{- if .Values.mpesa.ingress.annotations }}
-{{ toYaml .Values.mpesa.ingress.annotations | indent 4 }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 
 spec:
   rules:
-    - host: "{{ .Values.mpesa.hostname }}"
+    - host: "{{ .Values.hostname }}"
       http:
         paths:
-          - path: "{{ .Values.mpesa.ingress.path }}"
-            pathType: Prefix
-            backend:
-{{- if .Values.mpesa.ingress.backend }}
-{{ toYaml .Values.mpesa.ingress.backend | indent 14 }}
+        - path: "{{ .Values.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.backend | indent 14 }}
 {{- end }}
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  - hosts:
+    - "{{ .Values.wildcardhostname }}"
+    secretName: "{{ .Values.tls }}"
 {{- end }}
