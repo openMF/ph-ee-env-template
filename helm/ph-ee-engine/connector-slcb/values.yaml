@@ -17,7 +17,7 @@ password: "password"
 signature_key: "long_segnature_key"
 auth_host: "https://g2p-test.slcb.com:8443"
 api_host: "https://g2p-test.slcb.com:8443"
-account_number: "003001003879112168"
+account_number: "<account number>"
 account_type: 0
 institutioncode: "SLCB"
 aws: 
@@ -50,5 +50,5 @@ secret:
   signature_key: "long_segnature_key" 
   connector_bulk: 
     aws: 
-      access_key: "AKIAX32JM37TZOJ5AKFB"
-      secret_key: "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"
+      access_key: "<access key>"
+      secret_key: "<secret key>"
