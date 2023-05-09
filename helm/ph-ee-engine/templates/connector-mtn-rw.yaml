@@ -3,25 +3,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "mtn-rw-connector"
+  name: "ph-ee-connector-ams-mtn-rw"
   labels:
-    app: mtn-rwanda-connector
+    app: ph-ee-connector-ams-mtn-rw
 spec:
   replicas: {{ .Values.mtn_rwanda_connector.replicas }}
   selector:
     matchLabels:
-      app: mtn-rwanda-connector
+      app: ph-ee-connector-ams-mtn-rw
   template:
     metadata:
       labels:
-        app: mtn-rwanda-connector
+        app: ph-ee-connector-ams-mtn-rw
       annotations:
 {{- if .Values.mtn_rwanda_connector.deployment.annotations }}
 {{ toYaml .Values.mtn_rwanda_connector.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
-        - name: mtn-rw-connector
+        - name: ph-ee-connector-ams-mtn-rw
           image: "{{ .Values.mtn_rwanda_connector.image }}:{{ .Values.mtn_rwanda_connector.imageTag }}"
           imagePullPolicy: "{{ .Values.mtn_rwanda_connector.imagePullPolicy }}"
           resources:
@@ -86,8 +86,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: mtn-rwanda-connector
-  name: mtn-rw-connector
+    app: ph-ee-connector-ams-mtn-rw
+  name: ph-ee-connector-ams-mtn-rw
 spec:
   ports:
     - name: port
@@ -95,7 +95,7 @@ spec:
       protocol: TCP
       targetPort: 5000
   selector:
-    app: mtn-rwanda-connector
+    app: ph-ee-connector-ams-mtn-rw
   sessionAffinity: None
   type: ClusterIP
 {{- end}}
