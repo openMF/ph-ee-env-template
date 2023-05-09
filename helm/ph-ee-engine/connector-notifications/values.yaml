@@ -8,9 +8,9 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
+image: ""
 imageTag: latest
-SPRING_PROFILES_ACTIVE: "bb"
+SPRING_PROFILES_ACTIVE: ""
 hostname: notifications.sandbox.mifos.io
 MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
 NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"

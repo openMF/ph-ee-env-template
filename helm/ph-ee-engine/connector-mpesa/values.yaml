@@ -9,9 +9,9 @@ configmap:
 
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-mpesa"
+image: ""
 imageTag: latest
-SPRING_PROFILES_ACTIVE: "bb"
+SPRING_PROFILES_ACTIVE: ""
 LOGGING_LEVEL_ROOT: "INFO"
 hostname: "mpesa.sandbox.mifos.io"
 zeebe_init_transfer_wait_timer: 10
@@ -33,9 +33,9 @@ accounts:
     till: ""
     auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
     api_host: "https://sandbox.safaricom.co.ke"
-    client_key: ""
-    client_secret: ""
-    pass_key: ""
+    client_key: "<client key>"
+    client_secret: "<client secret>"
+    pass_key: "<pass key>"
   paygops:
     name: "paygops"
     business_short_code: ""

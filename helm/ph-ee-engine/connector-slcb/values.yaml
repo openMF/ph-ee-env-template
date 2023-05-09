@@ -8,13 +8,13 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
+image: ""
 imageTag: latest
-SPRING_PROFILES_ACTIVE: "bb"
+SPRING_PROFILES_ACTIVE: ""
 zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
-username: "username"
-password: "password"
-signature_key: "long_segnature_key"
+username: "<username>"
+password: "<password>"
+signature_key: "<long_segnature_key>"
 auth_host: "https://g2p-test.slcb.com:8443"
 api_host: "https://g2p-test.slcb.com:8443"
 account_number: "<account number>"
@@ -45,9 +45,9 @@ deployment:
 
 secret: 
   apiversion: "v1"
-  username: "username"
-  password: "password"
-  signature_key: "long_segnature_key" 
+  username: "<username>"
+  password: "<password>"
+  signature_key: "<long_segnature_key>" 
   connector_bulk: 
     aws: 
       access_key: "<access key>"

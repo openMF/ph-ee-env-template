@@ -8,9 +8,9 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
+image: ""
 imageTag: "latest"
-SPRING_PROFILES_ACTIVE: "bb"
+SPRING_PROFILES_ACTIVE: ""
 hostname: "mojaloop.sandbox.mifos.io"
 DFSPIDS: "gorilla,rhino"
 switch:

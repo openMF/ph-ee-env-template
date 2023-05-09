@@ -8,9 +8,9 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
+image: ""
 imageTag: latest
-hostname: "zeebeops.sandbox.fynarfin.io"
+hostname: "zeebeops.sandbox.mifos.io"
 zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
 elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
 elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"

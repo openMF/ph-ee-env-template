@@ -5,14 +5,14 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
-imageTag: latest
+image: ""
+imageTag: ""
 secret:
   apiversion: "v1"
   value:
-    api_key: "eKiC1_JWdKy7eaTGQFHxXXjXjacr60W9Zntl"
-    project_id: "PJ5ff552ce01d2978c"
-hostname: "messagegateway.sandbox.fynarfin.io"
+    api_key: "<api-key>"
+    project_id: "<project-id>"
+hostname: "messagegateway.sandbox.mifos.io"
 CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
 HOSTCONFIG_HOST: "message-gateway"
 MYSQL_USERNAME: "mifos"

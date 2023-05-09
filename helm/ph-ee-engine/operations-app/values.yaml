@@ -5,10 +5,10 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ops-bk"
-imageTag: "latest"
-SPRING_PROFILES_ACTIVE: "bb"
-tenants: "gorilla,lion, phdefault"
+image: ""
+imageTag: ""
+SPRING_PROFILES_ACTIVE: ""
+tenants: ""
 hostname: "ops-bk.sandbox.mifos.io"
 secret:
   apiversion: "v1"

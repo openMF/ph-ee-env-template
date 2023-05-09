@@ -12,7 +12,7 @@ configmap:
 
 enabled: true
 replicas: 1
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
+image: ""
 imageTag: latest
 SPRING_PROFILES_ACTIVE: "bb"
 api:

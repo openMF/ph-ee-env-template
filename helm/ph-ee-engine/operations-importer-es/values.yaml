@@ -14,7 +14,7 @@ configmap:
   apiversion: "v1"
   
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-es-importer"
+image: ""
 imageTag: latest
 elasticsearch_sslverification: false
 elasticsearch_security_enabled: false

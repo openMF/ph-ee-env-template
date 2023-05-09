@@ -5,11 +5,11 @@ secret:
   apiversion: "v1"
 
 enabled: true
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-ops-web"
-imageTag: "latest"
+image: ""
+imageTag: ""
 SPRING_PROFILES_ACTIVE: "bb"
-hostname: "ops.sandbox.fynarfin.io"
-webhost: "ops.sandbox.fynarfin.io"
+hostname: "ops.sandbox.mifos.io"
+webhost: "ops.sandbox.mifos.io"
 limits:
   cpu: "500m"
   memory: "512M"
@@ -39,6 +39,6 @@ deployment:
 
 configmap:
   apiversion: "v1"
-  hostname: "ops.sandbox.fynarfin.io"
+  hostname: "ops.sandbox.mifos.io"
   identity:
-    hostname: "ops-bk.sandbox.fynarfin.io"
+    hostname: "ops-bk.sandbox.mifos.io"
