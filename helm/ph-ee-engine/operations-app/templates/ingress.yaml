@@ -1,53 +1,53 @@
-{{- if .Values.operations_app.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-operations-app
   annotations:
-{{- if .Values.operations_app.ingress.annotations }}
-{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
-    - host: "{{ .Values.operations_app.hostname }}"
+    - host: "{{ .Values.hostname }}"
       http:
         paths:
-          - path: "{{ .Values.operations_app.ingress.path }}"
+          - path: "{{ .Values.ingress.path }}"
             pathType: Prefix
             backend:
-{{- if .Values.operations_app.ingress.backend }}
-{{ toYaml .Values.operations_app.ingress.backend | indent 14 }}
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.backend | indent 14 }}
 {{- end }}              
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  - hosts:
+    - "{{ .Values.wildcardhostname }}"
+    secretName: "{{ .Values.tls }}"
 
 ---
-apiVersion: {{ .Values.ingress.apiversion }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-identity
   annotations:
-{{- if .Values.operations_app.ingress.annotations }}
-{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
-    - host: "{{ .Values.operations_app.hostname }}"
+    - host: "{{ .Values.hostname }}"
       http:
         paths:
           - path: /identity
             pathType: Prefix
             backend:
-{{- if .Values.operations_app.ingress.backend }}
-{{ toYaml .Values.operations_app.ingress.backend | indent 14 }}
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.backend | indent 14 }}
 {{- end }} 
 
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-{{- end }}
+  - hosts:
+    - "{{ .Values.wildcardhostname }}"
+    secretName: "{{ .Values.tls }}"
 
+{{- end }}

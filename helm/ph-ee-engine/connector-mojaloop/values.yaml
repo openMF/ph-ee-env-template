@@ -1,0 +1,56 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: true
+image: ""
+imageTag: "latest"
+SPRING_PROFILES_ACTIVE: ""
+hostname: "mojaloop.sandbox.mifos.io"
+DFSPIDS: "gorilla,rhino"
+switch:
+  quotes:
+    host: "http://quoting-service.sandbox.mifos.io"
+    service: "quoting-service.sandbox.mifos.io"
+  als:
+    host: "http://account-lookup-service.sandbox.mifos.io"
+    service: "account-lookup-service.local"
+  transfers:
+    host: "http://api-adapter.sandbox.mifos.io"
+    service: "api-adapter.sandbox.mifos.io"
+  transactions:
+    host: "http://ml-api-adapter.sandbox.mifos.io"
+    service: "ml-api-adapter.sandbox.mifos.io"
+  oracle:
+    host: "http://moja-simulator.sandbox.mifos.io"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+wildcardhostname: mojaloop.sandbox.mifos.io    
+ingress:
+  apiversion: networking.k8s.io/v1
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  tls:
+  - hosts: "mojaloop.sandbox.mifos.io"
+  - secretName: sandbox-secret
+  path: "/"
+  backend:
+    service:
+      name: ph-ee-connector-mojaloop-java
+      port:
+        number: 80
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

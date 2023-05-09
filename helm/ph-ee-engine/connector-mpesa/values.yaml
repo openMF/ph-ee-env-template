@@ -1,0 +1,83 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+
+enabled: true
+image: ""
+imageTag: latest
+SPRING_PROFILES_ACTIVE: ""
+LOGGING_LEVEL_ROOT: "INFO"
+hostname: "mpesa.sandbox.mifos.io"
+zeebe_init_transfer_wait_timer: 10
+tenant: "lion"
+zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+callback_host: "https://mpesa.sandbox.mifos.io/"
+retry_count: 3
+api_timeout: 60000
+channel:
+  host: "http://ph-ee-connector-channel"
+paygops:
+  host: "http://ph-ee-connector-ams-paygops"
+roster:
+  host: "http://ph-ee-connector-ams-roster"
+accounts:
+  roster:
+    name: "roster"
+    business_short_code: ""
+    till: ""
+    auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+    api_host: "https://sandbox.safaricom.co.ke"
+    client_key: "<client key>"
+    client_secret: "<client secret>"
+    pass_key: "<pass key>"
+  paygops:
+    name: "paygops"
+    business_short_code: ""
+    till: ""
+    auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+    api_host: "https://sandbox.safaricom.co.ke"
+    client_key: "<client key>"
+    client_secret: "<client secret>"
+    pass_key: "<pass key>"
+paybill:
+  accountHoldingInstitutionId: "gorilla"
+  paygops:
+    business_short_code: ""
+    currency: "KES"
+  roster:
+    business_short_code: ""
+    currency: "KES"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+wildcardhostname: mpesa.sandbox.mifos.io  
+ingress:
+  apiversion: networking.k8s.io/v1
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  tls:
+  - hosts: "mpesa.sandbox.mifos.io"
+  - secretName: sandbox-secret 
+  path: "/"
+  backend:
+    service:
+      name: ph-ee-connector-mpesa
+      port:
+        number: 80
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
+skip:
+  enabled: false

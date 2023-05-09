@@ -1,73 +1,71 @@
-# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
-{{- if .Values.messagegateway.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template " message-gateway.fullname" . }}
+  name: message-gateway
   labels:
-    app: {{ template " message-gateway.fullname" . }}
+    app: message-gateway
 spec:
-  replicas: {{ .Values.messagegateway.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: {{ template " message-gateway.fullname" . }}
+      app: message-gateway
   template:
     metadata:
       labels:
-        app: {{ template " message-gateway.fullname" . }}
+        app: message-gateway
       annotations:
-{{- if .Values.messagegateway.deployment.annotations }}
-{{ toYaml .Values.messagegateway.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.messagegatewayConfig .Values.deployment.message-gatewayConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }} 
-
     spec:
-      affinity: {{ toYaml .Values.messagegateway.deployment.affinity | nindent 8 }}
-      nodeSelector: {{ toYaml .Values.messagegateway.deployment.nodeSelector | nindent 8 }}
-      tolerations: {{ toYaml ( .Values.messagegateway.tolerations | default .Values.messagegateway.deployment.tolerations ) | nindent 8 }}
-      {{- if .Values.messagegateway.priorityClassName }}
-      priorityClassName: {{ .Values.messagegateway.priorityClassName  }}
-      {{- end }}
-      serviceAccountName: {{ template " message-gateway.serviceAccount" . }}
-      terminationGracePeriodSeconds: {{ .Values.messagegateway.terminationGracePeriod }}
       containers:
         - name: message-gateway
-          image: "{{ .Values.messagegateway.image }}:{{ .Values.messagegateway.imageTag }}"  
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"  
           ports:
             - containerPort: 9191
-          imagePullPolicy: "{{ .Values.messagegateway.imagePullPolicy }}"
-          resources: {{ toYaml ( .Values.messagegateway.resources | default .Values.messagegateway.deployment.resources ) | nindent 10 }}
-      {{- if .Values.messagegateway.imagePullSecrets }}
-          imagePullSecrets:
-    {{ toYaml .Values.messagegateway.imagePullSecrets | indent 8 }}
-        {{- end }}
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           livenessProbe:
-{{ toYaml .Values.messagegateway.livenessProbe | indent 10 }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9191
+            initialDelaySeconds: 120
+            periodSeconds: 30
           readinessProbe:
-{{ toYaml .Values.messagegateway.readinessProbe | indent 10 }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9191
+            initialDelaySeconds: 120
+            periodSeconds: 30
+
           env:
             - name: "SPRING_DATASOURCE_URL"
-              value: "{{ .Values.messagegateway.DATASOURCE_URL }}"
+              value: "{{ .Values.DATASOURCE_URL }}"
             - name: "MYSQL_USERNAME"
-              value: "{{ .Values.messagegateway.MYSQL_USERNAME }}"
+              value: "{{ .Values.MYSQL_USERNAME }}"
             - name: "MYSQL_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: "messagegateway-secret"
                   key: "database-password"
             - name: "CALLBACKCONFIG_HOST"
-              value: "{{ .Values.messagegateway.CALLBACKCONFIG_HOST }}"
+              value: "{{ .Values.CALLBACKCONFIG_HOST }}"
             - name: "HOSTCONFIG_HOST"
-              value: "{{ .Values.messagegateway.HOSTCONFIG_HOST }}"
+              value: "{{ .Values.HOSTCONFIG_HOST }}"
             - name: "PROVIDERSOURCE_FROMDATABASE"
-              value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMDATABASE }}"
+              value: "{{ .Values.PROVIDERSOURCE_FROMDATABASE }}"
             - name: "PROVIDERSOURCE_FROMYML"
-              value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMYML }}"
+              value: "{{ .Values.PROVIDERSOURCE_FROMYML }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.messagegateway.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "PROVIDERKEYS_TELERIVETAPIKEY"
               valueFrom:
                 secretKeyRef:
@@ -78,18 +76,9 @@ spec:
                 secretKeyRef:
                   name: "messagegateway-secret"
                   key: "project-id"
-{{- if .Values.messagegateway.extraEnvs | default .Values.messagegateway.deployment.extraEnvs }}
-{{ toYaml ( .Values.messagegateway.extraEnvs | default .Values.messagegateway.deployment.extraEnvs ) | indent 8 }}
-{{- end }}
-          envFrom: {{ toYaml ( .Values.messagegateway.envFrom | default .Values.messagegateway.deployment.envFrom ) | nindent 10 }}
-          securityContext: {{ toYaml ( .Values.messagegateway.podSecurityContext | default .Values.messagegateway.deployment.securityContext ) | nindent 10 }}
-
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
-{{- if .Values.messagegateway.deployment.config }}
-{{ toYaml .Values.messagegateway.deployment.config | indent 12 }}
-{{- end }}            
       initContainers:
         - name: wait-db
           image: jwilder/dockerize
@@ -98,20 +87,8 @@ spec:
             - -timeout=120s
             - -wait
             - tcp://{{ .Values.operations_app.datasource.host }}:3306
-      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
-    {{ tpl .Values.extraInitContainers . | indent 6 }}
-          {{- else }}
-    {{ toYaml .Values.extraInitContainers | indent 6 }}
-          {{- end }}
-          {{- end }}          
       volumes:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-     {{- if .Values.messagegateway.extraVolumeMounts | default .Values.messagegateway.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.messagegateway.extraVolumeMounts | default .Values.messagegateway.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
-        {{- if .Values.messagegateway.extraContainers }}
-  {{ tpl .Values.messagegateway.extraContainers . | indent 6 }}
-        {{- end }}
 {{- end }}

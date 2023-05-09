@@ -1,0 +1,47 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: true
+image: ""
+imageTag: latest
+SPRING_PROFILES_ACTIVE: ""
+hostname: notifications.sandbox.mifos.io
+MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
+NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
+NOTIFICATION_SUCCESS_ENABLED: "false"
+NOTIFICATION_FAILURE_ENABLED: "false"
+zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+hostconfig:
+  host: "message-gateway"
+  port: 80
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+wildcardhostname: notifications.sandbox.mifos.io   
+ingress:
+  apiversion: networking.k8s.io/v1
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  tls:
+  - hosts: "notifications.sandbox.mifos.io"
+  - secretName: sandbox-secret
+  path: "/"
+  backend:
+    service:
+      name: ph-ee-connector-notifications
+      port:
+        number: 80
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

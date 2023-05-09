@@ -1,0 +1,52 @@
+service:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: true
+image: ""
+imageTag: ""
+secret:
+  apiversion: "v1"
+  value:
+    api_key: "<api-key>"
+    project_id: "<project-id>"
+hostname: "messagegateway.sandbox.mifos.io"
+CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
+HOSTCONFIG_HOST: "message-gateway"
+MYSQL_USERNAME: "mifos"
+MYSQL_PASSWORD: "password"
+DATASOURCE_URL: jdbc:mysql:thin://operationsmysql:3306/messagegateway
+PROVIDERSOURCE_FROMDATABASE: "disabled"
+PROVIDERSOURCE_FROMYML: "enabled"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+wildcardhostname: messagegateway.sandbox.mifos.io   
+ingress:
+  apiversion: networking.k8s.io/v1
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  tls:
+  - hosts: "messagegateway.sandbox.mifos.io"
+  - secretName: sandbox-secret
+  path: "/"
+  backend:
+    service:
+      name: message-gateway
+      port:
+        number: 80
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
+
+operations_app:
+  datasource:
+    host: "operationsmysql"

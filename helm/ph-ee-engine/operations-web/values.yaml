@@ -1,0 +1,44 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+enabled: true
+image: ""
+imageTag: ""
+SPRING_PROFILES_ACTIVE: "bb"
+hostname: "ops.sandbox.mifos.io"
+webhost: "ops.sandbox.mifos.io"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+wildcardhostname: notifications.sandbox.mifos.io   
+ingress:
+  apiversion: networking.k8s.io/v1
+  className: "kong"
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    konghq.com/plugins: request-transformer,oidc,cors
+  tls:
+  - hosts: "ops.sandbox.mifos.io"
+  - secretName: sandbox-secret 
+  path: "/"
+  backend:
+    service:
+      name: ph-ee-operations-web
+      port:
+        number: 4200
+deployment:
+  apiVersion: "apps/v1"
+  config: {}
+
+configmap:
+  apiversion: "v1"
+  hostname: "ops.sandbox.mifos.io"
+  identity:
+    hostname: "ops-bk.sandbox.mifos.io"

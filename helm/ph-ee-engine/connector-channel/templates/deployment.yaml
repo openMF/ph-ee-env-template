@@ -1,105 +1,85 @@
-# Deploy singleton instance in the whole cluster for some unique data sources, like aws input
-{{- if .Values.channel.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template " ph-ee-connector-channel.fullname" . }}
+  name: ph-ee-connector-channel
   labels:
-    app: {{ template " ph-ee-connector-channel.fullname" . }}
+    app: ph-ee-connector-channel
 spec:
-  replicas: {{ .Values.channel.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: {{ template " ph-ee-connector-channel.fullname" . }}
+      app: ph-ee-connector-channel
   template:
     metadata:
       labels:
-        app: {{ template " ph-ee-connector-channel.fullname" . }}
+        app: ph-ee-connector-channel
       annotations:
-{{- if .Values.channel.deployment.annotations }}
-{{ toYaml .Values.channel.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
-        # {{- if or  .Values.channelConfig .Values.deployment.ph-ee-connector-channelConfig }}
-        # configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
-        # {{- end }}
     spec:
-      affinity: {{ toYaml .Values.channel.deployment.affinity | nindent 8 }}
-      nodeSelector: {{ toYaml .Values.channel.deployment.nodeSelector | nindent 8 }}
-      tolerations: {{ toYaml ( .Values.channel.tolerations | default .Values.channel.deployment.tolerations ) | nindent 8 }}
-      {{- if .Values.channel.priorityClassName }}
-      priorityClassName: {{ .Values.channel.priorityClassName  }}
-      {{- end }}
-      serviceAccountName: {{ template " ph-ee-connector-channel.serviceAccount" . }}
-      terminationGracePeriodSeconds: {{ .Values.channel.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-channel
-          image: "{{ .Values.channel.image }}:{{ .Values.channel.imageTag }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: 8080
-          imagePullPolicy: "{{ .Values.channel.imagePullPolicy }}"
-          resources: {{ toYaml ( .Values.channel.resources | default .Values.channel.deployment.resources ) | nindent 10 }}
-      {{- if .Values.channel.imagePullSecrets }}
-          imagePullSecrets:
-    {{ toYaml .Values.channel.imagePullSecrets | indent 8 }}
-        {{- end }}
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           livenessProbe:
-{{ toYaml .Values.channel.livenessProbe | indent 10 }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
           readinessProbe:
-{{ toYaml .Values.channel.readinessProbe | indent 10 }}
-
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30 
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.channel.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "DFSPIDS"
-              value: "{{ .Values.channel.DFSPIDS }}"
+              value: "{{ .Values.DFSPIDS }}"
             - name: "TRANSACTION-ID-LENGTH"
-              value: "{{ .Values.channel.TRANSACTION_ID_LENGTH }}"
+              value: "{{ .Values.TRANSACTION_ID_LENGTH }}"
             - name: "MPESA_NOTIFICATION_SUCCESS_ENABLED"
               value: "{{ .Values.notifications.NOTIFICATION_SUCCESS_ENABLED }}"
             - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
               value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
             - name:  "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.channel.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "AMS"
-              value: "{{ .Values.channel.AMS  }}"
+              value: "{{ .Values.AMS  }}"
             - name: "LOGGING_PATTERN_CONSOLE"
-              value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
+              value: "{{ .Values.LOGGING_PATTERN_CONSOLE }}"
             - name: "gsma_payee_tenant"
-              value: "{{ .Values.channel.gsma_payee_tenant }}"
+              value: "{{ .Values.gsma_payee_tenant }}"
             - name: "operations_url"
-              value: "{{ .Values.channel.operations.url }}"
+              value: "{{ .Values.operations.url }}"
             - name: "operations_auth-enabled"
-              value: "{{ .Values.channel.operations.authEnabled }}"
+              value: "{{ .Values.operations.authEnabled }}"
             - name: "CHANNEL_TENANTPRIMARY_CLIENTID"
-              value: "{{ .Values.channel.tenantPrimary.clientId }}"
+              value: "{{ .Values.tenantPrimary.clientId }}"
             - name: "CHANNEL_TENANTPRIMARY_CLIENTSECRET"
-              value: "{{ .Values.channel.tenantPrimary.clientSecret }}"
+              value: "{{ .Values.tenantPrimary.clientSecret }}"
             - name: "CHANNEL_TENANTPRIMARY_TENANT"
-              value: "{{ .Values.channel.tenantPrimary.tenant }}"
+              value: "{{ .Values.tenantPrimary.tenant }}"
             - name: "CHANNEL_TENANTSECONDARY_CLIENTID"
-              value: "{{ .Values.channel.tenantSecondary.clientId }}"
+              value: "{{ .Values.tenantSecondary.clientId }}"
             - name: "CHANNEL_TENANTSECONDARY_CLIENTSECRET"
-              value: "{{ .Values.channel.tenantSecondary.clientSecret }}"
+              value: "{{ .Values.tenantSecondary.clientSecret }}"
             - name: "CHANNEL_TENANTSECONDARY_TENANT"
-              value: "{{ .Values.channel.tenantSecondary.tenant }}"
-            - name: "redis_idempotency_enabled"
-              value: "{{ .Values.channel.redis.idempotency.enabled }}"
-            - name: "redis_host"
-              value: "{{ .Values.channel.redis.host }}"
-            - name: "redis_port"
-              value: "{{ .Values.channel.redis.port }}"
-            - name: "redis_idempotency_keyFormat"
-              value: "{{ .Values.channel.redis_idempotency_keyFormat }}"
-            - name: "redis_idempotency_apiList"
-              value: "{{ .Values.channel.redis_idempotency_apiList }}"
-            - name: "redis_password"
-              valueFrom:
-                  secretKeyRef:
-                    name: "zeebetest-redis" # tobe changed to sit ingress
-                    key: redis-password
-
-
+              value: "{{ .Values.tenantSecondary.tenant }}"
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -107,41 +87,4 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-{{- if .Values.channel.extraEnvs | default .Values.channel.deployment.extraEnvs }}
-{{ toYaml ( .Values.channel.extraEnvs | default .Values.channel.deployment.extraEnvs ) | indent 8 }}
-{{- end }}
-          envFrom: {{ toYaml ( .Values.channel.envFrom | default .Values.channel.deployment.envFrom ) | nindent 10 }}
-          securityContext: {{ toYaml ( .Values.channel.podSecurityContext | default .Values.channel.deployment.securityContext ) | nindent 10 }}
-
-          volumeMounts:
-            - name: ph-ee-config
-              mountPath: "/config"
-{{- if .Values.channel.deployment.config }}
-{{ toYaml .Values.channel.deployment.config | indent 12 }}
-{{- end }}            
-      initContainers:
-        - name: wait-db
-          image: jwilder/dockerize
-          imagePullPolicy: IfNotPresent
-          args:
-            - -timeout=120s
-            - -wait
-            - tcp://{{ .Values.operations_app.datasource.host }}:3306
-      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
-    {{ tpl .Values.extraInitContainers . | indent 6 }}
-          {{- else }}
-    {{ toYaml .Values.extraInitContainers | indent 6 }}
-          {{- end }}
-          {{- end }}          
-      volumes:
-        - name: ph-ee-config
-          configMap:
-            name: ph-ee-config
-     {{- if .Values.channel.extraVolumeMounts | default .Values.channel.deployment.extraVolumeMounts }}
-  {{ toYaml ( .Values.channel.extraVolumeMounts | default .Values.channel.deployment.extraVolumeMounts ) | indent 8 }}
-          {{- end }}
-        {{- if .Values.channel.extraContainers }}
-  {{ tpl .Values.channel.extraContainers . | indent 6 }}
-        {{- end }}
-
 {{- end }}
