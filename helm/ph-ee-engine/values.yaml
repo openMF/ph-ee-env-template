@@ -480,7 +480,7 @@ roster_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-pesa"
-  imageTag: "v1.2.0"
+  imageTag: "v1.2.1"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: "bb"
@@ -510,7 +510,7 @@ paygops_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-connector-ams-paygops"
-  imageTag: "v1.5.0"
+  imageTag: "v1.5.1"
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
