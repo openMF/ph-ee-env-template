@@ -33,7 +33,7 @@ spec:
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         ports:
-          - containerPort: 5000
+          - containerPort: 8080
         resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}
     {{- if .Values.imagePullSecrets }}
         imagePullSecrets:
