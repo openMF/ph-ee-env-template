@@ -222,6 +222,14 @@ channel:
       enabled: true
       keyFormat: "clientCorrelationId_tenant_api"
       apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
+  server:
+    ssl:
+      key_alias: "tomcat-https"
+      key_store: "classpath:keystore.jks"
+      key_store_type: JKS
+      key_password: "<replace-with-password>"
+      key_store_password: "<replace-with-password>"
+    port: 8443
   operations:
     url: ""
     authEnabled: false
