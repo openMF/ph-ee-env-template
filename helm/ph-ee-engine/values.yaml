@@ -18,6 +18,7 @@ zeebe:
     contactpoint: "zeebe-zeebe-gateway:26500"      
 
 zeebe-cluster-helm:
+  enabled: true
   global:
     zeebe: "zeebe-zeebe"
     elasticsearch:
