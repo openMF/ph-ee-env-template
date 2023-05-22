@@ -1,8 +1,8 @@
-deployment:
-  apiVersion: "apps/v1"
-  
 ingress:
-  apiversion: networking.k8s.io/v1
+  apiversion: "networking.k8s.io/v1"
+
+deployment:
+  apiversion: "apps/v1"
 
 service:
   apiversion: "v1"
@@ -12,7 +12,7 @@ secret:
 
 configmap:
   apiversion: "v1"
-
+  
 zeebe:
   broker:
     contactpoint: "zeebe-zeebe-gateway:26500"      
@@ -321,8 +321,6 @@ operations:
   enabled: true
   mysql:
     enabled: true
-
-
 
 operationsmysql:
   fullnameOverride: "operationsmysql"
