@@ -80,6 +80,21 @@ spec:
               value: "{{ .Values.tenantSecondary.clientSecret }}"
             - name: "CHANNEL_TENANTSECONDARY_TENANT"
               value: "{{ .Values.tenantSecondary.tenant }}"
+            - name: "redis_idempotency_enabled"
+              value: "{{ .Values.channel.redis.idempotency.enabled }}"
+            - name: "redis_host"
+              value: "{{ .Values.channel.redis.host }}"
+            - name: "redis_port"
+              value: "{{ .Values.channel.redis.port }}"
+            - name: "redis_idempotency_keyFormat"
+              value: "{{ .Values.channel.redis_idempotency_keyFormat }}"
+            - name: "redis_idempotency_apiList"
+              value: "{{ .Values.channel.redis_idempotency_apiList }}"
+            - name: "redis_password"
+              valueFrom:
+                secretKeyRef:
+                  name: "g2pconnect-redis" # tobe changed to sit ingress
+                  key: redis-password
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
