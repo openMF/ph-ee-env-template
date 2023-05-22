@@ -1,0 +1,151 @@
+{
+  "info": {
+    "_postman_id": "afde8ff7-69e1-4187-b3a9-4fa6d0693cb6",
+    "name": "Elastic Search Audit Trial",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "21253421"
+  },
+  "item": [
+    {
+      "name": "Create/Update ILM Policy",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"policy\": {\n    \"_meta\": {\n      \"description\": {{PolicyDescription}}\n    },\n    \"phases\": {\n      \"hot\": {\n        \"min_age\": {{HotMinAge}},\n        \"actions\": {\n          \"rollover\": {\n            \"max_age\": {{HotRolloverMaxAge}},\n            \"max_size\": {{HotRolloverMaxSize}}\n          },\n          \"forcemerge\": {\n            \"max_num_segments\": {{MaxNumSegments}}\n          }\n        }\n      },\n      \"warm\": {\n        \"min_age\": {{WarmMinAge}},\n        \"actions\": {\n          \"forcemerge\": {\n          }\n        }\n      },\n      \"cold\": {\n        \"min_age\": {{ColdMinAge}},\n        \"actions\": {\n          \"freeze\": {}\n        }\n      },\n      \"delete\": {\n        \"min_age\": {{DeleteMinAge}},\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}\n"
+        },
+        "url": {
+          "raw": "{{ElasticSearchHost}}/_ilm/policy/{{PolicyName}}",
+          "host": [
+            "{{ElasticSearchHost}}"
+          ],
+          "path": [
+            "_ilm",
+            "policy",
+            "{{PolicyName}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cluster Settings",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"persistent\": {\n    \"cloud.aws.access_key\": {{AccessKey}},\n    \"cloud.aws.secret_key\": {{SecretKey}}\n  }\n}"
+        },
+        "url": {
+          "raw": "{{ElasticSearchHost}}/_cluster/settings",
+          "host": [
+            "{{ElasticSearchHost}}"
+          ],
+          "path": [
+            "_cluster",
+            "settings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register Snapshot",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"s3\",\n  \"settings\": {\n    \"bucket\": {{BucketName}},\n    \"region\": {{AWSRegion}},\n    \"access_key\": {{AccessKey}},\n    \"secret_key\": {{SecretKey}},\n    \"base_path\": {{BasePath}},\n    \"compress\": true\n  }\n}"
+        },
+        "url": {
+          "raw": "{{ElasticSearchHost}}/_snapshot/{{SnapshotRepoName}}",
+          "host": [
+            "{{ElasticSearchHost}}"
+          ],
+          "path": [
+            "_snapshot",
+            "{{SnapshotRepoName}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create a Snapshot",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{ElasticSearchHost}}/_snapshot/{{SnapshotRepoName}}/{{SnapshotName}}?wait_for_completion=true",
+          "host": [
+            "{{ElasticSearchHost}}"
+          ],
+          "path": [
+            "_snapshot",
+            "{{SnapshotRepoName}}",
+            "{{SnapshotName}}"
+          ],
+          "query": [
+            {
+              "key": "wait_for_completion",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Backup Snapshot",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"schedule\": \"0 30 1 * * ?\",       \n  \"name\": \"<nightly-snap-{now/d}>\", \n  \"repository\": \"my_repository\",    \n  \"config\": {\n    \"indices\": \"*\",                 \n    \"include_global_state\": true    \n  },\n  \"retention\": {                    \n    \"expire_after\": \"30d\",\n    \"min_count\": 5,\n    \"max_count\": 50\n  }\n}"
+        },
+        "url": {
+          "raw": "{{ElasticSearchHost}}/_slm/policy/{{SnapshotName}}?pretty",
+          "host": [
+            "{{ElasticSearchHost}}"
+          ],
+          "path": [
+            "_slm",
+            "policy",
+            "{{SnapshotName}}"
+          ],
+          "query": [
+            {
+              "key": "pretty",
+              "value": null
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
