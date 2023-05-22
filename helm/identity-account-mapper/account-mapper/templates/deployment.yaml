@@ -1,0 +1,60 @@
+{{- if .Values.identity_account_mapper.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-identity-account-mapper"
+  labels:
+    app: ph-ee-identity-account-mapper
+spec:
+  replicas: {{ .Values.identity_account_mapper.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-identity-account-mapper
+  template:
+    metadata:
+      labels:
+        app: ph-ee-identity-account-mapper
+      annotations:
+{{- if .Values.identity_account_mapper.deployment.annotations }}
+{{ toYaml .Values.identity_account_mapper.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-identity-account-mapper
+          image: "{{ .Values.identity_account_mapper.image }}:{{ .Values.identity_account_mapper.imageTag }}"
+          imagePullPolicy: "{{ .Values.identity_account_mapper.imagePullPolicy }}"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /oauth/token_key
+              port: 5000
+          periodSeconds: 30
+          timeoutSeconds: 5
+          resources:
+            limits:
+            memory: "{{ .Values.identity_account_mapper.limits.memory }}"
+            cpu: "{{ .Values.identity_account_mapper.limits.cpu }}"
+          requests:
+            memory: "{{ .Values.identity_account_mapper.requests.memory }}"
+            cpu: "{{ .Values.identity_account_mapper.requests.cpu }}"
+          env:
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.identity_account_mapper.LOGGING_LEVEL_ROOT }}"
+            - name: "async_core-pool-size"
+              value: "{{ .Values.identity_account_mapper.async_core-pool-size }}"
+            - name: "async_max-pool-size"
+              value: "{{ .Values.identity_account_mapper.async_max-pool-size }}"
+            - name: "async_queue-capacity"
+              value: "{{ .Values.identity_account_mapper.async_queue-capacity }}"
+
+
+          volumeMounts:
+                - name: ph-ee-config
+                  mountPath: "/config"
+    volumes:
+          - name: ph-ee-config
+            configMap:
+              name: ph-ee-config
+{{- end }}
