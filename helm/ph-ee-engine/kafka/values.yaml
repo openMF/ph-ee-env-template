@@ -9,6 +9,7 @@ configmap:
   
 enabled: true
 image: "spotify/kafka"
+nodePort: 30092
 advertised:
   host: "kafka"
   port: "9092"
