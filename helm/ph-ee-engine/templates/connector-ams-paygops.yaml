@@ -43,6 +43,12 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 60
             timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 5
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.paygops_connector.SPRING_PROFILES_ACTIVE }}"
