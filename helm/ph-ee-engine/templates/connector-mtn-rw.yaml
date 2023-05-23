@@ -24,6 +24,26 @@ spec:
         - name: ph-ee-connector-ams-mtn-rw
           image: "{{ .Values.mtn_rwanda_connector.image }}:{{ .Values.mtn_rwanda_connector.imageTag }}"
           imagePullPolicy: "{{ .Values.mtn_rwanda_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 5
           resources:
             limits:
               memory: "{{ .Values.mtn_rwanda_connector.deployment.resources.limits.memory }}"
