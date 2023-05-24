@@ -27,6 +27,7 @@ redis:
     enabled: true
     keyFormat: "clientCorrelationId_tenant_api"
     apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
+#below values are getting overridden from application.yaml
 server:
   ssl:
     key_alias: "tomcat-https"
