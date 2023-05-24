@@ -27,15 +27,7 @@ redis:
     enabled: true
     keyFormat: "clientCorrelationId_tenant_api"
     apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
-#below values are getting overridden from application.yaml
-server:
-  ssl:
-    key_alias: "tomcat-https"
-    key_store: "classpath:keystore.jks"
-    key_store_type: JKS
-    key_password: "<replace-with-password>"
-    key_store_password: "<replace-with-password>"
-  port: 8443
+#key-store values are getting overridden from application.yaml
 tenantPrimary:
   clientId: "mifos"
   clientSecret: "password"
