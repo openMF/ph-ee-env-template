@@ -26,7 +26,8 @@ redis:
   idempotency:
     enabled: true
     keyFormat: "clientCorrelationId_tenant_api"
-    apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest" 
+    apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
+#key-store values are getting overridden from application.yaml
 tenantPrimary:
   clientId: "mifos"
   clientSecret: "password"
