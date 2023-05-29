@@ -1428,6 +1428,26 @@ importer_es:
     annotations: {}
 
 
+
+mockpayment:
+  enabled: true
+  replicas: 1
+  image: ""
+  imageTag: "v1.1.0"
+  imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: ""
+  LOGGING_LEVEL_ROOT: "INFO"
+  DFSPIDS: ""
+  limits:
+    memory: "512M"
+    cpu: "500m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  deployment:
+    annotations: { }
+
+
 kafka:
   enabled: false
   replicas: 1
