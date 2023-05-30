@@ -63,6 +63,12 @@ spec:
               value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "LOGGING_PATTERN_CONSOLE"
               value: "{{ .Values.LOGGING_PATTERN_CONSOLE }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

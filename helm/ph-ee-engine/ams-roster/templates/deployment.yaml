@@ -54,6 +54,11 @@ spec:
               value: "{{ .Values.pesacore.base_url }}"
             - name: "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"

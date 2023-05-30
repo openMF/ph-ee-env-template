@@ -126,4 +126,10 @@ spec:
               value: "{{ .Values.paybill.roster.currency }}"
             - name: "paybill_accountHoldingInstitutionId"
               value: "{{ .Values.paybill.accountHoldingInstitutionId }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
 {{- end }}

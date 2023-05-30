@@ -56,6 +56,12 @@ spec:
           value: "{{ .Values.ams_local_loan_host }}"
         - name: "dfspids"
           value: "{{ .Values.dfspids }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
+{{- end }}        
+        envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}  
+
         volumeMounts:
         - name: ph-ee-config
           mountPath: "/config"
@@ -63,11 +69,6 @@ spec:
       - name: ph-ee-config
         configMap:
           name: ph-ee-config
-# {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-# {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
-# {{- end }}
-        envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 10 }}
-        securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}
 
         volumeMounts:
         - name: ph-ee-config

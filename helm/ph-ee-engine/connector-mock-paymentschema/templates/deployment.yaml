@@ -54,7 +54,11 @@ spec:
               value: "{{ .Values.mockpayment.LOGGING_LEVEL_ROOT }}"
             - name : "mockFailure_percentage"
               value: "{{ .Values.mockpayment.mockFailure_percentage }}"
-
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
