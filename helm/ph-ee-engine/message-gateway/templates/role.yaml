@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: message-gateway
+  name: message-gateway-role
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:

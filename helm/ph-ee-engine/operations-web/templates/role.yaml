@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: ph-ee-operations-web
+  name: ph-ee-operations-web-role
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
