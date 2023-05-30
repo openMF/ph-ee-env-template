@@ -1,0 +1,15 @@
+{{- if .Values.managedServiceAccount }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ph-ee-connector-slcb-c-role-binding
+subjects:
+- kind: ServiceAccount
+  name: ph-ee-connector-slcb # name of your service account
+  namespace: paymenthub # this is the namespace your service account is in
+roleRef: # referring to your ClusterRole
+  kind: ClusterRole
+  name: ph-ee-connector-slcb-c-role
+  apiGroup: rbac.authorization.k8s.io
+  
+{{- end -}}

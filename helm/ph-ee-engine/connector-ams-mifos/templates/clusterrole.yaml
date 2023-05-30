@@ -1,0 +1,11 @@
+{{- if .Values.managedServiceAccount }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: ph-ee-connector-ams-mifos-c-role
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+{{- end -}}
