@@ -1853,6 +1853,8 @@ tls: ""
 
 keycloak:
   enabled: false
+# Enabling this will publicly expose your keycloak instance.
+# Only enable this if you have security enabled on your cluster   
   ingress:
     enabled: false
     ingressClassName: "kong"
@@ -1869,7 +1871,7 @@ keycloak:
       readOnly: true
   extraEnv: |
     - name: KEYCLOAK_IMPORT
-      value: /realm/kong-keycloak-realm.json
+      value: /realm/kong-keycloak-realm.json     
 
 integration_test:
   enabled: false
@@ -1986,22 +1988,3 @@ kong:
         realm: kong
         discovery: https://keycloak.localhost/auth/realms/kong-oidc/.well-known/openid-configuration
         scope: openid
-
-keycloak:
-  enabled: true
-# Enabling this will publicly expose your keycloak instance.
-# Only enable this if you have security enabled on your cluster  
-  ingress:
-    enabled: false
-    ingressClassName: "kong"
-    rules:
-      - host: 'keycloak.mifos.io'
-    tls: []
-  extraEnv: |
-    - name: KEYCLOAK_IMPORT
-      value: /realm/kong-keycloak-realm.json
-
-redis:
-  enabled: false
-  replica:
-    replicaCount: 0
