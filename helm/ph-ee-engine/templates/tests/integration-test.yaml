@@ -1,9 +1,11 @@
-{{- if .Values.integration_test.enabled -}}
+
 
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: "ph-ee-integration-test-job"
+  annotations:
+    "helm.sh/hook": test-success
 spec:
   template:
     metadata:
@@ -52,6 +54,5 @@ spec:
               memory: "{{ .Values.integration_test.requests.memory }}"
               cpu: "{{ .Values.integration_test.requests.cpu }}"
       restartPolicy: Never
-  backoffLimit: 1
+  backoffLimit: 4
 
-{{- end }}

@@ -74,6 +74,8 @@ spec:
               value: "{{ .Values.config.completion_threshold_check.completion_rate }}"
             - name: "CLOUD_AWS_REGION_STATIC"
               value: "{{ .Values.aws.region }}"
+            - name: "BP_JAVA_OPTS"
+              value: "-Xmx400m -Xms400m"
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
