@@ -12,7 +12,6 @@ secret:
   value:
     api_key: "<api-key>"
     project_id: "<project-id>"
-hostname: "messagegateway.sandbox.mifos.io"
 CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
 HOSTCONFIG_HOST: "message-gateway"
 MYSQL_USERNAME: "mifos"

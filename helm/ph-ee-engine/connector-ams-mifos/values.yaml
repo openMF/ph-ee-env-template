@@ -12,7 +12,6 @@ image: ""
 imageTag: ""
 imagePullPolicy: ""
 SPRING_PROFILES_ACTIVE: ""
-hostname: ""
 ams_local_enabled: false
 ams_local_interop_host : "https://fynams.sandbox.mifos.io"
 ams_local_customer_host : "https://fynams.sandbox.mifos.io"

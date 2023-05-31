@@ -9,7 +9,6 @@ image: ""
 imageTag: ""
 SPRING_PROFILES_ACTIVE: ""
 tenants: ""
-hostname: "ops-bk.sandbox.mifos.io"
 secret:
   apiversion: "v1"
   datasource:
@@ -23,8 +22,7 @@ limits:
   memory: "512M"
 requests:
   cpu: "100m"
-  memory: "256M"
-wildcardhostname: ""        
+  memory: "256M"    
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:

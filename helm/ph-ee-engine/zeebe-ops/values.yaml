@@ -10,7 +10,6 @@ configmap:
 enabled: true
 image: ""
 imageTag: latest
-hostname: ""
 zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
 elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
 elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"

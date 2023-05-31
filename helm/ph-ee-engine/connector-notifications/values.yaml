@@ -11,7 +11,6 @@ enabled: true
 image: ""
 imageTag: latest
 SPRING_PROFILES_ACTIVE: ""
-hostname: "notifications.sandbox.mifos.io"
 MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
 NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
 NOTIFICATION_SUCCESS_ENABLED: "false"

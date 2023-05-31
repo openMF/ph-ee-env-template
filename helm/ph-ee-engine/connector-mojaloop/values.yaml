@@ -11,7 +11,6 @@ enabled: true
 image: ""
 imageTag: "latest"
 SPRING_PROFILES_ACTIVE: ""
-hostname: "mojaloop.sandbox.mifos.io"
 DFSPIDS: "gorilla,rhino"
 switch:
   quotes:

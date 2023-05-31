@@ -13,8 +13,6 @@ imageTag: latest
 imagePullPolicy: "Always"
 SPRING_PROFILES_ACTIVE: "bb,tenants"
 LOGGING_LEVEL_ROOT: "INFO"
-hostname: "channel.sandbox.mifos.io"
-stub_hostname: "channel-gsma.sandbox.mifos.io"
 DFSPIDS: ""
 operations:
   url: "http://ops-bk.sandbox.mifos.io/api/v1"
