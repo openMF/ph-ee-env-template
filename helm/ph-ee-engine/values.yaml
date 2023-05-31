@@ -260,7 +260,7 @@ channel:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -295,7 +295,7 @@ channel:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the channel Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -363,7 +363,7 @@ ph_ee_connector_ams_mifos:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -397,7 +397,7 @@ ph_ee_connector_ams_mifos:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the zeebeops Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -466,7 +466,7 @@ ph_ee_connector_mojaloop:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -500,7 +500,7 @@ ph_ee_connector_mojaloop:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the mojaloop Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -565,7 +565,7 @@ operations_app:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -599,7 +599,7 @@ operations_app:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
 # - User that the container will execute as.
 # Not necessary to run as root (0) as the operations_app Deployment use cases do not need access to Kubernetes Node internals
 # - Typically not necessarily unless running within environments such as OpenShift.
@@ -653,7 +653,7 @@ operations_web:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -693,7 +693,7 @@ operations_web:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
 # - User that the container will execute as.
 # Not necessary to run as root (0) as the operation-web Deployment use cases do not need access to Kubernetes Node internals
 # - Typically not necessarily unless running within environments such as OpenShift.
@@ -800,7 +800,7 @@ mpesa:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -834,7 +834,7 @@ mpesa:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the mpesa Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -895,7 +895,7 @@ roster_connector:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -922,7 +922,7 @@ roster_connector:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the roster_connector Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -983,7 +983,7 @@ paygops_connector:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1010,7 +1010,7 @@ paygops_connector:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the paygops Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1072,7 +1072,7 @@ messagegateway:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1113,7 +1113,7 @@ messagegateway:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the message-gateway Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1177,7 +1177,7 @@ notifications:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1211,7 +1211,7 @@ notifications:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the notifications Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1274,7 +1274,7 @@ zeebe_ops:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1308,7 +1308,7 @@ zeebe_ops:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the zeebeops Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1404,7 +1404,7 @@ importer_es:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1488,7 +1488,7 @@ importer_rdbms:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1515,7 +1515,7 @@ importer_rdbms:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the importer_rdbms Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1608,7 +1608,7 @@ connector_bulk:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1639,7 +1639,7 @@ connector_bulk:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1677,7 +1677,7 @@ ph-ee-connector_gsma:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1704,7 +1704,7 @@ ph-ee-connector_gsma:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the gsma Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
@@ -1776,7 +1776,7 @@ ph-ee-connector_slcb:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: ""
+  extraEnvs: []
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
@@ -1803,7 +1803,7 @@ ph-ee-connector_slcb:
     envFrom: []
   # - configMapRef:
   #     name: config-secret
-    extraEnvs: ""
+    extraEnvs: []
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the ph_ee_connector_slcb Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.

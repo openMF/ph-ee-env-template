@@ -86,6 +86,11 @@ spec:
                 secretKeyRef:
                   name: "bulk-processor-secret"
                   key: "aws-secret-key"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"

@@ -40,6 +40,12 @@ spec:
               value: "{{ .Values.advertised.host }}"
             - name: "ADVERTISED_PORT"
               value: "{{ .Values.advertised.port }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
           resources:
                 limits:
                   memory: "1536M"

@@ -36,6 +36,11 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
