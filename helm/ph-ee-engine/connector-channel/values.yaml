@@ -13,8 +13,6 @@ imageTag: latest
 imagePullPolicy: "Always"
 SPRING_PROFILES_ACTIVE: "bb,tenants"
 LOGGING_LEVEL_ROOT: "INFO"
-hostname: "channel.sandbox.mifos.io"
-stub_hostname: "channel-gsma.sandbox.mifos.io"
 DFSPIDS: ""
 operations:
   url: "http://ops-bk.sandbox.mifos.io/api/v1"
@@ -57,28 +55,22 @@ readinessProbe:
     port: 8080
   initialDelaySeconds: 20
   periodSeconds: 30  
-wildcardhostname: channel.sandbox.mifos.io   
-
+# Enabling this will publicly expose your channel instance.
+# Only enable this if you have security enabled on your cluster
 ingress:
-  apiversion: networking.k8s.io/v1
-  enabled: true
-  className: "nginx"
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-  tls:
-  - hosts: "notifications.sandbox.mifos.io"
-  - secretName: sandbox-secret
-  path: "/"
-  backend:
-    service:
-      name: ph-ee-connector-channel
-      port:
-        number: 80
-  stub_backend:
-    service:
-      name: ph-ee-connector-channel
-      port:
-        number: 82
+  enabled: false
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: "" 
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local
+
 deployment:
   apiVersion: "apps/v1"
   annotations:

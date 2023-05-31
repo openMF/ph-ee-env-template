@@ -11,7 +11,7 @@ configmap:
   apiversion: "v1" 
   
 
-enabled: true
+enabled: false
 image: ""
 imageTag: latest
 SPRING_PROFILES_ACTIVE: "bb"
@@ -20,7 +20,7 @@ ams:
   local:
     enabled: false
 paygops:
-  authheader: "PaymentHubTest"
+  authheader: ""
   base_url: "https://feature-test1.paygops.com/"
 limits:
   cpu: "500m"

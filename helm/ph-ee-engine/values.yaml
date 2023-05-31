@@ -200,7 +200,7 @@ kibana:
 
 
 channel:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.5.0"
@@ -230,8 +230,6 @@ channel:
     clientId: ""
     clientSecret: ""
     tenant: ""
-  hostname: ""
-  stub_hostname: ""
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -338,13 +336,13 @@ operationsmysql:
       GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
 
 ph_ee_connector_ams_mifos:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.2.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
-  ams_local_enabled: false
+  ams_local_enabled: true
   ams_local_interop_host: ""
   ams_local_account_host: ""
   ams_local_customer_host: ""
@@ -385,10 +383,9 @@ ph_ee_connector_ams_mifos:
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: false
-    path: "/"
+    enabled: false 
     annotations: {}
-    backend: {}
+      
   deployment:
     annotations: {}
     affinity: {}
@@ -528,7 +525,6 @@ operations_app:
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-  hostname: ""
   tenants: ""
   token_client_channel_secret: ""
   datasource:
@@ -623,7 +619,6 @@ operations_web:
   imageTag: "v1.3.2"
   imagePullPolicy: "Always"
   imagePullSecrets: []
-  hostname: ""
   webhost: ""
   livenessProbe:
     httpGet:
@@ -677,9 +672,7 @@ operations_web:
   ingress:
     enabled: false
     path: "/"
-    annotations:
-      konghq.com/plugins: request-transformer,oidc
-      kubernetes.io/ingress.class: kong
+    annotations: {}    
     backend: {}
   deployment:
     config:
@@ -713,7 +706,6 @@ operations_web:
     #   ph-ee-operations-web.yml: |          
 
 identity:
-  hostname: ""
 
 mpesa:
   enabled: false
@@ -723,7 +715,6 @@ mpesa:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
@@ -1036,7 +1027,6 @@ messagegateway:
   imageTag: "v1.0.0"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
-  hostname: ""
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
@@ -1094,7 +1084,7 @@ messagegateway:
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: false
+    enabled: true
     path: "/messages"
     annotations: {}
     backend: {}
@@ -1140,7 +1130,6 @@ notifications:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
@@ -1231,7 +1220,7 @@ notifications:
     #   ph-ee-connector-notifications.yml: |
 
 zeebe_ops:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.0.1"
@@ -1239,7 +1228,6 @@ zeebe_ops:
   imagePullSecrets: []
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  hostname: ""
   zeebe_broker_contactpoint: "zeebetest-zeebe-gateway:26500"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
@@ -1547,7 +1535,6 @@ connector_bulk:
     hostname: ""
   pollingApi:
     timer: "180"
-  hostname: ""
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: ""
   bucket_name: "paymenthub-ee-dev"
@@ -1630,7 +1617,8 @@ connector_bulk:
 # Enabling this will publicly expose your connector_bulk instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-      enabled: false 
+    enabled: false 
+    annotations: {}    
   deployment:
     annotations: {}
     affinity: {}
@@ -1827,7 +1815,6 @@ mock_oracle:
   replicas: 1
   image: ""
   imagePullPolicy: "Always"
-  hostname: ""
   service:
     targetport: 4100
   limits:
@@ -1845,11 +1832,6 @@ mock_oracle:
     backend: {}
   deployment:
     annotations: {}
-
-
-wildcardhostname: ""
-
-tls: ""
 
 keycloak:
   enabled: false
