@@ -12,13 +12,14 @@ image: ""
 imageTag: ""
 imagePullPolicy: ""
 SPRING_PROFILES_ACTIVE: ""
-ams_local_enabled: false
-ams_local_interop_host : "https://fynams.sandbox.mifos.io"
-ams_local_customer_host : "https://fynams.sandbox.mifos.io"
-ams_local_account_host : "https://fynams.sandbox.mifos.io"
-ams_local_auth_host : "https://fynams.sandbox.mifos.io"
-ams_local_loan_host : "https://fynams.sandbox.mifos.io/"
-dfspids: "gorilla,rhino"
+hostname: ""
+ams_local_enabled: true
+ams_local_interop_host : ""
+ams_local_customer_host : ""
+ams_local_account_host : ""
+ams_local_auth_host : ""
+ams_local_loan_host : ""
+dfspids: ""
 extraInitContainers: ""
 ## tenants properties have been moved to fin12
 limits:
@@ -26,9 +27,7 @@ limits:
   memory: "512M"
 requests:
   cpu: "100m"
-  memory: "256M" 
-# Enabling this will publicly expose your ams-mifos instance.
-# Only enable this if you have security enabled on your cluster
+  memory: "256M"  
 ingress:
   enabled: false
   annotations: {}
