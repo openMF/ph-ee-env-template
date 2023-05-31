@@ -202,10 +202,10 @@ kibana:
 channel:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
   imageTag: "v1.5.0"
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
@@ -338,7 +338,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ams"
   imageTag: "v1.2.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
@@ -416,10 +416,11 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
-  image: ""
-  imageTag: "v1.1.0"
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
+  imageTag: "latest"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
+  hostname: ""
   switch:
     quotes:
       host: ""
@@ -519,10 +520,10 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ops-bk"
   imageTag: "v1.4.0"
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   tenants: ""
@@ -615,7 +616,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-ops-web"
   imageTag: "v1.3.2"
   imagePullPolicy: "Always"
   imagePullSecrets: []
@@ -710,7 +711,7 @@ identity:
 mpesa:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-mpesa"
   imageTag: "v1.4.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
@@ -847,7 +848,7 @@ mpesa:
 roster_connector:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-roster"
   imageTag: "v1.2.0"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -935,7 +936,7 @@ roster_connector:
 paygops_connector:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-connector-ams-paygops"
   imageTag: "v1.5.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
@@ -1023,7 +1024,7 @@ paygops_connector:
 messagegateway:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
   imageTag: "v1.0.0"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1125,10 +1126,10 @@ messagegateway:
 notifications:
   enabled: true
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
   imageTag: "v1.1.0"
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
@@ -1136,8 +1137,8 @@ notifications:
   NOTIFICATION_SUCCESS_ENABLED: "false"
   NOTIFICATION_FAILURE_ENABLED: "true"
   hostconfig:
-    host: ""
-    port: ""
+    host: "message-gateway"
+    port: 80
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1222,7 +1223,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
   imageTag: "v1.0.1"
   imagePullPolicy: "Always"
   imagePullSecrets: []
@@ -1319,7 +1320,7 @@ zeebe_ops:
 importer_es:
   enabled: true
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-es-importer"
   imageTag: "v1.4.0"
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
@@ -1437,7 +1438,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
   imageTag: "v1.3.1"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1526,10 +1527,10 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
   imageTag: "v1.5.0"
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
+  SPRING_PROFILES_ACTIVE: "bb"
   camel_disable_ssl: true
   channel:
     hostname: ""
@@ -1649,7 +1650,7 @@ connector_bulk:
 ph-ee-connector_gsma:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
   imageTag: "v1.0.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
@@ -1714,7 +1715,7 @@ ph-ee-connector_gsma:
 ph-ee-connector_slcb:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
   imageTag: "v1.1.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
@@ -1813,7 +1814,7 @@ ph-ee-connector_slcb:
 mock_oracle:
   enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/mock-asl-oracle"
   imagePullPolicy: "Always"
   service:
     targetport: 4100
