@@ -347,16 +347,3 @@ ph-ee-engine:
       ingress:
         enabled: true
         hostname: admin-kong.sandbox.mifos.io
-  
-zeebe-operate:
-  ingress:
-    enabled: true
-    hostname: "zeebeoperate.sandbox.mifos.io"
-    annotations:
-      kubernetes.io/ingress.class: "nginx"
-    path: "/"
-    backend:
-      service:
-        name: "zeebe-operate"
-        port:
-          number: 80
