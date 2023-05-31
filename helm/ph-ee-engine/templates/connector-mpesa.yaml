@@ -38,6 +38,12 @@ spec:
               port: 8080
             initialDelaySeconds: 20
             periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 5
           resources:
             limits:
               memory: "{{ .Values.mpesa.limits.memory }}"
