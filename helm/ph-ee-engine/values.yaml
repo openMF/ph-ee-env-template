@@ -200,7 +200,7 @@ kibana:
 
 
 channel:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.5.0"
@@ -338,13 +338,13 @@ operationsmysql:
       GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
 
 ph_ee_connector_ams_mifos:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.2.2"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
-  ams_local_enabled: false
+  ams_local_enabled: true
   ams_local_interop_host: ""
   ams_local_account_host: ""
   ams_local_customer_host: ""
@@ -385,10 +385,9 @@ ph_ee_connector_ams_mifos:
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: false
-    path: "/"
+    enabled: false 
     annotations: {}
-    backend: {}
+      
   deployment:
     annotations: {}
     affinity: {}
@@ -677,9 +676,7 @@ operations_web:
   ingress:
     enabled: false
     path: "/"
-    annotations:
-      konghq.com/plugins: request-transformer,oidc
-      kubernetes.io/ingress.class: kong
+    annotations: {}    
     backend: {}
   deployment:
     config:
@@ -1094,7 +1091,7 @@ messagegateway:
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: false
+    enabled: true
     path: "/messages"
     annotations: {}
     backend: {}
@@ -1231,7 +1228,7 @@ notifications:
     #   ph-ee-connector-notifications.yml: |
 
 zeebe_ops:
-  enabled: true
+  enabled: false
   replicas: 1
   image: ""
   imageTag: "v1.0.1"
@@ -1630,7 +1627,8 @@ connector_bulk:
 # Enabling this will publicly expose your connector_bulk instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-      enabled: false 
+    enabled: false 
+    annotations: {}    
   deployment:
     annotations: {}
     affinity: {}

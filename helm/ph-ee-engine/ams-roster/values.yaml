@@ -10,7 +10,7 @@ secret:
 configmap:
   apiversion: "v1"
 
-enabled: true
+enabled: false
 image: ""
 imageTag: latest
 SPRING_PROFILES_ACTIVE: ""
