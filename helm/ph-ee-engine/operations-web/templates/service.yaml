@@ -1,3 +1,4 @@
+{{- if .Values.enabled -}}
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
@@ -8,3 +9,4 @@ spec:
   ports:
     - protocol: TCP
       port: 4200
+{{- end }}      
