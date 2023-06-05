@@ -1826,36 +1826,16 @@ ph-ee-connector_slcb:
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
 
-connector_bulk_mojaloop:
+connector_bulk_closedloop:
   enabled: false
   replicas: 1
-  image: ""
-  imageTag: "latest"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  camel_disable_ssl: true
   channel:
     hostname: ""
   pollingApi:
     timer: "180"
   hostname: ""
-  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
-  tenants: ""
-  bucket_name: "paymenthub-ee-dev"
   operations_app:
     contactpoint: "https://ops-bk.sandbox.mifos.io/"
-    endpoints:
-      batch_transaction: "/api/v1/batch/transactions"
-      batch_summary: ""
-      batch_detail: ""
-  config:
-    completion_threshold_check:
-      enable: true
-      completion_rate: 95
-  aws:
-    region: "<region>"
-    access_key: "<access key>"
-    secret_key: "<secret key>"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness

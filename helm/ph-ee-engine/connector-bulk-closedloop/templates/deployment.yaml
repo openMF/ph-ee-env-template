@@ -3,25 +3,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ph-ee-connector-bulk-mojaloop
+  name: ph-ee-connector-bulk-closedloop
   labels:
-    app: ph-ee-connector-bulk-mojaloop
+    app: ph-ee-connector-bulk-closedloop
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-bulk-mojaloop
+      app: ph-ee-connector-bulk-closedloop
   template:
     metadata:
       labels:
-        app: ph-ee-connector-bulk-mojaloop
+        app: ph-ee-connector-bulk-closedloop
       annotations:
 {{- if .Values.deployment.annotations }}
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
-        - name: ph-ee-connector-bulk-mojaloop
+        - name: ph-ee-connector-bulk-closedloop
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
@@ -48,26 +48,6 @@ spec:
               value: "{{ .Values.operations_app.contactpoint }}"
             - name: "OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION"
               value: "{{ .Values.operations_app.endpoints.batch_transaction }}"
-#            - name: "CONFIG_PARTYLOOKUP_ENABLE"
-#              value: "{{ .Values.config.partylookup.enable }}"
-#            - name: "CONFIG_APPROVAL_ENABLE"
-#              value: "{{ .Values.config.approval.enable }}"
-#            - name: "CONFIG_ORDERING_ENABLE"
-#              value: "{{ .Values.config.ordering.enable }}"
-#            - name: "CONFIG_ORDERING_FIELD"
-#              value: "{{ .Values.config.ordering.field }}"
-#            - name: "CONFIG_SPLITTING_ENABLE"
-#              value: "{{ .Values.config.splitting.enable }}"
-#            - name: "CONFIG_SPLITTING_SUB_BATCH_SIZE"
-#              value: "{{ .Values.config.splitting.sub_batch_size }}"
-#            - name: "CONFIG_FORMATTING_ENABLE"
-#              value: "{{ .Values.config.formatting.enable }}"
-#            - name: "CONFIG_FORMATTING_STANDARD"
-#              value: "{{ .Values.config.formatting.standard }}"
-#            - name: "CONFIG_MERGEBACK_ENABLE"
-#              value: "{{ .Values.config.mergeback.enable }}"
-#            - name: "CONFIG_BACKPRESSURE_ENABLE"
-#              value: "{{ .Values.config.backpressure.enable }}"
             - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_ENABLE"
               value: "{{ .Values.config.completion_threshold_check.enable }}"
             - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
@@ -77,12 +57,12 @@ spec:
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: "bulk-mojaloop-secret"
+                  name: "bulk-closedloop-secret"
                   key: "aws-access-key"
             - name: "AWS_SECRET_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: "bulk-mojaloop-secret"
+                  name: "bulk-closedloop-secret"
                   key: "aws-secret-key"
           volumeMounts:
             - name: ph-ee-config

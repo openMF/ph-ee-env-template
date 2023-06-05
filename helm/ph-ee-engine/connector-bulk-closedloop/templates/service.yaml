@@ -2,8 +2,8 @@ apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
-    app: ph-ee-connector-bulk-mojaloop
-  name: ph-ee-connector-bulk-mojaloop
+    app: ph-ee-connector-bulk-closedloop
+  name: ph-ee-connector-bulk-closedloop
 spec:
   ports:
     - name: port
@@ -11,6 +11,6 @@ spec:
       protocol: TCP
       targetPort: 5000
   selector:
-    app: ph-ee-connector-bulk-mojaloop
+    app: ph-ee-connector-bulk-closedloop
   sessionAffinity: None
   type: ClusterIP
