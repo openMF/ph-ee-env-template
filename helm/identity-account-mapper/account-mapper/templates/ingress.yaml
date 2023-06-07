@@ -1,26 +1,26 @@
-{{- if .Values.identity_account_mapper.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-identity-account-mapper
   annotations:
-  {{- if .Values.identity_account_mapper.ingress.annotations }}
-  {{ toYaml .Values.identity_account_mapper.ingress.annotations | indent 4 }}
-  {{- end }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
-    - host: "{{ .Values.identity_account_mapper.hostname }}"
+    - host: "{{ .Values.ingress.hostname }}"
       http:
         paths:
-          - path: "{{ .Values.identity_account_mapper.ingress.path }}"
+          - path: "{{ .Values.ingress.path }}"
             pathType: Prefix
             backend:
-  {{- if .Values.identity_account_mapper.ingress.backend }}
-  {{ toYaml .Values.identity_account_mapper.ingress.backend | indent 14 }}
-  {{- end }}
-
-tls:
-  - hosts:
-      - "{{ .Values.wildcardhostname }}"
-    secretName: "{{ .Values.tls }}"
+              service:
+                name: ph-ee-identity-account-mapper
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - "{{ .Values.ingress.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
   {{- end }}

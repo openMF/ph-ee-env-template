@@ -1,4 +1,4 @@
-apiVersion: {{ .Values.service.apiversion }}
+apiVersion: {{ .Values.service.apiVersion }}
 kind: Service
 metadata:
   labels:
