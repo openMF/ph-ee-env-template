@@ -4,6 +4,7 @@ kind: ClusterRole
 metadata:
   # "namespace" omitted since ClusterRoles are not namespaced
   name: ph-ee-connector-channel-c-role
+  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
