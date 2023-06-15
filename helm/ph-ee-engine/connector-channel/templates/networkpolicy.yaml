@@ -1,0 +1,34 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ph-ee-connector-channel-network-policy
+# From authorized namespaces
+  namespace: paymenthub   
+spec:
+  podSelector:
+    matchLabels:
+      name: ph-ee-connector-channel
+      app: ph-ee-connector-channel
+  policyTypes:
+  - Ingress  
+  - Egress
+# Allow inbound connections
+  ingress:   
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ph-ee-connector-channel
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  # The default is to allow all egress for hub
+  # If you want to restrict it the following egress is required
+  # proxy:8001
+  # singleuser:8888
+  # Kubernetes api-server
+{{ if .Values.networkPolicy.egress }}
+{{ toYaml .Values.networkPolicy.egress | indent 2 }}
+{{- end }}
+{{- end }}

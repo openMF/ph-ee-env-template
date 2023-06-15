@@ -32,6 +32,8 @@ deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+networkPolicy:
+  enabled: "true"    
 
 operations:
   SPRING_PROFILES_ACTIVE: "bb"

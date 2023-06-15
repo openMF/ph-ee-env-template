@@ -34,6 +34,8 @@ ingress:
 deployment:
   apiVersion: "apps/v1"
   config: {}
+networkPolicy:
+  enabled: "true"  
 
 configmap:
   apiversion: "v1"
