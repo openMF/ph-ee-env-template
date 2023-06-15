@@ -2,7 +2,7 @@ mtn_rwanda_connector:
   enabled: true
   image: "oaftech.azurecr.io/oneacrefund/mtn-connector"
   imageTag: "1.0.0"
-  tenants: "rw-oaf"
+  tenants: "oaf"
   imagePullPolicy: "IfNotPresent"
   zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   camel_server_port: 5000
@@ -262,6 +262,8 @@ channel:
         value: "tupande"
       - identifier: WALLETID
         value: "erply"
+      - identifier: FINERACTACCOUNTID
+        value: "fineract"
       - identifier: "default"
         value: "paygops"
 
@@ -1014,6 +1016,32 @@ erply_connector:
   erply:
     base_url: ""
     auth_header: ""
+  deployment:
+    annotations:
+      co.elastic.logs/enabled: "true"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
+
+fineract_oaf_connector:
+  enabled: true
+  replicas: 1
+  image: "oaftech.azurecr.io/oneacrefund/ph-ee-connector-ams-fineract"
+  imageTag: "0.0.1.2023.06.08.1"
+  imagePullPolicy: "IfNotPresent"
+  LOGGING_LEVEL_ROOT: "INFO"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
+  limits:
+    memory: "1Gi"
+    cpu: "200m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  ams:
+    local:
+      enabled: true
+  fineract:
+    base_url: "https://loans.qa.oneacrefund.org/fineract-provider/api/v1"
   deployment:
     annotations:
       co.elastic.logs/enabled: "true"

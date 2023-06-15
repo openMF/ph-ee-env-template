@@ -1,0 +1,86 @@
+{{- if .Values.fineract_oaf_connector.enabled -}}
+
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-fineract-oaf"
+  labels:
+    app: ph-ee-connector-ams-fineract-oaf
+spec:
+  replicas: {{ .Values.fineract_oaf_connector.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-fineract-oaf
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-fineract-oaf
+      annotations:
+{{- if .Values.fineract_oaf_connector.deployment.annotations }}
+{{ toYaml .Values.fineract_oaf_connector.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-ams-fineract-oaf
+          image: "{{ .Values.fineract_oaf_connector.image }}:{{ .Values.fineract_oaf_connector.imageTag }}"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: "{{ .Values.fineract_oaf_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 5004
+            periodSeconds: 60
+            initialDelaySeconds: 3
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 5004
+            initialDelaySeconds: 3
+            periodSeconds: 60
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 5004
+            failureThreshold: 30
+            periodSeconds: 5
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.fineract_oaf_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "AMS_LOCAL_ENABLED"
+              value: "{{ .Values.fineract_oaf_connector.ams.local.enabled }}"
+            - name: "FINERACT_BASE-URL"
+              value: "{{ .Values.fineract_oaf_connector.fineract.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.fineract_oaf_connector.LOGGING_LEVEL_ROOT }}"
+          resources:
+            limits:
+              memory: "{{ .Values.fineract_oaf_connector.limits.memory }}"
+              cpu: "{{ .Values.fineract_oaf_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.fineract_oaf_connector.requests.memory }}"
+              cpu: "{{ .Values.fineract_oaf_connector.requests.cpu }}"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-ams-fineract-oaf
+  name: ph-ee-connector-ams-fineract-oaf
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-ams-fineract-oaf
+  sessionAffinity: None
+  type: ClusterIP
+
+{{- end }}
