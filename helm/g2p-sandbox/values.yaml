@@ -1,4 +1,19 @@
 ph-ee-engine:
+  ingress:
+    apiversion: "networking.k8s.io/v1"
+
+  deployment:
+    apiversion: "apps/v1"
+
+  service:
+    apiversion: "v1"
+
+  secret:
+    apiversion: "v1"
+
+  configmap:
+    apiversion: "v1"
+
   zeebe:
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
@@ -10,7 +25,6 @@ ph-ee-engine:
     image:
       repository: camunda/zeebe
       tag: 1.1.0
-
     clusterSize: "1"
     partitionCount: "1"
     replicationFactor: "1"
@@ -44,13 +58,12 @@ ph-ee-engine:
       annotations: 
         kubernetes.io/ingress.class: nginx      
       path: /
-      host: operate.sandbox.mifos.io
+      host: operate.sandbox.fynarfin.io
       tls:
         enabled: true
 
   elasticsearch:
     enabled: true
-
     #Single Node Solution
     clusterHealthCheckParams: "wait_for_status=yellow&timeout=100s"
     protocol: http
@@ -72,12 +85,8 @@ ph-ee-engine:
           path: /_cluster/health?wait_for_status=yellow&timeout=5s
           port: 9200
         initialDelaySeconds: 30
-
-
-
     # Shrink default JVM heap.
     esJavaOpts: "-Xmx512m -Xms512m"
-
     # Allocate smaller chunks of memory per pod.
     resources:
       requests:
@@ -146,7 +155,20 @@ ph-ee-engine:
     ams_local_customer_host: "https://fynams.sandbox.mifos.io/"
     ams_local_auth_host: "https://fynams.sandbox.mifos.io/"
     ingress:
-      enabled: false    
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: ams-mifos.sandbox.fynarfin.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: ph-ee-connector-ams-mifos
+                port:
+                  number: 80   
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -156,10 +178,23 @@ ph-ee-engine:
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
     imageTag: "latest"
     SPRING_PROFILES_ACTIVE: "bb"
-    hostname: "mojaloop.sandbox.mifos.io"
+    hostname: "mojaloop.sandbox.fynarfin.io"
     DFSPIDS: "gorilla,lion"
     ingress:
-      enabled: false           
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx      
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: mojaloop.sandbox.fynarfin.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: ph-ee-connector-mojaloop-java
+                port:
+                  number: 80 
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -177,9 +212,10 @@ ph-ee-engine:
   channel:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
-    imageTag: latest
+    imageTag: "latest"
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
+    SPRING_PROFILES_ACTIVE: "bb,tenants"
     DFSPIDS: "rhino,gorilla"
     operations:
       url: "http://ops-bk.sandbox.mifos.io/api/v1"
@@ -193,7 +229,28 @@ ph-ee-engine:
       clientSecret: "password"
       tenant: "gorilla"
     ingress:
-      enabled: false
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: channel.sandbox.fynarfin.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-channel"
+                port:
+                  number: 80
+        - host: channel-gsma.sandbox.fynarfin.io          
+          paths:          
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-channel-gsma"
+                port:
+                  number: 82
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -201,7 +258,7 @@ ph-ee-engine:
   operations_app:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ops-bk"
-    imageTag: latest
+    imageTag: "latest"
     tenants: "rhino,gorilla"
     hostname: "ops-bk.sandbox.mifos.io"
     datasource:
@@ -211,7 +268,20 @@ ph-ee-engine:
       port: 3306
       schema: "tenants"
     ingress:
-      enabled: false           
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: ops-bk.sandbox.fynarfin.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-operations-app"
+                port:
+                  number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -219,18 +289,30 @@ ph-ee-engine:
   operations_web:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-ops-web"
-    imageTag: latest
+    imageTag: "latest"
     hostname: "ops.sandbox.mifos.io"
+    SPRING_PROFILES_ACTIVE: "bb"
     ingress:
-      enabled: false         
+      enabled: true 
+      className: "kong"
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: ops.sandbox.fynarfin.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-operations-web"
+                port:
+                  number: 4200
   identity:
     hostname: "ops-bk.sandbox.mifos.io"
-
 
   ph_ee_connector_gsma:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
-    imageTag: latest
+    imageTag: "latest"
     SPRING_PROFILES_ACTIVE: "bb"
     limits:
       cpu: "500m"
@@ -254,15 +336,34 @@ ph-ee-engine:
   paygops_connector:
     enabled: false
     
-
   notifications:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
-    imageTag: latest
+    imageTag: "latest"
+    imagePullPolicy: "Always"
+    SPRING_PROFILES_ACTIVE: "bb"
+    LOGGING_LEVEL_ROOT: "INFO"
+    zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
+    MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
+    NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
+    NOTIFICATION_SUCCESS_ENABLED: "false"
+    NOTIFICATION_FAILURE_ENABLED: "true"   
     hostname: "notifications.sandbox.mifos.io"
-    zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
     ingress:
-      enabled: false            
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: notifications.sandbox.fynarfin.io         
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-notifications"
+                port:
+                  number: 80  
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -270,9 +371,10 @@ ph-ee-engine:
   connector_bulk:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
-    imageTag: latest
+    imageTag: "latest"
+    zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
     tenant: "rhino,gorilla"
-    hostname: bulk-connector.sandbox.mifos.io
+    hostname: bulk-connector.sandbox.fynarfin.io
     aws:
       region: "<region>"
       access_key: "<access_key>"
@@ -282,7 +384,19 @@ ph-ee-engine:
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
     ingress:
-      enabled: false
+      enabled: true
+      annotations: 
+        konghq.com/plugins: request-transformer,oidc,cors
+      tls:
+      - secretName: sandbox-secret
+        hosts:
+          - bulk-connector.sandbox.fynarfin.io
+      path: "/"
+      backend:
+        service:
+          name: ph-ee-connector-bulk
+          port:
+            number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -290,11 +404,25 @@ ph-ee-engine:
   zeebe_ops:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
-    imageTag: latest
+    imageTag: "latest"
+    zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
-      enabled: false            
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: zeebeops.sandbox.fynarfin.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-zeebe-ops"
+                port:
+                  number: 80 
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -302,21 +430,35 @@ ph-ee-engine:
   messagegateway:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
-    imageTag: latest
+    imageTag: "latest"
     secret:
       value:
         api_key: "<api_key>"
         project_id: "<project_id>"
     hostname: "messagegateway.sandbox.mifos.io"
     ingress:
-      enabled: false   
+      enabled: true
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: messagegateway.sandbox.fynarfin.io       
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "message-gateway"
+                port:
+                  number: 80   
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"                           
 
   importer_es:
+    enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-es-importer"
-    imageTag: latest
+    imageTag: "latest"
     elasticsearch_sslverification: false
     elasticsearch_security_enabled: false
     reporting:
@@ -325,11 +467,20 @@ ph-ee-engine:
   importer_rdbms:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
-    imageTag: latest
+    imageTag: "latest"
     LOGGING_LEVEL_ROOT: "DEBUG"
 
   keycloak:
     enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: "kong"
+      rules:
+        - host: 'keycloak.sandbox.fynarfin.io'
+          paths:
+          - path: /
+            pathType: Prefix
+      tls: []
     
   kong:
     enabled: true
@@ -346,4 +497,4 @@ ph-ee-engine:
         enabled: false
       ingress:
         enabled: true
-        hostname: admin-kong.sandbox.mifos.io
+        hostname: admin-kong.sandbox.fynarfin.io

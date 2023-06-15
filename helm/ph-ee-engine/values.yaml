@@ -1094,8 +1094,8 @@ messagegateway:
     key:
       telerivet_api_key: ""
     value:
-      api_key: ""
-      project_id: ""  
+      api_key: "<api_key>"
+      project_id: "<project_id>"  
   deployment:
     annotations: {}
     affinity: {}
@@ -1229,7 +1229,7 @@ zeebe_ops:
   imagePullSecrets: []
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "zeebetest-zeebe-gateway:26500"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   elasticsearch_sslverification: false
