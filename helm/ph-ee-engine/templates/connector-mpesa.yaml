@@ -43,7 +43,7 @@ spec:
               path: /actuator/health/readiness
               port: 8080
             failureThreshold: 30
-            periodSeconds: 5
+            periodSeconds: 60
           resources:
             limits:
               memory: "{{ .Values.mpesa.limits.memory }}"
