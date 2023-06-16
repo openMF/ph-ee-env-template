@@ -51,4 +51,4 @@ operations_app:
   datasource:
     host: "operationsmysql"
 keycloak:
-  enabled: true 
+  enabled: "true"
