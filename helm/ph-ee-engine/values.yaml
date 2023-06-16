@@ -1022,7 +1022,7 @@ erply_connector:
       instrumentation.opentelemetry.io/inject-java: 'true'
       sidecar.opentelemetry.io/inject: 'sidecar'
 
-fineract_oaf_connector:
+fineract_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/oneacrefund/ph-ee-connector-ams-fineract"

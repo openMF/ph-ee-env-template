@@ -1,31 +1,31 @@
-{{- if .Values.fineract_oaf_connector.enabled -}}
+{{- if .Values.fineract_connector.enabled -}}
 
 apiVersion: "apps/v1"
 kind: Deployment
 metadata:
-  name: "ph-ee-connector-ams-fineract-oaf"
+  name: "ph-ee-connector-ams-fineract"
   labels:
-    app: ph-ee-connector-ams-fineract-oaf
+    app: ph-ee-connector-ams-fineract
 spec:
-  replicas: {{ .Values.fineract_oaf_connector.replicas }}
+  replicas: {{ .Values.fineract_connector.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-ams-fineract-oaf
+      app: ph-ee-connector-ams-fineract
   template:
     metadata:
       labels:
-        app: ph-ee-connector-ams-fineract-oaf
+        app: ph-ee-connector-ams-fineract
       annotations:
-{{- if .Values.fineract_oaf_connector.deployment.annotations }}
-{{ toYaml .Values.fineract_oaf_connector.deployment.annotations | indent 8 }}
+{{- if .Values.fineract_connector.deployment.annotations }}
+{{ toYaml .Values.fineract_connector.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
-        - name: ph-ee-connector-ams-fineract-oaf
-          image: "{{ .Values.fineract_oaf_connector.image }}:{{ .Values.fineract_oaf_connector.imageTag }}"
+        - name: ph-ee-connector-ams-fineract
+          image: "{{ .Values.fineract_connector.image }}:{{ .Values.fineract_connector.imageTag }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: "{{ .Values.fineract_oaf_connector.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.fineract_connector.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -48,30 +48,30 @@ spec:
             periodSeconds: 5
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.fineract_oaf_connector.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.fineract_connector.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "zeebe-zeebe-gateway:26500"
             - name: "AMS_LOCAL_ENABLED"
-              value: "{{ .Values.fineract_oaf_connector.ams.local.enabled }}"
+              value: "{{ .Values.fineract_connector.ams.local.enabled }}"
             - name: "FINERACT_BASE-URL"
-              value: "{{ .Values.fineract_oaf_connector.fineract.base_url }}"
+              value: "{{ .Values.fineract_connector.fineract.base_url }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.fineract_oaf_connector.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.fineract_connector.LOGGING_LEVEL_ROOT }}"
           resources:
             limits:
-              memory: "{{ .Values.fineract_oaf_connector.limits.memory }}"
-              cpu: "{{ .Values.fineract_oaf_connector.limits.cpu }}"
+              memory: "{{ .Values.fineract_connector.limits.memory }}"
+              cpu: "{{ .Values.fineract_connector.limits.cpu }}"
             requests:
-              memory: "{{ .Values.fineract_oaf_connector.requests.memory }}"
-              cpu: "{{ .Values.fineract_oaf_connector.requests.cpu }}"
+              memory: "{{ .Values.fineract_connector.requests.memory }}"
+              cpu: "{{ .Values.fineract_connector.requests.cpu }}"
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: ph-ee-connector-ams-fineract-oaf
-  name: ph-ee-connector-ams-fineract-oaf
+    app: ph-ee-connector-ams-fineract
+  name: ph-ee-connector-ams-fineract
 spec:
   ports:
     - name: port
@@ -79,7 +79,7 @@ spec:
       protocol: TCP
       targetPort: 5000
   selector:
-    app: ph-ee-connector-ams-fineract-oaf
+    app: ph-ee-connector-ams-fineract
   sessionAffinity: None
   type: ClusterIP
 
