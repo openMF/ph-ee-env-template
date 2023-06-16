@@ -343,10 +343,10 @@ ph_ee_connector_ams_mifos:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: true
-  ams_local_interop_host: ""
-  ams_local_account_host: ""
-  ams_local_customer_host: ""
-  ams_local_auth_host: ""
+  ams_local_interop_host: "fineract-server"
+  ams_local_account_host: "fineract-server"
+  ams_local_customer_host: "fineract-server"
+  ams_local_auth_host: "fineract-server"
   ams_local_tenants: ""
   ams_local_loan_host: ""
 # Whether this chart should self-manage its service account, role, and associated role binding.
@@ -1540,7 +1540,7 @@ connector_bulk:
   tenants: ""
   bucket_name: "paymenthub-ee-dev"
   operations_app:
-      contactpoint: "https://ops-bk.sandbox.mifos.io/"
+      contactpoint: "ph-ee-operations-app"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
   config:
@@ -1869,11 +1869,11 @@ integration_test:
     cpu: "100m"
     memory: "2Gi"
   operations_app:
-    contactpoint: ""
+    contactpoint: "ph-ee-operations-app"
   bulk_processor:
-    contactpoint: ""
+    contactpoint: "ph-ee-connector-bulk"
   channel_connector:
-    contactpoint: ""
+    contactpoint: "ph-ee-connector-channel"
   kafka:
     brokers: ""
     topics: ""
