@@ -30,7 +30,7 @@ spec:
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 60
-            timeoutSeconds: 5
+            timeoutSeconds: 60
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
@@ -43,7 +43,7 @@ spec:
               path: /actuator/health/readiness
               port: 8080
             failureThreshold: 30
-            periodSeconds: 5
+            periodSeconds: 60
           resources:
             limits:
               memory: "{{ .Values.mtn_rwanda_connector.deployment.resources.limits.memory }}"

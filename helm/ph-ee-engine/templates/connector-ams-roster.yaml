@@ -43,7 +43,7 @@ spec:
               path: /actuator/health/readiness
               port: 8080
             failureThreshold: 30
-            periodSeconds: 5
+            periodSeconds: 60
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.roster_connector.SPRING_PROFILES_ACTIVE }}"
