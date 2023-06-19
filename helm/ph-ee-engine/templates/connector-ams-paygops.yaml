@@ -48,6 +48,8 @@ spec:
               path: /actuator/health/readiness
               port: 8080
             failureThreshold: 30
+            successThreshold: 1
+            timeoutSeconds: 1
             periodSeconds: 60
           env:
             - name: "SPRING_PROFILES_ACTIVE"
