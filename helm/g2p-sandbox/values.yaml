@@ -58,7 +58,7 @@ ph-ee-engine:
       annotations: 
         kubernetes.io/ingress.class: nginx      
       path: /
-      host: operate.sandbox.fynarfin.io
+      host: operate.sandbox.mifos.io
       tls:
         enabled: true
 
@@ -161,7 +161,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ams-mifos.sandbox.fynarfin.io          
+        - host: ams-mifos.sandbox.mifos.io          
           paths: 
           - path: "/"
             backend:
@@ -178,7 +178,7 @@ ph-ee-engine:
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
     imageTag: "latest"
     SPRING_PROFILES_ACTIVE: "bb"
-    hostname: "mojaloop.sandbox.fynarfin.io"
+    hostname: "mojaloop.sandbox.mifos.io"
     DFSPIDS: "gorilla,lion"
     ingress:
       enabled: true
@@ -187,7 +187,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: mojaloop.sandbox.fynarfin.io          
+        - host: mojaloop.sandbox.mifos.io          
           paths: 
           - path: "/"
             backend:
@@ -235,7 +235,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: channel.sandbox.fynarfin.io          
+        - host: channel.sandbox.mifos.io          
           paths: 
           - path: "/"
             backend:
@@ -243,7 +243,7 @@ ph-ee-engine:
                 name: "ph-ee-connector-channel"
                 port:
                   number: 80
-        - host: channel-gsma.sandbox.fynarfin.io          
+        - host: channel-gsma.sandbox.mifos.io          
           paths:          
           - path: "/"
             backend:
@@ -274,7 +274,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops-bk.sandbox.fynarfin.io          
+        - host: ops-bk.sandbox.mifos.io          
           paths: 
           - path: "/"
             backend:
@@ -298,7 +298,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops.sandbox.fynarfin.io          
+        - host: ops.sandbox.mifos.io          
           paths: 
           - path: "/"
             backend:
@@ -356,7 +356,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: notifications.sandbox.fynarfin.io         
+        - host: notifications.sandbox.mifos.io         
           paths: 
           - path: "/"
             backend:
@@ -374,7 +374,7 @@ ph-ee-engine:
     imageTag: "latest"
     zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
     tenant: "rhino,gorilla"
-    hostname: bulk-connector.sandbox.fynarfin.io
+    hostname: bulk-connector.sandbox.mifos.io
     aws:
       region: "<region>"
       access_key: "<access_key>"
@@ -390,7 +390,7 @@ ph-ee-engine:
       tls:
       - secretName: sandbox-secret
         hosts:
-          - bulk-connector.sandbox.fynarfin.io
+          - bulk-connector.sandbox.mifos.io
       path: "/"
       backend:
         service:
@@ -415,7 +415,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: zeebeops.sandbox.fynarfin.io          
+        - host: zeebeops.sandbox.mifos.io          
           paths: 
           - path: "/"
             backend:
@@ -443,7 +443,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: messagegateway.sandbox.fynarfin.io       
+        - host: messagegateway.sandbox.mifos.io       
           paths: 
           - path: "/"
             backend:
@@ -476,7 +476,7 @@ ph-ee-engine:
       enabled: true
       ingressClassName: "kong"
       rules:
-        - host: 'keycloak.sandbox.fynarfin.io'
+        - host: 'keycloak.sandbox.mifos.io'
           paths:
           - path: /
             pathType: Prefix
@@ -497,4 +497,4 @@ ph-ee-engine:
         enabled: false
       ingress:
         enabled: true
-        hostname: admin-kong.sandbox.fynarfin.io
+        hostname: admin-kong.sandbox.mifos.io
