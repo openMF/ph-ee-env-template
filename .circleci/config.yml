@@ -84,7 +84,7 @@ jobs:
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
-        path: ph-ee-integration-test/build/cucumber-report.html
+          path: ph-ee-integration-test/build/cucumber-report.html
 workflows:
   build:
     jobs:
