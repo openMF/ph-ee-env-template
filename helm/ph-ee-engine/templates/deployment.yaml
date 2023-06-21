@@ -1,0 +1,65 @@
+{{- if .Values.mockpayment.enabled -}}
+
+apiVersion: {{ .Values.deployment.apiversion }}
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-mock-payment-schema"
+  labels:
+    app: ph-ee-connector-mock-payment-schema
+spec:
+  replicas: {{ .Values.mockpayment.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-mock-payment-schema
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-mock-payment-schema
+      annotations:
+{{- if .Values.mockpayment.deployment.annotations }}
+{{ toYaml .Values.mockpayment.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-mock-payment-schema
+          image: "{{ .Values.mockpayment.image }}:{{ .Values.mockpayment.imageTag }}"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.mockpayment.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.mockpayment.limits.memory }}"
+              cpu: "{{ .Values.mockpayment.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.mockpayment.requests.memory }}"
+              cpu: "{{ .Values.mockpayment.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.mockpayment.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.mockpayment.DFSPIDS }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.mockpayment.LOGGING_LEVEL_ROOT }}"
+            - name : "mockFailure_percentage"
+              value: "{{ .Values.mockpayment.mockFailure_percentage }}"
+
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}
