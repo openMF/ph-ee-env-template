@@ -82,7 +82,7 @@ jobs:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
       - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags=“@gov” 
       - store_test_results:
-          path: ph-ee-integration-test/build/test-results/test/TEST-org.mifos.integrationtest.TestRunner.xml
+          path: ph-ee-integration-test/build/cucumber.xml
 workflows:
   build:
     jobs:
