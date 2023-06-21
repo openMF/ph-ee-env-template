@@ -86,7 +86,7 @@ jobs:
       - store_artifacts:
           path: ph-ee-integration-test/build/reports/tests/test
 workflows:
-  build:
+  deploy:
     jobs:
       - build-and-host-engine:
           context: 
@@ -94,14 +94,16 @@ workflows:
             - Helm
             - slack
       - build-and-host-g2p-sandbox:
+          requires:
+            - build-and-host-engine
           context: 
             - AWS
             - Helm
             - slack
-  deploy:
-    jobs:
       - upgrade-helm-chart:
           cluster-name: sit
+          requires:
+            - build-and-host-g2p-sandbox
           context: 
             - AWS
             - Helm
