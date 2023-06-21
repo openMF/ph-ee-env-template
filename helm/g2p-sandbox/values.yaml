@@ -110,7 +110,7 @@ ph-ee-engine:
       successThreshold: 1    
     protocol: http
     ingress:
-      enabled: true
+      enabled: false
       className: "nginx"
       pathtype: "Prefix"
       annotations: {}
@@ -155,7 +155,7 @@ ph-ee-engine:
     ams_local_customer_host: "https://fynams.sandbox.mifos.io/"
     ams_local_auth_host: "https://fynams.sandbox.mifos.io/"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx
       tls:
@@ -181,7 +181,7 @@ ph-ee-engine:
     hostname: "mojaloop.sandbox.mifos.io"
     DFSPIDS: "gorilla,lion"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx      
       tls:
@@ -229,7 +229,7 @@ ph-ee-engine:
       clientSecret: "password"
       tenant: "gorilla"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx  
       tls:
@@ -268,7 +268,7 @@ ph-ee-engine:
       port: 3306
       schema: "tenants"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx  
       tls:
@@ -293,7 +293,7 @@ ph-ee-engine:
     hostname: "ops.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb"
     ingress:
-      enabled: true 
+      enabled: false
       className: "kong"
       tls:
         - secretName: sandbox-secret
@@ -350,7 +350,7 @@ ph-ee-engine:
     NOTIFICATION_FAILURE_ENABLED: "true"   
     hostname: "notifications.sandbox.mifos.io"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx  
       tls:
@@ -384,7 +384,7 @@ ph-ee-engine:
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         konghq.com/plugins: request-transformer,oidc,cors
       tls:
@@ -409,7 +409,7 @@ ph-ee-engine:
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx  
       tls:
@@ -437,7 +437,7 @@ ph-ee-engine:
         project_id: "<project_id>"
     hostname: "messagegateway.sandbox.mifos.io"
     ingress:
-      enabled: true
+      enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx  
       tls:
@@ -473,7 +473,7 @@ ph-ee-engine:
   keycloak:
     enabled: true
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: "kong"
       rules:
         - host: 'keycloak.sandbox.mifos.io'
@@ -496,5 +496,5 @@ ph-ee-engine:
       tls:
         enabled: false
       ingress:
-        enabled: true
+        enabled: false
         hostname: admin-kong.sandbox.mifos.io
