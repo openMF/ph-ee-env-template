@@ -294,7 +294,6 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb"
     ingress:
       enabled: false
-      className: "kong"
       tls:
         - secretName: sandbox-secret
       hosts:
