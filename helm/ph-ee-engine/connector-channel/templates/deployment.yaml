@@ -93,7 +93,7 @@ spec:
             - name: "redis_password"
               valueFrom:
                 secretKeyRef:
-                  name: "g2pconnect-redis" # tobe changed to sit ingress
+                  name: "{{ .Release.Name }}-redis" # tobe changed to sit ingress 
                   key: redis-password
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
