@@ -230,8 +230,8 @@ ph-ee-engine:
       tenant: "gorilla"
     server:
       ssl:
-        key-password: "password"
-        key-store-password: "password"
+        key-password: "<replace-with-password>"
+        key-store-password: "<replace-with-password>"
     ingress:
       enabled: false
       annotations: 
