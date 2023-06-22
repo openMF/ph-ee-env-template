@@ -56,20 +56,18 @@ requests:
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster  
 ingress:
-  apiversion: networking.k8s.io/v1
-  enabled: true
-  annotations: 
-    kubernetes.io/ingress.class: "kong"
-    konghq.com/plugins: cors
-  tls:
-  - hosts: "ph-ee-connector-bulk.com"
-    secretName: sandbox-secret
-  path: "/"
-  backend:
-    service:
-      name: ph-ee-connector-bulk
-      port:
-        number: 80      
+  enabled: false
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: "" 
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local      
 
 deployment:
   apiVersion: "apps/v1"
