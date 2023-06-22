@@ -95,6 +95,10 @@ spec:
                 secretKeyRef:
                   name: "{{ .Release.Name }}-redis" # tobe changed to sit ingress 
                   key: redis-password
+            - name: "server-ssl-key-password"  
+              value: "{{ .Values.server.ssl.key-password }}" 
+            - name: "server-ssl-key-store-password"
+              value: "{{ .Values.server.ssl.key-store-password }}"  
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        

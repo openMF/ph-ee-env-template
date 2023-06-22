@@ -228,6 +228,10 @@ ph-ee-engine:
       clientId: "mifos"
       clientSecret: "password"
       tenant: "gorilla"
+    server:
+      ssl:
+        key-password: "password"
+        key-store-password: "password"
     ingress:
       enabled: false
       annotations: 
@@ -254,6 +258,7 @@ ph-ee-engine:
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
+
 
   operations_app:
     enabled: true

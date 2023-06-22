@@ -37,6 +37,10 @@ tenantSecondary:
 notifications: 
   NOTIFICATION_SUCCESS_ENABLED: "false"
   NOTIFICATION_FAILURE_ENABLED: "false"  
+server:
+  ssl:
+    key-password: <replace-with-password>
+    key-store-password: "<replace-with-password>"  
 limits:
   cpu: "500m"
   memory: "512M"
