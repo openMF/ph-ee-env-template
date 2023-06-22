@@ -24,7 +24,7 @@ spec:
         - name: ph-ee-connector-channel
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
-            - containerPort: 8080
+            - containerPort: 8443
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           resources:
             limits:
@@ -36,13 +36,15 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8443
+              scheme: HTTPS
             initialDelaySeconds: 20
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8443
+              scheme: HTTPS
             initialDelaySeconds: 20
             periodSeconds: 30 
           env:
