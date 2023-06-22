@@ -41,6 +41,8 @@ config:
   completion_threshold_check:
     enable: true
     completion_rate: 95
+  deduplication:
+    enabled: true  
 aws:
   region: "<region>"
   access_key: "<access key>" 
