@@ -246,7 +246,7 @@ ph-ee-engine:
               service:
                 name: "ph-ee-connector-channel"
                 port:
-                  number: 80
+                  number: 8443
         - host: channel-gsma.sandbox.mifos.io          
           paths:          
           - path: "/"
