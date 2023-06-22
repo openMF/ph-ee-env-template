@@ -97,10 +97,17 @@ spec:
                 secretKeyRef:
                   name: "{{ .Release.Name }}-redis" # tobe changed to sit ingress 
                   key: redis-password
+<<<<<<< HEAD
             - name: "server_ssl_key_password"  
               value: "{{ .Values.server.ssl.keyPassword }}" 
             - name: "server_ssl_key_store_password"
               value: "{{ .Values.server.ssl.keyStorePassword }}"  
+=======
+            - name: "server-ssl-key-password"  
+              value: "{{ .Values.server.ssl.key-password }}" 
+            - name: "server-ssl-key-store-password"
+              value: "{{ .Values.server.ssl.key-store-password }}"  
+>>>>>>> 779f3f9 (added server ssl for channel)
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        
