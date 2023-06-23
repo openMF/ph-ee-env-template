@@ -15,6 +15,7 @@ ph-ee-engine:
     apiversion: "v1"
 
   zeebe:
+    fullnameOverride: "g2p-sandbox-zeebe-gateway:26500"
     broker:
       contactpoint: "zeebe-zeebe-gateway:26500"
   zeebe-cluster-helm:
