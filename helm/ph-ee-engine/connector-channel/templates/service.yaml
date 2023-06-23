@@ -10,11 +10,11 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 8080
+      targetPort: 8443
     - name: http
       port: 82
       protocol: TCP
-      targetPort: 8080
+      targetPort: 8443
   selector:
     app: ph-ee-connector-channel
   sessionAffinity: None
