@@ -233,7 +233,8 @@ channel:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 8443
+      scheme: HTTPS 
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -241,7 +242,8 @@ channel:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 8443
+      scheme: HTTPS
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1584,6 +1586,8 @@ connector_bulk:
     completion_threshold_check:
       enable: true
       completion_rate: 95
+    deduplication:
+      enabled: true  
   aws:
     region: "<region>"
     access_key: "<access key>"

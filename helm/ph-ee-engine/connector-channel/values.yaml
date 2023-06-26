@@ -37,6 +37,10 @@ tenantSecondary:
 notifications: 
   NOTIFICATION_SUCCESS_ENABLED: "false"
   NOTIFICATION_FAILURE_ENABLED: "false"  
+server:
+  ssl:
+    key-password: <replace-with-password>
+    key-store-password: "<replace-with-password>"  
 limits:
   cpu: "500m"
   memory: "512M"
@@ -46,13 +50,13 @@ requests:
 livenessProbe:
   httpGet:
     path: /actuator/health/liveness
-    port: 8080
+    port: 8443
   initialDelaySeconds: 20
   periodSeconds: 30
 readinessProbe:
   httpGet:
     path: /actuator/health/readiness
-    port: 8080
+    port: 8443
   initialDelaySeconds: 20
   periodSeconds: 30  
 # Enabling this will publicly expose your channel instance.

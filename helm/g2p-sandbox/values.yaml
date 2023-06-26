@@ -228,10 +228,15 @@ ph-ee-engine:
       clientId: "mifos"
       clientSecret: "password"
       tenant: "gorilla"
+    server:
+      ssl:
+        keyPassword: "<replace-with-password>"
+        keyStorePassword: "<replace-with-password>"
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx  
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
       tls:
         - secretName: sandbox-secret
       hosts:
@@ -242,7 +247,7 @@ ph-ee-engine:
               service:
                 name: "ph-ee-connector-channel"
                 port:
-                  number: 80
+                  number: 8443
         - host: channel-gsma.sandbox.mifos.io          
           paths:          
           - path: "/"
@@ -254,6 +259,7 @@ ph-ee-engine:
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
+
 
   operations_app:
     enabled: true
@@ -294,7 +300,6 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb"
     ingress:
       enabled: false
-      className: "kong"
       tls:
         - secretName: sandbox-secret
       hosts:
@@ -343,7 +348,7 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     SPRING_PROFILES_ACTIVE: "bb"
     LOGGING_LEVEL_ROOT: "INFO"
-    zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
+    zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
     MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
     NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
     NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -372,7 +377,7 @@ ph-ee-engine:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
     imageTag: "latest"
-    zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
+    zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     aws:
@@ -386,17 +391,18 @@ ph-ee-engine:
     ingress:
       enabled: false
       annotations: 
-        konghq.com/plugins: request-transformer,oidc,cors
+        kubernetes.io/ingress.class: nginx  
       tls:
-      - secretName: sandbox-secret
-        hosts:
-          - bulk-connector.sandbox.mifos.io
-      path: "/"
-      backend:
-        service:
-          name: ph-ee-connector-bulk
-          port:
-            number: 80
+        - secretName: sandbox-secret
+      hosts:
+        - host: bulk-connector.sandbox.mifos.io     
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-bulk"
+                port:
+                  number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -405,7 +411,7 @@ ph-ee-engine:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
     imageTag: "latest"
-    zeebe_broker_contactpoint: "g2pconnect-zeebe-gateway:26500"
+    zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
