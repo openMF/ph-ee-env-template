@@ -197,6 +197,12 @@ kibana:
         secretKeyRef:
           name: kibana
           key: encryptionkey
+  # Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true
+  # Custom service account override that the pod will use
+  serviceAccount: "payment-hub"
+  # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {}
 
 
 channel:
