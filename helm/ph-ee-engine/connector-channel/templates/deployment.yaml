@@ -95,8 +95,8 @@ spec:
             - name: "redis_password"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Release.Name }}-redis" # tobe changed to sit ingress 
-                  key: redis-password
+                  name: "{{ .Release.Name }}-redis" 
+                  key: "redis-password"
             - name: "server_ssl_key_password"  
               value: "{{ .Values.server.ssl.keyPassword }}" 
             - name: "server_ssl_key_store_password"
