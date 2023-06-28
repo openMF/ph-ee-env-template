@@ -20,7 +20,7 @@ zeebe:
 
 camunda-platform:
   global:
-    zeebe: "zeebe-zeebe"
+    zeebe: "{{ .Release.Name }}-zeebe"
     elasticsearch:
       disableExporter: true
       host: "ph-ee-elasticsearch"
