@@ -1421,7 +1421,7 @@ importer_es:
 
 
 mockpayment:
-  enabled: true
+  enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mock-paymentschema"
   imageTag: "v1.1.0"
