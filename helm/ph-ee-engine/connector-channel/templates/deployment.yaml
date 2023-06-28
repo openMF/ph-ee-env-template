@@ -101,10 +101,6 @@ spec:
               value: "{{ .Values.server.ssl.keyPassword }}" 
             - name: "server_ssl_key_store_password"
               value: "{{ .Values.server.ssl.keyStorePassword }}"  
-            - name: "server_ssl_key_password"  
-              value: "{{ .Values.server.ssl.keyPassword }}" 
-            - name: "server_ssl_key_store_password"
-              value: "{{ .Values.server.ssl.keyStorePassword }}"  
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        
