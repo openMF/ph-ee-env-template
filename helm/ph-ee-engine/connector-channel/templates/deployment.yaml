@@ -95,7 +95,7 @@ spec:
             - name: "redis_password"
               valueFrom:
                 secretKeyRef:
-                  name: "g2p-sandbox-redis" 
+                  name: "{{ .Release.Name }}-redis" 
                   key: "redis-password"
             - name: "server_ssl_key_password"  
               value: "{{ .Values.server.ssl.keyPassword }}" 
