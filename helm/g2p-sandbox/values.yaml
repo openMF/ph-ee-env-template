@@ -199,6 +199,9 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
+  mockpayment:
+    enabled: true        
+
   kafka:
     enabled: true
     image: "spotify/kafka"
