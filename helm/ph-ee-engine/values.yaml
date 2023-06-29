@@ -1,6 +1,6 @@
 global:
   release: {{ .Release.Name}}
-  
+
 ingress:
   apiversion: "networking.k8s.io/v1"
 
@@ -1132,7 +1132,7 @@ notifications:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+  zeebe_broker_contactpoint: "{{ tpl .Release.Name }}-zeebe-gateway:26500"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
