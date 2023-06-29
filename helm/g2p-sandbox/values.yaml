@@ -349,7 +349,7 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     SPRING_PROFILES_ACTIVE: "bb"
     LOGGING_LEVEL_ROOT: "INFO"
-    
+    zeebe_broker_contactpoint: "g2p-sandbox-zeebe-gateway:26500"
     MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
     NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
     NOTIFICATION_SUCCESS_ENABLED: "false"
