@@ -6,6 +6,7 @@ metadata:
   name: ph-ee-connector-notifications
   labels:
     app: ph-ee-connector-notifications
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:

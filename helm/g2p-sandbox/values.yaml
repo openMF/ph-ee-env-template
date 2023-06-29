@@ -18,7 +18,7 @@ ph-ee-engine:
     broker:
       contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
   zeebe-cluster-helm:
-    enabled: false
+    enabled: true
     global:
       elasticsearch:
         host: "ph-ee-elasticsearch"
