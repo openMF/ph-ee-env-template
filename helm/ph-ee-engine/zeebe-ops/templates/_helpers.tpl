@@ -19,6 +19,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 {{- end -}}
 
+{{- define "release.name" -}}
+{{- list .Values.a .Values.b .Values.c | join "-" }}
+{{- end }}
+
 {{/*
 Use the fullname if the serviceAccount value is not set
 */}}

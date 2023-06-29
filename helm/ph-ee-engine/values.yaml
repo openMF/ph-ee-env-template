@@ -1,6 +1,3 @@
-global:
-  release: {{ .Release.Name}}
-
 ingress:
   apiversion: "networking.k8s.io/v1"
 
@@ -1132,7 +1129,7 @@ notifications:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "{{ tpl .Release.Name }}-zeebe-gateway:26500"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -1230,7 +1227,7 @@ zeebe_ops:
   imagePullSecrets: []
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+  zeebe_broker_contactpoint: "{{ .Release.name }}-zeebe-gateway:26500"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   elasticsearch_sslverification: false
@@ -1557,7 +1554,7 @@ connector_bulk:
     hostname: ""
   pollingApi:
     timer: "180"
-  zeebe_broker_contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: ""
   bucket_name: "paymenthub-ee-dev"
   operations_app:
