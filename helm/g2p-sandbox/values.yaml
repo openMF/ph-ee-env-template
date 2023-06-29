@@ -14,9 +14,7 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
-  zeebe:
-    broker:
-      contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+
   zeebe-cluster-helm:
     enabled: true
     global:
@@ -351,7 +349,7 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     SPRING_PROFILES_ACTIVE: "bb"
     LOGGING_LEVEL_ROOT: "INFO"
-    zeebe_broker_contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+    
     MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
     NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
     NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -380,7 +378,7 @@ ph-ee-engine:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
     imageTag: "latest"
-    zeebe_broker_contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+    
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     aws:
@@ -414,7 +412,7 @@ ph-ee-engine:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
     imageTag: "latest"
-    zeebe_broker_contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+    
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
