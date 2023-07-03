@@ -18,7 +18,7 @@ operations:
   url: "http://ops-bk.sandbox.mifos.io/api/v1"
   authEnabled: false
 release:
-  name: {{ .Release.Name }}
+  name: {{ $name }}
 redis:
   host: "127.0.0.1"
   port: 6379
