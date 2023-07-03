@@ -211,6 +211,8 @@ channel:
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   DFSPIDS: ""
+  release:
+  name: {{ include "rlname" . | lower | quote }}
   redis:
     host: "127.0.0.1"
     port: 6379
