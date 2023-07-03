@@ -10,6 +10,11 @@ Expand the name of the chart.
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
+{{- $rlname := .Release.Name -}}
+{{- define "releasename" -}}
+{{- default .Release.Namee | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "ph-ee-connector-channel.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
