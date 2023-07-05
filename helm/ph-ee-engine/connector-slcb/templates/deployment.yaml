@@ -37,7 +37,7 @@ spec:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.zeebe_broker_contactpoint }}"
+              value: "{{ ne .Values.ZEEBE_BROKER_CONTACTPOINT {{ .Release.Name }}-zeebe-gateway:2650 }}" 
             - name: "SLCB_AUTH_HOST"
               value: "{{ .Values.auth_host }}"
             - name: "SLCB_AUTH_AUTH-ENDPOINT"

@@ -15,7 +15,6 @@ MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
 NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
 NOTIFICATION_SUCCESS_ENABLED: "false"
 NOTIFICATION_FAILURE_ENABLED: "false"
-zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
 hostconfig:
   host: "message-gateway"
   port: 80

@@ -39,7 +39,7 @@ spec:
             - name: "CAMEL_DISABLE-SSL"
               value: "{{ .Values.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.zeebe_broker_contactpoint }}"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "TENANTS"
               value: "{{ .Values.tenants }}"
             - name: "APPLICATION_BUCKET-NAME"

@@ -35,7 +35,7 @@ spec:
             - containerPort: 5000
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Values.zeebe_broker_contactpoint }}"
+              value: "{{ .Release.Name }}-zeebe-gateway:2650"
             - name: "TENANTS"
               value: "{{ .Values.tenants }}"
             - name: "elasticsearch_url"
