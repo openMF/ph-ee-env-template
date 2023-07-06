@@ -50,6 +50,8 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"  
             - name: "DFSPIDS"
               value: "{{ .Values.DFSPIDS }}"
             - name: "TRANSACTION-ID-LENGTH"
