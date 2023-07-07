@@ -14,7 +14,6 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
-
   zeebe-cluster-helm:
     enabled: true
     global:
@@ -31,7 +30,7 @@ ph-ee-engine:
     elasticsearch:
       enabled: false
     kibana:
-      enabled: false
+      enabled: true
 
     extraInitContainers: |
       - name: init-ph-ee-kafka-exporter
@@ -410,8 +409,7 @@ ph-ee-engine:
   zeebe_ops:
     enabled: true
     image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
-    imageTag: "latest"
-    
+    imageTag: "latest"   
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
