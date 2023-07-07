@@ -50,6 +50,8 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"  
             - name: "DFSPIDS"
               value: "{{ .Values.DFSPIDS }}"
             - name: "TRANSACTION-ID-LENGTH"
@@ -95,8 +97,8 @@ spec:
             - name: "redis_password"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Release.Name }}-redis" # tobe changed to sit ingress 
-                  key: redis-password
+                  name: "{{ .Release.Name }}-redis" 
+                  key: "redis-password"
             - name: "server_ssl_key_password"  
               value: "{{ .Values.server.ssl.keyPassword }}" 
             - name: "server_ssl_key_store_password"

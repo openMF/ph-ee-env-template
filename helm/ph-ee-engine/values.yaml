@@ -11,16 +11,15 @@ secret:
   apiversion: "v1"
 
 configmap:
-  apiversion: "v1"
+  apiversion: "v1"  
   
 zeebe:
   broker:
-    contactpoint: "zeebe-zeebe-gateway:26500"
-
+    contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
 
 camunda-platform:
   global:
-    zeebe: "zeebe-zeebe"
+    zeebe: "{{ .Release.Name }}-zeebe"
     elasticsearch:
       disableExporter: true
       host: "ph-ee-elasticsearch"
@@ -125,9 +124,6 @@ camunda-platform:
     enabled: true
   identity:
     enabled: false
-
-
-
 
 elasticsearch:
   enabled: true
@@ -718,7 +714,6 @@ mpesa:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   serviceAccountName: ""
@@ -1133,7 +1128,6 @@ notifications:
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -1231,7 +1225,6 @@ zeebe_ops:
   imagePullSecrets: []
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
-  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   elasticsearch_sslverification: false
@@ -1421,9 +1414,9 @@ importer_es:
 
 
 mockpayment:
-  enabled: true
+  enabled: false
   replicas: 1
-  image: ""
+  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mock-paymentschema"
   imageTag: "v1.1.0"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
@@ -1558,7 +1551,6 @@ connector_bulk:
     hostname: ""
   pollingApi:
     timer: "180"
-  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   tenants: ""
   bucket_name: "paymenthub-ee-dev"
   operations_app:
@@ -1743,7 +1735,6 @@ ph-ee-connector_slcb:
   imageTag: "v1.1.1"
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
-  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
   username: "username"
   password: "password"
   signature_key: "long_segnature_key"

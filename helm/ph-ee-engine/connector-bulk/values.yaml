@@ -15,7 +15,6 @@ SPRING_PROFILES_ACTIVE: ""
 camel_disable_ssl: true
 tenants: ""
 bucket_name: "paymenthub-ee-dev"
-zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
 operations_app: 
   contactpoint: ""
   endpoints:
