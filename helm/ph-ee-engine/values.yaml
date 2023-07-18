@@ -1826,6 +1826,92 @@ ph-ee-connector_slcb:
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
 
+connector_bulk_closedloop:
+  enabled: false
+  replicas: 1
+  channel:
+    hostname: ""
+  pollingApi:
+    timer: "180"
+  hostname: ""
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 9191
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+  # Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true
+  # Custom service account override that the pod will use
+  serviceAccount: ""
+  # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {}
+  # How long to wait for connector_bulk pods to stop gracefully
+  terminationGracePeriod: 30
+  # Extra environment variables for connector_bulk container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: ""
+  # This is the PriorityClass settings as defined in
+  # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
+  # ph-ee-connector-bulkConfig: ""
+  #   ph-ee-connector-bulk.yml: |
+  # - User that the container will execute as.
+  # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
+  # - Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:
+    limits:
+      memory: "512M"
+      cpu: "500m"
+    requests:
+      memory: "512M"
+      cpu: "100m"
+  # Enabling this will publicly expose your connector_bulk instance.
+  # Only enable this if you have security enabled on your cluster
+  ingress:
+    enabled: false
+  deployment:
+    annotations: {}
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    envFrom: []
+    # - configMapRef:
+    #     name: config-secret
+    extraEnvs: ""
+    # - User that the container will execute as.
+    # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
+    # - Typically not necessarily unless running within environments such as OpenShift.
+    securityContext:
+      runAsUser: 0
+      privileged: false
+    resources:
+      limits:
+        memory: "512M"
+        cpu: "500m"
+      requests:
+        memory: "512M"
+        cpu: "100m"
+    # Allows you to add any config files in /usr/share/
+    # such as ph-ee-connector-bulk.yml for deployment
+    # ph-ee-connector-bulkConfig: {}
+    #   ph-ee-connector-bulk-mojaloop.yml: |
+
 mock_oracle:
   enabled: false
   replicas: 1

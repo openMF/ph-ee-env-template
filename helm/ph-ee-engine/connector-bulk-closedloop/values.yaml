@@ -1,0 +1,73 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: true
+image: ""  
+imageTag: "latest"
+imagePullPolicy: ""
+SPRING_PROFILES_ACTIVE: ""
+camel_disable_ssl: true
+tenants: ""
+application:
+  bucket_name: "paymenthub-ee-dev"
+hostname: "bulk-connector-closedloop.sandbox.mifos.io"
+zeebe:
+  broker:
+    contactpoint: ""
+operations_app: 
+  contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
+  endpoints:
+    batch-summary: "/api/v1/batch"
+    batch-detail: "/api/v1/batch/detail"
+mock-payment-schema:
+  contactpoint: ""
+  endpoints:
+    batch-summary: "/mockapi/v1/batch"
+    batch-detail: "/mockapi/v1/batch/detail"
+bulk-processor:
+  contactpoint: "https://bulk-connector.sandbox.fynarfin.io/"
+  endpoints:
+    batch-transaction: "/batchtransactions"
+config:
+  completion_threshold_check:
+    completion-threshold: 90
+    max-retry-count: 5
+    wait-timer: PT30S
+tenant: ""
+aws:
+  region: "<region>"
+  access_key: "<access key>" 
+  secret_key: "<secret key>"  
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+wildcardhostname: bulk-connector-closedloop.sandbox.mifos.io
+ingress:
+  apiversion: networking.k8s.io/v1
+  enabled: true
+  className: "kong"
+  annotations: 
+    kubernetes.io/ingress.class: "nginx"
+    konghq.com/plugins: cors
+  tls:
+  - hosts: "bulk-connector-closedloop.sandbox.mifos.io"
+  - secretName: sandbox-secret
+  path: "/"
+  backend:
+    service:
+      name: ph-ee-connector-bulk-closedloop
+      port:
+        number: 80
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
