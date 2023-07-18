@@ -1834,8 +1834,6 @@ connector_bulk_closedloop:
   pollingApi:
     timer: "180"
   hostname: ""
-  operations_app:
-    contactpoint: "https://ops-bk.sandbox.mifos.io/"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness

@@ -14,17 +14,32 @@ imagePullPolicy: ""
 SPRING_PROFILES_ACTIVE: ""
 camel_disable_ssl: true
 tenants: ""
-bucket_name: "paymenthub-ee-dev"
+application:
+  bucket_name: "paymenthub-ee-dev"
 hostname: "bulk-connector-closedloop.sandbox.mifos.io"
-zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+zeebe:
+  broker:
+    contactpoint: ""
 operations_app: 
+  contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
+  endpoints:
+    batch-summary: "/api/v1/batch"
+    batch-detail: "/api/v1/batch/detail"
+mock-payment-schema:
   contactpoint: ""
   endpoints:
-    batch_transaction: ""
+    batch-summary: "/mockapi/v1/batch"
+    batch-detail: "/mockapi/v1/batch/detail"
+bulk-processor:
+  contactpoint: "https://bulk-connector.sandbox.fynarfin.io/"
+  endpoints:
+    batch-transaction: "/batchtransactions"
 config:
   completion_threshold_check:
-    enable: true
-    completion_rate: 95
+    completion-threshold: 90
+    max-retry-count: 5
+    wait-timer: PT30S
+tenant: ""
 aws:
   region: "<region>"
   access_key: "<access key>" 
