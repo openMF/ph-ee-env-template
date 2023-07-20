@@ -1997,6 +1997,11 @@ kong:
     tag: "latest"
   env:
     plugins: "bundled,oidc"
+    database: "postgres"
+    pg_host: "security-postgresql" 
+    pg_user: "keycloak"                  
+    pg_password: "keycloak"
+    pg_database: "kong" 
   admin:
     enabled: true
     http:
@@ -2017,7 +2022,7 @@ kong:
         annotations:
           kubernetes.io/ingress.class: "kong"
         labels:
-          global: "false"
+          global: "true"
       disabled: false # optionally disable the plugin in Kong
       plugin: request-transformer
       config:
@@ -2056,6 +2061,12 @@ kong:
       config: # configuration for the plugin
         client_id: kong-oidc
         client_secret: xxxxxxxx  # Generated on keyCloak
-        realm: kong
+        realm: Kong
         discovery: https://keycloak.localhost/auth/realms/kong-oidc/.well-known/openid-configuration
         scope: openid
+        introspection_endpoint: http://keycloak.localhost/auth/realms/Kong/protocol/openid-connect/token/introspect
+        redirect_after_logout_uri: http://keycloak.localhost/auth/realms/kong-oidc/protocol/openid-connect/logout?redirect_uri=http://keycloak.localhost
+
+  migrations:
+    preUpgrade: false
+    postUpgrade: false
