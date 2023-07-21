@@ -77,12 +77,22 @@ jobs:
       #     chart: "https://fynarfin.io/images/ph-ee-g2psandbox-0.2.0.tgz"
       #     release-name: g2p-sandbox
       #     namespace: ph-test
-  test-chart:
+  test-chart-gov:
     docker:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
       - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
+      - store_test_results:
+          path: ph-ee-integration-test/build/cucumber.xml
+      - store_artifacts:
+          path: ph-ee-integration-test/build/reports/tests/test
+  test-chart-ams:
+    docker:
+      - image: cimg/openjdk:17.0.0
+    steps:
+      - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
@@ -110,10 +120,17 @@ workflows:
             - AWS
             - Helm
             - slack
-      - test-chart:
+      - test-chart-gov:
           requires:
             - upgrade-helm-chart
           context: 
+            - AWS
+            - Helm
+            - slack
+      - test-chart-ams:
+          requires:
+            - upgrade-helm-chart
+          context:
             - AWS
             - Helm
             - slack
