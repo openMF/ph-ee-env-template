@@ -16,7 +16,7 @@ jobs:
       - run: rm -f helm/ph-ee-engine/Chart.lock helm/ph-ee-engine/requirements.lock helm/ph-ee-engine/charts/*
       - helm/install-helm-client:
           version: "v3.8.2"
-      - run: echo "Hello World"
+      - run: echo "Hello World!"
       - run: "sed -i '2s/.*/appVersion: 0.0.0/' helm/ph-ee-engine/Chart.yaml"
       - run: "sed -i '5s/.*/version: 0.0.0-SNAPSHOT/' helm/ph-ee-engine/Chart.yaml"
       - run: helm dep up helm/ph-ee-engine
