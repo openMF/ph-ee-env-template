@@ -40,6 +40,7 @@ jobs:
       - run: "sed -i '7s/.*/version: 0.0.0/' helm/g2p-sandbox/Chart.yaml"
       # - run: "sed -i '4s/.*/version: 0.0.0-SNAPSHOT/' helm/g2p-sandbox/requirements.yaml"
       # SED & replace dependency with 0.0.0
+      - run: echo "Hello World"
       - run: helm dep up helm/g2p-sandbox
       - run: helm package helm/g2p-sandbox
       - run: helm repo index .
