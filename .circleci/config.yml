@@ -152,16 +152,28 @@ workflows:
             - AWS
             - Helm
             - slack
-      - test-chart-gov:
+      - create-secret:
           requires:
             - upgrade-helm-chart
+          context:
+            - AWS
+            - Helm
+            - slack
+      - deploying-bpmns:
+          requires:
+            - upgrade-helm-chart
+      - test-chart-gov:
+          requires:
+            - create-secret
+            - deploying-bpmns
           context: 
             - AWS
             - Helm
             - slack
       - test-chart-ams:
           requires:
-            - upgrade-helm-chart
+            - create-secret
+            - deploying-bpmns
           context:
             - AWS
             - Helm
