@@ -117,17 +117,6 @@ jobs:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
           path: ph-ee-integration-test/build/reports/tests/test
-  test:
-    docker:
-      - image: circleci/node:14 # Adjust the image based on your project's requirements
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Run tests
-          command: npm test
 workflows:
   deploy:
     jobs:
@@ -171,8 +160,3 @@ workflows:
             - AWS
             - Helm
             - slack
-      - test:
-          filters:
-            branches:
-              only: /.*/
-          when: always
