@@ -37,7 +37,7 @@ jobs:
       - helm/install-helm-client:
           version: "v3.8.2"
       - run: "sed -i '6s/.*/appVersion: 0.0.0/' helm/g2p-sandbox/Chart.yaml"
-      - run: "sed -i '7s/.*/version: 0.0.0/' helm/g2p-sandbox/Chart.yaml" 
+      - run: "sed -i '7s/.*/version: 0.0.0/' helm/g2p-sandbox/Chart.yaml"
       # - run: "sed -i '4s/.*/version: 0.0.0-SNAPSHOT/' helm/g2p-sandbox/requirements.yaml"
       # SED & replace dependency with 0.0.0
       - run: helm dep up helm/g2p-sandbox
@@ -66,7 +66,7 @@ jobs:
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
       - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz    
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz
   upgrade-helm-chart:
     docker:
       - image: cimg/python:3.10
@@ -89,7 +89,7 @@ jobs:
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
           wait: true
           timeout: "300s"
-      # - run: helm test g2p-sandbox --namespace=paymenthub 
+      # - run: helm test g2p-sandbox --namespace=paymenthub
             # reset-values: true
             # dry-run: true
       # - helm/install-helm-chart:
@@ -102,7 +102,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
+      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
@@ -121,35 +121,35 @@ workflows:
   deploy:
     jobs:
       - build-and-host-engine:
-          context: 
+          context:
             - AWS
             - Helm
             - slack
       - build-and-host-g2p-sandbox:
           requires:
             - build-and-host-engine
-          context: 
+          context:
             - AWS
             - Helm
             - slack
       - build-host-g2p-fyn-chart:
           requires:
             - build-and-host-g2p-sandbox
-          context: 
+          context:
             - AWS
             - Helm
       - upgrade-helm-chart:
           cluster-name: sit
           requires:
             - build-host-g2p-fyn-chart
-          context: 
+          context:
             - AWS
             - Helm
             - slack
       - test-chart-gov:
           requires:
             - upgrade-helm-chart
-          context: 
+          context:
             - AWS
             - Helm
             - slack
@@ -160,3 +160,8 @@ workflows:
             - AWS
             - Helm
             - slack
+      - test:
+          filters:
+            branches:
+              only: /.*/
+          when: always
