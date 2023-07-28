@@ -77,6 +77,38 @@ jobs:
       #     chart: "https://fynarfin.io/images/ph-ee-g2psandbox-0.2.0.tgz"
       #     release-name: g2p-sandbox
       #     namespace: ph-test
+
+  create-secret:
+    docker:
+      - image: cimg/base:2022.06
+    steps:
+      - setup_remote_docker:
+          version: 20.10.14
+      - kubernetes/install-kubectl
+      - checkout
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "sit"
+          aws-region: "$REGION"
+      - run: |
+          kubectl config use-context arn:aws:eks:$REGION:419830066942:cluster/sit
+          kubectl config get-contexts
+          cd helm/kibana-secret/
+          make secrets || echo "kibana" already exists
+      - run: |
+          kubectl config use-context arn:aws:eks:$REGION:419830066942:cluster/sit
+          kubectl config get-contexts
+          cd helm/es-secret/
+          make secrets || echo "elastic-certificates" already exists
+
+  deploying-bpmns:
+    docker:
+      - image: 'curlimages/curl:8.1.2'
+    steps:
+      - checkout
+      - run: echo $AWS_PROFILE
+      - run: echo $AWS_DEFAULT_PROFILE
+      - run: sh orchestration/deployBpmn.sh
+
   test-chart-gov:
     docker:
       - image: cimg/openjdk:17.0.0
