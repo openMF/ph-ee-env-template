@@ -1552,7 +1552,7 @@ connector_bulk:
   pollingApi:
     timer: "180"
   tenants: ""
-  bucket_name: "paymenthub-ee-dev"
+  bucket_name: "paymenthub-ee"
   operations_app:
       contactpoint: "ph-ee-operations-app"
       endpoints:
