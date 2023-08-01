@@ -219,7 +219,7 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     DFSPIDS: "rhino,gorilla"
     operations:
-      url: "http://ops-bk.sandbox.mifos.io/api/v1"
+      url: "https://ops-bk.sandbox.mifos.io/api/v1"
       authEnabled: false
     tenantPrimary:
       clientId: "mifos"
