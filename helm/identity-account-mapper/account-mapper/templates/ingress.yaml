@@ -1,26 +1,98 @@
-{{- if .Values.ingress.enabled }}
+{{- if .Values.ingress.enabled -}}
+  {{- $pathtype := .Values.ingress.pathtype -}}
+  {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ph-ee-identity-account-mapper
-  annotations:
-{{- if .Values.ingress.annotations }}
-{{ toYaml .Values.ingress.annotations | indent 4 }}
-{{- end }}
-spec:
-  rules:
-    - host: "{{ .Values.ingress.hostname }}"
-      http:
-        paths:
-          - path: "{{ .Values.ingress.path }}"
-            pathType: Prefix
-            backend:
-              service:
-                name: ph-ee-identity-account-mapper
-                port:
-                  number: 8080
-  tls:
-    - hosts:
-        - "{{ .Values.ingress.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
+  name: ph_ee_identity_account_mapper
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  {{- with .Values.ingress.annotations }}
+annotations:
+  {{ toYaml . | indent 4 }}
   {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+tls:
+  {{- if .ingressPath }}
+  {{- range  .Values.ingress.tls }}
+- hosts:
+  {{- range  .hosts }}
+  - {{ . }}
+  {{- end }}
+  secretName: {{ .secretName }}
+  {{- end }}
+  {{- else }}
+  {{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end }}
+  {{- end}}
+rules:
+  {{- range .Values.ingress.hosts }}
+- host: {{ .host }}
+  http:
+    paths:
+    {{- range .paths }}
+    - path: {{ .path }}
+      pathType: {{ $pathtype }}
+      backend:
+        service:
+          name: {{ .backend.service.name}}
+          port:
+            number: {{ .backend.service.port.number}}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+  { { - if .Values.ingress.enabled - } }
+  { { - $pathtype := .Values.ingress.pathtype - } }
+  { { - $ingressPath := .Values.ingress.path - } }
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ph-ee-vouchers
+  labels:
+    app: { { .Chart.Name } }
+    release: { { .Release.Name } }
+    heritage: { { .Release.Service } }
+  { { - with .Values.ingress.annotations } }
+annotations:
+  { { toYaml . | indent 4 } }
+    { { - end } }
+spec:
+  { { - if .Values.ingress.className } }
+  ingressClassName: { { .Values.ingress.className | quote } }
+  { { - end } }
+  { { - if .Values.ingress.tls } }
+tls:
+  { { - if .ingressPath } }
+    { { - range  .Values.ingress.tls } }
+    - hosts:
+      { { - range  .hosts } }
+      - { { . } }
+      { { - end } }
+      secretName: { { .secretName } }
+      { { - end } }
+      { { - else } }
+      { { toYaml .Values.ingress.tls | indent 4 } }
+      { { - end } }
+      { { - end } }
+rules:
+  { { - range .Values.ingress.hosts } }
+  - host: { { .host } }
+    http:
+      paths:
+      { { - range .paths } }
+      - path: { { .path } }
+        pathType: { { $pathtype } }
+        backend:
+          service:
+            name: { { .backend.service.name } }
+            port:
+              number: { { .backend.service.port.number } }
+      { { - end } }
+    { { - end } }
+    { { - end } }
