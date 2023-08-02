@@ -132,10 +132,16 @@ workflows:
             - AWS
             - Helm
             - slack
+      - build-host-g2p-fyn-chart:
+          requires:
+            - build-and-host-g2p-sandbox
+          context: 
+            - AWS
+            - Helm
       - upgrade-helm-chart:
           cluster-name: sit
           requires:
-            - build-and-host-g2p-sandbox
+            - build-host-g2p-fyn-chart
           context: 
             - AWS
             - Helm
