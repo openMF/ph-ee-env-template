@@ -198,8 +198,7 @@ kibana:
 channel:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
-  imageTag: "v1.5.0"
+  image: docker.io/openmf/ph-ee-connector-channel:v1.5.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -336,8 +335,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ams"
-  imageTag: "v1.2.2"
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.3.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: true
@@ -614,8 +612,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-ops-web"
-  imageTag: "v1.3.2"
+  image: docker.io/openmf/openmf/ph-ee-operations-web:v1.3.2
   imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
@@ -1219,8 +1216,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
-  imageTag: "v1.0.1"
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.1.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   SPRING_PROFILES_ACTIVE: ""
@@ -1315,8 +1311,7 @@ zeebe_ops:
 importer_es:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-es-importer"
-  imageTag: "v1.4.0"
+  image: docker.io/openmf/openmf/ph-ee-importer-es:v1.4.0
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
@@ -1453,8 +1448,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
-  imageTag: "v1.3.1"
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.4.1
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
@@ -1542,8 +1536,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
-  imageTag: "v1.5.0"
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.6.1
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   camel_disable_ssl: true

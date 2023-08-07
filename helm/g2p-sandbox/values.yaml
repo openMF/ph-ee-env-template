@@ -144,8 +144,7 @@ ph-ee-engine:
 
   ph_ee_connector_ams_mifos:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ams"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-connector-ams-mifos:latest
     SPRING_PROFILES_ACTIVE: "fin12,bb"
     ams_local_enabled: true
     ams_local_interop_host: "https://fynams.sandbox.mifos.io/"
@@ -173,8 +172,7 @@ ph-ee-engine:
 
   ph_ee_connector_mojaloop:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-connector-mojaloop:latest
     SPRING_PROFILES_ACTIVE: "bb"
     hostname: "mojaloop.sandbox.mifos.io"
     DFSPIDS: "gorilla,lion"
@@ -212,8 +210,7 @@ ph-ee-engine:
 
   channel:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-connector-channel:latest
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
@@ -264,8 +261,7 @@ ph-ee-engine:
 
   operations_app:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ops-bk"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-operations-app:latest
     tenants: "rhino,gorilla"
     hostname: "ops-bk.sandbox.mifos.io"
     datasource:
@@ -295,8 +291,7 @@ ph-ee-engine:
 
   operations_web:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-ops-web"
-    imageTag: "latest"
+    image: docker.io/openmf/openmf/ph-ee-operations-web:latest
     hostname: "ops.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb"
     ingress:
@@ -317,8 +312,7 @@ ph-ee-engine:
 
   ph_ee_connector_gsma:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-connector-gsma:latest
     SPRING_PROFILES_ACTIVE: "bb"
     limits:
       cpu: "500m"
@@ -344,8 +338,7 @@ ph-ee-engine:
     
   notifications:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-notifications:latest
     imagePullPolicy: "Always"
     SPRING_PROFILES_ACTIVE: "bb"
     LOGGING_LEVEL_ROOT: "INFO"
@@ -375,9 +368,7 @@ ph-ee-engine:
 
   connector_bulk:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
-    imageTag: "latest"
-    
+    image: docker.io/openmf/ph-ee-bulk-processor:latest
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     aws:
@@ -409,9 +400,7 @@ ph-ee-engine:
         
   zeebe_ops:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
-    imageTag: "latest"
-    
+    image: docker.io/openmf/ph-ee-zeebe-ops:latest 
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
@@ -435,8 +424,7 @@ ph-ee-engine:
 
   messagegateway:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
-    imageTag: "latest"
+    image: docker.io/openmf/message-gateway:latest
     secret:
       value:
         api_key: "<api_key>"
@@ -463,8 +451,7 @@ ph-ee-engine:
 
   importer_es:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-es-importer"
-    imageTag: "latest"
+    image: docker.io/openmf/openmf/ph-ee-importer-es:latest
     elasticsearch_sslverification: false
     elasticsearch_security_enabled: false
     reporting:
@@ -472,10 +459,8 @@ ph-ee-engine:
 
   importer_rdbms:
     enabled: true
-    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
-    imageTag: "latest"
+    image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
-
   keycloak:
     enabled: true
     ingress:
