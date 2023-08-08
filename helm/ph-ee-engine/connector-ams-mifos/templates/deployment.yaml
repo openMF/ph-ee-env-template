@@ -29,42 +29,42 @@ spec:
       serviceAccountName: ph-ee-connector-ams-mifos
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}  
       containers:
-        - name: ph-ee-connector-ams-mifos
-          image: "{{ .Values.image}}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-          ports:
-            - containerPort: 5000
-          resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}
-      {{- if .Values.imagePullSecrets }}
-          imagePullSecrets:
-    {{ toYaml .Values.imagePullSecrets | indent 8 }}
-        {{- end }}  
-          env:
-            - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
-            - name: "ams_local_enabled"
-              value: "{{ .Values.ams_local_enabled }}"
-            - name: "ams_local_interop_host"
-              value: "{{ .Values.ams_local_interop_host }}"
-            - name: "ams_local_customer_host"
-              value: "{{ .Values.ams_local_customer_host }}"
-            - name: "ams_local_account_host"
-              value: "{{ .Values.ams_local_account_host }}"
-            - name: "ams_local_auth_host"
-              value: "{{ .Values.ams_local_auth_host }}"
-            - name: "ams_local_loan_host"
-              value: "{{ .Values.ams_local_loan_host }}"
-            - name: "dfspids"
-              value: "{{ .Values.dfspids }}"
-  {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-  {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
-  {{- end }}        
-          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 10 }}
-          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}  
+      - name: ph-ee-connector-ams-mifos
+        image: "{{ .Values.image}}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        ports:
+          - containerPort: 5000
+        resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}
+    {{- if .Values.imagePullSecrets }}
+        imagePullSecrets:
+  {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end }}  
+        env:
+        - name: "SPRING_PROFILES_ACTIVE"
+          value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+        - name: "ams_local_enabled"
+          value: "{{ .Values.ams_local_enabled }}"
+        - name: "ams_local_interop_host"
+          value: "{{ .Values.ams_local_interop_host }}"
+        - name: "ams_local_customer_host"
+          value: "{{ .Values.ams_local_customer_host }}"
+        - name: "ams_local_account_host"
+          value: "{{ .Values.ams_local_account_host }}"
+        - name: "ams_local_auth_host"
+          value: "{{ .Values.ams_local_auth_host }}"
+        - name: "ams_local_loan_host"
+          value: "{{ .Values.ams_local_loan_host }}"
+        - name: "dfspids"
+          value: "{{ .Values.dfspids }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
+{{- end }}        
+        envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}  
 
-          volumeMounts:
-          - name: ph-ee-config
-            mountPath: "/config"
+        volumeMounts:
+        - name: ph-ee-config
+          mountPath: "/config"
       volumes:
       - name: ph-ee-config
         configMap:
