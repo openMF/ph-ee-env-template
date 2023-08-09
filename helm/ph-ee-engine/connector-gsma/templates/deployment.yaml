@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: "ph-ee-connector-gsma-mm"
-          image: "{{ .Values.image }}
+          image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000 
