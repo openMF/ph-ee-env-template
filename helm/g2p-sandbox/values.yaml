@@ -291,7 +291,7 @@ ph-ee-engine:
 
   operations_web:
     enabled: true
-    image: docker.io/openmf/openmf/ph-ee-operations-web:latest
+    image: docker.io/openmf/ph-ee-operations-web:latest
     hostname: "ops.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb"
     ingress:
@@ -451,7 +451,7 @@ ph-ee-engine:
 
   importer_es:
     enabled: true
-    image: docker.io/openmf/openmf/ph-ee-importer-es:latest
+    image: docker.io/openmf/ph-ee-importer-es:latest
     elasticsearch_sslverification: false
     elasticsearch_security_enabled: false
     reporting:

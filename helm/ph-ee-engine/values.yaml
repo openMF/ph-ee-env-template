@@ -612,7 +612,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/openmf/ph-ee-operations-web:v1.3.2
+  image: docker.io/openmf/ph-ee-operations-web:v1.3.2
   imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
@@ -1311,7 +1311,7 @@ zeebe_ops:
 importer_es:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/openmf/ph-ee-importer-es:v1.4.0
+  image: docker.io/openmf/ph-ee-importer-es:v1.4.0
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
