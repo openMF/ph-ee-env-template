@@ -196,7 +196,8 @@ ph-ee-engine:
         deployTime: "{{ .Values.deployTime }}"
 
   mockpayment:
-    enabled: true        
+    enabled: true 
+    image: docker.io/openmf/ph-ee-connector-mock-payment-schema:latest       
 
   kafka:
     enabled: true
