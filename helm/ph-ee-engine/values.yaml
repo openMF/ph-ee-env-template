@@ -412,8 +412,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
-  imageTag: "latest"
+  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.2.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
@@ -516,8 +515,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ops-bk"
-  imageTag: "v1.4.0"
+  image: docker.io/openmf/ph-ee-operations-app:v1.5.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1018,8 +1016,7 @@ paygops_connector:
 messagegateway:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
-  imageTag: "v1.0.0"
+  image: docker.io/openmf/message-gateway:v1.0.0
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
@@ -1120,8 +1117,7 @@ messagegateway:
 notifications:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
-  imageTag: "v1.1.0"
+  image: docker.io/openmf/ph-ee-notifications:v1.0.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1411,8 +1407,7 @@ importer_es:
 mockpayment:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mock-paymentschema"
-  imageTag: "v1.1.0"
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.0.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1659,8 +1654,7 @@ connector_bulk:
 ph-ee-connector_gsma:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
-  imageTag: "v1.0.0"
+  image: docker.io/openmf/ph-ee-connector-gsma:v1.0.2
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
 # Whether this chart should self-manage its service account, role, and associated role binding.
