@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mpesa
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          image: "{{ .Values.image }}"
           ports:
             - containerPort: 5000
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
