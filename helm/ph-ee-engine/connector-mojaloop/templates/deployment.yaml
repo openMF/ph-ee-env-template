@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mojaloop-java
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000

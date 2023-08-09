@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: message-gateway
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"  
+          image: "{{ .Values.image }}"  
           ports:
             - containerPort: 9191
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mock-payment-schema
-          image: "{{ .Values.mockpayment.image }}:{{ .Values.mockpayment.imageTag }}"
+          image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
           imagePullPolicy: "{{ .Values.mockpayment.imagePullPolicy }}"
