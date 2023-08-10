@@ -14,7 +14,7 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
-  camunda-platform-helm:
+  camunda-platform:
     operate:
       enabled: false 
 
