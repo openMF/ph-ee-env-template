@@ -181,7 +181,7 @@ ph-ee-engine:
     enabled: false
 
   redis:
-    enabled: false
+    enabled: true
 
   connector_bulk:
     enabled: true
