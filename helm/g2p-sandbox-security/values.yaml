@@ -14,6 +14,10 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
+  camunda-platform:
+    operate:
+      enabled: false 
+
   elasticsearch:
     enabled: true
     #Single Node Solution
@@ -174,6 +178,9 @@ ph-ee-engine:
     enabled: false
     
   notifications:
+    enabled: false
+
+  redis:
     enabled: false
 
   connector_bulk:
