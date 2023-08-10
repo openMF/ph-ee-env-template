@@ -182,6 +182,8 @@ ph-ee-engine:
 
   redis:
     enabled: true
+    replica:
+      replicaCount: 0
 
   connector_bulk:
     enabled: true
