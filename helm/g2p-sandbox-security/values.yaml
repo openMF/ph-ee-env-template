@@ -1,0 +1,277 @@
+ph-ee-engine:
+  ingress:
+    apiversion: "networking.k8s.io/v1"
+
+  deployment:
+    apiversion: "apps/v1"
+
+  service:
+    apiversion: "v1"
+
+  secret:
+    apiversion: "v1"
+
+  configmap:
+    apiversion: "v1"
+
+  elasticsearch:
+    enabled: true
+    #Single Node Solution
+    clusterHealthCheckParams: "wait_for_status=yellow&timeout=100s"
+    protocol: http
+    master:
+      readinessProbe:
+        httpGet:
+          allow-insecure: true
+          username: elastic
+          password: "{{ .Env.ELASTIC_PASSWORD }}"
+          path: /_cluster/health?wait_for_status=yellow&timeout=5s
+          port: 9200
+        initialDelaySeconds: 30
+    data:
+      readinessProbe:
+        httpGet:
+          allow-insecure: true
+          username: elastic
+          password: "{{ .Env.ELASTIC_PASSWORD }}"
+          path: /_cluster/health?wait_for_status=yellow&timeout=5s
+          port: 9200
+        initialDelaySeconds: 30
+    # Shrink default JVM heap.
+    esJavaOpts: "-Xmx512m -Xms512m"
+    # Allocate smaller chunks of memory per pod.
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "1024M"
+      limits:
+        cpu: "1000m"
+        memory: "1024M"
+    volumeClaimTemplate:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "gp2"
+      resources:
+        requests:
+          storage: 10Gi
+
+  kibana:
+    enabled: false
+
+  operations:
+    enabled: false
+    mysql:
+      enabled: false
+
+  operationsmysql:
+    auth:
+      database: "tenants"
+      username: "mifos"
+      password: "password"
+      rootPassword: "ethieTieCh8ahv"
+    initdbScripts:
+      setup.sql: |-
+        CREATE DATABASE messagegateway;
+        CREATE DATABASE `rhino`;
+        CREATE DATABASE `gorilla`;
+        GRANT ALL PRIVILEGES ON `rhino`.* TO 'mifos';
+        GRANT ALL PRIVILEGES ON `gorilla`.* TO 'mifos';
+        GRANT ALL ON *.* TO 'root'@'%';
+        GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
+
+  ph_ee_connector_ams_mifos:
+    enabled: false
+
+  ph_ee_connector_mojaloop:
+    enabled: false
+
+  mockpayment:
+    enabled: true 
+    image: docker.io/openmf/ph-ee-connector-mock-payment-schema:latest       
+
+  kafka:
+    enabled: true
+    image: "spotify/kafka"
+    advertised:
+      host: "kafka"
+      port: "9092"
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+
+  channel:
+    enabled: true
+    image: docker.io/openmf/ph-ee-connector-channel:latest
+    hostname: "channel.sandbox.mifos.io"
+    stub_hostname: "channel-gsma.sandbox.mifos.io"
+    SPRING_PROFILES_ACTIVE: "bb,tenants"
+    DFSPIDS: "rhino,gorilla"
+    operations:
+      url: "http://ops-bk.sandbox.mifos.io/api/v1"
+      authEnabled: false
+    tenantPrimary:
+      clientId: "mifos"
+      clientSecret: "password"
+      tenant: "rhino"
+    tenantSecondary:
+      clientId: "mifos"
+      clientSecret: "password"
+      tenant: "gorilla"
+    server:
+      ssl:
+        keyPassword: "<replace-with-password>"
+        keyStorePassword: "<replace-with-password>"
+    ingress:
+      enabled: false
+      annotations: 
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: channel.sandbox.mifos.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-channel"
+                port:
+                  number: 8443
+        - host: channel-gsma.sandbox.mifos.io          
+          paths:          
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-channel-gsma"
+                port:
+                  number: 82
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+
+  operations_app:
+    enabled: false
+
+  operations_web:
+    enabled: false
+
+  identity:
+    hostname: "ops-bk.sandbox.mifos.io"
+
+  ph_ee_connector_gsma:
+    enabled: false
+
+  ph_ee_connector_slcb:
+    enabled: false
+   
+  mpesa:
+    enabled: false
+    
+  roster_connector:
+    enabled: false
+    
+  paygops_connector:
+    enabled: false
+    
+  notifications:
+    enabled: false
+
+  connector_bulk:
+    enabled: true
+    image: docker.io/openmf/ph-ee-bulk-processor:latest
+    tenant: "rhino,gorilla"
+    hostname: bulk-connector.sandbox.mifos.io
+    aws:
+      region: "<region>"
+      access_key: "<access_key>"
+      secret_key: "<secret_key>"
+    operations_app:
+      contactpoint: "https://ops-bk.sandbox.mifos.io/"
+      endpoints:
+        batch_transaction: "/api/v1/batch/transactions"
+    ingress:
+      enabled: false
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: bulk-connector.sandbox.mifos.io     
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-bulk"
+                port:
+                  number: 80
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+        
+  zeebe_ops:
+    enabled: true
+    image: docker.io/openmf/ph-ee-zeebe-ops:latest 
+    hostname: "zeebeops.sandbox.mifos.io"
+    tenants: "rhino,gorilla"
+    ingress:
+      enabled: false
+      annotations: 
+        kubernetes.io/ingress.class: nginx  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: zeebeops.sandbox.mifos.io          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-zeebe-ops"
+                port:
+                  number: 80 
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+
+  messagegateway:
+    enabled: false                       
+
+  importer_es:
+    enabled: true
+    image: docker.io/openmf/ph-ee-importer-es:latest
+    elasticsearch_sslverification: false
+    elasticsearch_security_enabled: false
+    reporting:
+      enabled: false
+
+  importer_rdbms:
+    enabled: true
+    image: docker.io/openmf/ph-ee-importer-rdbms:latest
+    LOGGING_LEVEL_ROOT: "DEBUG"
+
+  keycloak:
+    enabled: true
+    ingress:
+      enabled: false
+      ingressClassName: "kong"
+      rules:
+        - host: 'keycloak.sandbox.mifos.io'
+          paths:
+          - path: /
+            pathType: Prefix
+      tls: []
+    
+  kong:
+    enabled: true
+    image:
+      repository: revomatico/docker-kong-oidc
+      tag: "latest"
+    env:
+      plugins: "bundled,oidc"
+    admin:
+      enabled: true
+      http:
+        enabled: true
+      tls:
+        enabled: false
+      ingress:
+        enabled: false
+        hostname: admin-kong.sandbox.mifos.io
