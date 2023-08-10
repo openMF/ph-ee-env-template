@@ -154,7 +154,7 @@ ph-ee-engine:
         deployTime: "{{ .Values.deployTime }}"
 
   operations_app:
-    enabled: false
+    enabled: true
 
   operations_web:
     enabled: false
