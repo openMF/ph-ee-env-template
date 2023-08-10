@@ -155,6 +155,7 @@ ph-ee-engine:
 
   operations_app:
     enabled: true
+    tenants: "rhino,gorilla"
 
   operations_web:
     enabled: false
