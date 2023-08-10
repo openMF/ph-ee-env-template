@@ -14,7 +14,7 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
-  camunda-platform:
+  camunda-platform-helm:
     operate:
       enabled: false 
 
@@ -62,9 +62,9 @@ ph-ee-engine:
     enabled: false
 
   operations:
-    enabled: false
+    enabled: true
     mysql:
-      enabled: false
+      enabled: true
 
   operationsmysql:
     auth:
