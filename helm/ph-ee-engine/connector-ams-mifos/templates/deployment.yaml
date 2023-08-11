@@ -32,6 +32,8 @@ spec:
       - name: ph-ee-connector-ams-mifos
         image: "{{ .Values.image}}"
         imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
         ports:
           - containerPort: 5000
         resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}

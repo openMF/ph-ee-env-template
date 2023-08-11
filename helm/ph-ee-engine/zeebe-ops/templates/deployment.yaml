@@ -22,6 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-zeebe-ops
+
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
