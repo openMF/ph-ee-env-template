@@ -318,3 +318,20 @@ ph-ee-engine:
       ingress:
         enabled: false
         hostname: admin-kong.sandbox.mifos.io
+
+ph_ee_identity_account_mapper:
+
+    ingress:
+      apiversion: "networking.k8s.io/v1"
+
+    deployment:
+      apiversion: "apps/v1"
+
+    service:
+      apiversion: "v1"
+
+    secret:
+      apiversion: "v1"
+
+    configmap:
+      apiversion: "v1"
