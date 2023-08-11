@@ -14,9 +14,8 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
-
   zeebe-cluster-helm:
-    enabled: true
+    enabled: false
     global:
       elasticsearch:
         host: "ph-ee-elasticsearch"
@@ -31,7 +30,7 @@ ph-ee-engine:
     elasticsearch:
       enabled: false
     kibana:
-      enabled: false
+      enabled: true
 
     extraInitContainers: |
       - name: init-ph-ee-kafka-exporter
@@ -401,7 +400,7 @@ ph-ee-engine:
         
   zeebe_ops:
     enabled: true
-    image: docker.io/openmf/ph-ee-zeebe-ops:latest 
+    image: docker.io/openmf/ph-ee-zeebe-ops:latest
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
