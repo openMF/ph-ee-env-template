@@ -198,8 +198,7 @@ kibana:
 channel:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-channel"
-  imageTag: "v1.5.0"
+  image: docker.io/openmf/ph-ee-connector-channel:v1.5.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -336,8 +335,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ams"
-  imageTag: "v1.2.2"
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.3.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: true
@@ -414,8 +412,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mojaloop"
-  imageTag: "latest"
+  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.2.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   hostname: ""
@@ -518,8 +515,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-ops-bk"
-  imageTag: "v1.4.0"
+  image: docker.io/openmf/ph-ee-operations-app:v1.5.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -614,8 +610,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-ops-web"
-  imageTag: "v1.3.2"
+  image: docker.io/openmf/ph-ee-operations-web:v1.3.2
   imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
@@ -1021,8 +1016,7 @@ paygops_connector:
 messagegateway:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-message-gateway"
-  imageTag: "v1.0.0"
+  image: docker.io/openmf/message-gateway:v1.0.0
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
@@ -1123,8 +1117,7 @@ messagegateway:
 notifications:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-notifications"
-  imageTag: "v1.1.0"
+  image: docker.io/openmf/ph-ee-notifications:v1.0.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1219,8 +1212,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-zeebe-ops"
-  imageTag: "v1.0.1"
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.1.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   SPRING_PROFILES_ACTIVE: ""
@@ -1315,8 +1307,7 @@ zeebe_ops:
 importer_es:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-es-importer"
-  imageTag: "v1.4.0"
+  image: docker.io/openmf/ph-ee-importer-es:v1.4.0
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
@@ -1416,8 +1407,7 @@ importer_es:
 mockpayment:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-mock-paymentschema"
-  imageTag: "v1.1.0"
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.0.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1453,8 +1443,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-importer-rdbms"
-  imageTag: "v1.3.1"
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.4.1
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
@@ -1542,8 +1531,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-bulk-processor"
-  imageTag: "v1.5.0"
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.6.1
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "bb"
   camel_disable_ssl: true
@@ -1552,7 +1540,7 @@ connector_bulk:
   pollingApi:
     timer: "180"
   tenants: ""
-  bucket_name: "paymenthub-ee-dev"
+  bucket_name: "paymenthub-ee"
   operations_app:
       contactpoint: "ph-ee-operations-app"
       endpoints:
@@ -1666,8 +1654,7 @@ connector_bulk:
 ph-ee-connector_gsma:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-gsma"
-  imageTag: "v1.0.0"
+  image: docker.io/openmf/ph-ee-connector-gsma:v1.0.2
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: ""
 # Whether this chart should self-manage its service account, role, and associated role binding.
@@ -2010,6 +1997,11 @@ kong:
     tag: "latest"
   env:
     plugins: "bundled,oidc"
+    database: "postgres"
+    pg_host: "security-postgresql"
+    pg_user: "keycloak"
+    pg_password: "keycloak"
+    pg_database: "kong"
   admin:
     enabled: true
     http:
@@ -2030,7 +2022,7 @@ kong:
         annotations:
           kubernetes.io/ingress.class: "kong"
         labels:
-          global: "false"
+          global: "true"
       disabled: false # optionally disable the plugin in Kong
       plugin: request-transformer
       config:
@@ -2067,8 +2059,11 @@ kong:
       disabled: false # optionally disable the plugin in Kong
       plugin: oidc
       config: # configuration for the plugin
-        client_id: kong-oidc
-        client_secret: xxxxxxxx  # Generated on keyCloak
-        realm: kong
+        realm: Kong
         discovery: https://keycloak.localhost/auth/realms/kong-oidc/.well-known/openid-configuration
         scope: openid
+        introspection_endpoint: http://keycloak.localhost/auth/realms/Kong/protocol/openid-connect/token/introspect
+        redirect_after_logout_uri: http://keycloak.localhost/auth/realms/kong-oidc/protocol/openid-connect/logout?redirect_uri=http://keycloak.localhost
+  migrations:
+    preUpgrade: false
+    postUpgrade: false

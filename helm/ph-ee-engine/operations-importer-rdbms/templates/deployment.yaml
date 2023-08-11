@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-importer-rdbms
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 8000
@@ -48,6 +48,16 @@ spec:
             value: "{{ .Values.LOGGING_PATTERN_CONSOLE }}"
           - name: "JAVA_TOOL_OPTIONS"
             value: "{{ .Values.javaToolOptions}}"
+          - name: "AWS_ACCESS_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "bulk-processor-secret"
+                key: "aws-access-key"
+          - name: "AWS_SECRET_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: "bulk-processor-secret"
+                key: "aws-secret-key"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        

@@ -30,7 +30,7 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}  
       containers:
       - name: ph-ee-connector-ams-mifos
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        image: "{{ .Values.image}}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         ports:
           - containerPort: 5000

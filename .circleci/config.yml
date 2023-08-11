@@ -47,6 +47,26 @@ jobs:
       - run: chmod 400 b64encoded.pem
       - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-0.0.0.tgz ec2-user@13.233.68.128:~/
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-0.0.0 index.yaml ph-ee-g2psandbox-0.0.0.tgz
+  build-host-g2p-fyn-chart:
+    docker:
+      - image: cimg/python:3.10
+    working_directory: ~/repo
+    environment:
+      TERM: dumb
+    steps:
+      - run: git clone https://github.com/openmf/ph-ee-env-labs
+      - run: rm -f ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/requirements.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/charts/*
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      # - run: "sed -i '12s/.*/version: 0.0.0/' helm/g2p-sandbox-fynarfin-SIT/Chart.yaml"
+      - run: cat ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
+      - run: helm dep up ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
+      - run: helm package ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
+      - run: helm repo index .
+      - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
+      - run: chmod 400 b64encoded.pem
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz ec2-user@13.233.68.128:~/
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz    
   upgrade-helm-chart:
     docker:
       - image: cimg/python:3.10
@@ -57,7 +77,7 @@ jobs:
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "sit"
-          aws-region: "us-east-2"
+          aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub
@@ -77,12 +97,22 @@ jobs:
       #     chart: "https://fynarfin.io/images/ph-ee-g2psandbox-0.2.0.tgz"
       #     release-name: g2p-sandbox
       #     namespace: ph-test
-  test-chart:
+  test-chart-gov:
     docker:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
       - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
+      - store_test_results:
+          path: ph-ee-integration-test/build/cucumber.xml
+      - store_artifacts:
+          path: ph-ee-integration-test/build/reports/tests/test
+  test-chart-ams:
+    docker:
+      - image: cimg/openjdk:17.0.0
+    steps:
+      - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
@@ -102,18 +132,31 @@ workflows:
             - AWS
             - Helm
             - slack
-      - upgrade-helm-chart:
-          cluster-name: sit
+      - build-host-g2p-fyn-chart:
           requires:
             - build-and-host-g2p-sandbox
           context: 
             - AWS
             - Helm
+      - upgrade-helm-chart:
+          cluster-name: sit
+          requires:
+            - build-host-g2p-fyn-chart
+          context: 
+            - AWS
+            - Helm
             - slack
-      - test-chart:
+      - test-chart-gov:
           requires:
             - upgrade-helm-chart
           context: 
+            - AWS
+            - Helm
+            - slack
+      - test-chart-ams:
+          requires:
+            - upgrade-helm-chart
+          context:
             - AWS
             - Helm
             - slack

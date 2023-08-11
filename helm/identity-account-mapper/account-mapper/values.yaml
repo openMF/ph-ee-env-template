@@ -36,6 +36,11 @@ mojaloop_connector:
   contactpoint: ""
 hostname: "identity-accouunt.fynarfin.sandbox.io"
 
+datasource:
+  url: jdbc:mysql:thin://operationsmysql:3306/IdentityAccountMapper
+  username: mifos
+  password: password
+
 
 
 
