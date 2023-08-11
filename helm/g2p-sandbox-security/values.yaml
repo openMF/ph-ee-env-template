@@ -258,6 +258,38 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
 
+  identity_account_mapper:
+    enabled: true
+    image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-identity-account-mapper"
+    imagetag: "latest"
+    imagePullPolicy: "Always"
+    hostname: "identity.sandbox.fynarfin.io"
+    ingress:
+      enabled: true
+      hostname: "identity.sandbox.fynarfin.io"
+      path: "/"
+      wildcardhostname: "*.sandbox.fynarfin.io"
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+      requests:
+        cpu: "200m"
+        memory: "0.5Gi"
+    async:
+      core_pool_size: "10"
+      max_pool_size: "10"
+      queue_capacity: "100"
+    account_validation_enabled: "false"
+    account_validator_connector: "gsma"
+    gsma_connector:
+      contactpoint: ""
+    mojaloop_connector:
+      contactpoint: ""
+
   keycloak:
     enabled: true
     ingress:
