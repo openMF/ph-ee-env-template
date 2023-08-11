@@ -12,10 +12,13 @@ secret:
 
 configmap:
   apiversion: "v1"  
-  
-zeebe:
-  broker:
-    contactpoint: "{{ .Release.Name }}-zeebe-gateway:26500"
+
+global:
+  SPRING_PROFILES_ACTIVE: "bb"
+  imagePullPolicy: "Always"
+  LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+  tenants: ""
 
 camunda-platform:
   global:
@@ -201,12 +204,8 @@ channel:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-channel:v1.5.0
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: "bb"
-  LOGGING_LEVEL_ROOT: "INFO"
-  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
-  DFSPIDS: ""
   redis:
     host: "127.0.0.1"
     port: 6379
@@ -342,7 +341,6 @@ ph_ee_connector_ams_mifos:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.3.0
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
   ams_local_enabled: true
   ams_local_interop_host: "fineract-server"
   ams_local_account_host: "fineract-server"
@@ -419,7 +417,6 @@ ph_ee_connector_mojaloop:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-mojaloop:v1.2.0
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
   hostname: ""
   switch:
     quotes:
@@ -522,10 +519,6 @@ operations_app:
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-app:v1.5.0
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: "bb"
-  LOGGING_LEVEL_ROOT: "INFO"
-  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-  tenants: ""
   token_client_channel_secret: ""
   datasource:
       username: "mifos"
@@ -711,9 +704,6 @@ mpesa:
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-mpesa"
   imageTag: "v1.4.1"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  LOGGING_LEVEL_ROOT: "INFO"
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   serviceAccountName: ""
@@ -847,9 +837,6 @@ roster_connector:
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-roster"
   imageTag: "v1.2.0"
-  imagePullPolicy: "Always"
-  LOGGING_LEVEL_ROOT: "INFO"
-  SPRING_PROFILES_ACTIVE: ""
   containerPort: 5000
   ams:
     local:
@@ -935,9 +922,6 @@ paygops_connector:
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-connector-ams-paygops"
   imageTag: "v1.5.0"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  LOGGING_LEVEL_ROOT: "INFO"
   containerPort: 5000
   ams:
     local:
@@ -1023,7 +1007,6 @@ messagegateway:
   replicas: 1
   image: docker.io/openmf/message-gateway:v1.0.0
   imagePullPolicy: "Always"
-  LOGGING_LEVEL_ROOT: "INFO"
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
@@ -1124,8 +1107,6 @@ notifications:
   replicas: 1
   image: docker.io/openmf/ph-ee-notifications:v1.0.0
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: "bb"
-  LOGGING_LEVEL_ROOT: "INFO"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -1220,13 +1201,10 @@ zeebe_ops:
   image: docker.io/openmf/ph-ee-zeebe-ops:v1.1.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
-  SPRING_PROFILES_ACTIVE: ""
-  LOGGING_LEVEL_ROOT: "INFO"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   elasticsearch_sslverification: false
   elasticsearch_security_enabled: false
-  tenants: ""
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1433,7 +1411,6 @@ kafka:
   enabled: false
   replicas: 1
   image: "spotify/kafka"
-  imagePullPolicy: "Always"
   advertised:
     host: "kafka"
     port: "9093"
@@ -1452,8 +1429,6 @@ importer_rdbms:
   replicas: 1
   image: docker.io/openmf/ph-ee-importer-rdbms:v1.4.1
   imagePullPolicy: "Always"
-  LOGGING_LEVEL_ROOT: "INFO"
-  LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   datasource:
       username: "mifos"
       password: "password"
@@ -1540,7 +1515,6 @@ connector_bulk:
   replicas: 1
   image: docker.io/openmf/ph-ee-bulk-processor:v1.6.1
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: "bb"
   camel_disable_ssl: true
   channel:
     hostname: ""
@@ -1665,7 +1639,6 @@ ph-ee-connector_gsma:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.0.2
   imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -1729,8 +1702,6 @@ ph-ee-connector_slcb:
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
   imageTag: "v1.1.1"
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
   username: "username"
   password: "password"
   signature_key: "long_segnature_key"
@@ -1912,7 +1883,6 @@ mock_oracle:
   enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/mock-asl-oracle"
-  imagePullPolicy: "Always"
   service:
     targetport: 4100
   limits:

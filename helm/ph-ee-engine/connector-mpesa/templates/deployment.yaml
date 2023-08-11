@@ -47,7 +47,7 @@ spec:
               cpu: "{{ .Values.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "ZEEBE_INIT-TRANSFER_WAIT-TIMER"
@@ -61,7 +61,7 @@ spec:
             - name: "TENANT"
               value: "{{ .Values.tenant }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value:  "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "ACCOUNTS_ROSTER_SHORTCODE"
               value: "{{ .Values.accounts.roster.business_short_code }}"
             - name: "ACCOUNTS_ROSTER_TILL"

@@ -22,8 +22,13 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mojaloop-java
+<<<<<<< HEAD
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+=======
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+>>>>>>> 481a2c5 (Global parameters in one location and be able to re-use in multiple locations)
           ports:
             - containerPort: 5000
           resources:
@@ -35,10 +40,10 @@ spec:
               cpu: "{{ .Values.requests.cpu }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
 
             - name: "DFSPIDS"
-              value: "{{ .Values.DFSPIDS }}"
+              value: "{{ .Values.global.DFSPIDS }}"
 
             - name: "SWITCH_quotes-host"
               value: "{{ .Values.switch.quotes.host }}"

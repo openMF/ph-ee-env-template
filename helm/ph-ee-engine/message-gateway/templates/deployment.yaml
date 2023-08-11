@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"  
           ports:
             - containerPort: 9191
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -65,7 +65,7 @@ spec:
             - name: "PROVIDERSOURCE_FROMYML"
               value: "{{ .Values.PROVIDERSOURCE_FROMYML }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "PROVIDERKEYS_TELERIVETAPIKEY"
               valueFrom:
                 secretKeyRef:

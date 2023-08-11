@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: 5000
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -40,7 +40,7 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "AMS_LOCAL_ENABLED"
@@ -53,7 +53,7 @@ spec:
             - name: "PESACORE_BASE-URL"
               value: "{{ .Values.pesacore.base_url }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        

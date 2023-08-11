@@ -14,6 +14,14 @@ ph-ee-engine:
   configmap:
     apiversion: "v1"
 
+  global:
+    SPRING_PROFILES_ACTIVE: "bb"
+    imagePullPolicy: "Always"
+    LOGGING_LEVEL_ROOT: "INFO"
+    LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+    tenants: ""
+    DFSPIDS: ""
+
   zeebe-cluster-helm:
     enabled: false
     global:
@@ -306,7 +314,6 @@ ph-ee-engine:
     enabled: true
     image: docker.io/openmf/ph-ee-operations-web:latest
     hostname: "ops.sandbox.mifos.io"
-    SPRING_PROFILES_ACTIVE: "bb"
     ingress:
       enabled: false
       tls:

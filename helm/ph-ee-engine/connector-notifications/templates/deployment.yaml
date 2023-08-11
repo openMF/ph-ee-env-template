@@ -22,8 +22,13 @@ spec:
     spec:
       containers:
         - name: "ph-ee-connector-notifications"
+<<<<<<< HEAD
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+=======
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+>>>>>>> 481a2c5 (Global parameters in one location and be able to re-use in multiple locations)
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -47,7 +52,7 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "HOSTCONFIG_HOST"
@@ -63,7 +68,7 @@ spec:
             - name: "NOTIFICATION_FAILURE_ENABLED"
               value: "{{ .Values.NOTIFICATION_FAILURE_ENABLED }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value:  "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        
