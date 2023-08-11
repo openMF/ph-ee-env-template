@@ -30,13 +30,8 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}  
       containers:
       - name: ph-ee-connector-ams-mifos
-<<<<<<< HEAD
         image: "{{ .Values.image}}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-=======
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
->>>>>>> 481a2c5 (Global parameters in one location and be able to re-use in multiple locations)
         ports:
           - containerPort: 5000
         resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}

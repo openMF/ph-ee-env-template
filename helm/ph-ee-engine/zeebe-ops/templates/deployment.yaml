@@ -22,13 +22,8 @@ spec:
     spec:
       containers:
         - name: ph-ee-zeebe-ops
-<<<<<<< HEAD
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-=======
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
->>>>>>> 481a2c5 (Global parameters in one location and be able to re-use in multiple locations)
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
