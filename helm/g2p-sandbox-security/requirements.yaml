@@ -5,5 +5,5 @@ dependencies:
 
 
 - name: ph_ee_identity_account_mapper
-  repository: "file://././identity-account-mapper/account-mapper"
-  version: 1.0.0
+  repository: https://fynarfin.io/images/account-mapper/ph_ee_identity_account_mapper-1.0.0-SNAPSHOT
+  version: 1.0.0-SNAPSHOT
