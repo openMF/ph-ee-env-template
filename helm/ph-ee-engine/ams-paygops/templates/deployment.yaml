@@ -41,7 +41,7 @@ spec:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "zeebe-zeebe-gateway:26500"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "AMS_LOCAL_ENABLED"
               value: "{{ .Values.ams.local.enabled }}"
             - name: "PAYGOPS_AUTHHEADER"

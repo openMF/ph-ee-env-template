@@ -15,7 +15,7 @@ ph-ee-engine:
     apiversion: "v1"
 
   zeebe-cluster-helm:
-    enabled: true
+    enabled: false
     global:
       elasticsearch:
         host: "ph-ee-elasticsearch"
