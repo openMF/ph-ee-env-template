@@ -46,7 +46,7 @@ jobs:
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/account-mapper
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/account-mapper/ph_ee_identity_account_mapper-1.0.0-SNAPSHOT
       - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph_ee_identity_account_mapper-1.0.0-SNAPSHOT.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph_ee_identity_account_mapper-1.0.0-SNAPSHOT index.yaml ph_ee_identity_account_mapper-1.0.0-SNAPSHOT.tgz
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/account-mapper/ph_ee_identity_account_mapper-1.0.0-SNAPSHOT index.yaml ph_ee_identity_account_mapper-1.0.0-SNAPSHOT.tgz
   build-and-host-g2p-sandbox:
     docker:
       - image: cimg/python:3.10
