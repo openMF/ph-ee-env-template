@@ -5,4 +5,4 @@ dependencies:
 
 - name: ph_ee_identity_account_mapper
   version: 1.0.0
-  repository: "file://../account-mapper"
+  repository: "file://../identity-account-mapper/account-mapper"
