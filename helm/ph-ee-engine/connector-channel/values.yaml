@@ -39,8 +39,8 @@ notifications:
   NOTIFICATION_FAILURE_ENABLED: "false"  
 server:
   ssl:
-    key-password: <replace-with-password>
-    key-store-password: "<replace-with-password>"  
+    keyPassword: "<replace-with-password>"
+    keyStorePassword: "<replace-with-password>"
 limits:
   cpu: "500m"
   memory: "512M"
