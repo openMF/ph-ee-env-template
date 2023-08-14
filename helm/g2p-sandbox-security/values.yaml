@@ -193,8 +193,6 @@ ph-ee-engine:
     hostname: bulk-connector.sandbox.mifos.io
     aws:
       region: "<region>"
-      access_key: "<access_key>"
-      secret_key: "<secret_key>"
     operations_app:
       contactpoint: "https://ops-bk.sandbox.mifos.io/"
       endpoints:
