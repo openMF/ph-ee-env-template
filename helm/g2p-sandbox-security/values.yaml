@@ -128,7 +128,7 @@ ph-ee-engine:
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: ""
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
       tls:
         - secretName: sandbox-secret
@@ -200,7 +200,7 @@ ph-ee-engine:
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx  
+        kubernetes.io/ingress.class: ""  
       tls:
         - secretName: sandbox-secret
       hosts:
@@ -224,7 +224,7 @@ ph-ee-engine:
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx  
+        kubernetes.io/ingress.class: ""  
       tls:
         - secretName: sandbox-secret
       hosts:
@@ -268,7 +268,7 @@ ph-ee-engine:
       path: "/"
       wildcardhostname: "*.sandbox.fynarfin.io"
       annotations:
-        kubernetes.io/ingress.class: "nginx"
+        kubernetes.io/ingress.class: ""
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     resources:
       limits:
