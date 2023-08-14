@@ -1,7 +1,7 @@
 dependencies:
   - name: camunda-platform
     repository: https://helm.camunda.io
-    version: 8.1.1
+    version: 8.1.6
     condition: "camunda-platform-helm.enabled"
   - name: elasticsearch
     repository: http://helm.elastic.co
@@ -12,16 +12,16 @@ dependencies:
     version: 7.16.3
     condition: "kibana.enabled"
   - name: mysql
-    version: 9.4.5
+    version: 9.4.8
     repository: "https://charts.bitnami.com/bitnami"
     alias: operationsmysql
     condition: "operations.mysql.enabled"
   - name: kong
-    version: 2.13.1
+    version: 2.15.3
     repository: https://charts.konghq.com
     condition: "kong.enabled"
   - name: keycloak
-    version: 18.1.1
+    version: 18.4.3
     repository: https://codecentric.github.io/helm-charts
     condition: "keycloak.enabled"
   - name: redis
