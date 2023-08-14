@@ -1932,13 +1932,19 @@ mock_oracle:
 keycloak:
   enabled: false
 # Enabling this will publicly expose your keycloak instance.
-# Only enable this if you have security enabled on your cluster   
+# Only enable this if you have security enabled on your cluster
   ingress:
     enabled: false
     ingressClassName: "kong"
     rules:
       - host: 'keycloak.mifos.io'
     tls: []
+  postgresql:
+    initdbUser: "keycloak"
+    initdbPassword: "keycloak"
+    initdbScripts:
+      my_init_script.sql: |-
+          CREATE DATABASE kong;
   extraVolumes: |
     - name: realm-secret
       secret:
@@ -2005,7 +2011,6 @@ kong:
     tag: "latest"
   env:
     plugins: "bundled,oidc"
-    database: "postgres"
     pg_host: "security-postgresql"
     pg_user: "keycloak"
     pg_password: "keycloak"
