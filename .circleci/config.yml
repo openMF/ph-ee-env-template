@@ -106,7 +106,7 @@ jobs:
       # SED & replace dependency with 0.0.0
       - run: helm dep up helm/g2p-sandbox-security
       - run: helm package helm/g2p-sandbox-security
-      - run: helm repo index .
+      - run: helm repo index . --url https://fynarfin.io/images/ph-ee-g2psandbox-security
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-security
