@@ -52,8 +52,10 @@ spec:
               value: "{{ .Values.mockpayment.DFSPIDS }}"
             - name: "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.mockpayment.LOGGING_LEVEL_ROOT }}"
-            - name : "mockFailure_percentage"
-              value: "{{ .Values.mockpayment.mockFailure_percentage }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name : "MOCKFAILURE_PERCENTAGE"
+              value: "{{ .Values.mockpayment.mockFailure.percentage }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}        
