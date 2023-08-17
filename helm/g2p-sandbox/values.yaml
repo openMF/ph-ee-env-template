@@ -196,7 +196,7 @@ ph-ee-engine:
 
   mockpayment:
     enabled: true 
-    image: docker.io/openmf/ph-ee-connector-mock-payment-schema:latest       
+    image: docker.io/openmf/ph-ee-connector-mock-payment-schema:latest
 
   kafka:
     enabled: true
