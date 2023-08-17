@@ -47,15 +47,15 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.mockpayment.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "DFSPIDS"
-              value: "{{ .Values.mockpayment.DFSPIDS }}"
+              value: "{{ .Values.DFSPIDS }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.mockpayment.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name : "mockFailure_percentage"
-              value: "{{ .Values.mockpayment.mockFailure.percentage }}"
+              value: "{{ .Values.mockFailure.percentage }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}        
