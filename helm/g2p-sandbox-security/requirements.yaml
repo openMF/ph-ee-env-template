@@ -4,6 +4,6 @@ dependencies:
   version: 0.0.0-SNAPSHOT
 
 
-# - name: ph_ee_identity_account_mapper
-#   repository: https://fynarfin.io/images/account-mapper
-#   version: 1.0.0-SNAPSHOT
+- name: ph_ee_identity_account_mapper
+  repository: https://fynarfin.io/images/account-mapper
+  version: 1.0.0-SNAPSHOT

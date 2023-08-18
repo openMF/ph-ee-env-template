@@ -194,7 +194,7 @@ workflows:
             - Helm
             - slack
       - build-and-host-account-mapper:
-          context: 
+          context:
             - AWS
             - Helm
             - slack
