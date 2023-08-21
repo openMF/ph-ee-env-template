@@ -1931,6 +1931,7 @@ mock_oracle:
 
 keycloak:
   enabled: false
+  fullnameOverride: "keycloak"
 # Enabling this will publicly expose your keycloak instance.
 # Only enable this if you have security enabled on your cluster
   ingress:
