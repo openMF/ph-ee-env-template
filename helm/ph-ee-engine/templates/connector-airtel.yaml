@@ -1,0 +1,115 @@
+{{- if .Values.airtel_connector.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-airtel"
+  labels:
+    app: ph-ee-connector-airtel
+spec:
+  replicas: {{ .Values.airtel_connector.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-airtel
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-airtel
+      annotations:
+{{- if .Values.airtel_connector.deployment.annotations }}
+{{ toYaml .Values.airtel_connector.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-airtel
+          image: "{{ .Values.airtel_connector.image }}:{{ .Values.airtel_connector.imageTag }}"
+          imagePullPolicy: "{{ .Values.airtel_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            periodSeconds: 60
+            initialDelaySeconds: 3
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 60
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: "{{ .Values.airtel_connector.limits.memory }}"
+              cpu: "{{ .Values.airtel_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.airtel_connector.requests.memory }}"
+              cpu: "{{ .Values.airtel_connector.requests.cpu }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Values.airtel_connector.zeebe_broker_contactpoint }}"
+            - name: "SKIP_ENABLED"
+              value: "{{ .Values.airtel_connector.skip.enabled }}"
+            - name: "AIRTEL_API_BASE-URL"
+              value: "{{ .Values.airtel_connector.api.base_url }}"
+            - name: "AIRTEL_API_AUTH-ENDPOINT"
+              value: "{{ .Values.airtel_connector.api.auth_endpoint }}"
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.airtel_connector.spring_profiles_active }}"
+            - name: "AIRTEL_API_COLLECTION-ENDPOINT"
+              value: "{{ .Values.airtel_connector.api.collection_endpoint }}"
+            - name: "AIRTEL_API_STATUS-ENDPOINT"
+              value: "{{ .Values.airtel_connector.api.status_endpoint }}"
+            - name: "AIRTEL_CREDENTIALS_CLIENT-ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "airtel-secret"
+                  key: "client-id"
+            - name: "AIRTEL_CREDENTIALS_CLIENT-SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "airtel-secret"
+                  key: "client-secret"
+            - name: "AIRTEL_CREDENTIALS_GRANT-TYPE"
+              value: "{{ .Values.airtel_connector.credentials.grant_type }}"
+            - name: "AIRTEL_MAX-RETRY-COUNT"
+              value: "{{ .Values.airtel_connector.max_retry_count}}"
+            - name: "AIRTEL_TIMEOUT"
+              value: "{{ .Values.airtel_connector.timeout }}"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: airtel-secret
+type: Opaque
+data:
+  client-id: {{ .Values.airtel_connector.credentials.client_id | b64enc}}
+  client-secret: {{ .Values.airtel_connector.credentials.client_secret | b64enc }}
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-airtel
+  name: ph-ee-connector-airtel
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-airtel
+  sessionAffinity: None
+  type: ClusterIP
+{{- end}}
