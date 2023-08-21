@@ -1047,3 +1047,38 @@ fineract_connector:
       co.elastic.logs/enabled: "true"
       instrumentation.opentelemetry.io/inject-java: 'true'
       sidecar.opentelemetry.io/inject: 'sidecar'
+
+airtel_connector:
+  enabled: true
+  replicas: 1
+  image: "oaftech.azurecr.io/oneacrefund/airtel-connector"
+  imageTag: "0.0.1"
+  imagePullPolicy: "IfNotPresent"
+  zeebe_broker_contactpoint: "zeebe-zeebe-gateway:26500"
+  LOGGING_LEVEL_ROOT: "INFO"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
+  limits:
+    memory: "1Gi"
+    cpu: "200m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  api:
+    base_url: "https://openapiuat.airtel.africa"
+    auth_endpoint: "/auth/oauth2/token"
+    collection_endpoint: "/merchant/v1/payments/"
+    status_endpoint: "/standard/v1/payments"
+  credentials:
+    client_id: "abc"
+    client_secret: "xyz"
+    grant_type: "client_credentials"
+  max_retry_count: 3
+  timeout: 6000
+  skip:
+    enabled: false
+  deployment:
+    annotations:
+      co.elastic.logs/enabled: "true"
+      instrumentation.opentelemetry.io/inject-java: "true"
+      sidecar.opentelemetry.io/inject: "sidecar"
