@@ -2035,7 +2035,7 @@ kong:
         annotations:
           kubernetes.io/ingress.class: "kong"
         labels:
-          global: "true"
+          global: "false"
       disabled: false # optionally disable the plugin in Kong
       plugin: request-transformer
       config:
