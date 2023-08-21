@@ -1925,9 +1925,9 @@ keycloak:
       value: /realm/kong-keycloak-realm.json     
 
 integration_test:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
+  image: docker.io/openmf/ph-ee-integration-test:latest
   imageTag: latest
   imagePullPolicy: "Never"
   limits:
