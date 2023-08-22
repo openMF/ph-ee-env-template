@@ -66,4 +66,5 @@ spec:
               memory: "{{ .Values.integration_test.requests.memory }}"
               cpu: "{{ .Values.integration_test.requests.cpu }}"
       restartPolicy: Never
+      terminationGracePeriodSeconds: 120
   backoffLimit: 4

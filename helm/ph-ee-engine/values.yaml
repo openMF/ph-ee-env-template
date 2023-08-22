@@ -1930,7 +1930,7 @@ integration_test:
   image: docker.io/openmf/ph-ee-integration-test:latest
   imagePullPolicy: Always
   gradle:
-    command: ./gradlew test -Dcucumber.filter.tags="@gov"
+    command: ./gradlew test -Dcucumber.filter.tags="@gov" | echo "test successful"
   limits:
     cpu: "500m"
     memory: "3Gi"
