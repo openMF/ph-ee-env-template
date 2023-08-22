@@ -204,7 +204,7 @@ ph-ee-engine:
             - path: "/"
               backend:
                 service:
-                  name: ph-ee-connector-mojaloop-java
+                  name: ph-ee-connector-mock-payment-schema
                   port:
                     number: 80
   kafka:
