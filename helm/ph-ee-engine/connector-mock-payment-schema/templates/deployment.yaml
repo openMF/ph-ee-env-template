@@ -1,13 +1,13 @@
-{{- if .Values.mockpayment.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "ph-ee-connector-mock-payment-schema"
   labels:
     app: ph-ee-connector-mock-payment-schema
 spec:
-  replicas: {{ .Values.mockpayment.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: ph-ee-connector-mock-payment-schema
@@ -16,23 +16,23 @@ spec:
       labels:
         app: ph-ee-connector-mock-payment-schema
       annotations:
-{{- if .Values.mockpayment.deployment.annotations }}
-{{ toYaml .Values.mockpayment.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: ph-ee-connector-mock-payment-schema
-          image: "{{ .Values.mockpayment.image }}:{{ .Values.mockpayment.imageTag }}"
+          image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
-          imagePullPolicy: "{{ .Values.mockpayment.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           resources:
             limits:
-              memory: "{{ .Values.mockpayment.limits.memory }}"
-              cpu: "{{ .Values.mockpayment.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.mockpayment.requests.memory }}"
-              cpu: "{{ .Values.mockpayment.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -47,14 +47,20 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.mockpayment.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
             - name: "DFSPIDS"
-              value: "{{ .Values.mockpayment.DFSPIDS }}"
+              value: "{{ .Values.DFSPIDS }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.mockpayment.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name : "mockFailure_percentage"
-              value: "{{ .Values.mockpayment.mockFailure_percentage }}"
-
+              value: "{{ .Values.mockFailure.percentage }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
@@ -63,3 +69,4 @@ spec:
           configMap:
             name: ph-ee-config
 {{- end }}
+
