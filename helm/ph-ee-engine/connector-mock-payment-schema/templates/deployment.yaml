@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-connector-mock-payment-schema
-          image: docker.io/openmf/ph-ee-connector-mock-payment-schema:latest
+          image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
