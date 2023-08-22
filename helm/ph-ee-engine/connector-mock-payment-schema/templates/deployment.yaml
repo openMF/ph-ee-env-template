@@ -25,7 +25,11 @@ spec:
           image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
+<<<<<<< HEAD:helm/ph-ee-engine/connector-mock-payment-schema/templates/deployment.yaml
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+=======
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+>>>>>>> eaf5d49 (* fix mps docker pull):helm/ph-ee-engine/connector-mock-paymentschema/templates/deployment.yaml
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
