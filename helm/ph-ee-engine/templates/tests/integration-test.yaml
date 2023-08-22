@@ -65,6 +65,9 @@ spec:
             requests:
               memory: "{{ .Values.integration_test.requests.memory }}"
               cpu: "{{ .Values.integration_test.requests.cpu }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}
       restartPolicy: Never
       terminationGracePeriodSeconds: 120
   backoffLimit: 4
