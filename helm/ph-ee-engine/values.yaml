@@ -1928,8 +1928,9 @@ integration_test:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-integration-test:latest
-  imageTag: latest
-  imagePullPolicy: "Never"
+  imagePullPolicy: Always
+  gradle:
+    command: ./gradlew test -Dcucumber.filter.tags="@gov"
   limits:
     cpu: "500m"
     memory: "3Gi"
@@ -1956,13 +1957,20 @@ integration_test:
     tenant: ""
     authorization: ""
   channel:
+    contactpoint: "ph-ee-connector-channel"
     base_url: ""
   loan:
+    contactpoint: "fineract-server"
     base_url: ""
   savings:
+    contactpoint: "fineract-server"
     base_url: ""
-  gradle:
-    command: ""
+  mock-server:
+    port: "53013"
+  identity-account-mapper:
+    contactpoint: "ph-ee-identity-account-mapper"
+  mifos-connector:
+    contactpoint: "ph-ee-connector-ams-mifos"
 
 redis:
   enabled: true

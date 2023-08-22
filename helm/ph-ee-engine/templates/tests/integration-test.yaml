@@ -1,5 +1,3 @@
-
-
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -13,7 +11,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-integration-test
-          image: "{{ .Values.integration_test.image }}:{{ .Values.integration_test.imageTag }}"
+          image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
           command: [ "/bin/bash" ]
           args: [ "-c", '{{ .Values.integration_test.gradle.command }}' ]
@@ -46,6 +44,20 @@ spec:
               value: "{{ .Values.integration_test.loan.base_url }}"
             - name: "SAVINGS_BASE-URL"
               value: "{{ .Values.integration_test.savings.base_url }}"
+            - name: CHANNEL_CONTACTPOINT
+              value: "{{ .Values.integration_test.channel.contactpoint }}"
+            - name: SAVINGS_CONTACTPOINT
+              value: "{{ .Values.integration_test.savings.contactpoint }}"
+            - name: LOAN_CONTACTPOINT
+              value: "{{ .Values.integration_test.loan.contactpoint }}"
+            - name: MOCK-SERVER_PORT
+              value: "{{ .Values.integration_test.mock-server.port }}"
+            - name: callback_url
+              value: ""
+            - name: IDENTITY-ACCOUNT-MAPPER_CONTACTPOINT
+              value: "{{ .Values.integration_test.identity-account-mapper.contactpoint }}"
+            - name: MIFOS-CONNECTOR_CONTACTPOINT
+              value: "{{ .Values.integration_test.mifos-connector.contactpoint }}"
           resources:
             limits:
               memory: "{{ .Values.integration_test.limits.memory }}"
@@ -55,4 +67,3 @@ spec:
               cpu: "{{ .Values.integration_test.requests.cpu }}"
       restartPolicy: Never
   backoffLimit: 4
-
