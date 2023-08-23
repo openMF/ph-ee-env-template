@@ -381,9 +381,6 @@ ph-ee-engine:
         batch_transaction: "/api/v1/batch/transactions"
     ingress:
       enabled: false
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       tls:
         - secretName: sandbox-secret
       hosts:
