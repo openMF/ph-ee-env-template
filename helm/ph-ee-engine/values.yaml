@@ -2010,6 +2010,8 @@ kong:
   image:
     repository: revomatico/docker-kong-oidc
     tag: "latest"
+  migrations:
+        init: true
   env:
     plugins: "bundled,oidc"
     pg_host: "security-postgresql"
