@@ -1,47 +1,96 @@
 {{- if .Values.ingress.enabled -}}
-{{- $pathtype := .Values.ingress.pathtype -}}
-{{- $ingressPath := .Values.ingress.path -}}
+  {{- $pathtype := .Values.ingress.pathtype -}}
+  {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ph-ee-identity-account-mapper
+  name: ph_ee_identity_account_mapper
   labels:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-{{- with .Values.ingress.annotations }}
-  annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
+  {{- with .Values.ingress.annotations }}
+annotations:
+  {{ toYaml . | indent 4 }}
+  {{- end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className | quote }}
   {{- end }}
-{{- if .Values.ingress.tls }}
-  tls:
+  {{- if .Values.ingress.tls }}
+tls:
   {{- if .ingressPath }}
   {{- range  .Values.ingress.tls }}
-  - hosts:
-    {{- range  .hosts }}
-      - {{ . }}
-    {{- end }}
-    secretName: {{ .secretName }}
+- hosts:
+  {{- range  .hosts }}
+  - {{ . }}
   {{- end }}
-{{- else }}
-{{ toYaml .Values.ingress.tls | indent 4 }}
+  secretName: {{ .secretName }}
   {{- end }}
-{{- end}}
-  rules:
+  {{- else }}
+  {{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end }}
+  {{- end}}
+rules:
   {{- range .Values.ingress.hosts }}
-  - host: {{ .host }}
+- host: {{ .host }}
+  http:
+    paths:
+    {{- range .paths }}
+    - path: {{ .path }}
+      pathType: {{ $pathtype }}
+      backend:
+        service:
+          name: {{ .backend.service.name}}
+          port:
+            number: {{ .backend.service.port.number}}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+  { { - if .Values.ingress.enabled - } }
+  { { - $pathtype := .Values.ingress.pathtype - } }
+  { { - $ingressPath := .Values.ingress.path - } }
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ph-ee-vouchers
+  labels:
+    app: { { .Chart.Name } }
+    release: { { .Release.Name } }
+    heritage: { { .Release.Service } }
+  { { - with .Values.ingress.annotations } }
+annotations:
+  { { toYaml . | indent 4 } }
+    { { - end } }
+spec:
+  { { - if .Values.ingress.className } }
+  ingressClassName: { { .Values.ingress.className | quote } }
+  { { - end } }
+  { { - if .Values.ingress.tls } }
+tls:
+  { { - if .ingressPath } }
+    { { - range  .Values.ingress.tls } }
+    - hosts:
+      { { - range  .hosts } }
+      - { { . } }
+      { { - end } }
+      secretName: { { .secretName } }
+      { { - end } }
+      { { - else } }
+      { { toYaml .Values.ingress.tls | indent 4 } }
+      { { - end } }
+      { { - end } }
+rules:
+  { { - range .Values.ingress.hosts } }
+  - host: { { .host } }
     http:
       paths:
-      {{- range .paths }}
-      - path: {{ .path }}
-        pathType: {{ $pathtype }}
+      { { - range .paths } }
+      - path: { { .path } }
+        pathType: { { $pathtype } }
         backend:
           service:
-            name: {{ .backend.service.name}}
+            name: { { .backend.service.name } }
             port:
               number: {{ .backend.service.port.number}}
       {{- end }}
