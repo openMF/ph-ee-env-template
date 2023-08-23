@@ -9,3 +9,4 @@ helm/*.tgz
 .env
 index.yaml
 helm/index.yaml
+*.tgz
