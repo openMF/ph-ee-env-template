@@ -379,6 +379,9 @@ ph-ee-engine:
       contactpoint: "https://ops-bk.sandbox.mifos.io/"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
+    service:
+      annotations:
+        konghq.com/protocol: "https"
     ingress:
       enabled: false
       tls:
