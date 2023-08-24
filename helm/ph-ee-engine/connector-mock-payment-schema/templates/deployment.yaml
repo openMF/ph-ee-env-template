@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
-          imagePullPolicy: "{{ .Values.global.mockpayment.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
