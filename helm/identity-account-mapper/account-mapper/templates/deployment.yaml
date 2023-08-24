@@ -3,85 +3,74 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ph-ee-connector-channel
+  name: ph-ee-identity-account-mapper
   labels:
-    app: ph-ee-connector-channel
+    app: ph-ee-identity-account-mapper
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: ph_ee_identity_account_mapper
+      app: ph-ee-identity-account-mapper
   template:
     metadata:
       labels:
-        app: ph_ee_identity_account_mapper
+        app: ph-ee-identity-account-mapper
       annotations:
-  {{- if .Values.deployment.annotations }}
-  {{ toYaml .Values.deployment.annotations | indent 8 }}
-  {{- end }}
-spec:
-  containers:
-    - name: ph_ee_identity_account_mapper
-      image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-      ports:
-        - containerPort: 8443
-      imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-      resources:
-        limits:
-          memory: "{{ .Values.limits.memory }}"
-          cpu: "{{ .Values.limits.cpu }}"
-        requests:
-          memory: "{{ .Values.requests.memory }}"
-          cpu: "{{ .Values.requests.cpu }}"
-      livenessProbe:
-        httpGet:
-          path: /actuator/health/liveness
-          port: 8443
-          scheme: HTTPS
-        initialDelaySeconds: 20
-        periodSeconds: 30
-      readinessProbe:
-        httpGet:
-          path: /actuator/health/readiness
-          port: 8443
-          scheme: HTTPS
-        initialDelaySeconds: 20
-        periodSeconds: 30
-      env:
-        - name: "LOGGING_LEVEL_ROOT"
-          value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
-        - name: "async.core-pool-size"
-          value: "{{ .Values.async.core_pool_size }}"
-        - name: "async.max-pool-size"
-          value: "{{ .Values.async.max_pool_size }}"
-        - name: "async.queue-capacity"
-          value: "{{ .Values.async.queue_capacity }}"
-        - name: "account_validation_enabled"
-          value: "{{ .Values.account_validation_enabled }}"
-        - name: "account_validator_connector"
-          value: "{{ .Values.account_validator_connector }}"
-        - name: "gsma-connector.contactpoint"
-          value: "{{ .Values.gsma_connector.contactpoint }}"
-        - name: "mojaloop-connector.contactpoint"
-          value: "{{ .Values.mojaloop_connector.contactpoint }}"
-        - name: "ZEEBE_BROKER_CONTACTPOINT"
-          value: "{{ .Release.Name }}-zeebe-gateway:26500"
-        - name: "DATASOURCE_URL"
-          value: "{{ .Values.datasource.host }}"
-        - name: "DATASOURCE_USERNAME"
-          value: "{{ .Values.datasource.username }}"
-        - name: "DATASOURCE_PASSWORD"
-          value: "{{ .Values.datasource.password }}"
-  {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-  {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
-  {{- end }}
-envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
-securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
-volumeMounts:
-  - name: ph-ee-config
-    mountPath: "/config"
-volumes:
-  - name: ph-ee-config
-    configMap:
-      name: ph-ee-config
-  {{- end }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-identity-account-mapper
+          image: "{{ .Values.image}}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          env:
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "SPRING_CACHE_TIME_TO_LIVE"
+              value: "{{ .Values.spring.cache.time_to_live }}"
+            - name: "SPRING_CACHE_TIME_TO_IDLE"
+              value: "{{ .Values.spring.cache.time_to_idle }}"
+            - name: "SPRING_CACHE_MAX_ENTRIES_HEAP"
+              value: "{{ .Values.spring.cache.max_entries_heap }}"
+            - name: "SPRING_CACHE_MAX_BYTE_OFF_HEAP"
+              value: "{{ .Values.spring.cache.max_byte_off_heap }}"
+            - name: "SPRING_CACHE_MAX_BYTE_DISK"
+              value: "{{ .Values.spring.cache.max_byte_disk }}"
+            - name: "SPRING_DATASOURCE_URL"
+              value: "{{ .Values.spring.datasource.url }}"
+            - name: "SPRING_DATASOURCE_USERNAME"
+              value: "{{ .Values.spring.datasource.username }}"
+            - name: "SPRING_DATASOURCE_PASSWORD"
+              value: "{{ .Values.spring.datasource.password }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.logging.level.ROOT }}"
+            - name: "ACCOUNT_VALIDATION_ENABLED"
+              value: "{{ .Values.account_validation_enabled }}"
+            - name: "ACCOUNT_VALIDATOR_CONNECTOR"
+              value: "{{ .Values.account_validator_connector }}"
+            - name: "CALLBACK_ENABLED"
+              value: "{{ .Values.callback_enabled }}"
+
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}
