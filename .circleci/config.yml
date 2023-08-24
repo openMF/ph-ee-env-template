@@ -72,11 +72,11 @@ jobs:
       - image: cimg/python:3.10
     parameters:
       cluster-name:
-        description: "sit"
+        description: "fynarfin-sit"
         type: string
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
+          cluster-name: "fynarfin-sit"
           aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -162,7 +162,7 @@ workflows:
             - AWS
             - Helm
       - upgrade-helm-chart:
-          cluster-name: sit
+          cluster-name: fynarfin-sit
           requires:
             - build-host-g2p-fyn-chart
           context: 
