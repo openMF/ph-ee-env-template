@@ -8,54 +8,57 @@ configmap:
   apiVersion: "v1"
 
 enabled: true
-replicas: 1
-image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-identity-account-mapper"
-imagetag: latest
-SPRING_PROFILES_ACTIVE: "bb"
+image: docker.io/openmf/ph-ee-identity-account-mapper:latest
+imagePullPolicy: "Always"
+hostname: "identity-mapper.sandbox.mifos.io"
 limits:
   cpu: "500m"
   memory: "512M"
 requests:
   cpu: "100m"
   memory: "256M"
-deployment:
-  apiVersion: "apps/v1"
-  annotations:
-    deployTime: "{{ .Values.deployTime }}"
 
-LOGGING_LEVEL_ROOT : ""
+logging:
+  level:
+    ROOT: INFO
+
 async:
-  core_pool_size: "10"
-  max_pool_size: "10"
-  queue_capacity: "100"
+  core_pool_size: 10
+  max_pool_size: 10
+  queue_capacity: 100
 account_validation_enabled: "false"
 account_validator_connector: "gsma"
-gsma_connector:
-  contactpoint: ""
-mojaloop_connector:
-  contactpoint: ""
-hostname: "identity-accouunt.fynarfin.sandbox.io"
 
-datasource:
-  url: jdbc:mysql:thin://operationsmysql:3306/IdentityAccountMapper
-  username: mifos
-  password: password
+spring:
+  cache:
+    time_to_live: 30
+    time_to_idle: 30
+    max_entries_heap: 1000
+    max_byte_off_heap: 10
+    max_byte_disk: 10
+  datasource:
+    url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
+    username: mifos
+    password: password
 
 
 
 
 ingress:
   enabled: true
-  hostname: "identity.sandbox.fynarfin.io"
-  path: "/"
-  wildcardhostname: "*.sandbox.fynarfin.io"
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: Prefix
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local
+
+deployment:
+  apiVersion: "apps/v1"
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-resources:
-  limits:
-    cpu: "1000m"
-    memory: "2Gi"
-  requests:
-    cpu: "200m"
-    memory: "0.5Gi"
+    deployTime: "{{ .Values.deployTime }}"
