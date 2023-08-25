@@ -147,7 +147,7 @@ elasticsearch:
   secretMounts:
     - name: elastic-certificates
       secretName: elastic-certificates
-      path: /usr/share/elasticsearch/config/certs
+      path: /usr/share/elasticsearch/config/certs/
   extraEnvs:
     - name: ELASTIC_PASSWORD
       valueFrom:
