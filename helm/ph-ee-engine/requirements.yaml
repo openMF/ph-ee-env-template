@@ -104,4 +104,8 @@ dependencies:
     version: 1.0.0
     repository: "file://./connector-mock-payment-schema"
     condition: "mockpayment.enabled"
-    
+
+  - name: vouchers
+    version: 1.0.0
+    repository: "file://./vouchers"
+    condition: "vouchers.enabled"

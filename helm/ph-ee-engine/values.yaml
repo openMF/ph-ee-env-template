@@ -329,9 +329,11 @@ operationsmysql:
     setup.sql: |-
       CREATE DATABASE IF NOT EXISTS phdefault;
       CREATE DATABASE IF NOT EXISTS messagegateway;
+      CREATE DATABASE `voucher_management`
       GRANT ALL ON *.* TO 'root'@'%';
       GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
       GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
+      GRANT ALL PRIVILEGES ON `voucher_management`.* TO 'mifos';
   volumeClaimTemplate:
     storageClassName: "gp2"
 
@@ -2073,3 +2075,61 @@ kong:
   migrations:
     preUpgrade: false
     postUpgrade: false
+
+vouchers:
+  enabled: false
+  replicas: 1
+  image: docker.io/openmf/ph-ee-vouchers:latest
+  imagePullPolicy: "Always"
+  hostname: "vouchers.sandbox.mifos.io"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    tls:
+      - secretName: sandbox-secret
+    hosts:
+      - host: vouchers.sandbox.mifos.io
+        paths:
+          - path: "/"
+            backend:
+              service:
+                name: ph-ee-vouchers
+                port:
+                  number: 80
+  deployment:
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"
+  spring:
+    datasource:
+      url: jdbc:mysql://operationsmysql:3306/voucher_management
+      username: mifos
+      password: password
+
+  logging:
+    level:
+      ROOT: INFO
+
+  async:
+    core_pool_size: 10
+    max_pool_size: 10
+    queue_capacity: 100
+
+  expiry_time: 60
+
+  payer:
+    tenant: rhino
+    identifier: 12345678
+    identifierType: MSISDN
+  voucher:
+    hostname: "https://vouchers.sandbox.mifos.io"
+
+  salting:
+    enabled: true
+
+  identity-account-mapper:
+    hostname: "https://identity-mapper.sandbox.mifos.io"
+  operations:
+    hostname: "https://ops-bk.sandbox.mifos.io"
+    endpoints:
+      transfers: "/api/v1/transfers?size=1&page=0"
