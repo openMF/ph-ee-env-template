@@ -80,12 +80,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: "bulk-processor-secret"
-                  key: "aws-access-key"
+                  key: "<accesskey>"
             - name: "AWS_SECRET_KEY"
               valueFrom:
                 secretKeyRef:
                   name: "bulk-processor-secret"
-                  key: "aws-secret-key"
+                  key: "<secretkey>"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        
