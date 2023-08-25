@@ -538,6 +538,7 @@ account_mapper:
     account_validation_enabled: "false"
     account_validator_connector: "gsma"
 
+
     spring:
       cache:
         time_to_live: 30
