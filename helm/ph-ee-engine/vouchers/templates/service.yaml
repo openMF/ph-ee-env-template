@@ -1,0 +1,19 @@
+{{- if .Values.enabled -}}
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-vouchers
+  name: ph-ee-vouchers
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+
+  selector:
+    app: ph-ee-vouchers
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}
