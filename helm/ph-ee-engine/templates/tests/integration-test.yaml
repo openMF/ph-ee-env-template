@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: ph-ee-integration-test
-          image: "{{ .Values.integration_test.image }}:{{ .Values.integration_test.imageTag }}"
+          image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
           command: [ "/bin/bash" ]
           args: [ "-c", '{{ .Values.integration_test.gradle.command }}' ]

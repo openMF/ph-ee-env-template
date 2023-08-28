@@ -18,9 +18,17 @@ requests:
   cpu: "100m"
   memory: "256M"
 <<<<<<< HEAD
+<<<<<<< HEAD
 LOGGING_LEVEL_ROOT: INFO
 
 =======
+=======
+=======
+deployment:
+  apiVersion: "apps/v1"
+  annotations: {}
+>>>>>>> 26ecf96 (Hotfix for the release-1.9.0)
+>>>>>>> 3d71764 (Hotfix for the release-1.9.0)
 
 logging:
   level:
@@ -45,9 +53,6 @@ spring:
     url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
     username: mifos
     password: password
-
-
-
 
 ingress:
   enabled: true

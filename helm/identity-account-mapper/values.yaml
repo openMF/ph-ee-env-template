@@ -163,8 +163,7 @@ kafka:
     memory: "512M"
     cpu: "100m"
   deployment:
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
+    annotations: {}
 
 account_mapper:
   enabled: true
