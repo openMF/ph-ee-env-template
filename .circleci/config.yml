@@ -131,6 +131,7 @@ jobs:
       - run:
           name: Test execution
           command: |
+            ngrok config add-authtoken “$AUTH_TOKEN”
             ngrok http 53013 > /dev/null &
             echo -n "Extracting ngrok public url ."
             NGROK_PUBLIC_URL=""
@@ -206,6 +207,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Ngrok
       - test-chart-ams:
           requires:
             - upgrade-helm-chart
