@@ -1,4 +1,4 @@
-{{- if .Values.mpesa.enabled -}}
+{{- if .Values.notifications.enabled -}}
 
 apiVersion: {{ .Values.deployment.apiversion }}
 kind: Deployment
