@@ -1931,14 +1931,21 @@ mock_oracle:
 
 keycloak:
   enabled: false
+  fullnameOverride: "keycloak"
 # Enabling this will publicly expose your keycloak instance.
-# Only enable this if you have security enabled on your cluster   
+# Only enable this if you have security enabled on your cluster
   ingress:
     enabled: false
     ingressClassName: "kong"
     rules:
       - host: 'keycloak.mifos.io'
     tls: []
+  postgresql:
+    initdbUser: "keycloak"
+    initdbPassword: "keycloak"
+    initdbScripts:
+      my_init_script.sql: |-
+          CREATE DATABASE kong;
   extraVolumes: |
     - name: realm-secret
       secret:
@@ -2003,10 +2010,11 @@ kong:
   image:
     repository: revomatico/docker-kong-oidc
     tag: "latest"
+  migrations:
+        init: true
   env:
     plugins: "bundled,oidc"
-    database: "postgres"
-    pg_host: "security-postgresql"
+    pg_host: "ph-infrastructure-postgresql"
     pg_user: "keycloak"
     pg_password: "keycloak"
     pg_database: "kong"
@@ -2030,7 +2038,7 @@ kong:
         annotations:
           kubernetes.io/ingress.class: "kong"
         labels:
-          global: "true"
+          global: "false"
       disabled: false # optionally disable the plugin in Kong
       plugin: request-transformer
       config:

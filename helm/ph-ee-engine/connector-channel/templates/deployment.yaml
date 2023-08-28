@@ -99,9 +99,9 @@ spec:
                 secretKeyRef:
                   name: "{{ .Release.Name }}-redis" 
                   key: "redis-password"
-            - name: "server_ssl_key_password"  
+            - name: "server_ssl_key-password"
               value: "{{ .Values.server.ssl.keyPassword }}" 
-            - name: "server_ssl_key_store_password"
+            - name: "server_ssl_key-store-password"
               value: "{{ .Values.server.ssl.keyStorePassword }}"  
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
