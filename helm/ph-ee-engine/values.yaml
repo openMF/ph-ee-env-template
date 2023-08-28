@@ -575,7 +575,7 @@ messagegateway:
       sidecar.opentelemetry.io/inject: 'sidecar'
 
 notifications:
-  enabled: true
+  enabled: false
   replicas: 1
   image: "oaftech.azurecr.io/phee-ns/ph-ee-notifications"
   imagePullPolicy: IfNotPresent
