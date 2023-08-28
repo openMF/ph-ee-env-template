@@ -14,7 +14,7 @@ spec:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 8443
+      targetPort: 5000
   selector:
     app: ph-ee-connector-bulk
   sessionAffinity: None
