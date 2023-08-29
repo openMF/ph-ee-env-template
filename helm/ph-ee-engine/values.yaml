@@ -130,7 +130,7 @@ elasticsearch:
   enabled: true
 #  imageTag: 7.17.0
   replicas: 1
-  protocol: http
+  protocol: https
   fullnameOverride: "ph-ee-elasticsearch"
   clusterName: "ph-ee-elasticsearch"
 #  minimumMasterNodes: 1
@@ -1221,9 +1221,9 @@ zeebe_ops:
   SPRING_PROFILES_ACTIVE: ""
   LOGGING_LEVEL_ROOT: "INFO"
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
-  elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
-  elasticsearch_sslverification: false
-  elasticsearch_security_enabled: false
+  elasticsearch_url: "https://ph-ee-elasticsearch:9200/"
+  elasticsearch_sslverification: true
+  elasticsearch_security_enabled: true
   tenants: ""
   livenessProbe:
     httpGet:
