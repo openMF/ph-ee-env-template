@@ -2014,7 +2014,8 @@ kong:
         init: true
   env:
     plugins: "bundled,oidc"
-    pg_host: "ph-infrastructure-postgresql"
+    database: "postgres"
+    pg_host: "g2p-sandbox-security-postgresql"
     pg_user: "keycloak"
     pg_password: "keycloak"
     pg_database: "kong"
