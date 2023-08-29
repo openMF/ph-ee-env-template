@@ -23,6 +23,7 @@ camunda-platform:
     elasticsearch:
       disableExporter: true
       host: "ph-ee-elasticsearch"
+      protocol: https
     identity:
       auth:
         enabled: false
