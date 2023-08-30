@@ -181,18 +181,16 @@ ph-ee-engine:
     enabled: true 
     image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.2.0 
     ingress:
-        enabled: true
-        hosts:
-          - host: ""
-            paths:
-            - path: "/"
-              backend:
-                service:
-                  name: ph-ee-connector-mock-payment-schema
-                  port:
-                    number: 80
-        
-
+      enabled: true  
+      hosts:
+        - host: ""          
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: ph-ee-connector-mojaloop-java
+                port:
+                  number: 80
   kafka:
     enabled: true
     image: "spotify/kafka"
