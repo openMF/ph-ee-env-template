@@ -183,6 +183,54 @@ spec:
                 secretKeyRef:
                   name: "mpesa-secret-tupande"
                   key: "pass-key"
+            # fineract
+            - name: "ACCOUNTS_FINERACT_SHORTCODE"
+              value: "{{ .Values.mpesa.accounts.fineract.business_short_code}}"
+            - name: "ACCOUNTS_FINERACT_TILL"
+              value: "{{ .Values.mpesa.accounts.fineract.till }}"
+            - name: "ACCOUNTS_FINERACT_AUTHHOST"
+              value: "{{ .Values.mpesa.accounts.fineract.auth_host }}"
+            - name: "ACCOUNTS_FINERACT_APIHOST"
+              value: "{{ .Values.mpesa.accounts.fineract.api_host }}"
+            - name: "ACCOUNTS_FINERACT_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-fineract"
+                  key: "client-key"
+            - name: "ACCOUNTS_FINERACT_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-fineract"
+                  key: "client-secret"
+            - name: "ACCOUNTS_FINERACT_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-fineract"
+                  key: "pass-key"
+            # odoo
+            - name: "ACCOUNTS_ODOO_SHORTCODE"
+              value: "{{ .Values.mpesa.accounts.odoo.business_short_code}}"
+            - name: "ACCOUNTS_ODOO_TILL"
+              value: "{{ .Values.mpesa.accounts.odoo.till }}"
+            - name: "ACCOUNTS_ODOO_AUTHHOST"
+              value: "{{ .Values.mpesa.accounts.odoo.auth_host }}"
+            - name: "ACCOUNTS_ODOO_APIHOST"
+              value: "{{ .Values.mpesa.accounts.odoo.api_host }}"
+            - name: "ACCOUNTS_ODOO_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-odoo"
+                  key: "client-key"
+            - name: "ACCOUNTS_ODOO_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-odoo"
+                  key: "client-secret"
+            - name: "ACCOUNTS_ODOO_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-odoo"
+                  key: "pass-key"
 
 ---
 apiVersion: {{ .Values.service.apiversion }}
@@ -244,6 +292,28 @@ data:
   client-key: {{ .Values.mpesa.accounts.paygops.client_key | b64enc }}
   client-secret: {{ .Values.mpesa.accounts.paygops.client_secret | b64enc }}
   pass-key: {{ .Values.mpesa.accounts.paygops.pass_key | b64enc }}
+
+---
+apiVersion: {{ .Values.secret.apiversion }}
+kind: Secret
+metadata:
+  name: mpesa-secret-fineract
+type: Opaque
+data:
+  client-key: {{ .Values.mpesa.accounts.fineract.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.accounts.fineract.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.accounts.fineract.pass_key | b64enc }}
+
+---
+apiVersion: {{ .Values.secret.apiversion }}
+kind: Secret
+metadata:
+  name: mpesa-secret-odoo
+type: Opaque
+data:
+  client-key: {{ .Values.mpesa.accounts.odoo.client_key | b64enc }}
+  client-secret: {{ .Values.mpesa.accounts.odoo.client_secret | b64enc }}
+  pass-key: {{ .Values.mpesa.accounts.odoo.pass_key | b64enc }}
 
 ---
 {{- if .Values.mpesa.ingress.enabled }}
