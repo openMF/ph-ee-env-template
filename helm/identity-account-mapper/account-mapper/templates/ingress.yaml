@@ -46,4 +46,8 @@ spec:
               number: {{ .backend.service.port.number}}
       {{- end }}
  {{- end }}
+<<<<<<< HEAD
  {{- end }}
+=======
+ {{- end }}
+>>>>>>> 7ea81b8 (Identity Account Mapper (#225))

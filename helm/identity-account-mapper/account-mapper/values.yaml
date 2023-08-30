@@ -17,8 +17,16 @@ limits:
 requests:
   cpu: "100m"
   memory: "256M"
+<<<<<<< HEAD
 LOGGING_LEVEL_ROOT: INFO
 
+=======
+
+logging:
+  level:
+    ROOT: INFO
+
+>>>>>>> 7ea81b8 (Identity Account Mapper (#225))
 async:
   core_pool_size: 10
   max_pool_size: 10

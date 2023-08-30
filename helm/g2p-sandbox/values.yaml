@@ -517,7 +517,6 @@ account_mapper:
     enabled: true
     image: docker.io/openmf/ph-ee-identity-account-mapper:latest
     hostname: "identity-mapper.sandbox.mifos.io"
-    LOGGING_LEVEL_ROOT: INFO    
     ingress:
       enabled: true
       pathtype: Prefix

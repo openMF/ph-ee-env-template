@@ -52,8 +52,13 @@ spec:
               value: "{{ .Values.spring.datasource.username }}"
             - name: "SPRING_DATASOURCE_PASSWORD"
               value: "{{ .Values.spring.datasource.password }}"
+<<<<<<< HEAD
             - name:  "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
+=======
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.logging.level.ROOT }}"
+>>>>>>> 7ea81b8 (Identity Account Mapper (#225))
             - name: "ACCOUNT_VALIDATION_ENABLED"
               value: "{{ .Values.account_validation_enabled }}"
             - name: "ACCOUNT_VALIDATOR_CONNECTOR"

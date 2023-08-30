@@ -17,4 +17,11 @@ dependencies:
 =======
   repository: https://fynarfin.io/images/ph-ee-engine-1.9.0-SNAPSHOT
   version: 1.9.0-SNAPSHOT
+<<<<<<< HEAD
 >>>>>>> 7ac3c70 (version-release:)
+=======
+
+- name: account_mapper
+  version: 1.0.0
+  repository: "file://../identity-account-mapper/account-mapper"
+>>>>>>> 7ea81b8 (Identity Account Mapper (#225))
