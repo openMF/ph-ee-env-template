@@ -154,8 +154,6 @@ ph-ee-engine:
     ams_local_account_host: "https://fynams.sandbox.mifos.io/"
     ams_local_customer_host: "https://fynams.sandbox.mifos.io/"
     ams_local_auth_host: "https://fynams.sandbox.mifos.io/"
-    ams_local_loan_host: "https://fynams.sandbox.mifos.io/"
-    dfspids: "rhino,gorilla"
     ingress:
       enabled: false
       annotations: 
