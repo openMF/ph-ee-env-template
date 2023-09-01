@@ -1625,9 +1625,11 @@ connector_bulk:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"       
+      cpu: "100m"
+  service:
+    annotations: {}
 # Enabling this will publicly expose your connector_bulk instance.
-# Only enable this if you have security enabled on your cluster    
+# Only enable this if you have security enabled on your cluster
   ingress:
     enabled: false 
     annotations: {}    
@@ -1652,7 +1654,7 @@ connector_bulk:
         cpu: "500m"
       requests:
         memory: "512M"
-        cpu: "100m"    
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-bulk.yml for deployment  
     # ph-ee-connector-bulkConfig: {}
