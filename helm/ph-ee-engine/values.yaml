@@ -1432,7 +1432,7 @@ mockpayment:
 kafka:
   enabled: false
   replicas: 1
-  image: "spotify/kafka"
+  image: "bitnami/kafka:3.4.1"
   imagePullPolicy: "Always"
   advertised:
     host: "kafka"
