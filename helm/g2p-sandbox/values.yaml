@@ -155,6 +155,42 @@ ph-ee-engine:
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
+      spec:
+        container:
+          env:
+            - name: ams_local_loan_host
+              valueFrom:
+                configMapKeyRef:
+                  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                  name: ph-ee-config
+                  # Specify the key associated with the value
+                  key: ams_local_loan_host
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: /config/application-fin12.properties
+              readOnly: true
+        volumes:
+          - name: ph-ee-config
+            configMap:
+              name: ph-ee-config
+    spec:
+      container:
+        env:
+          - name: ams_local_loan_host
+            valueFrom:
+              configMapKeyRef:
+                # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                name: ph-ee-config
+                # Specify the key associated with the value
+                key: ams_local_loan_host
+        volumeMounts:
+          - name: ph-ee-config
+            mountPath: /config/application-fin12.properties
+            readOnly: true
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
 
   ph_ee_connector_mojaloop:
     enabled: true
