@@ -103,11 +103,11 @@ jobs:
           aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
+      - run: helm ls --namespace=paymenthub-test
       - helm/upgrade-helm-chart:
           chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
           release-name: g2p-sandbox
-          namespace: paymenthub
+          namespace: paymenthub-test
           recreate-pods: true
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
           wait: true

@@ -2,13 +2,13 @@ apiVersion: v2
 description: PaymentHub EE Barebone Edition
 type: application
 name: ph-ee-g2psandbox
-version: 0.0.5
+version: 0.0.0
 appVersion: 0.0.0
 
 dependencies:
 - name: ph-ee-engine
   repository: https://fynarfin.io/images/
-  version: 0.0.5-SNAPSHOT
+  version: 0.0.0-SNAPSHOT
 
 - name: account_mapper
   version: 1.0.0
