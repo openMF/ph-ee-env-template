@@ -44,8 +44,7 @@ ingress:
 
 deployment:
   apiVersion: "apps/v1"
-  annotations:
-    deployTime: "{{ .Values.deployTime }}"
+  annotations: {}
 
 operations_app:
   datasource:
