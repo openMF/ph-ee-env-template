@@ -623,7 +623,7 @@ ph_ee_connector_mojaloop:
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/"
     annotations: {}
     backend: {}
@@ -1319,7 +1319,7 @@ messagegateway:
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/messages"
     annotations: {}
     backend: {}
@@ -2208,7 +2208,7 @@ mock_oracle:
 # Enabling this will publicly expose your mock_oracle instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/"
     annotations: {}
     backend: {}
@@ -2315,7 +2315,7 @@ kong:
 # Enabling this will publicly expose your kong instance.
 # Only enable this if you have security enabled on your cluster      
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: "kong"
       hostname: kong-admin.mifos.io
   extraObjects:
