@@ -60,6 +60,8 @@ spec:
               value: "{{ .Values.account_validator_connector }}"
             - name: "CALLBACK_ENABLED"
               value: "{{ .Values.callback_enabled }}"
+            - name: "GSMA_CONTACTPOINT"
+              value: "{{ .Values.gsma_connector.contactpoint }}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}

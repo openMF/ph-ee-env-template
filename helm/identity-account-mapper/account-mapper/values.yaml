@@ -28,6 +28,9 @@ async:
   queue_capacity: 100
 account_validation_enabled: "false"
 account_validator_connector: "gsma"
+callback_enabled: "false"
+gsma_connector:
+  contactpoint: "https://ams-mifos.sandbox.mifos.io"
 
 spring:
   cache:
