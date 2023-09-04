@@ -1,0 +1,52 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: true
+image: ""
+imageTag: ""
+imagePullPolicy: ""
+SPRING_PROFILES_ACTIVE: ""
+hostname: ""
+ams_local_enabled: true
+ams_local_interop_host : ""
+ams_local_customer_host : ""
+ams_local_account_host : ""
+ams_local_auth_host : ""
+ams_local_loan_host : ""
+dfspids: ""
+extraInitContainers: ""
+## tenants properties have been moved to fin12
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"  
+ingress:
+  enabled: false
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: "" 
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local   
+
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
+
+operations_app:
+  datasource:
+    host: "operationsmysql"

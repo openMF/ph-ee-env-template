@@ -1,53 +1,49 @@
-{{- if .Values.operations_app.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled -}}
+{{- $pathtype := .Values.ingress.pathtype -}}
+{{- $ingressPath := .Values.ingress.path -}}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-operations-app
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
   annotations:
-{{- if .Values.operations_app.ingress.annotations }}
-{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
-{{- end }}
+{{ toYaml . | indent 4 }}
+{{- end }}    
 spec:
-  rules:
-    - host: "{{ .Values.operations_app.hostname }}"
-      http:
-        paths:
-          - path: "{{ .Values.operations_app.ingress.path }}"
-            pathType: Prefix
-            backend:
-{{- if .Values.operations_app.ingress.backend }}
-{{ toYaml .Values.operations_app.ingress.backend | indent 14 }}
-{{- end }}              
-
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
+{{- if .Values.ingress.tls }}
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-
----
-apiVersion: {{ .Values.ingress.apiversion }}
-kind: Ingress
-metadata:
-  name: ph-ee-identity
-  annotations:
-{{- if .Values.operations_app.ingress.annotations }}
-{{ toYaml .Values.operations_app.ingress.annotations | indent 4 }}
-{{- end }}
-spec:
+  {{- if .ingressPath }}
+  {{- range  .Values.ingress.tls }}
+  - hosts:
+    {{- range  .hosts }}
+      - {{ . }}
+    {{- end }}
+    secretName: {{ .secretName }}
+  {{- end }}
+{{- else }}
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end }}
+{{- end}}
   rules:
-    - host: "{{ .Values.operations_app.hostname }}"
-      http:
-        paths:
-          - path: /identity
-            pathType: Prefix
-            backend:
-{{- if .Values.operations_app.ingress.backend }}
-{{ toYaml .Values.operations_app.ingress.backend | indent 14 }}
-{{- end }} 
-
-  tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-{{- end }}
-
+  {{- range .Values.ingress.hosts }}
+  - host: {{ .host }}
+    http:
+      paths:
+      {{- range .paths }}
+      - path: {{ .path }}
+        pathType: {{ $pathtype }}
+        backend:
+          service:
+            name: {{ .backend.service.name}}
+            port:
+              number: {{ .backend.service.port.number}}
+      {{- end }}
+ {{- end }}
+ {{- end }}

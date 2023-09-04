@@ -1,0 +1,81 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1" 
+
+enabled: true
+image: ""
+imageTag: latest
+imagePullPolicy: "Always"
+SPRING_PROFILES_ACTIVE: "bb,tenants"
+LOGGING_LEVEL_ROOT: "INFO"
+DFSPIDS: ""
+operations:
+  url: "http://ops-bk.sandbox.mifos.io/api/v1"
+  authEnabled: false
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+  idempotency:
+    enabled: true
+    keyFormat: "clientCorrelationId_tenant_api"
+    apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
+#key-store values are getting overridden from application.yaml
+tenantPrimary:
+  clientId: "mifos"
+  clientSecret: "password"
+  tenant: "rhino"
+tenantSecondary:
+  clientId: "mifos"
+  clientSecret: "password"
+  tenant: "gorilla"
+notifications: 
+  NOTIFICATION_SUCCESS_ENABLED: "false"
+  NOTIFICATION_FAILURE_ENABLED: "false"  
+server:
+  ssl:
+    keyPassword: "<replace-with-password>"
+    keyStorePassword: "<replace-with-password>"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8443
+  initialDelaySeconds: 20
+  periodSeconds: 30
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8443
+  initialDelaySeconds: 20
+  periodSeconds: 30  
+# Enabling this will publicly expose your channel instance.
+# Only enable this if you have security enabled on your cluster
+ingress:
+  enabled: true
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: Prefix
+  hosts:
+    - host: "" 
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local
+
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

@@ -1,0 +1,58 @@
+
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "ph-ee-integration-test-job"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  template:
+    metadata:
+      name: ph-ee-integration-test-job
+    spec:
+      containers:
+        - name: ph-ee-integration-test
+          image: "{{ .Values.integration_test.image }}:{{ .Values.integration_test.imageTag }}"
+          imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
+          command: [ "/bin/bash" ]
+          args: [ "-c", '{{ .Values.integration_test.gradle.command }}' ]
+          env:
+            - name: "OPERATIONS-APP_CONTACTPOINT"
+              value: "{{ .Values.integration_test.operations_app.contactpoint }}"
+            - name: "BULK-PROCESSOR_CONTACTPOINT"
+              value: "{{ .Values.integration_test.bulk_processor.contactpoint }}"
+            - name: "CHANNEL-CONNECTOR_CONTACTPOINT"
+              value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
+            - name: "KAFKA_BROKERS"
+              value: "{{ .Values.integration_test.kafka.brokers }}"
+            - name: "KAFKA_TOPICS"
+              value: "{{ .Values.integration_test.kafka.topics }}"
+            - name: "ZEEBE-OPERATIONS_CONTACTPOINT"
+              value: "{{ .Values.integration_test.zeebe_operations.contactpoint }}"
+            - name: "ZEEBE-OPERATIONS_NO-OF-WORKFLOWS"
+              value: "{{ .Values.integration_test.zeebe_operations.no_of_workflows }}"
+            - name: "MAX-RETRY-COUNT"
+              value: "{{ .Values.integration_test.max_retry_count }}"
+            - name: "RETRY-INTERVAL"
+              value: "{{ .Values.integration_test.retry_intervals }}"
+            - name: "DEFAULTS_TENANT"
+              value: "{{ .Values.integration_test.defaults.tenant }}"
+            - name: "DEFAULTS_AUTHORIZATION"
+              value: "{{ .Values.integration_test.defaults.authorization }}"
+            - name: "CHANNEL_BASE-URL"
+              value: "{{ .Values.integration_test.channel.base_url }}"
+            - name: "LOAN_BASE-URL"
+              value: "{{ .Values.integration_test.loan.base_url }}"
+            - name: "SAVINGS_BASE-URL"
+              value: "{{ .Values.integration_test.savings.base_url }}"
+          resources:
+            limits:
+              memory: "{{ .Values.integration_test.limits.memory }}"
+              cpu: "{{ .Values.integration_test.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.integration_test.requests.memory }}"
+              cpu: "{{ .Values.integration_test.requests.cpu }}"
+      restartPolicy: Never
+  backoffLimit: 4
+

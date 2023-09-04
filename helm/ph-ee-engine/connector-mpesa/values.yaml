@@ -1,0 +1,81 @@
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+
+enabled: false
+image: ""
+imageTag: latest
+SPRING_PROFILES_ACTIVE: ""
+LOGGING_LEVEL_ROOT: "INFO"
+zeebe_init_transfer_wait_timer: 10
+tenant: "lion"
+callback_host: "https://mpesa.sandbox.mifos.io/"
+retry_count: 3
+api_timeout: 60000
+channel:
+  host: "http://ph-ee-connector-channel"
+paygops:
+  host: "http://ph-ee-connector-ams-paygops"
+roster:
+  host: "http://ph-ee-connector-ams-roster"
+accounts:
+  roster:
+    name: "roster"
+    business_short_code: ""
+    till: ""
+    auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+    api_host: "https://sandbox.safaricom.co.ke"
+    client_key: "<client key>"
+    client_secret: "<client secret>"
+    pass_key: "<pass key>"
+  paygops:
+    name: "paygops"
+    business_short_code: ""
+    till: ""
+    auth_host: "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+    api_host: "https://sandbox.safaricom.co.ke"
+    client_key: "<client key>"
+    client_secret: "<client secret>"
+    pass_key: "<pass key>"
+paybill:
+  accountHoldingInstitutionId: "gorilla"
+  paygops:
+    business_short_code: ""
+    currency: "KES"
+  roster:
+    business_short_code: ""
+    currency: "KES"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+# Enabling this will publicly expose your Elasticsearch instance.
+# Only enable this if you have security enabled on your cluster
+ingress:
+  enabled: false
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: "" 
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local 
+  
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
+skip:
+  enabled: false

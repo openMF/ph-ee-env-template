@@ -1,53 +1,49 @@
-{{- if .Values.channel.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled -}}
+{{- $pathtype := .Values.ingress.pathtype -}}
+{{- $ingressPath := .Values.ingress.path -}}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-channel
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
   annotations:
-{{- if .Values.channel.ingress.annotations }}
-{{ toYaml .Values.channel.ingress.annotations | indent 4 }}
-{{- end }}
+{{ toYaml . | indent 4 }}
+{{- end }}    
 spec:
-  rules:
-    - host: "{{ .Values.channel.hostname }}"
-      http:
-        paths:
-        - path: "{{ .Values.channel.ingress.path }}"
-          pathType: Prefix
-          backend:
-{{- if .Values.channel.ingress.backend }}
-{{ toYaml .Values.channel.ingress.backend | indent 14 }}
-{{- end }}
-
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
+{{- if .Values.ingress.tls }}
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-{{- end }}
----
-{{- if .Values.channel.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
-kind: Ingress
-metadata:
-  name: ph-ee-connector-channel-gsma
-  annotations:
-{{- if .Values.channel.ingress.annotations }}
-{{ toYaml .Values.channel.ingress.annotations | indent 4 }}
-{{- end }}
-spec:
+  {{- if .ingressPath }}
+  {{- range  .Values.ingress.tls }}
+  - hosts:
+    {{- range  .hosts }}
+      - {{ . }}
+    {{- end }}
+    secretName: {{ .secretName }}
+  {{- end }}
+{{- else }}
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end }}
+{{- end}}
   rules:
-    - host: "{{ .Values.channel.stub_hostname }}"
-      http:
-        paths:
-        - path: "{{ .Values.channel.ingress.path }}"
-          pathType: Prefix
-          backend:
-{{- if .Values.channel.ingress.backend }}
-{{ toYaml .Values.channel.ingress.stub_backend | indent 14 }}
-{{- end }}
-
-  tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-{{- end }}
+  {{- range .Values.ingress.hosts }}
+  - host: {{ .host }}
+    http:
+      paths:
+      {{- range .paths }}
+      - path: {{ .path }}
+        pathType: {{ $pathtype }}
+        backend:
+          service:
+            name: {{ .backend.service.name}}
+            port:
+              number: {{ .backend.service.port.number}}
+      {{- end }}
+ {{- end }}
+ {{- end }}

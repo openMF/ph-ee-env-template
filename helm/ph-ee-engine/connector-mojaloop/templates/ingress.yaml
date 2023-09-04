@@ -1,26 +1,50 @@
-{{- if .Values.ph_ee_connector_mojaloop.ingress.enabled }}
-apiVersion: {{ .Values.ingress.apiversion }}
+{{- if .Values.ingress.enabled -}}
+{{- $pathtype := .Values.ingress.pathtype -}}
+{{- $ingressPath := .Values.ingress.path -}}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-mojaloop-java
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
   annotations:
-{{- if .Values.ph_ee_connector_mojaloop.ingress.annotations }}
-{{ toYaml .Values.ph_ee_connector_mojaloop.ingress.annotations | indent 4 }}
-{{- end }}
+{{ toYaml . | indent 4 }}
+{{- end }}    
 spec:
-  rules:
-    - host: "{{ .Values.ph_ee_connector_mojaloop.hostname }}"
-      http:
-        paths:
-        - path: "{{ .Values.ph_ee_connector_mojaloop.ingress.path }}"
-          pathType: Prefix
-          backend:
-{{- if .Values.ph_ee_connector_mojaloop.ingress.backend }}
-{{ toYaml .Values.ph_ee_connector_mojaloop.ingress.backend | indent 14 }}
-{{- end }}
-
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
+{{- if .Values.ingress.tls }}
   tls:
-    - hosts:
-        - "{{ .Values.wildcardhostname }}"
-      secretName: "{{ .Values.tls }}"
-{{- end }}
+  {{- if .ingressPath }}
+  {{- range  .Values.ingress.tls }}
+  - hosts:
+    {{- range  .hosts }}
+      - {{ . }}
+    {{- end }}
+    secretName: {{ .secretName }}
+  {{- end }}
+{{- else }}
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end }}
+{{- end}}
+  rules:
+  {{- range .Values.ingress.hosts }}
+  - host: {{ .host }}
+    http:
+      paths:
+      {{- range .paths }}
+      - path: {{ .path }}
+        pathType: {{ $pathtype }}
+        backend:
+          service:
+            name: {{ .backend.service.name}}
+            port:
+              number: {{ .backend.service.port.number}}
+      {{- end }}
+ {{- end }}
+ {{- end }}
+ 

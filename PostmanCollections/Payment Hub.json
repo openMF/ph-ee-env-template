@@ -42959,7 +42959,7 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);",
+                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);"
                 ],
                 "type": "text/javascript"
               }
@@ -43250,7 +43250,7 @@
               "script": {
                 "exec": [
                   "var jsonData = JSON.parse(responseBody);",
-                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);",
+                  "postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);"
                 ],
                 "type": "text/javascript"
               }

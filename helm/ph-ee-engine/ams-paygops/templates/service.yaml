@@ -1,3 +1,4 @@
+{{- if .Values.enabled -}}
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
@@ -18,3 +19,4 @@ spec:
     app: ph-ee-connector-ams-paygops
   sessionAffinity: None
   type: ClusterIP
+{{- end }}

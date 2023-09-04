@@ -1,0 +1,67 @@
+deployment:
+  apiVersion: "apps/v1"
+  
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+  
+enabled: true
+image: ""
+imageTag: latest
+elasticsearch_sslverification: false
+elasticsearch_security_enabled: false
+importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
+javaToolOptions: 
+logging:
+  level:
+    root: "INFO"
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+reporting:
+  enabled: true
+  fields:
+    amount: true
+    accountId: true
+    ams: true
+    clientCorrelationId: true
+    currency: true
+    customData: true
+    confirmationReceived: true
+    errorInformation: true
+    errorCode: false
+    errorDescription: true
+    externalId: true
+    initiator: false
+    initiatorType: false
+    isNotificationsFailureEnabled: false
+    isNotificationsSuccessEnabled: false
+    mpesaTransactionId: false
+    mpesaTransactionStatusRetryCount: false
+    originDate: false
+    partyLookupFailed: false
+    phoneNumber: true
+    processDefinitionKey: false
+    processInstanceKey: true
+    scenario: false
+    tenantId: false
+    timer: false
+    timestamp: true
+    transactionFailed: false
+    transactionId: false
+    transferCreateFailed: false
+    transferSettlementFailed: false
+    transferResponseCREATE: false
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"

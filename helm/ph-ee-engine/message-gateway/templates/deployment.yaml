@@ -1,13 +1,13 @@
-{{- if .Values.messagegateway.enabled -}}
+{{- if .Values.enabled -}}
 
-apiVersion: {{ .Values.deployment.apiversion }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "message-gateway"
+  name: message-gateway
   labels:
     app: message-gateway
 spec:
-  replicas: {{ .Values.messagegateway.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: message-gateway
@@ -16,23 +16,23 @@ spec:
       labels:
         app: message-gateway
       annotations:
-{{- if .Values.messagegateway.deployment.annotations }}
-{{ toYaml .Values.messagegateway.deployment.annotations | indent 8 }}
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
         - name: message-gateway
-          image: "{{ .Values.messagegateway.image }}:{{ .Values.messagegateway.imageTag }}"  
+          image: "{{ .Values.image }}"  
           ports:
             - containerPort: 9191
-          imagePullPolicy: "{{ .Values.messagegateway.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           resources:
             limits:
-              memory: "{{ .Values.messagegateway.limits.memory }}"
-              cpu: "{{ .Values.messagegateway.limits.cpu }}"
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
             requests:
-              memory: "{{ .Values.messagegateway.requests.memory }}"
-              cpu: "{{ .Values.messagegateway.requests.cpu }}"
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -48,24 +48,24 @@ spec:
 
           env:
             - name: "SPRING_DATASOURCE_URL"
-              value: "{{ .Values.messagegateway.DATASOURCE_URL }}"
+              value: "{{ .Values.DATASOURCE_URL }}"
             - name: "MYSQL_USERNAME"
-              value: "{{ .Values.messagegateway.MYSQL_USERNAME }}"
+              value: "{{ .Values.MYSQL_USERNAME }}"
             - name: "MYSQL_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: "messagegateway-secret"
                   key: "database-password"
             - name: "CALLBACKCONFIG_HOST"
-              value: "{{ .Values.messagegateway.CALLBACKCONFIG_HOST }}"
+              value: "{{ .Values.CALLBACKCONFIG_HOST }}"
             - name: "HOSTCONFIG_HOST"
-              value: "{{ .Values.messagegateway.HOSTCONFIG_HOST }}"
+              value: "{{ .Values.HOSTCONFIG_HOST }}"
             - name: "PROVIDERSOURCE_FROMDATABASE"
-              value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMDATABASE }}"
+              value: "{{ .Values.PROVIDERSOURCE_FROMDATABASE }}"
             - name: "PROVIDERSOURCE_FROMYML"
-              value: "{{ .Values.messagegateway.PROVIDERSOURCE_FROMYML }}"
+              value: "{{ .Values.PROVIDERSOURCE_FROMYML }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.messagegateway.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
             - name: "PROVIDERKEYS_TELERIVETAPIKEY"
               valueFrom:
                 secretKeyRef:
@@ -76,6 +76,12 @@ spec:
                 secretKeyRef:
                   name: "messagegateway-secret"
                   key: "project-id"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
