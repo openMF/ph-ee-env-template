@@ -1983,7 +1983,9 @@ kong:
     repository: revomatico/docker-kong-oidc
     tag: "latest"
   migrations:
-        init: true
+    init: true
+    preUpgrade: false
+    postUpgrade: false
   env:
     plugins: "bundled,oidc"
     database: "postgres"
@@ -2053,9 +2055,8 @@ kong:
         scope: openid
         introspection_endpoint: http://keycloak.localhost/auth/realms/Kong/protocol/openid-connect/token/introspect
         redirect_after_logout_uri: http://keycloak.localhost/auth/realms/kong-oidc/protocol/openid-connect/logout?redirect_uri=http://keycloak.localhost
-  migrations:
-    preUpgrade: false
-    postUpgrade: false
+
+    
 
 vouchers:
   enabled: false

@@ -19,8 +19,8 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     LOGGING_LEVEL_ROOT: "INFO"
     LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-    tenants: ""
-    DFSPIDS: ""
+    tenants: "rhino,gorilla"
+    DFSPIDS: "gorilla,lion"
 
   zeebe-cluster-helm:
     enabled: false
@@ -541,6 +541,7 @@ account_mapper:
     enabled: true
     image: docker.io/openmf/ph-ee-identity-account-mapper:latest
     hostname: "identity-mapper.sandbox.mifos.io"
+    LOGGING_LEVEL_ROOT: INFO    
     ingress:
       enabled: true
       pathtype: Prefix
@@ -560,10 +561,6 @@ account_mapper:
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
-
-    logging:
-      level:
-        ROOT: INFO
 
     async:
       core_pool_size: 10
