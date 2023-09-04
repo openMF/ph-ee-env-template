@@ -1927,7 +1927,7 @@ keycloak:
 integration_test:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-integration-test:latest
+  image: docker.io/openmf/ph-ee-integration-test:v1.2.0
   imagePullPolicy: Always
   gradle:
     command: ./gradlew test -Dcucumber.filter.tags="@gov" | echo "test successful"

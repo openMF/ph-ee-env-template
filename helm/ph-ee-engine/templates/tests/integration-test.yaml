@@ -13,8 +13,11 @@ spec:
         - name: ph-ee-integration-test
           image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
-          command: [ "/bin/bash" ]
-          args: [ "-c", '{{ .Values.integration_test.gradle.command }}' ]
+          ports:
+          - containerPort: 53013
+          command: [ "/bin/bash" , "-c" ]
+          args:
+          - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
           env:
             - name: "OPERATIONS-APP_CONTACTPOINT"
               value: "{{ .Values.integration_test.operations_app.contactpoint }}"
@@ -52,12 +55,16 @@ spec:
               value: "{{ .Values.integration_test.loan.contactpoint }}"
             - name: MOCK-SERVER_PORT
               value: "{{ .Values.integration_test.mock-server.port }}"
-            - name: callback_url
-              value: ""
             - name: IDENTITY-ACCOUNT-MAPPER_CONTACTPOINT
               value: "{{ .Values.integration_test.identity-account-mapper.contactpoint }}"
             - name: MIFOS-CONNECTOR_CONTACTPOINT
               value: "{{ .Values.integration_test.mifos-connector.contactpoint }}"
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: "CALLBACK_URL"
+              value: http://$(MY_POD_IP):53013
           resources:
             limits:
               memory: "{{ .Values.integration_test.limits.memory }}"
@@ -65,6 +72,7 @@ spec:
             requests:
               memory: "{{ .Values.integration_test.requests.memory }}"
               cpu: "{{ .Values.integration_test.requests.cpu }}"
+
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}
