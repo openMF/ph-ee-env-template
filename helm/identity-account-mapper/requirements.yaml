@@ -1,0 +1,26 @@
+dependencies:
+  - name: zeebe-cluster-helm
+    repository: https://helm.camunda.io
+    version: 1.0.0
+  - name: zeebe-operate-helm
+    repository: https://helm.camunda.io
+    version: 1.2.0
+    condition: "zeebe-operate-helm.enabled"
+  - name: elasticsearch
+    repository: http://helm.elastic.co
+    version: 7.16.3
+  - name: kibana
+    repository: http://helm.elastic.co
+    version: 7.16.3
+    condition: "kibana.enabled"
+  - name: mysql
+    version: 9.4.5
+    repository: "https://charts.bitnami.com/bitnami"
+    alias: idmappermysql
+    condition: "idmappermysql.enabled"
+  - name: kafka
+    version: 1.0.0
+    repository: "file://../ph-ee-engine/kafka"
+  - name: ph_ee_identity_account_mapper
+    version: 1.0.0
+    repository: "file://./account-mapper"

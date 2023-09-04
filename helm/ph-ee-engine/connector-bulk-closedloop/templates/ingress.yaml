@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: {{ .Values.ingress.apiversion }}
+kind: Ingress
+metadata:
+  name: ph-ee-connector-bulk-closedloop
+  annotations:
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.hostname }}"
+      http:
+        paths:
+        - path: "{{ .Values.ingress.path }}"
+          pathType: Prefix
+          backend:
+{{- if .Values.ingress.backend }}
+{{ toYaml .Values.ingress.backend | indent 14 }}
+{{- end }}
+
+  tls:
+    - hosts:
+      - "{{ .Values.wildcardhostname }}"
+      secretName: "{{ .Values.tls }}"
+{{- end }}

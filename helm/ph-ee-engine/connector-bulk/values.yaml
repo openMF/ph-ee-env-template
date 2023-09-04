@@ -1,0 +1,75 @@
+service:
+  apiversion: "v1"
+  annotations: {}
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: ""
+image: ""  
+imageTag: ""
+imagePullPolicy: ""
+SPRING_PROFILES_ACTIVE: ""
+camel_disable_ssl: true
+tenants: ""
+bucket_name: "paymenthub-ee-dev"
+operations_app: 
+  contactpoint: ""
+  endpoints:
+    batch_transaction: ""
+config:
+  partylookup:
+    enable: false
+  approval:
+    enable: false
+  ordering:
+    enable: false
+    field: ""
+  splitting:
+    enable: true
+    sub_batch_size: 5
+  formatting:
+    enable: false
+    standard: "DEFAULT"
+  mergeback:
+    enable: true
+  backpressure:
+    enable: false
+  completion_threshold_check:
+    enable: true
+    completion_rate: 95
+  deduplication:
+    enabled: true  
+aws:
+  region: "<region>"
+  access_key: "<access key>" 
+  secret_key: "<secret key>"  
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+# Enabling this will publicly expose your Elasticsearch instance.
+# Only enable this if you have security enabled on your cluster  
+ingress:
+  enabled: false
+  annotations: {}
+  # kubernetes.io/ingress.class: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: "" 
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: sandbox-secret
+  #    hosts:
+  #      - chart-example.local      
+
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

@@ -1,0 +1,29 @@
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+secret:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1" 
+
+enabled: true
+replicas: 1
+image: ""
+imageTag: latest
+SPRING_PROFILES_ACTIVE: "bb"
+api:
+  channel: "http://ph-ee-connector-channel"
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"

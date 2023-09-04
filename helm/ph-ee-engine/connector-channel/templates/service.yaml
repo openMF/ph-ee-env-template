@@ -1,0 +1,22 @@
+{{- if .Values.enabled -}}
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-channel
+  name: ph-ee-connector-channel
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8443
+    - name: http
+      port: 82
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    app: ph-ee-connector-channel
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}  

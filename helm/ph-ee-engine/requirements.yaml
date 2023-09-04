@@ -26,3 +26,88 @@ dependencies:
     version: 18.3.0
     repository: https://codecentric.github.io/helm-charts
     condition: "keycloak.enabled"
+  - name: redis
+    version: 17.9.3
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: "redis.enabled"
+  - name: operations_app
+    version: 1.0.0
+    repository: "file://./operations-app"
+    condition: "operations_app.enabled"
+  - name: ph_ee_connector_gsma
+    version: 1.0.0
+    repository: "file://./connector-gsma"
+    condition: "ph_ee_connector_gsma.enabled"
+  - name: notifications
+    version: 1.0.0
+    repository: "file://./connector-notifications"
+    condition: "notifications.enabled"
+  - name: paygops_connector
+    version: 1.0.0
+    repository: "file://./ams-paygops"
+    condition: "paygops_connector.enabled"
+  - name: roster_connector
+    version: 1.0.0
+    repository: "file://./ams-roster"
+    condition: "roster_connector.enabled"
+  - name: mpesa
+    version: 1.0.0
+    repository: "file://./connector-mpesa"
+    condition: "mpesa.enabled"
+  - name: operations_web
+    version: 1.0.0
+    repository: "file://./operations-web"
+    condition: "operations_web.enabled"
+  - name: ph_ee_connector_mojaloop
+    version: 1.0.0
+    repository: "file://./connector-mojaloop"
+    condition: "ph_ee_connector_mojaloop.enabled"
+  - name: ph_ee_connector_slcb
+    version: 1.0.0
+    repository: "file://./connector-slcb"
+    condition: "ph_ee_connector_slcb.enabled"
+  - name: importer_es
+    version: 1.0.0
+    repository: "file://./operations-importer-es"
+    condition: "importer_es.enabled"
+  - name: messagegateway
+    version: 1.0.0
+    repository: "file://./message-gateway"
+    condition: "messagegateway.enabled"
+  - name: ph_ee_connector_ams_mifos
+    version: 1.0.0
+    repository: "file://./connector-ams-mifos"
+    condition: "ph_ee_connector_ams_mifos.enabled"
+  - name: connector_bulk
+    version: 1.0.0
+    repository: "file://./connector-bulk"
+    condition: "connector_bulk.enabled"
+  - name: channel
+    version: 1.0.0
+    repository: "file://./connector-channel"
+    condition: "channel.enabled"
+  - name: importer_rdbms
+    version: 1.0.0
+    repository: "file://./operations-importer-rdbms"
+    condition: "importer_rdbms.enabled"
+  - name: zeebe_ops
+    version: 1.0.0
+    repository: "file://./zeebe-ops"
+    condition: "zeebe_ops.enabled"
+  - name: kafka
+    version: 1.0.0
+    repository: "file://./kafka"
+    condition: "kafka.enabled"
+  - name: connector_bulk_closedloop
+    version: 1.0.0
+    repository: "file://./connector-bulk-closedloop"
+    condition: "connector_bulk_closedloop.enabled"
+  - name: mockpayment
+    version: 1.0.0
+    repository: "file://./connector-mock-payment-schema"
+    condition: "mockpayment.enabled"
+
+  - name: vouchers
+    version: 1.0.0
+    repository: "file://./vouchers"
+    condition: "vouchers.enabled"

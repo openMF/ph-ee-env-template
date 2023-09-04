@@ -1,0 +1,18 @@
+{{- if .Values.enabled -}}
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-gsma
+  name: ph-ee-connector-gsma
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: ph-ee-connector-gsma
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}  

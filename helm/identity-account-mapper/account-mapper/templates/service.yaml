@@ -1,0 +1,18 @@
+{{- if .Values.enabled -}}
+apiVersion: {{ .Values.service.apiVersion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-identity-account-mapper
+  name: ph-ee-identity-account-mapper
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ph-ee-identity-account-mapper
+  sessionAffinity: None
+  type: ClusterIP
+  {{- end }}

@@ -1,0 +1,135 @@
+{{- if .Values.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph-ee-connector-mpesa
+  labels:
+    app: ph-ee-connector-mpesa
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-mpesa
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-mpesa
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-mpesa
+          image: "{{ .Values.image }}"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_INIT-TRANSFER_WAIT-TIMER"
+              value: "{{ .Values.zeebe_init_transfer_wait_timer }}"
+            - name: "MPESA_LOCAL_HOST"
+              value: "{{ .Values.callback_host }}"
+            - name: "MPESA_API_TIMEOUT"
+              value: "{{ .Values.api_timeout }}"
+            - name: "MPESA_MAX-RETRY-COUNT"
+              value: "{{ .Values.retry_count }}"
+            - name: "TENANT"
+              value: "{{ .Values.tenant }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
+            - name: "ACCOUNTS_ROSTER_SHORTCODE"
+              value: "{{ .Values.accounts.roster.business_short_code }}"
+            - name: "ACCOUNTS_ROSTER_TILL"
+              value: "{{ .Values.accounts.roster.till }}"
+            - name: "ACCOUNTS_ROSTER_AUTHHOST"
+              value: "{{ .Values.accounts.roster.auth_host }}"
+            - name: "ACCOUNTS_ROSTER_APIHOST"
+              value: "{{ .Values.accounts.roster.api_host }}"
+            - name: "ACCOUNTS_ROSTER_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-roster"
+                  key: "client-key"
+            - name: "ACCOUNTS_ROSTER_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-roster"
+                  key: "client-secret"
+            - name: "ACCOUNTS_ROSTER_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-roster"
+                  key: "pass-key"
+            - name: "ACCOUNTS_PAYGOPS_SHORTCODE"
+              value: "{{ .Values.accounts.paygops.business_short_code}}"
+            - name: "ACCOUNTS_PAYGOPS_TILL"
+              value: "{{ .Values.accounts.paygops.till }}"
+            - name: "ACCOUNTS_PAYGOPS_AUTHHOST"
+              value: "{{ .Values.accounts.paygops.auth_host }}"
+            - name: "ACCOUNTS_PAYGOPS_APIHOST"
+              value: "{{ .Values.accounts.paygops.api_host }}"
+            - name: "ACCOUNTS_PAYGOPS_CLIENTKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-paygops"
+                  key: "client-key"
+            - name: "ACCOUNTS_PAYGOPS_CLIENTSECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-paygops"
+                  key: "client-secret"
+            - name: "ACCOUNTS_PAYGOPS_PASSKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mpesa-secret-paygops"
+                  key: "pass-key"
+            - name: "SKIP_ENABLED"
+              value: "{{ .Values.skip.enabled }}"
+            - name: "PAYGOPS_HOST"
+              value: "{{ .Values.paygops.host }}"
+            - name: "ROSTER_HOST"
+              value: "{{ .Values.roster.host }}"
+            - name: "CHANNEL_HOST"
+              value: "{{ .Values.channel.host }}"
+            - name: "ACCOUNTS_PAYGOPS_PAYBILL_SHORTCODE"
+              value: "{{ .Values.paybill.paygops.business_short_code }}"
+            - name: "ACCOUNTS_PAYGOPS_CURRENCY"
+              value: "{{ .Values.paybill.paygops.currency }}"
+            - name: "ACCOUNTS_ROSTER_PAYBILL_SHORTCODE"
+              value: "{{ .Values.paybill.roster.business_short_code }}"
+            - name: "ACCOUNTS_ROSTER_CURRENCY"
+              value: "{{ .Values.paybill.roster.currency }}"
+            - name: "paybill_accountHoldingInstitutionId"
+              value: "{{ .Values.paybill.accountHoldingInstitutionId }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
+{{- end }}

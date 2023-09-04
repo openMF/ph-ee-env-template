@@ -1,0 +1,15 @@
+{{- if .Values.managedServiceAccount }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ph-ee-importer-es-role-binding
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ph-ee-importer-es-role
+subjects:
+- kind: ServiceAccount
+  name: ph-ee-importer-es
+  namespace: {{ .Release.Namespace }}
+{{- end -}}

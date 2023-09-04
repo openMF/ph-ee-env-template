@@ -1,0 +1,104 @@
+ph-ee-engine:
+  ingress:
+    apiversion: "networking.k8s.io/v1"
+
+  deployment:
+    apiversion: "apps/v1"
+
+  service:
+    apiversion: "v1"
+
+  secret:
+    apiversion: "v1"
+
+  configmap:
+    apiversion: "v1"
+
+  camunda-platform-helm:
+    enabled: false
+
+  zeebe-operate-helm:
+    enabled: false
+
+  ph_ee_connector_gsma:
+    enabled: false
+
+  notifications:
+    enabled: false
+
+  channel:
+    enabled: false
+    ingress:
+      enabled: false 
+
+  operations_web:
+    enabled: false
+    ingress:
+      enabled: false
+           
+  operations_app:
+    enabled: false
+    ingress:
+      enabled: false
+
+  operations:
+    mysql:
+      enabled: false
+
+  connector_bulk:
+    enabled: false
+    ingress:
+      enabled: false                      
+
+  importer_es:
+    enabled: false
+
+  importer_rdbms:
+    enabled: false
+
+  zeebe_ops:
+    enabled: false
+
+  elasticsearch:
+    enabled: false
+
+  mockpayment:
+    enabled: false
+
+  kibana:
+    enabled: false
+
+  kafka:
+    enabled: false
+
+  redis:
+    enabled: false
+
+  keycloak:
+    enabled: true
+    ingress:
+      enabled: false
+      ingressClassName: "kong"
+      rules:
+        - host: 'keycloak.sandbox.mifos.io'
+          paths:
+          - path: /
+            pathType: Prefix
+      tls: []
+    
+  kong:
+    enabled: true
+    image:
+      repository: revomatico/docker-kong-oidc
+      tag: "latest"
+    env:
+      plugins: "bundled,oidc"
+    admin:
+      enabled: true
+      http:
+        enabled: true
+      tls:
+        enabled: false
+      ingress:
+        enabled: false
+        hostname: admin-kong.sandbox.mifos.io

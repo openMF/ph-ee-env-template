@@ -1,0 +1,3661 @@
+{
+	"info": {
+		"_postman_id": "0f06e33a-12a2-49ed-8b9c-6ba059f6a42e",
+		"name": "Mojaloop Setup",
+		"description": "Setup the mojaloop environment in any cluster with mojaloop chart already deployed. Use Mojaloop-Local environment along with this collection.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17902615"
+	},
+	"item": [
+		{
+			"name": "Hub Account",
+			"item": [
+				{
+					"name": "Add Hub Account-HUB_MULTILATERAL_SETTLEMENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"type": "text",
+								"value": "{{payerfsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"HUB_MULTILATERAL_SETTLEMENT\",\n  \"currency\": \"{{currency}}\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/participants/Hub/accounts",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"participants",
+								"Hub",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Hub Account-HUB_RECONCILIATION",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payerfsp}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"HUB_RECONCILIATION\",\n  \"currency\": \"{{currency}}\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/participants/Hub/accounts",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"participants",
+								"Hub",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hub Set Endpoint-SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL\",\n  \"value\": \"sridevi.miriyala@modusbox.com\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/participants/Hub/endpoints",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"participants",
+								"Hub",
+								"endpoints"
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -X POST     {{HOST_CENTRAL_LEDGER}}/participants/testfsp2/initialPositionAndLimits     -H 'Cache-Control: no-cache'     -H 'Content-Type: application/json'     -d '{\n    \\\"currency\\\": \\\"USD\\\",\n    \\\"limit\\\": {\n      \\\"type\\\": \\\"NET_DEBIT_CAP\\\",\n      \\\"value\\\": 1000\n    },\n    \\\"initialPosition\\\": 0\n  }'"
+					},
+					"response": [
+						{
+							"name": "2. Create Initial Position and Limits",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cache-Control",
+										"value": "no-cache"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currency\": \"USD\",\n    \"limit\": {\n      \"type\": \"NET_DEBIT_CAP\",\n      \"value\": 1000\n    },\n    \"initialPosition\": 0\n  }"
+								},
+								"url": {
+									"raw": "http://http:/central-ledger.sandbox.fynarfin.io/admin/participants/testfsp/initialPositionAndLimits",
+									"protocol": "http",
+									"host": [
+										"http"
+									],
+									"port": "",
+									"path": [
+										"central-ledger.sandbox.fynarfin.io",
+										"admin",
+										"participants",
+										"testfsp",
+										"initialPositionAndLimits"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Hub Set Endpoint-NET_DEBIT_CAP_ADJUSTMENT_EMAIL Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"NET_DEBIT_CAP_ADJUSTMENT_EMAIL\",\n  \"value\": \"sridevi.miriyala@modusbox.com\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/participants/Hub/endpoints",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"participants",
+								"Hub",
+								"endpoints"
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -X POST     {{HOST_CENTRAL_LEDGER}}/participants/testfsp2/initialPositionAndLimits     -H 'Cache-Control: no-cache'     -H 'Content-Type: application/json'     -d '{\n    \\\"currency\\\": \\\"USD\\\",\n    \\\"limit\\\": {\n      \\\"type\\\": \\\"NET_DEBIT_CAP\\\",\n      \\\"value\\\": 1000\n    },\n    \\\"initialPosition\\\": 0\n  }'"
+					},
+					"response": [
+						{
+							"name": "2. Create Initial Position and Limits",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cache-Control",
+										"value": "no-cache"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currency\": \"USD\",\n    \"limit\": {\n      \"type\": \"NET_DEBIT_CAP\",\n      \"value\": 1000\n    },\n    \"initialPosition\": 0\n  }"
+								},
+								"url": {
+									"raw": "http://http:/central-ledger.sandbox.fynarfin.io/admin/participants/testfsp/initialPositionAndLimits",
+									"protocol": "http",
+									"host": [
+										"http"
+									],
+									"port": "",
+									"path": [
+										"central-ledger.sandbox.fynarfin.io",
+										"admin",
+										"participants",
+										"testfsp",
+										"initialPositionAndLimits"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Hub Endpoint-NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL\",\n  \"value\": \"sridevi.miriyala@modusbox.com\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/participants/Hub/endpoints",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"participants",
+								"Hub",
+								"endpoints"
+							]
+						},
+						"description": "Generated from a curl request: \ncurl -i -X POST     {{HOST_CENTRAL_LEDGER}}/participants/testfsp2/initialPositionAndLimits     -H 'Cache-Control: no-cache'     -H 'Content-Type: application/json'     -d '{\n    \\\"currency\\\": \\\"USD\\\",\n    \\\"limit\\\": {\n      \\\"type\\\": \\\"NET_DEBIT_CAP\\\",\n      \\\"value\\\": 1000\n    },\n    \\\"initialPosition\\\": 0\n  }'"
+					},
+					"response": [
+						{
+							"name": "2. Create Initial Position and Limits",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cache-Control",
+										"value": "no-cache"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currency\": \"USD\",\n    \"limit\": {\n      \"type\": \"NET_DEBIT_CAP\",\n      \"value\": 1000\n    },\n    \"initialPosition\": 0\n  }"
+								},
+								"url": {
+									"raw": "http://http:/central-ledger.sandbox.fynarfin.io/participants/testfsp/initialPositionAndLimits",
+									"protocol": "http",
+									"host": [
+										"http"
+									],
+									"port": "",
+									"path": [
+										"central-ledger.sandbox.fynarfin.io",
+										"participants",
+										"testfsp",
+										"initialPositionAndLimits"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Settlement Models",
+			"item": [
+				{
+					"name": "Create settlement model DEFERREDNET",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"DEFERREDNET\",\n  \"settlementGranularity\": \"NET\",\n  \"settlementInterchange\": \"MULTILATERAL\",\n  \"settlementDelay\": \"DEFERRED\",\n  \"requireLiquidityCheck\": true,\n  \"ledgerAccountType\": \"POSITION\",\n  \"autoPositionReset\": true,\n  \"settlementAccountType\" : \"SETTLEMENT\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/settlementModels",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"settlementModels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create settlement model DEFERRED NET USD",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"DEFERREDNETUSD\",\n  \"settlementGranularity\": \"NET\",\n  \"settlementInterchange\": \"MULTILATERAL\",\n  \"settlementDelay\": \"DEFERRED\",\n  \"currency\": \"USD\",\n  \"requireLiquidityCheck\": true,\n  \"ledgerAccountType\": \"POSITION\",\n  \"autoPositionReset\": true,\n  \"settlementAccountType\" : \"SETTLEMENT\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_CENTRAL_LEDGER}}/settlementModels",
+							"host": [
+								"{{HOST_CENTRAL_LEDGER}}"
+							],
+							"path": [
+								"settlementModels"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FSP Onboarding",
+			"item": [
+				{
+					"name": "payerfsp (p2p transfers)",
+					"item": [
+						{
+							"name": "Add payerfsp - TRANSFERS",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"{{payerfsp}}\",\"currency\": \"{{currency}}\"}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add initial position and limits - payerfsp",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"currency\": \"{{currency}}\",\n\t\"limit\": {\n\t  \"type\": \"NET_DEBIT_CAP\",\n\t  \"value\": 1000000\n\t},\n\t\"initialPosition\": 0\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/initialPositionAndLimits",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"initialPositionAndLimits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT Batch",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{requestId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT Batch Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{requestId}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_GET\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - QUOTES PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_QUOTES\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - TRANSFER POST",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_POST\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/transfers\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - TRANSFER PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/transfers/{{transferId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - TRANSFER ERROR",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/switch/transfers/{{transferId}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT SUB-ID PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT SUB-ID PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT SUB-ID DELETE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_DELETE\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES SUB-ID GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES SUB-ID PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES SUB-ID PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}/{{payerfsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - FSPIOP_CALLBACK_URL_TRX_REQ_SERVICE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRX_REQ_SERVICE\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - FSPIOP_CALLBACK_URL_AUTHORIZATIONS",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_AUTHORIZATIONS\",\n  \"value\": \"{{PAYER_CALLBACK_HOST}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Record Funds In - payerfsp ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var uuid = require('uuid');",
+											"var generatedUUID = uuid.v4();",
+											"pm.environment.set('fundsInPrepareTransferId', generatedUUID);",
+											"pm.environment.set('fundsInPrepareAmount', 5000);",
+											"",
+											"",
+											"const payerfspGetStatusRequest = {",
+											"  url: pm.environment.get(\"HOST_CENTRAL_LEDGER\")+pm.environment.get(\"BASE_CENTRAL_LEDGER_ADMIN\")+'/participants/'+pm.environment.get(\"payerfsp\")+'/accounts',",
+											"  method: 'GET',",
+											"  header: {",
+											"      \"Authorization\":\"Bearer \"+pm.environment.get(\"HUB_OPERATOR_BEARER_TOKEN\"),",
+											"      \"FSPIOP-Source\": pm.environment.get(\"hub_operator\"),",
+											"      \"Content-Type\": \"application/json\"",
+											"  }",
+											"};",
+											"pm.sendRequest(payerfspGetStatusRequest, function (err, response) {",
+											"    console.log(response.json())",
+											"    var jsonData = response.json()",
+											"    for(var i in jsonData) {",
+											"        if((jsonData[i].ledgerAccountType === 'SETTLEMENT') && (jsonData[i].currency === pm.environment.get(\"currency\"))) {",
+											"            pm.environment.set(\"payerfspSettlementAccountId\",jsonData[i].id)",
+											"            pm.environment.set(\"payerfspSettlementAccountBalanceBeforeFundsIn\",jsonData[i].value)",
+											"        }",
+											"    }",
+											"});",
+											"",
+											"const hubGetStatusRequest = {",
+											"  url: pm.environment.get(\"HOST_CENTRAL_LEDGER\")+pm.environment.get(\"BASE_CENTRAL_LEDGER_ADMIN\")+'/participants/Hub/accounts',",
+											"  method: 'GET',",
+											"  header: {",
+											"      \"Authorization\":\"Bearer \"+pm.environment.get(\"BEARER_TOKEN\"),",
+											"      \"FSPIOP-Source\": pm.environment.get(\"payerfsp\"),",
+											"      \"Content-Type\": \"application/json\"",
+											"  }",
+											"};",
+											"pm.sendRequest(hubGetStatusRequest, function (err, response) {",
+											"    console.log(response.json())",
+											"    var jsonData = response.json()",
+											"    for(var i in jsonData) {",
+											"        if((jsonData[i].ledgerAccountType === 'HUB_RECONCILIATION') && (jsonData[i].currency === pm.environment.get(\"currency\"))) {",
+											"            pm.environment.set(\"hubReconAccountBalanceBeforeFundsIn\",jsonData[i].value)",
+											"        }",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{BEARER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "FSPIOP-Source",
+										"value": "{{payerfsp}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"transferId\": \"{{fundsInPrepareTransferId}}\",\n  \"externalReference\": \"string\",\n  \"action\": \"recordFundsIn\",\n  \"reason\": \"string\",\n  \"amount\": {\n    \"amount\":\"{{fundsInPrepareAmount}}\" ,\n    \"currency\": \"{{currency}}\"\n  },\n  \"extensionList\": {\n    \"extension\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\"\n      }\n    ]\n  }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payerfsp}}/accounts/{{payerfspSettlementAccountId}}",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payerfsp}}",
+										"accounts",
+										"{{payerfspSettlementAccountId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "payeefsp (p2p transfers)",
+					"item": [
+						{
+							"name": "Add payeefsp - TRANSFERS",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"{{payeefsp}}\",\"currency\": \"{{currency}}\"}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add initial position and limits - payeefsp",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"currency\": \"{{currency}}\",\n\t\"limit\": {\n\t  \"type\": \"NET_DEBIT_CAP\",\n\t  \"value\": 1000000\n\t},\n\t\"initialPosition\": 0\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/initialPositionAndLimits",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"initialPositionAndLimits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT Batch",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{requestId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTICIPANT PUT Batch Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{requestId}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_GET\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - PARTIES PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/parties/{{partyIdType}}/{{partyIdentifier}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payerfsp callback - QUOTES PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_QUOTES\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - TRANSFER POST",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_POST\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/transfers\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - TRANSFER PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/transfers/{{transferId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - TRANSFER ERROR",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_TRANSFER_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/switch/transfers/{{transferId}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - PARTICIPANT SUB-ID PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - PARTICIPANT SUB-ID PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - PARTIES SUB-ID GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - PARTIES SUB-ID PUT",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add payeefsp callback - PARTIES SUB-ID PUT Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR\",\n  \"value\": \"{{PAYEE_CALLBACK_HOST}}/{{payeefsp}}/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/endpoints",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Record Funds In - payeefsp ",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var uuid = require('uuid');",
+											"var generatedUUID = uuid.v4();",
+											"pm.environment.set('fundsInPrepareTransferId', generatedUUID);",
+											"pm.environment.set('fundsInPrepareAmount', 5000);",
+											"",
+											"",
+											"const payerfspGetStatusRequest = {",
+											"  url: pm.environment.get(\"HOST_CENTRAL_LEDGER\")+pm.environment.get(\"BASE_CENTRAL_LEDGER_ADMIN\")+'/participants/'+pm.environment.get(\"payeefsp\")+'/accounts',",
+											"  method: 'GET',",
+											"  header: {",
+											"      \"Authorization\":\"Bearer \"+pm.environment.get(\"HUB_OPERATOR_BEARER_TOKEN\"),",
+											"      \"FSPIOP-Source\": pm.environment.get(\"hub_operator\"),",
+											"      \"Content-Type\": \"application/json\"",
+											"  }",
+											"};",
+											"pm.sendRequest(payerfspGetStatusRequest, function (err, response) {",
+											"    console.log(response.json())",
+											"    var jsonData = response.json()",
+											"    for(var i in jsonData) {",
+											"        if((jsonData[i].ledgerAccountType === 'SETTLEMENT') && (jsonData[i].currency === pm.environment.get(\"currency\"))) {",
+											"            pm.environment.set(\"payeefspSettlementAccountId\",jsonData[i].id)",
+											"            pm.environment.set(\"payeefspSettlementAccountBalanceBeforeFundsIn\",jsonData[i].value)",
+											"        }",
+											"    }",
+											"});",
+											"",
+											"const hubGetStatusRequest = {",
+											"  url: pm.environment.get(\"HOST_CENTRAL_LEDGER\")+pm.environment.get(\"BASE_CENTRAL_LEDGER_ADMIN\")+'/participants/Hub/accounts',",
+											"  method: 'GET',",
+											"  header: {",
+											"      \"Authorization\":\"Bearer \"+pm.environment.get(\"BEARER_TOKEN\"),",
+											"      \"FSPIOP-Source\": pm.environment.get(\"payerfsp\"),",
+											"      \"Content-Type\": \"application/json\"",
+											"  }",
+											"};",
+											"pm.sendRequest(hubGetStatusRequest, function (err, response) {",
+											"    console.log(response.json())",
+											"    var jsonData = response.json()",
+											"    for(var i in jsonData) {",
+											"        if((jsonData[i].ledgerAccountType === 'HUB_RECONCILIATION') && (jsonData[i].currency === pm.environment.get(\"currency\"))) {",
+											"            pm.environment.set(\"hubReconAccountBalanceBeforeFundsIn\",jsonData[i].value)",
+											"        }",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{HUBOPERATOR_BEARER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "FSPIOP-Source",
+										"type": "text",
+										"value": "{{hub_operator}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"transferId\": \"{{fundsInPrepareTransferId}}\",\n  \"externalReference\": \"string\",\n  \"action\": \"recordFundsIn\",\n  \"reason\": \"string\",\n  \"amount\": {\n    \"amount\":\"{{fundsInPrepareAmount}}\" ,\n    \"currency\": \"{{currency}}\"\n  },\n  \"extensionList\": {\n    \"extension\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\"\n      }\n    ]\n  }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_CENTRAL_LEDGER}}/participants/{{payeefsp}}/accounts/{{payeefspSettlementAccountId}}",
+									"host": [
+										"{{HOST_CENTRAL_LEDGER}}"
+									],
+									"path": [
+										"participants",
+										"{{payeefsp}}",
+										"accounts",
+										"{{payeefspSettlementAccountId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Add Users to Simulators",
+			"item": [
+				{
+					"name": "payeefsp",
+					"item": [
+						{
+							"name": "Add User - 27713803912",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('fullName', 'Siabelo Maroka');",
+											"pm.environment.set('firstName', 'Siabelo');",
+											"pm.environment.set('lastName', 'Maroka');",
+											"pm.environment.set('dob', '3/3/1973');",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"party\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27713803912\",\n            \"fspId\": \"{{payeefsp}}\"\n        },\n        \"name\": \"{{fullName}}\",\n        \"personalInfo\": {\n            \"complexName\": {\n                \"firstName\": \"{{firstName}}\",\n                \"lastName\": \"{{lastName}}\"\n            },\n            \"dateOfBirth\": \"{{dob}}\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_SIMULATOR}}/{{payeefsp}}/parties/MSISDN/27713803912",
+									"host": [
+										"{{HOST_SIMULATOR}}"
+									],
+									"path": [
+										"{{payeefsp}}",
+										"parties",
+										"MSISDN",
+										"27713803912"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User - 27713803913",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('fullName', 'Nanga Makwetla');",
+											"pm.environment.set('firstName', 'Nanga');",
+											"pm.environment.set('lastName', 'Makwetla');",
+											"pm.environment.set('dob', '4/4/1974');",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"party\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27713803932\",\n            \"fspId\": \"{{payeefsp}}\"\n        },\n        \"name\": \"{{fullName}}\",\n        \"personalInfo\": {\n            \"complexName\": {\n                \"firstName\": \"{{firstName}}\",\n                \"lastName\": \"{{lastName}}\"\n            },\n            \"dateOfBirth\": \"{{dob}}\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_SIMULATOR}}/{{payeefsp}}/parties/MSISDN/27713803913",
+									"host": [
+										"{{HOST_SIMULATOR}}"
+									],
+									"path": [
+										"{{payeefsp}}",
+										"parties",
+										"MSISDN",
+										"27713803913"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User - 27713803914",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('fullName', 'Abimbola Alao');",
+											"pm.environment.set('firstName', 'Abimbola');",
+											"pm.environment.set('lastName', 'Alao');",
+											"pm.environment.set('dob', '5/5/1975');",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"party\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27713803914\",\n            \"fspId\": \"{{payeefsp}}\"\n        },\n        \"name\": \"{{fullName}}\",\n        \"personalInfo\": {\n            \"complexName\": {\n                \"firstName\": \"{{firstName}}\",\n                \"lastName\": \"{{lastName}}\"\n            },\n            \"dateOfBirth\": \"{{dob}}\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_SIMULATOR}}/{{payeefsp}}/parties/MSISDN/27713803914",
+									"host": [
+										"{{HOST_SIMULATOR}}"
+									],
+									"path": [
+										"{{payeefsp}}",
+										"parties",
+										"MSISDN",
+										"27713803914"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User - 27713803915",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('fullName', 'Adeola Baba');",
+											"pm.environment.set('firstName', 'Adeola');",
+											"pm.environment.set('lastName', 'Baba');",
+											"pm.environment.set('dob', '6/6/1976');",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"party\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27713803915\",\n            \"fspId\": \"{{payeefsp}}\"\n        },\n        \"name\": \"{{fullName}}\",\n        \"personalInfo\": {\n            \"complexName\": {\n                \"firstName\": \"{{firstName}}\",\n                \"lastName\": \"{{lastName}}\"\n            },\n            \"dateOfBirth\": \"{{dob}}\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_SIMULATOR}}/{{payeefsp}}/parties/MSISDN/27713803915",
+									"host": [
+										"{{HOST_SIMULATOR}}"
+									],
+									"path": [
+										"{{payeefsp}}",
+										"parties",
+										"MSISDN",
+										"27713803915"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User - {{pathfinderMSISDN}}",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set('fullName', 'SimFirst SimLast');",
+											"pm.variables.set('firstName', 'SimFirst');",
+											"pm.variables.set('lastName', 'SimLast');",
+											"pm.variables.set('dob', '2010-10-10');",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"party\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"{{pathfinderMSISDN}}\",\n            \"fspId\": \"{{payeefsp}}\"\n        },\n        \"name\": \"{{fullName}}\",\n        \"personalInfo\": {\n            \"complexName\": {\n                \"firstName\": \"{{firstName}}\",\n                \"lastName\": \"{{lastName}}\"\n            },\n            \"dateOfBirth\": \"{{dob}}\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{HOST_SIMULATOR}}/{{payeefsp}}/parties/MSISDN/{{pathfinderMSISDN}}",
+									"host": [
+										"{{HOST_SIMULATOR}}"
+									],
+									"path": [
+										"{{payeefsp}}",
+										"parties",
+										"MSISDN",
+										"{{pathfinderMSISDN}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Oracle Onboarding",
+			"item": [
+				{
+					"name": "Register Simulator Oracle for MSISDN",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": ""
+							},
+							{
+								"key": "Postman-Token",
+								"value": "003d55c1-2ebc-4e25-b9da-26bf053a8a5c"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oracleIdType\": \"MSISDN\",\n  \"endpoint\": {\n    \"value\": \"{{HOST_SIMULATOR_K8S_CLUSTER}}/oracle\",\n    \"endpointType\": \"URL\"\n  },\n  \"currency\": \"USD\",\n  \"isDefault\": true\n}"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_ADMIN}}/oracles",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_ADMIN}}"
+							],
+							"path": [
+								"oracles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Participant 27720201001 against MSISDN Simulator for PayerFSP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payerfsp}}"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "7aa4c9f3-1738-49f0-8904-7821e2336692,4127ff87-7d17-483c-8e3e-f0b562a16d84"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.11.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "gzip, deflate"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fspId\": \"payerfsp\",\n    \"currency\": \"USD\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27720201001",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27720201001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Participant 27720201002 against MSISDN Simulator for PayeeFSP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "7aa4c9f3-1738-49f0-8904-7821e2336692,4127ff87-7d17-483c-8e3e-f0b562a16d84"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.11.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "gzip, deflate"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fspId\": \"payeefsp\",\n    \"currency\": \"USD\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27720201002",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27720201002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Participant {{pathfinderMSISDN}} against MSISDN Simulator for PayeeFSP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "7aa4c9f3-1738-49f0-8904-7821e2336692,4127ff87-7d17-483c-8e3e-f0b562a16d84"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.11.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "gzip, deflate"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fspId\": \"payeefsp\",\n    \"currency\": \"USD\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/{{pathfinderMSISDN}}",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"{{pathfinderMSISDN}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Party record for MSISDN 27720201002 on simulator for PayeeFSP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"party\": {\n        \"partyIdInfo\": {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdentifier\": \"27720201002\",\n            \"fspId\": \"payeefsp\"\n        },\n        \"name\": \"SiabeloMaroka\",\n        \"personalInfo\": {\n            \"complexName\": {\n                \"firstName\": \"Aruna\",\n                \"lastName\": \"Switch\"\n            },\n            \"dateOfBirth\": \"1/7/1980\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{HOST_SIMULATOR}}/{{payeefsp}}/parties/MSISDN/27720201002",
+							"host": [
+								"{{HOST_SIMULATOR}}"
+							],
+							"path": [
+								"{{payeefsp}}",
+								"parties",
+								"MSISDN",
+								"27720201002"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add Users to ALS / mock-pathfinder",
+			"item": [
+				{
+					"name": "Add 27713803910 to payerfsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payerfsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payerfsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27713803910",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27713803910"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add 27713803911 to payerfsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202 or 200\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payerfsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payerfsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27713803911",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27713803911"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add 27713803912 to payeefsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payeefsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27713803912",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27713803912"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add {{pathfinderMSISDN}} to payeefsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payeefsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/{{pathfinderMSISDN}}",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"{{pathfinderMSISDN}}"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add 27713803913 to payeefsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payeefsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27713803913",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27713803913"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add 27713803914 to payeefsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payeefsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27713803914",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27713803914"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Add 27713803915 to payeefsp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.environment.get('participant')) {",
+									"    pm.environment.set('participant', 'testfsp');   ",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.be.success;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.interoperability.participants+json;version=1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.interoperability.participants+json;version=1.0"
+							},
+							{
+								"key": "Date",
+								"value": "{{transferDate}}"
+							},
+							{
+								"key": "FSPIOP-Source",
+								"value": "{{payeefsp}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"fspId\": \"{{payeefsp}}\",\n \"currency\": \"USD\"\n}\n"
+						},
+						"url": {
+							"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/participants/MSISDN/27713803915",
+							"host": [
+								"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+							],
+							"path": [
+								"participants",
+								"MSISDN",
+								"27713803915"
+							]
+						},
+						"description": "Set the Proxy URIs for a specific FSP. This will allow the switch to re-direct the incoming Quote requests to the respective FSP.\n\n*Note: connectorPort has been deprecated and is no longer used, but still required in the request."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scenarios",
+			"item": [
+				{
+					"name": "Party Lookup",
+					"item": [
+						{
+							"name": "Get Parties",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.interoperability.parties+json;version=1.0",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.interoperability.parties+json;version=1.0",
+										"type": "text"
+									},
+									{
+										"key": "date",
+										"value": "Wed, 15 Feb 2023 09:31:08 GMT",
+										"type": "text"
+									},
+									{
+										"key": "fspiop-source",
+										"value": "{{payerfsp}}",
+										"type": "text"
+									},
+									{
+										"key": "traceparent",
+										"value": "00-aabbe7816aae8b6b3fd6dd3374a124bd-0123456789abcdef0-00",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{HOST_ACCOUNT_LOOKUP_SERVICE}}/parties/MSISDN/27713803912",
+									"host": [
+										"{{HOST_ACCOUNT_LOOKUP_SERVICE}}"
+									],
+									"path": [
+										"parties",
+										"MSISDN",
+										"27713803912"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Source callback url must be setup preperly for party lookup to work.  \nRefer to [this](https://docs.mojaloop.io/technical/account-lookup-service/als-get-parties.html)/below UML diagram for better understanding.\n\n<img src=\"https://content.pstmn.io/b59341f4-d3c0-466d-a348-33bf212efe2b/aW1hZ2UucG5n\" width=\"2358\" height=\"2335\">"
+				},
+				{
+					"name": "Quoting Request",
+					"item": [
+						{
+							"name": "Send quote",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.interoperability.quotes+json;version=1.1",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.interoperability.quotes+json;version=1.1",
+										"type": "text"
+									},
+									{
+										"key": "date",
+										"value": "Mon, 13 Feb 2023 13:23:00 GMT",
+										"type": "text"
+									},
+									{
+										"key": "fspiop-source",
+										"value": "{{payerfsp}}",
+										"type": "text"
+									},
+									{
+										"key": "traceparent",
+										"value": "00-aabbe7816aae8b6b3fd6dd3374a124bd-0123456789abcdef0-00",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "fspiop-destination",
+										"value": "{{payeefsp}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"quoteId\": \"92060082-dc72-4877-bd90-6606c85ef156\",\n  \"transactionId\": \"{{txnId}}\",\n  \"transactionRequestId\": \"288dc44c-662f-4f78-80d4-557a26effdf5\",\n  \"payer\": {\n    \"partyIdInfo\": {\n      \"partyIdType\": \"MSISDN\",\n      \"partyIdentifier\": \"{{payerMSISDN}}\",\n      \"fspId\": \"{{payerfsp}}\"\n    },\n    \"personalInfo\": {\n      \"complexName\": {\n        \"firstName\": \"Firstname-Test\",\n        \"lastName\": \"Lastname-Test\"\n      },\n      \"dateOfBirth\": \"1984-01-01\"\n    }\n  },\n  \"payee\": {\n    \"partyIdInfo\": {\n      \"partyIdType\": \"MSISDN\",\n      \"partyIdentifier\": \"{{payeeMSISDN}}\",\n      \"fspId\": \"{{payeefsp}}\"\n    }\n  },\n  \"amountType\": \"RECEIVE\",\n  \"amount\": {\n    \"amount\": \"100\",\n    \"currency\": \"USD\"\n  },\n  \"transactionType\": {\n    \"scenario\": \"TRANSFER\",\n    \"initiator\": \"PAYER\",\n    \"initiatorType\": \"CONSUMER\"\n  },\n  \"note\": \"test\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_QUOTING_SERVICE}}/quotes",
+									"host": [
+										"{{HOST_QUOTING_SERVICE}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "For quotation to work with custom cluster make sure to register the source(ex. payer) callback properly.  \nRefer [this](https://docs.mojaloop.io/technical/quoting-service/qs-post-quotes.html)/below UML for better understanding of the flow.\n\n<img src=\"https://content.pstmn.io/b3b34a16-0cc3-48c1-9314-4e51f324a99b/aW1hZ2UucG5n\" alt=\"\" height=\"2542\" width=\"1262\">"
+				},
+				{
+					"name": "Transfer request",
+					"item": [
+						{
+							"name": "Send transfer",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.interoperability.transfers+json;version=1.1",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.interoperability.transfers+json;version=1.1",
+										"type": "text"
+									},
+									{
+										"key": "date",
+										"value": "Mon, 13 Feb 2023 13:23:40 GMT",
+										"type": "text"
+									},
+									{
+										"key": "fspiop-source",
+										"value": "{{payerfsp}}",
+										"type": "text"
+									},
+									{
+										"key": "traceparent",
+										"value": "00-aabbf3b0dac6e7242f66db3d6ae44ad1-0123456789abcdef0-00",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "fspiop-destination",
+										"value": "{{payeefsp}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transferId\": \"{{txnId}}\",\n    \"payerFsp\": \"{{payerfsp}}\",\n    \"payeeFsp\": \"{{payeefsp}}\",\n    \"amount\": {\n        \"amount\": \"100\",\n        \"currency\": \"USD\"\n    },\n    \"expiration\": \"2023-02-13T13:23:49.791Z\",\n  \"ilpPacket\": \"AYIDBAAAAAAAACcQG2cucGF5ZWVmc3AubXNpc2RuLjQ0OTk5OTExMoIC3GV5SjBjbUZ1YzJGamRHbHZia2xrSWpvaVkyWXhaamszTXpFdFpESTBPQzAwWTJNNUxXSmxOR010Tnprek4yWXlaV1EyWXpFNElpd2ljWFZ2ZEdWSlpDSTZJamt5TURZd01EZ3lMV1JqTnpJdE5EZzNOeTFpWkRrd0xUWTJNRFpqT0RWbFpqRTFOaUlzSW5CaGVXVmxJanA3SW5CaGNuUjVTV1JKYm1adklqcDdJbkJoY25SNVNXUlVlWEJsSWpvaVRWTkpVMFJPSWl3aWNHRnlkSGxKWkdWdWRHbG1hV1Z5SWpvaU5EUTVPVGs1TVRFeUlpd2labk53U1dRaU9pSndZWGxsWldaemNDSjlmU3dpY0dGNVpYSWlPbnNpY0dGeWRIbEpaRWx1Wm04aU9uc2ljR0Z5ZEhsSlpGUjVjR1VpT2lKTlUwbFRSRTRpTENKd1lYSjBlVWxrWlc1MGFXWnBaWElpT2lJME5EazVPVGs1T1RraUxDSm1jM0JKWkNJNkluQmhlV1Z5Wm5Od0luMHNJbkJsY25OdmJtRnNTVzVtYnlJNmV5SmpiMjF3YkdWNFRtRnRaU0k2ZXlKbWFYSnpkRTVoYldVaU9pSkdhWEp6ZEc1aGJXVXRWR1Z6ZENJc0lteGhjM1JPWVcxbElqb2lUR0Z6ZEc1aGJXVXRWR1Z6ZENKOUxDSmtZWFJsVDJaQ2FYSjBhQ0k2SWpFNU9EUXRNREV0TURFaWZYMHNJbUZ0YjNWdWRDSTZleUpoYlc5MWJuUWlPaUl4TURBaUxDSmpkWEp5Wlc1amVTSTZJbFZUUkNKOUxDSjBjbUZ1YzJGamRHbHZibFI1Y0dVaU9uc2ljMk5sYm1GeWFXOGlPaUpVVWtGT1UwWkZVaUlzSW1sdWFYUnBZWFJ2Y2lJNklsQkJXVVZTSWl3aWFXNXBkR2xoZEc5eVZIbHdaU0k2SWtOUFRsTlZUVVZTSW4xOQA\",\n  \"condition\": \"8hjc1-YZ8YOyWFvQ9XZ_RO1PMUI1wJDbgeRqxWqOcRs\"\n}"
+								},
+								"url": {
+									"raw": "{{HOST_ML_API_ADAPTER}}/transfers",
+									"host": [
+										"{{HOST_ML_API_ADAPTER}}"
+									],
+									"path": [
+										"transfers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Ensure that the following variables are not set in the environment",
+					"// This is a fix for the following issue: https://github.com/mojaloop/project/issues/903",
+					"// This will ensure that templates are not replaced in the endpoint configs:",
+					"pm.environment.unset('partyIdType')",
+					"pm.environment.unset('partyIdentifier')",
+					"pm.environment.unset('requestId')",
+					"pm.environment.unset('transferId')",
+					"",
+					"pm.globals.unset('partyIdType')",
+					"pm.globals.unset('partyIdentifier')",
+					"pm.globals.unset('requestId')",
+					"pm.globals.unset('transferId')"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

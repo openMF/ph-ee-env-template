@@ -1,0 +1,53 @@
+ingress:
+  apiversion: networking.k8s.io/v1
+
+service:
+  apiversion: "v1"
+
+configmap:
+  apiversion: "v1"
+
+enabled: false
+image: ""
+imageTag: latest
+SPRING_PROFILES_ACTIVE: ""
+username: "<username>"
+password: "<password>"
+signature_key: "<long_segnature_key>"
+auth_host: "https://g2p-test.slcb.com:8443"
+api_host: "https://g2p-test.slcb.com:8443"
+account_number: "<account number>"
+account_type: 0
+institutioncode: "SLCB"
+aws: 
+  bucket_name: ""
+  region: ""
+endpoint:
+  auth: "/api/auth"
+  transaction_request: "/api/transactionRequest"
+  reconciliation: "/reconciliation"
+  account_balance: "/accountBalance"
+config:
+  date_format: "yyyy-MM-dd'T'hh:mm:ssXXX"
+  reconciliation:
+    enable: false  
+limits:
+  cpu: "500m"
+  memory: "512M"
+requests:
+  cpu: "100m"
+  memory: "256M"
+deployment:
+  apiVersion: "apps/v1"
+  annotations:
+    deployTime: "{{ .Values.deployTime }}"
+
+secret: 
+  apiversion: "v1"
+  username: "<username>"
+  password: "<password>"
+  signature_key: "<long_segnature_key>" 
+  connector_bulk: 
+    aws: 
+      access_key: "<access key>"
+      secret_key: "<secret key>"

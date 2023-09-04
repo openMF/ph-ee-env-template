@@ -1,0 +1,22 @@
+{{- if .Values.enabled -}}
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-bulk
+  name: ph-ee-connector-bulk
+{{- with .Values.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    app: ph-ee-connector-bulk
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}

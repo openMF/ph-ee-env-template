@@ -1,0 +1,100 @@
+{{- if .Values.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-gateway
+  labels:
+    app: message-gateway
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: message-gateway
+  template:
+    metadata:
+      labels:
+        app: message-gateway
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: message-gateway
+          image: "{{ .Values.image }}"  
+          ports:
+            - containerPort: 9191
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9191
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9191
+            initialDelaySeconds: 120
+            periodSeconds: 30
+
+          env:
+            - name: "SPRING_DATASOURCE_URL"
+              value: "{{ .Values.DATASOURCE_URL }}"
+            - name: "MYSQL_USERNAME"
+              value: "{{ .Values.MYSQL_USERNAME }}"
+            - name: "MYSQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "messagegateway-secret"
+                  key: "database-password"
+            - name: "CALLBACKCONFIG_HOST"
+              value: "{{ .Values.CALLBACKCONFIG_HOST }}"
+            - name: "HOSTCONFIG_HOST"
+              value: "{{ .Values.HOSTCONFIG_HOST }}"
+            - name: "PROVIDERSOURCE_FROMDATABASE"
+              value: "{{ .Values.PROVIDERSOURCE_FROMDATABASE }}"
+            - name: "PROVIDERSOURCE_FROMYML"
+              value: "{{ .Values.PROVIDERSOURCE_FROMYML }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+            - name: "PROVIDERKEYS_TELERIVETAPIKEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "messagegateway-secret"
+                  key: "api-key"
+            - name: "PROVIDERKEYS_TELERIVETPROJECTID"
+              valueFrom:
+                secretKeyRef:
+                  name: "messagegateway-secret"
+                  key: "project-id"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      initContainers:
+        - name: wait-db
+          image: jwilder/dockerize
+          imagePullPolicy: IfNotPresent
+          args:
+            - -timeout=120s
+            - -wait
+            - tcp://{{ .Values.operations_app.datasource.host }}:3306
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}

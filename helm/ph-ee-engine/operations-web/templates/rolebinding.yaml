@@ -1,0 +1,15 @@
+{{- if .Values.managedServiceAccount }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ph-ee-operations-web-role-binding
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ph-ee-operations-web-role
+subjects:
+- kind: ServiceAccount
+  name: ph-ee-operations-web
+  namespace: {{ .Release.Namespace }}
+{{- end -}}
