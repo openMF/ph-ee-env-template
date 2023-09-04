@@ -10,16 +10,14 @@ configmap:
 enabled: true
 image: docker.io/openmf/ph-ee-vouchers:latest
 imagePullPolicy: ""
-
+SPRING_PROFILES_ACTIVE: ""
+LOGGING_LEVEL_ROOT: ""
 spring:
   datasource:
     url:
     username:
     password:
 
-logging:
-  level:
-    ROOT:
 
 async:
   core_pool_size:
