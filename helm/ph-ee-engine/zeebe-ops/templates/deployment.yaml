@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-zeebe-ops
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -37,11 +37,11 @@ spec:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "TENANTS"
-              value: "{{ .Values.tenants }}"
+              value: "{{ .Values.global.tenants }}"
             - name: "elasticsearch_url"
               value: "{{ .Values.elasticsearch_url }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value:  "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS"
               value: "{{ .Values.elasticsearch_contactpoint }}"
             - name: "ELASTICSEARCH_SECURITY_ENABLED"

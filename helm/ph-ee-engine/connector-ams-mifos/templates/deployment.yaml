@@ -31,7 +31,7 @@ spec:
       containers:
       - name: ph-ee-connector-ams-mifos
         image: "{{ .Values.image}}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
         ports:
           - containerPort: 5000
         resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}
@@ -54,8 +54,8 @@ spec:
           value: "{{ .Values.ams_local_auth_host }}"
         - name: "ams_local_loan_host"
           value: "{{ .Values.ams_local_loan_host }}"
-        - name: "dfspids"
-          value: "{{ .Values.dfspids }}"
+        - name: "DFSPIDS"
+          value: "{{ .Values.global.DFSPIDS }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
 {{- end }}        

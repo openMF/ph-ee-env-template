@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"
           ports:
             - containerPort: 8443
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -61,11 +61,11 @@ spec:
             - name: "MPESA_NOTIFICATION_FAILURE_ENABLED"
               value: "{{ .Values.notifications.NOTIFICATION_FAILURE_ENABLED }}"
             - name:  "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "AMS"
               value: "{{ .Values.AMS  }}"
             - name: "LOGGING_PATTERN_CONSOLE"
-              value: "{{ .Values.LOGGING_PATTERN_CONSOLE }}"
+              value: "{{ .Values.global.LOGGING_PATTERN_CONSOLE }}"
             - name: "gsma_payee_tenant"
               value: "{{ .Values.gsma_payee_tenant }}"
             - name: "operations_url"

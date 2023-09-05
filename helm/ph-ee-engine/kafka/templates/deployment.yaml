@@ -24,7 +24,7 @@ spec:
       containers:
         - name: kafka
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 2181
             - containerPort: 9092

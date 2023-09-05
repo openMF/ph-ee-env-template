@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -47,11 +47,11 @@ spec:
             periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "DFSPIDS"
-              value: "{{ .Values.DFSPIDS }}"
+              value: "{{ .Values.global.DFSPIDS }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+              value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name : "mockFailure_percentage"

@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"
           ports:
             - containerPort: 8080
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -36,7 +36,7 @@ spec:
 
           env:
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "PAYER_TENANT"
@@ -68,7 +68,7 @@ spec:
             - name: "SALTING_ENABLED"
               value: "{{ .Values.salting.enabled }}"
             - name: "LOGGING_LEVEL_ROOT"
-              value: "{{ .Values.logging.level.ROOT }}"
+              value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}

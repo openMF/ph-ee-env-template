@@ -17,10 +17,7 @@ limits:
 requests:
   cpu: "100m"
   memory: "256M"
-
-logging:
-  level:
-    ROOT: INFO
+LOGGING_LEVEL_ROOT: INFO
 
 async:
   core_pool_size: 10

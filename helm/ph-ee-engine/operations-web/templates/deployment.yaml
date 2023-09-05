@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-operations-web
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 4200
           resources:

@@ -14,7 +14,6 @@ secret:
 configmap:
   apiVersion: "v1"
 
-
 zeebe:
   broker:
     contactpoint: "zeebe-zeebe-gateway:26500"
@@ -88,9 +87,6 @@ elasticsearch:
         path: /_cluster/health?wait_for_status=yellow&timeout=5s
         port: 9200
       initialDelaySeconds: 30
-
-
-
   # Shrink default JVM heap.
   esJavaOpts: "-Xmx512m -Xms512m"
 
@@ -151,7 +147,6 @@ idmappermysql:
       CREATE DATABASE IF NOT EXISTS IdentityAccountMapper;
       GRANT ALL ON *.* TO 'root'@'%';
       GRANT ALL PRIVILEGES ON IdentityAccountMapper.* TO 'idmapper';
-
 
 kafka:
   enabled: true

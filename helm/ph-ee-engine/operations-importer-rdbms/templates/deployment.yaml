@@ -23,12 +23,12 @@ spec:
       containers:
         - name: ph-ee-importer-rdbms
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 8000
           env:
           - name: "SPRING_PROFILES_ACTIVE"
-            value: "{{ .Values.operations.SPRING_PROFILES_ACTIVE }}"
+            value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
           - name: "DATASOURCE_CORE_USERNAME"
             value: "{{ .Values.datasource.username }}" 
           - name: "DATASOURCE_CORE_PASSWORD"
@@ -43,9 +43,9 @@ spec:
           - name: "DATASOURCE_CORE_SCHEMA"
             value: "{{ .Values.datasource.schema }}"
           - name: "LOGGING_LEVEL_ROOT"
-            value: "{{ .Values.LOGGING_LEVEL_ROOT }}"
+            value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
           - name: "LOGGING_PATTERN_CONSOLE"
-            value: "{{ .Values.LOGGING_PATTERN_CONSOLE }}"
+            value: "{{ .Values.global.LOGGING_PATTERN_CONSOLE }}"
           - name: "JAVA_TOOL_OPTIONS"
             value: "{{ .Values.javaToolOptions}}"
           - name: "AWS_ACCESS_KEY"

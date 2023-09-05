@@ -19,7 +19,7 @@ spec:
       containers:
         - name: ph-ee-importer-es
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -30,14 +30,14 @@ spec:
           env:
           - name: "reporting.enabled"
             value: "{{ .Values.reporting.enabled }}"
-          - name: "logging_level_ROOT"
-            value: "{{ .Values.logging.level.root }}"
+          - name: "LOGGING_LEVEL_ROOT"
+            value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
           - name: "importer_elasticsearch_url"
             value: "{{ .Values.importer_elasticsearch_url }}"
           - name: "JAVA_TOOL_OPTIONS"
             value: "{{ .Values.javaToolOptions}}"
           - name: "LOGGING_PATTERN_CONSOLE"
-            value: "{{ .Values.logging.pattern.console}}"
+            value: "{{ .Values.global.LOGGING_PATTERN_CONSOLE}}"
           - name: "reporting.fields.amount"
             value: "{{ .Values.reporting.fields.amount }}"
           - name: "reporting.fields.accountId"
