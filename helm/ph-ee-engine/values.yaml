@@ -203,7 +203,6 @@ channel:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-channel:v1.7.0
-  imagePullPolicy: "Always"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   redis:
@@ -340,7 +339,6 @@ ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.4.0
-  imagePullPolicy: "Always"
   ams_local_enabled: true
   ams_local_interop_host: "fineract-server"
   ams_local_account_host: "fineract-server"
@@ -416,7 +414,6 @@ ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-mojaloop:v1.3.0
-  imagePullPolicy: "Always"
   hostname: ""
   switch:
     quotes:
@@ -518,7 +515,6 @@ operations_app:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-app:v1.6.0
-  imagePullPolicy: "Always"
   token_client_channel_secret: ""
   datasource:
       username: "mifos"
@@ -609,7 +605,6 @@ operations_web:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-web:v1.4.0
-  imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
   livenessProbe:
@@ -1006,7 +1001,6 @@ messagegateway:
   enabled: false
   replicas: 1
   image: docker.io/openmf/message-gateway:v1.1.0
-  imagePullPolicy: "Always"
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
@@ -1106,7 +1100,6 @@ notifications:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-notifications:v1.3.0
-  imagePullPolicy: "Always"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -1199,7 +1192,6 @@ zeebe_ops:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-zeebe-ops:v1.2.0
-  imagePullPolicy: "Always"
   imagePullSecrets: []
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
@@ -1291,7 +1283,6 @@ importer_es:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-importer-es:v1.6.0
-  imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
     enabled: true
@@ -1424,7 +1415,6 @@ importer_rdbms:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-importer-rdbms:v1.5.0
-  imagePullPolicy: "Always"
   datasource:
       username: "mifos"
       password: "password"
@@ -1510,7 +1500,6 @@ connector_bulk:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-bulk-processor:v1.7.0
-  imagePullPolicy: "Always"
   camel_disable_ssl: true
   channel:
     hostname: ""
@@ -1634,7 +1623,6 @@ ph-ee-connector_gsma:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.1.0
-  imagePullPolicy: "Always"
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -1929,8 +1917,7 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-integration-test:v1.2.0-rc.1
-  imagePullPolicy: "Never"
+  image: docker.io/openmf/ph-ee-integration-test:v1.2.0
   limits:
     cpu: "500m"
     memory: "3Gi"
