@@ -22,33 +22,6 @@ ph-ee-engine:
     tenants: "rhino,gorilla"
     DFSPIDS: "gorilla,lion"
 
-  zeebe-cluster-helm:
-    enabled: false
-    global:
-      elasticsearch:
-        host: "ph-ee-elasticsearch"
-    image:
-      repository: camunda/zeebe
-      tag: 1.1.0
-    clusterSize: "1"
-    partitionCount: "1"
-    replicationFactor: "1"
-    JavaOpts: "-Xms8g -Xmx8g -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:MaxRAMPercentage=25.0 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:+PrintFlagsFinal"
-
-    elasticsearch:
-      enabled: false
-    kibana:
-      enabled: true
-
-    extraInitContainers: |
-      - name: init-ph-ee-kafka-exporter
-        image: busybox:1.28
-        command: ['/bin/sh', '-c']
-        args: ['wget -O /exporters/ph-ee-kafka-exporter.jar "https://paymenthub-ee-dev.s3.us-east-2.amazonaws.com/jars/exporter-1.0.0-SNAPSHOT.jar"; ls -al /exporters/']
-        volumeMounts:
-        - name: exporters
-          mountPath: /exporters/
-
   zeebe-operate-helm:
     enabled: true
     image:
