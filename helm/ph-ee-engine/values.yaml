@@ -1391,13 +1391,6 @@ mockpayment:
   enabled: false
   image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.2.0
   replicas: 1
-<<<<<<< HEAD
-=======
-  imagePullPolicy: "Always"
-  SPRING_PROFILES_ACTIVE: ""
-  LOGGING_LEVEL_ROOT: "INFO"
-  DFSPIDS: ""
->>>>>>> eaf5d49 (* fix mps docker pull)
   mockFailure:
     percentage: "50"
   limits:
