@@ -54,7 +54,7 @@ spec:
             - name: "FINERACT_DATASOURCE_CORE_SCHEMA"
               value: "{{ .Values.datasource.schema }}"
             - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "TOKEN_CLIENT_CHANNEL_SECRET"
               value: "{{ .Values.token_client_channel_secret }}"
             - name: "TENANTS"
