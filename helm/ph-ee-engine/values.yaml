@@ -21,6 +21,8 @@ global:
   tenants: ""
   DFSPIDS: ""
 camunda-platform:
+  connectors:
+    enabled: false
   global:
     zeebe: "{{ .Release.Name }}-zeebe"
     elasticsearch:
