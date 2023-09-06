@@ -84,6 +84,7 @@ spec:
               value: "{{ .Values.tenantSecondary.clientSecret }}"
             - name: "CHANNEL_TENANTSECONDARY_TENANT"
               value: "{{ .Values.tenantSecondary.tenant }}"
+{{- if .Values.redis.idempotency.enabled }}
             - name: "redis_idempotency_enabled"
               value: "{{ .Values.redis.idempotency.enabled }}"
             - name: "redis_host"
@@ -99,6 +100,7 @@ spec:
                 secretKeyRef:
                   name: "{{ .Release.Name }}-redis" 
                   key: "redis-password"
+{{end}}
             - name: "server_ssl_key-password"
               value: "{{ .Values.server.ssl.keyPassword }}" 
             - name: "server_ssl_key-store-password"
