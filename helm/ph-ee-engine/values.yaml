@@ -8,6 +8,8 @@ identity:
   hostname: ""
 secret:
   apiversion: "v1"
+ingress:
+  apiversion: "networking.k8s.io/v1"
 mtn_rwanda_connector:
   enabled: true
   image: "oaftech.azurecr.io/oneacrefund/mtn-connector"
