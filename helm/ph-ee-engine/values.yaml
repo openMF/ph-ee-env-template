@@ -4,7 +4,8 @@ configmap:
   apiversion: "v1"
 service:
   apiversion: "v1"
-
+identity:
+  hostname: ""
 secret:
   apiversion: "v1"
 mtn_rwanda_connector:
@@ -838,8 +839,6 @@ operations_web:
       co.elastic.logs/multiline.negate: 'true'
       co.elastic.logs/multiline.match: after
 
-identity:
-  hostname: ""
   ingress:
     enabled: false
     config:
@@ -871,8 +870,6 @@ identity:
     # such as ph-ee-operations-web.yml for deployment
     # ph-ee-operations-webConfig: {}
     #   ph-ee-operations-web.yml: |          
-
-identity:
 
 mpesa:
   enabled: true
