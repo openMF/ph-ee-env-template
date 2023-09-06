@@ -18,7 +18,9 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb"
     imagePullPolicy: "Always"
     LOGGING_LEVEL_ROOT: "INFO"
-    LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+    LOGGING_PATTERN_CONSOLE: >
+       "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread])
+        %highlight(%-5level) %logger.%M - %msg%n"
     tenants: "rhino,gorilla"
     DFSPIDS: "gorilla,lion"
 
@@ -33,8 +35,8 @@ ph-ee-engine:
         clusterName: "ph-ee-elasticsearch"
     ingress:
       enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx      
+      annotations:
+        kubernetes.io/ingress.class: nginx
       path: /
       host: operate.sandbox.mifos.io
       tls:
@@ -42,7 +44,7 @@ ph-ee-engine:
 
   elasticsearch:
     enabled: true
-    #Single Node Solution
+      #Single Node Solution
     clusterHealthCheckParams: "wait_for_status=yellow&timeout=100s"
     protocol: http
     master:
@@ -74,7 +76,7 @@ ph-ee-engine:
         cpu: "1000m"
         memory: "1024M"
     volumeClaimTemplate:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: ["ReadWriteOnce"]
       storageClassName: "gp2"
       resources:
         requests:
@@ -85,15 +87,15 @@ ph-ee-engine:
     readinessProbe:
       initialDelaySeconds: 45
       timeoutSeconds: 15
-      successThreshold: 1    
+      successThreshold: 1
     protocol: http
     ingress:
       enabled: false
       className: "nginx"
       pathtype: "Prefix"
       annotations: {}
-        # kubernetes.io/ingress.class: nginx
-        # kubernetes.io/tls-acme: "true"       
+        # kubernetes.io/ingress.class: "nginx"
+        # kubernetes.io/tls-acme: "true"
       hosts:
         - host: analytics.sandbox.mifos.io
           paths:
@@ -137,19 +139,19 @@ ph-ee-engine:
     ams_local_auth_host: "https://fynams.sandbox.mifos.io/"
     ingress:
       enabled: false
-      annotations: 
+      annotations:
         kubernetes.io/ingress.class: nginx
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ams-mifos.sandbox.mifos.io          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: ph-ee-connector-ams-mifos
-                port:
-                  number: 80   
+        - host: ams-mifos.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: ph-ee-connector-ams-mifos
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -161,36 +163,36 @@ ph-ee-engine:
     DFSPIDS: "gorilla,lion"
     ingress:
       enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx      
+      annotations:
+        kubernetes.io/ingress.class: nginx
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: mojaloop.sandbox.mifos.io          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: ph-ee-connector-mojaloop-java
-                port:
-                  number: 80 
+        - host: mojaloop.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: ph-ee-connector-mojaloop-java
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
   mockpayment:
-    enabled: true 
+    enabled: true
     ingress:
       enabled: true
       hosts:
         - host: ""
           paths:
-          - path: "/"
-            backend:
-              service:
-                name: ph-ee-connector-mock-payment-schema
-                port:
-                  number: 80
+            - path: "/"
+              backend:
+                service:
+                  name: ph-ee-connector-mock-payment-schema
+                  port:
+                    number: 80
   kafka:
     enabled: true
     image: "spotify/kafka"
@@ -225,28 +227,28 @@ ph-ee-engine:
         keyStorePassword: "<replace-with-password>"
     ingress:
       enabled: false
-      annotations: 
+      annotations:
         kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: channel.sandbox.mifos.io          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-connector-channel"
-                port:
-                  number: 8443
-        - host: channel-gsma.sandbox.mifos.io          
-          paths:          
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-connector-channel-gsma"
-                port:
-                  number: 82
+        - host: channel.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-connector-channel"
+                  port:
+                    number: 8443
+        - host: channel-gsma.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-connector-channel-gsma"
+                  port:
+                    number: 82
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -265,19 +267,19 @@ ph-ee-engine:
       schema: "tenants"
     ingress:
       enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx  
+      annotations:
+        kubernetes.io/ingress.class: nginx
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops-bk.sandbox.mifos.io          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-operations-app"
-                port:
-                  number: 80
+        - host: ops-bk.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-operations-app"
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -291,14 +293,14 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops.sandbox.mifos.io          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-operations-web"
-                port:
-                  number: 4200
+        - host: ops.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-operations-web"
+                  port:
+                    number: 4200
   identity:
     hostname: "ops-bk.sandbox.mifos.io"
 
@@ -317,39 +319,39 @@ ph-ee-engine:
 
   ph_ee_connector_slcb:
     enabled: false
-   
+
   mpesa:
     enabled: false
-    
+
   roster_connector:
     enabled: false
-    
+
   paygops_connector:
     enabled: false
-    
+
   notifications:
     enabled: true
     image: docker.io/openmf/ph-ee-notifications:latest
     MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
     NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
     NOTIFICATION_SUCCESS_ENABLED: "false"
-    NOTIFICATION_FAILURE_ENABLED: "true"   
+    NOTIFICATION_FAILURE_ENABLED: "true"
     hostname: "notifications.sandbox.mifos.io"
     ingress:
       enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx  
+      annotations:
+        kubernetes.io/ingress.class: nginx
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: notifications.sandbox.mifos.io         
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-connector-notifications"
-                port:
-                  number: 80  
+        - host: notifications.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-connector-notifications"
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -375,18 +377,18 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: bulk-connector.sandbox.mifos.io     
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-connector-bulk"
-                port:
-                  number: 80
+        - host: bulk-connector.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-connector-bulk"
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
-        
+
   zeebe_ops:
     enabled: true
     image: docker.io/openmf/ph-ee-zeebe-ops:latest
@@ -394,19 +396,19 @@ ph-ee-engine:
     tenants: "rhino,gorilla"
     ingress:
       enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx  
+      annotations:
+        kubernetes.io/ingress.class: nginx
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: zeebeops.sandbox.mifos.io          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-zeebe-ops"
-                port:
-                  number: 80 
+        - host: zeebeops.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-zeebe-ops"
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -421,22 +423,22 @@ ph-ee-engine:
     hostname: "messagegateway.sandbox.mifos.io"
     ingress:
       enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx  
+      annotations:
+        kubernetes.io/ingress.class: nginx
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: messagegateway.sandbox.mifos.io       
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "message-gateway"
-                port:
-                  number: 80   
+        - host: messagegateway.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "message-gateway"
+                  port:
+                    number: 80
     deployment:
       annotations:
-        deployTime: "{{ .Values.deployTime }}"                           
+        deployTime: "{{ .Values.deployTime }}"
 
   importer_es:
     enabled: true
@@ -458,10 +460,10 @@ ph-ee-engine:
       rules:
         - host: 'keycloak.sandbox.mifos.io'
           paths:
-          - path: /
-            pathType: Prefix
+            - path: /
+              pathType: Prefix
       tls: []
-    
+
   kong:
     enabled: true
     image:
@@ -502,14 +504,12 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
-
-
 account_mapper:
   account_mapper:
     enabled: true
     image: docker.io/openmf/ph-ee-identity-account-mapper:latest
     hostname: "identity-mapper.sandbox.mifos.io"
-    LOGGING_LEVEL_ROOT: INFO    
+    LOGGING_LEVEL_ROOT: INFO
     ingress:
       enabled: true
       pathtype: Prefix
@@ -520,12 +520,12 @@ account_mapper:
       hosts:
         - host: identity-mapper.sandbox.mifos.io
           paths:
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-identity-account-mapper"
-                port:
-                  number: 80
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-identity-account-mapper"
+                  port:
+                    number: 80
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
