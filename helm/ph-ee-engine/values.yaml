@@ -2014,7 +2014,7 @@ ph-ee-connector_gsma:
     # ph_ee_connector_gsmaConfig: {}
     #   ph_ee_connector_gsma.yml: |
 
-ph-ee-connector_slcb:
+ph_ee_connector_slcb:
   enabled: false
   replicas: 1
   image: ""
