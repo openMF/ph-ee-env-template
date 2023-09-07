@@ -202,7 +202,7 @@ kibana:
 channel:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-channel:v1.5.0
+  image: docker.io/openmf/ph-ee-connector-channel:v1.8.0
   imagePullPolicy: "Always"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
@@ -415,7 +415,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.2.0
+  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.3.0
   imagePullPolicy: "Always"
   hostname: ""
   switch:
@@ -517,7 +517,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.5.0
+  image: docker.io/openmf/ph-ee-operations-app:v1.7.0
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
   datasource:
@@ -608,7 +608,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-web:v1.3.2
+  image: docker.io/openmf/ph-ee-operations-web:v1.4.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
@@ -703,7 +703,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-mpesa"
-  imageTag: "v1.4.1"
+  imageTag: "v1.6.0"
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   serviceAccountName: ""
@@ -836,7 +836,7 @@ roster_connector:
   enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-roster"
-  imageTag: "v1.2.0"
+  imageTag: "v1.3.1"
   containerPort: 5000
   ams:
     local:
@@ -921,7 +921,7 @@ paygops_connector:
   enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-connector-ams-paygops"
-  imageTag: "v1.5.0"
+  imageTag: "v1.6.1"
   containerPort: 5000
   ams:
     local:
@@ -1005,7 +1005,7 @@ paygops_connector:
 messagegateway:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/message-gateway:v1.0.0
+  image: docker.io/openmf/message-gateway:v1.1.0
   imagePullPolicy: "Always"
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
   HOSTCONFIG_HOST: "message-gateway"
@@ -1105,7 +1105,7 @@ messagegateway:
 notifications:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-notifications:v1.0.0
+  image: docker.io/openmf/ph-ee-notifications:v1.3.0
   imagePullPolicy: "Always"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
@@ -1198,7 +1198,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-zeebe-ops:v1.1.0
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.2.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
@@ -1290,7 +1290,7 @@ zeebe_ops:
 importer_es:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-es:v1.4.0
+  image: docker.io/openmf/ph-ee-importer-es:v1.6.0
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   reporting:
@@ -1389,7 +1389,7 @@ importer_es:
 
 mockpayment:
   enabled: false
-  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:latest
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.3.0
   replicas: 1
   mockFailure:
     percentage: "50"
@@ -1423,7 +1423,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.4.1
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.6.0
   imagePullPolicy: "Always"
   datasource:
       username: "mifos"
@@ -1509,7 +1509,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.6.1
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.8.0
   imagePullPolicy: "Always"
   camel_disable_ssl: true
   channel:
@@ -1633,7 +1633,7 @@ connector_bulk:
 ph-ee-connector_gsma:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-gsma:v1.0.2
+  image: docker.io/openmf/ph-ee-connector-gsma:v1.1.0
   imagePullPolicy: "Always"
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
@@ -1697,7 +1697,7 @@ ph-ee-connector_slcb:
   enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
-  imageTag: "v1.1.1"
+  imageTag: "v1.4.0"
   username: "username"
   password: "password"
   signature_key: "long_segnature_key"
@@ -1930,7 +1930,7 @@ integration_test:
   enabled: false
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
-  imageTag: latest
+  imageTag: "1.3.0"
   imagePullPolicy: "Never"
   limits:
     cpu: "500m"
@@ -2057,7 +2057,7 @@ kong:
 vouchers:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-vouchers:latest
+  image: docker.io/openmf/ph-ee-vouchers:v1.0.0
   hostname: "vouchers.sandbox.mifos.io"
   ingress:
     enabled: true
