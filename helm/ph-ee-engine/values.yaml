@@ -114,11 +114,7 @@ camunda-platform:
     clusterName: "zeebe-elasticsearch"
 
   operate:
-    enabled: true
-    image:
-      repository: camunda/operate
-      tag: 8.1.1
-    fullnameOverride: "zeebe-operate"
+    enabled: false
 
   tasklist:
     enabled: false
