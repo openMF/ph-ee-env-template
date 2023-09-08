@@ -19,7 +19,7 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     LOGGING_LEVEL_ROOT: "INFO"
     LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-    tenants: "rhino,gorilla"
+    tenants: "rhino,gorilla,lion"
     DFSPIDS: "gorilla,lion"
 
   zeebe-operate-helm:
@@ -208,7 +208,7 @@ ph-ee-engine:
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
-    DFSPIDS: "rhino,gorilla"
+    DFSPIDS: "rhino,gorilla,lion"
     operations:
       url: "http://ops-bk.sandbox.mifos.io/api/v1"
       authEnabled: false
