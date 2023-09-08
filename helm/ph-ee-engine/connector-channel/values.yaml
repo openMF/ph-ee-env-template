@@ -1,5 +1,6 @@
 service:
   apiversion: "v1"
+  annotations: {}
 
 secret:
   apiversion: "v1"

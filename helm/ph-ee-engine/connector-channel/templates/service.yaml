@@ -5,6 +5,10 @@ metadata:
   labels:
     app: ph-ee-connector-channel
   name: ph-ee-connector-channel
+{{- with .Values.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
   ports:
     - name: port
