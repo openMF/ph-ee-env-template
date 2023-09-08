@@ -1630,7 +1630,7 @@ connector_bulk:
     # ph-ee-connector-bulkConfig: {}
     #   ph-ee-connector-bulk.yml: |
 
-ph-ee-connector_gsma:
+ph_ee_connector_gsma:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.1.0
