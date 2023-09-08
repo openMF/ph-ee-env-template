@@ -51,6 +51,7 @@ jobs:
       TERM: dumb
     steps:
       - run: git clone https://github.com/openmf/ph-ee-env-labs
+      - run: cd ph-ee-env-labs && git checkout v1.2.0-release && cd ..
       - run: rm -f ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/requirements.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/charts/*
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -61,8 +62,8 @@ jobs:
       - run: helm repo index .
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
-      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz    
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-1.2.0.tgz ec2-user@13.233.68.128:~/
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-1.2.0.tgz    
   build-and-host-g2p-sandbox-security:
     docker:
       - image: cimg/python:3.10
@@ -99,7 +100,7 @@ jobs:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub
       - helm/upgrade-helm-chart:
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-1.2.0.tgz"
           release-name: g2p-sandbox
           namespace: paymenthub
           recreate-pods: true
@@ -119,6 +120,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test &&  git checkout -b v1.3.0-rc.1 v1.3.0-rc.1 && cd ..
       - run: 
           name: Ngrok setup
           command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
@@ -154,6 +156,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test &&  git checkout -b v1.3.0-rc.1 v1.3.0-rc.1 && cd ..
       - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
