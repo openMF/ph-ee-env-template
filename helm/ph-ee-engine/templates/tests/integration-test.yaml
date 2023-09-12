@@ -16,26 +16,29 @@ spec:
           ports:
           - containerPort: 53013
           command: [ "/bin/bash" , "-c" ]
-          args:
-          - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
+          args: "{{ .Values.integration_test.gradle.command }}"
           env:
-            - name: "OPERATIONS-APP_CONTACTPOINT"
+            - name: "OPERATIONS_APP_CONTACTPOINT"
               value: "{{ .Values.integration_test.operations_app.contactpoint }}"
-            - name: "BULK-PROCESSOR_CONTACTPOINT"
+            - name: "BULK_PROCESSOR_CONTACTPOINT"
               value: "{{ .Values.integration_test.bulk_processor.contactpoint }}"
-            - name: "CHANNEL-CONNECTOR_CONTACTPOINT"
+            - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
               value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
             - name: "KAFKA_BROKERS"
               value: "{{ .Values.integration_test.kafka.brokers }}"
             - name: "KAFKA_TOPICS"
               value: "{{ .Values.integration_test.kafka.topics }}"
-            - name: "ZEEBE-OPERATIONS_CONTACTPOINT"
+            - name: "KAFKA_CONSUMERTIMEOUTMS"
+              value: "{{ .Values.integration_test.kafka.consumerTimeoutMs }}"
+            - name: "ZEEBE_OPERATIONS_CONTACTPOINT"
               value: "{{ .Values.integration_test.zeebe_operations.contactpoint }}"
-            - name: "ZEEBE-OPERATIONS_NO-OF-WORKFLOWS"
+            - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
               value: "{{ .Values.integration_test.zeebe_operations.no_of_workflows }}"
-            - name: "MAX-RETRY-COUNT"
+            - name: "ZEEBE_OPERATIONS_THREAD-COUNT"
+              value: "{{ .Values.integration_test.zeebe_operations.thread-count }}"
+            - name: "MAX_RETRY_COUNT"
               value: "{{ .Values.integration_test.max_retry_count }}"
-            - name: "RETRY-INTERVAL"
+            - name: "RETRY_INTERVAL"
               value: "{{ .Values.integration_test.retry_intervals }}"
             - name: "DEFAULTS_TENANT"
               value: "{{ .Values.integration_test.defaults.tenant }}"
@@ -53,11 +56,11 @@ spec:
               value: "{{ .Values.integration_test.savings.contactpoint }}"
             - name: LOAN_CONTACTPOINT
               value: "{{ .Values.integration_test.loan.contactpoint }}"
-            - name: MOCK-SERVER_PORT
+            - name: MOCK_SERVER_PORT
               value: "{{ .Values.integration_test.mock-server.port }}"
-            - name: IDENTITY-ACCOUNT-MAPPER_CONTACTPOINT
+            - name: IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT
               value: "{{ .Values.integration_test.identity-account-mapper.contactpoint }}"
-            - name: MIFOS-CONNECTOR_CONTACTPOINT
+            - name: MIFOS_CONNECTOR_CONTACTPOINT
               value: "{{ .Values.integration_test.mifos-connector.contactpoint }}"
             - name: MY_POD_IP
               valueFrom:
@@ -65,6 +68,8 @@ spec:
                   fieldPath: status.podIP
             - name: "CALLBACK_URL"
               value: http://$(MY_POD_IP):53013
+            - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
+              value: "{{ .Values.integration_test.paybill.mpesa-connector.contactpoint}}"
           resources:
             limits:
               memory: "{{ .Values.integration_test.limits.memory }}"
