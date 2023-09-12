@@ -14,7 +14,7 @@ spec:
           image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
           ports:
-          - containerPort: 53013
+          - containerPort: "53013"
           command: "[ "/bin/bash" , "-c" ]"
           args: "{{ .Values.integration_test.gradle.command }}"
           env:
