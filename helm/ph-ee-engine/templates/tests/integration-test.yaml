@@ -55,11 +55,11 @@ spec:
             - name: LOAN_CONTACTPOINT
               value: "{{ .Values.integration_test.loan.contactpoint }}"
             - name: MOCK_SERVER_PORT
-              value: "{{ .Values.integration_test.mock-server.port }}"
+              value: "{{ .Values.integration_test.mock_server.port }}"
             - name: IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT
-              value: "{{ .Values.integration_test.identity-account-mapper.contactpoint }}"
+              value: "{{ .Values.integration_test.identity_account_mapper.contactpoint }}"
             - name: MIFOS_CONNECTOR_CONTACTPOINT
-              value: "{{ .Values.integration_test.mifos-connector.contactpoint }}"
+              value: "{{ .Values.integration_test.mifos_connector.contactpoint }}"
             - name: MY_POD_IP
               valueFrom:
                 fieldRef:
@@ -67,7 +67,7 @@ spec:
             - name: "CALLBACK_URL"
               value: http://$(MY_POD_IP):53013
             - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
-              value: "{{ .Values.integration_test.paybill.mpesa-connector.contactpoint}}"
+              value: "{{ .Values.integration_test.paybill.mpesa_connector.contactpoint}}"
           resources:
             limits:
               memory: "{{ .Values.integration_test.limits.memory }}"

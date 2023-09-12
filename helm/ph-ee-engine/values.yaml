@@ -1965,14 +1965,14 @@ integration_test:
   savings:
     contactpoint: "https://fineract-server:8443"
     base_url: ""
-  mock-server:
+  mock_server:
     port: "53013"
-  identity-account-mapper:
+  identity_account_mapper:
     contactpoint: "https://ph-ee-identity-account-mapper:80"
-  mifos-connector:
+  mifos_connector:
     contactpoint: "https://ph-ee-connector-ams-mifos:80"
   paybill:
-    mpesa-connector:
+    mpesa_connector:
       contactpoint: 
 
 redis:
