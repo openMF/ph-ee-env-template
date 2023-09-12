@@ -15,8 +15,9 @@ spec:
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
           ports:
             - containerPort: "53013"
-          command: ["/bin/bash", "-c"]
-          args: "{{ .Values.integration_test.gradle.command }}"
+          command: [ "/bin/bash" , "-c" ]
+          args: 
+            - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
           env:
             - name: "OPERATIONS_APP_CONTACTPOINT"
               value: "{{ .Values.integration_test.operations_app.contactpoint }}"
