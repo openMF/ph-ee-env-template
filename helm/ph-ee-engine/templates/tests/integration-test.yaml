@@ -35,7 +35,7 @@ spec:
             - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
               value: "{{ .Values.integration_test.zeebe_operations.no_of_workflows }}"
             - name: "ZEEBE_OPERATIONS_THREAD-COUNT"
-              value: "{{ .Values.integration_test.zeebe_operations.thread-count }}"
+              value: "{{ .Values.integration_test.zeebe_operations.thread_count }}"
             - name: "MAX_RETRY_COUNT"
               value: "{{ .Values.integration_test.max_retry_count }}"
             - name: "RETRY_INTERVAL"

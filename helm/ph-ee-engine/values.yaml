@@ -1950,7 +1950,7 @@ integration_test:
   zeebe_operations:
     contactpoint: ""
     no_of_workflows: ""
-    thread-count: ""
+    thread_count: ""
   max_retry_count: ""
   retry_intervals: ""
   defaults:
