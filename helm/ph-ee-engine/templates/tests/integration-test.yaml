@@ -3,10 +3,13 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: "ph-ee-integration-test-job"
+  namespace: paymenthub
   annotations:
-    "helm.sh/hook": post-install,test-success
-    "helm.sh/hook-weight": "1"
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
+    # "helm.sh/hook": post-install,post-upgrade,test-success,test 
+    # "helm.sh/hook-weight": "1"
+    # "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
