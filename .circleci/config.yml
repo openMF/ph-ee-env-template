@@ -228,6 +228,7 @@ workflows:
             - Helm
             - slack
       - helm-test:
+          cluster-name: sit
           requires:
             - upgrade-helm-chart
           context: 
