@@ -182,8 +182,8 @@ jobs:
       - run: helm ls --namespace=paymenthub
       - helm/install-helm-client:
           version: v3.2.0
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: cd ph-ee-integration-test && helm test --namespace paymenthub -Dcucumber.filter.tags="@amsIntegration"
+      - run: git clone https://github.com/openmf/ph-ee-env-templates
+      - run: cd helm/ph-ee-engine/templates/tests && kubectl apply -f integration_test.yaml
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
