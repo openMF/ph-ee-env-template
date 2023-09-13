@@ -1924,6 +1924,7 @@ keycloak:
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json     
 
+createJob: true
 integration_test:
   enabled: true
   replicas: 1
