@@ -1,3 +1,4 @@
+{{- if .Values.createJob }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -83,3 +84,4 @@ spec:
       restartPolicy: Never
       terminationGracePeriodSeconds: 120
   backoffLimit: 4
+{{- end }}
