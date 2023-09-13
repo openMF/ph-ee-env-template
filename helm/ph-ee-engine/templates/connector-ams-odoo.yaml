@@ -1,0 +1,101 @@
+{{- if .Values.odoo_connector.enabled -}}
+
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-ams-odoo"
+  labels:
+    app: ph-ee-connector-ams-odoo
+spec:
+  replicas: {{ .Values.odoo_connector.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-ams-odoo
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-ams-odoo
+      annotations:
+{{- if .Values.odoo_connector.deployment.annotations }}
+{{ toYaml .Values.odoo_connector.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - name: ph-ee-connector-ams-odoo
+          image: "{{ .Values.odoo_connector.image }}:{{ .Values.odoo_connector.imageTag }}"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.odoo_connector.imagePullPolicy }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 60
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.odoo_connector.SPRING_PROFILES_ACTIVE }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "zeebe-zeebe-gateway:26500"
+            - name: "AMS_LOCAL_ENABLED"
+              value: "{{ .Values.odoo_connector.ams.local.enabled }}"
+            - name: "ODOO_AUTH-HEADER"
+              valueFrom:
+                secretKeyRef:
+                  name: "odoo-secret"
+                  key: "auth-token"
+            - name: "ODOO_BASE-URL"
+              value: "{{ .Values.odoo_connector.odoo.base_url }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.odoo_connector.LOGGING_LEVEL_ROOT }}"
+            - name: "ODOO_ENDPOINT_CONFIRMATION"
+              value: "{{ .Values.odoo_connector.odoo.endpoint.confirmation}}"
+          resources:
+            limits:
+              memory: "{{ .Values.odoo_connector.limits.memory }}"
+              cpu: "{{ .Values.odoo_connector.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.odoo_connector.requests.memory }}"
+              cpu: "{{ .Values.odoo_connector.requests.cpu }}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: odoo-secret
+type: Opaque
+data:
+  auth-token: {{ .Values.odoo_connector.odoo.auth_header | b64enc }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-ams-odoo
+  name: ph-ee-connector-ams-odoo
+spec:
+  ports:
+    - name: port
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ph-ee-connector-ams-odoo
+  sessionAffinity: None
+  type: ClusterIP
+
+{{- end }}
