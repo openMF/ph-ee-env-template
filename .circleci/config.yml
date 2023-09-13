@@ -183,7 +183,7 @@ jobs:
       - helm/install-helm-client:
           version: v3.2.0
       - run: git clone https://github.com/openmf/ph-ee-env-template
-      - run: cd helm/ph-ee-engine/templates/tests && kubectl apply -f integration_test.yaml
+      - run: cd helm/ph-ee-engine && kubectl apply -f templates/tests/integration_test.yaml
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
