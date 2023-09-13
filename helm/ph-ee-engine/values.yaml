@@ -1924,8 +1924,8 @@ keycloak:
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json     
 
-createJob: true
 integration_test:
+  createJob: true
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-integration-test:v1.2.0
