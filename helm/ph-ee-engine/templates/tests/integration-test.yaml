@@ -1,4 +1,4 @@
-{{- if .Values.integration_test.createJob }}
+{{- if .Values.createJob }}
 apiVersion: batch/v1
 kind: Job
 metadata:

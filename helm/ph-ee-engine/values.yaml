@@ -12,6 +12,7 @@ secret:
 
 configmap:
   apiversion: "v1"  
+createJob: true
 
 global:
   SPRING_PROFILES_ACTIVE: "bb"
@@ -1922,10 +1923,9 @@ keycloak:
       readOnly: true
   extraEnv: |
     - name: KEYCLOAK_IMPORT
-      value: /realm/kong-keycloak-realm.json     
+      value: /realm/kong-keycloak-realm.json
 
 integration_test:
-  createJob: true
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-integration-test:v1.2.0
