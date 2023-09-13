@@ -4,7 +4,9 @@ kind: Job
 metadata:
   name: "ph-ee-integration-test-job"
   annotations:
-    "helm.sh/hook": test-success
+    "helm.sh/hook": post-install,test-success
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
