@@ -182,10 +182,8 @@ jobs:
       - run: helm ls --namespace=paymenthub
       - helm/install-helm-client:
           version: v3.2.0
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox  --namespace paymenthub 
+      - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test && helm test --namespace paymenthub -Dcucumber.filter.tags="@amsIntegration"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
