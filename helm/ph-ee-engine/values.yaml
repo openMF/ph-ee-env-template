@@ -2578,7 +2578,7 @@ odoo_connector:
   enabled: true
   replicas: 1
   image: "oaftech.azurecr.io/oneacrefund/ph-ee-connector-ams-odoo"
-  imageTag: "1.0.1"
+  imageTag: "1.0.0"
   imagePullPolicy: "IfNotPresent"
   LOGGING_LEVEL_ROOT: "INFO"
   SPRING_PROFILES_ACTIVE: ""
