@@ -1102,3 +1102,32 @@ airtel_connector:
       co.elastic.logs/enabled: "true"
       instrumentation.opentelemetry.io/inject-java: "true"
       sidecar.opentelemetry.io/inject: "sidecar"
+
+odoo_connector:
+  enabled: true
+  replicas: 1
+  image: "oaftech.azurecr.io/oneacrefund/ph-ee-connector-ams-odoo"
+  imageTag: "1.0.0"
+  imagePullPolicy: "IfNotPresent"
+  LOGGING_LEVEL_ROOT: "INFO"
+  SPRING_PROFILES_ACTIVE: ""
+  containerPort: 5000
+  limits:
+    memory: "1Gi"
+    cpu: "200m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
+  ams:
+    local:
+      enabled: true
+  odoo:
+    base_url: "https://mocks.qa.oneacrefund.org"
+    auth_header: ""
+    endpoint:
+      confirmation: "/rest/Odoo+confirmation+Api+Mock/2.1.0/confirmation"
+  deployment:
+    annotations:
+      co.elastic.logs/enabled: "true"
+      instrumentation.opentelemetry.io/inject-java: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
