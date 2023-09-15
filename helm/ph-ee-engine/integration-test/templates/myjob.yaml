@@ -19,11 +19,11 @@ spec:
         - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
         env:
         - name: "OPERATIONS_APP_CONTACTPOINT"
-          value: "{{ .Values.operationsapp.contactpoint }}"
+          value: "{{ .Values.operations_app.contactpoint }}"
         - name: "BULK_PROCESSOR_CONTACTPOINT"
           value: "{{ .Values.bulk_processor.contactpoint }}"
         - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
-          value: "{{ .Values.channel_connector.contactpoint }}"
+          value: "https://ph-ee-connector-channel:80"
         - name: "KAFKA_BROKERS"
           value: "{{ .Values.kafka.brokers }}"
         - name: "KAFKA_TOPICS"
@@ -49,17 +49,17 @@ spec:
         - name: "SAVINGS_BASE-URL"
           value: "{{ .Values.savings.base_url }}"
         - name: CHANNEL_CONTACTPOINT
-          value: "{{ .Values.channel.contactpoint }}"
+          value: https://ph-ee-connector-channel:80
         - name: SAVINGS_CONTACTPOINT
-          value: "{{ .Values.savings.contactpoint }}"
+          value: "https://fineract-server:8443"
         - name: LOAN_CONTACTPOINT
-          value: "{{ .Values.loan.contactpoint }}"
+          value: "https://fineract-server:8443"
         - name: MOCK_SERVER_PORT
-          value: "{{ .Values.mock_server.port }}"
+          value: "53013"
         - name: IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT
-          value: "{{ .Values.identity_account_mapper.contactpoint }}"
+          value: "https://ph-ee-identity-account-mapper:80"
         - name: MIFOS_CONNECTOR_CONTACTPOINT
-          value: "{{ .Values.mifos_connector.contactpoint }}"
+          value: "https://ph-ee-connector-ams-mifos:80"
         - name: MY_POD_IP
           valueFrom:
             fieldRef:
@@ -75,7 +75,5 @@ spec:
           requests:
             memory: "{{ .Values.requests.memory }}"
             cpu: "{{ .Values.requests.cpu }}"
-
-      restartPolicy: Never
-      terminationGracePeriodSeconds: 120
+      restartPolicy: OnFailure
   backoffLimit: 0
