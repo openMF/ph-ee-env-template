@@ -19,7 +19,7 @@ spec:
         - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
         env:
         - name: "OPERATIONS_APP_CONTACTPOINT"
-          value: "{{ .Values.operations_app.contactpoint }}"
+          value: "{{ .Values.operationsapp.contactpoint }}"
         - name: "BULK_PROCESSOR_CONTACTPOINT"
           value: "{{ .Values.bulk_processor.contactpoint }}"
         - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
