@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "5be4c62c-0aea-413e-b751-49297ba27877",
+    "_postman_id": "3fcd3de2-5a78-4049-b448-092d9fd1fc1a",
     "name": "Payment Hub APIs",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "21253421"
@@ -45246,11 +45246,16 @@
                 "key": "X-CallbackURL",
                 "value": "{{X-CallbackURL}}",
                 "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"requestID\": \"915251236706\",\n  \"sourceBBID\": \"467028349179\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"94049169714828912115\",\n      \"paymentModality\": \"00\"\n    },\n    {\n      \"payeeIdentity\": \"76032553265657618183\",\n      \"paymentModality\": \"01\"\n    },\n    {\n      \"payeeIdentity\": \"51498584148040549461\"\n    },\n    {\n      \"payeeIdentity\": \"69028769626982342710\"\n    }\n  ]\n}\n",
+              "raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"financialAddress\": \"589\",\n            \"bankingInstitutionCode\": \"gorilla\"\n        }\n    ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45258,26 +45263,36 @@
               }
             },
             "url": {
-              "raw": "{{IdentityAccountMapperHostName}}/identityAccountMapper/registerBeneficiary",
+              "raw": "{{IdentityAccountMapperHostName}}/beneficiary",
               "host": [
                 "{{IdentityAccountMapperHostName}}"
               ],
               "path": [
-                "identityAccountMapper",
-                "registerBeneficiary"
+                "beneficiary"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Register Beneficiary Callback",
+          "name": "Update Beneficiary",
           "request": {
-            "method": "POST",
-            "header": [],
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n \"requestID\": \"291535126670\",\n \"registerRequestID\": \"915251236706\",\n \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity \": \"94049169714828912115\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Beneficiary already registered\"\n    }\n  ]\n}\n",
+              "raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"1233456\",\n      \"bankingInstitutionCode\": \"gorilla\"\n    }\n  ]\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45285,16 +45300,19 @@
               }
             },
             "url": {
-              "raw": "{{X-CallbackURL}}",
+              "raw": "{{IdentityAccountMapperHostName}}/beneficiary",
               "host": [
-                "{{X-CallbackURL}}"
+                "{{IdentityAccountMapperHostName}}"
+              ],
+              "path": [
+                "beneficiary"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Add Payment Modality",
+          "name": "Batch Account Lookup",
           "request": {
             "method": "POST",
             "header": [
@@ -45302,67 +45320,16 @@
                 "key": "X-CallbackURL",
                 "value": "{{X-CallbackURL}}",
                 "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"requestID\": \"915251236706\",\n  \"sourceBBID\": \"467028349179\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"51498584148040549461\",\n      \"paymentModality\": \"02\"\n    },\n        {\n      \"payeeIdentity\": \"94049169714828912115\",\n      \"paymentModality\": \"01\"\n    },\n        {\n      \"payeeIdentity\": \"76032553265657618183\",\n      \"paymentModality\": \"00\"\n    },    {\n      \"payeeIdentity\": \"51498584148040549469\",\n      \"paymentModality\": \"02\"\n    }\n  ]\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{IdentityAccountMapperHostName}}/identityAccountMapper/addPaymentModality",
-              "host": [
-                "{{IdentityAccountMapperHostName}}"
-              ],
-              "path": [
-                "identityAccountMapper",
-                "addPaymentModality"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Add Payment Modality Callback",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": " \"requestID\": \"291535126670\",\n \"registerRequestID\": \"915251236706\",\n \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity \": \"94049169714828912115\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Account was found to be inactive during prevalidation\"\n    }\n  ]\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{X-CallbackURL}}",
-              "host": [
-                "{{X-CallbackURL}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update Payment Modality",
-          "request": {
-            "method": "POST",
-            "header": [
+              },
               {
-                "key": "X-CallbackURL",
-                "value": "{{X-CallbackURL}}",
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
                 "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"requestID\": \"915251236706\",\n  \"sourceBBID\": \"467028349179\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"94049169714828912115\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"LB28369763644714781256435714\"\n    },\n    {\n      \"payeeIdentity\": \"76032553265657618183\",\n      \"paymentModality\": \"01\",\n      \"financialAddress\": \"PK36RWHD3218721458424734\"\n    },\n    {\n      \"payeeIdentity\": \"51498584148040549469\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"IT48S0300203280864215187346\"\n    },\n    {\n      \"payeeIdentity\": \"69028769626982342710\",\n      \"paymentModality\": \"02\"\n    }\n  ]\n}\n",
+              "raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"9404916971482891259\"\n    },\n    {\n      \"payeeIdentity\": \"76032553265657618183\"\n    },\n    {\n      \"payeeIdentity\": \"51498584148040549461\"\n    },\n    {\n      \"payeeIdentity\": \"69028769626982342710\"\n    },\n        {\n      \"payeeIdentity\": \"690287696269444382342710\"\n    }\n  ]\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45370,36 +45337,12 @@
               }
             },
             "url": {
-              "raw": "{{IdentityAccountMapperHostName}}/identityAccountMapper/updatePaymentModality",
+              "raw": "{{IdentityAccountMapperHostName}}/accountLookup",
               "host": [
                 "{{IdentityAccountMapperHostName}}"
               ],
               "path": [
-                "identityAccountMapper",
-                "updatePaymentModality"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update Payment Modality Callbcak",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n \"requestID\": \"291535126670\",\n \"registerRequestID\": \"915251236706\",\n \"numberFailedCases\": 0\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{X-CallbackURL}}",
-              "host": [
-                "{{X-CallbackURL}}"
+                "accountLookup"
               ]
             }
           },
@@ -45417,6 +45360,11 @@
                 "key": "X-CallbackURL",
                 "value": "{{X-CallbackURL}}",
                 "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "SocialWelfare",
+                "type": "text"
               }
             ],
             "body": {
@@ -45429,23 +45377,599 @@
               }
             },
             "url": {
-              "raw": "{{IdentityAccountMapperHostName}}/identityAccountMapper/accountLookup/?payeeIdentity={{payeeIdentity}}&requestId=123456",
+              "raw": "{{IdentityAccountMapperHostName}}/beneficiary/?payeeIdentity=63310590323322234956&requestId=12345667987&paymentModality=00",
               "host": [
                 "{{IdentityAccountMapperHostName}}"
               ],
               "path": [
-                "identityAccountMapper",
-                "accountLookup",
+                "beneficiary",
                 ""
               ],
               "query": [
                 {
                   "key": "payeeIdentity",
-                  "value": "{{payeeIdentity}}"
+                  "value": "63310590323322234956"
                 },
                 {
                   "key": "requestId",
-                  "value": "123456"
+                  "value": "12345667987"
+                },
+                {
+                  "key": "paymentModality",
+                  "value": "00"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch All Beneficiaries",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{IdentityAccountMapperHostName}}/beneficiaries?page=10&pageSize=5",
+              "host": [
+                "{{IdentityAccountMapperHostName}}"
+              ],
+              "path": [
+                "beneficiaries"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "10"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Beneficiaries",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{IdentityAccountMapperHostName}}/beneficiaries/{{payeeIdentity}}",
+              "host": [
+                "{{IdentityAccountMapperHostName}}"
+              ],
+              "path": [
+                "beneficiaries",
+                "{{payeeIdentity}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Payment Modality",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"00\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{IdentityAccountMapperHostName}}/paymentModality",
+              "host": [
+                "{{IdentityAccountMapperHostName}}"
+              ],
+              "path": [
+                "paymentModality"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Payment Modality",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"51498584148040549461\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"998LB283697636447147812564357\"\n    }\n  ]\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{IdentityAccountMapperHostName}}/paymentModality",
+              "host": [
+                "{{IdentityAccountMapperHostName}}"
+              ],
+              "path": [
+                "paymentModality"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Voucher Management",
+      "item": [
+        {
+          "name": "Create Voucher",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requestID\": \"8493244991559\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"12023833433254345358844445\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"6331059032228893263382\",\n            \"narration\": \"Social Support Payment for the Month of January 2023\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate Voucher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16939790248654\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?command=activate",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "command",
+                  "value": "activate"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Suspend Voucher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"06\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?command=suspend",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "command",
+                  "value": "suspend"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Voucher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895845478866\",\n            \"status\": \"03\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?command=cancel",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "command",
+                  "value": "cancel"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reactivate Voucher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?command=reactivate",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "command",
+                  "value": "reactivate"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Redeem Voucher",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestID \": \"849324499155\",\n  \"agentID \": \"1234567890\",\n  \"voucherSerialNumber\": \"16895906640276\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?command=redeem",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "command",
+                  "value": "redeem"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Redeem and Pay Voucher",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSerialNumber\": \"16897537747061\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?command=redeemPay",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "command",
+                  "value": "redeemPay"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check Validity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-CallbackURL",
+                "value": "{{X-CallbackURL}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/voucher/validity?isValid=true&serialNumber=16939790248654",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "voucher",
+                "validity"
+              ],
+              "query": [
+                {
+                  "key": "isValid",
+                  "value": "true"
+                },
+                {
+                  "key": "voucherNumber",
+                  "value": "ffds",
+                  "disabled": true
+                },
+                {
+                  "key": "groupCode",
+                  "value": "fsfsfd",
+                  "disabled": true
+                },
+                {
+                  "key": "serialNumber",
+                  "value": "16939790248654"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Vouchers",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers/{{voucherNumber}}",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers",
+                "{{voucherNumber}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch All Vouchers",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Registering-Institution-ID",
+                "value": "{{X-Registering-Institution-ID}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{VoucherManagementHostName}}/vouchers?page=0&size=10",
+              "host": [
+                "{{VoucherManagementHostName}}"
+              ],
+              "path": [
+                "vouchers"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
                 }
               ]
             }
