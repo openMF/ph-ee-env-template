@@ -190,10 +190,10 @@ jobs:
             sudo mv kubectl /usr/local/bin/
 
         # Wait for the deployment to stabilize (optional but recommended)
-        # - run:
-        #     name: Wait for deployment to stabilize
-        #     command: |
-               kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
+      - run:
+          name: Wait for deployment to stabilize
+          command: |
+            kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
 
         # Run Helm tests
       - run:
