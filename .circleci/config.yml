@@ -182,8 +182,15 @@ jobs:
       - run: helm ls --namespace=paymenthub
       - helm/install-helm-client:
           version: v3.2.0
+       # Wait for the deployment to stabilize (optional but recommended)
       - run:
-          name: Run Helm Tests
+          name: Wait for deployment to stabilize
+          command: |
+            kubectl wait --for=condition=Available deployment/g2p-sandbox --namespace paymenthub --timeout=300s
+
+        # Run Helm tests
+      - run:
+          name: Run Helm tests
           command: |
             helm test g2p-sandbox --namespace paymenthub 
       - store_test_results:
