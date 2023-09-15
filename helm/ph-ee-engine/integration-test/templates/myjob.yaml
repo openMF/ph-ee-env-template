@@ -10,8 +10,8 @@ spec:
     spec:
       containers:
       - name: ph-ee-integration-test
-        image: "{{ .Values.integration_test.image }}"
-        imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
+        image: "{{ .Values.image }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         ports:
           - containerPort: "53013"
         command: [ "/bin/bash" , "-c" ]
@@ -19,47 +19,47 @@ spec:
         - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
         env:
         - name: "OPERATIONS_APP_CONTACTPOINT"
-          value: "{{ .Values.integration_test.operations_app.contactpoint }}"
+          value: "{{ .Values.operations_app.contactpoint }}"
         - name: "BULK_PROCESSOR_CONTACTPOINT"
-          value: "{{ .Values.integration_test.bulk_processor.contactpoint }}"
+          value: "{{ .Values.bulk_processor.contactpoint }}"
         - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
-          value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
+          value: "{{ .Values.channel_connector.contactpoint }}"
         - name: "KAFKA_BROKERS"
-          value: "{{ .Values.integration_test.kafka.brokers }}"
+          value: "{{ .Values.kafka.brokers }}"
         - name: "KAFKA_TOPICS"
-          value: "{{ .Values.integration_test.kafka.topics }}"
+          value: "{{ .Values.kafka.topics }}"
         - name: "KAFKA_CONSUMERTIMEOUTMS"
-          value: "{{ .Values.integration_test.kafka.consumerTimeoutMs }}"
+          value: "{{ .Values.kafka.consumerTimeoutMs }}"
         - name: "ZEEBE_OPERATIONS_CONTACTPOINT"
-          value: "{{ .Values.integration_test.zeebe_operations.contactpoint }}"
+          value: "{{ .Values.zeebe_operations.contactpoint }}"
         - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
-          value: "{{ .Values.integration_test.zeebe_operations.no_of_workflows }}"
+          value: "{{ .Values.zeebe_operations.no_of_workflows }}"
         - name: "MAX_RETRY_COUNT"
-          value: "{{ .Values.integration_test.max_retry_count }}"
+          value: "{{ .Values.max_retry_count }}"
         - name: "RETRY_INTERVAL"
-          value: "{{ .Values.integration_test.retry_intervals }}"
+          value: "{{ .Values.retry_intervals }}"
         - name: "DEFAULTS_TENANT"
-          value: "{{ .Values.integration_test.defaults.tenant }}"
+          value: "{{ .Values.defaults.tenant }}"
         - name: "DEFAULTS_AUTHORIZATION"
-          value: "{{ .Values.integration_test.defaults.authorization }}"
+          value: "{{ .Values.defaults.authorization }}"
         - name: "CHANNEL_BASE-URL"
-          value: "{{ .Values.integration_test.channel.base_url }}"
+          value: "{{ .Values.channel.base_url }}"
         - name: "LOAN_BASE-URL"
-          value: "{{ .Values.integration_test.loan.base_url }}"
+          value: "{{ .Values.loan.base_url }}"
         - name: "SAVINGS_BASE-URL"
-          value: "{{ .Values.integration_test.savings.base_url }}"
+          value: "{{ .Values.savings.base_url }}"
         - name: CHANNEL_CONTACTPOINT
-          value: "{{ .Values.integration_test.channel.contactpoint }}"
+          value: "{{ .Values.channel.contactpoint }}"
         - name: SAVINGS_CONTACTPOINT
-          value: "{{ .Values.integration_test.savings.contactpoint }}"
+          value: "{{ .Values.savings.contactpoint }}"
         - name: LOAN_CONTACTPOINT
-          value: "{{ .Values.integration_test.loan.contactpoint }}"
+          value: "{{ .Values.loan.contactpoint }}"
         - name: MOCK_SERVER_PORT
-          value: "{{ .Values.integration_test.mock_server.port }}"
+          value: "{{ .Values.mock_server.port }}"
         - name: IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT
-          value: "{{ .Values.integration_test.identity_account_mapper.contactpoint }}"
+          value: "{{ .Values.identity_account_mapper.contactpoint }}"
         - name: MIFOS_CONNECTOR_CONTACTPOINT
-          value: "{{ .Values.integration_test.mifos_connector.contactpoint }}"
+          value: "{{ .Values.mifos_connector.contactpoint }}"
         - name: MY_POD_IP
           valueFrom:
             fieldRef:
@@ -67,14 +67,14 @@ spec:
         - name: "CALLBACK_URL"
           value: http://$(MY_POD_IP):53013
         - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
-          value: "{{ .Values.integration_test.paybill.mpesa_connector.contactpoint}}"
+          value: "{{ .Values.paybill.mpesa_connector.contactpoint}}"
         resources:
           limits:
-            memory: "{{ .Values.integration_test.limits.memory }}"
-            cpu: "{{ .Values.integration_test.limits.cpu }}"
+            memory: "{{ .Values.limits.memory }}"
+            cpu: "{{ .Values.limits.cpu }}"
           requests:
-            memory: "{{ .Values.integration_test.requests.memory }}"
-            cpu: "{{ .Values.integration_test.requests.cpu }}"
+            memory: "{{ .Values.requests.memory }}"
+            cpu: "{{ .Values.requests.cpu }}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
