@@ -1,8 +1,8 @@
-{{- if .Values.createJob }}
+# {{- if .Values.createJob }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "ph-ee-integration-test-job"
+  name: {{ .Release.Name }}-test-job"
   namespace: paymenthub
   annotations:
     "helm.sh/hook": post-install
@@ -12,8 +12,8 @@ metadata:
     # "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
-    metadata:
-      name: ph-ee-integration-test-job
+    # metadata:
+    #   name: {{ .Release.Name }}-test-job"
     spec:
       containers:
       - name: ph-ee-integration-test
@@ -89,4 +89,4 @@ spec:
       restartPolicy: Never
       terminationGracePeriodSeconds: 120
   backoffLimit: 4
-{{- end }}
+# {{- end }}
