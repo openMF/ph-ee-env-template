@@ -193,7 +193,7 @@ jobs:
         # - run:
         #     name: Wait for deployment to stabilize
         #     command: |
-        #       kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
+               kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
 
         # Run Helm tests
       - run:
