@@ -76,9 +76,6 @@ spec:
             memory: "{{ .Values.requests.memory }}"
             cpu: "{{ .Values.requests.cpu }}"
 
-{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
-{{- end }}
       restartPolicy: Never
       terminationGracePeriodSeconds: 120
   backoffLimit: 0
