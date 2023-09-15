@@ -110,7 +110,7 @@ dependencies:
     repository: "file://./vouchers"
     condition: "vouchers.enabled"
 
-  - name: integration-test
+  - name: myjob
     version: 1.0.0
     repository: "file://./integration-test"
     condition: "integration-test.enabled"

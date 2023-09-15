@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: myjob
+        image: myjob:1.0
+        command: ["python", "-u", "my_script.py"]
+      restartPolicy: OnFailure
