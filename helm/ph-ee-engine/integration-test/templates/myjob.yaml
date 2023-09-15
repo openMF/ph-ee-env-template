@@ -7,6 +7,6 @@ spec:
     spec:
       containers:
       - name: myjob
-        image: myjob:1.0
-        command: ["python", "-u", "my_script.py"]
+        image: docker.io/openmf/ph-ee-integration-test:v1.2.0
+        command: [ "/bin/bash" , "-c", echo 'test' ]
       restartPolicy: OnFailure
