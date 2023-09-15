@@ -1,12 +1,85 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}
+  name: "{{ .Release.Name }}-test-job"
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
+    # "helm.sh/hook": post-install,post-upgrade,test-success,test 
+    # "helm.sh/hook-weight": "1"
+    # "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
+    # metadata:
+    #   name: {{ .Release.Name }}-test-job"
     spec:
       containers:
-      - name: myjob
-        image: myjob:1.0
-        command: ["python", "-u", "my_script.py"]
-      restartPolicy: OnFailure
+      - name: ph-ee-integration-test
+        image: "{{ .Values.integration_test.image }}"
+        imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
+        ports:
+          - containerPort: "53013"
+        command: [ "/bin/bash" , "-c" ]
+        args: 
+        - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
+        env:
+        - name: "OPERATIONS_APP_CONTACTPOINT"
+          value: "{{ .Values.integration_test.operations_app.contactpoint }}"
+        - name: "BULK_PROCESSOR_CONTACTPOINT"
+          value: "{{ .Values.integration_test.bulk_processor.contactpoint }}"
+        - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
+          value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
+        - name: "KAFKA_BROKERS"
+          value: "{{ .Values.integration_test.kafka.brokers }}"
+        - name: "KAFKA_TOPICS"
+          value: "{{ .Values.integration_test.kafka.topics }}"
+        - name: "KAFKA_CONSUMERTIMEOUTMS"
+          value: "{{ .Values.integration_test.kafka.consumerTimeoutMs }}"
+        - name: "ZEEBE_OPERATIONS_CONTACTPOINT"
+          value: "{{ .Values.integration_test.zeebe_operations.contactpoint }}"
+        - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
+          value: "{{ .Values.integration_test.zeebe_operations.no_of_workflows }}"
+        - name: "MAX_RETRY_COUNT"
+          value: "{{ .Values.integration_test.max_retry_count }}"
+        - name: "RETRY_INTERVAL"
+          value: "{{ .Values.integration_test.retry_intervals }}"
+        - name: "DEFAULTS_TENANT"
+          value: "{{ .Values.integration_test.defaults.tenant }}"
+        - name: "DEFAULTS_AUTHORIZATION"
+          value: "{{ .Values.integration_test.defaults.authorization }}"
+        - name: "CHANNEL_BASE-URL"
+          value: "{{ .Values.integration_test.channel.base_url }}"
+        - name: "LOAN_BASE-URL"
+          value: "{{ .Values.integration_test.loan.base_url }}"
+        - name: "SAVINGS_BASE-URL"
+          value: "{{ .Values.integration_test.savings.base_url }}"
+        - name: CHANNEL_CONTACTPOINT
+          value: "{{ .Values.integration_test.channel.contactpoint }}"
+        - name: SAVINGS_CONTACTPOINT
+          value: "{{ .Values.integration_test.savings.contactpoint }}"
+        - name: LOAN_CONTACTPOINT
+          value: "{{ .Values.integration_test.loan.contactpoint }}"
+        - name: MOCK_SERVER_PORT
+          value: "{{ .Values.integration_test.mock_server.port }}"
+        - name: IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT
+          value: "{{ .Values.integration_test.identity_account_mapper.contactpoint }}"
+        - name: MIFOS_CONNECTOR_CONTACTPOINT
+          value: "{{ .Values.integration_test.mifos_connector.contactpoint }}"
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: "CALLBACK_URL"
+          value: http://$(MY_POD_IP):53013
+        - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
+          value: "{{ .Values.integration_test.paybill.mpesa_connector.contactpoint}}"
+        resources:
+          limits:
+            memory: "{{ .Values.integration_test.limits.memory }}"
+            cpu: "{{ .Values.integration_test.limits.cpu }}"
+          requests:
+            memory: "{{ .Values.integration_test.requests.memory }}"
+            cpu: "{{ .Values.integration_test.requests.cpu }}"
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 120
+  backoffLimit: 4

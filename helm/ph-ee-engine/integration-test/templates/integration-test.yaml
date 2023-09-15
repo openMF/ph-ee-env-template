@@ -2,8 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-test-job"
-  namespace: paymenthub
+  name: "{{ .Release.Name }}-test-job"
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "10"
