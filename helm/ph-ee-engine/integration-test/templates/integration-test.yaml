@@ -1,8 +1,7 @@
-# {{- if .Values.createJob }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-test-job"
+  name: {{ .Release.Name }}
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "10"
@@ -11,8 +10,8 @@ metadata:
     # "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
-    # metadata:
-    #   name: {{ .Release.Name }}-test-job"
+    metadata:
+      name: "ph-ee-integration-test"
     spec:
       containers:
       - name: ph-ee-integration-test
@@ -88,4 +87,3 @@ spec:
       restartPolicy: Never
       terminationGracePeriodSeconds: 120
   backoffLimit: 4
-# {{- end }}
