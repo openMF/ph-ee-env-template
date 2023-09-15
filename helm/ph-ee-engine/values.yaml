@@ -1925,11 +1925,11 @@ keycloak:
       value: /realm/kong-keycloak-realm.json     
 
 integration_test:
-  enabled: false
-  replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
-  imageTag: latest
-  imagePullPolicy: "Never"
+  enabled: true
+  image: docker.io/openmf/ph-ee-integration-test:v1.2.0
+  imagePullPolicy: Always
+  gradle:
+    command: ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
   limits:
     cpu: "500m"
     memory: "3Gi"
@@ -1937,11 +1937,11 @@ integration_test:
     cpu: "100m"
     memory: "2Gi"
   operations_app:
-    contactpoint: "ph-ee-operations-app"
+    contactpoint: http://ph-ee-operations-app:80
   bulk_processor:
-    contactpoint: "ph-ee-connector-bulk"
+    contactpoint: http://ph-ee-connector-bulk:80
   channel_connector:
-    contactpoint: "ph-ee-connector-channel"
+    contactpoint: https://ph-ee-connector-channel:80
   kafka:
     brokers: ""
     topics: ""
@@ -1949,20 +1949,30 @@ integration_test:
   zeebe_operations:
     contactpoint: ""
     no_of_workflows: ""
-    thread-count: ""
+    thread_count: ""
   max_retry_count: ""
   retry_intervals: ""
   defaults:
     tenant: ""
     authorization: ""
   channel:
+    contactpoint: https://ph-ee-connector-channel:80
     base_url: ""
   loan:
+    contactpoint: "https://fineract-server:8443"
     base_url: ""
   savings:
+    contactpoint: "https://fineract-server:8443"
     base_url: ""
-  gradle:
-    command: ""
+  mock_server:
+    port: "53013"
+  identity_account_mapper:
+    contactpoint: "https://ph-ee-identity-account-mapper:80"
+  mifos_connector:
+    contactpoint: "https://ph-ee-connector-ams-mifos:80"
+  paybill:
+    mpesa_connector:
+      contactpoint:
 
 redis:
   enabled: true

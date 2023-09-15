@@ -120,47 +120,86 @@ jobs:
       #     chart: "https://fynarfin.io/images/ph-ee-g2psandbox-0.2.0.tgz"
       #     release-name: g2p-sandbox
       #     namespace: ph-test
-  test-chart-gov:
+#  test-chart-gov:
+#    docker:
+#      - image: cimg/openjdk:17.0.0
+#    steps:
+#      - run: git clone https://github.com/openmf/ph-ee-integration-test
+#      - run:
+#          name: Ngrok setup
+#          command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+#      - run:
+#          name: Test execution
+#          command: |
+#            ngrok config add-authtoken $AUTH_TOKEN
+#            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+#            ngrok http 53013 > /dev/null &
+#            echo -n "Extracting ngrok public url ."
+#            NGROK_PUBLIC_URL=""
+#            while [ -z "$NGROK_PUBLIC_URL" ]; do
+#              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+#              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+#                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+#                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+#              sleep 1
+#              echo -n "."
+#            done
+#
+#            export CALLBACK_URL="https://$NGROK_PUBLIC_URL"
+#            echo -n "Public url ."
+#            echo $CALLBACK_URL
+#            cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov"
+#            echo -n "Test execution is completed, kill ngrok"
+#            pkill ngrok
+#      - store_test_results:
+#          path: ph-ee-integration-test/build/cucumber.xml
+#      - store_artifacts:
+#          path: ph-ee-integration-test/build/reports/tests/test
+#  test-chart-ams:
+#    docker:
+#      - image: cimg/openjdk:17.0.0
+#    steps:
+#      - run: git clone https://github.com/openmf/ph-ee-integration-test
+#      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
+#      - store_test_results:
+#          path: ph-ee-integration-test/build/cucumber.xml
+#      - store_artifacts:
+#          path: ph-ee-integration-test/build/reports/tests/test
+  helm-test:
     docker:
-      - image: cimg/openjdk:17.0.0
+      - image: cimg/python:3.10
+    parameters:
+      cluster-name:
+        description: "sit"
+        type: string
     steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: 
-          name: Ngrok setup
-          command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "sit"
+          aws-region: "$REGION"
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      - run: helm ls --namespace=paymenthub
+      - helm/install-helm-client:
+          version: v3.2.0
+      # Set up kubectl and Helm if not already available in your image
       - run:
-          name: Test execution
+          name: Install kubectl and Helm
           command: |
-            ngrok config add-authtoken $AUTH_TOKEN
-            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http 53013 > /dev/null &
-            echo -n "Extracting ngrok public url ."
-            NGROK_PUBLIC_URL=""
-            while [ -z "$NGROK_PUBLIC_URL" ]; do
-              # Run 'curl' against ngrok API and extract public (using 'sed' command)
-              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-              sleep 1
-              echo -n "."
-            done
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/
 
-            export CALLBACK_URL="https://$NGROK_PUBLIC_URL"
-            echo -n "Public url ."
-            echo $CALLBACK_URL
-            cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
-            echo -n "Test execution is completed, kill ngrok"
-            pkill ngrok
-      - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
-      - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
-  test-chart-ams:
-    docker:
-      - image: cimg/openjdk:17.0.0
-    steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
+        # Wait for the deployment to stabilize (optional but recommended)
+        # - run:
+        #     name: Wait for deployment to stabilize
+        #     command: |
+        #       kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
+
+        # Run Helm tests
+      - run:
+          name: Run Helm tests
+          command: |
+            helm test g2p-sandbox --namespace paymenthub
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
@@ -201,15 +240,23 @@ workflows:
             - AWS
             - Helm
             - slack
-      - test-chart-gov:
-          requires:
-            - upgrade-helm-chart
-          context: 
-            - AWS
-            - Helm
-            - slack
-            - Ngrok
-      - test-chart-ams:
+#      - test-chart-gov:
+#          requires:
+#            - upgrade-helm-chart
+#          context:
+#            - AWS
+#            - Helm
+#            - slack
+#            - Ngrok
+#      - test-chart-ams:
+#          requires:
+#            - upgrade-helm-chart
+#          context:
+#            - AWS
+#            - Helm
+#            - slack
+      - helm-test:
+          cluster-name: sit
           requires:
             - upgrade-helm-chart
           context:
