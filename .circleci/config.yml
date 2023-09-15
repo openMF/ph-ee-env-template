@@ -160,7 +160,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: cd ph-ee-integration-test && helm test -Dcucumber.filter.tags="@amsIntegration"
+      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
