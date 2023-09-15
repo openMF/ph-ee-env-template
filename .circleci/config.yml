@@ -182,8 +182,10 @@ jobs:
       - run: helm ls --namespace=paymenthub
       - helm/install-helm-client:
           version: v3.2.0
-      - run: git clone https://github.com/openmf/ph-ee-env-template
-      - run: cd helm/ph-ee-engine && kubectl apply -f templates/tests/integration_test.yaml
+      - run:
+          name: Run Helm Tests
+          command: |
+            helm test g2p-sandbox --namespace paymenthub 
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
       - store_artifacts:
