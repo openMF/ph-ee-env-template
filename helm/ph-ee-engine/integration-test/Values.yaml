@@ -6,7 +6,7 @@ secret:
 
 configmap:
   apiversion: "v1"
-  
+
 enabled: true
 replicas: 1
 image: docker.io/openmf/ph-ee-integration-test:v1.2.0
@@ -19,7 +19,7 @@ limits:
 requests:
   cpu: "100m"
   memory: "2Gi"
-operations_app:
+operationsapp:
   contactpoint: http://ph-ee-operations-app:80
 bulk_processor:
   contactpoint: http://ph-ee-connector-bulk:80

@@ -1938,7 +1938,7 @@ integration_test:
   requests:
     cpu: "100m"
     memory: "2Gi"
-  operations_app:
+  operationsapp:
     contactpoint: http://ph-ee-operations-app:80
   bulk_processor:
     contactpoint: http://ph-ee-connector-bulk:80
