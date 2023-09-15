@@ -166,45 +166,45 @@ jobs:
       - store_artifacts:
           path: ph-ee-integration-test/build/reports/tests/test
 
-  helm-test:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "sit"
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
-      - helm/install-helm-client:
-          version: v3.2.0
-      # Set up kubectl and Helm if not already available in your image
-      - run:
-          name: Install kubectl and Helm
-          command: |
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            chmod +x kubectl
-            sudo mv kubectl /usr/local/bin/
+  # helm-test:
+  #   docker:
+  #     - image: cimg/python:3.10
+  #   parameters:
+  #     cluster-name:
+  #       description: "sit"
+  #       type: string
+  #   steps:
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: "sit"
+  #         aws-region: "$REGION"
+  #     - helm/install-helm-client:
+  #         version: "v3.8.2"
+  #     - run: helm ls --namespace=paymenthub
+  #     - helm/install-helm-client:
+  #         version: v3.2.0
+  #     # Set up kubectl and Helm if not already available in your image
+  #     - run:
+  #         name: Install kubectl and Helm
+  #         command: |
+  #           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  #           chmod +x kubectl
+  #           sudo mv kubectl /usr/local/bin/
 
-       # Wait for the deployment to stabilize (optional but recommended)
-      # - run:
-      #     name: Wait for deployment to stabilize
-      #     command: |
-      #       kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
+  #      # Wait for the deployment to stabilize (optional but recommended)
+  #     # - run:
+  #     #     name: Wait for deployment to stabilize
+  #     #     command: |
+  #     #       kubectl wait --for=condition=Available pods/g2p-sandbox-zeebe-0 --namespace paymenthub --timeout=30s
 
-        # Run Helm tests
-      - run:
-          name: Run Helm tests
-          command: |
-            helm test g2p-sandbox --namespace paymenthub 
-      - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
-      - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
+  #       # Run Helm tests
+  #     - run:
+  #         name: Run Helm tests
+  #         command: |
+  #           helm test g2p-sandbox --namespace paymenthub 
+  #     - store_test_results:
+  #         path: ph-ee-integration-test/build/cucumber.xml
+  #     - store_artifacts:
+  #         path: ph-ee-integration-test/build/reports/tests/test
 
 workflows:
   deploy:
@@ -242,11 +242,26 @@ workflows:
             - AWS
             - Helm
             - slack
-      - helm-test:
-          cluster-name: sit
+      - test-chart-gov:
           requires:
             - upgrade-helm-chart
           context: 
             - AWS
             - Helm
             - slack
+            - Ngrok
+      - test-chart-ams:
+          requires:
+            - upgrade-helm-chart
+          context:
+            - AWS
+            - Helm
+            - slack            
+      # - helm-test:
+      #     cluster-name: sit
+      #     requires:
+      #       - upgrade-helm-chart
+      #     context: 
+      #       - AWS
+      #       - Helm
+      #       - slack
