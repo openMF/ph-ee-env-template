@@ -182,6 +182,14 @@ jobs:
       - run: helm ls --namespace=paymenthub
       - helm/install-helm-client:
           version: v3.2.0
+      # Set up kubectl and Helm if not already available in your image
+      - run:
+          name: Install kubectl and Helm
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/
+
        # Wait for the deployment to stabilize (optional but recommended)
       - run:
           name: Wait for deployment to stabilize
