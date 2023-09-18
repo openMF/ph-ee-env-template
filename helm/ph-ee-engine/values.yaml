@@ -129,7 +129,7 @@ camunda-platform:
 
 elasticsearch:
   enabled: true
-  # imageTag: 7.17.0
+  # imageTag: 7.17.1
   replicas: 1
   protocol: http
   fullnameOverride: "ph-ee-elasticsearch"
