@@ -5,7 +5,7 @@ dependencies:
     condition: "camunda-platform-helm.enabled"
   - name: elasticsearch
     repository: http://helm.elastic.co
-    version: 7.17.3
+    version: 7.16.3
     condition: "elasticsearch.enabled"
   - name: kibana
     repository: http://helm.elastic.co
