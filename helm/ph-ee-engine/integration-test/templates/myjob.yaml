@@ -7,8 +7,8 @@ spec:
     spec:
       containers:
       - name: ph-ee-integration-test
-        image: docker.io/openmf/ph-ee-integration-test:v1.3.0-rc.1
-        imagePullPolicy: Always
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
         ports: 
           - containerPort: 53013
         command: [ "/bin/bash" , "-c" ]
