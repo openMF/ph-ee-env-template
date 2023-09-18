@@ -1,7 +1,7 @@
 dependencies:
   - name: camunda-platform
     repository: https://helm.camunda.io
-    version: 8.1.1
+    version: 8.2.8
     condition: "camunda-platform-helm.enabled"
   - name: elasticsearch
     repository: http://helm.elastic.co
