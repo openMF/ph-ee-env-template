@@ -502,7 +502,7 @@ account_mapper:
     hostname: "identity-mapper.sandbox.mifos.io"
     LOGGING_LEVEL_ROOT: INFO    
     ingress:
-      enabled: true
+      enabled: false
       pathtype: Prefix
       annotations:
         kubernetes.io/ingress.class: nginx
