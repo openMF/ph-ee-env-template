@@ -67,7 +67,7 @@ jobs:
       - run: helm repo index .
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
-      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml helm/exporter-2.0.0-SNAPSHOT.jar ph-ee-g2psandbox-fynarfin-0.2.0.tgz ec2-user@13.233.68.128:~/
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml exporter-2.0.0-SNAPSHOT.jar ph-ee-g2psandbox-fynarfin-0.2.0.tgz ec2-user@13.233.68.128:~/
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-0.2.0.tgz    
   build-and-host-g2p-sandbox-security:
     docker:
@@ -90,7 +90,7 @@ jobs:
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-security
-      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml helm/exporter-2.0.0-SNAPSHOT.jar ph-ee-g2psandbox-security-0.0.0.tgz ec2-user@13.233.68.128:~/
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0.tgz ec2-user@13.233.68.128:~/
       - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-security index.yaml ph-ee-g2psandbox-security-0.0.0.tgz
   upgrade-helm-chart:
     docker:
