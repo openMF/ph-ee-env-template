@@ -25,7 +25,7 @@ jobs:
       - run: chmod 400 b64encoded.pem
       - run: echo "Hello World"
       - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml helm/exporter-2.0.0-SNAPSHOT.jar ph-ee-engine-0.0.0-SNAPSHOT.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-engine-0.0.0-SNAPSHOT index.yaml helm/exporter-2.0.0-SNAPSHOT.jar ph-ee-engine-0.0.0-SNAPSHOT.tgz
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-engine-0.0.0-SNAPSHOT index.yaml exporter-2.0.0-SNAPSHOT.jar ph-ee-engine-0.0.0-SNAPSHOT.tgz
       # - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem  ec2-user@13.233.68.128:~/
   build-and-host-g2p-sandbox:
     docker:
