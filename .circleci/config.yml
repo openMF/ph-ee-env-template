@@ -21,6 +21,7 @@ jobs:
       - run: helm dep up helm/ph-ee-engine
       - run: helm package helm/ph-ee-engine
       - run: helm repo index .
+      - run: echo "$CERT_FILE"
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
       - run: echo "Hello World"
