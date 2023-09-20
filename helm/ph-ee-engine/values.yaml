@@ -1975,6 +1975,7 @@ myjob:
   paybill:
     mpesa_connector:
       contactpoint: 
+      
 
 redis:
   enabled: true
