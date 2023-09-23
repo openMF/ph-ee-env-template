@@ -28,6 +28,10 @@ dependencies:
     version: 17.9.3
     repository: "https://charts.bitnami.com/bitnami"
     condition: "redis.enabled"
+  - name: kafka
+    version: 25.1.8
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: "kafka.enabled"
   - name: operations_app
     version: 1.0.0
     repository: "file://./operations-app"
@@ -92,22 +96,20 @@ dependencies:
     version: 1.0.0
     repository: "file://./zeebe-ops"
     condition: "zeebe_ops.enabled"
-  - name: kafka
+  - name: connector_bulk_closedloop
     version: 1.0.0
-    repository: "file://./kafka"
-    condition: "kafka.enabled"
-  - name: connector
-    version: 1.0.0
-    repository: "file://./connector"
-    condition: "connector.enabled"
+    repository: "file://./connector-bulk-closedloop"
+    condition: "connector_bulk_closedloop.enabled"
   - name: mockpayment
     version: 1.0.0
     repository: "file://./connector-mock-payment-schema"
     condition: "mockpayment.enabled"
+
   - name: vouchers
     version: 1.0.0
     repository: "file://./vouchers"
     condition: "vouchers.enabled"
+
   - name: billPay
     version: 1.0.0
     repository: "file://./connector-bill-pay"
@@ -117,7 +119,3 @@ dependencies:
     version: 1.0.0
     repository: "file://./connector-crm"
     condition: "crm.enabled"
-  - name: minio
-    repository: "https://charts.min.io/"
-    version: 5.0.14
-    condition: "minio.enabled"
