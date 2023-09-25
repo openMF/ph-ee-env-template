@@ -187,7 +187,8 @@ jobs:
           name: Helm Test
           command: |
             # Skip specific test suites if needed
-            helm test g2p-sandbox -n paymenthub --run g2p-sandbox-zeebe-test-connection || true
+            helm test g2p-sandbox -n paymenthub
+            
             # Replace RELEASE_NAME with your release name and adjust the pattern accordingly
             # helm test g2p-sandbox --filter name=g2p-sandbox -n paymenthub
             # --skip "g2p-sandbox-zeebe-0"
