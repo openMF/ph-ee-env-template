@@ -28,7 +28,7 @@ spec:
         - name: "KAFKA_CONSUMERTIMEOUTMS"
           value: "{{ .Values.kafka.consumerTimeoutMs }}"
         - name: "ZEEBE_OPERATIONS_CONTACTPOINT"
-          value: "{{ .Values.zeebe_operations.contactpoint }}"
+          value: ""
         - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
           value: "{{ .Values.zeebe_operations.no_of_workflows }}"
         - name: "MAX_RETRY_COUNT"
