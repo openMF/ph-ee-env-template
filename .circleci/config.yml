@@ -185,7 +185,8 @@ jobs:
           name: Helm Test
           command: |
             # Replace RELEASE_NAME with your release name and adjust the pattern accordingly
-            helm test g2p-sandbox -n paymenthub --skip "g2p-sandbox-zeebe-0"
+            helm test g2p-sandbox -n paymenthub 
+            # --skip "g2p-sandbox-zeebe-0"
 
 workflows:
   deploy:
