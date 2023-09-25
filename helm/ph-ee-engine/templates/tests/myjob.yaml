@@ -30,7 +30,7 @@ spec:
         - name: "ZEEBE_OPERATIONS_CONTACTPOINT"
           value: ""
         - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
-          value: "{{ .Values.zeebe_operations.no_of_workflows }}"
+          value: ""
         - name: "MAX_RETRY_COUNT"
           value: "{{ .Values.max_retry_count }}"
         - name: "RETRY_INTERVAL"
@@ -64,7 +64,7 @@ spec:
         - name: "CALLBACK_URL"
           value: http://$(MY_POD_IP):53013
         - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
-          value: "{{ .Values.paybill.mpesa_connector.contactpoint}}"
+          value: ""
         resources:
           limits:
             memory: "{{ .Values.limits.memory }}"
