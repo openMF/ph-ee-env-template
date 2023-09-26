@@ -67,10 +67,10 @@ spec:
           value: ""
         resources:
           limits:
-            memory: "{{ .Values.limits.memory }}"
-            cpu: "{{ .Values.limits.cpu }}"
+            cpu: "500m"
+            memory: "3Gi"
           requests:
-            memory: "{{ .Values.requests.memory }}"
-            cpu: "{{ .Values.requests.cpu }}"
+            cpu: "100m"
+            memory: "2Gi"
       restartPolicy: OnFailure
   backoffLimit: 0
