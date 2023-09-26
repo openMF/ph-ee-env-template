@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-integration-test
 spec:
   template:
     spec:
