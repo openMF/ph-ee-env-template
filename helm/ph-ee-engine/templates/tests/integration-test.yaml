@@ -4,7 +4,7 @@ metadata:
   name: "g2p-sandbox-test-connection"
   labels:
     app: "integration-test"
-  annotations:"
+  annotations:
     "helm.sh/hook": test-success
 spec:
   containers:
