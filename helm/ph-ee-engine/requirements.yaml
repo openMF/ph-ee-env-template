@@ -112,5 +112,5 @@ dependencies:
 
   - name: integration-test
     version: 1.0.0
-    repository: "file://./templates"
+    repository: "file://.setup-files/templates"
     condition: "integration-test.enabled"
