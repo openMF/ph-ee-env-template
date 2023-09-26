@@ -22,19 +22,19 @@ spec:
         - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
           value: "https://ph-ee-connector-channel:80"
         - name: "KAFKA_BROKERS"
-          value: "{{ .Values.kafka.brokers }}"
+          value: ""
         - name: "KAFKA_TOPICS"
-          value: "{{ .Values.kafka.topics }}"
+          value: ""
         - name: "KAFKA_CONSUMERTIMEOUTMS"
-          value: "{{ .Values.kafka.consumerTimeoutMs }}"
+          value: ""
         - name: "ZEEBE_OPERATIONS_CONTACTPOINT"
           value: ""
         - name: "ZEEBE_OPERATIONS_NO-OF-WORKFLOWS"
           value: ""
         - name: "MAX_RETRY_COUNT"
-          value: "{{ .Values.max_retry_count }}"
+          value: ""
         - name: "RETRY_INTERVAL"
-          value: "{{ .Values.retry_intervals }}"
+          value: ""
         - name: "DEFAULTS_TENANT"
           value: ""
         - name: "DEFAULTS_AUTHORIZATION"
@@ -64,7 +64,7 @@ spec:
         - name: "CALLBACK_URL"
           value: http://$(MY_POD_IP):53013
         - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
-          value: "{{ .Values.paybill.mpesa_connector.contactpoint}}"
+          value: ""
         resources:
           limits:
             memory: "{{ .Values.limits.memory }}"
