@@ -87,7 +87,7 @@ camunda-platform:
 
     image:
       repository: camunda/zeebe
-      tag: 8.1.1
+      tag: 8.2.8
     clusterSize: "1"
     partitionCount: "1"
     replicationFactor: "1"
