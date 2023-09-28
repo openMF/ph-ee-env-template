@@ -51,6 +51,8 @@ spec:
               value: "{{ .Values.DATASOURCE_URL }}"
             - name: "MYSQL_USERNAME"
               value: "{{ .Values.MYSQL_USERNAME }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "MYSQL_PASSWORD"
               valueFrom:
                 secretKeyRef:
