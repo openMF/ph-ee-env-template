@@ -53,9 +53,9 @@ spec:
       - name: MOCK_SERVER_PORT
         value: "53013"
       - name: IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT
-        value: "https://ph-ee-identity-account-mapper:80"
+        value: "http://ph-ee-identity-account-mapper:80"
       - name: MIFOS_CONNECTOR_CONTACTPOINT
-        value: "https://ph-ee-connector-ams-mifos:80"
+        value: "http://ph-ee-connector-ams-mifos:80"
       - name: MY_POD_IP
         valueFrom:
           fieldRef:
@@ -64,6 +64,8 @@ spec:
         value: http://$(MY_POD_IP):53013
       - name: PAYBILL_MPESA_CONNECTOR_CONTACTPOINT
         value: ""
+      - name: VOUCHER_MANAGEMENT_CONTACTPOINT
+        value: "http://ph-ee-vouchers:80"
     resources:
         limits:
           cpu: "500m"
