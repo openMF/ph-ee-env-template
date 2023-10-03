@@ -1939,11 +1939,11 @@ integration_test:
     cpu: "100m"
     memory: "2Gi"
   operations_app:
-    contactpoint: "ph-ee-operations-app"
+    contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
-    contactpoint: "ph-ee-connector-bulk"
+    contactpoint: "http://ph-ee-connector-bulk:80"
   channel_connector:
-    contactpoint: "ph-ee-connector-channel"
+    contactpoint: "https://ph-ee-connector-channel:80"
   kafka:
     brokers: ""
     topics: ""
