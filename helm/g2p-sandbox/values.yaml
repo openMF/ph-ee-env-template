@@ -509,6 +509,7 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
+  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.3.1
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
