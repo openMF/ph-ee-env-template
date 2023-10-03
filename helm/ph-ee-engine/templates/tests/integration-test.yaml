@@ -20,6 +20,8 @@ spec:
         value: "https://ph-ee-connector-bulk:80"
       - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
         value: "https://ph-ee-connector-channel:80"
+      - name:  "LOGGING_LEVEL_ROOT"
+        value: "DEBUG"
       - name: "MAX_RETRY_COUNT"
         value: "5"
       - name: "RETRY_INTERVAL"
