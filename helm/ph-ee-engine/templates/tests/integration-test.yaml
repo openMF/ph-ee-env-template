@@ -12,8 +12,7 @@ spec:
     image: docker.io/openmf/ph-ee-integration-test:v1.3.0-rc.1
     command: [ "/bin/bash" , "-c" ]
     args: 
-    - ./gradlew cucumberCli -Dcucumber.options="src/test/java/resources/batch.feature" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'
-    env:
+    - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'    env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
         value: "http://ph-ee-operations-app:80"
       - name: "BULK_PROCESSOR_CONTACTPOINT"
