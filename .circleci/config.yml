@@ -106,7 +106,7 @@ jobs:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub-release
       - helm/upgrade-helm-chart:
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-$FY_SIT_RELEASE.tgz"
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-1.2.0.tgz"
           release-name: g2p-sandbox
           namespace: paymenthub-release
           recreate-pods: true
