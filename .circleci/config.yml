@@ -11,6 +11,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
+      PH_RELEASE: 1.10.0
     steps:
       - checkout
       - run: rm -f helm/ph-ee-engine/Chart.lock helm/ph-ee-engine/requirements.lock helm/ph-ee-engine/charts/*
@@ -21,14 +22,15 @@ jobs:
       - run: helm repo index .
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
-      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-engine-1.10.0-SNAPSHOT.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-engine-1.10.0-SNAPSHOT index.yaml ph-ee-engine-1.10.0-SNAPSHOT.tgz
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-engine-$PH_RELEASE-SNAPSHOT.tgz ec2-user@13.233.68.128:~/
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-engine-$PH_RELEASE-SNAPSHOT index.yaml ph-ee-engine-$PH_RELEASE-SNAPSHOT.tgz
   build-and-host-g2p-sandbox:
     docker:
       - image: cimg/python:3.10
     working_directory: ~/repo
     environment:
       TERM: dumb
+      G2P_RELEASE: 1.2.0
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox/Chart.lock helm/g2p-sandbox/requirements.lock helm/g2p-sandbox/charts/*
@@ -41,17 +43,18 @@ jobs:
       - run: helm repo index .
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
-      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-1.2.0.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-1.2.0 index.yaml ph-ee-g2psandbox-1.2.0.tgz
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-$G2P_RELEASE.tgz ec2-user@13.233.68.128:~/
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-$G2P_RELEASE index.yaml ph-ee-g2psandbox-$G2P_RELEASE.tgz
   build-host-g2p-fyn-chart:
     docker:
       - image: cimg/python:3.10
     working_directory: ~/repo
     environment:
       TERM: dumb
+      FY_SIT_RELEASE: 1.2.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-env-labs
-      - run: cd ph-ee-env-labs && git checkout v1.2.0-release && cd ..
+      - run: cd ph-ee-env-labs && git checkout v$FY_SIT_RELEASE-release && cd ..
       - run: rm -f ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/requirements.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/charts/*
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -62,8 +65,8 @@ jobs:
       - run: helm repo index .
       - run: echo "$CERT_FILE" | base64 --decode > b64encoded.pem
       - run: chmod 400 b64encoded.pem
-      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-1.2.0.tgz ec2-user@13.233.68.128:~/
-      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-1.2.0.tgz    
+      - run: scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-$FY_SIT_RELEASE.tgz ec2-user@13.233.68.128:~/
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-g2psandbox-fynarfin index.yaml ph-ee-g2psandbox-fynarfin-$FY_SIT_RELEASE.tgz    
   build-and-host-g2p-sandbox-security:
     docker:
       - image: cimg/python:3.10
@@ -88,6 +91,9 @@ jobs:
   upgrade-helm-chart:
     docker:
       - image: cimg/python:3.10
+    environment:
+      TERM: dumb
+      FY_SIT_RELEASE: 1.2.0
     parameters:
       cluster-name:
         description: "sit"
@@ -98,11 +104,11 @@ jobs:
           aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
+      - run: helm ls --namespace=paymenthub-release
       - helm/upgrade-helm-chart:
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-1.2.0.tgz"
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-$FY_SIT_RELEASE.tgz"
           release-name: g2p-sandbox
-          namespace: paymenthub
+          namespace: paymenthub-release
           recreate-pods: true
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
           wait: true
