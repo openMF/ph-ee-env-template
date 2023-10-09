@@ -111,7 +111,7 @@ jobs:
       - run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
           chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.2.0/ph-ee-g2psandbox-1.2.0.tgz"
-          release-name: g2p-sandbox
+          release-name: ph-ee-g2psandbox
           namespace: paymenthub-release
           recreate-pods: true
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.2.0"
