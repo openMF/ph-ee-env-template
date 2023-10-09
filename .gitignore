@@ -1,7 +1,7 @@
 charts/
 helm/*.tgz
 .idea/
-
+*.icloud
 *.iml
 **/*.lock
 

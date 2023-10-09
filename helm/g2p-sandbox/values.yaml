@@ -19,7 +19,7 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     LOGGING_LEVEL_ROOT: "INFO"
     LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-    tenants: "rhino,gorilla,lion"
+    tenants: "rhino,gorilla"
     DFSPIDS: "gorilla,lion"
 
   zeebe-operate-helm:
@@ -205,7 +205,7 @@ ph-ee-engine:
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
-    DFSPIDS: "rhino,gorilla,lion"
+    DFSPIDS: "rhino,gorilla"
     operations:
       url: "http://ops-bk.sandbox.mifos.io/api/v1"
       authEnabled: false
@@ -444,7 +444,7 @@ ph-ee-engine:
     enabled: true
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       enabled: false
       ingressClassName: "kong"
@@ -476,7 +476,7 @@ ph-ee-engine:
     enabled: true
     hostname: "vouchers.sandbox.mifos.io"
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/ingress.class: nginx
       tls:
@@ -502,7 +502,7 @@ account_mapper:
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
-    enabled: true
+    enabled: false
     pathtype: Prefix
     annotations:
       kubernetes.io/ingress.class: nginx

@@ -244,7 +244,7 @@ channel:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "channel" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -277,7 +277,7 @@ channel:
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/channel"
     annotations: {}
     backend: {}
@@ -349,7 +349,7 @@ ph_ee_connector_ams_mifos:
   ams_local_tenants: ""
   ams_local_loan_host: ""
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -450,7 +450,7 @@ ph_ee_connector_mojaloop:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -483,7 +483,7 @@ ph_ee_connector_mojaloop:
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/"
     annotations: {}
     backend: {}
@@ -543,7 +543,7 @@ operations_app:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -629,7 +629,7 @@ operations_web:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -768,7 +768,7 @@ mpesa:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -860,7 +860,7 @@ roster_connector:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -945,7 +945,7 @@ paygops_connector:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1031,7 +1031,7 @@ messagegateway:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1064,7 +1064,7 @@ messagegateway:
 # Enabling this will publicly expose your message-gateway instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/messages"
     annotations: {}
     backend: {}
@@ -1131,7 +1131,7 @@ notifications:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1222,7 +1222,7 @@ zeebe_ops:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1351,7 +1351,7 @@ importer_es:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1448,7 +1448,7 @@ importer_rdbms:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1566,7 +1566,7 @@ connector_bulk:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1636,7 +1636,7 @@ ph_ee_connector_gsma:
   image: docker.io/openmf/ph-ee-connector-gsma:v1.1.0
   imagePullPolicy: "Always"
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1732,7 +1732,7 @@ ph-ee-connector_slcb:
     failureThreshold: 3
     timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: false
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1814,7 +1814,7 @@ connector_bulk_closedloop:
     failureThreshold: 3
     timeoutSeconds: 5
   # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true
+  managedServiceAccount: false
   # Custom service account override that the pod will use
   serviceAccount: ""
   # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -1890,7 +1890,7 @@ mock_oracle:
 # Enabling this will publicly expose your mock_oracle instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/"
     annotations: {}
     backend: {}
@@ -1998,7 +1998,7 @@ kong:
 # Enabling this will publicly expose your kong instance.
 # Only enable this if you have security enabled on your cluster      
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: "kong"
       hostname: kong-admin.mifos.io
   extraObjects:
@@ -2060,7 +2060,7 @@ vouchers:
   image: docker.io/openmf/ph-ee-vouchers:v1.0.0
   hostname: "vouchers.sandbox.mifos.io"
   ingress:
-    enabled: true
+    enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
     tls:
