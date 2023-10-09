@@ -105,6 +105,8 @@ jobs:
       - helm/install-helm-client:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub-release
+      - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
+      - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
           chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.2.0/ph-ee-g2psandbox-1.2.0.tgz"
           release-name: g2p-sandbox
