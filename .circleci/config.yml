@@ -105,6 +105,7 @@ jobs:
       - helm/install-helm-client:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub-release
+      - kubernetes/install-kubectl
       - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
