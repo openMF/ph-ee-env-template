@@ -106,11 +106,11 @@ jobs:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub-release
       - helm/upgrade-helm-chart:
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-1.2.0.tgz"
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.2.0/ph-ee-g2psandbox-1.2.0.tgz"
           release-name: g2p-sandbox
           namespace: paymenthub-release
           recreate-pods: true
-          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.2.0"
           wait: true
           timeout: "300s"
       # - run: helm test g2p-sandbox --namespace=paymenthub 
