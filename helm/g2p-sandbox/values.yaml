@@ -456,7 +456,7 @@ ph-ee-engine:
       tls: []
     
   kong:
-    enabled: true
+    enabled: false
     image:
       repository: revomatico/docker-kong-oidc
       tag: "latest"
