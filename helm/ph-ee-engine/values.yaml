@@ -1421,7 +1421,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.4.1
+  image: docker.io/openmf/ph-ee-importer-rdbms:importer_rdbms_1
   imagePullPolicy: "Always"
   datasource:
       username: "mifos"

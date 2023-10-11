@@ -455,7 +455,7 @@ ph-ee-engine:
 
   importer_rdbms:
     enabled: true
-    image: docker.io/openmf/ph-ee-importer-rdbms:latest
+    image: docker.io/openmf/ph-ee-importer-rdbms:importer_rdbms_1
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
     enabled: true
