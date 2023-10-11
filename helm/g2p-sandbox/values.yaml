@@ -444,7 +444,7 @@ ph-ee-engine:
     enabled: true
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       enabled: false
       ingressClassName: "kong"

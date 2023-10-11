@@ -1998,7 +1998,7 @@ kong:
 # Enabling this will publicly expose your kong instance.
 # Only enable this if you have security enabled on your cluster      
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: "kong"
       hostname: kong-admin.mifos.io
   extraObjects:
@@ -2025,7 +2025,7 @@ kong:
           kubernetes.io/ingress.class: "kong"
         labels:
           global: "true"
-      disabled: false # optionally disable the plugin in Kong
+      disabled: true # optionally disable the plugin in Kong
       plugin: cors
       config:
         origins:
