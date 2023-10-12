@@ -9,10 +9,11 @@ metadata:
 spec:
   containers:
   - name: integration-test
-    image: docker.io/openmf/ph-ee-integration-test:latest
+    image: docker.io/openmf/ph-ee-integration-test:v1.3.0-rc.2
     command: [ "/bin/bash" , "-c" ]
     args: 
-    - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 600 ; echo 'pod terminate'    
+    # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+    - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'    
     env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
         value: "http://ph-ee-operations-app:80"
@@ -21,7 +22,7 @@ spec:
       - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
         value: "https://ph-ee-connector-channel:80"
       - name:  "LOGGING_LEVEL_ROOT"
-        value: "DEBUG"
+        value: "INFO"
       - name: "MAX_RETRY_COUNT"
         value: "5"
       - name: "RETRY_INTERVAL"
