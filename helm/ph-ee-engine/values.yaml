@@ -1931,8 +1931,7 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test"
-  imageTag: v1.4.0-rc.1
+  image: "docker.io/openmf/ph-ee-integration-test:latest"
   imagePullPolicy: "Never"
   limits:
     cpu: "500m"
