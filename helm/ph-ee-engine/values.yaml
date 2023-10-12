@@ -1929,8 +1929,7 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
-  imageTag: "1.3.0"
+  image: "docker.io/openmf/ph-ee-integration-test:latest"
   imagePullPolicy: "Never"
   limits:
     cpu: "500m"
