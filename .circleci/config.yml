@@ -130,33 +130,29 @@ jobs:
           cluster-name: "sit"
           aws-region: "$REGION"
       - kubernetes/install-kubectl
-      - run:
-          name: Update kubeconfig
-          command: |
-            aws eks update-kubeconfig --name ${EKS_CLUSTER}
       - helm/install-helm-client:
           version: "v3.8.2"
       - run:
           name: Run Helm Tests
           command: |
             helm test g2p-sandbox --namespace paymenthub || echo test
-#      - run:
-#          name: Fetch Integration Test Report
-#          command: |
-#            #!/bin/bash
-#            mkdir -p integration_report/test-report
-#            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-#            # Specify the path to the downloaded file
-#            downloaded_file="integration_report/test-report/cucumber.xml"
-#            # Loop until the file is not empty
-#            while [ ! -s $downloaded_file ]; do
-#                echo "File is empty, waiting..."
-#                sleep 60  # You can adjust the sleep interval as needed
-#                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-#                downloaded_file="integration_report/test-report/cucumber.xml  "
-#            done
-#            echo "File is no longer empty, processing..."
-#            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml  "
+            done
+            echo "File is no longer empty, processing..."
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
         # - run:
         #     name: Fetch Integration Test Report
         #     command: |
