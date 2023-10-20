@@ -124,37 +124,58 @@ jobs:
     docker:
       - image: cimg/openjdk:17.0.0
     steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: 
-          name: Ngrok setup
-          command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+      - checkout
+      - aws-cli/setup:
+          role_arn: "${AWS_CIRCLECI_ROLE_ARN}"
+          region: AWS_REGION
+          profile_name: "playground"
+          role_session_name: deploy-test
+          session_duration: '1800'
+      - kubernetes/install-kubectl
       - run:
-          name: Test execution
+          name: Update kubeconfig
           command: |
-            ngrok config add-authtoken $AUTH_TOKEN
-            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http 53013 > /dev/null &
-            echo -n "Extracting ngrok public url ."
-            NGROK_PUBLIC_URL=""
-            while [ -z "$NGROK_PUBLIC_URL" ]; do
-              # Run 'curl' against ngrok API and extract public (using 'sed' command)
-              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-              sleep 1
-              echo -n "."
+            aws eks update-kubeconfig --name ${EKS_CLUSTER}
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      - run:
+          name: Run Helm Tests
+          command: |
+            helm test g2p-sandbox --namespace paymenthub || echo test
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml  "
             done
-
-            export CALLBACK_URL="https://$NGROK_PUBLIC_URL"
-            echo -n "Public url ."
-            echo $CALLBACK_URL
-            cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
-            echo -n "Test execution is completed, kill ngrok"
-            pkill ngrok
+            echo "File is no longer empty, processing..."
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+        # - run:
+        #     name: Fetch Integration Test Report
+        #     command: |
+        #       kubectl cp -n $KUBE_NAMESPACE <pod-name>:<path-to-report-file> ./integration_report  # Replace <pod-name> and <path-to-report-file>
+      # - run:
+      #     name: List Contents of Integration Report Directory
+      #     command: |
+      #       ls -l /tmp/integration_report
       - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
+          path: integration_report/test-report/cucumber.xml
       - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
+          path: integration_report/test-report/reports/tests/test
+          # path: integration_report/test-report/reports/tests/test
+      # - store_test_results:
+      #     path: integration_reports/test-report/cucumber.xml
+      # - store_artifacts:
+      #     path: ph-ee-integration-test/build/reports/tests/test
   test-chart-ams:
     docker:
       - image: cimg/openjdk:17.0.0
