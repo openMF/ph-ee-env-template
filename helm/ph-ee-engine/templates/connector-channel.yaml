@@ -67,7 +67,7 @@ spec:
             - name: "AMS"
               value: "{{ .Values.channel.AMS  }}"
             - name: "PAYMENTSCHEMES"
-              value: "{{ .Values.channel.paymentSchemes  }}"
+              value: {{ .Values.channel.paymentSchemes | toJson | quote }}
             - name: "LOGGING_PATTERN_CONSOLE"
               value: "{{ .Values.channel.LOGGING_PATTERN_CONSOLE }}"
             {{- range $key, $value := .Values.channel.ams.groups }}

@@ -268,7 +268,11 @@ channel:
         value: "odoo"
       - identifier: "default"
         value: "paygops"
-  paymentSchemes: {"safaricom": "mpesa", "mtn": "momo", "airtel": "airtel", "tigo": "airtel"}
+  paymentSchemes:
+    airtel: airtel
+    safaricom: mpesa
+    mtn: momo
+    tigo: airtel
 
 operations:
   enabled: true
