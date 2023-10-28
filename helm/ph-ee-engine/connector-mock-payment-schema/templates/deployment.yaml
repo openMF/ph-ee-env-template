@@ -45,7 +45,6 @@ spec:
               port: 8080
             initialDelaySeconds: 20
             periodSeconds: 30
-            periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
