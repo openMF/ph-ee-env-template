@@ -11,6 +11,10 @@ spec:
       port: 8443
       protocol: TCP
       targetPort: 8443
+    - name: port
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
     - name: http
       port: 82
       protocol: TCP

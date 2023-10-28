@@ -20,12 +20,31 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+      #During this Pod's initialization, check that kafka service is up and running before starting this pod
+      - name: check-kafka-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz kafka 9092; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
         - name: ph-ee-importer-rdbms
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 8000
+          livenessProbe: 
+            httpGet:
+              path: "{{ .Values.livenessProbe.httpGet.path }}"
+              port: "{{ .Values.livenessProbe.httpGet.port }}"
+              scheme: "{{ .Values.livenessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.livenessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.livenessProbe.periodSeconds }}"
+          readinessProbe: 
+            httpGet:
+              path: "{{ .Values.readinessProbe.httpGet.path }}"
+              port: "{{ .Values.readinessProbe.httpGet.port }}"
+              scheme: "{{ .Values.readinessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.readinessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
           env:
           - name: "SPRING_PROFILES_ACTIVE"
             value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"

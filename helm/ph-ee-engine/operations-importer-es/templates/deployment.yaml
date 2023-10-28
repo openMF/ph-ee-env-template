@@ -16,6 +16,14 @@ spec:
       labels:
         app: ph-ee-importer-es
     spec:
+      initContainers:
+      #During this Pod's initialization, check that elasricSerach and kafka services are up and running before starting this pod
+      - name: check-elasticsearch-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz ph-ee-elasticsearch 9200; do echo "Waiting for myconfig service"; sleep 2; done;']
+      - name: check-kafka-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz kafka 9092; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
         - name: ph-ee-importer-es
           image: "{{ .Values.image }}"
@@ -27,6 +35,20 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
+          livenessProbe: 
+            httpGet:
+              path: "{{ .Values.livenessProbe.httpGet.path }}"
+              port: "{{ .Values.livenessProbe.httpGet.port }}"
+              scheme: "{{ .Values.livenessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.livenessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.livenessProbe.periodSeconds }}"
+          readinessProbe: 
+            httpGet:
+              path: "{{ .Values.readinessProbe.httpGet.path }}"
+              port: "{{ .Values.readinessProbe.httpGet.port }}"
+              scheme: "{{ .Values.readinessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.readinessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
           env:
           - name: "reporting.enabled"
             value: "{{ .Values.reporting.enabled }}"

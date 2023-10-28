@@ -28,6 +28,11 @@ spec:
       {{- end }}
       serviceAccountName: ph-ee-connector-ams-mifos
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}  
+      initContainers:
+      #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+      - name: check-zeebe-gateway-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
       - name: ph-ee-connector-ams-mifos
         image: "{{ .Values.image}}"
@@ -39,9 +44,25 @@ spec:
         imagePullSecrets:
   {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}  
+        livenessProbe: 
+          httpGet:
+            path: "{{ .Values.livenessProbe.httpGet.path }}"
+            port: "{{ .Values.livenessProbe.httpGet.port }}"
+            scheme: "{{ .Values.livenessProbe.httpGet.scheme }}"
+          initialDelaySeconds: "{{ .Values.livenessProbe.initialDelaySeconds }}"
+          periodSeconds: "{{ .Values.livenessProbe.periodSeconds }}"
+        readinessProbe: 
+          httpGet:
+            path: "{{ .Values.readinessProbe.httpGet.path }}"
+            port: "{{ .Values.readinessProbe.httpGet.port }}"
+            scheme: "{{ .Values.readinessProbe.httpGet.scheme }}"
+          initialDelaySeconds: "{{ .Values.readinessProbe.initialDelaySeconds }}"
+          periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
         env:
         - name: "SPRING_PROFILES_ACTIVE"
           value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
+        - name: "ZEEBE_BROKER_CONTACTPOINT"
+          value: "{{ .Release.Name }}-zeebe-gateway:26500"
         - name: "ams_local_enabled"
           value: "{{ .Values.ams_local_enabled }}"
         - name: "ams_local_interop_host"

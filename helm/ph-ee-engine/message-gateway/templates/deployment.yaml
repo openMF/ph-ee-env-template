@@ -33,18 +33,20 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
-          livenessProbe:
+          livenessProbe: 
             httpGet:
-              path: /actuator/health/liveness
-              port: 9191
-            initialDelaySeconds: 120
-            periodSeconds: 30
-          readinessProbe:
+              path: "{{ .Values.livenessProbe.httpGet.path }}"
+              port: "{{ .Values.livenessProbe.httpGet.port }}"
+              scheme: "{{ .Values.livenessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.livenessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.livenessProbe.periodSeconds }}"
+          readinessProbe: 
             httpGet:
-              path: /actuator/health/readiness
-              port: 9191
-            initialDelaySeconds: 120
-            periodSeconds: 30
+              path: "{{ .Values.readinessProbe.httpGet.path }}"
+              port: "{{ .Values.readinessProbe.httpGet.port }}"
+              scheme: "{{ .Values.readinessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.readinessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
 
           env:
             - name: "SPRING_DATASOURCE_URL"

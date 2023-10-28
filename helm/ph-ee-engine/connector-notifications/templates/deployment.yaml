@@ -20,6 +20,11 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+      #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+      - name: check-zeebe-gateway-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
         - name: "ph-ee-connector-notifications"
           image: "{{ .Values.image }}"
@@ -33,18 +38,20 @@ spec:
               cpu: "{{ .Values.requests.cpu }}"
           ports:
            - containerPort: 5000
-          livenessProbe:
+          livenessProbe: 
             httpGet:
-              path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
-          readinessProbe:
+              path: "{{ .Values.livenessProbe.httpGet.path }}"
+              port: "{{ .Values.livenessProbe.httpGet.port }}"
+              scheme: "{{ .Values.livenessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.livenessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.livenessProbe.periodSeconds }}"
+          readinessProbe: 
             httpGet:
-              path: /actuator/health/readiness
-              port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+              path: "{{ .Values.readinessProbe.httpGet.path }}"
+              port: "{{ .Values.readinessProbe.httpGet.port }}"
+              scheme: "{{ .Values.readinessProbe.httpGet.scheme }}"
+            initialDelaySeconds: "{{ .Values.readinessProbe.initialDelaySeconds }}"
+            periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
