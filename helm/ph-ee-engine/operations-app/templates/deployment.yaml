@@ -26,20 +26,18 @@ spec:
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 5000
-          livenessProbe: 
+          livenessProbe:
             httpGet:
-              path: "{{ .Values.livenessProbe.httpGet.path }}"
-              port: "{{ .Values.livenessProbe.httpGet.port }}"
-              scheme: "{{ .Values.livenessProbe.httpGet.scheme }}"
-            initialDelaySeconds: "{{ .Values.livenessProbe.initialDelaySeconds }}"
-            periodSeconds: "{{ .Values.livenessProbe.periodSeconds }}"
-          readinessProbe: 
+              path: /actuator/health/liveness
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
             httpGet:
-              path: "{{ .Values.readinessProbe.httpGet.path }}"
-              port: "{{ .Values.readinessProbe.httpGet.port }}"
-              scheme: "{{ .Values.readinessProbe.httpGet.scheme }}"
-            initialDelaySeconds: "{{ .Values.readinessProbe.initialDelaySeconds }}"
-            periodSeconds: "{{ .Values.readinessProbe.periodSeconds }}"
+              path: /actuator/health/readiness
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
