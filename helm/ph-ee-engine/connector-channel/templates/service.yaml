@@ -7,8 +7,8 @@ metadata:
   name: ph-ee-connector-channel
 spec:
   ports:
-    - name: port
-      port: 8443
+    - name: port1
+      port: 80
       protocol: TCP
       targetPort: 8443
     - name: port
