@@ -527,7 +527,11 @@ account_mapper:
       enabled: true
       pathtype: Prefix
       annotations:
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: nginx 
+        nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
+        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+        nginx.ingress.kubernetes.io/enable-cors: "true"
       tls:
         - secretName: sandbox-secret
       hosts:
