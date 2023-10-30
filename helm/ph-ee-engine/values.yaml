@@ -2080,7 +2080,7 @@ vouchers:
       url: jdbc:mysql://operationsmysql:3306/voucher_management
       username: mifos
       password: password
-  extraEnvs:
+  extraEnv:
     - name: registeringInstitutionId
       value: "SocialWelfare"
 
