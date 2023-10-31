@@ -210,7 +210,7 @@ ph-ee-engine:
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
-    DFSPIDS: "rhino,gorilla,lion"
+    DFSPIDS: "rhino,alpha,beta"
     operations:
       url: "http://ops-bk.sandbox.mifos.io/api/v1"
       authEnabled: false
@@ -377,6 +377,38 @@ ph-ee-engine:
         batch_transaction: "/api/v1/batch/transactions"
     identity_account_mapper:
       hostname: "https://identity-mapper.sandbox.mifos.io"
+    extraEnv:
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_0"
+        value: "GOV001"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_0_PROGRAMS_0_ID"
+        value: "P001"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_0_PROGRAMS_0_IDENTIFIERTYPE"
+        value: "ACCOUNT"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_0_PROGRAMS_0_IDENTIFIERVALUE"
+        value: "KE22WAKA0000009988771234"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_0_PROGRAMS_0_NAME"
+        value: "Education Allowance"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_1"
+        value: "GOV001"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_1_PROGRAMS_0_ID"
+        value: "P002"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_1_PROGRAMS_0_IDENTIFIERTYPE"
+        value: "ACCOUNT"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_1_PROGRAMS_0_IDENTIFIERVALUE"
+        value: "KE22WAKA0000009988123456"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_1_PROGRAMS_0_NAME"
+        value: "Unconditional Cash Transfer"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_2"
+        value: "GOV002"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_2_PROGRAMS_0_ID"
+        value: "P007"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_2_PROGRAMS_0_IDENTIFIERTYPE"
+        value: "ACCOUNT"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_2_PROGRAMS_0_IDENTIFIERVALUE"
+        value: "KE22WAKA0000009988661234"
+      - name: "BUDGET_ACCOUNT_REGISTERINGINSTITUTIONSID_2_PROGRAMS_0_NAME"
+        value: "Maternity Benefits"
+
     service:
       annotations:
         konghq.com/protocol: "https"

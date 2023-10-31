@@ -1579,7 +1579,6 @@ connector_bulk:
 # How long to wait for connector_bulk pods to stop gracefully
   terminationGracePeriod: 30 
 # Extra environment variables for connector_bulk container.
-  envFrom: [] 
   # - configMapRef:
   #     name: config-secret
   extraEnvs: []
