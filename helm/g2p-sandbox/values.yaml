@@ -161,7 +161,22 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-connector-mojaloop:latest
     SPRING_PROFILES_ACTIVE: "bb"
     hostname: "mojaloop.sandbox.mifos.io"
-    DFSPIDS: "gorilla,lion"
+    DFSPIDS: "gorilla,lion,rhino"
+    switch:
+      quotes:
+        host: "http://quoting-service.sandbox.fynarfin.io"
+        service: "quoting-service.sandbox.fynarfin.io"
+      als:
+        host: "http://account-lookup-service.sandbox.fynarfin.io"
+        service: "account-lookup-service.local"
+      transfers:
+        host: "http://api-adapter.sandbox.fynarfin.io"
+        service: "api-adapter.sandbox.fynarfin.io"
+      transactions:
+        host: "http://ml-api-adapter.sandbox.fynarfin.io"
+        service: "ml-api-adapter.sandbox.fynarfin.io"
+      oracle:
+        host: "http://moja-simulator.sandbox.fynarfin.io"
     ingress:
       enabled: false
       annotations: 
