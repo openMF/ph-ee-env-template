@@ -498,7 +498,7 @@ ph-ee-engine:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-headers: x-registering-institution-id
+        nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
         nginx.ingress.kubernetes.io/cors-allow-origin: '*'
         nginx.ingress.kubernetes.io/enable-cors: 'true'
@@ -530,7 +530,7 @@ account_mapper:
       pathtype: Prefix
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-headers: x-registering-institution-id
+        nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
         nginx.ingress.kubernetes.io/cors-allow-origin: '*'
         nginx.ingress.kubernetes.io/enable-cors: 'true'
