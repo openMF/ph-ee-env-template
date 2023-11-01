@@ -1520,6 +1520,8 @@ connector_bulk:
       contactpoint: "ph-ee-operations-app"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
+  identity_account_mapper:
+    hostname: "ph-ee-identity-account-mapper"
   config:
     partylookup:
       enable: false

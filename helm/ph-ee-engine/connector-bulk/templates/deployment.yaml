@@ -86,6 +86,8 @@ spec:
                 secretKeyRef:
                   name: "bulk-processor-secret"
                   key: "aws-secret-key"
+            - name: "IDENTITY_MAPPER_CONTACTPOINT"
+              value: "{{ .Values.identity_account_mapper.hostname }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        

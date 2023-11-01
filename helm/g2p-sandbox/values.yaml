@@ -378,6 +378,8 @@ ph-ee-engine:
       contactpoint: "https://ops-bk.sandbox.mifos.io/"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
+    identity_account_mapper:
+      hostname: "https://identity-mapper.sandbox.mifos.io"
     service:
       annotations:
         konghq.com/protocol: "https"

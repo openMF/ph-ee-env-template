@@ -20,6 +20,8 @@ operations_app:
   contactpoint: ""
   endpoints:
     batch_transaction: ""
+identity_account_mapper:
+  hostname : ""
 config:
   partylookup:
     enable: false
