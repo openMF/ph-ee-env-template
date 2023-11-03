@@ -15,4 +15,4 @@ spec:
     app: ph-ee-connector-slcb
   sessionAffinity: None
   type: ClusterIP
-{{- end }}
+{{- end }}  

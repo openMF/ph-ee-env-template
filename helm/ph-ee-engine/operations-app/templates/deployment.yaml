@@ -26,18 +26,12 @@ spec:
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 5000
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 5000
-            initialDelaySeconds: 20
-            periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /actuator/health/readiness
+              path: /oauth/token_key
               port: 5000
-            initialDelaySeconds: 20
             periodSeconds: 30
+            timeoutSeconds: 5
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
