@@ -89,8 +89,8 @@ spec:
             - name: "IDENTITY_MAPPER_CONTACTPOINT"
               value: "{{ .Values.identity_account_mapper.hostname }}"
             {{- with .Values.extraEnv }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}        
+            {{- toYaml . | nindent 10 }}
+            {{- end }}       
           envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
           securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
           volumeMounts:
