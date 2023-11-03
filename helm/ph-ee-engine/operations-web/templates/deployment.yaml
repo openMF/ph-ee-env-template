@@ -33,6 +33,18 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 4200
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 4200
+            initialDelaySeconds: 20
+            periodSeconds: 30
           volumeMounts:
 {{- if .Values.deployment.config }}
 {{ toYaml .Values.deployment.config | indent 12 }}

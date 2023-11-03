@@ -377,6 +377,18 @@ ph_ee_connector_ams_mifos:
     requests:
       memory: "1024M"
       cpu: "300m"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 5000
+    initialDelaySeconds: 120
+    periodSeconds: 30
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 5000
+    initialDelaySeconds: 120
+    periodSeconds: 30
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -434,7 +446,7 @@ ph_ee_connector_mojaloop:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -442,7 +454,7 @@ ph_ee_connector_mojaloop:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -527,7 +539,7 @@ operations_app:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -535,7 +547,7 @@ operations_app:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -752,7 +764,7 @@ mpesa:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 8443
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -760,7 +772,7 @@ mpesa:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 8443
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1018,16 +1030,12 @@ messagegateway:
       port: 9191
     initialDelaySeconds: 120
     periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5 
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
     initialDelaySeconds: 120
     periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -1115,7 +1123,7 @@ notifications:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1123,7 +1131,7 @@ notifications:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1206,7 +1214,7 @@ zeebe_ops:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1214,7 +1222,7 @@ zeebe_ops:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1332,22 +1340,7 @@ importer_es:
       root: "INFO"
     pattern:
       console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-  livenessProbe:
-    httpGet:
-      path: /actuator/health/liveness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5 
-  readinessProbe:
-    httpGet:
-      path: /actuator/health/readiness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5
+  
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -1397,6 +1390,18 @@ mockpayment:
   requests:
     memory: "512M"
     cpu: "100m"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+    initialDelaySeconds: 120
+    periodSeconds: 30
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8080
+    initialDelaySeconds: 120
+    periodSeconds: 30
   deployment:
     annotations: {}
 
@@ -1552,7 +1557,7 @@ connector_bulk:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 8443
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1560,7 +1565,7 @@ connector_bulk:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 8443
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1687,7 +1692,19 @@ ph-ee-connector_gsma:
         cpu: "500m"
       requests:
         memory: "512M"
-        cpu: "100m"    
+        cpu: "100m" 
+    livenessProbe:
+      httpGet:
+        path: /actuator/health/liveness
+        port: 5000
+      initialDelaySeconds: 120
+      periodSeconds: 30
+    readinessProbe:
+      httpGet:
+        path: /actuator/health/readiness
+        port: 5000
+      initialDelaySeconds: 120
+      periodSeconds: 30
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
@@ -1718,7 +1735,7 @@ ph-ee-connector_slcb:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
@@ -1726,7 +1743,7 @@ ph-ee-connector_slcb:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 9191
+      port: 5000
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
