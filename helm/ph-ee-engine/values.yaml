@@ -1549,6 +1549,9 @@ connector_bulk:
     region: "<region>"
     access_key: "<access key>"
     secret_key: "<secret key>"
+  extraEnv:
+    - name: EXTRA_ENV_VAR1
+      value: "value1"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
