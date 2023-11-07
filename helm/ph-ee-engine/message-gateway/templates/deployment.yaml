@@ -77,7 +77,7 @@ spec:
                   name: "messagegateway-secret"
                   key: "project-id"
             - name : "ZEEBE_BROKER_CONTACTPOINT"
-              value: "g2p-zeebe-gateway:26500"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
