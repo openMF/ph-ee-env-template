@@ -128,12 +128,12 @@ jobs:
         description: "sit"
         type: string
     steps:
-      - checkout
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "sit"
           aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
+      - run: helm ls --namespace=paymenthub
       - run:
           name: Run Helm Tests
           command: |
@@ -188,6 +188,7 @@ workflows:
             - Helm
             - slack
       - helm-test:
+          cluster-name: sit
           requires:
             - upgrade-helm-chart
           context: 
