@@ -123,15 +123,15 @@ jobs:
   helm-test:
     docker:
       - image: cimg/python:3.10
+    parameters:
+      cluster-name:
+        description: "sit"
+        type: string
     steps:
       - checkout
-      - aws-cli/setup:
+      - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "sit"
           aws-region: "$REGION"
-      - run:
-          name: Update kubeconfig
-          command: |
-            aws eks update-kubeconfig --name sit
       - helm/install-helm-client:
           version: "v3.8.2"
       - run:
