@@ -187,7 +187,7 @@ workflows:
             - AWS
             - Helm
             - slack
-      - hel-test:
+      - helm-test:
           requires:
             - upgrade-helm-chart
           context: 
