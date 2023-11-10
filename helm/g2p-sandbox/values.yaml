@@ -226,9 +226,6 @@ ph-ee-engine:
       ssl:
         keyPassword: "<replace-with-password>"
         keyStorePassword: "<replace-with-password>"
-    service:
-      annotations:
-        konghq.com/protocol: "https"
     ingress:
       enabled: false
       tls:
