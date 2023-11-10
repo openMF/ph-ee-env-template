@@ -13,6 +13,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
+      PH_RELEASE: 1.11.0
     steps:
       - checkout
       - run: rm -f helm/ph-ee-engine/Chart.lock helm/ph-ee-engine/requirements.lock helm/ph-ee-engine/charts/*
@@ -46,6 +47,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
+      G2P_RELEASE: 1.3.0
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox/Chart.lock helm/g2p-sandbox/requirements.lock helm/g2p-sandbox/charts/*
@@ -81,8 +83,10 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
+      FY_SIT_RELEASE: 1.3.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-env-labs
+      - run: cd ph-ee-env-labs && git checkout v$FY_SIT_RELEASE-release && cd ..
       - run: rm -f ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/requirements.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/charts/*
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -171,6 +175,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test &&  git checkout -b v1.4.0-rc.1 v1.4.0-rc.1 && cd ..
       - run: 
           name: Ngrok setup
           command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
@@ -206,6 +211,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - run: cd ph-ee-integration-test &&  git checkout -b v1.4.0-rc.1 v1.4.0-rc.1 && cd ..
       - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
       - store_test_results:
           path: ph-ee-integration-test/build/cucumber.xml
