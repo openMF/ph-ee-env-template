@@ -46,6 +46,10 @@ spec:
         value: "http://ph-ee-identity-account-mapper:80"
       - name: MIFOS_CONNECTOR_CONTACTPOINT
         value: "http://ph-ee-connector-ams-mifos:80"
+      - name: AMSMIFOS_MOCK_BASE_URL
+        value: "http://ph-ee-connector-ams-mifos:80"
+      - name: MOCK_PAYMENT_SCHEMA_CONTACTPOINT
+        value: "http://ph-ee-connector-mock-payment-schema:8080"
       - name: MY_POD_IP
         valueFrom:
           fieldRef:
