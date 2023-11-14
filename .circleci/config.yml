@@ -166,6 +166,7 @@ jobs:
       - run:
           name: Test execution
           command: |
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
             ngrok http 53013 > /dev/null &
             echo -n "Extracting ngrok public url ."
             NGROK_PUBLIC_URL=""
