@@ -168,7 +168,8 @@ jobs:
           command: |
             mkdir -p /home/circleci/.config/ngrok
             touch /home/circleci/.config/ngrok/ngrok.yml
-            echo "web_addr: $LOCAL_PORT" > /home/circleci/.config/ngrok/ngrok.yml
+            echo 'version: "2"' > /home/circleci/.config/ngrok/ngrok.yml
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
             ngrok http 53013 > /dev/null &
             echo -n "Extracting ngrok public url ."
             NGROK_PUBLIC_URL=""
