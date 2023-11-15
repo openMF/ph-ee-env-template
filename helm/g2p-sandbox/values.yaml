@@ -250,7 +250,7 @@ ph-ee-engine:
 
 
   operations_app:
-    enabled: false
+    enabled: true
     tenants: "rhino,gorilla"
     hostname: "ops-bk.sandbox.mifos.io"
     datasource:
@@ -446,7 +446,7 @@ ph-ee-engine:
       enabled: false
 
   importer_rdbms:
-    enabled: false
+    enabled: true
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
     enabled: false
