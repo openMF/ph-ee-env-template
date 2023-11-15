@@ -42,4 +42,4 @@ deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
-preStopScript: "echo 'sleeping'; sleep 100"
+preStopScript: 'echo 'sleeping'; sleep 100;'
