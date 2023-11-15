@@ -104,6 +104,7 @@ jobs:
         type: string
       create_namespace:
         default: true
+        type: boolean
         description: ""
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
