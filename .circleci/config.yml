@@ -121,6 +121,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
+      SEC_RELEASE: 1.2.0
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox-security/Chart.lock helm/g2p-sandbox-security/requirements.lock helm/g2p-sandbox-security/charts/*
