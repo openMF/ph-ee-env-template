@@ -114,15 +114,12 @@ ph-ee-engine:
       rootPassword: "ethieTieCh8ahv"
     initdbScripts:
       setup.sql: |-
-        DROP DATABASE IF EXISTS `tenants`;
-        CREATE DATABASE `tenants`;
         CREATE DATABASE messagegateway;
         CREATE DATABASE `rhino`;
         CREATE DATABASE `gorilla`;
         CREATE DATABASE `lion`;
         CREATE DATABASE `identity_account_mapper`;
         CREATE DATABASE `voucher_management`;
-        GRANT ALL PRIVILEGES ON `tenants`.* TO 'mifos';
         GRANT ALL PRIVILEGES ON `rhino`.* TO 'mifos';
         GRANT ALL PRIVILEGES ON `gorilla`.* TO 'mifos';
         GRANT ALL PRIVILEGES ON `lion`.* TO 'mifos';
@@ -253,7 +250,7 @@ ph-ee-engine:
 
 
   operations_app:
-    enabled: true
+    enabled: false
     tenants: "rhino,gorilla"
     hostname: "ops-bk.sandbox.mifos.io"
     datasource:
