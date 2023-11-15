@@ -461,7 +461,7 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       enabled: false
       ingressClassName: "kong"
