@@ -84,4 +84,8 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+      lifecycle:
+            preStop:
+              exec:
+                command: ['sh', '-c', '{{ .Values.preStopScript}}']
 {{- end }}
