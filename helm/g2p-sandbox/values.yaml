@@ -446,7 +446,7 @@ ph-ee-engine:
       enabled: false
 
   importer_rdbms:
-    enabled: true
+    enabled: false
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
     enabled: false
