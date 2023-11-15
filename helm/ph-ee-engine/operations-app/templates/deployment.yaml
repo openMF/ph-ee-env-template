@@ -26,6 +26,10 @@ spec:
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 5000
+          lifecycle:
+            preStop:
+              exec:
+                command: ['sh', '-c', '{{ .Values.preStopScript}}']
           readinessProbe:
             httpGet:
               path: /oauth/token_key
@@ -68,14 +72,10 @@ spec:
 {{- end }}        
           envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
           securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
-
+          
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
-          lifecycle:
-            preStop:
-              exec:
-                command: ['sh', '-c', '{{ .Values.preStopScript}}']
       initContainers:
         - name: wait-db
           image: jwilder/dockerize
