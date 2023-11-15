@@ -26,10 +26,6 @@ spec:
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
             - containerPort: 5000
-          lifecycle:
-            preStop:
-              exec:
-                command: ['sh', '-c', '{{ .Values.preStopScript}}']
           readinessProbe:
             httpGet:
               path: /oauth/token_key
