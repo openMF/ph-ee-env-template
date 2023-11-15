@@ -54,7 +54,7 @@ ingress:
   #  - secretName: sandbox-secret
   #    hosts:
   #      - chart-example.local
-
+  backend: {}
 deployment:
   apiVersion: "apps/v1"
   annotations:
