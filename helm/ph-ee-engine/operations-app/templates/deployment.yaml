@@ -72,6 +72,10 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+          lifecycle:
+            preStop:
+              exec:
+                command: ['sh', '-c', '{{ .Values.preStopScript}}']
       initContainers:
         - name: wait-db
           image: jwilder/dockerize
@@ -84,8 +88,4 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
-      lifecycle:
-            preStop:
-              exec:
-                command: ['sh', '-c', '{{ .Values.preStopScript}}']
 {{- end }}
