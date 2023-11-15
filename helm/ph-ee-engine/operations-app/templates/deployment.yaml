@@ -30,7 +30,7 @@ spec:
             httpGet:
               path: /oauth/token_key
               port: 5000
-            periodSeconds: 30
+            periodSeconds: 3000
             timeoutSeconds: 5
           resources:
             limits:
