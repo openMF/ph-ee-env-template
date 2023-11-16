@@ -214,7 +214,7 @@ workflows:
             - slack
       - test-chart-gov:
           requires:
-            - upgrade-helm-chartl
+            - upgrade-helm-chart
           context: 
             - AWS
             - Helm
