@@ -10,16 +10,6 @@ filters: &filters
   tags:
     only: /.*/
 jobs:
-  command-test:
-    docker:
-      - image: cimg/base:current
-
-#    parameters:
-#      jira-story: "1234"
-##      type: string
-    steps:
-      - checkout
-
   build-and-host-engine:
     docker:
       - image: cimg/python:3.10
