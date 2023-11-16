@@ -19,9 +19,6 @@ jobs:
 ##      type: string
     steps:
       - checkout
-      - test/lint
-
-
 
   build-and-host-engine:
     docker:
@@ -186,9 +183,9 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - command-test:
+      - test:
           requires:
-            - build-and-host-engine
+            - test/lint-and-test
       - build-and-host-engine:
           context: 
             - AWS
