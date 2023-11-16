@@ -175,8 +175,8 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - test/lint-and-test:
-          jira: "testjira"
+      - test/docker-image-availability-check:
+          jira-story: "test-123"
       - build-and-host-engine:
           requires:
             - test/lint-and-test
