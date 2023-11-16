@@ -179,7 +179,7 @@ workflows:
           jira-story: "test-123"
       - build-and-host-engine:
           requires:
-            - test/lint-and-test
+            - test/docker-image-availability-check
           context:
             - AWS
             - Helm
@@ -207,14 +207,14 @@ workflows:
       - upgrade-helm-chart:
           cluster-name: sit
           requires:
-            - test/lint-and-test
+            - test/docker-image-availability-check
           context: 
             - AWS
             - Helm
             - slack
       - test-chart-gov:
           requires:
-            - upgrade-helm-chart
+            - upgrade-helm-chartl
           context: 
             - AWS
             - Helm
