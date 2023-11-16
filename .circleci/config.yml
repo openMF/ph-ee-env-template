@@ -184,8 +184,7 @@ workflows:
   deploy:
     jobs:
       - test/lint-and-test:
-          parameter:
-            jira-story: test
+          jira-story: test
       - build-and-host-engine:
           requires:
             - test/lint-and-test
