@@ -33,7 +33,12 @@ jobs:
   lint-and-test:
     docker:
       - image: alpine:latest
+    parameters:
+      jira:
+        type: string
+        default: "55555"
     steps:
-      - lint
+      - lint:
+          jira-story: <<parameters.jira>>
       - test
 
