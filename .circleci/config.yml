@@ -176,7 +176,7 @@ workflows:
   deploy:
     jobs:
       - test/docker-image-availability-check:
-          jira-story: "test-123"
+          jira-story: test-123
       - build-and-host-engine:
           requires:
             - test/docker-image-availability-check

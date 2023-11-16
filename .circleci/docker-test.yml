@@ -39,7 +39,7 @@ commands:
           environment:
             JIRA_STORY: <<parameters.jira-story>>
           command: | 
-            echo TICKET NO: $JIRA_STORY
+            echo TICKET NO:${JIRA_STORY}ff
             function docker_tag_exists() {
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
