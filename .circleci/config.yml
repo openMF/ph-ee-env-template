@@ -4,7 +4,25 @@ orbs:
   helm: circleci/helm@2.0.1
   aws-eks: circleci/aws-eks@2.2.0
   kubernetes: circleci/kubernetes@1.3
+  test: mifos/docker-test@0.0.1
+
+filters: &filters
+  tags:
+    only: /.*/
 jobs:
+  command-test:
+    docker:
+      - image: cimg/base:current
+
+#    parameters:
+#      jira-story: "1234"
+##      type: string
+    steps:
+      - checkout
+      - test/lint
+
+
+
   build-and-host-engine:
     docker:
       - image: cimg/python:3.10
@@ -168,6 +186,9 @@ jobs:
 workflows:
   deploy:
     jobs:
+      - command-test:
+          requires:
+            - build-and-host-engine
       - build-and-host-engine:
           context: 
             - AWS

@@ -1,0 +1,33 @@
+version: 2.1
+description: "testing"
+
+commands:
+  lint:
+    description: "Install lint dependency"
+    steps:
+      - checkout
+      - run:
+          name: "Install  linting tool"
+          command: echo "Install successful"
+      - run:
+          name: "Run linting on given dir"
+          command: echo "linting successful"
+  test:
+    description: "Run integration test"
+    steps:
+      - checkout
+      - run:
+          name: "Run unit test"
+          command: echo "unit test successful"
+      - run:
+          name: "Run integration test"
+          command: echo "integration test successful"
+
+jobs:
+  lint-and-test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - lint
+      - test
+
