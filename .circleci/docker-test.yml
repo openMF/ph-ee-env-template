@@ -43,7 +43,7 @@ commands:
 
           command: | 
             function docker_tag_exists() {
-            curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
+              curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
             if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
               COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app:${JIRA_STORY}"),
