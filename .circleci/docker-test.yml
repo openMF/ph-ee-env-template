@@ -8,11 +8,11 @@ commands:
         default: latest
         type: string
         description: "Jira story ticket No"
-      add-repo:
-        description: |
-          The url for the helm chart repository used as part of helm repo add
-          command
-        type: string
+#      add-repo:
+#        description: |
+#          The url for the helm chart repository used as part of helm repo add
+#          command
+#        type: string
       namespace:
         default: ""
         description: |
@@ -86,6 +86,16 @@ commands:
           command: echo "integration test successful"
 
 jobs:
+  docker-image-availability-check:
+    docker:
+      - image: alpine:latest
+    parameters:
+      jira-story:
+        type: string
+        default: "latest"
+    steps:
+      - docker-image-availability-check:
+          jira-story: <<parameters.jira-story>>
   lint-and-test:
     docker:
       - image: alpine:latest
