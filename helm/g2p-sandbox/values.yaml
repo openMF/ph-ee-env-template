@@ -502,7 +502,10 @@ ph-ee-engine:
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
-
+  integration_test:
+    enabled: true
+    gradle:
+      command: ./gradlew test -Dcucumber.filter.tags="@gov"
 
 account_mapper:
   enabled: true
