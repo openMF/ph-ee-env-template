@@ -5,7 +5,7 @@ commands:
   lint:
     parameters:
       jira-story:
-        default: latest
+        default: latest123
         type: string
         description: "Jira story ticket No"
 
@@ -13,7 +13,7 @@ commands:
     steps:
       - checkout
       - run:
-          name: "Install  linting tool + <<parameters.jira-story>>"
+          name: "Install  linting tool check + <<parameters.jira-story>>"
           command: echo "Install successful"
       - run:
           name: "Run linting on given dir"
