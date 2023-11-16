@@ -3,11 +3,17 @@ description: "PRIVATE ORB11"
 
 commands:
   lint:
+    parameters:
+      jira-story:
+        default: latest
+        type: string
+        description: "Jira story ticket No"
+
     description: "Install lint dependency"
     steps:
       - checkout
       - run:
-          name: "Install  linting tool"
+          name: "Install  linting tool + <<parameters.jira-story>>"
           command: echo "Install successful"
       - run:
           name: "Run linting on given dir"
