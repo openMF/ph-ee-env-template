@@ -183,7 +183,7 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - test:
+      - lint-and-test:
           requires:
             - test/lint-and-test
       - build-and-host-engine:
