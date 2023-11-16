@@ -183,12 +183,11 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - test/lint-and-test:
-          build:
-            requires:
-              - test/lint-and-test
+      - test/lint-and-test
       - build-and-host-engine:
-          context: 
+          requires:
+            - test/lint-and-test
+          context:
             - AWS
             - Helm
             - slack
