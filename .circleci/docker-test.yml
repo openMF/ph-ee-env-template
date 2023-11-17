@@ -90,7 +90,7 @@ commands:
 jobs:
   docker-image-availability-check:
     docker:
-      - image: alpine:latest
+      - image: cimg/openjdk:17.0.0
     parameters:
       jira-story:
         type: string
@@ -100,7 +100,7 @@ jobs:
           jira-story: <<parameters.jira-story>>
   lint-and-test:
     docker:
-      - image: alpine:latest
+      - image: cimg/openjdk:17.0.0
     parameters:
       jira:
         type: string
