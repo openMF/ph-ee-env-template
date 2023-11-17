@@ -67,7 +67,7 @@ commands:
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
             
-            DOCKER_PATH = $(echo docker.io/openmf/)
+            DOCKER_PATH=$(echo docker.io/openmf/)
             
             if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
               COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app=${JIRA_STORY}"),
