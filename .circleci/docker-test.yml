@@ -116,7 +116,7 @@ commands:
             
             helm repo update
             
-            helm upgrade -f --install "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}" "$@"
+            helm upgrade "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}" "$@"
 
   lint:
     parameters:
