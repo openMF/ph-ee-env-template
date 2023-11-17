@@ -60,14 +60,6 @@ spec:
         value: ""
       - name: VOUCHER_MANAGEMENT_CONTACTPOINT
         value: "http://ph-ee-vouchers:80"
-      - name: VOUCHER_HOSTNAME
-        value: "http://ph-ee-vouchers:8080"
-      - name: OPERATIONS_HOSTNAME
-        value: "http://ph-ee-operations-app:5000"
-      - name: MOCK_SCHEMA_HOSTNAME
-        value: "http://ph-ee-connector-mock-payment-schema:8080"
-      - name: MOCK_FAILURE_PERCENTAGE
-        value: "0"
     resources:
         limits:
           cpu: "500m"

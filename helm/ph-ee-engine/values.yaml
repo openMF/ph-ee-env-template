@@ -1392,7 +1392,7 @@ mockpayment:
   image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.4.0
   replicas: 1
   mockFailure:
-    percentage: "50"
+    percentage: "0"
   limits:
     memory: "512M"
     cpu: "500m"
