@@ -1,6 +1,7 @@
 version: 2.1
 description: "PRIVATE ORB11"
-
+orbs:
+  helm: circleci/helm@2.0.1
 commands:
   docker-image-availability-check:
     parameters:
@@ -34,6 +35,8 @@ commands:
 
     steps:
       - checkout
+      - helm/install-helm-client:
+          version: "v3.8.2"
       - run:
           name: fetch docker images
           environment:
