@@ -131,7 +131,7 @@ commands:
             
             helm repo update
             
-            helm upgrade --install "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}" "$@"
+            helm upgrade --install ${VALUES_TO_OVERRIDE} "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}"
 
   lint:
     parameters:
