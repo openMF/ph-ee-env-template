@@ -175,6 +175,12 @@ jobs:
       chart:
         default: ""
         type: string
+      cluster-name:
+        default: "sit"
+        type: string
+      aws-region:
+        default: "$REGION"
+        type: string
 
     steps:
       - docker-image-availability-check:
@@ -183,6 +189,8 @@ jobs:
           add-repo: <<parameters.add-repo>>
           release-name: <<parameters.release-name>>
           chart: <<parameters.chart>>
+          cluster-name: <<parameters.cluster-name>>
+          aws-region: <<parameters.aws-region>>
 
   lint-and-test:
     docker:
