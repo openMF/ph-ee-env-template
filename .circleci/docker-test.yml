@@ -47,7 +47,7 @@ commands:
               echo openmf/community-app: $JIRA_STORY
               COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app:${JIRA_STORY}"),
             fi
-            if docker_tag_exists openmf/ph-ee-importer-rdbms ${JIRA_STORY}; then
+            if docker_tag_exists openmf/ph-ee-importer-rdbms test-123; then
               echo openmf/ph-ee-importer-rdbms: $JIRA_STORY
               IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms:${JIRA_STORY}"),
               echo $IMPORTER_RDBMS | echo not success rdbms
