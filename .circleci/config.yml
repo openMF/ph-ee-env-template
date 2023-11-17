@@ -6,9 +6,6 @@ orbs:
   kubernetes: circleci/kubernetes@1.3
   test: mifos/private-docker@dev:first
 
-filters: &filters
-  tags:
-    only: /.*/
 jobs:
   build-and-host-engine:
     docker:
