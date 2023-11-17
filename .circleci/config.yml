@@ -180,6 +180,10 @@ workflows:
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
           cluster-name: "sit"
           aws-region: "$REGION"
+          context:
+            - AWS
+            - Helm
+            - slack
 
       - build-and-host-engine:
           requires:
