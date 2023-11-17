@@ -43,23 +43,58 @@ commands:
             function docker_tag_exists() {
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
+            
             if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
-              echo openmf/community-app: $JIRA_STORY
-              COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app:${JIRA_STORY}"),
+              COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app=${JIRA_STORY}"),
             fi
             if docker_tag_exists openmf/ph-ee-importer-rdbms test-123; then
-              echo openmf/ph-ee-importer-rdbms: $JIRA_STORY
-              IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms:${JIRA_STORY}"),
-              echo $IMPORTER_RDBMS | echo not success rdbms
+              IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms=${JIRA_STORY}"),
             fi
             if docker_tag_exists openmf/ph-ee-connector-channel ${JIRA_STORY}; then
-              echo openmf/ph-ee-connector-channel: $JIRA_STORY
-              CHANNEL=$(echo "ph-ee-g2psandbox.ph-ee-engine.channel:${JIRA_STORY}"),
-              echo $CHANNEL | echo not success channel
+              CHANNEL=$(echo "ph-ee-g2psandbox.ph-ee-engine.channel=${JIRA_STORY}"),
             fi
-            export VALUES_TO_OVERRIDE=$(echo $IMPORTER_RDBMS)$(echo $CHANNEL)
+            if docker_tag_exists openmf/message-gateway ${JIRA_STORY}; then
+              MESSAGE_GATEWAY=$(echo "ph-ee-g2psandbox.ph-ee-engine.messagegateway=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-connector-gsma ${JIRA_STORY}; then
+              CONNECTOR_GSMA=$(echo "ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_gsma=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-connector-mock-payment-schema ${JIRA_STORY}; then
+              CONNECTOR_MOCK=$(echo "ph-ee-g2psandbox.ph-ee-engine.mockpayment=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-connector-mojaloop ${JIRA_STORY}; then
+              CONNECTOR_MOJALOOP=$(echo "ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_mojaloop=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-notifications ${JIRA_STORY}; then
+              NOTIFICATIONS=$(echo "ph-ee-g2psandbox.ph-ee-engine.notifications=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-identity-account-mapper ${JIRA_STORY}; then
+              ACCOUNT_MAPPER=$(echo "ph-ee-g2psandbox.ph-ee-engine.account_mapper=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-importer-es ${JIRA_STORY}; then
+              IMPORTER_ES=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_es=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-operations-app ${JIRA_STORY}; then
+              OPERATIONS_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.operations_app=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-operations-web ${JIRA_STORY}; then
+              OPERATIONS_WEB=$(echo "ph-ee-g2psandbox.ph-ee-engine.operations_web=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-vouchers ${JIRA_STORY}; then
+              VOUCHERS=$(echo "ph-ee-g2psandbox.ph-ee-engine.vouchers=${JIRA_STORY}"),
+            fi
+            if docker_tag_exists openmf/ph-ee-vouchers ${JIRA_STORY}; then
+              VOUCHERS=$(echo "ph-ee-g2psandbox.ph-ee-engine.vouchers=${JIRA_STORY}"),
+            fi
             
-            echo this $VALUES_TO_OVERRIDE
+            VALUES_TO_OVERRIDE=$(echo $IMPORTER_RDBMS)$(echo $CHANNEL)
+            echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
+            if [[ -z "$VALUES_TO_OVERRIDE" ]]; then
+              echo "VALUES_TO_OVERRIDE is empty"
+            else
+              VALUES_TO_OVERRIDE= "--set ${VALUES_TO_OVERRIDE:0:-1}"  
+            fi
+            echo "Passing VALUES_TO_OVERRIDE with --set flag";
   lint:
     parameters:
       jira-story:
