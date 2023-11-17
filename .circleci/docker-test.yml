@@ -34,12 +34,18 @@ commands:
         description: |
           Specify a name for the release.
         type: string
+      cluster-name:
+        default: "sit"
+        type: string
+      aws-region:
+        default: "$REGION"
+        type: string
 
     steps:
       - checkout
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
+          cluster-name: <<parameters.cluster-name>>
+          aws-region: <<parameters.aws-region>>
       - helm/install-helm-client:
           version: "v3.8.2"
       - run:
