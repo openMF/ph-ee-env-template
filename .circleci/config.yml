@@ -184,7 +184,6 @@ jobs:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "sit"
           aws-region: "$REGION"
-      - checkout
       - kubernetes/install-kubectl
       - helm/install-helm-client:
           version: "v3.8.2"

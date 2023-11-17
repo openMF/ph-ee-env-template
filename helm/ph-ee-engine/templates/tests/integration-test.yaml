@@ -21,7 +21,7 @@ spec:
       - name: "BULK_PROCESSOR_CONTACTPOINT"
         value: "https://ph-ee-connector-bulk:80"
       - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
-        value: "https://ph-ee-connector-channel:80"
+        value: "https://ph-ee-connector-channel:8443"
       - name:  "LOGGING_LEVEL_ROOT"
         value: "INFO"
       - name: "MAX_RETRY_COUNT"
@@ -33,9 +33,9 @@ spec:
       - name: "DEFAULTS_AUTHORIZATION"
         value: "Basic bWlmb3M6cGFzc3dvcmQ="
       - name: "CHANNEL_BASE-URL"
-        value: "https://ph-ee-connector-channel:80"
+        value: "https://ph-ee-connector-channel:8443"
       - name: CHANNEL_CONTACTPOINT
-        value: "https://ph-ee-connector-channel:80"
+        value: "https://ph-ee-connector-channel:8443"
       - name: SAVINGS_CONTACTPOINT
         value: "https://fineract-server:8443"
       - name: LOAN_CONTACTPOINT
