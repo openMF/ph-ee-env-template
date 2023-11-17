@@ -8,11 +8,11 @@ commands:
         default: latest
         type: string
         description: "Jira story ticket No"
-#      add-repo:
-#        description: |
-#          The url for the helm chart repository used as part of helm repo add
-#          command
-#        type: string
+      add-repo:
+        description: |
+          The url for the helm chart repository used as part of helm repo add
+          command
+        type: string
       namespace:
         default: ""
         description: |
@@ -38,6 +38,11 @@ commands:
           name: fetch docker images
           environment:
             JIRA_STORY: <<parameters.jira-story>>
+            ORB_PARAM_CHART: << parameters.chart >>
+            ORB_PARAM_NAMESPACE: << parameters.namespace >>
+            ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
+            ORB_PARAM_REPO: << parameters.add-repo >>
+            VALUES_TO_OVERRIDE: ''
           command: | 
             echo TICKET NO:${JIRA_STORY}ff
             function docker_tag_exists() {
@@ -89,12 +94,27 @@ commands:
             
             VALUES_TO_OVERRIDE=$(echo $IMPORTER_RDBMS)$(echo $CHANNEL)
             echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
+            
             if [[ -z "$VALUES_TO_OVERRIDE" ]]; then
               echo "VALUES_TO_OVERRIDE is empty"
             else
               VALUES_TO_OVERRIDE="--set ${VALUES_TO_OVERRIDE:0:-1}"  
+              set -- "$@" --namespace="${ORB_PARAM_NAMESPACE}"
             fi
             echo "Passing VALUES_TO_OVERRIDE with --set flag: $VALUES_TO_OVERRIDE";
+            
+            
+            
+            if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
+                set -- "$@" --namespace="${ORB_PARAM_NAMESPACE}"
+            fi
+            
+            helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+            
+            helm repo updated
+            
+            helm upgrade -f --install "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}" "$@"
+
   lint:
     parameters:
       jira-story:
@@ -130,9 +150,26 @@ jobs:
       jira-story:
         type: string
         default: "latest"
+      namespace:
+        type: string
+        default: ""
+      add-repo:
+        type: string
+      release-name:
+        default: ""
+        type: string
+      chart:
+        default: ""
+        type: string
+
     steps:
       - docker-image-availability-check:
           jira-story: <<parameters.jira-story>>
+          namespace: <<parameters.namespace>>
+          add-repo: <<parameters.add-repo>>
+          release-name: <<parameters.release-name>>
+          chart: <<parameters.chart>>
+
   lint-and-test:
     docker:
       - image: cimg/openjdk:17.0.0
