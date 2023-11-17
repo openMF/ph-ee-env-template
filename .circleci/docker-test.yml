@@ -38,7 +38,7 @@ commands:
         default: "sit"
         type: string
       aws-region:
-        default: "$REGION"
+        default: "${REGION}"
         type: string
 
     steps:
@@ -46,7 +46,7 @@ commands:
       - run:
           name: TEST AWS REGION
           command: |
-            echo "REGION: $REGION"
+            echo "REGION: ${REGION}"
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: <<parameters.cluster-name>>
           aws-region: <<parameters.aws-region>>
