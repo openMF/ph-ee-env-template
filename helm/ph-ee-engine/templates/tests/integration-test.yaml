@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: integration-test
-    image: docker.io/openmf/ph-ee-integration-test:v1.3.0
+    image: docker.io/openmf/ph-ee-integration-test:v1.4.0-rc.2
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args: 
@@ -60,6 +60,8 @@ spec:
         value: ""
       - name: VOUCHER_MANAGEMENT_CONTACTPOINT
         value: "http://ph-ee-vouchers:80"
+      - name: GLOBAL_WAIT_TIME_MS
+        value: "5000"
     resources:
         limits:
           cpu: "500m"

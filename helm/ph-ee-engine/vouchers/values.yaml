@@ -35,7 +35,7 @@ payer:
   identifierType:
 
 identity-account-mapper:
-  hostname : ""
+  hostname: ""
 voucher:
   hostname: "http://ph-ee-vouchers:80"
 operations:
@@ -60,9 +60,9 @@ ingress:
   # kubernetes.io/ingress.class: "nginx"
   pathtype: ImplementationSpecific
   hosts:
-    - host: "" 
-      paths:
-        - path: /
+  - host: ""
+    paths:
+    - path: /
   tls: []
   #  - secretName: sandbox-secret
   #    hosts:
