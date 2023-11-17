@@ -1519,11 +1519,11 @@ connector_bulk:
   tenants: ""
   bucket_name: "paymenthub-ee"
   operations_app:
-      contactpoint: "ph-ee-operations-app"
+      contactpoint: "http://ph-ee-operations-app:5000"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
   identity_account_mapper:
-    hostname: "ph-ee-identity-account-mapper"
+    hostname: "http://ph-ee-identity-account-mapper:80"
   config:
     partylookup:
       enable: false
@@ -2060,7 +2060,6 @@ vouchers:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
-  hostname: "vouchers.sandbox.mifos.io"
   ingress:
     enabled: true
     annotations:
