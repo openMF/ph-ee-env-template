@@ -126,7 +126,7 @@ commands:
             
             
             if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
-                ORB_PARAM_NAMESPACE=$(echo--namespace ${ORB_PARAM_NAMESPACE})
+                ORB_PARAM_NAMESPACE=$(echo --namespace ${ORB_PARAM_NAMESPACE})
             fi
             
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
