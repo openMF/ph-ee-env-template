@@ -62,7 +62,7 @@ commands:
             ORB_PARAM_REPO: << parameters.add-repo >>
             VALUES_TO_OVERRIDE: ''
           command: | 
-            echo TICKET NO:${JIRA_STORY}ff
+            echo TICKET NO: ${JIRA_STORY}
             function docker_tag_exists() {
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
@@ -126,14 +126,14 @@ commands:
             
             
             if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
-                set -- "$@" --namespace="${ORB_PARAM_NAMESPACE}"
+                ORB_PARAM_NAMESPACE=$(echo--namespace ${ORB_PARAM_NAMESPACE})
             fi
             
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
             
             helm repo update
             
-            helm upgrade --install ${VALUES_TO_OVERRIDE} "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}"
+            helm upgrade --install ${VALUES_TO_OVERRIDE} "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} "
 
   lint:
     parameters:
