@@ -181,6 +181,7 @@ ph-ee-engine:
 
   mockpayment:
     enabled: true 
+    hostname: " http://ph-ee-connector-mock-payment-schema:8080"
     ingress:
         enabled: true
         hosts:
@@ -252,7 +253,7 @@ ph-ee-engine:
   operations_app:
     enabled: true
     tenants: "rhino,gorilla"
-    hostname: "ops-bk.sandbox.mifos.io"
+    hostname: "http://ph-ee-operations-app:5000"
     datasource:
       username: "mifos"
       password: "password"
@@ -479,7 +480,7 @@ ph-ee-engine:
 
   vouchers:
     enabled: true
-    hostname: "vouchers.sandbox.mifos.io"
+    hostname: "http://ph-ee-vouchers:80"
     ingress:
       enabled: true
       annotations:
