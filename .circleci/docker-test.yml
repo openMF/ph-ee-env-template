@@ -92,9 +92,9 @@ commands:
             if [[ -z "$VALUES_TO_OVERRIDE" ]]; then
               echo "VALUES_TO_OVERRIDE is empty"
             else
-              VALUES_TO_OVERRIDE= "--set ${VALUES_TO_OVERRIDE:0:-1}"  
+              VALUES_TO_OVERRIDE="--set ${VALUES_TO_OVERRIDE:0:-1}"  
             fi
-            echo "Passing VALUES_TO_OVERRIDE with --set flag";
+            echo "Passing VALUES_TO_OVERRIDE with --set flag: $VALUES_TO_OVERRIDE";
   lint:
     parameters:
       jira-story:
