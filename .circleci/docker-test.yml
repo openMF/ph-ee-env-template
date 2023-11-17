@@ -114,7 +114,7 @@ commands:
             
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
             
-            helm repo updated
+            helm repo update
             
             helm upgrade -f --install "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_CHART}" "$@"
 
