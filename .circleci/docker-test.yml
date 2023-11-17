@@ -70,7 +70,7 @@ commands:
             DOCKER_PATH=$(echo docker.io/openmf/)
             
             if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
-              COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app=${JIRA_STORY}"),
+              COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}:${JIRA_STORY}"),
             fi
             if docker_tag_exists openmf/ph-ee-importer-rdbms test-123; then
               IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=${DOCKER_PATH}:${JIRA_STORY}"),
