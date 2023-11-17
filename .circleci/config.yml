@@ -105,7 +105,7 @@ jobs:
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "sit"
-          aws-region: "$REGION"
+          aws-region: $REGION
       - helm/install-helm-client:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub
