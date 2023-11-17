@@ -103,10 +103,6 @@ jobs:
         description: "sit"
         type: string
     steps:
-      - run:
-          name: TEST AWS REGION
-          command: |
-            echo "REGION: $REGION"
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "sit"
           aws-region: $REGION
