@@ -62,19 +62,19 @@ commands:
             ORB_PARAM_REPO: << parameters.add-repo >>
             DOCKER_PATH: docker.io/openmf
             VALUES_TO_OVERRIDE: ''
-            COMMUNITY_APP: ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}/community-app:latest
-            IMPORTER_RDBMS: ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=${DOCKER_PATH}/ph-ee-importer-rdbms:latest
-            CHANNEL: ph-ee-g2psandbox.ph-ee-engine.channel.image=${DOCKER_PATH}/ph-ee-connector-channel:latest
-            MESSAGE_GATEWAY: ph-ee-g2psandbox.ph-ee-engine.messagegateway.image=${DOCKER_PATH}/message-gateway:latest
-            CONNECTOR_GSMA: ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_gsma.image=${DOCKER_PATH}/ph-ee-connector-gsma:latest
-            CONNECTOR_MOCK: ph-ee-g2psandbox.ph-ee-engine.mockpayment.image=${DOCKER_PATH}/ph-ee-connector-mock-payment-schema:latest
-            CONNECTOR_MOJALOOP: ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_mojaloop.image=${DOCKER_PATH}/ph-ee-connector-mojaloop:latest
-            NOTIFICATIONS: ph-ee-g2psandbox.ph-ee-engine.notifications.image=${DOCKER_PATH}/ph-ee-notifications:latest
-            ACCOUNT_MAPPER: ph-ee-g2psandbox.ph-ee-engine.account_mapper.image=${DOCKER_PATH}/ph-ee-identity-account-mapper:latest
-            IMPORTER_ES: ph-ee-g2psandbox.ph-ee-engine.importer_es.image=${DOCKER_PATH}/ph-ee-importer-es:latest
-            OPERATIONS_APP: ph-ee-g2psandbox.ph-ee-engine.operations_app.image=${DOCKER_PATH}/ph-ee-operations-app:latest
-            OPERATIONS_WEB: ph-ee-g2psandbox.ph-ee-engine.operations_web.image=${DOCKER_PATH}/ph-ee-operations-web:latest
-            VOUCHERS: ph-ee-g2psandbox.ph-ee-engine.vouchers.image=${DOCKER_PATH}/ph-ee-vouchers:latest
+            COMMUNITY_APP: ph-ee-g2psandbox.ph-ee-engine.community-app.image=docker.io/openmf/community-app:latest
+            IMPORTER_RDBMS: ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=docker.io/openmf/ph-ee-importer-rdbms:latest
+            CHANNEL: ph-ee-g2psandbox.ph-ee-engine.channel.image=docker.io/openmf/ph-ee-connector-channel:latest
+            MESSAGE_GATEWAY: ph-ee-g2psandbox.ph-ee-engine.messagegateway.image=docker.io/openmf/message-gateway:latest
+            CONNECTOR_GSMA: ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_gsma.image=docker.io/openmf/ph-ee-connector-gsma:latest
+            CONNECTOR_MOCK: ph-ee-g2psandbox.ph-ee-engine.mockpayment.image=docker.io/openmf/ph-ee-connector-mock-payment-schema:latest
+            CONNECTOR_MOJALOOP: ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_mojaloop.image=docker.io/openmf/ph-ee-connector-mojaloop:latest
+            NOTIFICATIONS: ph-ee-g2psandbox.ph-ee-engine.notifications.image=docker.io/openmf/ph-ee-notifications:latest
+            ACCOUNT_MAPPER: ph-ee-g2psandbox.ph-ee-engine.account_mapper.image=docker.io/openmf/ph-ee-identity-account-mapper:latest
+            IMPORTER_ES: ph-ee-g2psandbox.ph-ee-engine.importer_es.image=docker.io/openmf/ph-ee-importer-es:latest
+            OPERATIONS_APP: ph-ee-g2psandbox.ph-ee-engine.operations_app.image=docker.io/openmf/ph-ee-operations-app:latest
+            OPERATIONS_WEB: ph-ee-g2psandbox.ph-ee-engine.operations_web.image=docker.io/openmf/ph-ee-operations-web:latest
+            VOUCHERS: ph-ee-g2psandbox.ph-ee-engine.vouchers.image=docker.io/openmf/ph-ee-vouchers:latest
           command: |
             if [ "$CIRCLE_BRANCH" != "master" ]; then
               echo TICKET NO: ${JIRA_STORY}
