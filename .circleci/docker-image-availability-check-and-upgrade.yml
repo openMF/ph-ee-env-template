@@ -70,12 +70,18 @@ commands:
             if [ "$CIRCLE_BRANCH" != "master" ]; then
               wget https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
               cat services.yaml
+            
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/ph-ee-env-template/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY"; fi
               
               function docker_tag_exists() {
+                input="./services.txt"
+                while IFS= read -r line
+                do
+                  echo "$line"
+                done < "$input"
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
               }
               
