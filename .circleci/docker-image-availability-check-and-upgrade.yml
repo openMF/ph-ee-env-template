@@ -7,10 +7,6 @@ orbs:
 commands:
   docker-image-availability-check-and-upgrade:
     parameters:
-      jira-story:
-        default: latest
-        type: string
-        description: "Jira story ticket No"
       add-repo:
         description: |
           The url for the helm chart repository used as part of helm repo add
@@ -55,7 +51,6 @@ commands:
       - run:
           name: fetch docker images and helm upgrade
           environment:
-            JIRA_STORY: <<parameters.jira-story>>
             ORB_PARAM_CHART: << parameters.chart >>
             ORB_PARAM_NAMESPACE: << parameters.namespace >>
             ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
@@ -77,6 +72,10 @@ commands:
             VOUCHERS: ph-ee-g2psandbox.ph-ee-engine.vouchers.image=docker.io/openmf/ph-ee-vouchers:latest
           command: |
             if [ "$CIRCLE_BRANCH" != "master" ]; then
+              PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/ph-ee-importer-rdbms/pulls/$PR_NUMBER" | jq -r '.title')
+              JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1)
+            
               echo TICKET NO: ${JIRA_STORY}
               function docker_tag_exists() {
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
@@ -171,9 +170,6 @@ jobs:
     docker:
       - image: cimg/openjdk:17.0.0
     parameters:
-      jira-story:
-        type: string
-        default: "latest"
       namespace:
         type: string
         default: ""
@@ -194,7 +190,6 @@ jobs:
 
     steps:
       - docker-image-availability-check-and-upgrade:
-          jira-story: <<parameters.jira-story>>
           namespace: <<parameters.namespace>>
           add-repo: <<parameters.add-repo>>
           release-name: <<parameters.release-name>>
