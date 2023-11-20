@@ -2083,27 +2083,16 @@ vouchers:
       url: jdbc:mysql://operationsmysql:3306/voucher_management
       username: mifos
       password: password
-
   async:
     core_pool_size: 10
     max_pool_size: 10
     queue_capacity: 100
-
   expiry_time: 60
-
   payer:
     tenant: rhino
     identifier: 12345678
     identifierType: MSISDN
-  voucher:
-    hostname: "https://vouchers.sandbox.mifos.io"
-
   salting:
     enabled: true
-
   identity-account-mapper:
-    hostname: "https://identity-mapper.sandbox.mifos.io"
-  operations:
-    hostname: "https://ops-bk.sandbox.mifos.io"
-    endpoints:
-      transfers: "/api/v1/transfers?size=1&page=0"
+    hostname: "https://ph-ee-identity-mapper:80"
