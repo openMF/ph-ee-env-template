@@ -79,10 +79,9 @@ commands:
               function docker_tag_exists() {
                 input="./services.txt"
                 while IFS= read -r line
-                  splitting $line
+                  splitting ${line}
                 do
                 done < "$input"
-                
               }
               function splitting() {
                 IFS='|' read -r -a array \<< $1
