@@ -39,10 +39,6 @@ commands:
 
     steps:
       - checkout
-      - run:
-          name: TEST AWS REGION
-          command: |
-            echo REGION: "${REGION}"
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: <<parameters.cluster-name>>
           aws-region: <<parameters.aws-region>>
@@ -75,7 +71,10 @@ commands:
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/ph-ee-importer-rdbms/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1)
-            
+              if [ -n "${JIRA_STORY}" ]; then
+                echo INVALID PR TITLE
+                exit 1;
+              fi
               echo TICKET NO: ${JIRA_STORY}
               function docker_tag_exists() {
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
