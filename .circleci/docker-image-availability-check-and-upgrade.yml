@@ -82,7 +82,7 @@ commands:
               if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
                 COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}/community-app:${JIRA_STORY}")
               fi
-              if docker_tag_exists openmf/ph-ee-importer-rdbms test-123; then
+              if docker_tag_exists openmf/ph-ee-importer-rdbms ${JIRA_STORY}; then
                 IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=${DOCKER_PATH}/ph-ee-importer-rdbms:${JIRA_STORY}")
               fi
               if docker_tag_exists openmf/ph-ee-connector-channel ${JIRA_STORY}; then
@@ -138,7 +138,7 @@ commands:
   lint:
     parameters:
       jira-story:
-        default: latest123
+        default: latest
         type: string
         description: "Jira story ticket No"
 
