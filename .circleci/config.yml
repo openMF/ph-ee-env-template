@@ -141,17 +141,6 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - mifos-orb/docker-image-availability-check-and-upgrade:
-          namespace: paymenthub
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-          release-name: g2p-sandbox
-          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
-          cluster-name: "sit"
-          aws-region: "$REGION"
-          context:
-            - AWS
-            - Helm
-            - slack
       - build-and-host-engine:
           context:
             - AWS
@@ -176,7 +165,20 @@ workflows:
           context: 
             - AWS
             - Helm
-            - slack      
+            - slack
+      - mifos-orb/docker-image-availability-check-and-upgrade:
+          namespace: paymenthub
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+          release-name: g2p-sandbox
+          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+          cluster-name: "sit"
+          aws-region: "$REGION"
+          context:
+            - AWS
+            - Helm
+            - slack
+          requires:
+            - build-host-g2p-fyn-chart
       - test-chart-gov:
           requires:
             - mifos-orb/docker-image-availability-check-and-upgrade
