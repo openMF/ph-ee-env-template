@@ -1,0 +1,216 @@
+version: 2.1
+description: "Check for docker image availability wrt jira story and do helm upgrade"
+orbs:
+  helm: circleci/helm@2.0.1
+  aws-eks: circleci/aws-eks@2.2.0
+  kubernetes: circleci/kubernetes@1.3
+commands:
+  docker-image-availability-check-and-upgrade:
+    parameters:
+      jira-story:
+        default: latest
+        type: string
+        description: "Jira story ticket No"
+      add-repo:
+        description: |
+          The url for the helm chart repository used as part of helm repo add
+          command
+        type: string
+      namespace:
+        default: ""
+        description: |
+          The kubernetes namespace that should be used.
+        type: string
+      chart:
+        default: ""
+        description: |
+          Specify for upgrade a chart reference (e.g. stable/mariadb),
+          or a path to a packaged chart (e.g. ./nginx-1.2.3.tgz),
+          or a path to an unpacked chart directory (e.g. ./nginx)
+          or an absolute URL (e.g. https://example.com/charts/nginx-1.2.3.tgz)
+        type: string
+      release-name:
+        default: ""
+        description: |
+          Specify a name for the release.
+        type: string
+      cluster-name:
+        default: "sit"
+        type: string
+      aws-region:
+        default: "${REGION}"
+        type: string
+
+    steps:
+      - checkout
+      - run:
+          name: TEST AWS REGION
+          command: |
+            echo REGION: "${REGION}"
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: <<parameters.cluster-name>>
+          aws-region: <<parameters.aws-region>>
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      - run:
+          name: fetch docker images and helm upgrade
+          environment:
+            JIRA_STORY: <<parameters.jira-story>>
+            ORB_PARAM_CHART: << parameters.chart >>
+            ORB_PARAM_NAMESPACE: << parameters.namespace >>
+            ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
+            ORB_PARAM_REPO: << parameters.add-repo >>
+            DOCKER_PATH: docker.io/openmf
+            VALUES_TO_OVERRIDE: ''
+            COMMUNITY_APP: ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}/community-app:latest
+            IMPORTER_RDBMS: ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=${DOCKER_PATH}/ph-ee-importer-rdbms:latest
+            CHANNEL: ph-ee-g2psandbox.ph-ee-engine.channel.image=${DOCKER_PATH}/ph-ee-connector-channel:latest
+            MESSAGE_GATEWAY: ph-ee-g2psandbox.ph-ee-engine.messagegateway.image=${DOCKER_PATH}/message-gateway:latest
+            CONNECTOR_GSMA: ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_gsma.image=${DOCKER_PATH}/ph-ee-connector-gsma:latest
+            CONNECTOR_MOCK: ph-ee-g2psandbox.ph-ee-engine.mockpayment.image=${DOCKER_PATH}/ph-ee-connector-mock-payment-schema:latest
+            CONNECTOR_MOJALOOP: ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_mojaloop.image=${DOCKER_PATH}/ph-ee-connector-mojaloop:latest
+            NOTIFICATIONS: ph-ee-g2psandbox.ph-ee-engine.notifications.image=${DOCKER_PATH}/ph-ee-notifications:latest
+            ACCOUNT_MAPPER: ph-ee-g2psandbox.ph-ee-engine.account_mapper.image=${DOCKER_PATH}/ph-ee-identity-account-mapper:latest
+            IMPORTER_ES: ph-ee-g2psandbox.ph-ee-engine.importer_es.image=${DOCKER_PATH}/ph-ee-importer-es:latest
+            OPERATIONS_APP: ph-ee-g2psandbox.ph-ee-engine.operations_app.image=${DOCKER_PATH}/ph-ee-operations-app:latest
+            OPERATIONS_WEB: ph-ee-g2psandbox.ph-ee-engine.operations_web.image=${DOCKER_PATH}/ph-ee-operations-web:latest
+            VOUCHERS: ph-ee-g2psandbox.ph-ee-engine.vouchers.image=${DOCKER_PATH}/ph-ee-vouchers:latest
+          command: |
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
+              echo TICKET NO: ${JIRA_STORY}
+              function docker_tag_exists() {
+                curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
+              }
+              
+              
+              if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
+                COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}/community-app:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-importer-rdbms test-123; then
+                IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=${DOCKER_PATH}/ph-ee-importer-rdbms:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-connector-channel ${JIRA_STORY}; then
+                CHANNEL=$(echo "ph-ee-g2psandbox.ph-ee-engine.channel.image=${DOCKER_PATH}/ph-ee-connector-channel:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/message-gateway ${JIRA_STORY}; then
+                MESSAGE_GATEWAY=$(echo "ph-ee-g2psandbox.ph-ee-engine.messagegateway.image=${DOCKER_PATH}/message-gateway:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-connector-gsma ${JIRA_STORY}; then
+                CONNECTOR_GSMA=$(echo "ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_gsma.image=${DOCKER_PATH}/ph-ee-connector-gsma:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-connector-mock-payment-schema ${JIRA_STORY}; then
+                CONNECTOR_MOCK=$(echo "ph-ee-g2psandbox.ph-ee-engine.mockpayment.image=${DOCKER_PATH}/ph-ee-connector-mock-payment-schema:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-connector-mojaloop ${JIRA_STORY}; then
+                CONNECTOR_MOJALOOP=$(echo "ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_mojaloop.image=${DOCKER_PATH}/ph-ee-connector-mojaloop:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-notifications ${JIRA_STORY}; then
+                NOTIFICATIONS=$(echo "ph-ee-g2psandbox.ph-ee-engine.notifications.image=${DOCKER_PATH}/ph-ee-notifications:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-identity-account-mapper ${JIRA_STORY}; then
+                ACCOUNT_MAPPER=$(echo "ph-ee-g2psandbox.ph-ee-engine.account_mapper.image=${DOCKER_PATH}/ph-ee-identity-account-mapper:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-importer-es ${JIRA_STORY}; then
+                IMPORTER_ES=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_es.image=${DOCKER_PATH}/ph-ee-importer-es:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-operations-app ${JIRA_STORY}; then
+                OPERATIONS_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.operations_app.image=${DOCKER_PATH}/ph-ee-operations-app:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-operations-web ${JIRA_STORY}; then
+                OPERATIONS_WEB=$(echo "ph-ee-g2psandbox.ph-ee-engine.operations_web.image=${DOCKER_PATH}/ph-ee-operations-web:${JIRA_STORY}")
+              fi
+              if docker_tag_exists openmf/ph-ee-vouchers ${JIRA_STORY}; then
+                VOUCHERS=$(echo "ph-ee-g2psandbox.ph-ee-engine.vouchers.image=${DOCKER_PATH}/ph-ee-vouchers:${JIRA_STORY}")
+              fi
+            fi
+              
+            VALUES_TO_OVERRIDE= --set $(echo $IMPORTER_RDBMS),$(echo $CHANNEL),$(echo $MESSAGE_GATEWAY),$(echo $CONNECTOR_GSMA),$(echo $CONNECTOR_MOCK),$(echo $CONNECTOR_MOJALOOP),$(echo $NOTIFICATIONS),$(echo $ACCOUNT_MAPPER),$(echo $IMPORTER_ES),$(echo $OPERATIONS_APP),$(echo $OPERATIONS_WEB),$(echo $VOUCHERS),$(echo $VOUCHERS)
+            echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
+
+            if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
+                ORB_PARAM_NAMESPACE=$(echo --namespace ${ORB_PARAM_NAMESPACE})
+            fi
+            
+            echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+            helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+            
+            helm repo update
+            echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
+            helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
+              
+
+  lint:
+    parameters:
+      jira-story:
+        default: latest123
+        type: string
+        description: "Jira story ticket No"
+
+    description: "Install lint dependency"
+    steps:
+      - checkout
+      - run:
+          name: "Install  linting tool check + <<parameters.jira-story>>"
+          command: echo "Install successful"
+      - run:
+          name: "Run linting on given dir"
+          command: echo "linting successful"
+  test:
+    description: "Run integration test"
+    steps:
+      - checkout
+      - run:
+          name: "Run unit test"
+          command: echo "unit test successful"
+      - run:
+          name: "Run integration test"
+          command: echo "integration test successful"
+
+jobs:
+  docker-image-availability-check-and-upgrade:
+    docker:
+      - image: cimg/openjdk:17.0.0
+    parameters:
+      jira-story:
+        type: string
+        default: "latest"
+      namespace:
+        type: string
+        default: ""
+      add-repo:
+        type: string
+      release-name:
+        default: ""
+        type: string
+      chart:
+        default: ""
+        type: string
+      cluster-name:
+        default: "sit"
+        type: string
+      aws-region:
+        default: "$REGION"
+        type: string
+
+    steps:
+      - docker-image-availability-check-and-upgrade:
+          jira-story: <<parameters.jira-story>>
+          namespace: <<parameters.namespace>>
+          add-repo: <<parameters.add-repo>>
+          release-name: <<parameters.release-name>>
+          chart: <<parameters.chart>>
+          cluster-name: <<parameters.cluster-name>>
+          aws-region: <<parameters.aws-region>>
+
+  lint-and-test:
+    docker:
+      - image: cimg/openjdk:17.0.0
+    parameters:
+      jira:
+        type: string
+        default: "55555"
+    steps:
+      - lint:
+          jira-story: <<parameters.jira>>
+      - test
+
