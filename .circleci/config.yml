@@ -153,8 +153,6 @@ workflows:
             - Helm
             - slack
       - build-and-host-engine:
-          requires:
-            - mifos-orb/docker-image-availability-check-and-upgrade
           context:
             - AWS
             - Helm
