@@ -187,7 +187,7 @@ workflows:
 
       - build-and-host-engine:
           requires:
-            - test/docker-image-availability-check
+            - mifos-orb/docker-image-availability-check-and-upgrade
           context:
             - AWS
             - Helm
@@ -215,7 +215,7 @@ workflows:
       - upgrade-helm-chart:
           cluster-name: sit
           requires:
-            - test/docker-image-availability-check
+            - mifos-orb/docker-image-availability-check-and-upgrade
           context: 
             - AWS
             - Helm
