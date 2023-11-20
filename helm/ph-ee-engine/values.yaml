@@ -1431,6 +1431,9 @@ importer_rdbms:
       host: "operationsmysql"
       port: 3306
       schema: "tenants"
+  bucket_name: "paymenthub-ee"
+  aws:
+    region: "<region>"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
