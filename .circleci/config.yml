@@ -178,6 +178,8 @@ workflows:
             - AWS
             - Helm
             - slack
+          requires:
+            - build-host-g2p-fyn-chart
       - test-chart-gov:
           requires:
             - mifos-orb/docker-image-availability-check-and-upgrade
