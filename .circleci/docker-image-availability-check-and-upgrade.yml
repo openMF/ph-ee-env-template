@@ -69,8 +69,8 @@ commands:
           command: |
             if [ "$CIRCLE_BRANCH" != "master" ]; then
               wget https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
-              cat services.yaml
-            
+              cat services.txt
+              
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/ph-ee-env-template/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
@@ -79,12 +79,23 @@ commands:
               function docker_tag_exists() {
                 input="./services.txt"
                 while IFS= read -r line
+                  splitting $line
                 do
-                  echo "$line"
                 done < "$input"
+                
+              }
+              function splitting() {
+                IFS='|' read -r -a array \<< $1
+                BASE_PATH=${array[0]}
+                SERVICE_NAME=${array[1]}
+                echo "TESTING TSEING $BASE_PATH, $SERVICE_NAME"
+                if check_for_image_tag ${SERVICE_NAME} ${JIRA_STORY}; then
+                    VALUES_TO_OVERRIDE+=($BASE_PATH=$SERVICE_NAME:$JIRA_STORY),
+                fi
+              }
+              function check_for_image_tag(){
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
               }
-              
               
               if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
                 COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}/community-app:${JIRA_STORY}")
