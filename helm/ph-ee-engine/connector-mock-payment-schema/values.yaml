@@ -16,7 +16,7 @@ SPRING_PROFILES_ACTIVE: ""
 LOGGING_LEVEL_ROOT: "INFO"
 DFSPIDS: ""
 mockFailure:
-  percentage: "50"
+  percentage: "0"
 limits:
   memory: "512M"
   cpu: "500m"

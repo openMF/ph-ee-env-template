@@ -181,6 +181,7 @@ ph-ee-engine:
 
   mockpayment:
     enabled: true 
+    hostname: " http://ph-ee-connector-mock-payment-schema:8080"
     ingress:
         enabled: true
         hosts:
@@ -252,7 +253,7 @@ ph-ee-engine:
   operations_app:
     enabled: true
     tenants: "rhino,gorilla"
-    hostname: "ops-bk.sandbox.mifos.io"
+    hostname: "http://ph-ee-operations-app:5000"
     datasource:
       username: "mifos"
       password: "password"
@@ -364,11 +365,11 @@ ph-ee-engine:
       access_key: "aws-access-key"
       secret_key: "aws-secret-key"
     operations_app:
-      contactpoint: "https://ops-bk.sandbox.mifos.io/"
+      contactpoint: "http://ph-ee-operations-app:5000"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
     identity_account_mapper:
-      hostname: "https://identity-mapper.sandbox.mifos.io"
+      hostname: "https://identity-mapper.sandbox.mifos.io:80"
     service:
       annotations:
         konghq.com/protocol: "https"
@@ -479,7 +480,6 @@ ph-ee-engine:
 
   vouchers:
     enabled: true
-    hostname: "vouchers.sandbox.mifos.io"
     ingress:
       enabled: true
       annotations:
@@ -509,6 +509,7 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
+  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:

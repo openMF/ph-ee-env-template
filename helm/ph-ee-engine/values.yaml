@@ -129,7 +129,7 @@ camunda-platform:
 
 elasticsearch:
   enabled: true
-#  imageTag: 7.17.0
+  # imageTag: 7.17.1
   replicas: 1
   protocol: http
   fullnameOverride: "ph-ee-elasticsearch"
@@ -1392,7 +1392,7 @@ mockpayment:
   image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.4.0
   replicas: 1
   mockFailure:
-    percentage: "50"
+    percentage: "0"
   limits:
     memory: "512M"
     cpu: "500m"
@@ -1519,11 +1519,11 @@ connector_bulk:
   tenants: ""
   bucket_name: "paymenthub-ee"
   operations_app:
-      contactpoint: "ph-ee-operations-app"
+      contactpoint: "http://ph-ee-operations-app:5000"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
   identity_account_mapper:
-    hostname: "ph-ee-identity-account-mapper"
+    hostname: "http://ph-ee-identity-account-mapper:80"
   config:
     partylookup:
       enable: false
@@ -2060,7 +2060,6 @@ vouchers:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
-  hostname: "vouchers.sandbox.mifos.io"
   ingress:
     enabled: true
     annotations:
@@ -2084,27 +2083,16 @@ vouchers:
       url: jdbc:mysql://operationsmysql:3306/voucher_management
       username: mifos
       password: password
-
   async:
     core_pool_size: 10
     max_pool_size: 10
     queue_capacity: 100
-
   expiry_time: 60
-
   payer:
     tenant: rhino
     identifier: 12345678
     identifierType: MSISDN
-  voucher:
-    hostname: "https://vouchers.sandbox.mifos.io"
-
   salting:
     enabled: true
-
   identity-account-mapper:
-    hostname: "https://identity-mapper.sandbox.mifos.io"
-  operations:
-    hostname: "https://ops-bk.sandbox.mifos.io"
-    endpoints:
-      transfers: "/api/v1/transfers?size=1&page=0"
+    hostname: "https://ph-ee-identity-mapper:80"
