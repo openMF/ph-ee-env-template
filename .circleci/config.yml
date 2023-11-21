@@ -116,7 +116,7 @@ jobs:
       - kubernetes/install-kubectl
       - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
-      - run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
+      #- run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
           chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.0/ph-ee-g2psandbox-1.3.0.tgz"
           release-name: ph-ee-g2psandbox
