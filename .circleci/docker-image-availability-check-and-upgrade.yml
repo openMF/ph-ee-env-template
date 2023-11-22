@@ -77,7 +77,7 @@ commands:
               }
               function splitting() {
                 echo Splitting: $1
-                IFS=' | ' fields=$1
+                IFS=' | ' fields=($1)
                 BASE_PATH=${fields[0]}
                 SERVICE_NAME=${fields[1]}
                 echo "TESTING TSEING $BASE_PATH $SERVICE_NAME"
