@@ -37,7 +37,7 @@ commands:
         default: "${REGION}"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/34f78dee7e9fab60905575b9175d53bcaa5c7a37/.circleci/services.txt
         type: string
 
     steps:
@@ -71,18 +71,15 @@ commands:
                 file=$1
                 while IFS= read -r line; do
                   echo "Processing line: $line"
-                  splitting "$line"
+                  generate_values_to_override "$line"
+                  
                 done < "$file"
             
               }
-              function splitting() {
-                echo Splitting: $1
-                IFS=' | ' fields=($1)
-                BASE_PATH=${fields[0]}
-                SERVICE_NAME=${fields[1]}
-                echo "TESTING TSEING $BASE_PATH $SERVICE_NAME"
-                if check_for_image_tag ${SERVICE_NAME} ${JIRA_STORY}; then
-                    VALUES_TO_OVERRIDE+=($BASE_PATH=$SERVICE_NAME:$JIRA_STORY),
+              function generate_values_to_override() {
+                echo "TESTING TSEING $1 $2"
+                if check_for_image_tag $1 ${JIRA_STORY}; then
+                    VALUES_TO_OVERRIDE+=($BASE_PATH=$1:$JIRA_STORY),
                 fi
               }
               function check_for_image_tag(){
@@ -162,7 +159,7 @@ jobs:
         default: "$REGION"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/34f78dee7e9fab60905575b9175d53bcaa5c7a37/.circleci/services.txt
         type: string
 
     steps:
