@@ -148,6 +148,7 @@ workflows:
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
           cluster-name: "sit"
           aws-region: "$REGION"
+          service-file-path: https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
           context:
             - AWS
             - Helm
