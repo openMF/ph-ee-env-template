@@ -75,14 +75,19 @@ commands:
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY"; fi
               
+              wget https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
               function docker_tag_exists() {
-                wget https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
-                input="services.txt"
+                file="services.txt"
+                for line in $file
+                do
+                  echo -e "$line\n"
+                done
+            
                 while IFS= read -r line; 
                 do
                   echo "THIS IS LINE $line"
                   splitting $line
-                done <$input
+                done <$file
               }
               function splitting() {
                 IFS='|' read -r -a array \<< $1
