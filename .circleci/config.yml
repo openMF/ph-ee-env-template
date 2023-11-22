@@ -179,7 +179,7 @@ workflows:
             - Helm
             - slack
           requires:
-            - build-and-host-g2p-sandbox-security
+            - build-host-g2p-fyn-chart
       - test-chart-gov:
           requires:
             - mifos-orb/docker-image-availability-check-and-upgrade
