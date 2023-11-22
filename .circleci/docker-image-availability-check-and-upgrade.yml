@@ -101,47 +101,8 @@ commands:
               function check_for_image_tag(){
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
               }
+              docker_tag_exists
               
-              if docker_tag_exists openmf/community-app ${JIRA_STORY}; then
-                COMMUNITY_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.community-app.image=${DOCKER_PATH}/community-app:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-importer-rdbms ${JIRA_STORY}; then
-                IMPORTER_RDBMS=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_rdbms.image=${DOCKER_PATH}/ph-ee-importer-rdbms:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-connector-channel ${JIRA_STORY}; then
-                CHANNEL=$(echo "ph-ee-g2psandbox.ph-ee-engine.channel.image=${DOCKER_PATH}/ph-ee-connector-channel:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/message-gateway ${JIRA_STORY}; then
-                MESSAGE_GATEWAY=$(echo "ph-ee-g2psandbox.ph-ee-engine.messagegateway.image=${DOCKER_PATH}/message-gateway:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-connector-gsma ${JIRA_STORY}; then
-                CONNECTOR_GSMA=$(echo "ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_gsma.image=${DOCKER_PATH}/ph-ee-connector-gsma:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-connector-mock-payment-schema ${JIRA_STORY}; then
-                CONNECTOR_MOCK=$(echo "ph-ee-g2psandbox.ph-ee-engine.mockpayment.image=${DOCKER_PATH}/ph-ee-connector-mock-payment-schema:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-connector-mojaloop ${JIRA_STORY}; then
-                CONNECTOR_MOJALOOP=$(echo "ph-ee-g2psandbox.ph-ee-engine.ph_ee_connector_mojaloop.image=${DOCKER_PATH}/ph-ee-connector-mojaloop:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-notifications ${JIRA_STORY}; then
-                NOTIFICATIONS=$(echo "ph-ee-g2psandbox.ph-ee-engine.notifications.image=${DOCKER_PATH}/ph-ee-notifications:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-identity-account-mapper ${JIRA_STORY}; then
-                ACCOUNT_MAPPER=$(echo "ph-ee-g2psandbox.ph-ee-engine.account_mapper.image=${DOCKER_PATH}/ph-ee-identity-account-mapper:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-importer-es ${JIRA_STORY}; then
-                IMPORTER_ES=$(echo "ph-ee-g2psandbox.ph-ee-engine.importer_es.image=${DOCKER_PATH}/ph-ee-importer-es:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-operations-app ${JIRA_STORY}; then
-                OPERATIONS_APP=$(echo "ph-ee-g2psandbox.ph-ee-engine.operations_app.image=${DOCKER_PATH}/ph-ee-operations-app:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-operations-web ${JIRA_STORY}; then
-                OPERATIONS_WEB=$(echo "ph-ee-g2psandbox.ph-ee-engine.operations_web.image=${DOCKER_PATH}/ph-ee-operations-web:${JIRA_STORY}")
-              fi
-              if docker_tag_exists openmf/ph-ee-vouchers ${JIRA_STORY}; then
-                VOUCHERS=$(echo "ph-ee-g2psandbox.ph-ee-engine.vouchers.image=${DOCKER_PATH}/ph-ee-vouchers:${JIRA_STORY}")
-              fi
-            fi
               
             VALUES_TO_OVERRIDE=$(echo "$IMPORTER_RDBMS,$CHANNEL,$MESSAGE_GATEWAY,$CONNECTOR_GSMA,$CONNECTOR_MOCK,$CONNECTOR_MOJALOOP,$NOTIFICATIONS,$ACCOUNT_MAPPER,$IMPORTER_ES,$OPERATIONS_APP,$OPERATIONS_WEB,$VOUCHERS")
             echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
