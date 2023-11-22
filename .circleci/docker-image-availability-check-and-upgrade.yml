@@ -78,10 +78,9 @@ commands:
               function docker_tag_exists() {
                 wget https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
                 input="services.txt"
-                while IFS= read -r line
+                while IFS= read -r line do
                   splitting ${line}
-                do
-                done <"$input"
+                done <$input
               }
               function splitting() {
                 IFS='|' read -r -a array \<< $1
