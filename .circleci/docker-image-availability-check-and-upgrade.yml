@@ -37,7 +37,7 @@ commands:
         default: "${REGION}"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/a7e9846a507bbe183b42790978c47f62edf98d74/.circleci/services.txt
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
         type: string
 
     steps:
@@ -108,34 +108,6 @@ commands:
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
             helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
 
-
-  lint:
-    parameters:
-      jira-story:
-        default: latest
-        type: string
-        description: "Jira story ticket No"
-
-    description: "Install lint dependency"
-    steps:
-      - checkout
-      - run:
-          name: "Install  linting tool check + <<parameters.jira-story>>"
-          command: echo "Install successful"
-      - run:
-          name: "Run linting on given dir"
-          command: echo "linting successful"
-  test:
-    description: "Run integration test"
-    steps:
-      - checkout
-      - run:
-          name: "Run unit test"
-          command: echo "unit test successful"
-      - run:
-          name: "Run integration test"
-          command: echo "integration test successful"
-
 jobs:
   docker-image-availability-check-and-upgrade:
     docker:
@@ -159,7 +131,7 @@ jobs:
         default: "$REGION"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/a7e9846a507bbe183b42790978c47f62edf98d74/.circleci/services.txt
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
         type: string
 
     steps:
@@ -170,16 +142,4 @@ jobs:
           chart: <<parameters.chart>>
           cluster-name: <<parameters.cluster-name>>
           aws-region: <<parameters.aws-region>>
-
-  lint-and-test:
-    docker:
-      - image: cimg/openjdk:17.0.0
-    parameters:
-      jira:
-        type: string
-        default: "55555"
-    steps:
-      - lint:
-          jira-story: <<parameters.jira>>
-      - test
 
