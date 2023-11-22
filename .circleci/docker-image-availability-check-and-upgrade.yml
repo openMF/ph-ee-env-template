@@ -54,7 +54,6 @@ commands:
             ORB_PARAM_NAMESPACE: << parameters.namespace >>
             ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
             ORB_PARAM_REPO: << parameters.add-repo >>
-            DOCKER_PATH: docker.io/openmf
             VALUES_TO_OVERRIDE: ''
             SERVICE_FILE_PATH: << parameters.service-file-path>>
           command: |
