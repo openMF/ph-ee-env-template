@@ -76,9 +76,10 @@ commands:
             
               }
               function splitting() {
-                IFS=' | ' my_array=($1)
-                BASE_PATH=${array[0]}
-                SERVICE_NAME=${array[1]}
+                echo Splitting: $1
+                IFS=' | ' read -r -a fields \<<< "$1"
+                BASE_PATH=${fields[0]}
+                SERVICE_NAME=${fields[1]}
                 echo "TESTING TSEING $BASE_PATH, $SERVICE_NAME"
                 if check_for_image_tag ${SERVICE_NAME} ${JIRA_STORY}; then
                     VALUES_TO_OVERRIDE+=($BASE_PATH=$SERVICE_NAME:$JIRA_STORY),
