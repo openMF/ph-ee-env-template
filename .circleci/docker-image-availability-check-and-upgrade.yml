@@ -84,6 +84,7 @@ commands:
                 fi
               }
               function check_for_image_tag(){
+                echo "checking for service with image tag $1 $2"
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
               }
               
