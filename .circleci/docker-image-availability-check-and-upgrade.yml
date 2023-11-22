@@ -78,8 +78,8 @@ commands:
               }
               function generate_values_to_override() {
                 echo "TESTING TSEING $1 $2"
-                if check_for_image_tag $1 ${JIRA_STORY}; then
-                    VALUES_TO_OVERRIDE+=($BASE_PATH=$1:$JIRA_STORY),
+                if check_for_image_tag $2 ${JIRA_STORY}; then
+                    VALUES_TO_OVERRIDE+=($1=$2:$JIRA_STORY),
                 fi
               }
               function check_for_image_tag(){
@@ -102,12 +102,8 @@ commands:
             fi
             
             echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
-            helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
-            
-            helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
-            helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
-              
+
 
   lint:
     parameters:
