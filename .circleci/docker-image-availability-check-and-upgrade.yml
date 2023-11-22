@@ -79,6 +79,7 @@ commands:
                 echo "generate_values_to_override with $1 $2"
                 PREFIX="docker.io/"
                 SERVICE=${2#"$PREFIX"}
+                echo SERVICE NAME: $SERVICE
                 if check_for_image_tag ${SERVICE} ${JIRA_STORY}; then
                     echo "$1=$2:$JIRA_STORY"
                     VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
