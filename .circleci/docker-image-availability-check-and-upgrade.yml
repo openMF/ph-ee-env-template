@@ -68,6 +68,7 @@ commands:
               
               
               function docker_tag_exists() {
+                echo "Processing line"
                 while IFS= read -r line; do
                   echo "Processing line: $line"
                   # Add your processing logic here
