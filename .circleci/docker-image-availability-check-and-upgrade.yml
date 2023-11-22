@@ -90,7 +90,7 @@ commands:
                 done <$file
               }
               function splitting() {
-                IFS='|' read -r -a array \<< $1
+                IFS='|' my_array=($1)
                 BASE_PATH=${array[0]}
                 SERVICE_NAME=${array[1]}
                 echo "TESTING TSEING $BASE_PATH, $SERVICE_NAME"
