@@ -71,7 +71,7 @@ commands:
                 file=$1
                 while IFS= read -r line; do
                   echo "Processing line: $line"
-                  splitting $line
+                  splitting "$line"
                 done < "$file"
             
               }
