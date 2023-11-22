@@ -96,7 +96,7 @@ commands:
             fi 
               
             if [ -n "${VALUES_TO_OVERRIDE}" ]; then
-                VALUES_TO_OVERRIDE=$(echo --set ${VALUES_TO_OVERRIDE})
+                VALUES_TO_OVERRIDE=$(echo --set ${VALUES_TO_OVERRIDE::-1})
                 echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
             fi
 
@@ -105,7 +105,11 @@ commands:
             fi
             
             echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+            helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+
+            helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
+            helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
 
 
   lint:
