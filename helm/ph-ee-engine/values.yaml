@@ -1970,6 +1970,12 @@ integration_test:
     base_url: ""
   gradle:
     command: ""
+  keycloak: 
+    config:
+      client: 
+        id: ""
+        secret: ""
+
 
 redis:
   enabled: true
