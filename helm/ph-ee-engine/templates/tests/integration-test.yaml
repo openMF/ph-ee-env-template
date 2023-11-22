@@ -46,6 +46,10 @@ spec:
               value: "{{ .Values.integration_test.loan.base_url }}"
             - name: "SAVINGS_BASE-URL"
               value: "{{ .Values.integration_test.savings.base_url }}"
+            - name: "KEYCLOAK_CONFIG_CLIENT_ID"
+              value: "{{ .Values.integration_test.keycloak.config.client.id}}"
+            - name: "KEYCLOAK_CONFIG_CLIENT_SECRET"
+              value: "{{ .Values.integration_test.keycloak.config.client.secret}}"
           resources:
             limits:
               memory: "{{ .Values.integration_test.limits.memory }}"
