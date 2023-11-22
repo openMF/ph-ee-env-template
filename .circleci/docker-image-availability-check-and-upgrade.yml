@@ -73,16 +73,6 @@ commands:
                   # Add your processing logic here
                 done < "$1"
             
-                for line in $file
-                do
-                  echo -e "$line\n"
-                done
-            
-                while IFS= read -r line; 
-                do
-                  echo "THIS IS LINE $line"
-                  splitting $line
-                done <$file
               }
               function splitting() {
                 IFS='|' my_array=($1)
