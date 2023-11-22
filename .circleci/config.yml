@@ -141,18 +141,6 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - mifos-orb/docker-image-availability-check-and-upgrade:
-          namespace: paymenthub
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-          release-name: g2p-sandbox
-          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
-          cluster-name: "sit"
-          aws-region: "$REGION"
-          service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/a7e9846a507bbe183b42790978c47f62edf98d74/.circleci/services.txt
-          context:
-            - AWS
-            - Helm
-            - slack
       - build-and-host-engine:
           context:
             - AWS
@@ -178,6 +166,20 @@ workflows:
             - AWS
             - Helm
             - slack
+      - mifos-orb/docker-image-availability-check-and-upgrade:
+          namespace: paymenthub
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+          release-name: g2p-sandbox
+          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+          cluster-name: "sit"
+          aws-region: "$REGION"
+          service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/a7e9846a507bbe183b42790978c47f62edf98d74/.circleci/services.txt
+          context:
+            - AWS
+            - Helm
+            - slack
+          requires:
+            - build-and-host-g2p-sandbox-security
       - test-chart-gov:
           requires:
             - mifos-orb/docker-image-availability-check-and-upgrade
