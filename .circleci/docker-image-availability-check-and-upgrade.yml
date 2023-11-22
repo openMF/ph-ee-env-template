@@ -80,6 +80,7 @@ commands:
                 input="services.txt"
                 while IFS= read -r line; 
                 do
+                  echo "THIS IS LINE $line"
                   splitting $line
                 done <$input
               }
