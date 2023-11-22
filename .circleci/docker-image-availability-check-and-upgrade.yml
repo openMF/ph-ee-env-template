@@ -83,6 +83,11 @@ commands:
                   echo -e "$line\n"
                 done
             
+                while IFS= read -r line; 
+                do
+                  echo "THIS IS LINE $line"
+                  splitting $line
+                done <$file
               }
               function splitting() {
                 IFS='|' my_array=($1)
@@ -97,9 +102,9 @@ commands:
                 curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
               }
               docker_tag_exists
+            fi 
               
-              
-            VALUES_TO_OVERRIDE=$(echo "$IMPORTER_RDBMS,$CHANNEL,$MESSAGE_GATEWAY,$CONNECTOR_GSMA,$CONNECTOR_MOCK,$CONNECTOR_MOJALOOP,$NOTIFICATIONS,$ACCOUNT_MAPPER,$IMPORTER_ES,$OPERATIONS_APP,$OPERATIONS_WEB,$VOUCHERS")
+            
             echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
 
             if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
