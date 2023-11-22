@@ -69,6 +69,9 @@ commands:
               
               function docker_tag_exists() {
                 file=$1
+                cat $file
+                echo without .
+                cat ./$file
                 echo "Processing line $1"
                 while IFS= read -r line; do
                   echo "Processing line: $line"
