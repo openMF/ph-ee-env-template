@@ -37,7 +37,7 @@ commands:
         default: "${REGION}"
         type: string
       service-file-path:
-        default: https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
         type: string
 
     steps:
@@ -165,7 +165,7 @@ jobs:
         default: "$REGION"
         type: string
       service-file-path:
-        default: https://github.com/openMF/ph-ee-env-labs/blob/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/c44f269f71762cac2380277757b34d41acb47244/.circleci/services.txt
         type: string
 
     steps:
