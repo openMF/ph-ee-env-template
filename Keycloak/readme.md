@@ -1,18 +1,42 @@
 # How to export realm configuration
-* Step 1: Open the keycloak administration console in browser and click `Administration Console` as shown in below snippet.
+* Step 1: Open the keycloak administration console in browser and click `Administration Console` as shown in below snippet.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 26 39 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/6d24b6a0-f98a-4298-87c3-0db6b2e1789a"><br><br>
 
-* Step 2: Enter the admin username/email and password. Then click on `Sign In` button,  as shown in below snippet.
+* Step 2: Enter the admin username/email and password. Then click on `Sign In` button,  as shown in below snippet.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 26 50 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/064d6bb9-b5f4-456a-b5a3-57f4b30a6575"><br><br>
 
-* Step 3: On successful login below screen will open, with list of all the realms. Click on the realm you want to export.
+* Step 3: On successful login below screen will open, with list of all the realms. Click on the realm you want to export.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 32 16 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/833171cf-b769-4c22-acc4-c0a6979b55d7"><br><br>
 
-* Step 4: In the left menu panel, select `Export` under the manage section. Refer below snippet.
+* Step 4: In the left menu panel, select `Export` under the manage section. Refer below snippet.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 33 45 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/342dce17-e364-41fd-be99-e80e808e4058"><br><br>
 
-* Step 5: In the `Partial Export` section enable both the toggle i.e. `Export groups and roles` and `Export clients`, then click on the `Export` button, as shown in the below snippet.
+* Step 5: In the `Partial Export` section enable both the toggle i.e. `Export groups and roles` and `Export clients`, then click on the `Export` button, as shown in the below snippet.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 38 08 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/1a315cdb-a690-475a-9749-066336ad78a5"><br><br>
 
-* Step 6: Once clicked on `Export` in previous step a popup window will open as shown in below snippet, read the instruction and click on `Export` button.
+* Step 6: Once clicked on the `Export` in previous step a popup window will open as shown in below snippet, read the instruction and click on the `Export` button.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 41 50 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/7124de04-36fe-438b-96ca-83dd66bf23e8"><br><br>
+
+
+# How to import realm configuration
+
+* Step 1: Open the keycloak administration console in browser and click `Administration Console` as shown in below snippet.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 26 39 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/6d24b6a0-f98a-4298-87c3-0db6b2e1789a"><br><br>
+
+* Step 2: Enter the admin username/email and password. Then click on `Sign In` button,  as shown in below snippet.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 26 50 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/064d6bb9-b5f4-456a-b5a3-57f4b30a6575"><br><br>
+
+* Step 3: On successful login below screen will open, with list of all the realms. Click on the `master` realm.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 32 16 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/833171cf-b769-4c22-acc4-c0a6979b55d7"><br><br>
+
+* Step 4: In the left menu panel, select `Import` under the manage section. Refer below snippet.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 53 49 PM" src="https://github.com/danishjamal104/ph-ee-env-template/assets/31315800/62d3d4cf-fac0-4ec0-9e30-f5ec4cffbd6d"><br><br>
+
+* Step 5: In the `Partial Export` section click on the `Select file` button, as shown in below snipper. A system file selector window will open, select the configuration by navigating into the system files.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 55 55 PM" src="https://github.com/danishjamal104/ph-ee-env-template/assets/31315800/49a396aa-73a2-4df9-9e55-67733fd9e470"><br><br>
+
+* Step 6: Once valid configuration file in submited, a below screen will open. 
+    * Use `View details` button to see the raw configuration file.
+    * Use the toggle buttons to import selectively or enable all the toggle button to import everything.
+    * In the `If a resource exists` dropdown, click on the dropdown and select `Skip`, this will make sure the resources which are already present are skipped while importing the realm. or you can choose from `Fail`, `Skip` and `Overwrite` based on your requirements <br>
+<img width="500" alt="Screenshot 2023-11-23 at 3 00 25 PM" src="https://github.com/danishjamal104/ph-ee-env-template/assets/31315800/d225fd85-6a04-4dbb-a258-acc9a8034ddb"><br><br>
