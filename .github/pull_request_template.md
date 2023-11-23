@@ -1,13 +1,15 @@
 ## Description
 
 * Describe the changes made and why they were made.
-* Add a link to teh design document or include the design bullet points related to this PR here.
-
- _(Ignore if these details are present on the associated JIRA ticket)_
+* PR title should have jira ticket enclosed in `[]`. 
+```Format [jira_ticket] description``` 
+ex: [phee-123] PR title.
+* Add a link to the Jira ticket.
 
 ## Checklist
 
 Please make sure these boxes are checked before submitting your pull request - thanks!
+- [ ] Followed the PR naming convention mentioned in description.
 
 - [ ] Design related bullet points or design document link related to this PR added in the description above. 
 
