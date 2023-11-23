@@ -187,7 +187,7 @@ workflows:
             - build-host-g2p-fyn-chart
       - test-chart-gov:
           requires:
-            - mifos-orb/docker-image-availability-check-and-upgrade
+            - docker-image-availability-check-and-upgrade
           context: 
             - AWS
             - Helm
@@ -195,7 +195,7 @@ workflows:
             - Ngrok
       - test-chart-ams:
           requires:
-            - mifos-orb/docker-image-availability-check-and-upgrade
+            - docker-image-availability-check-and-upgrade
           context:
             - AWS
             - Helm
