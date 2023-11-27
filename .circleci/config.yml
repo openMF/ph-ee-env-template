@@ -117,7 +117,7 @@ jobs:
               sed -i "s/^version:.*/version: 0.2.0-$JIRA_STORY/" helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             fi
       
-           "sed -i '7s/.*/version: 0.0.0$JIRA_STORY/' helm/g2p-sandbox-security/Chart.yaml" 
+           sed -i '7s/.*/version: 0.0.0$JIRA_STORY/' helm/g2p-sandbox-security/Chart.yaml
            # - run: "sed -i '4s/.*/version: 0.0.0-SNAPSHOT/' helm/g2p-sandbox-security/requirements.yaml"
            # SED & replace dependency with 0.0.0
            helm dep up helm/g2p-sandbox-security
