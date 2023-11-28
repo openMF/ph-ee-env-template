@@ -91,7 +91,7 @@ jobs:
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY"; fi
-              sed -i "s/^version:.*/version: 0.2.0$JIRA_STORY/" helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
+              sed -i "s/^version:.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             fi
             cat ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             helm dep up ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
