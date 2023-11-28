@@ -7,23 +7,10 @@ orbs:
 commands:
   docker-image-availability-check-and-upgrade:
     parameters:
-      add-repo:
-        description: |
-          The url for the helm chart repository used as part of helm repo add
-          command
-        type: string
       namespace:
         default: ""
         description: |
           The kubernetes namespace that should be used.
-        type: string
-      chart:
-        default: ""
-        description: |
-          Specify for upgrade a chart reference (e.g. stable/mariadb),
-          or a path to a packaged chart (e.g. ./nginx-1.2.3.tgz),
-          or a path to an unpacked chart directory (e.g. ./nginx)
-          or an absolute URL (e.g. https://example.com/charts/nginx-1.2.3.tgz)
         type: string
       release-name:
         default: ""
@@ -39,6 +26,15 @@ commands:
       service-file-path:
         default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
         type: string
+      chart-base-url:
+        default: https://fynarfin.io/images
+        type: string
+      chart-name:
+        default: ph-ee-g2psandbox-fynarfin
+        type: string
+      chart-version:
+        default: 0.2.0
+        type: string
 
     steps:
       - checkout
@@ -50,47 +46,50 @@ commands:
       - run:
           name: fetch docker images and helm upgrade
           environment:
-            ORB_PARAM_CHART: << parameters.chart >>
+            ORB_CHART_BASE_URL: << parameters.chart-base-url >>
+            ORB_CHART_NAME: << parameters.chart-name >>
+            ORB_CHART_VERSION: << parameters.chart-version >>
             ORB_PARAM_NAMESPACE: << parameters.namespace >>
             ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
-            ORB_PARAM_REPO: << parameters.add-repo >>
+            JIRA_STORY: ''
+            JIRA_STORY_DIR: ''
             VALUES_TO_OVERRIDE: ''
             SERVICE_FILE_PATH: << parameters.service-file-path>>
           command: |
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
-              
-              PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
-              JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
-              if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY"; fi
-              
-              
-              function get_services_from_file() {
+            function get_services_from_file() {
                 file=$1
                 while IFS= read -r line || [ -n "$line" ]; do
                   echo "Processing line: $line"
                   generate_values_to_override $line
                 done < "$file"
-              }
+            }
             
-              function generate_values_to_override() {
-                PREFIX="docker.io/"
-                if check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
-                    echo "$1=$2:$JIRA_STORY"
-                    VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
-                fi
-              }
-              function check_for_image_tag(){
-                echo "checking for service with image tag $1 $2"
-                curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
-              }
+            function generate_values_to_override() {
+              PREFIX="docker.io/"
+              if check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
+                  echo "$1=$2:$JIRA_STORY"
+                  VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
+              else
+                  VALUES_TO_OVERRIDE+=$(echo "$1=$2:latest"),
+              fi
+            }
+            function check_for_image_tag(){
+              echo "checking for service with image tag $1 $2"
+              curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
+            }
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
               
-              echo $SERVICE_FILE_PATH
-              wget $SERVICE_FILE_PATH
-              filename=$(basename "$SERVICE_FILE_PATH")
-              get_services_from_file $filename
+              PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
+              if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi 
-              
+            
+            echo $SERVICE_FILE_PATH
+            wget $SERVICE_FILE_PATH
+            filename=$(basename "$SERVICE_FILE_PATH")
+            get_services_from_file $filename
+            
             if [ -n "${VALUES_TO_OVERRIDE}" ]; then
                 VALUES_TO_OVERRIDE=$(echo --set ${VALUES_TO_OVERRIDE::-1})
                 echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
@@ -99,7 +98,18 @@ commands:
             if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
                 ORB_PARAM_NAMESPACE=$(echo --namespace ${ORB_PARAM_NAMESPACE})
             fi
+            if [ -n "${JIRA_STORY}" ]; then
+              JIRA_STORY=-$(echo $JIRA_STORY)
+            fi
             
+            # Generating the chart url for deployment
+            # chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+            
+            ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
+            
+            # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+            
+            ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
             echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
 
@@ -115,12 +125,7 @@ jobs:
       namespace:
         type: string
         default: ""
-      add-repo:
-        type: string
       release-name:
-        default: ""
-        type: string
-      chart:
         default: ""
         type: string
       cluster-name:
@@ -132,13 +137,23 @@ jobs:
       service-file-path:
         default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
         type: string
+      chart-base-url:
+        default: https://fynarfin.io/images/
+        type: string
+      chart-name:
+        default: ph-ee-g2psandbox-fynarfin
+        type: string
+      chart-version:
+        default: 0.2.0
+        type: string
 
     steps:
       - docker-image-availability-check-and-upgrade:
           namespace: <<parameters.namespace>>
-          add-repo: <<parameters.add-repo>>
           release-name: <<parameters.release-name>>
-          chart: <<parameters.chart>>
           cluster-name: <<parameters.cluster-name>>
           aws-region: <<parameters.aws-region>>
+          chart-base-url: https://fynarfin.io/images/
+          chart-name: ph-ee-g2psandbox-fynarfin
+          chart-version: 0.2.0
 
