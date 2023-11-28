@@ -41,6 +41,8 @@ deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+networkPolicy:
+  enabled: "true"     
 
 secret: 
   apiversion: "v1"

@@ -77,5 +77,7 @@ deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+networkPolicy:
+  enabled: "true"
 skip:
   enabled: false
