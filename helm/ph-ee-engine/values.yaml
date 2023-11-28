@@ -2095,7 +2095,13 @@ vouchers:
     tenant: rhino
     identifier: 12345678
     identifierType: MSISDN
+  voucher:
+    hostname: "https://vouchers.sandbox.mifos.io"
   salting:
     enabled: true
   identity-account-mapper:
     hostname: "https://ph-ee-identity-mapper:80"
+  operations:
+    hostname: "https://ops-bk.sandbox.mifos.io"
+    endpoints:
+      transfers: "/api/v1/transfers?size=1&page=0"
