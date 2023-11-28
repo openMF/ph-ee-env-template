@@ -104,11 +104,11 @@ commands:
             
             # Generating the chart url for deployment
             # chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-            ORB_PARAM_CHART=$(echo "$ORB_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY")
+            ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY")
             
             # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
             
-            ORB_PARAM_REPO=$(echo "$ORB_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
+            ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
             echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
 
