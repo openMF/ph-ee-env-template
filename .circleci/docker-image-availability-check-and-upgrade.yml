@@ -7,23 +7,10 @@ orbs:
 commands:
   docker-image-availability-check-and-upgrade:
     parameters:
-      add-repo:
-        description: |
-          The url for the helm chart repository used as part of helm repo add
-          command
-        type: string
       namespace:
         default: ""
         description: |
           The kubernetes namespace that should be used.
-        type: string
-      chart:
-        default: ""
-        description: |
-          Specify for upgrade a chart reference (e.g. stable/mariadb),
-          or a path to a packaged chart (e.g. ./nginx-1.2.3.tgz),
-          or a path to an unpacked chart directory (e.g. ./nginx)
-          or an absolute URL (e.g. https://example.com/charts/nginx-1.2.3.tgz)
         type: string
       release-name:
         default: ""
@@ -62,12 +49,10 @@ commands:
             ORB_CHART_BASE_URL: << parameters.chart-base-url >>
             ORB_CHART_NAME: << parameters.chart-name >>
             ORB_CHART_VERSION: << parameters.chart-version >>
-            ORB_PARAM_CHART: << parameters.chart >>
             ORB_PARAM_NAMESPACE: << parameters.namespace >>
             ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
             JIRA_STORY: ''
             JIRA_STORY_DIR: ''
-            ORB_PARAM_REPO: << parameters.add-repo >>
             VALUES_TO_OVERRIDE: ''
             SERVICE_FILE_PATH: << parameters.service-file-path>>
           command: |
@@ -139,12 +124,7 @@ jobs:
       namespace:
         type: string
         default: ""
-      add-repo:
-        type: string
       release-name:
-        default: ""
-        type: string
-      chart:
         default: ""
         type: string
       cluster-name:
@@ -169,9 +149,7 @@ jobs:
     steps:
       - docker-image-availability-check-and-upgrade:
           namespace: <<parameters.namespace>>
-          add-repo: <<parameters.add-repo>>
           release-name: <<parameters.release-name>>
-          chart: <<parameters.chart>>
           cluster-name: <<parameters.cluster-name>>
           aws-region: <<parameters.aws-region>>
           chart-base-url: https://fynarfin.io/images/
