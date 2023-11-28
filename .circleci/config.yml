@@ -30,7 +30,7 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            sed -i "s/^version:.*/version: 0.0.0$JIRA_STORY-SNAPSHOT/" helm/ph-ee-engine/Chart.yaml
+            sed -i '5s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT/' helm/ph-ee-engine/Chart.yaml
             helm dep up helm/ph-ee-engine
             helm package helm/ph-ee-engine
             helm repo index .
@@ -61,11 +61,10 @@ jobs:
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
-              
             fi
-            sed -i "s/^version:.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
-            sed -i '5s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT/' helm/g2p-sandbox/Chart.yaml
-            sed -i '6s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT' helm/g2p-sandbox/Chart.yaml
+            sed -i '5s/.*/version: 0.0.0$JIRA_STORY/' helm/g2p-sandbox/Chart.yaml
+            sed -i '11s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT/' helm/g2p-sandbox/Chart.yaml
+            sed -i '12s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT' helm/g2p-sandbox/Chart.yaml
             helm dep up helm/g2p-sandbox
             helm package helm/g2p-sandbox
             helm repo index .
@@ -98,7 +97,7 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            sed -i "s/^version:.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
+            sed -i '6s/.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             sed -i '11s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0JIRA_STORY/' ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             sed -i '12s/.*/version: 0.0.0$JIRA_STORY' ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             cat ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
@@ -133,7 +132,7 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            sed -i "s/^version:.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox-security/Chart.yaml
+            sed -i '5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox-security/Chart.yaml
             sed -i '10s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT/' helm/g2p-sandbox-security/Chart.yaml
             sed -i '11s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT' helm/g2p-sandbox-security/Chart.yaml
             # - run: "sed -i '4s/.*/version: 0.0.0-SNAPSHOT/' helm/g2p-sandbox-security/requirements.yaml"
