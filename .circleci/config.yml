@@ -216,8 +216,8 @@ workflows:
             - Helm
             - slack
       - build-and-host-g2p-sandbox:
-          requires:
-            - build-and-host-engine
+#          requires:
+#            - build-and-host-engine
           context: 
             - AWS
             - Helm
