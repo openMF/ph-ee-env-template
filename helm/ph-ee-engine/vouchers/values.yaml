@@ -35,13 +35,15 @@ payer:
   identifierType:
 
 identity-account-mapper:
-  hostname : ""
+  hostname: ""
 voucher:
-  hostname: ""
+  hostname: "http://ph-ee-vouchers:80"
 operations:
-  hostname: ""
+  hostname: "http://ph-ee-operations-app:5000"
   endpoints:
     transfers: ""
+mock_schema:
+  hostname: "http://ph-ee-connector-mock-payment-schema:8080"
 
 limits:
   cpu: "500m"
@@ -58,9 +60,9 @@ ingress:
   # kubernetes.io/ingress.class: "nginx"
   pathtype: ImplementationSpecific
   hosts:
-    - host: "" 
-      paths:
-        - path: /
+  - host: ""
+    paths:
+    - path: /
   tls: []
   #  - secretName: sandbox-secret
   #    hosts:

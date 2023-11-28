@@ -224,8 +224,8 @@ ph-ee-engine:
       tenant: "gorilla"
     server:
       ssl:
-        keyPassword: "<replace-with-password>"
-        keyStorePassword: "<replace-with-password>"
+        keyPassword: "password"
+        keyStorePassword: "password"  
     ingress:
       enabled: false
       tls:
@@ -368,9 +368,9 @@ ph-ee-engine:
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     aws:
-      region: "<region>"
-      access_key: "<access_key>"
-      secret_key: "<secret_key>"
+      region: "ap-south-1"
+      access_key: "aws-access-key"
+      secret_key: "aws-secret-key"
     operations_app:
       contactpoint: "https://ops-bk.sandbox.mifos.io/"
       endpoints:
@@ -515,55 +515,53 @@ ph-ee-engine:
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
-
-
+  integration_test:
+    enabled: true
+    gradle:
+      command: ./gradlew test -Dcucumber.filter.tags="@gov"
 
 account_mapper:
-  account_mapper:
+  enabled: true
+  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
+  hostname: "identity-mapper.sandbox.mifos.io"
+  LOGGING_LEVEL_ROOT: INFO    
+  ingress:
     enabled: true
-    image: docker.io/openmf/ph-ee-identity-account-mapper:latest
-    hostname: "identity-mapper.sandbox.mifos.io"
-    LOGGING_LEVEL_ROOT: INFO    
-    ingress:
-      enabled: true
-      pathtype: Prefix
-      annotations:
-        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
-        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-        nginx.ingress.kubernetes.io/enable-cors: 'true'
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: identity-mapper.sandbox.mifos.io
-          paths:
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-identity-account-mapper"
-                port:
-                  number: 80
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
-
-    async:
-      core_pool_size: 10
-      max_pool_size: 10
-      queue_capacity: 100
-
-    account_validation_enabled: "false"
-    account_validator_connector: "gsma"
-
-    spring:
-      cache:
-        time_to_live: 30
-        time_to_idle: 30
-        max_entries_heap: 1000
-        max_byte_off_heap: 10
-        max_byte_disk: 10
-      datasource:
-        url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
-        username: mifos
-        password: password
+    pathtype: Prefix
+    annotations:
+      nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+      nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
+      nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+      nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+      nginx.ingress.kubernetes.io/enable-cors: 'true'
+    tls:
+      - secretName: sandbox-secret
+    hosts:
+      - host: identity-mapper.sandbox.mifos.io
+        paths:
+        - path: "/"
+          backend:
+            service:
+              name: "ph-ee-identity-account-mapper"
+              port:
+                number: 80
+  deployment:
+    annotations:
+      deployTime: "{{ .Values.deployTime }}"
+  async:
+    core_pool_size: 10
+    max_pool_size: 10
+    queue_capacity: 100
+  account_validation_enabled: "false"
+  account_validator_connector: "gsma"
+  spring:
+    cache:
+      time_to_live: 30
+      time_to_idle: 30
+      max_entries_heap: 1000
+      max_byte_off_heap: 10
+      max_byte_disk: 10
+    datasource:
+      url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
+      username: mifos
+      password: password
