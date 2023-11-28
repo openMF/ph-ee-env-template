@@ -100,7 +100,7 @@ jobs:
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
             sed -i "6s/.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
-            sed -i "11s@^ *repository:.*\$@  repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0JIRA_STORY@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
+            sed -i "11s@^ *repository:.*\$@  repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             sed -i "12s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             cat ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             helm dep up ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
