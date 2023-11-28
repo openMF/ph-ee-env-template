@@ -65,7 +65,7 @@ jobs:
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
             sed -i "11s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT/" helm/g2p-sandbox/Chart.yaml
-            sed -i "12s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT" helm/g2p-sandbox/Chart.yaml
+            sed -i "12s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT/" helm/g2p-sandbox/Chart.yaml
             helm dep up helm/g2p-sandbox
             helm package helm/g2p-sandbox
             helm repo index .
@@ -100,7 +100,7 @@ jobs:
             fi
             sed -i "6s/.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             sed -i "11s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
-            sed -i "12s/.*/version: 0.0.0$JIRA_STORY" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
+            sed -i "12s/.*/version: 0.0.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             cat ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
             helm dep up ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
             helm package ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
@@ -135,7 +135,7 @@ jobs:
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox-security/Chart.yaml
             sed -i "10s/.*/repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT/' helm/g2p-sandbox-security/Chart.yaml
-            sed -i "11s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT" helm/g2p-sandbox-security/Chart.yaml
+            sed -i "11s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT/" helm/g2p-sandbox-security/Chart.yaml
             # - run: "sed -i '4s/.*/version: 0.0.0-SNAPSHOT/' helm/g2p-sandbox-security/requirements.yaml"
             # SED & replace dependency with 0.0.0
             helm dep up helm/g2p-sandbox-security
