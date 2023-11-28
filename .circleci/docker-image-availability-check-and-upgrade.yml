@@ -51,7 +51,7 @@ commands:
             ORB_CHART_VERSION: << parameters.chart-version >>
             ORB_PARAM_NAMESPACE: << parameters.namespace >>
             ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
-            JIRA_STORY: 'latest'
+            JIRA_STORY: ''
             JIRA_STORY_DIR: ''
             VALUES_TO_OVERRIDE: ''
             SERVICE_FILE_PATH: << parameters.service-file-path>>
