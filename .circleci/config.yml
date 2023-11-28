@@ -151,10 +151,12 @@ jobs:
   docker-image-availability-check-and-upgrade:
     docker:
       - image: cimg/python:3.10
+    environment:
+      TERM: dumb
     steps:
       - mifos-orb/docker-image-availability-check-and-upgrade:
           namespace: paymenthub
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+          chart: $TERM
           release-name: g2p-sandbox
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
           cluster-name: "sit"
