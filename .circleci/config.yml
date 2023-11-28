@@ -67,7 +67,7 @@ jobs:
             cat helm/g2p-sandbox/Chart.yaml
             sed -i "10s@^ *repository:.*\$@  repository: https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT@" helm/g2p-sandbox/Chart.yaml
             cat helm/g2p-sandbox/Chart.yaml
-            sed -i "11s@^ *version:.*\$@ version: 0.0.0$JIRA_STORY-SNAPSHOT@" helm/g2p-sandbox/Chart.yaml
+            sed -i "11s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY-SNAPSHOT@" helm/g2p-sandbox/Chart.yaml
             cat helm/g2p-sandbox/Chart.yaml
             helm dep up helm/g2p-sandbox
             helm package helm/g2p-sandbox
