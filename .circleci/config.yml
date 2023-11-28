@@ -65,7 +65,7 @@ jobs:
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
             cat helm/g2p-sandbox/Chart.yaml
-            sed -i "10s@.*@repository: 'https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT'@" helm/g2p-sandbox/Chart.yaml
+            sed -i "10s@. *@repository: 'https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0$JIRA_STORY-SNAPSHOT'@" helm/g2p-sandbox/Chart.yaml
             cat helm/g2p-sandbox/Chart.yaml
             sed -i "11s/.*/version: 0.0.0$JIRA_STORY-SNAPSHOT/" helm/g2p-sandbox/Chart.yaml
             cat helm/g2p-sandbox/Chart.yaml
