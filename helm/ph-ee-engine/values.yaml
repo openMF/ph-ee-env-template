@@ -1931,9 +1931,9 @@ keycloak:
     - name: KEYCLOAK_IMPORT
       value: /realm/kong-keycloak-realm.json     
 
-integration_test:
+integration-test:
   enabled: true
-  image: docker.io/openmf/ph-ee-integration-test:latest
+  image: "docker.io/openmf/ph-ee-integration-test:latest"
   imagePullPolicy: "Always"
   command: [ "/bin/bash" , "-c" ]
   args: 
