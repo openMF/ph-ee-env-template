@@ -59,7 +59,6 @@ commands:
             function get_services_from_file() {
                 file=$1
                 while IFS= read -r line || [ -n "$line" ]; do
-                  echo "Processing line: $line"
                   generate_values_to_override $line
                 done < "$file"
             }
@@ -67,14 +66,14 @@ commands:
             function generate_values_to_override() {
               PREFIX="docker.io/"
               if [ "$CIRCLE_BRANCH" != "master" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
-                  echo "$1=$2:$JIRA_STORY"
+                  echo "image: < $1=$2:$JIRA_STORY >"
                   VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
               else
+                  echo "image: < $1=$2:latest >"
                   VALUES_TO_OVERRIDE+=$(echo "$1=$2:latest"),
               fi
             }
             function check_for_image_tag(){
-              echo "checking for service with image tag $1 $2"
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
             if [ "$CIRCLE_BRANCH" != "master" ]; then
