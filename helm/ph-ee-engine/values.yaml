@@ -1932,11 +1932,13 @@ keycloak:
       value: /realm/kong-keycloak-realm.json     
 
 integration_test:
-  enabled: false
-  replicas: 1
-  image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-integration-test"
-  imageTag: latest
-  imagePullPolicy: "Never"
+  enabled: true
+  image: docker.io/openmf/ph-ee-integration-test:latest
+  imagePullPolicy: "Always"
+  command: [ "/bin/bash" , "-c" ]
+  args: 
+  # - ./gradlew test -Dcucumber.filter.name="bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate' // for single test case
+  - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate' 
   limits:
     cpu: "500m"
     memory: "3Gi"
@@ -1944,11 +1946,13 @@ integration_test:
     cpu: "100m"
     memory: "2Gi"
   operations_app:
-    contactpoint: "ph-ee-operations-app"
+    contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
-    contactpoint: "ph-ee-connector-bulk"
+    contactpoint: "https://ph-ee-connector-bulk:80"
   channel_connector:
-    contactpoint: "ph-ee-connector-channel"
+    contactpoint: "https://ph-ee-connector-channel:80"
+  channel:
+    base_url: "https://ph-ee-connector-channel:80"
   kafka:
     brokers: ""
     topics: ""
@@ -1957,19 +1961,33 @@ integration_test:
     contactpoint: ""
     no_of_workflows: ""
     thread-count: ""
-  max_retry_count: ""
-  retry_intervals: ""
+  max_retry_count: "5"
+  retry_intervals: "15000"
   defaults:
-    tenant: ""
-    authorization: ""
-  channel:
-    base_url: ""
+    tenant: "gorilla"
+    authorization: "Basic bWlmb3M6cGFzc3dvcmQ="
   loan:
-    base_url: ""
+    base_url: "https://fineract-server:8443"
   savings:
-    base_url: ""
-  gradle:
-    command: ""
+    base_url: "https://fineract-server:8443"
+  mifos_connector:
+    contactpoint: "http://ph-ee-connector-ams-mifos:80"
+  amsmifos:
+    mock:
+      base_url: "http://ph-ee-connector-ams-mifos:80"
+  mock_payment_schema:
+    contactpoint: "http://ph-ee-connector-mock-payment-schema:8080"
+  identity_account_mapper:
+    contactpoint: "http://ph-ee-identity-account-mapper:80"
+  mock_server:
+    port: "53013"
+  voucher_management:
+    contactpoint: "http://ph-ee-vouchers:80"
+  paybill:
+    mpesa_connector:
+      contactpoint: ""
+  callback_url: "http://$(MY_POD_IP):53013"
+
 
 redis:
   enabled: true

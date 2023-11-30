@@ -1,22 +1,21 @@
-
-
+{{- if .Values.integration_test.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "ph-ee-integration-test-job"
+  name: "integration-test-job"
   annotations:
     "helm.sh/hook": test-success
 spec:
   template:
     metadata:
-      name: ph-ee-integration-test-job
+      name: "integration-test-job"
     spec:
       containers:
-        - name: ph-ee-integration-test
-          image: "{{ .Values.integration_test.image }}:{{ .Values.integration_test.imageTag }}"
+        - name: "integration-test-job"
+          image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
-          command: [ "/bin/bash" ]
-          args: [ "-c", '{{ .Values.integration_test.gradle.command }}' ]
+          command: "{{ .Values.integration_test.command | quote }}"
+          args: "{{ .Values.integration_test.args | toYaml }} "
           env:
             - name: "OPERATIONS-APP_CONTACTPOINT"
               value: "{{ .Values.integration_test.operations_app.contactpoint }}"
@@ -24,10 +23,14 @@ spec:
               value: "{{ .Values.integration_test.bulk_processor.contactpoint }}"
             - name: "CHANNEL-CONNECTOR_CONTACTPOINT"
               value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
+            - name: "CHANNEL_BASE-URL"
+              value: "{{ .Values.integration_test.channel.base_url }}"
             - name: "KAFKA_BROKERS"
               value: "{{ .Values.integration_test.kafka.brokers }}"
             - name: "KAFKA_TOPICS"
               value: "{{ .Values.integration_test.kafka.topics }}"
+            - name: "KAFKA_CONSUMER_TIME_OUT_MS"
+              value: "{{ .Values.integration_test.kafka.consumerTimeoutMs }}"
             - name: "ZEEBE-OPERATIONS_CONTACTPOINT"
               value: "{{ .Values.integration_test.zeebe_operations.contactpoint }}"
             - name: "ZEEBE-OPERATIONS_NO-OF-WORKFLOWS"
@@ -46,6 +49,31 @@ spec:
               value: "{{ .Values.integration_test.loan.base_url }}"
             - name: "SAVINGS_BASE-URL"
               value: "{{ .Values.integration_test.savings.base_url }}"
+            - name: "SAVINGS_CONTACTPOINT"
+              value: "{{ .Values.integration_test.savings.contactpoint }}"
+            - name: "MOCK_SERVER_PORT"
+              value: "{{ .Values.integration_test.mock_server.port }}"
+            - name: "IDENTITY_ACCOUNT_MAPPER_CONTACTPOINT"
+              value: "{{ .Values.integration_test.identity_account_mapper.contactpoint }}"
+            - name: "MIFOS_CONNECTOR_CONTACTPOINT"
+              value: "{{ .Values.integration_test.mifos_connector.contactpoint }}"
+            - name: "AMSMIFOS_MOCK_BASE_URL"
+              value: "{{ .Values.integration_test.amsmifos.mock.base_url }}"
+            - name: "MOCK_PAYMENT_SCHEMA_CONTACTPOINT"
+              value: "{{ .Values.integration_test.mock_payment_schema.contactpoint }}"
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: "CALLBACK_URL"
+              value: "{{ .Values.integration_test.callback_url }}"
+            - name: "PAYBILL_MPESA_CONNECTOR_CONTACTPOINT"
+              value: "{{ .Values.integration_test.paybill.mpesa_connector.contactpoint }}"
+            - name: VOUCHER_MANAGEMENT_CONTACTPOINT
+              value: "{{ .Values.integration_test.voucher_management.contactpoint }}"
+          {{- with .Values.extraEnv }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
           resources:
             limits:
               memory: "{{ .Values.integration_test.limits.memory }}"
@@ -53,6 +81,6 @@ spec:
             requests:
               memory: "{{ .Values.integration_test.requests.memory }}"
               cpu: "{{ .Values.integration_test.requests.cpu }}"
-      restartPolicy: Never
-  backoffLimit: 4
-
+      restartPolicy: "{{ .Values.integration_test.restartPolicy }}"
+  backoffLimit: "{{ .Values.integration_test.backoffLimit }}"
+{{- end }}
