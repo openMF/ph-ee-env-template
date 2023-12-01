@@ -1,5 +1,0 @@
-apiVersion: v1
-description: ph-ee-integration-test
-name: integration_test
-version: 1.0.0
-appVersion: "1.0.0"
