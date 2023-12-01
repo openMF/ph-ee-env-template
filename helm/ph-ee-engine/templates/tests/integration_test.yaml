@@ -18,7 +18,7 @@ spec:
             - "sh"
             - "-c"
           args: 
-            - "{{ .Values.integration_test.args }} "
+            - {{ .Values.integration_test.args }}
           env:
             - name: "OPERATIONS-APP_CONTACTPOINT"
               value: "{{ .Values.integration_test.operations_app.contactpoint }}"
