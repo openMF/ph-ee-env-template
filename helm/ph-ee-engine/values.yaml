@@ -1935,7 +1935,6 @@ integration_test:
   enabled: true
   image: "docker.io/openmf/ph-ee-integration-test:latest"
   imagePullPolicy: "Always"
-  command: [ "/bin/bash" , "-c" ]
   args: 
   # - ./gradlew test -Dcucumber.filter.name="bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate' // for single test case
   - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate' 

@@ -14,8 +14,10 @@ spec:
         - name: "integration-test-job"
           image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
-          command: [ "/bin/bash" , "-c" ]
-          args: "{{ .Values.integration_test.args | toYaml }} "
+          command: 
+            - "sh"
+            - "-c"
+          args: "{{ .Values.integration_test.args }} "
           env:
             - name: "OPERATIONS-APP_CONTACTPOINT"
               value: "{{ .Values.integration_test.operations_app.contactpoint }}"
