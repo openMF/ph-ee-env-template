@@ -1,6 +1,6 @@
 {{- if .Values.integration_test.enabled }}
 apiVersion: batch/v1
-kind: Job
+kind: pod
 metadata:
   name: "integration-test-job"
   annotations:
@@ -14,9 +14,7 @@ spec:
         - name: "integration-test-job"
           image: "{{ .Values.integration_test.image }}"
           imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
-          command: 
-            - "sh"
-            - "-c"
+          command: [ "/bin/bash" , "-c" ]
           args: 
             - {{ .Values.integration_test.args }}
           env:
