@@ -109,3 +109,7 @@ dependencies:
     version: 1.0.0
     repository: "file://./vouchers"
     condition: "vouchers.enabled"
+  - name: ph_ee_integration_test
+    version: 1.0.0
+    repository: "file://./integration-test"
+    condition: "ph_ee_integration_test.enabled"

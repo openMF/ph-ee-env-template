@@ -1985,7 +1985,7 @@ integration_test:
   paybill:
     mpesa_connector:
       contactpoint: ""
-  callback_url: "http://$(MY_POD_IP):53013"
+callback_url: "http://$(MY_POD_IP):53013"
 
 
 redis:

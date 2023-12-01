@@ -1,6 +1,6 @@
 {{- if .Values.integration_test.enabled }}
 apiVersion: batch/v1
-kind: pod
+kind: job
 metadata:
   name: "integration-test-job"
   annotations:
