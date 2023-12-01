@@ -103,12 +103,19 @@ commands:
             
             # Generating the chart url for deployment
             # chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-            
             ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
             
-            # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
-            
-            ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
+            CHART_URL="$ORB_PARAM_CHART"
+            if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
+              echo "chart used: < $CHART_URL >"
+              # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+              ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
+            else
+              CHART_URL="https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+              ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
+              echo "chart used: < $CHART_URL >"
+            fi
+          
             echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
 
