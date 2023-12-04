@@ -17,11 +17,11 @@ spec:
     - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'    
     env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
-        value: "http://ph-ee-operations-app:80"
+        value: "{{ .Values.integration_test.operations_app.contactpoint }}"
       - name: "BULK_PROCESSOR_CONTACTPOINT"
-        value: "https://ph-ee-connector-bulk:80"
+        value: "{{ .Values.integration_test.bulk_processor.contactpoint }}"
       - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
-        value: "https://ph-ee-connector-channel:8443"
+        value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
       - name:  "LOGGING_LEVEL_ROOT"
         value: "INFO"
       - name: "MAX_RETRY_COUNT"
