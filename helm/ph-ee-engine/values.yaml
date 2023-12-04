@@ -1933,7 +1933,7 @@ keycloak:
 
 integration_test:
   enabled: true
-  image: "docker.io/openmf/ph-ee-integration-test:latest"
+  image: "docker.io/openmf/ph-ee-integration-test:phee-496"
   imagePullPolicy: "Always"
   args: 
   # - ./gradlew test -Dcucumber.filter.name="bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate' // for single test case

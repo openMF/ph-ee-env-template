@@ -25,17 +25,17 @@ spec:
       - name:  "LOGGING_LEVEL_ROOT"
         value: "INFO"
       - name: "MAX_RETRY_COUNT"
-        value: "5"
+        value: "{{ .Values.integration_test.max_retry_count }}"
       - name: "RETRY_INTERVAL"
-        value: "15000"
+        value: "{{ .Values.integration_test.retry_intervals }}"
       - name: "DEFAULTS_TENANT"
-        value: "gorilla"
+        value: "{{ .Values.integration_test.defaults.tenant }}"
       - name: "DEFAULTS_AUTHORIZATION"
-        value: "Basic bWlmb3M6cGFzc3dvcmQ="
+        value: "{{ .Values.integration_test.defaults.authorization }}"
       - name: "CHANNEL_BASE-URL"
-        value: "https://ph-ee-connector-channel:8443"
+        value: "{{ .Values.integration_test.channel.base_url }}"
       - name: CHANNEL_CONTACTPOINT
-        value: "https://ph-ee-connector-channel:8443"
+        value: "{{ .Values.integration_test.channel_connector.contactpoint }}"
       - name: SAVINGS_CONTACTPOINT
         value: "https://fineract-server:8443"
       - name: LOAN_CONTACTPOINT
