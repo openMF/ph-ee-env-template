@@ -65,8 +65,8 @@ spec:
     resources:
         limits:
           cpu: "500m"
-          memory: "3Gi"
+          memory: "1024Mi"
         requests:
           cpu: "100m"
-          memory: "2Gi"
+          memory: "256Mi"
   restartPolicy: Never

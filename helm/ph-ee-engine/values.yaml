@@ -1198,7 +1198,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-zeebe-ops:v1.2.0
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.3.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"

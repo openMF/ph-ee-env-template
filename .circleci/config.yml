@@ -11,7 +11,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      PH_RELEASE: 1.11.0
+      PH_RELEASE: 1.11.1
     steps:
       - checkout
       - run: rm -f helm/ph-ee-engine/Chart.lock helm/ph-ee-engine/requirements.lock helm/ph-ee-engine/charts/*
