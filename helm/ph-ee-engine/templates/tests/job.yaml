@@ -64,6 +64,22 @@ spec:
           sleep 300
           
       restartPolicy: Never
-  backoffLimit: 0 # Adjust as needed
+#   backoffLimit: 0 # Adjust as needed
   # successfulJobsHistoryLimit: 0  # Number of successful completions to retain
   # failedJobsHistoryLimit: 0 # Number of failed completions to retain
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-world-job
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello-world-container
+        image: busybox
+        command: ["echo", "Hello, World!"]
+      restartPolicy: Never
