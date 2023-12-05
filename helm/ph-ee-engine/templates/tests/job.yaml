@@ -61,7 +61,7 @@ spec:
 
           cd elastic/helm-charts/kibana/examples/security/
           make secrets || echo "kibana-secrets" already exists
-          sleep 300
+        #   sleep 300
           
       restartPolicy: Never
 #   backoffLimit: 0 # Adjust as needed
