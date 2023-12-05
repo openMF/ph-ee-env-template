@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: hello-world-job
+  name: post-installation-job
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
@@ -9,7 +9,61 @@ spec:
   template:
     spec:
       containers:
-      - name: hello-world-container
-        image: busybox
-        command: ["echo", "Hello, World!"]
+      - name: post-installation-job
+        image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06"
+        securityContext:
+          privileged: true
+        command:
+        - "/bin/sh"
+        - "-c"
+        args:
+        - |
+          # Add Docker's official GPG key:
+          apt-get update
+          apt-get --assume-yes install ca-certificates curl gnupg 
+          install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+          chmod a+r /etc/apt/keyrings/docker.gpg
+
+          # Add the repository to Apt sources:
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            tee /etc/apt/sources.list.d/docker.list > /dev/null
+          apt-get update 
+          apt-get --assume-yes install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
+          
+          #starting docker-deamon
+          service docker start
+          
+          #install make
+          apt-get install --assume-yes make
+          
+          #install kubectl 
+          apt-get update
+          # apt-transport-https may be a dummy package; if so, you can skip that package
+          apt-get install -y apt-transport-https ca-certificates curl gpg
+
+          curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+          # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+          echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list
+
+          apt-get update
+          apt-get install -y kubelet kubeadm kubectl
+          apt-mark hold kubelet kubeadm kubectl
+
+          # export ENV_NAMESPACE=ph-infrastructure
+          # kubectl config use-context arn:aws:eks:ap-south-1:419830066942:cluster/sit
+          git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+          cd elastic/helm-charts/elasticsearch/examples/security/
+          make secrets || echo "elastic-secrets" already exists
+
+          cd elastic/helm-charts/kibana/examples/security/
+          make secrets || echo "kibana-secrets" already exists
+          sleep 300
+          
       restartPolicy: Never
+  backoffLimit: 0 # Adjust as needed
+  # successfulJobsHistoryLimit: 0  # Number of successful completions to retain
+  # failedJobsHistoryLimit: 0 # Number of failed completions to retain
