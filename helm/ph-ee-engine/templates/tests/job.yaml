@@ -61,6 +61,18 @@ spec:
 
           cd elastic/helm-charts/kibana/examples/security/
           make secrets || echo "kibana-secrets" already exists
+          #insatll netcat
+          apt install -y netcat
+          until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+         
+         #Deploy BPMN 
+          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub #portforward zeebe-ops
+          git clone https://github.com/openMF/ph-ee-env-labs.git
+          cd openMF/ph-ee-env-labs/orchestration
+          sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+          sh deployBpmn.sh
+        #   sed 's/^aaa=.*/aaa=xxx/' 
+
         #   sleep 300
           
       restartPolicy: Never
