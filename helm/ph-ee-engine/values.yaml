@@ -339,7 +339,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.3.0
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.5.0
   imagePullPolicy: "Always"
   ams_local_enabled: true
   ams_local_interop_host: "fineract-server"
