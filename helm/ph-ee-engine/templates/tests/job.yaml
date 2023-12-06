@@ -70,8 +70,9 @@ spec:
           git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
           cd openMF/ph-ee-env-labs/orchestration
           ls
-          sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" openMF/ph-ee-env-labs/orchestration/deployBpmn.sh
-          sh openMF/ph-ee-env-labs/orchestration/deployBpmn.sh
+          sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+          cat deployBpmn.sh
+          sh deployBpmn.sh
           #   sed 's/^aaa=.*/aaa=xxx/'   
       restartPolicy: Never
 #   backoffLimit: 0 # Adjust as needed
