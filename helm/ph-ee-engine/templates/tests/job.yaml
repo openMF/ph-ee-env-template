@@ -33,7 +33,7 @@ spec:
         #   apt-get update 
         #   apt-get --assume-yes install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
           
-        #starting docker-deamon
+        #   starting docker-deamon
           service docker start
           
         #   #install make
@@ -53,8 +53,8 @@ spec:
         #   apt-get install -y kubelet kubeadm kubectl
         #   apt-mark hold kubelet kubeadm kubectl
 
-        # export ENV_NAMESPACE=ph-infrastructure
-        # kubectl config use-context arn:aws:eks:ap-south-1:419830066942:cluster/sit
+          export ENV_NAMESPACE=ph-infrastructure
+          kubectl config use-context arn:aws:eks:ap-south-1:419830066942:cluster/sit
           git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
           cd elastic/helm-charts/elasticsearch/examples/security/
           make secrets || echo "elastic-secrets" already exists
@@ -73,7 +73,7 @@ spec:
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
           cat deployBpmn.sh
           sh deployBpmn.sh
-        #   sed 's/^aaa=.*/aaa=xxx/'   
+        # sed 's/^aaa=.*/aaa=xxx/'   
       restartPolicy: Never
   backoffLimit: 0 # Adjust as needed
   # successfulJobsHistoryLimit: 0  # Number of successful completions to retain
