@@ -72,7 +72,8 @@ spec:
           ls
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
           cat deployBpmn.sh
-          sh deployBpmn.sh
+          cd ..
+          sh orchestration/deployBpmn.sh
         # sed 's/^aaa=.*/aaa=xxx/'   
       restartPolicy: Never
   backoffLimit: 0 # Adjust as needed
