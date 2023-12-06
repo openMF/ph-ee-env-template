@@ -33,7 +33,7 @@ spec:
         #   apt-get update 
         #   apt-get --assume-yes install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
           
-        #   starting docker-deamon
+        #   # starting docker-deamon
           service docker start
           
         #   #install make
