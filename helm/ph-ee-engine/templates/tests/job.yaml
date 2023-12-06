@@ -72,8 +72,6 @@ spec:
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" orchestration/deployBpmn.sh
           sh deployBpmn.sh
           #   sed 's/^aaa=.*/aaa=xxx/'   
-
-          #   sleep 300          
       restartPolicy: Never
 #   backoffLimit: 0 # Adjust as needed
   # successfulJobsHistoryLimit: 0  # Number of successful completions to retain
