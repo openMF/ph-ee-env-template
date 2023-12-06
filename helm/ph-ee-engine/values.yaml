@@ -1977,7 +1977,25 @@ redis:
     replicaCount: 1
 volumeClaimTemplate:
     storageClassName: "gp2"
-
+minio:
+  enabled: true
+  fullnameOverride: "minio"
+  environment:
+    MINIO_SERVER_URL: "http://localhost:9000"
+    MINIO_BROWSER_REDIRECT_URL: "http://localhost:9001"
+  resources:
+    requests:
+      memory: 256Mi
+  replicas: 1
+  persistence: 
+    enabled: false
+    size: 10Gi
+  mode: standalone
+  rootUser: rootuser
+  rootPassword: mifos123
+  buckets:
+    - name: paymenthub-ee
+      policy: public
 kong:
   enabled: false
   image:

@@ -28,6 +28,10 @@ dependencies:
     version: 17.9.3
     repository: "https://charts.bitnami.com/bitnami"
     condition: "redis.enabled"
+  - name: minio
+    version: 5.0.14
+    repository: "https://charts.min.io"
+    condition: "minio.enabled"
   - name: operations_app
     version: 1.0.0
     repository: "file://./operations-app"
