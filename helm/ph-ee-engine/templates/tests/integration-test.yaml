@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: integration-test
-    image: docker.io/openmf/ph-ee-integration-test:latest
+    image: docker.io/openmf/ph-ee-integration-test:v1.4.0-rc.2
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args: 
