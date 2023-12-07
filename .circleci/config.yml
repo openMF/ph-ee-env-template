@@ -185,9 +185,6 @@ jobs:
         - run:
             name: deploy bpmn
             command: |
-
-        - run:
-            command:
               pwd
               ls
               sed "s/zeebeops.sandbox.fynarfin.io/localhost:5000/g;" ph-ee-env-labs/orchestration/deployBpmn.sh
@@ -271,8 +268,8 @@ workflows:
             - slack       
       - upgrade-helm-chart:
           cluster-name: sit
-#          requires:
-#            - build-host-g2p-fyn-chart
+          requires:
+            - build-host-g2p-fyn-chart
           context: 
             - AWS
             - Helm
