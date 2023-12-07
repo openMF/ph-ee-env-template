@@ -12,11 +12,11 @@ image: docker.io/openmf/ph-ee-identity-account-mapper:latest
 imagePullPolicy: "Always"
 hostname: "identity-mapper.sandbox.mifos.io"
 limits:
-  cpu: "500m"
-  memory: "512M"
+  cpu: "1000m"
+  memory: "1024Mi"
 requests:
-  cpu: "100m"
-  memory: "256M"
+  cpu: "500m"
+  memory: "512Mi"
 LOGGING_LEVEL_ROOT: INFO
 
 async:
