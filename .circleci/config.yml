@@ -284,16 +284,16 @@ workflows:
             - Helm
             - slack
             - Secrets
-      - deploying-bpmns:
-          requires:
-            - create-secret-paymenthub-namespace
-          context:
-            - AWS
-            - Helm
-            - slack
+#      - deploying-bpmns:
+#          requires:
+#            - create-secret-paymenthub-namespace
+#          context:
+#            - AWS
+#            - Helm
+#            - slack
       - helm-test:
           requires:
-            - deploying-bpmns
+            - create-secret-paymenthub-namespace
           context:
             - AWS
             - Helm
