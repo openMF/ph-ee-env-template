@@ -116,7 +116,7 @@ jobs:
       - kubernetes/install-kubectl
       - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
-      - run: "kubectl create namespace paymenthub-release || echo ' '"
+      - run: "kubectl delete namespace paymenthub-release || echo ' '"
       - run: "kubectl create namespace paymenthub-release || echo ' '"
       #- run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
