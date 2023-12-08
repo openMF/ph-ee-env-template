@@ -61,12 +61,12 @@ spec:
       - name: VOUCHER_MANAGEMENT_CONTACTPOINT
         value: "http://ph-ee-vouchers:80"
       - name: GLOBAL_WAIT_TIME_MS
-        value: "10000"
+        value: "50000"
     resources:
         limits:
           cpu: "500m"
           memory: "1024Mi"
         requests:
           cpu: "100m"
-          memory: "256Mi"
+          memory: "512Mi"
   restartPolicy: Never
