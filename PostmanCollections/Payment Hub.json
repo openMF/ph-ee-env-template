@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "2578222e-3cef-49ca-b32d-42997efeaa33",
+		"_postman_id": "a1f41a4d-235b-439a-a805-beb249272c92",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21253421"
+		"_exporter_id": "17902615",
+		"_collection_link": "https://martian-firefly-704030.postman.co/workspace/Fynarfin~cbeb07e6-89cb-4850-a0f6-5647e70b83e2/collection/17902615-a1f41a4d-235b-439a-a805-beb249272c92?action=share&source=collection_link&creator=17902615"
 	},
 	"item": [
 		{
@@ -45656,7 +45657,7 @@
 										"validation"
 									]
 								},
-								"description": "BillRefNo : (primaryIdentifier)  \n Paygops - foundationalId - 24322607  \n Roster - accountId - 33272035\n\nMSISDN :  \nPaygops - 254797668592  \nRoster - 2540726839144\n\nTransactionID:  \nPaygops - “8335b60090979AvUefSR”  \nRoster - “670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\""
+								"description": "BillRefNo : (primaryIdentifier)  \n Paygops - foundationalId - 24322607  \n Roster - accountId - 33272035\n\nMSISDN :  \nPaygops - 254797668592  \nRoster - 2540726839144\n\nTransactionID:  \nPaygops - “8335b60090979AvUefSR”  \nRoster - “670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\""
 							},
 							"response": []
 						}
@@ -46255,7 +46256,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestID \": \"849324499155\",\n  \"agentID \": \"1234567890\",\n  \"voucherSerialNumber\": \"16895906640276\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
+							"raw": "{\n  \"requestID \": \"849324499155\",\n  \"agentID \": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46298,7 +46299,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSerialNumber\": \"16897537747061\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+							"raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
