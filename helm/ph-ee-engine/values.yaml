@@ -1394,10 +1394,10 @@ mockpayment:
   mockFailure:
     percentage: "0"
   limits:
-    memory: "512M"
+    memory: "1024M"
     cpu: "500m"
   requests:
-    memory: "512M"
+    memory: "1024M"
     cpu: "300m"
   deployment:
     annotations: {}
@@ -1509,7 +1509,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.9.0
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.10.0
   imagePullPolicy: "Always"
   camel_disable_ssl: true
   channel:
