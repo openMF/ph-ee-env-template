@@ -31,7 +31,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      G2P_RELEASE: 1.3.0
+      G2P_RELEASE: 1.3.1
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox/Chart.lock helm/g2p-sandbox/requirements.lock helm/g2p-sandbox/charts/*
@@ -120,11 +120,11 @@ jobs:
       - run: "kubectl create namespace paymenthub-release || echo ' '"
       #- run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
-          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.0/ph-ee-g2psandbox-1.3.0.tgz"
+          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/ph-ee-g2psandbox-1.3.1.tgz"
           release-name: ph-ee-g2psandbox
           namespace: paymenthub-release
           recreate-pods: true
-          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.0"
+          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1"
           wait: true
           timeout: "300s"
       # - run: helm test g2p-sandbox --namespace=paymenthub 
