@@ -22,15 +22,30 @@ global:
   DFSPIDS: ""
 camunda-platform:
   connectors:
-    enabled: false
+    enabled: true
   global:
     zeebe: "{{ .Release.Name }}-zeebe"
-    elasticsearch:
-      disableExporter: true
-      host: "ph-ee-elasticsearch"
     identity:
       auth:
-        enabled: false
+        zeebe:
+          existingSecret: "7gS9r0JgNy"
+        tasklist:
+          existingSecret: "LR2CI9QE4Z"
+        optimize:
+          existingSecret: "PyXpbNtbAC"
+        operate:
+          existingSecret: "O6C8g9bi9h"
+        connectors:
+          existingSecret: "8QvXnRv7Vo"
+      keycloak:
+        url:
+          protocol: "https"
+          host: "keycloak.stage.svc.cluster.local"
+          port: "8443"
+        auth:
+          adminUser: "admin"
+          existingSecret: "stage-keycloak"
+          existingSecretKey: "admin-password"
 
   zeebe:
     enabled: true
@@ -115,6 +130,22 @@ camunda-platform:
     fullnameOverride: "zeebe-elasticsearch"
     clusterName: "zeebe-elasticsearch"
 
+  webModeler:
+    enabled: true
+    image:
+      registry: registry.camunda.cloud
+      tag: 8.3.2
+
+    restapi:
+      image:
+        repository: web-modeler-ee/modeler-restapi
+      service:
+        type: ClusterIP
+        port: 80
+        managementPort: 8091
+      mail:
+        fromAddress: Cammunda-8
+
   operate:
     enabled: false
 
@@ -124,8 +155,6 @@ camunda-platform:
     enabled: false
   prometheusServiceMonitor:
     enabled: true
-  identity:
-    enabled: false
 
 elasticsearch:
   enabled: true

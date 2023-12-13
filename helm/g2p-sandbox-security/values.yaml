@@ -15,7 +15,7 @@ ph-ee-engine:
     apiversion: "v1"
 
   camunda-platform-helm:
-    enabled: false
+    enabled: true
 
   zeebe-operate-helm:
     enabled: false
@@ -56,7 +56,7 @@ ph-ee-engine:
   importer_rdbms:
     enabled: false
 
-  zeebe_ops:
+    zeebe_ops:
     enabled: false
 
   elasticsearch:

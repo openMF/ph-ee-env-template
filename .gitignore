@@ -1,4 +1,5 @@
 charts/
+requirements/
 helm/*.tgz
 .idea/
 

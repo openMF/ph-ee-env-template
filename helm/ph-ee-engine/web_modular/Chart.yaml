@@ -1,0 +1,11 @@
+apiVersion: v1
+appVersion: 0.0.0
+description: web-modular
+name: web-modular
+version: 0.0.0
+
+dependencies:
+  - name: camunda-platform
+    repository: https://helm.camunda.io
+    version: 8.2.12
+    condition: "camunda-platform-helm.enabled"
