@@ -727,6 +727,8 @@ operations_web:
     #   ph-ee-operations-web.yml: |          
 
 identity:
+  keycloak:
+    enabled: false
 
 mpesa:
   enabled: false
