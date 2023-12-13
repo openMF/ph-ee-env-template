@@ -13,7 +13,7 @@ spec:
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args: 
-    - ./gradlew test -Dcucumber.filter.name="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+    - ./gradlew test -Dcucumber.filter.name="@MFT-002" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
     # - ./gradlew test -i -Dcucumber.filter.tags="@gov and not @wip" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
     env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
