@@ -1,3 +1,22 @@
+# Initial Setup/ User creation
+* Step 1: Open the keycloak administration console in browser and click `Administration Console` as shown in below snippet.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 26 39 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/6d24b6a0-f98a-4298-87c3-0db6b2e1789a"><br><br>
+
+* Step 2: Enter the admin username/email and password. Then click on `Sign In` button,  as shown in below snippet.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 26 50 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/064d6bb9-b5f4-456a-b5a3-57f4b30a6575"><br><br>
+
+* Step 3: On successful login below screen will open, with list of all the realms. Click on the realm which you wnat to use.<br>
+<img width="500" alt="Screenshot 2023-11-23 at 2 32 16 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/833171cf-b769-4c22-acc4-c0a6979b55d7"><br><br>
+
+* Step 4: Click on `Add user` by navigating to the `Users` section from left menu. As shown in below snippet.<br>
+<img width="500" alt="Screenshot 2023-12-12 at 8 56 00 PM" src="https://github.com/openMF/ph-ee-env-template/assets/31315800/de356bf3-e856-42ad-b1d9-f54864e98e4f"><br><br>
+
+* Step 5: Enter the username and relevant information as per the need adn click on the `Save` button, as shown in the below snippet.<br>
+<img width="500" alt="Screenshot 2023-12-12 at 9 00 51 PM" src="https://github.com/openMF/ph-ee-env-template/assets/31315800/ea7be48a-f726-45ee-8ebd-61103552b481"><br><br>
+
+* Step 6: Once user is created navigate to `Credential/Role Mapping` tabs for updating relevant information, as shown in below screenshot.<br>
+<img width="500" alt="Screenshot 2023-12-12 at 9 04 38 PM" src="https://github.com/openMF/ph-ee-env-template/assets/31315800/148288f9-eb3a-4633-820c-28268157efa3"><br><br>
+
 # How to export realm configuration
 * Step 1: Open the keycloak administration console in browser and click `Administration Console` as shown in below snippet.<br>
 <img width="500" alt="Screenshot 2023-11-23 at 2 26 39 PM" src="https://github.com/fynarfin/ph-ee-env-template/assets/31315800/6d24b6a0-f98a-4298-87c3-0db6b2e1789a"><br><br>
