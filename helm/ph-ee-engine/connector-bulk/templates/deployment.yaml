@@ -80,6 +80,8 @@ spec:
                   key: "aws-region"
             - name: "BP_JAVA_OPTS"
               value: "-Xmx400m -Xms400m"
+            - name: "HOST"
+              value: {{.Values.aws.host}}
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
