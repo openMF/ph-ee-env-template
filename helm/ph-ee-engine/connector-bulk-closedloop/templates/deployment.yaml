@@ -69,7 +69,10 @@ spec:
             - name: "TENANT"
               value: "{{ .Values.global.tenant }}"
             - name: "CLOUD_AWS_REGION_STATIC"
-              value: "{{ .Values.aws.region }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-region"
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:

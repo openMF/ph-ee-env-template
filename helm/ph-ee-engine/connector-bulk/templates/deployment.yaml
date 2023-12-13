@@ -74,7 +74,10 @@ spec:
             - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
               value: "{{ .Values.config.completion_threshold_check.completion_rate }}"
             - name: "CLOUD_AWS_REGION_STATIC"
-              value: "{{ .Values.aws.region }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-region"
             - name: "BP_JAVA_OPTS"
               value: "-Xmx400m -Xms400m"
             - name: "AWS_ACCESS_KEY"

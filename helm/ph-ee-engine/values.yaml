@@ -2105,3 +2105,19 @@ vouchers:
     hostname: "https://ops-bk.sandbox.mifos.io"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
+minio:
+  enabled: true
+  fullnameOverride: "minio"
+  resources:
+    requests:
+      memory: 256Mi
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 10Gi
+  mode: standalone
+  rootUser: root
+  rootPassword: password
+  buckets:
+    - name: paymenthub-ee
+      policy: public
