@@ -28,15 +28,15 @@ camunda-platform:
     identity:
       auth:
         zeebe:
-          existingSecret: "7gS9r0JgNy"
+          existingSecret: "admin"
         tasklist:
-          existingSecret: "LR2CI9QE4Z"
+          existingSecret: "admin"
         optimize:
-          existingSecret: "PyXpbNtbAC"
+          existingSecret: "admin"
         operate:
-          existingSecret: "O6C8g9bi9h"
+          existingSecret: "admin"
         connectors:
-          existingSecret: "8QvXnRv7Vo"
+          existingSecret: "admin"
       keycloak:
         url:
           protocol: "https"
@@ -46,6 +46,17 @@ camunda-platform:
           adminUser: "admin"
           existingSecret: "stage-keycloak"
           existingSecretKey: "admin-password"
+    postgresql:
+      enabled: false
+      image:
+        repository: bitnami/postgresql
+        tag: 15.5.0
+      nameOverride: identity-postgresql
+      auth:
+        username: identity
+        database: identity
+        password: admin
+        existingSecret: admin
 
   zeebe:
     enabled: true
