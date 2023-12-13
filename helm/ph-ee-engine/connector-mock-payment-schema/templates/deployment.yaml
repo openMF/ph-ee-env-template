@@ -20,6 +20,7 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-mock-payment-schema
           image: "{{ .Values.image }}"
