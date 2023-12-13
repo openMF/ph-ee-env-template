@@ -23,6 +23,7 @@ camunda-platform:
           port: "8443"
         auth:
             adminUser: "admin"
+            adminPassword: "admin"
             existingSecret: "stage-keycloak"
             existingSecretKey: "admin-password"
 
