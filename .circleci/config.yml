@@ -112,17 +112,17 @@ jobs:
           aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub-release
+      - run: helm ls --namespace=paymenthub-ns
       - kubernetes/install-kubectl
       - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
-      - run: "kubectl delete namespace paymenthub-release || echo ' '"
-      - run: "kubectl create namespace paymenthub-release || echo ' '"
+      - run: "kubectl delete namespace paymenthub-ns || echo ' '"
+      - run: "kubectl create namespace paymenthub-ns || echo ' '"
       #- run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
           chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/ph-ee-g2psandbox-1.3.1.tgz"
           release-name: ph-ee-g2psandbox
-          namespace: paymenthub-release
+          namespace: paymenthub-ns
           recreate-pods: true
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1"
           wait: true
@@ -177,7 +177,7 @@ jobs:
       - image: cimg/base:2022.06
     environment:
       TERM: dumb
-      NAMESPACE: paymenthub-release
+      NAMESPACE: paymenthub-ns
     steps:
       - setup_remote_docker:
             version: 20.10.14
@@ -192,7 +192,7 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            helm test ph-ee-g2psandbox --namespace paymenthub-release || echo test
+            helm test ph-ee-g2psandbox --namespace paymenthub-ns || echo test
       - run:
           name: Fetch Integration Test Report
           command: |
