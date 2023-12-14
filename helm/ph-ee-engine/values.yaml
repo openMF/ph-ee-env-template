@@ -14,6 +14,7 @@ configmap:
   apiversion: "v1"  
 
 global:
+  bucket_name: paymenthub-ee
   SPRING_PROFILES_ACTIVE: "bb"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1431,9 +1432,8 @@ importer_rdbms:
       host: "operationsmysql"
       port: 3306
       schema: "tenants"
-  bucket_name: "paymenthub-ee"
   aws:
-    host: "<host>"
+    s3BaseUrl: "http://minio:9000"
     region: "<region>"
   livenessProbe:
     httpGet:
@@ -1521,7 +1521,6 @@ connector_bulk:
   pollingApi:
     timer: "180"
   tenants: ""
-  bucket_name: "paymenthub-ee"
   operations_app:
       contactpoint: "http://ph-ee-operations-app:5000"
       endpoints:
@@ -1552,7 +1551,7 @@ connector_bulk:
     deduplication:
       enabled: true  
   aws:
-    host: "<host>"
+    s3BaseUrl: "http://minio:9000"
     region: "<region>"
     access_key: "<access key>"
     secret_key: "<secret key>"
