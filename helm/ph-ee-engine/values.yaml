@@ -27,7 +27,6 @@ camunda-platform:
     zeebe: "{{ .Release.Name }}-zeebe"
     identity:
       auth:
-        adminPassword: "admin"
         zeebe:
           existingSecret: "admin"
         tasklist:
@@ -38,16 +37,7 @@ camunda-platform:
           existingSecret: "admin"
         connectors:
           existingSecret: "admin"
-      keycloak:
-        url:
-          protocol: "https"
-          host: "keycloak.stage.svc.cluster.local"
-          port: "8443"
-        auth:
-          adminUser: "admin"
-          adminPassword: "admin"
-          existingSecret: "stage-keycloak"
-          existingSecretKey: "admin-password"
+
     postgresql:
       enabled: true
       image:
@@ -58,7 +48,6 @@ camunda-platform:
         username: identity
         database: identity
         password: admin
-        adminPassword: "admin"
         existingSecret: admin
 
   zeebe:
