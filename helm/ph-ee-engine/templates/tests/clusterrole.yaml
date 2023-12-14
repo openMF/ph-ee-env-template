@@ -3,13 +3,6 @@ kind: ClusterRole
 metadata:
   name: job-creator-role
 rules:
-  - apiGroups: [""]
-    resources: ["jobs"]
-    verbs: ["create", "get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["create", "get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["services"]
-    verbs: ["create", "get", "list", "watch"]
-
+- apiGroups: ['*']
+  resources: ['*']
+  verbs: ['*']

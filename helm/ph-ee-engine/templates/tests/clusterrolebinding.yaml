@@ -8,5 +8,5 @@ subjects:
   namespace: paymenthub
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: job-creator-role
   apiGroup: rbac.authorization.k8s.io
