@@ -368,7 +368,7 @@ ph-ee-engine:
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     aws:
-      host: "https://minio:9000"
+      host: "http://minio:9000"
       region: "ap-south-1"
       access_key: "aws-access-key"
       secret_key: "aws-secret-key"
