@@ -277,7 +277,7 @@ channel:
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     path: "/channel"
     annotations: {}
     backend: {}
