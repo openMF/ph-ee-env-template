@@ -171,7 +171,7 @@ account_mapper:
   image: docker.io/openmf/ph-ee-identity-account-mapper:latest
   hostname: "identity-mapper.sandbox.mifos.io"
   ingress:
-    enabled: true
+    enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
     tls:
