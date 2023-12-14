@@ -461,6 +461,9 @@ ph-ee-engine:
     enabled: true
     image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
+    aws:
+      host: "http://minio:9000"
+
   keycloak:
     enabled: true
     ingress:

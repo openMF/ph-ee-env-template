@@ -18,6 +18,7 @@ LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highl
 javaToolOptions: "-Xmx256M"
 bucket_name: "paymenthub-ee-dev"
 aws:
+  host: "<host>"
   region: "<region>"
 limits:
   cpu: "500m"

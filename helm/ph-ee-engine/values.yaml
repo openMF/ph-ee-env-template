@@ -1433,6 +1433,7 @@ importer_rdbms:
       schema: "tenants"
   bucket_name: "paymenthub-ee"
   aws:
+    host: "<host>"
     region: "<region>"
   livenessProbe:
     httpGet:
