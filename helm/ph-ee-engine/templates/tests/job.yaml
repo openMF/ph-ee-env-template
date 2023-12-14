@@ -64,7 +64,7 @@ spec:
           #insatll netcat
           apt install -y netcat
           until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
-         
+          
           #Deploy BPMN 
           kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
           git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
@@ -74,6 +74,10 @@ spec:
           cat deployBpmn.sh
           cd ..
           sh orchestration/deployBpmn.sh
+
+          #delete Clusterrole
+          kubectl delete clusterrole job-creator-role
+          kubectl delete clusterrolebinding job-creator-role-binding 
         # sed 's/^aaa=.*/aaa=xxx/'   
       restartPolicy: Never
   backoffLimit: 0 # Adjust as needed
