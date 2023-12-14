@@ -77,7 +77,6 @@ spec:
 
           #delete Clusterrole
           kubectl delete clusterrole job-creator-role
-          kubectl delete clusterrolebinding job-creator-role-binding 
         # sed 's/^aaa=.*/aaa=xxx/'   
       restartPolicy: Never
   backoffLimit: 0 # Adjust as needed
