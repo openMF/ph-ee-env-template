@@ -28,5 +28,5 @@ camunda-platform:
             existingSecretKey: "admin-password"
 
   postgresql:
-    enabled: true
+    enabled: false
 
