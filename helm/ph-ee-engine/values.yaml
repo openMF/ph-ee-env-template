@@ -27,6 +27,7 @@ camunda-platform:
     zeebe: "{{ .Release.Name }}-zeebe"
     identity:
       auth:
+        adminPassword: "admin"
         zeebe:
           existingSecret: "admin"
         tasklist:
@@ -48,7 +49,7 @@ camunda-platform:
           existingSecret: "stage-keycloak"
           existingSecretKey: "admin-password"
     postgresql:
-      enabled: false
+      enabled: true
       image:
         repository: bitnami/postgresql
         tag: 15.5.0
@@ -726,7 +727,7 @@ operations_web:
 
 identity:
   keycloak:
-    enabled: false
+    enabled: true
 
 mpesa:
   enabled: false
