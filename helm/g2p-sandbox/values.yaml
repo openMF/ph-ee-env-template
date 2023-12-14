@@ -494,7 +494,7 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-vouchers:latest
     hostname: "vouchers.sandbox.mifos.io"
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
         nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'

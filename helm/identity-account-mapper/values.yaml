@@ -113,7 +113,7 @@ kibana:
     successThreshold: 1
   protocol: http
   ingress:
-    enabled: true
+    enabled: false
     className: "nginx"
     pathtype: "Prefix"
     annotations: {}
