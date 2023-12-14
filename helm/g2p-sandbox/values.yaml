@@ -461,7 +461,7 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       enabled: false
       ingressClassName: "kong"
@@ -473,7 +473,7 @@ ph-ee-engine:
       tls: []
     
   kong:
-    enabled: true
+    enabled: false
     image:
       repository: revomatico/docker-kong-oidc
       tag: "latest"
