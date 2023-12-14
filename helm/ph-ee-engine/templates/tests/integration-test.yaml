@@ -9,12 +9,12 @@ metadata:
 spec:
   containers:
   - name: integration-test
-    image: docker.io/openmf/ph-ee-integration-test:v1.4.0-rc.2
+    image: docker.io/openmf/ph-ee-integration-test:latest
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args: 
-    # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
-    - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'    
+    - ./gradlew test -Dcucumber.filter.tags="MFT-002" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+    # - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'    
     env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
         value: "http://ph-ee-operations-app:80"
