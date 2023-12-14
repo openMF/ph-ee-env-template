@@ -1551,7 +1551,7 @@ connector_bulk:
     deduplication:
       enabled: true  
   aws:
-    host:
+    host: "<host>"
     region: "<region>"
     access_key: "<access key>"
     secret_key: "<secret key>"
