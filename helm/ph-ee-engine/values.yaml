@@ -142,22 +142,6 @@ camunda-platform:
     fullnameOverride: "zeebe-elasticsearch"
     clusterName: "zeebe-elasticsearch"
 
-  webModeler:
-    enabled: true
-    image:
-      registry: registry.camunda.cloud
-      tag: 8.3.2
-
-    restapi:
-      image:
-        repository: web-modeler-ee/modeler-restapi
-      service:
-        type: ClusterIP
-        port: 80
-        managementPort: 8091
-      mail:
-        fromAddress: Cammunda-8
-
   operate:
     enabled: false
 
