@@ -2107,7 +2107,7 @@ vouchers:
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
 minio:
-  enabled: true
+  enabled: false
   fullnameOverride: "minio"
   resources:
     requests:
