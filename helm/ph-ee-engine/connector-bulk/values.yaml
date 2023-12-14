@@ -46,7 +46,7 @@ config:
   deduplication:
     enabled: true  
 aws:
-  host: "<host>"
+  s3BaseUrl: "<host>"
   region: "<region>"
   access_key: "<access key>" 
   secret_key: "<secret key>"  
