@@ -20,6 +20,13 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}
+      tolerations: {{ toYaml ( .Values.tolerations | default .Values.deployment.tolerations ) | nindent 8 }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName  }}
+      {{- end }}
+      serviceAccountName: ph-ee-operations-app
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-operations-app
