@@ -58,6 +58,7 @@ camunda-platform:
         username: identity
         database: identity
         password: admin
+        adminPassword: "admin"
         existingSecret: admin
 
   zeebe:

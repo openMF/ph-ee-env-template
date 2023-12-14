@@ -6,6 +6,7 @@ camunda-platform:
     zeebe: "{{ .Release.Name }}-zeebe"
     identity:
       auth:
+        adminPassword: "admin"
         zeebe:
           existingSecret: "7gS9r0JgNy"
         tasklist:
