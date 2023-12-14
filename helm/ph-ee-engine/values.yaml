@@ -1434,7 +1434,9 @@ importer_rdbms:
       schema: "tenants"
   aws:
     s3BaseUrl: "http://minio:9000"
-    region: "<region>"
+    access_key: "root"
+    secret_key: "password"
+    region: "ap-south-1"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1552,9 +1554,9 @@ connector_bulk:
       enabled: true  
   aws:
     s3BaseUrl: "http://minio:9000"
-    region: "<region>"
-    access_key: "<access key>"
-    secret_key: "<secret key>"
+    region: "ap-south-1"
+    access_key: "root"
+    secret_key: "password"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
