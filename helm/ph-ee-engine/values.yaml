@@ -27,6 +27,7 @@ camunda-platform:
     zeebe: "{{ .Release.Name }}-zeebe"
     identity:
       auth:
+        enabled: true
         zeebe:
           existingSecret: "admin"
         tasklist:
