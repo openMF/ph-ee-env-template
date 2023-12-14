@@ -184,7 +184,7 @@ ph-ee-engine:
   mockpayment:
     enabled: true 
     ingress:
-        enabled: true
+        enabled: false
         hosts:
           - host: ""
             paths:
