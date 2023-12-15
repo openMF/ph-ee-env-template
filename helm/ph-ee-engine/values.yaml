@@ -11,7 +11,7 @@ secret:
   apiversion: "v1"
 
 configmap:
-  apiversion: "v1"  
+  apiversion: "v1"
 
 global:
   SPRING_PROFILES_ACTIVE: "bb"
@@ -22,43 +22,15 @@ global:
   DFSPIDS: ""
 camunda-platform:
   connectors:
-    enabled: true
+    enabled: false
   global:
     zeebe: "{{ .Release.Name }}-zeebe"
+    elasticsearch:
+      disableExporter: true
+      host: "ph-ee-elasticsearch"
     identity:
       auth:
-        enabled: true
-        zeebe:
-          existingSecret: "admin"
-        tasklist:
-          existingSecret: "admin"
-        optimize:
-          existingSecret: "admin"
-        operate:
-          existingSecret: "admin"
-        connectors:
-          existingSecret: "admin"
-      keycloak:
-        url:
-          protocol: https
-          host: keycloak.stage.svc.cluster.local
-          port: 8443
-        auth:
-          adminUser: admin
-          adminPassword: admin
-          existingSecret: stage-keycloak
-          existingSecretKey: admin-password
-    postgresql:
-      enabled: true
-      image:
-        repository: bitnami/postgresql
-        tag: 15.5.0
-      nameOverride: identity-postgresql
-      auth:
-        username: identity
-        database: identity
-        password: admin
-        existingSecret: admin
+        enabled: false
 
   zeebe:
     enabled: true
@@ -117,7 +89,7 @@ camunda-platform:
 
     image:
       repository: camunda/zeebe
-      tag: 8.2.8
+      tag: 8.1.1
     clusterSize: "1"
     partitionCount: "1"
     replicationFactor: "1"
@@ -144,24 +116,20 @@ camunda-platform:
     clusterName: "zeebe-elasticsearch"
 
   operate:
-    enabled: true
+    enabled: false
 
   tasklist:
-    enabled: true
+    enabled: false
   optimize:
+    enabled: false
+  prometheusServiceMonitor:
     enabled: true
-  prometheus:
-    service:
-      monitor:
-        enabled: true
   identity:
-    enabled: true
-    keycloak:
-      enabled: false
+    enabled: false
 
 elasticsearch:
   enabled: true
-  # imageTag: 7.17.1
+  #  imageTag: 7.17.0
   replicas: 1
   protocol: http
   fullnameOverride: "ph-ee-elasticsearch"
@@ -187,7 +155,6 @@ elasticsearch:
         secretKeyRef:
           name: elastic-credentials
           key: password
-
 
 kibana:
   enabled: true
