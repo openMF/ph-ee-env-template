@@ -563,6 +563,3 @@ account_mapper:
       url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
-
-  minio:
-    enabled: false

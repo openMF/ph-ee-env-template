@@ -81,7 +81,7 @@ spec:
             - name: "BP_JAVA_OPTS"
               value: "-Xmx400m -Xms400m"
             - name: "CLOUD_AWS_s3BaseUrl"
-              value: {{.Values.aws.s3BaseUrl}}
+              value: {{.Values.global.s3BaseUrl}}
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
