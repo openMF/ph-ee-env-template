@@ -6,6 +6,7 @@ camunda-platform:
     zeebe: "{{ .Release.Name }}-zeebe"
     identity:
       auth:
+        enabled: true
         zeebe:
           existingSecret: "7gS9r0JgNy"
         tasklist:
@@ -16,16 +17,21 @@ camunda-platform:
           existingSecret: "O6C8g9bi9h"
         connectors:
           existingSecret: "8QvXnRv7Vo"
-#      keycloak:
-#        url:
-#          protocol: "https"
-#          host: "keycloak.stage.svc.cluster.local"
-#          port: "8443"
-#        auth:
-#            adminUser: "admin"
-#            existingSecret: "stage-keycloak"
-#            existingSecretKey: "admin-password"
+      keycloak:
+        url:
+          protocol: "https"
+          host: "keycloak.stage.svc.cluster.local"
+          port: "8443"
+        auth:
+            adminUser: "admin"
+            existingSecret: "stage-keycloak"
+            existingSecretKey: "admin-password"
 
   postgresql:
-    enabled: false
+    enabled: true
+
+  identity:
+    enabled: true
+    keycloak:
+      enabled: false
 
