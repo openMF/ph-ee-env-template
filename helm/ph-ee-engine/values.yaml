@@ -22,7 +22,11 @@ global:
   DFSPIDS: ""
 camunda-platform:
   connectors:
-    enabled: false
+    enabled: true
+    inbound:
+      mode:
+      auth:
+        existingSecret: admin
   global:
     zeebe: "{{ .Release.Name }}-zeebe"
     elasticsearch:
@@ -116,12 +120,12 @@ camunda-platform:
     clusterName: "zeebe-elasticsearch"
 
   operate:
-    enabled: false
+    enabled: true
 
   tasklist:
-    enabled: false
+    enabled: true
   optimize:
-    enabled: false
+    enabled: true
   prometheusServiceMonitor:
     enabled: true
   identity:
