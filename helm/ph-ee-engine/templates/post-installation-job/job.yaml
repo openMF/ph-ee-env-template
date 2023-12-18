@@ -76,7 +76,7 @@ spec:
           sh orchestration/deployBpmn.sh
 
           #delete Clusterrole
-          kubectl delete clusterrole job-creator-role && kubectl delete clusterrolebinding job-creator-role-binding
+          kubectl delete clusterrolebinding job-creator-role-binding && kubectl delete clusterrole job-creator-role 
           # kubectl delete clusterrole job-creator-role
         # sed 's/^aaa=.*/aaa=xxx/'   
       restartPolicy: Never
