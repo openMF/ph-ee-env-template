@@ -15,7 +15,6 @@ ph-ee-engine:
     apiversion: "v1"
 
   global:
-    bucket_name: paymenthub-ee
     SPRING_PROFILES_ACTIVE: "bb"
     imagePullPolicy: "Always"
     LOGGING_LEVEL_ROOT: "INFO"
