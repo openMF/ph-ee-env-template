@@ -93,7 +93,7 @@ camunda-platform:
 
     image:
       repository: camunda/zeebe
-      tag: 8.1.1
+      tag: 8.2.8
     clusterSize: "1"
     partitionCount: "1"
     replicationFactor: "1"
@@ -133,7 +133,7 @@ camunda-platform:
 
 elasticsearch:
   enabled: true
-  #  imageTag: 7.17.0
+  #  imageTag: 7.17.1
   replicas: 1
   protocol: http
   fullnameOverride: "ph-ee-elasticsearch"
