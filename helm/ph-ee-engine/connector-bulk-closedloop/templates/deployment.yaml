@@ -73,7 +73,7 @@ spec:
                 secretKeyRef:
                   name: "bulk-processor-secret"
                   key: "aws-region"
-            - name: "CLOUD_AWS_s3BaseUrl"
+            - name: "CLOUD_AWS_S3BASEURL"
               value: {{.Values.global.s3BaseUrl}}
             - name: "AWS_ACCESS_KEY"
               valueFrom:
