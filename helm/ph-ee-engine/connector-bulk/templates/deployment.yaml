@@ -80,7 +80,7 @@ spec:
                   key: "aws-region"
             - name: "BP_JAVA_OPTS"
               value: "-Xmx400m -Xms400m"
-            - name: "CLOUD_AWS_s3BaseUrl"
+            - name: "CLOUD_AWS_S3BASEURL"
               value: {{.Values.global.s3BaseUrl}}
             - name: "AWS_ACCESS_KEY"
               valueFrom:
