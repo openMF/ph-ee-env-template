@@ -73,7 +73,7 @@ spec:
             - name: "CALLBACK_ENABLED"
               value: "{{ .Values.callback_enabled }}"
             - name: "JAVA_TOOL_OPTIONS"
-              value: "-Xmx256m"
+              value: "{{ .Values.JAVA_TOOL_OPTIONS}}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
