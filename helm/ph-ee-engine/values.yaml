@@ -1309,6 +1309,7 @@ mockpayment:
     cpu: "100m"
   deployment:
     annotations: {}
+  javaToolOptions: "-Xmx256M"
 
 
 kafka:
