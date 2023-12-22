@@ -368,10 +368,10 @@ ph_ee_connector_ams_mifos:
     privileged: false
   resources:    
     limits:
-      memory: "2048M"
+      memory: "512M"
       cpu: "500m"
     requests:
-      memory: "1024M"
+      memory: "512M"
       cpu: "300m"
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
@@ -1104,16 +1104,7 @@ notifications:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the notifications Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-notifications.yml for deployment  
     # ph-ee-connector-notificationsConfig: {}
@@ -1195,16 +1186,7 @@ zeebe_ops:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the zeebeops Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
@@ -1440,16 +1422,7 @@ importer_rdbms:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the importer_rdbms Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-importer_rdbms.yml for deployment  
     # ph-ee-importer_rdbmsConfig: {}
@@ -1565,16 +1538,7 @@ connector_bulk:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-bulk.yml for deployment  
     # ph-ee-connector-bulkConfig: {}
@@ -1628,16 +1592,7 @@ ph_ee_connector_gsma:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the gsma Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
@@ -1724,16 +1679,7 @@ ph-ee-connector_slcb:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the ph_ee_connector_slcb Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_slcb.yml for deployment  
     # ph_ee_connector_slcbConfig: {}
