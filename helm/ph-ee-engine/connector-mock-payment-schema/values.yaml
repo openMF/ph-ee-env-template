@@ -23,6 +23,7 @@ limits:
 requests:
   memory: "256M"
   cpu: "100m"
+JAVA_TOOL_OPTIONS: "-Xmx256m"
 deployment:
   annotations: { }
 ingress:
