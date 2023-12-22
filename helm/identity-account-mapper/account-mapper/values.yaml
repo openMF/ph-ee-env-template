@@ -18,7 +18,7 @@ requests:
   cpu: "100m"
   memory: "256M"
 LOGGING_LEVEL_ROOT: INFO
-JAVA_TOOL_OPTIONS: "-Xmx512m"
+JAVA_TOOL_OPTIONS: "-Xmx256m"
 
 async:
   core_pool_size: 10
