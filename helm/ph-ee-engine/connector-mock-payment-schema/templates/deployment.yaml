@@ -66,6 +66,8 @@ spec:
               value: "{{ .Values.global.poll_interval}}"
             - name : "mockFailure_percentage"
               value: "{{ .Values.mockFailure.percentage }}"
+            - name: "JAVA_TOOL_OPTIONS"
+              value: "{{ .Values.javaToolOptions}}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}        
