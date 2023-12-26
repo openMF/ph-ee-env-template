@@ -82,3 +82,7 @@
     * A text box present just beside the `Regenerate Secret` will contain the latest generated secret.<br>
    <img width="500" alt="Screenshot 2023-11-23 at 3 26 46 PM" src="https://github.com/danishjamal104/ph-ee-env-template/assets/31315800/602a472d-fb09-463b-8201-723e5a89c15a">
 <br><br>
+
+Add a role with name admin
+select realm-management in the Roles select box and add user-management role to this role.
+create an admin user with username as 'admin' and password as 'admin' in the realm paymenthub.
