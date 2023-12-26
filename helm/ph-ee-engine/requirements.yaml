@@ -96,10 +96,10 @@ dependencies:
     version: 1.0.0
     repository: "file://./kafka"
     condition: "kafka.enabled"
-  - name: connector_bulk_closedloop
+  - name: connector
     version: 1.0.0
-    repository: "file://./connector-bulk-closedloop"
-    condition: "connector_bulk_closedloop.enabled"
+    repository: "file://./connector"
+    condition: "connector.enabled"
   - name: mockpayment
     version: 1.0.0
     repository: "file://./connector-mock-payment-schema"
