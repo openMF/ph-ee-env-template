@@ -69,19 +69,19 @@ spec:
 # {{ toYaml .Values.deployment.config | indent 12 }}
 # {{- end }}            
       initContainers:
-      - name: wait-db
-        image: jwilder/dockerize
-        imagePullPolicy: IfNotPresent
-        args:
-        - -timeout=120s
-        - -wait
-        - tcp://{{ .Values.operations_app.datasource.host }}:3306         
+        - name: wait-db
+          image: jwilder/dockerize
+          imagePullPolicy: IfNotPresent
+          args:
+            - -timeout=120s
+            - -wait
+            - tcp://{{ .Values.operations_app.datasource.host }}:3306         
       volumes:
-      - name: ph-ee-config
-        configMap:
-          name: ph-ee-config
-        {{- if .Values.extraContainers }}
-  {{ tpl .Values.extraContainers . | indent 6 }}
-        {{- end }}
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+      {{- if .Values.extraContainers }}
+      {{ tpl .Values.extraContainers . | indent 6 }}
+      {{- end }}
 
 {{- end }}
