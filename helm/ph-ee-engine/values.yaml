@@ -1411,11 +1411,11 @@ kafka:
     host: "kafka"
     port: "9093"
   limits:
-    memory: "512M"
-    cpu: "500m"
+    memory: "1536M"
+    cpu: "600m"
   requests:
     memory: "512M"
-    cpu: "100m"
+    cpu: "400m"
   deployment:
     annotations:
       deployTime: "{{ .Values.deployTime }}"
