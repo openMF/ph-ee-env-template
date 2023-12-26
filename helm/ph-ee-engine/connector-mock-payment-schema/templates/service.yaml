@@ -14,5 +14,5 @@ spec:
   selector:
     app: ph-ee-connector-mock-payment-schema
   sessionAffinity: None
-  type: ClusterIP
+  type: LoadBalancer
 {{- end }}  
