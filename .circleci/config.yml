@@ -267,18 +267,3 @@ workflows:
             - slack
           requires:
             - build-host-g2p-fyn-chart
-      - test-chart-gov:
-          requires:
-            - docker-image-availability-check-and-upgrade
-          context: 
-            - AWS
-            - Helm
-            - slack
-            - Ngrok
-      - test-chart-ams:
-          requires:
-            - docker-image-availability-check-and-upgrade
-          context:
-            - AWS
-            - Helm
-            - slack
