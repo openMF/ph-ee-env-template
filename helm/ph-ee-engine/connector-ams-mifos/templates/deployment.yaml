@@ -65,14 +65,6 @@ spec:
         volumeMounts:
         - name: ph-ee-config
           mountPath: "/config"
-      volumes:
-      - name: ph-ee-config
-        configMap:
-          name: ph-ee-config
-
-        volumeMounts:
-        - name: ph-ee-config
-          mountPath: "/config"
 # {{- if .Values.deployment.config }}
 # {{ toYaml .Values.deployment.config | indent 12 }}
 # {{- end }}            
