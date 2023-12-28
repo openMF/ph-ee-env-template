@@ -2175,16 +2175,6 @@ billPay:
     extraEnvs: []
     # - User that the container will execute as.
     # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"
 
 crm:
   enabled: false
@@ -2255,13 +2245,3 @@ crm:
     extraEnvs: []
     # - User that the container will execute as.
     # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"
