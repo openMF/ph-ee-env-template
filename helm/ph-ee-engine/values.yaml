@@ -2105,3 +2105,163 @@ vouchers:
     hostname: "https://ops-bk.sandbox.mifos.io"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
+
+billPay:
+  enabled: false
+  replicas: 1
+  image: docker.io/openmf/ph-ee-connector-bill-pay:v1.0.0
+  imagePullPolicy: "Always"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+      scheme: HTTPS
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8080
+      scheme: HTTPS
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+  # Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true
+  # Custom service account override that the pod will use
+  serviceAccount: "billPay"
+  # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {}
+  # How long to wait for pods to stop gracefully
+  terminationGracePeriod: 30
+  # Extra environment variables for container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: []
+  # This is the PriorityClass settings as defined in
+  # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:
+    limits:
+      memory: "512M"
+      cpu: "500m"
+    requests:
+      memory: "512M"
+      cpu: "100m"
+  service:
+    annotations: {}
+  # Only enable this if you have security enabled on your cluster
+  ingress:
+    enabled: true
+    path: "/billPay"
+    annotations: {}
+    backend: {}
+    stub_backend: {}
+  deployment:
+    annotations: {}
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    envFrom: []
+    # - configMapRef:
+    #     name: config-secret
+    extraEnvs: []
+    # - User that the container will execute as.
+    # - Typically not necessarily unless running within environments such as OpenShift.
+    securityContext:
+      runAsUser: 0
+      privileged: false
+    resources:
+      limits:
+        memory: "512M"
+        cpu: "500m"
+      requests:
+        memory: "512M"
+        cpu: "100m"
+
+crm:
+  enabled: false
+  replicas: 1
+  image: docker.io/openmf/ph-ee-connector-crm:v1.0.0
+  imagePullPolicy: "Always"
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+      scheme: HTTPS
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8080
+      scheme: HTTPS
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
+  # Whether this chart should self-manage its service account, role, and associated role binding.
+  managedServiceAccount: true
+  # Custom service account override that the pod will use
+  serviceAccount: "crm"
+  # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+  serviceAccountAnnotations: {}
+  # How long to wait for pods to stop gracefully
+  terminationGracePeriod: 30
+  # Extra environment variables for container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: []
+  # This is the PriorityClass settings as defined in
+  # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:
+    limits:
+      memory: "512M"
+      cpu: "500m"
+    requests:
+      memory: "512M"
+      cpu: "100m"
+  service:
+    annotations: {}
+  # Only enable this if you have security enabled on your cluster
+  ingress:
+    enabled: true
+    path: "/crm"
+    annotations: {}
+    backend: {}
+    stub_backend: {}
+  deployment:
+    annotations: {}
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    envFrom: []
+    # - configMapRef:
+    #     name: config-secret
+    extraEnvs: []
+    # - User that the container will execute as.
+    # - Typically not necessarily unless running within environments such as OpenShift.
+    securityContext:
+      runAsUser: 0
+      privileged: false
+    resources:
+      limits:
+        memory: "512M"
+        cpu: "500m"
+      requests:
+        memory: "512M"
+        cpu: "100m"
