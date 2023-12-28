@@ -1,0 +1,22 @@
+{{- if .Values.enabled -}}
+apiVersion: {{ .Values.service.apiversion }}
+kind: Service
+metadata:
+  labels:
+    app: ph-ee-connector-crm
+  name: ph-ee-connector-crm
+{{- with .Values.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  ports:
+    - name: port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ph-ee-connector-crm
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}  

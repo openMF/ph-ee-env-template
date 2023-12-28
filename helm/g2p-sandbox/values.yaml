@@ -520,6 +520,54 @@ ph-ee-engine:
     gradle:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
 
+  billPay:
+    enabled: true
+    image: docker.io/openmf/ph-ee-bill-pay:latest
+    hostname: "bill-pay.sandbox.mifos.io"
+    stub_hostname: "bill-pay.sandbox.mifos.io"
+    SPRING_PROFILES_ACTIVE: "bb,tenants"
+    DFSPIDS: "rhino,gorilla,lion"
+    ingress:
+      enabled: false
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: bill-pay.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-bill-pay"
+                  port:
+                    number: 8080
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+
+  crm:
+    enabled: true
+    image: docker.io/openmf/ph-ee-connector-crm:latest
+    hostname: "crm.sandbox.mifos.io"
+    stub_hostname: "crm.sandbox.mifos.io"
+    SPRING_PROFILES_ACTIVE: "bb,tenants"
+    DFSPIDS: "rhino,gorilla,lion"
+    ingress:
+      enabled: false
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: crm.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: "ph-ee-connector-crm"
+                  port:
+                    number: 8080
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
@@ -565,3 +613,4 @@ account_mapper:
       url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
+
