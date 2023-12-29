@@ -13,7 +13,6 @@ imagePullPolicy: ""
 SPRING_PROFILES_ACTIVE: ""
 LOGGING_LEVEL_ROOT: "INFO"
 camel_disable_ssl: true
-tenants: ""
 application:
   bucket_name: "paymenthub-ee-dev"
 zeebe:
@@ -33,12 +32,6 @@ bulk_processor:
   contactpoint: "https://ph-ee-connector-bulk:8443"
   endpoints:
     batch_transaction: "/batchtransactions"
-config:
-  completion_threshold_check:
-    completion-threshold: 90
-    max-retry-count: 5
-    wait-timer: PT30S
-tenant: ""
 aws:
   region: "<region>"
   access_key: "<access key>" 
