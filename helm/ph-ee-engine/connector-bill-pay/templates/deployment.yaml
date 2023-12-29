@@ -56,9 +56,9 @@ spec:
             - name: "DFSPIDS"
               value: "{{ .Values.DFSPIDS }}"
             - name: "CONNECTOR_CONTACTPOINT"
-              value: "{{ .Values.ph_ee_connector.contactpoint }}"
-            - name: "BILL_PAY_CONTACTPOINT"
-              value: "{{ .Values.ph_ee_bill_pay.contactpoint }}"
+              value: "{{ .Values.connector.contactpoint }}"
+            - name: "BILLPAY_CONTACTPOINT"
+              value: "{{ .Values.billpay.contactpoint }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        
