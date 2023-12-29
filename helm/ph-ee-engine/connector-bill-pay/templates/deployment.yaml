@@ -55,6 +55,10 @@ spec:
               value: "{{ .Release.Name }}-zeebe-gateway:26500"  
             - name: "DFSPIDS"
               value: "{{ .Values.DFSPIDS }}"
+            - name: "CONNECTOR_CONTACTPOINT"
+              value: "{{ .Values.ph_ee_connector.contactpoint }}"
+            - name: "BILL_PAY_CONTACTPOINT"
+              value: "{{ .Values.ph_ee_bill_pay.contactpoint }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        

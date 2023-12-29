@@ -14,6 +14,10 @@ imageTag: latest
 imagePullPolicy: "Always"
 SPRING_PROFILES_ACTIVE: "bb,tenants"
 LOGGING_LEVEL_ROOT: "INFO"
+ph_ee_bill_pay:
+  contactpoint: ""
+ph_ee_connector:
+  contactpoint: ""
 DFSPIDS: ""
 limits:
   cpu: "500m"
