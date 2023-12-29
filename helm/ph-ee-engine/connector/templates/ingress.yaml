@@ -4,7 +4,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ph-ee-vouchers
+  name: ph-ee-connector
   labels:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name }}

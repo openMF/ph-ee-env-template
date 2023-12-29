@@ -7,8 +7,8 @@ secret:
 configmap:
   apiversion: "v1"
 
-enabled: true
-image: docker.io/openmf/ph-ee-vouchers:latest
+enabled: ""
+image: ""
 imagePullPolicy: ""
 SPRING_PROFILES_ACTIVE: ""
 LOGGING_LEVEL_ROOT: "INFO"
@@ -20,7 +20,7 @@ zeebe:
   broker:
     contactpoint: ""
 operations_app: 
-  contactpoint: "https://ops-bk.sandbox.fynarfin.io/"
+  contactpoint: "http://ph-ee-operations-app:5000"
   endpoints:
     batch_summary: "/api/v1/batch"
     batch_detail: "/api/v1/batch/detail"
@@ -30,7 +30,7 @@ mock_payment_schema:
     batch_summary: "/mockapi/v1/batch"
     batch_detail: "/mockapi/v1/batch/detail"
 bulk_processor:
-  contactpoint: "https://bulk-connector.sandbox.fynarfin.io/"
+  contactpoint: "https://ph-ee-connector-bulk:8443"
   endpoints:
     batch_transaction: "/batchtransactions"
 config:
