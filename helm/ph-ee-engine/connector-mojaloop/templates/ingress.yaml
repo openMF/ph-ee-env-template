@@ -45,6 +45,12 @@ spec:
             port:
               number: {{ .backend.service.port.number}}
       {{- end }}
+      - path: /actuator
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .backend.service.name}}
+            port:
+              number: 8080
  {{- end }}
  {{- end }}
- 
