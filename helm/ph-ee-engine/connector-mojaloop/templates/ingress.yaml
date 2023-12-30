@@ -49,7 +49,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .backend.service.name}}
+            name: ph-ee-connector-mojaloop-java
             port:
               number: 8080
  {{- end }}
