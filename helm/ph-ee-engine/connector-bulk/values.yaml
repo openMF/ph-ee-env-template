@@ -50,7 +50,7 @@ aws:
   access_key: "<access key>" 
   secret_key: "<secret key>"  
 limits:
-  cpu: "500m"
+  cpu: "256m"
   memory: "512M"
 requests:
   cpu: "100m"

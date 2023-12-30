@@ -1,16 +1,19 @@
+{{- if .Values.enabled -}}
 apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
-    app: ph-ee-connector-bulk-closedloop
-  name: ph-ee-connector-bulk-closedloop
+    app: ph-ee-connector
+  name: ph-ee-connector
 spec:
   ports:
     - name: port
       port: 80
       protocol: TCP
-      targetPort: 5000
+      targetPort: 8080
+
   selector:
-    app: ph-ee-connector-bulk-closedloop
+    app: ph-ee-connector
   sessionAffinity: None
   type: ClusterIP
+{{- end }}

@@ -568,6 +568,26 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
+  connector:
+    enabled: true
+    image: docker.io/openmf/ph-ee-connector-bulk:latest
+    aws:
+      region: "ap-south-1"
+      access_key: "aws-access-key"
+      secret_key: "aws-secret-key"
+    hostname: "connector.sandbox.mifos.io"
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+        nginx.ingress.kubernetes.io/enable-cors: 'true'
+
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
+
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
@@ -613,4 +633,6 @@ account_mapper:
       url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
+
+
 
