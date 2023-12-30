@@ -3,29 +3,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ph-ee-connector-bulk-closedloop
+  name: ph-ee-connector
   labels:
-    app: ph-ee-connector-bulk-closedloop
+    app: ph-ee-connector
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: ph-ee-connector-bulk-closedloop
+      app: ph-ee-connector
   template:
     metadata:
       labels:
-        app: ph-ee-connector-bulk-closedloop
+        app: ph-ee-connector
       annotations:
 {{- if .Values.deployment.annotations }}
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
-        - name: ph-ee-connector-bulk-closedloop
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+        - name: ph-ee-connector
+          image: "{{ .Values.image }}"
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -33,6 +33,7 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
+
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
@@ -40,32 +41,24 @@ spec:
               value: "{{ .Values.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
-            - name: "TENANTS"
-              value: "{{ .Values.tenants }}"
             - name: "APPLICATION_BUCKET-NAME"
               value: "{{ .Values.application.bucket_name }}"
             - name: "OPERATIONS-APP_CONTACTPOINT"
               value: "{{ .Values.operations_app.contactpoint }}"
             - name: "OPERATIONS-APP_ENDPOINTS_BATCH-SUMMARY"
-              value: "{{ .Values.operations_app.endpoints.batch-summary }}"
+              value: "{{ .Values.operations_app.endpoints.batch_summary }}"
             - name: "OPERATIONS-APP_ENDPOINTS_BATCH-DETAIL"
-              value: "{{ .Values.operations_app.endpoints.batch-detail }}"
+              value: "{{ .Values.operations_app.endpoints.batch_detail }}"
             - name: "MOCK-PAYMENT-SCHEMA_CONTACTPOINT"
-              value: "{{ .Values.mock-payment-schema.contactpoint }}"
+              value: "{{ .Values.mock_payment_schema.contactpoint }}"
             - name: "MOCK-PAYMENT-SCHEMA_ENDPOINTS_BATCH-SUMMARY"
-              value: "{{ .Values.mock-payment-schema.endpoints.batch-summary }}"
+              value: "{{ .Values.mock_payment_schema.endpoints.batch_summary }}"
             - name: "MOCK-PAYMENT-SCHEMA_ENDPOINTS_BATCH-DETAIL"
-              value: "{{ .Values.mock-payment-schema.endpoints.batch-detail }}"
+              value: "{{ .Values.mock_payment_schema.endpoints.batch_detail }}"
             - name: "BULK-PROCESSOR_CONTACTPOINT"
-              value: "{{ .Values.bulk-processor.contactpoint }}"
+              value: "{{ .Values.bulk_processor.contactpoint }}"
             - name: "BULK-PROCESSOR_ENDPOINTS_BATCH-TRANSACTION"
-              value: "{{ .Values.bulk-processor.endpoints.batch-transaction }}"
-            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-THRESHOLD"
-              value: "{{ .Values.config.completion_threshold_check.completion-threshold }}"
-            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_MAX-RETRY-COUNT"
-              value: "{{ .Values.config.completion_threshold_check.max-retry-count }}"
-            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_WAIT-TIMER"
-              value: "{{ .Values.config.completion_threshold_check.wait-timer }}"
+              value: "{{ .Values.bulk_processor.endpoints.batch_transaction }}"
             - name: "TENANT"
               value: "{{ .Values.global.tenant }}"
             - name: "CLOUD_AWS_REGION_STATIC"
@@ -80,6 +73,12 @@ spec:
                 secretKeyRef:
                   name: "bulk-processor-secret"
                   key: "aws-secret-key"
+
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{- end }}
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
