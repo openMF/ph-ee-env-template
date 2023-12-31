@@ -45,5 +45,12 @@ spec:
             port:
               number: {{ .backend.service.port.number}}
       {{- end }}
+      - path: /actuator
+        pathType: Prefix
+        backend:
+          service:
+            name: ph-ee-zeebe-ops
+            port:
+              number: 8080
  {{- end }}
  {{- end }}

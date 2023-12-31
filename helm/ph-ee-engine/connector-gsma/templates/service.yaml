@@ -11,6 +11,10 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 5000
+    - name: actuator
+      protocol: TCP
+      port: 8080   # Port where Actuator endpoints are exposed
+      targetPort: 8080
   selector:
     app: ph-ee-connector-gsma
   sessionAffinity: None
