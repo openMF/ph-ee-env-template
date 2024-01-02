@@ -2182,3 +2182,19 @@ crm:
     extraEnvs: []
     # - User that the container will execute as.
     # - Typically not necessarily unless running within environments such as OpenShift.
+minio:
+  enabled: true
+  fullnameOverride: "minio"
+  resources:
+    requests:
+      memory: 256Mi
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 10Gi
+  mode: standalone
+  rootUser: root
+  rootPassword: password
+  buckets:
+    - name: paymenthub-ee
+      policy: public
