@@ -2184,7 +2184,7 @@ crm:
     # - User that the container will execute as.
     # - Typically not necessarily unless running within environments such as OpenShift.
 minio:
-  enabled: true
+  enabled: false
   fullnameOverride: "minio"
   resources:
     requests:
