@@ -41,8 +41,10 @@ spec:
               value: "{{ .Values.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
-            - name: "APPLICATION_BUCKET-NAME"
-              value: "{{ .Values.application.bucket_name }}"
+            - name: "TENANTS"
+              value: "{{ .Values.tenants }}"
+            - name: "CLOUD_AWS_BUCKET-NAME"
+              value: "{{ .Values.global.bucket_name }}"
             - name: "OPERATIONS-APP_CONTACTPOINT"
               value: "{{ .Values.operations_app.contactpoint }}"
             - name: "OPERATIONS-APP_ENDPOINTS_BATCH-SUMMARY"
@@ -66,6 +68,8 @@ spec:
                 secretKeyRef:
                   name: "bulk-processor-secret"
                   key: "aws-region"
+            - name: "CLOUD_AWS_s3BaseUrl"
+              value: {{.Values.global.s3BaseUrl}}
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
