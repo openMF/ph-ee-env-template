@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f7b77f34-73a1-4812-b389-1e9c98945675",
+		"_postman_id": "2578222e-3cef-49ca-b32d-42997efeaa33",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31254556"
+		"_exporter_id": "21253421"
 	},
 	"item": [
 		{
@@ -1759,6 +1759,98 @@
 								{
 									"key": "clientCorrelationId",
 									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Variables",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.5",
+								"disabled": true
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJvYWYiXSwidXNlcl9uYW1lIjoibWlmb3MiLCJzY29wZSI6WyJpZGVudGl0eSJdLCJleHAiOjE2NDI2NzA0MTcsImF1dGhvcml0aWVzIjpbIlJFRlVORCIsIkFMTF9GVU5DVElPTlMiXSwianRpIjoiQStsajFsRVNsWW9YMU9uNjdyTlNRbFhHY05VPSIsImNsaWVudF9pZCI6ImNsaWVudCJ9.flZD_GlQJ2w8P_cU0DC2hojJLUA9WS_Bc3yy9X-1v8hR1xhJZjdHUKfBl-TqNdwPnWHEvuKNdsGSEzNCP8CYR71n3J33gzEpcKVZ0P7d2bOOLX6EgtSjDdjSLU_IGRxmOZEGES9p-UPAARbj24vIM3kugG6jBbVTJ08DksnLRXP0MdWjAmW6JNq0Y2VAJq_0LSCdab5XZT-vQsRL5PdrKvPT1w28jDFklWCrft6G-6SQbqkJPGR_oQPwYBmaZOx5ateE6JDMZN5CVmejExRVPYgE-tMxXRh7GZFTDaSW1DiMzNriBeDSu3NUkuwOCC4B4Z-XmzQJw36uE6pvqGT-Pg",
+								"disabled": true
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:4200",
+								"disabled": true
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"disabled": true
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:4200/",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/variables/21037e77-7227-4757-8e45-5c356f369b11",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variables",
+								"21037e77-7227-4757-8e45-5c356f369b11"
+							],
+							"query": [
+								{
+									"key": "direction",
+									"value": "OUTGOING",
+									"description": "INCOMING or OUTGOING direction",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{status}}",
+									"description": "Transaction Status. Values can be COMPLETED, FAILED, IN_PROGRESS and ALL. By default set to ALL.",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "clientCorrelationId",
+									"value": "123456789",
+									"disabled": true
 								}
 							]
 						}
@@ -44396,6 +44488,391 @@
 							"body": "{\n    \"content\": [\n        {\n            \"id\": 7,\n            \"batchId\": \"acea70d3-df71-431b-992b-e5f609c62ebf\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": null,\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": null,\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799819952265,\n            \"startedAt\": 1661784518000,\n            \"completedAt\": 1661784518000\n        },\n        {\n            \"id\": 8,\n            \"batchId\": \"b0a10f54-3efe-4ad5-aceb-700a3c831e60\",\n            \"subBatchId\": null,\n            \"requestId\": \"3a4dfab5-0f4f-4e78-b6b5-1aff3859d4e8\",\n            \"requestFile\": null,\n            \"totalTransactions\": null,\n            \"ongoing\": null,\n            \"failed\": null,\n            \"completed\": null,\n            \"totalAmount\": null,\n            \"ongoingAmount\": null,\n            \"failedAmount\": null,\n            \"completedAmount\": null,\n            \"result_file\": null,\n            \"resultGeneratedAt\": null,\n            \"note\": null,\n            \"workflowKey\": null,\n            \"workflowInstanceKey\": 2251799819961213,\n            \"startedAt\": 1661785658000,\n            \"completedAt\": 1661785658000\n        }\n    ],\n    \"totalElements\": 79,\n    \"totalPages\": 40,\n    \"last\": false,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"ASC\",\n            \"property\": \"requestFile\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": false,\n            \"ascending\": true\n        }\n    ],\n    \"first\": false,\n    \"size\": 2,\n    \"number\": 2\n}"
 						}
 					]
+				},
+				{
+					"name": "Batch Payment Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.5",
+								"disabled": true
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww",
+								"disabled": true
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:4200",
+								"disabled": true
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"disabled": true
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:4200/",
+								"disabled": true
+							},
+							{
+								"key": "X-Correlation-ID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/batches/{{batchId}}?associations=all",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"batches",
+								"{{batchId}}"
+							],
+							"query": [
+								{
+									"key": "direction",
+									"value": "OUTGOING",
+									"description": "INCOMING or OUTGOING direction",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "ONGOING",
+									"description": "Transaction State can be ONGOING, STARTED, FAILED",
+									"disabled": true
+								},
+								{
+									"key": "associations",
+									"value": "all"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Batch Summary",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json, text/plain, */*",
+										"disabled": true
+									},
+									{
+										"key": "Accept-Language",
+										"value": "en-US,en;q=0.5",
+										"disabled": true
+									},
+									{
+										"key": "Platform-TenantId",
+										"value": "ibank-usa"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww"
+									},
+									{
+										"key": "Origin",
+										"value": "http://localhost:4200",
+										"disabled": true
+									},
+									{
+										"key": "Connection",
+										"value": "keep-alive",
+										"disabled": true
+									},
+									{
+										"key": "Referer",
+										"value": "http://localhost:4200/",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/batch?batchId={{batchId}}",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"batch"
+									],
+									"query": [
+										{
+											"key": "direction",
+											"value": "OUTGOING",
+											"description": "INCOMING or OUTGOING direction",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "ONGOING",
+											"description": "Transaction State can be ONGOING, STARTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "batchId",
+											"value": "{{batchId}}"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"batchId\": \"c02a14f0-5e7e-44a1-88eb-5584a21e6f28\",\n    \"requestId\": \"dhgdfe-jiae-ugir-bsjf-ndsdfsdfdfd\",\n    \"totalTransactions\": 2,\n    \"ongoing\": 2,\n    \"failed\": 0,\n    \"completed\": 0,\n    \"total_amount\": 767,\n    \"completed_amount\": 0,\n    \"ongoing_amount\": 767,\n    \"failed_amount\": 0,\n    \"result_file\": null,\n    \"resultGeneratedAt\": 1634955667187,\n    \"note\": \"Sample Response\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Sub Batch Payment Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.text).not.equal(null)",
+									"});",
+									"",
+									"if(postman.getEnvironmentVariable(\"AutoTest\") == \"true\"){",
+									"    var nextTextIndex = Number(postman.getEnvironmentVariable(\"NextTestIndex\"));",
+									"    var apis = pm.environment.get('TestApiList');",
+									"    var testList = JSON.parse(apis);",
+									"    if(testList.length>nextTextIndex){",
+									"        postman.setEnvironmentVariable(\"NextTestIndex\", 1+ nextTextIndex);",
+									"        postman.setNextRequest(testList[nextTextIndex]); ",
+									"    }else{",
+									"        postman.setNextRequest(null); ",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.5",
+								"disabled": true
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww",
+								"disabled": true
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:4200",
+								"disabled": true
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"disabled": true
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:4200/",
+								"disabled": true
+							},
+							{
+								"key": "X-Correlation-ID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/batches/{{batchId}}}/subBatches/{{subBatchId}}?offset=0&limit=5",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"batches",
+								"{{batchId}}}",
+								"subBatches",
+								"{{subBatchId}}"
+							],
+							"query": [
+								{
+									"key": "direction",
+									"value": "OUTGOING",
+									"description": "INCOMING or OUTGOING direction",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "ONGOING",
+									"description": "Transaction State can be ONGOING, STARTED, FAILED",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Batch Summary",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json, text/plain, */*",
+										"disabled": true
+									},
+									{
+										"key": "Accept-Language",
+										"value": "en-US,en;q=0.5",
+										"disabled": true
+									},
+									{
+										"key": "Platform-TenantId",
+										"value": "ibank-usa"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww"
+									},
+									{
+										"key": "Origin",
+										"value": "http://localhost:4200",
+										"disabled": true
+									},
+									{
+										"key": "Connection",
+										"value": "keep-alive",
+										"disabled": true
+									},
+									{
+										"key": "Referer",
+										"value": "http://localhost:4200/",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{OperationsHostName}}/api/v1/batch?batchId={{batchId}}",
+									"host": [
+										"{{OperationsHostName}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"batch"
+									],
+									"query": [
+										{
+											"key": "direction",
+											"value": "OUTGOING",
+											"description": "INCOMING or OUTGOING direction",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "ONGOING",
+											"description": "Transaction State can be ONGOING, STARTED, FAILED",
+											"disabled": true
+										},
+										{
+											"key": "batchId",
+											"value": "{{batchId}}"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"batchId\": \"c02a14f0-5e7e-44a1-88eb-5584a21e6f28\",\n    \"requestId\": \"dhgdfe-jiae-ugir-bsjf-ndsdfsdfdfd\",\n    \"totalTransactions\": 2,\n    \"ongoing\": 2,\n    \"failed\": 0,\n    \"completed\": 0,\n    \"total_amount\": 767,\n    \"completed_amount\": 0,\n    \"ongoing_amount\": 767,\n    \"failed_amount\": 0,\n    \"result_file\": null,\n    \"resultGeneratedAt\": 1634955667187,\n    \"note\": \"Sample Response\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -45821,7 +46298,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+							"raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSerialNumber\": \"16897537747061\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
