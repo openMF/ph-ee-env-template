@@ -184,7 +184,7 @@ ph-ee-engine:
   mockpayment:
     enabled: true 
     limits:
-      memory: "1024M"
+      memory: "768M"
     ingress:
         enabled: true
         hosts:
