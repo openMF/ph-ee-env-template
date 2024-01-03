@@ -73,6 +73,7 @@ jobs:
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
+            rm -rf helm/g2p-sandbox/templates/config.yml
             cat helm/g2p-sandbox/Chart.yaml
             helm dep up helm/g2p-sandbox
             helm package helm/g2p-sandbox
