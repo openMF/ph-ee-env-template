@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: g2p-sandbox-test-b
+  labels:
+    app: "integration-test-b"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+  - name: g2p-sandbox-test-b
+    image: docker.io/openmf/ph-ee-integration-test:v1.4.0-rc.2
+    imagePullPolicy: "Always"
+    command: [ "/bin/bash" , "-c" ]
+    args:
+      # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+      - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+    {{- include "inttest.env" . | nindent 4 }}
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "3Gi"
+      requests:
+        cpu: "100m"
+        memory: "2Gi"
+  restartPolicy: Never

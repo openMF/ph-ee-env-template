@@ -188,51 +188,88 @@ jobs:
           aws-region: "$REGION"
           service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
 
-  test-chart-gov:
+  helm-test-gov:
     docker:
-      - image: cimg/openjdk:17.0.0
+      - image: cimg/python:3.10
+    parameters:
+      cluster-name:
+        description: "sit"
+        type: string
     steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: 
-          name: Ngrok setup
-          command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "sit"
+          aws-region: "$REGION"
+      - kubernetes/install-kubectl
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      - run: helm ls --namespace=paymenthub
       - run:
-          name: Test execution
+          name: Run Helm Tests
           command: |
-            ngrok config add-authtoken $AUTH_TOKEN
-            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http 53013 > /dev/null &
-            echo -n "Extracting ngrok public url ."
-            NGROK_PUBLIC_URL=""
-            while [ -z "$NGROK_PUBLIC_URL" ]; do
-              # Run 'curl' against ngrok API and extract public (using 'sed' command)
-              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-              sleep 1
-              echo -n "."
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-b --namespace paymenthub || echo test
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-b |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-b |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml  "
             done
+            echo "File is no longer empty, processing..."
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-b |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      - store_test_results:
+          path: integration_report/test-report/cucumber.xml
+      - store_artifacts:
+          path: integration_report/test-report/reports/tests/test
 
-            export CALLBACK_URL="https://$NGROK_PUBLIC_URL"
-            echo -n "Public url ."
-            echo $CALLBACK_URL
-            cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
-            echo -n "Test execution is completed, kill ngrok"
-            pkill ngrok
-      - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
-      - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
-  test-chart-ams:
+  helm-test-ams:
     docker:
-      - image: cimg/openjdk:17.0.0
+      - image: cimg/python:3.10
+    parameters:
+      cluster-name:
+        description: "sit"
+        type: string
     steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "sit"
+          aws-region: "$REGION"
+      - kubernetes/install-kubectl
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      - run: helm ls --namespace=paymenthub
+      - run:
+          name: Run Helm Tests
+          command: |
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-a --namespace paymenthub || echo test
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-a |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-a |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml  "
+            done
+            echo "File is no longer empty, processing..."
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-a |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
       - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
+          path: integration_report/test-report/cucumber.xml
       - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
+          path: integration_report/test-report/reports/tests/test
+
 workflows:
   deploy:
     jobs:
@@ -268,3 +305,19 @@ workflows:
             - slack
           requires:
             - build-host-g2p-fyn-chart
+      - helm-test-gov:
+          cluster-name: sit
+          requires:
+            - helm-test-ams
+          context:
+            - AWS
+            - Helm
+            - slack
+      - helm-test-ams:
+          cluster-name: sit
+          requires:
+            - docker-image-availability-check-and-upgrade
+          context:
+            - AWS
+            - Helm
+            - slack
