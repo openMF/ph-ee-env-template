@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a1f41a4d-235b-439a-a805-beb249272c92",
+		"_postman_id": "f7b77f34-73a1-4812-b389-1e9c98945675",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17902615",
-		"_collection_link": "https://martian-firefly-704030.postman.co/workspace/Fynarfin~cbeb07e6-89cb-4850-a0f6-5647e70b83e2/collection/17902615-a1f41a4d-235b-439a-a805-beb249272c92?action=share&source=collection_link&creator=17902615"
+		"_exporter_id": "31254556"
 	},
 	"item": [
 		{
@@ -1760,98 +1759,6 @@
 								{
 									"key": "clientCorrelationId",
 									"value": "123456789"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Variables",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "User-Agent",
-								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:90.0) Gecko/20100101 Firefox/90.0",
-								"disabled": true
-							},
-							{
-								"key": "Accept",
-								"value": "application/json, text/plain, */*",
-								"disabled": true
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en-US,en;q=0.5",
-								"disabled": true
-							},
-							{
-								"key": "Platform-TenantId",
-								"value": "{{TenantName}}"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJvYWYiXSwidXNlcl9uYW1lIjoibWlmb3MiLCJzY29wZSI6WyJpZGVudGl0eSJdLCJleHAiOjE2NDI2NzA0MTcsImF1dGhvcml0aWVzIjpbIlJFRlVORCIsIkFMTF9GVU5DVElPTlMiXSwianRpIjoiQStsajFsRVNsWW9YMU9uNjdyTlNRbFhHY05VPSIsImNsaWVudF9pZCI6ImNsaWVudCJ9.flZD_GlQJ2w8P_cU0DC2hojJLUA9WS_Bc3yy9X-1v8hR1xhJZjdHUKfBl-TqNdwPnWHEvuKNdsGSEzNCP8CYR71n3J33gzEpcKVZ0P7d2bOOLX6EgtSjDdjSLU_IGRxmOZEGES9p-UPAARbj24vIM3kugG6jBbVTJ08DksnLRXP0MdWjAmW6JNq0Y2VAJq_0LSCdab5XZT-vQsRL5PdrKvPT1w28jDFklWCrft6G-6SQbqkJPGR_oQPwYBmaZOx5ateE6JDMZN5CVmejExRVPYgE-tMxXRh7GZFTDaSW1DiMzNriBeDSu3NUkuwOCC4B4Z-XmzQJw36uE6pvqGT-Pg",
-								"disabled": true
-							},
-							{
-								"key": "Origin",
-								"value": "http://localhost:4200",
-								"disabled": true
-							},
-							{
-								"key": "Connection",
-								"value": "keep-alive",
-								"disabled": true
-							},
-							{
-								"key": "Referer",
-								"value": "http://localhost:4200/",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "{{OperationsHostName}}/api/v1/variables/21037e77-7227-4757-8e45-5c356f369b11",
-							"host": [
-								"{{OperationsHostName}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"variables",
-								"21037e77-7227-4757-8e45-5c356f369b11"
-							],
-							"query": [
-								{
-									"key": "direction",
-									"value": "OUTGOING",
-									"description": "INCOMING or OUTGOING direction",
-									"disabled": true
-								},
-								{
-									"key": "status",
-									"value": "{{status}}",
-									"description": "Transaction Status. Values can be COMPLETED, FAILED, IN_PROGRESS and ALL. By default set to ALL.",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "page",
-									"value": "0",
-									"disabled": true
-								},
-								{
-									"key": "clientCorrelationId",
-									"value": "123456789",
-									"disabled": true
 								}
 							]
 						}
@@ -45272,7 +45179,7 @@
 										"validation"
 									]
 								},
-								"description": "BillRefNo : (primaryIdentifier)  \n Paygops - foundationalId - 24322607  \n Roster - accountId - 33272035\n\nMSISDN :  \nPaygops - 254797668592  \nRoster - 2540726839144\n\nTransactionID:  \nPaygops - “8335b60090979AvUefSR”  \nRoster - “670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\""
+								"description": "BillRefNo : (primaryIdentifier)  \n Paygops - foundationalId - 24322607  \n Roster - accountId - 33272035\n\nMSISDN :  \nPaygops - 254797668592  \nRoster - 2540726839144\n\nTransactionID:  \nPaygops - “8335b60090979AvUefSR”  \nRoster - “670d65bd-4efd-4a6c-ae2c-7fdaa8cb4d60\""
 							},
 							"response": []
 						}
