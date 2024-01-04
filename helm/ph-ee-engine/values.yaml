@@ -1407,21 +1407,21 @@ mockpayment:
 
 
 kafka:
-  enabled: false
-  replicas: 1
-  image: "spotify/kafka"
-  advertised:
-    host: "kafka"
-    port: "9093"
-  limits:
-    memory: "1536M"
-    cpu: "600m"
-  requests:
-    memory: "512M"
-    cpu: "400m"
-  deployment:
-    annotations:
-      deployTime: "{{ .Values.deployTime }}"
+  enabled: true
+#  replicas: 1
+#  image: "spotify/kafka"
+#  advertised:
+#    host: "kafka"
+#    port: "9093"
+#  limits:
+#    memory: "1536M"
+#    cpu: "600m"
+#  requests:
+#    memory: "512M"
+#    cpu: "400m"
+#  deployment:
+#    annotations:
+#      deployTime: "{{ .Values.deployTime }}"
 
 importer_rdbms:
   enabled: true
