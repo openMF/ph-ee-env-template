@@ -14,6 +14,9 @@ configmap:
   apiversion: "v1"  
 
 global:
+  bucket_name: paymenthub-ee
+  region: "ap-south-1"
+  s3BaseUrl: "http://minio:9000"
   SPRING_PROFILES_ACTIVE: "bb"
   imagePullPolicy: "Always"
   LOGGING_LEVEL_ROOT: "INFO"
@@ -1431,9 +1434,6 @@ importer_rdbms:
       host: "operationsmysql"
       port: 3306
       schema: "tenants"
-  bucket_name: "paymenthub-ee"
-  aws:
-    region: "<region>"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1520,7 +1520,6 @@ connector_bulk:
   pollingApi:
     timer: "180"
   tenants: ""
-  bucket_name: "paymenthub-ee"
   operations_app:
       contactpoint: "http://ph-ee-operations-app:5000"
       endpoints:
@@ -1551,9 +1550,8 @@ connector_bulk:
     deduplication:
       enabled: true  
   aws:
-    region: "<region>"
-    access_key: "<access key>"
-    secret_key: "<secret key>"
+    access_key: "root"
+    secret_key: "password"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -2182,3 +2180,19 @@ crm:
     extraEnvs: []
     # - User that the container will execute as.
     # - Typically not necessarily unless running within environments such as OpenShift.
+minio:
+  enabled: true
+  fullnameOverride: "minio"
+  resources:
+    requests:
+      memory: 256Mi
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 10Gi
+  mode: standalone
+  rootUser: root
+  rootPassword: password
+  buckets:
+    - name: paymenthub-ee
+      policy: public

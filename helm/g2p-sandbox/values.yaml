@@ -369,10 +369,6 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-bulk-processor:latest
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
-    aws:
-      region: "ap-south-1"
-      access_key: "aws-access-key"
-      secret_key: "aws-secret-key"
     operations_app:
       contactpoint: "https://ops-bk.sandbox.mifos.io/"
       endpoints:
@@ -462,6 +458,7 @@ ph-ee-engine:
     enabled: true
     image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
+
   keycloak:
     enabled: true
     ingress:
@@ -635,6 +632,5 @@ account_mapper:
       url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
-
-
-
+  minio:
+    enabled: false

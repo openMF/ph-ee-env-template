@@ -45,10 +45,6 @@ config:
     completion_rate: 95
   deduplication:
     enabled: true  
-aws:
-  region: "<region>"
-  access_key: "<access key>" 
-  secret_key: "<secret key>"  
 limits:
   cpu: "256m"
   memory: "512M"
