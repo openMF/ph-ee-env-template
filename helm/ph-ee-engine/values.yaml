@@ -1408,20 +1408,33 @@ mockpayment:
 
 kafka:
   enabled: true
-#  replicas: 1
-#  image: "spotify/kafka"
-#  advertised:
-#    host: "kafka"
-#    port: "9093"
-#  limits:
-#    memory: "1536M"
-#    cpu: "600m"
-#  requests:
-#    memory: "512M"
-#    cpu: "400m"
-#  deployment:
-#    annotations:
-#      deployTime: "{{ .Values.deployTime }}"
+  fullnameOverride: kafka
+
+  provisioning:
+    enabled: true
+    topics:
+      - name: zeebe-export
+        partitions: 1
+        replicationFactor: 1
+
+  controller:
+    replicaCount: 3
+
+  listeners:
+    client:
+      protocol: PLAINTEXT
+
+    controller:
+      protocol: PLAINTEXT
+
+    interbroker:
+      protocol: PLAINTEXT
+
+    external:
+      protocol: PLAINTEXT
+
+  kraft:
+    clusterId: spDnn4oSr6DLKPx3cEheLp
 
 importer_rdbms:
   enabled: true
