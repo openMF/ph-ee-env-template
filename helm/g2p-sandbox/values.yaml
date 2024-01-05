@@ -567,9 +567,6 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
-  job:
-    enabled: false
-
   connector:
     enabled: true
     image: docker.io/openmf/ph-ee-connector-bulk:latest
