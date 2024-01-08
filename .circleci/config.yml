@@ -7,7 +7,8 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - run:
+      - run: apt-get update && apt-get install -y curl
+      - run: 
           name: Install Minikube
           command: |
             curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -23,7 +24,6 @@ jobs:
       - run:
           name: Deploy Helm Charts
           command: |
-            apt-get update && apt-get install -y curl
             sudo apt-get update
             sudo apt-get install -y apt-transport-https ca-certificates curl gpg
             sudo mkdir -p /etc/apt/keyrings
