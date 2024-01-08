@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: your-docker-image
+      - image: ubuntu:latest
     resource_class: large
     steps:
       - checkout
