@@ -20,7 +20,6 @@ jobs:
           command: |
             apt-get update
             apt-get install -y docker.io
-            usermod -aG docker $USER
 
       - run:
           name: Start Minikube
