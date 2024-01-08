@@ -13,10 +13,10 @@ jobs:
           command: |
             curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
             chmod +x minikube
-            mv minikube /usr/local/bin/
+            sudo mv minikube /usr/local/bin/
       - run:
           name: Start Minikube
-          command: minikube start --memory 16384
+          command: minikube start --memory 16384 --driver=virtualbox
       - run:
           name: Install Helm
           command: |
@@ -24,20 +24,20 @@ jobs:
       - run:
           name: Deploy Helm Charts
           command: |
-            apt-get update
-            apt-get install -y apt-transport-https ca-certificates curl gpg
-            mkdir -p /etc/apt/keyrings
-            touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list
-            apt-get update
+            sudo apt-get update
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            sudo mkdir -p /etc/apt/keyrings
+            sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
             kubectl version
-            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null
-            apt-get install apt-transport-https --yes
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list
+            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            sudo apt-get install apt-transport-https --yes
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
             #helm install
-            apt-get update
-            apt-get install helm
+            sudo apt-get update
+            sudo apt-get install helm
             #payment install
             kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
             kubectl create namespace paymenthub
