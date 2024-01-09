@@ -68,7 +68,7 @@ ph-ee-engine:
     # Allocate smaller chunks of memory per pod.
     resources:
       requests:
-        cpu: "100m"
+        cpu: "500m"
         memory: "1024M"
       limits:
         cpu: "1000m"
