@@ -1441,6 +1441,7 @@ importer_rdbms:
   replicas: 1
   image: docker.io/openmf/ph-ee-importer-rdbms:v1.7.1
   imagePullPolicy: "Always"
+  SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   datasource:
       username: "mifos"
       password: "password"
