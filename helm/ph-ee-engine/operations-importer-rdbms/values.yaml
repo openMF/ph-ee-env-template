@@ -35,4 +35,4 @@ deployment:
     deployTime: "{{ .Values.deployTime }}"
 
 operations:
-  SPRING_PROFILES_ACTIVE: "bb"
+  SPRING_PROFILES_ACTIVE: "local,tenants"
