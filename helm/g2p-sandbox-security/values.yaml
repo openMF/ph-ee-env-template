@@ -102,6 +102,3 @@ ph-ee-engine:
       ingress:
         enabled: false
         hostname: admin-kong.sandbox.mifos.io
-  
-  job:
-    enabled: false

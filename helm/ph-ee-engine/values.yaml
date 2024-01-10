@@ -2197,5 +2197,5 @@ minio:
     - name: paymenthub-ee
       policy: public
 
-job:
-  enabled: true
+post-installation-job:
+  enabled: false

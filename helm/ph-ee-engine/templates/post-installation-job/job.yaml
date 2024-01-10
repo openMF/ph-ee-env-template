@@ -1,4 +1,4 @@
-{{- if .Values.job.enabled }}
+{{- if .Values.post-installation-job.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
