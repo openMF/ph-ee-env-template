@@ -28,7 +28,7 @@ spec:
             - containerPort: 8000
           env:
           - name: "SPRING_PROFILES_ACTIVE"
-            value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
+            value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
           - name: "DATASOURCE_CORE_USERNAME"
             value: "{{ .Values.datasource.username }}" 
           - name: "DATASOURCE_CORE_PASSWORD"

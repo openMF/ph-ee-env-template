@@ -196,15 +196,6 @@ ph-ee-engine:
                   name: ph-ee-connector-mock-payment-schema
                   port:
                     number: 80
-  kafka:
-    enabled: true
-    image: "spotify/kafka"
-    advertised:
-      host: "kafka"
-      port: "9092"
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
 
   channel:
     enabled: true
@@ -472,7 +463,7 @@ ph-ee-engine:
       tls: []
     
   kong:
-    enabled: true
+    enabled: false
     image:
       repository: revomatico/docker-kong-oidc
       tag: "latest"
