@@ -634,5 +634,5 @@ account_mapper:
       password: password
   minio:
     enabled: false
-  post-installation-job:
+  post_installation_job:
     enabled: true
