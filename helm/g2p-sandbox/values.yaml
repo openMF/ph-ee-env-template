@@ -625,3 +625,5 @@ account_mapper:
       password: password
   minio:
     enabled: false
+  post_installation_job:
+    enabled: true

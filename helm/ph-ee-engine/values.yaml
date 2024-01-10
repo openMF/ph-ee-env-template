@@ -2210,3 +2210,6 @@ minio:
   buckets:
     - name: paymenthub-ee
       policy: public
+
+post_installation_job:
+  enabled: false
