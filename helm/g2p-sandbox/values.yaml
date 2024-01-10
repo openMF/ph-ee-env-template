@@ -578,6 +578,11 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
+  post_installation_job:
+    enabled: true
+  minio:
+    enabled: false
+
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
@@ -623,7 +628,5 @@ account_mapper:
       url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
-  minio:
-    enabled: false
-  post_installation_job:
-    enabled: true
+ 
+  
