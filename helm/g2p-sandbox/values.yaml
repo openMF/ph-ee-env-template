@@ -580,6 +580,8 @@ ph-ee-engine:
 
   post_installation_job:
     enabled: true
+  minio:
+    enabled: false
 
 account_mapper:
   enabled: true
@@ -626,6 +628,5 @@ account_mapper:
       url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
-  minio:
-    enabled: false
+ 
   
