@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_openMF_ph_ee_env_template_1704892298403-push-trigger-input-set
+  identifier: Build_openMF_ph_ee_env_template_1704892298403pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_openMF_ph_ee_env_template_1704892298403
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
