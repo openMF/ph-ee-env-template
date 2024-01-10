@@ -168,7 +168,7 @@ kafka:
 
 account_mapper:
   enabled: true
-  image: docker.io/openmf/ph-ee-identity-account-mapper:latest
+  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.5.0
   hostname: "identity-mapper.sandbox.mifos.io"
   ingress:
     enabled: true

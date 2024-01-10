@@ -130,7 +130,6 @@ ph-ee-engine:
 
   ph_ee_connector_ams_mifos:
     enabled: true
-    image: docker.io/openmf/ph-ee-connector-ams-mifos:latest
     SPRING_PROFILES_ACTIVE: "fin12,bb"
     ams_local_enabled: true
     ams_local_interop_host: "https://fynams.sandbox.mifos.io/"
@@ -158,7 +157,6 @@ ph-ee-engine:
 
   ph_ee_connector_mojaloop:
     enabled: true
-    image: docker.io/openmf/ph-ee-connector-mojaloop:latest
     SPRING_PROFILES_ACTIVE: "bb"
     hostname: "mojaloop.sandbox.mifos.io"
     DFSPIDS: "gorilla,lion"
@@ -199,7 +197,6 @@ ph-ee-engine:
 
   channel:
     enabled: true
-    image: docker.io/openmf/ph-ee-connector-channel:latest
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
@@ -247,7 +244,6 @@ ph-ee-engine:
 
   operations_app:
     enabled: true
-    image: docker.io/openmf/ph-ee-operations-app:latest
     tenants: "rhino,gorilla"
     hostname: "ops-bk.sandbox.mifos.io"
     datasource:
@@ -281,7 +277,6 @@ ph-ee-engine:
 
   operations_web:
     enabled: true
-    image: docker.io/openmf/ph-ee-operations-web:latest
     hostname: "ops.sandbox.mifos.io"
     ingress:
       enabled: false
@@ -301,7 +296,6 @@ ph-ee-engine:
 
   ph_ee_connector_gsma:
     enabled: true
-    image: docker.io/openmf/ph-ee-connector-gsma:latest
     SPRING_PROFILES_ACTIVE: "bb"
     limits:
       cpu: "500m"
@@ -327,7 +321,6 @@ ph-ee-engine:
     
   notifications:
     enabled: true
-    image: docker.io/openmf/ph-ee-notifications:latest
     imagePullPolicy: "Always"
     SPRING_PROFILES_ACTIVE: "bb"
     LOGGING_LEVEL_ROOT: "INFO"
@@ -357,7 +350,6 @@ ph-ee-engine:
 
   connector_bulk:
     enabled: true
-    image: docker.io/openmf/ph-ee-bulk-processor:latest
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     operations_app:
@@ -388,7 +380,6 @@ ph-ee-engine:
         
   zeebe_ops:
     enabled: true
-    image: docker.io/openmf/ph-ee-zeebe-ops:latest
     hostname: "zeebeops.sandbox.mifos.io"
     tenants: "rhino,gorilla"
     ingress:
@@ -412,7 +403,6 @@ ph-ee-engine:
 
   messagegateway:
     enabled: true
-    image: docker.io/openmf/message-gateway:latest
     secret:
       value:
         api_key: "<api_key>"
@@ -439,7 +429,6 @@ ph-ee-engine:
 
   importer_es:
     enabled: true
-    image: docker.io/openmf/ph-ee-importer-es:latest
     elasticsearch_sslverification: false
     elasticsearch_security_enabled: false
     reporting:
@@ -447,7 +436,6 @@ ph-ee-engine:
 
   importer_rdbms:
     enabled: true
-    image: docker.io/openmf/ph-ee-importer-rdbms:latest
     LOGGING_LEVEL_ROOT: "DEBUG"
 
   keycloak:
@@ -481,7 +469,6 @@ ph-ee-engine:
 
   vouchers:
     enabled: true
-    image: docker.io/openmf/ph-ee-vouchers:latest
     hostname: "vouchers.sandbox.mifos.io"
     ingress:
       enabled: true
@@ -512,7 +499,6 @@ ph-ee-engine:
 
   billPay:
     enabled: true
-    image: docker.io/openmf/ph-ee-bill-pay:latest
     hostname: "bill-pay.sandbox.mifos.io"
     stub_hostname: "bill-pay.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
@@ -536,7 +522,6 @@ ph-ee-engine:
 
   crm:
     enabled: true
-    image: docker.io/openmf/ph-ee-connector-crm:latest
     hostname: "crm.sandbox.mifos.io"
     stub_hostname: "crm.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
@@ -560,7 +545,6 @@ ph-ee-engine:
 
   connector:
     enabled: true
-    image: docker.io/openmf/ph-ee-connector-bulk:latest
     aws:
       region: "ap-south-1"
       access_key: "aws-access-key"
