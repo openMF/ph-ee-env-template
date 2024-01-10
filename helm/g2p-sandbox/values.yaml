@@ -578,6 +578,9 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
+  post_installation_job:
+    enabled: true
+
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
@@ -625,5 +628,4 @@ account_mapper:
       password: password
   minio:
     enabled: false
-  post_installation_job:
-    enabled: true
+  
