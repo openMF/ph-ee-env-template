@@ -54,8 +54,8 @@ spec:
           apt-get install -y kubelet kubeadm kubectl
           apt-mark hold kubelet kubeadm kubectl
 
-          export ENV_NAMESPACE=ph-infrastructure
-          kubectl config use-context arn:aws:eks:ap-south-1:419830066942:cluster/sit
+          export ENV_NAMESPACE={{ .Release.Namespace }}
+          # kubectl config use-context arn:aws:eks:ap-south-1:419830066942:cluster/sit
           git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
           cd elastic/helm-charts/elasticsearch/examples/security/
           make secrets || echo "elastic-secrets" already exists
