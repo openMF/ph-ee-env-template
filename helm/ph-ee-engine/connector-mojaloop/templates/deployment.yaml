@@ -66,6 +66,9 @@ spec:
 
             - name: "SWITCH_oracle-host"
               value: "{{ .Values.switch.oracle.host }}"
+
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }} 
