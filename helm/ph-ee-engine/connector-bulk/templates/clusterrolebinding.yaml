@@ -6,7 +6,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: ph-ee-connector-bulk # name of your service account
-  namespace: paymenthub # this is the namespace your service account is in
+  namespace: {{ .Release.Namespace }} # this is the namespace your service account is in
 roleRef: # referring to your ClusterRole
   kind: ClusterRole
   name: ph-ee-connector-bulk-c-role

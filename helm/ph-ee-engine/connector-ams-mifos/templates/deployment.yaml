@@ -56,6 +56,8 @@ spec:
           value: "{{ .Values.ams_local_loan_host }}"
         - name: "DFSPIDS"
           value: "{{ .Values.global.DFSPIDS }}"
+        - name: "ZEEBE_BROKER_CONTACTPOINT"
+          value: "{{ .Release.Name }}-zeebe-gateway:26500"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
 {{- end }}        

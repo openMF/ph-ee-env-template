@@ -186,7 +186,7 @@ ph-ee-engine:
     limits:
       memory: "768M"
     ingress:
-        enabled: true
+        enabled: false
         hosts:
           - host: ""
             paths:
@@ -205,7 +205,7 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     DFSPIDS: "rhino,gorilla,lion"
     operations:
-      url: "http://ops-bk.sandbox.mifos.io/api/v1"
+      url: "http://ph-ee-operations-app:80/api/v1"
       authEnabled: false
     tenantPrimary:
       clientId: "mifos"
@@ -361,11 +361,11 @@ ph-ee-engine:
     tenant: "rhino,gorilla"
     hostname: bulk-connector.sandbox.mifos.io
     operations_app:
-      contactpoint: "https://ops-bk.sandbox.mifos.io/"
+      contactpoint: "http://ph-ee-operations-app:80"
       endpoints:
         batch_transaction: "/api/v1/batch/transactions"
     identity_account_mapper:
-      hostname: "https://identity-mapper.sandbox.mifos.io"
+      hostname: "http://ph-ee-identity-account-mapper:80"
     service:
       annotations:
         konghq.com/protocol: "https"
@@ -451,7 +451,7 @@ ph-ee-engine:
     LOGGING_LEVEL_ROOT: "DEBUG"
 
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       enabled: false
       ingressClassName: "kong"
@@ -482,9 +482,8 @@ ph-ee-engine:
   vouchers:
     enabled: true
     image: docker.io/openmf/ph-ee-vouchers:latest
-    hostname: "vouchers.sandbox.mifos.io"
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
         nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
@@ -581,7 +580,7 @@ ph-ee-engine:
   post_installation_job:
     enabled: true
   minio:
-    enabled: false
+    enabled: true
 
 account_mapper:
   enabled: true
@@ -589,7 +588,7 @@ account_mapper:
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
-    enabled: true
+    enabled: false
     pathtype: Prefix
     annotations:
       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'

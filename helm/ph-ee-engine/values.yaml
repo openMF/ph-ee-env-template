@@ -2044,21 +2044,19 @@ vouchers:
     tenant: rhino
     identifier: 12345678
     identifierType: MSISDN
-  voucher:
-    hostname: "https://vouchers.sandbox.mifos.io"
   salting:
     enabled: true
   identity-account-mapper:
     hostname: "https://ph-ee-identity-mapper:80"
   operations:
-    hostname: "https://ops-bk.sandbox.mifos.io"
+    hostname: "http://ph-ee-operations-app:80"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
 
 billPay:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-bill-pay:v1.0.0
+  image: docker.io/openmf/ph-ee-bill-pay:v1.0.0
   imagePullPolicy: "Always"
   livenessProbe:
     httpGet:
