@@ -9,6 +9,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccountName: job-creator
       containers:
       - name: post-installation-job
         image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06"
@@ -54,33 +55,31 @@ spec:
           apt-get install -y kubelet kubeadm kubectl
           apt-mark hold kubelet kubeadm kubectl
 
-          export ENV_NAMESPACE=ph-infrastructure
-          kubectl config use-context arn:aws:eks:ap-south-1:419830066942:cluster/sit
-          git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-          cd elastic/helm-charts/elasticsearch/examples/security/
-          make secrets || echo "elastic-secrets" already exists
+          export ENV_NAMESPACE={{ .Release.Namespace }}
+          echo "check-namespace"
+          echo $ENV_NAMESPACE
+          git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
+          cd ph-ee-env-labs/helm/es-secret/
+          make secrets || echo "elastic-certificates" already exists
 
-          cd elastic/helm-charts/kibana/examples/security/
-          make secrets || echo "kibana-secrets" already exists
+          cd ../../helm/kibana-secret/
+          make secrets || echo "kibana" already exists
+
           #insatll netcat
           apt install -y netcat
           until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
           
           #Deploy BPMN 
-          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-          git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-          cd openMF/ph-ee-env-labs/orchestration
+          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n {{ .Release.Namespace }} & 
+
+          cd ../../orchestration
           ls
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
           cat deployBpmn.sh
           cd ..
+          sleep 10
           sh orchestration/deployBpmn.sh
-
-          #delete Clusterrole
-          kubectl delete clusterrole job-creator-role 
-          #&& kubectl delete clusterrolebinding job-creator-role-binding
-          # kubectl delete clusterrole job-creator-role
-        # sed 's/^aaa=.*/aaa=xxx/'   
+          echo "Configurations successful"
       restartPolicy: Never
   backoffLimit: 0 # Adjust as needed
   # successfulJobsHistoryLimit: 0  # Number of successful completions to retain

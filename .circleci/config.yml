@@ -114,6 +114,7 @@ jobs:
           version: "v3.8.2"
       - run: helm ls --namespace=paymenthub-release
       - kubernetes/install-kubectl
+      - run: "helm uninstall  ph-ee-g2psandbox -n paymenthub-release || echo ' ' "
       - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete namespace paymenthub-release || echo ' '"
@@ -126,7 +127,7 @@ jobs:
           recreate-pods: true
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0"
           wait: true
-          timeout: "300s"
+          timeout: "30m"
       # - run: helm test g2p-sandbox --namespace=paymenthub 
             # reset-values: true
             # dry-run: true
@@ -135,20 +136,6 @@ jobs:
       #     chart: "https://fynarfin.io/images/ph-ee-g2psandbox-0.2.0.tgz"
       #     release-name: g2p-sandbox
       #     namespace: ph-test
-  create-secret-paymenthub-namespace:
-    docker:
-      - image: cimg/base:2022.06
-    environment:
-      TERM: dumb
-      NAMESPACE: paymenthub-release
-    steps:
-      - setup_remote_docker:
-            version: 20.10.14
-      - kubernetes/install-kubectl
-      - run: git clone https://github.com/openmf/ph-ee-env-labs
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
   helm-test:
     docker:
       - image: cimg/base:2022.06
@@ -197,24 +184,43 @@ jobs:
 
 workflows:
   deploy:
-    jobs:      
+    jobs:
+      - build-and-host-engine:
+          context: 
+            - AWS
+            - Helm
+            - slack
+      - build-and-host-g2p-sandbox:
+          requires:
+            - build-and-host-engine
+          context: 
+            - AWS
+            - Helm
+            - slack
+      - build-host-g2p-fyn-chart:
+          requires:
+            - build-and-host-g2p-sandbox
+          context: 
+            - AWS
+            - Helm
+      - build-and-host-g2p-sandbox-security:
+          requires:
+            - build-host-g2p-fyn-chart
+          context: 
+            - AWS
+            - Helm
+            - slack       
       - upgrade-helm-chart:
           cluster-name: sit
+          requires:
+            - build-and-host-g2p-sandbox-security
           context: 
             - AWS
             - Helm
             - slack
-      - create-secret-paymenthub-namespace:
-          requires: 
-            - upgrade-helm-chart
-          context: 
-            - AWS
-            - Helm
-            - slack
-            - Secrets
       - helm-test:
           requires:
-            - create-secret-paymenthub-namespace
+            - upgrade-helm-chart
           context:
             - AWS
             - Helm

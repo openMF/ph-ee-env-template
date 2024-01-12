@@ -9,17 +9,17 @@ metadata:
 spec:
   containers:
   - name: integration-test
-    image: docker.io/openmf/ph-ee-integration-test:v1.5.0-rc.1
+    image: docker.io/openmf/ph-ee-integration-test:v1.5.0-rc.2
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args: 
     # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
-    - ./gradlew test -Dcucumber.filter.tags="@gov" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'    
+      - ./gradlew test -i -Dcucumber.filter.tags="@gov and not @flaky" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
     env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
         value: "http://ph-ee-operations-app:80"
       - name: "BULK_PROCESSOR_CONTACTPOINT"
-        value: "https://ph-ee-connector-bulk:80"
+        value: "https://ph-ee-connector-bulk:8443"
       - name: "CHANNEL_CONNECTOR_CONTACTPOINT"
         value: "https://ph-ee-connector-channel:8443"
       - name:  "LOGGING_LEVEL_ROOT"
@@ -48,6 +48,8 @@ spec:
         value: "http://ph-ee-connector-ams-mifos:80"
       - name: AMSMIFOS_MOCK_BASE_URL
         value: "http://ph-ee-connector-ams-mifos:80"
+      - name: AMS_BASE_URL
+        value: "http://ph-ee-connector-ams-mifos:80"
       - name: MOCK_PAYMENT_SCHEMA_CONTACTPOINT
         value: "http://ph-ee-connector-mock-payment-schema:8080"
       - name: MY_POD_IP
@@ -61,7 +63,9 @@ spec:
       - name: VOUCHER_MANAGEMENT_CONTACTPOINT
         value: "http://ph-ee-vouchers:80"
       - name: GLOBAL_WAIT_TIME_MS
-        value: "10000"
+        value: "20000"
+      - name: billPay_contactpoint
+        value: "http://ph-ee-connector-bill-pay:8080"
     resources:
         limits:
           cpu: "500m"

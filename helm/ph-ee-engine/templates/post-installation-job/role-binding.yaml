@@ -1,14 +1,13 @@
 {{- if .Values.post_installation_job.enabled }}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: job-creator-role-binding
 subjects:
 - kind: ServiceAccount
-  name: default
-  namespace: paymenthub
+  name: job-creator
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: job-creator-role
   apiGroup: rbac.authorization.k8s.io
 {{- end }}
