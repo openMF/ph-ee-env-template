@@ -206,24 +206,24 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-b --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
       - run:
           name: Fetch Integration Test Report
           command: |
             #!/bin/bash
             mkdir -p integration_report/test-report
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-b |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-b |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml  "
             done
             echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-b |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
       - store_test_results:
           path: integration_report/test-report/cucumber.xml
       - store_artifacts:
@@ -247,24 +247,24 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-a --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
       - run:
           name: Fetch Integration Test Report
           command: |
             #!/bin/bash
             mkdir -p integration_report/test-report
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-a |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-a |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml  "
             done
             echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-a |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
       - store_test_results:
           path: integration_report/test-report/cucumber.xml
       - store_artifacts:

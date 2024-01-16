@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: g2p-sandbox-test-b
+  name: g2p-sandbox-test-gov
   labels:
-    app: "integration-test-b"
+    app: "integration-test-gov"
   annotations:
     "helm.sh/hook": test-success
 spec:
   containers:
-  - name: g2p-sandbox-test-b
+  - name: g2p-sandbox-test-gov
     image: docker.io/openmf/ph-ee-integration-test:v1.4.0-rc.2
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
