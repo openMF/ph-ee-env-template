@@ -1436,6 +1436,14 @@ kafka:
   kraft:
     clusterId: spDnn4oSr6DLKPx3cEheLp
 
+  externalAccess:
+    enabled: true
+    autoDiscovery:
+      enabled: true
+
+  rbac:
+    create: true
+
 importer_rdbms:
   enabled: true
   replicas: 1
