@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: g2p-sandbox-test-ams
-    image: docker.io/openmf/ph-ee-integration-test:v1.4.0-rc.2
+    image: docker.io/openmf/ph-ee-integration-test:latest
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args:
@@ -18,8 +18,8 @@ spec:
     resources:
       limits:
         cpu: "500m"
-        memory: "3Gi"
+        memory: "1.5Gi"
       requests:
         cpu: "100m"
-        memory: "2Gi"
+        memory: "1Gi"
   restartPolicy: Never

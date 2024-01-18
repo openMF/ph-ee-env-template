@@ -213,7 +213,7 @@ jobs:
             #!/bin/bash
             mkdir -p integration_report/test-report
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file
+            # Specify the path to the downloaded file 
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
