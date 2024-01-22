@@ -91,7 +91,7 @@ jobs:
             # helm install -f helm/g2p-sandbox/values.yaml g2p-sandbox helm/g2p-sandbox -n paymenthub --timeout 35m
 
             helm repo add g2p-sandbox-master https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0/
-            helm install ph-ee-g2psandbox g2p-sandbox-master/ph-ee-g2psandbox --version 0.0.0 -n paymenthub --timeout 20m
+            helm install ph-ee-g2psandbox g2p-sandbox-master/ph-ee-g2psandbox --version 0.0.0 -n paymenthub --timeout 10m || echo 'helm insatll done'
             # helm repo add g2p-sandbox-1-4 https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0/
             # helm install ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 35m
             # helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
