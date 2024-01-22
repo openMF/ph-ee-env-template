@@ -2,62 +2,153 @@ version: 2.1
 
 jobs:
   build:
-    docker:
-      - image: ubuntu:latest
-    resource_class: large
-    steps:
-      - checkout
-      - run: apt-get update && apt-get install -y curl
-      - run: 
-          name: Install Minikube
-          command: |
-            curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-            chmod +x minikube
-            mv minikube /usr/local/bin/
-      # Install Docker
-      - run:
-          name: Install Docker
-          command: |
-            apt-get update
-            apt-get install -y docker.io
-            docker start my_container
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: xlarge
 
-      - run:
-          name: Start Minikube
-          command: |
-            minikube start --memory 16384 --driver=docker
-      - run:
-          name: Install Helm
-          command: |
-            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-      - run:
-          name: Deploy Helm Charts
-          command: |
-            # sudo apt-get update
-            # sudo apt-get install -y apt-transport-https ca-certificates curl gpg
-            # sudo mkdir -p /etc/apt/keyrings
-            # sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-            # curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-            # echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-            # sudo apt-get update
+    steps:
+      - checkout 
+      - run: 
+          name: run minikube 
+          command : |
+            free -m
+            #!/bin/bash
+            #insatll kubectl
+            echo hello 
+            sudo apt-get update
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            sudo mkdir -p /etc/apt/keyrings
+            sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg || echo done
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
+            sudo apt-get install -y kubelet kubeadm kubectl
+            sudo apt-mark hold kubelet kubeadm kubectl
+            # echo check version
             # kubectl version
-            # curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-            # sudo apt-get install apt-transport-https --yes
-            # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-            
-            #payment install
-            kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
+            # echo kubectl setup done
+
+            #  #Install Docker 
+            # sudo apt update
+            # sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+            # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+            # echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            # sudo apt update
+            # sudo apt install -y docker-ce docker-ce-cli containerd.io
+            # sudo docker --version
+            # ls -lart /etc/init.d/
+            # # cat /etc/init.d/docker 
+            # cat /etc/init.d/docker | grep ulimit
+            # cat /etc/docker/daemon.json
+            # sudo service docker status
+            # journalctl -xe | grep docker #Check Docker Daemon Logs
+            # sudo service docker start
+            # ls -l /var/run/docker.sock #Check Docker Socket File
+            # docker run --ulimit nofile=10240:40960 ubuntu
+            # # docker run --ulimit nofile=10240:40960 ubuntu
+            # # sudo /etc/init.d/docker start
+            # which docker
+
+            #Setup Minikube
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+            sudo dpkg -i minikube_latest_amd64.deb
+            echo minikube waiting
+            minikube start #--driver=docker
+            sleep 20
+            echo minikube started
+            minikube kubectl -- get po -A #Interact with Minikube cluster
+
+            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            sudo apt-get install apt-transport-https --yes
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            #helm install
+            sudo apt-get update
+            sudo apt-get install helm
             kubectl create namespace paymenthub
             kubectl get -A namespace  
-            helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
-            helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
-            
-            kubectl get pods -n paymenthub
-      - run:
-          name: helm test
-          command: |
-            helm test ph-ee-g2psandbox -n paymenthub --timeout 5m
 
+            #helm deploy hello-world-world
+            git clone -b GOV-561 https://github.com/somanath21/examples
+            echo git clone is done
+            cd examples/
+            helm dep up charts/hello-world
+            helm install -f charts/hello-world/values.yaml hello-world charts/hello-world -n paymenthub
+            sleep 20
+
+            #helm test
+            helm test hello-world -n paymenthub || echo helm test done
+            kubectl get pods -n paymenthub
+            # kubectl logs -f  g2p-sandbox-test-connection -n paymenthub
+            # #payment install
+            # kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
+            # kubectl create namespace paymenthub
+            # kubectl get -A namespace  
+            # helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
+            # helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
+
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # # sleep 300
+            # cd elastic/helm-charts/elasticsearch/examples/security/
+            # make secrets || echo "elastic-secrets" already exists
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/kibana/examples/security/
+            # make secrets || echo "kibana-secrets" already exists
+            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secrets -n paymenthub
+            # kubectl get configmap -n paymenthub
+            # free -g
+            # sleep 5m
+            # # kubectl get pods -n paymenthub
+            # echo minikube is running
+            # #insatll netcat
+            # sudo apt install -y netcat
+            # # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+            # #Deploy BPMN 
+            # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            # cd openMF/ph-ee-env-labs/orchestration
+            # ls
+            # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            # cat deployBpmn.sh
+            # cd ..
+            # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            # kubectl get pods -n paymenthub
+            # # kubectl describe po -n paymenthub `kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops |cut -d ' ' -f1` || echo ' '
+            # # helm list -n paymenthub
+            # # sleep 10m
+            # # kubectl get -A namespace paymenthub
+            # kubectl get pods -n paymenthub
+            # kubectl describe pod ph-ee-elasticsearch-0 -n paymenthub
+            # helm test ph-ee-g2psandbox -n paymenthub --timeout 5m
+            # kubectl get pods -n paymenthub
+            # kubectl describe g2p-sandbox-test-connection -n paymenthub
+
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml  "
+            done
+            echo "File is no longer empty, processing..."
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      - store_test_results:
+          path: integration_report/test-report/cucumber.xml
+      - store_artifacts:
+          path: integration_report/test-report/reports/tests/test
 
 workflows:
   version: 2
@@ -82,4 +173,4 @@ workflows:
 #                   - generated.yml
 #       - test-harness/execute-tests:
 #           requires:
-#             - test-harness/create-config
+#             - test
