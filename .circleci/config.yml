@@ -85,9 +85,9 @@ jobs:
             kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
             git clone https://github.com/openMF/ph-ee-env-template
             cd ph-ee-env-template
-            echo ls
+            ls
             helm dep up helm/g2p-sandbox
-            helm install -f helm/g2p-sandbox/values.yaml g2p-sandbox helm/g2p-sandbox -n paymenthub
+            helm install -f helm/g2p-sandbox/values.yaml g2p-sandbox helm/g2p-sandbox -n paymenthub --timeout 15m
 
             # helm repo add g2p-sandbox-1-4 https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0/
             # helm install ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 15m
