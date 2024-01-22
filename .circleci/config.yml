@@ -11,6 +11,7 @@ jobs:
       - checkout 
       - run: 
           name: run minikube 
+          no_output_timeout: 40m
           command : |
             free -m
             #!/bin/bash
