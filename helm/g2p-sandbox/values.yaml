@@ -204,9 +204,6 @@ ph-ee-engine:
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     DFSPIDS: "rhino,gorilla,lion"
-    operations:
-      url: "http://ph-ee-operations-app:80/api/v1"
-      authEnabled: false
     tenantPrimary:
       clientId: "mifos"
       clientSecret: "password"
