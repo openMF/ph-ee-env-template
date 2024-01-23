@@ -69,7 +69,10 @@ jobs:
             sudo apt-get update
             sudo apt-get install helm
             kubectl create namespace paymenthub
-            kubectl get -A namespace  
+            kubectl get -A namespace 
+            
+            #cluster-id 
+            curl -X GET -H "Accept: application/vnd.api+json" localhost:8082/v3/clusters 
 
             #payment install
             kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
