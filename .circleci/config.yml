@@ -87,7 +87,7 @@ jobs:
             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
             ngrok config add-authtoken $AUTH_TOKEN
             echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http https://$MINIKUBE_IP:8443 > /dev/null &
+            ngrok http 8443 > /dev/null &
 
             echo -n "Extracting ngrok public url ."
             NGROK_PUBLIC_URL=""
