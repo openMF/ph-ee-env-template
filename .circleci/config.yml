@@ -47,46 +47,47 @@ jobs:
             minikube kubectl -- get po -A #Interact with Minikube cluster
             kubectl create namespace paymenthub
             kubectl get -A namespace  
-          
-            sudo apt install nginx        
-            sudo touch /etc/nginx/conf.d/minikube.conf 
-            echo "create nginx conf"
-            sudo chmod 777 -R /etc/nginx/conf.d/
-            echo "changed access"
 
-            sudo apt-get install apache2-utils -y
-            echo "apache2-utils installed"
-            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+            # echo "Install Nginx---------------------------------------------------------------------------------------"
+            # sudo apt install nginx        
+            # sudo touch /etc/nginx/conf.d/minikube.conf 
+            # echo "create nginx conf"
+            # sudo chmod 777 -R /etc/nginx/conf.d/
+            # echo "changed access"
 
-            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
-            server {
-                listen       8080;
-                listen [::]:8080;
-                server_name  localhost;
-                access_log /home/circleci/project/nginx_access.log;
-                auth_basic "Administrators Area";
-                auth_basic_user_file /home/circleci/project/.htpasswd;    
+            # sudo apt-get install apache2-utils -y
+            # echo "apache2-utils installed"
+            # htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+
+            # sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            # server {
+            #     listen       8080;
+            #     listen [::]:8080;
+            #     server_name  localhost;
+            #     access_log /home/circleci/project/nginx_access.log;
+            #     auth_basic "Administrators Area";
+            #     auth_basic_user_file /home/circleci/project/.htpasswd;    
                 
-                location / {   
-                    proxy_pass https://$MINIKUBE_IP:8443;
-                    proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
-                    proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
-                }
-            }
-            EOF
-            sudo service nginx restart || echo 'start nginx'
-            #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+            #     location / {   
+            #         proxy_pass https://$MINIKUBE_IP:8443;
+            #         proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+            #         proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+            #     }
+            # }
+            # EOF
+            # sudo service nginx restart || echo 'start nginx'
+            # #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
             
-            sleep 10
-            echo "Nginx ready---------------------------------------------------------------------------------------"
+            # sleep 10
+            # echo "Nginx ready---------------------------------------------------------------------------------------"
             
-            echo "test-nginx-proxy"
-            curl -u minikube:minikube http://localhost:8080
+            # echo "test-nginx-proxy"
+            # curl -u minikube:minikube http://localhost:8080
             
             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
             ngrok config add-authtoken $AUTH_TOKEN
             echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http 8080 > /dev/null &
+            ngrok http https://$MINIKUBE_IP:8443 > /dev/null &
 
             echo -n "Extracting ngrok public url ."
             NGROK_PUBLIC_URL=""
@@ -105,8 +106,8 @@ jobs:
             echo "https://$NGROK_PUBLIC_URL"
 
             echo "test ngrok "
-            curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-
+            #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+ 
             #docker logs -f `docker ps |grep nginx | cut -d " " -f1`
 
             # curl --request GET \
@@ -116,13 +117,13 @@ jobs:
             # --cacert  /home/circleci/.minikube/ca.crt \
             # --verbose
 
-            # echo "client.crt---------------------------------------------------------------------------------------"
-            # cat /home/circleci/.minikube/profiles/minikube/client.crt
-            # echo "client.key---------------------------------------------------------------------------------------"
-            # cat /home/circleci/.minikube/profiles/minikube/client.key
-            # echo "ca.crt---------------------------------------------------------------------------------------"
-            # cat /home/circleci/.minikube/ca.crt
-            # echo "---------------------------------------------------------------------------------------"
+            echo "client.crt---------------------------------------------------------------------------------------"
+            cat /home/circleci/.minikube/profiles/minikube/client.crt
+            echo "client.key---------------------------------------------------------------------------------------"
+            cat /home/circleci/.minikube/profiles/minikube/client.key
+            echo "ca.crt---------------------------------------------------------------------------------------"
+            cat /home/circleci/.minikube/ca.crt
+            echo "---------------------------------------------------------------------------------------"
 
             #minikube logs -f
             sleep 1000
