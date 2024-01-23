@@ -11,6 +11,7 @@ jobs:
       - checkout 
       - run: 
           name: run minikube 
+          no_output_timeout: 40m
           command : |
             free -m
             #!/bin/bash
@@ -25,19 +26,42 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y kubelet kubeadm kubectl
             sudo apt-mark hold kubelet kubeadm kubectl
+            # echo check version
             # kubectl version
-            echo kubectl setup done
+            # echo kubectl setup done
+
+            #  #Install Docker 
+            # sudo apt update
+            # sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+            # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+            # echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            # sudo apt update
+            # sudo apt install -y docker-ce docker-ce-cli containerd.io
+            # sudo docker --version
+            # ls -lart /etc/init.d/
+            # # cat /etc/init.d/docker 
+            # cat /etc/init.d/docker | grep ulimit
+            # cat /etc/docker/daemon.json
+            # sudo service docker status
+            # journalctl -xe | grep docker #Check Docker Daemon Logs
+            # sudo service docker start
+            # ls -l /var/run/docker.sock #Check Docker Socket File
+            # docker run --ulimit nofile=10240:40960 ubuntu
+            # # docker run --ulimit nofile=10240:40960 ubuntu
+            # # sudo /etc/init.d/docker start
+            # which docker
 
             #Setup Minikube
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
             sudo dpkg -i minikube_latest_amd64.deb
             echo minikube waiting
+            minikube config set cpus 6
+            minikube config set memory 25600
             minikube start #--driver=docker
             sleep 20
             echo minikube started
             minikube kubectl -- get po -A #Interact with Minikube cluster
 
-            #helm install
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
             sudo apt-get install apt-transport-https --yes
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
@@ -47,73 +71,66 @@ jobs:
             kubectl create namespace paymenthub
             kubectl get -A namespace  
 
-            # #helm deploy hello-world-world
-            # git clone -b GOV-561 https://github.com/somanath21/examples
-            # echo git clone is done
-            # cd examples/
-            # helm dep up charts/hello-world
-            # helm install -f charts/hello-world/values.yaml hello-world charts/hello-world -n paymenthub
-            # sleep 20
-
-            # #helm test
-            # helm test hello-world -n paymenthub || echo helm test done
-
-            # kubectl get pods -n paymenthub
-            # kubectl logs -f  g2p-sandbox-test-connection -n paymenthub
-
             #payment install
             kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
-            # kubectl create namespace paymenthub
-            # kubectl get -A namespace  
+            # git clone https://github.com/openMF/ph-ee-env-template
+            # cd ph-ee-env-template
+            # ls
+            # helm dep up helm/g2p-sandbox
+            # helm install -f helm/g2p-sandbox/values.yaml ph-ee-g2psandbox helm/g2p-sandbox -n paymenthub --timeout 35m
+
+            helm repo add g2p-sandbox-master https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0/
+            helm install ph-ee-g2psandbox g2p-sandbox-master/ph-ee-g2psandbox --version 0.0.0 -n paymenthub --timeout 10m || echo 'helm insatll done'
             # helm repo add g2p-sandbox-1-4 https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0/
-            # helm install my-ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 15m
+            # helm install ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 35m
+            # helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
+            # helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
+
+            # # secret creation
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # # sleep 300
+            # cd elastic/helm-charts/elasticsearch/examples/security/
+            # make secrets || echo "elastic-secrets" already exists
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/kibana/examples/security/
+            # make secrets || echo "kibana-secrets" already exists
+            # kubectl get secrets -n paymenthub
+            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # # kubectl get secrets -n paymenthub
+            # # kubectl get configmap -n paymenthub
+            # free -g
             # sleep 5m
-            helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
-            helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
-
-            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            # sleep 300
-            cd elastic/helm-charts/elasticsearch/examples/security/
-            make secrets || echo "elastic-secrets" already exists
-            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            cd elastic/helm-charts/kibana/examples/security/
-            make secrets || echo "kibana-secrets" already exists
-            kubectl get secrets -n paymenthub
-            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secrets -n paymenthub
-            kubectl get configmap -n paymenthub
-            free -g
-            sleep 5m
-            # kubectl get pods -n paymenthub
-            echo minikube is running
-            #insatll netcat
-            sudo apt install -y netcat
-            # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+            # # kubectl get pods -n paymenthub
+            # echo minikube is running
+            # #insatll netcat
+            # sudo apt install -y netcat
+            # # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
            
-            #Deploy BPMN 
-            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            cd openMF/ph-ee-env-labs/orchestration
-            ls
-            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
-            cat deployBpmn.sh
-            cd ..
-            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            # #Deploy BPMN 
+            # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            # cd openMF/ph-ee-env-labs/orchestration
+            # ls
+            # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            # cat deployBpmn.sh
+            # cd ..
+            # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
 
-            # kubectl get pods -n paymenthub
-            # kubectl describe po -n paymenthub `kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops |cut -d ' ' -f1` || echo ' '
-            # helm list -n paymenthub
-            # sleep 10m
-            # kubectl get -A namespace paymenthub
+            # # kubectl get pods -n paymenthub
+            # # kubectl describe po -n paymenthub `kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops |cut -d ' ' -f1` || echo ' '
+        
             kubectl get secrets -n paymenthub
             kubectl get pods -n paymenthub
+            echo helm test started
             # kubectl describe pod ph-ee-elasticsearch-0 -n paymenthub
-            helm test ph-ee-g2psandbox -n paymenthub --timeout 10m || echo test completed
-            kubectl get pods -n paymenthub
+            # helm test ph-ee-g2psandbox -n paymenthub --timeout 40m #|| echo test completed
+            helm test ph-ee-g2psandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+            # echo helm test completed
+            # kubectl get pods -n paymenthub
             # kubectl describe g2p-sandbox-test-connection -n paymenthub
 
       - run:
