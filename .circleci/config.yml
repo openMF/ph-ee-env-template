@@ -82,7 +82,7 @@ jobs:
             # helm repo add g2p-sandbox-master https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0/
             # helm install ph-ee-g2psandbox g2p-sandbox-master/ph-ee-g2psandbox --version 0.0.0 -n paymenthub --timeout 30m 
             helm repo add g2p-sandbox-1-4 https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0/
-            helm install ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 35m --set ph-ee-engine.post_installation_job.enabled=false ph-ee-engine.kafka.provisioning.enabled=false
+            helm install ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 35m --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
             # helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
             # helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
 
