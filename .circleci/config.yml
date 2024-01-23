@@ -87,7 +87,8 @@ jobs:
             # kubectl create namespace paymenthub
             # kubectl get -A namespace  
             helm repo add g2p-sandbox-1-4 https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0/
-            helm install my-ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 20m
+            helm install my-ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub #--timeout 20m
+            sleep 5m
             # helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
             # helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
 
