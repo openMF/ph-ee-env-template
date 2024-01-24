@@ -5,7 +5,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
       docker_layer_caching: true
-    resource_class: large
+    resource_class: xlarge
 
     steps:
       - checkout 
@@ -27,9 +27,9 @@ jobs:
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
             sudo dpkg -i minikube_latest_amd64.deb
             echo minikube waiting
-            export no_proxy="127.0.0.1,192.168.49.2"
-            minikube config set cpus 2
-            minikube config set memory 8192
+            #export no_proxy="127.0.0.1,192.168.49.2"
+            minikube config set cpus 6
+            minikube config set memory 25600
             minikube start #--driver=docker
             sleep 20
             echo minikube started
@@ -106,6 +106,7 @@ jobs:
 
             echo "test ngrok "
             curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
 
             #docker logs -f `docker ps |grep nginx | cut -d " " -f1`
 
@@ -124,7 +125,7 @@ jobs:
             # cat /home/circleci/.minikube/ca.crt
             # echo "---------------------------------------------------------------------------------------"
 
-            #minikube logs -f
+            minikube logs -f
             sleep 1000
 
 workflows:
