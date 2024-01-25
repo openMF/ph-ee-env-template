@@ -295,7 +295,7 @@ jobs:
             helm repo add g2p-sandbox-phee-528 https://fynarfin.io/images/jira-story-version/ph-ee-g2psandbox-fynarfin-phee-528/
             echo helm repo added
             helm install ph-ee-g2psandbox g2p-sandbox-phee-528/ph-ee-g2psandbox-fynarfin-phee-528 -n paymenthub 
-
+ 
             # git clone https://github.com/openMF/ph-ee-env-template
             # cd ph-ee-env-template
             # ls
