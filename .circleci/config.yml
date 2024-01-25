@@ -170,7 +170,7 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
-  docker-image-availability-check-and-upgrade:
+  Helm-deploy-test-minikube:
     machine:
       image: ubuntu-2004:current
       docker_layer_caching: true
@@ -343,13 +343,42 @@ jobs:
 
             # # kubectl get pods -n paymenthub
             # # kubectl describe po -n paymenthub `kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops |cut -d ' ' -f1` || echo ' '
-            # sleep 5m
-            # kubectl get secrets -n paymenthub
-            # kubectl get pods -n paymenthub
-            # echo helm test started
+            sleep 5m
+            kubectl get secrets -n paymenthub
+            kubectl get pods -n paymenthub
+            echo helm test started
             # # kubectl describe pod ph-ee-elasticsearch-0 -n paymenthub
-            # # helm test ph-ee-g2psandbox -n paymenthub --timeout 40m #|| echo test completed
-            # helm test ph-ee-g2psandbox --namespace paymenthub || echo test
+            # helm test ph-ee-g2psandbox -n paymenthub --timeout 40m #|| echo test completed
+            helm test ph-ee-g2psandbox --namespace paymenthub || echo test
+            # echo helm test completed
+            # kubectl get pods -n paymenthub
+            # kubectl describe g2p-sandbox-test-connection -n paymenthub
+
+            # sleep 2400
+
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml  "
+            done
+            echo "File is no longer empty, processing..."
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      - store_test_results:
+          path: integration_report/test-report/cucumber.xml
+      - store_artifacts:
+          path: integration_report/test-report/reports/tests/test
+
+
 #     docker:
 #       - image: cimg/python:3.10
 #     environment:
@@ -367,87 +396,87 @@ jobs:
 #           aws-region: "$REGION"
 #           service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
 
-  helm-test-gov:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "sit"
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
-      - kubernetes/install-kubectl
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
-      - run:
-          name: Fetch Integration Test Report
-          command: |
-            #!/bin/bash
-            mkdir -p integration_report/test-report
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file 
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml  "
-            done
-            echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-      - store_test_results:
-          path: integration_report/test-report/cucumber.xml
-      - store_artifacts:
-          path: integration_report/test-report/reports/tests/test
+  # helm-test-gov:
+  #   docker:
+  #     - image: cimg/python:3.10
+  #   parameters:
+  #     cluster-name:
+  #       description: "sit"
+  #       type: string
+  #   steps:
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: "sit"
+  #         aws-region: "$REGION"
+  #     - kubernetes/install-kubectl
+  #     - helm/install-helm-client:
+  #         version: "v3.8.2"
+  #     - run: helm ls --namespace=paymenthub
+  #     - run:
+  #         name: Run Helm Tests
+  #         command: |
+  #           helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+  #     - run:
+  #         name: Fetch Integration Test Report
+  #         command: |
+  #           #!/bin/bash
+  #           mkdir -p integration_report/test-report
+  #           kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #           # Specify the path to the downloaded file 
+  #           downloaded_file="integration_report/test-report/cucumber.xml"
+  #           # Loop until the file is not empty
+  #           while [ ! -s $downloaded_file ]; do
+  #               echo "File is empty, waiting..."
+  #               sleep 60  # You can adjust the sleep interval as needed
+  #               kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+  #               downloaded_file="integration_report/test-report/cucumber.xml  "
+  #           done
+  #           echo "File is no longer empty, processing..."
+  #           # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #     - store_test_results:
+  #         path: integration_report/test-report/cucumber.xml
+  #     - store_artifacts:
+  #         path: integration_report/test-report/reports/tests/test
 
-  helm-test-ams:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "sit"
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
-      - kubernetes/install-kubectl
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
-      - run:
-          name: Fetch Integration Test Report
-          command: |
-            #!/bin/bash
-            mkdir -p integration_report/test-report
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml  "
-            done
-            echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-      - store_test_results:
-          path: integration_report/test-report/cucumber.xml
-      - store_artifacts:
-          path: integration_report/test-report/reports/tests/test
+  # helm-test-ams:
+  #   docker:
+  #     - image: cimg/python:3.10
+  #   parameters:
+  #     cluster-name:
+  #       description: "sit"
+  #       type: string
+  #   steps:
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: "sit"
+  #         aws-region: "$REGION"
+  #     - kubernetes/install-kubectl
+  #     - helm/install-helm-client:
+  #         version: "v3.8.2"
+  #     - run: helm ls --namespace=paymenthub
+  #     - run:
+  #         name: Run Helm Tests
+  #         command: |
+  #           helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+  #     - run:
+  #         name: Fetch Integration Test Report
+  #         command: |
+  #           #!/bin/bash
+  #           mkdir -p integration_report/test-report
+  #           kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #           # Specify the path to the downloaded file
+  #           downloaded_file="integration_report/test-report/cucumber.xml"
+  #           # Loop until the file is not empty
+  #           while [ ! -s $downloaded_file ]; do
+  #               echo "File is empty, waiting..."
+  #               sleep 60  # You can adjust the sleep interval as needed
+  #               kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+  #               downloaded_file="integration_report/test-report/cucumber.xml  "
+  #           done
+  #           echo "File is no longer empty, processing..."
+  #           # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #     - store_test_results:
+  #         path: integration_report/test-report/cucumber.xml
+  #     - store_artifacts:
+  #         path: integration_report/test-report/reports/tests/test
 
 workflows:
   deploy:
@@ -477,7 +506,7 @@ workflows:
             - AWS
             - Helm
             - slack
-      - docker-image-availability-check-and-upgrade:
+      - Helm-deploy-test-minikube:
           context:
             - AWS
             - Helm
@@ -485,21 +514,21 @@ workflows:
             - Ngrok
           requires:
             - build-host-g2p-fyn-chart
-      - helm-test-gov:
-          # cluster-name: sit
-          requires:
-            - helm-test-ams
-          context:
-            - AWS
-            - Helm
-            - slack
-            - Ngrok
-      - helm-test-ams:
-          # cluster-name: sit
-          requires:
-            - docker-image-availability-check-and-upgrade
-          context:
-            - AWS
-            - Helm
-            - slack
-            - Ngrok
+      # - helm-test-gov:
+      #     # cluster-name: sit
+      #     requires:
+      #       - helm-test-ams
+      #     context:
+      #       - AWS
+      #       - Helm
+      #       - slack
+      #       - Ngrok
+      # - helm-test-ams:
+      #     # cluster-name: sit
+      #     requires:
+      #       - docker-image-availability-check-and-upgrade
+      #     context:
+      #       - AWS
+      #       - Helm
+      #       - slack
+      #       - Ngrok
