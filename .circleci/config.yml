@@ -76,7 +76,7 @@ jobs:
             minikube kubectl -- get po -A #Interact with Minikube cluster
             kubectl create namespace paymenthub
             kubectl get -A namespace  
-          
+
             sudo apt install nginx        
             sudo touch /etc/nginx/conf.d/minikube.conf 
             echo "create nginx conf"
@@ -95,7 +95,7 @@ jobs:
                 access_log /home/circleci/project/nginx_access.log;
                 auth_basic "Administrators Area";
                 auth_basic_user_file /home/circleci/project/.htpasswd;    
-                
+
                 location / {   
                     proxy_pass https://$MINIKUBE_IP:8443;
                     proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
@@ -105,13 +105,13 @@ jobs:
             EOF
             sudo service nginx restart || echo 'start nginx'
             #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
-            
+
             sleep 10
             echo "Nginx ready---------------------------------------------------------------------------------------"
-            
+
             echo "test-nginx-proxy"
             curl -u minikube:minikube http://localhost:8080
-            
+
             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
             ngrok config add-authtoken $AUTH_TOKEN
             echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
@@ -127,14 +127,16 @@ jobs:
               sleep 1
               echo -n "."
             done
-
+           
             echo "Ngrok ready---------------------------------------------------------------------------------------"
-            
+
             echo "https://$NGROK_PUBLIC_URL"
             echo "https://$NGROK_PUBLIC_URL"
 
             echo "test ngrok "
             curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
+            
 
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
@@ -231,6 +233,7 @@ jobs:
           path: integration_report/test-report/cucumber.xml
       - store_artifacts:
           path: integration_report/test-report/reports/tests/test
+      
 
 workflows:
   version: 2
