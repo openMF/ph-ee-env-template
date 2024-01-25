@@ -239,7 +239,9 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - build:
+          context:
+            - Ngrok
 
 # version: 2.1
 # setup: true
