@@ -145,7 +145,7 @@ jobs:
             #helm install
             sudo apt-get update
             sudo apt-get install helm
-            kubectl create namespace paymenthub
+            kubectl create namespace paymenthub || echo namespace already exists
             kubectl get -A namespace 
 
             #payment install
