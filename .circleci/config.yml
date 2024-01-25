@@ -26,30 +26,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y kubelet kubeadm kubectl
             sudo apt-mark hold kubelet kubeadm kubectl
-            # echo check version
             # kubectl version
-            # echo kubectl setup done
-
-            #  #Install Docker 
-            # sudo apt update
-            # sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
-            # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-            # echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            # sudo apt update
-            # sudo apt install -y docker-ce docker-ce-cli containerd.io
-            # sudo docker --version
-            # ls -lart /etc/init.d/
-            # # cat /etc/init.d/docker 
-            # cat /etc/init.d/docker | grep ulimit
-            # cat /etc/docker/daemon.json
-            # sudo service docker status
-            # journalctl -xe | grep docker #Check Docker Daemon Logs
-            # sudo service docker start
-            # ls -l /var/run/docker.sock #Check Docker Socket File
-            # docker run --ulimit nofile=10240:40960 ubuntu
-            # # docker run --ulimit nofile=10240:40960 ubuntu
-            # # sudo /etc/init.d/docker start
-            # which docker
 
             #Setup Minikube
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
@@ -58,12 +35,8 @@ jobs:
             minikube config set cpus 6
             minikube config set memory 25600
             minikube start #--driver=docker
-            sleep 20
-            echo minikube started
-            minikube kubectl -- get po -A #Interact with Minikube cluster
-
             echo "Minikube started---------------------------------------------------------------------------------------"
-            
+           
             # To check the allocated values 
             minikube config get cpus
             minikube config get memory
