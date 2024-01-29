@@ -171,22 +171,230 @@ jobs:
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
   docker-image-availability-check-and-upgrade:
-    docker:
-      - image: cimg/python:3.10
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: xlarge
     environment:
       TERM: dumb
+    parameters:
+      namespace:
+        default: ""
+        description: |
+          The kubernetes namespace that should be used.
+        type: string
+      release-name:
+        default: ""
+        description: |
+          Specify a name for the release.
+        type: string
+      cluster-name:
+        default: "minikube"
+        type: string
+      service-file-path:
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+        type: string
+      chart-base-url:
+        default: https://fynarfin.io/images
+        type: string
+      chart-name:
+        default: ph-ee-g2psandbox-fynarfin
+        type: string
+      chart-version:
+        default: 0.2.0
+        type: string
     steps:
-      - mifos-orb/docker-image-availability-check-and-upgrade:
-          namespace: paymenthub
-          chart-base-url: https://fynarfin.io/images
-          chart-name: ph-ee-g2psandbox-fynarfin
-          chart-version: 0.2.0
-#          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-          release-name: g2p-sandbox
-#          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
-          cluster-name: "sit"
-          aws-region: "$REGION"
-          service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+      - run: 
+          name: run minikube 
+          no_output_timeout: 40m
+          command : |
+            free -m
+            #!/bin/bash
+            #insatll kubectl
+            echo hello 
+            sudo apt-get update
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            sudo mkdir -p /etc/apt/keyrings
+            sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg || echo done
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
+            sudo apt-get install -y kubelet kubeadm kubectl
+            sudo apt-mark hold kubelet kubeadm kubectl
+            # kubectl version
+
+            #Setup Minikube
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+            sudo dpkg -i minikube_latest_amd64.deb
+            echo minikube waiting
+            minikube config set cpus 6
+            minikube config set memory 25600
+            minikube start #--driver=docker
+            echo "Minikube started---------------------------------------------------------------------------------------"
+           
+            # To check the allocated values 
+            minikube config get cpus
+            minikube config get memory
+
+            MINIKUBE_IP=`minikube ip`
+            echo $MINIKUBE_IP
+            free -m
+            cat ~/.kube/config
+        
+            minikube kubectl -- get po -A #Interact with Minikube cluster
+            kubectl create namespace paymenthub
+            kubectl get -A namespace  
+
+            sudo apt install nginx        
+            sudo touch /etc/nginx/conf.d/minikube.conf 
+            echo "create nginx conf"
+            sudo chmod 777 -R /etc/nginx/conf.d/
+            echo "changed access"
+
+            sudo apt-get install apache2-utils -y
+            echo "apache2-utils installed"
+            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+
+            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            server {
+                listen       8080;
+                listen [::]:8080;
+                server_name  localhost;
+                access_log /home/circleci/project/nginx_access.log;
+                auth_basic "Administrators Area";
+                auth_basic_user_file /home/circleci/project/.htpasswd;    
+
+                location / {   
+                    proxy_pass https://$MINIKUBE_IP:8443;
+                    proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+                    proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+                }
+            }
+            EOF
+            sudo service nginx restart || echo 'start nginx'
+            #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+
+            sleep 10
+            echo "Nginx ready---------------------------------------------------------------------------------------"
+
+            echo "test-nginx-proxy"
+            curl -u minikube:minikube http://localhost:8080
+
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            ngrok config add-authtoken $AUTH_TOKEN
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            ngrok http 8080 > /dev/null &
+
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+              sleep 1
+              echo -n "."
+            done
+           
+            echo "Ngrok ready---------------------------------------------------------------------------------------"
+
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
+
+            echo "test ngrok "
+            curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
+            
+
+
+            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            sudo apt-get install apt-transport-https --yes
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            #helm install
+            sudo apt-get update
+            sudo apt-get install helm
+            kubectl create namespace paymenthub || echo namespace already exists
+            kubectl get -A namespace
+      - run:
+          name: fetch docker images and helm upgrade
+          environment:
+            ORB_CHART_BASE_URL: << parameters.chart-base-url >>
+            ORB_CHART_NAME: << parameters.chart-name >>
+            ORB_CHART_VERSION: << parameters.chart-version >>
+            ORB_PARAM_NAMESPACE: << parameters.namespace >>
+            ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
+            JIRA_STORY: ''
+            JIRA_STORY_DIR: ''
+            VALUES_TO_OVERRIDE: ''
+            SERVICE_FILE_PATH: << parameters.service-file-path>>
+          command: |
+            function get_services_from_file() {
+                file=$1
+                while IFS= read -r line || [ -n "$line" ]; do
+                  generate_values_to_override $line
+                done < "$file"
+            }
+            
+            function generate_values_to_override() {
+              PREFIX="docker.io/"
+              if [ "$CIRCLE_BRANCH" != "master" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
+                  echo "image: < $1=$2:$JIRA_STORY >"
+                  VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
+              else
+                  echo "image: < $1=$2:latest >"
+                  VALUES_TO_OVERRIDE+=$(echo "$1=$2:latest"),
+              fi
+            }
+            function check_for_image_tag(){
+              curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
+            }
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
+              
+              PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
+              if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
+            fi 
+            
+            echo $SERVICE_FILE_PATH
+            wget $SERVICE_FILE_PATH
+            filename=$(basename "$SERVICE_FILE_PATH")
+            get_services_from_file $filename
+            
+            if [ -n "${VALUES_TO_OVERRIDE}" ]; then
+                VALUES_TO_OVERRIDE=$(echo --set ${VALUES_TO_OVERRIDE::-1})
+                echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
+            fi
+
+            if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
+                ORB_PARAM_NAMESPACE=$(echo --namespace ${ORB_PARAM_NAMESPACE})
+            fi
+            if [ -n "${JIRA_STORY}" ]; then
+              JIRA_STORY=-$(echo $JIRA_STORY)
+            fi
+            
+            # Generating the chart url for deployment
+            # chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+            ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
+            
+            CHART_URL="$ORB_PARAM_CHART"
+            if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
+              echo "chart used: < $CHART_URL >"
+              # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+              ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
+            else
+              CHART_URL="https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+              ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
+              echo "chart used: < $CHART_URL >"
+            fi
+          
+            echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+            helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+
+            helm repo update
+            echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
+            helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
+
 
   helm-test-gov:
     docker:
