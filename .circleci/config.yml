@@ -511,6 +511,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Ngrok
           requires:
             - build-host-g2p-fyn-chart
       - helm-test-gov:
@@ -521,6 +522,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Ngrok
       - helm-test-ams:
           cluster-name: sit
           requires:
@@ -529,3 +531,4 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Ngrok
