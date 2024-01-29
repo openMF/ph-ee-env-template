@@ -401,12 +401,11 @@ jobs:
       - image: cimg/python:3.10
     parameters:
       cluster-name:
-        description: "sit"
+        description: "minikube"
         type: string
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
+          cluster-name: "minikube"
       - kubernetes/install-kubectl
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -442,12 +441,11 @@ jobs:
       - image: cimg/python:3.10
     parameters:
       cluster-name:
-        description: "sit"
+        description: "minikube"
         type: string
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
+          cluster-name: "minikube"
       - kubernetes/install-kubectl
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -515,7 +513,7 @@ workflows:
           requires:
             - build-host-g2p-fyn-chart
       - helm-test-gov:
-          cluster-name: sit
+          cluster-name: minikube
           requires:
             - helm-test-ams
           context:
@@ -524,7 +522,7 @@ workflows:
             - slack
             - Ngrok
       - helm-test-ams:
-          cluster-name: sit
+          cluster-name: minikube
           requires:
             - docker-image-availability-check-and-upgrade
           context:
