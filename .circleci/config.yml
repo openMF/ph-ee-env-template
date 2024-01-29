@@ -179,12 +179,12 @@ jobs:
       TERM: dumb
     parameters:
       namespace:
-        default: ""
+        default: "paymenthub"
         description: |
           The kubernetes namespace that should be used.
         type: string
       release-name:
-        default: ""
+        default: "g2p-sandbox"
         description: |
           Specify a name for the release.
         type: string
