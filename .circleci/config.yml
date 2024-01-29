@@ -281,7 +281,8 @@ jobs:
             curl -u minikube:minikube http://localhost:8080
 
             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            ngrok config add-authtoken $AUTH_TOKEN
+            ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
+            # ngrok config add-authtoken $AUTH_TOKEN
             echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
             ngrok http 8080 > /dev/null &
 
