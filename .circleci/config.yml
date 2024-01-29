@@ -112,17 +112,17 @@ jobs:
           aws-region: "$REGION"
       - helm/install-helm-client:
           version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub-release
+      - run: helm ls --namespace=paymenthub-av
       - kubernetes/install-kubectl
       - run: "kubectl delete clusterroles `kubectl get clusterroles |grep c-role|cut -d ' ' -f1` || echo ' ' "
       - run: "kubectl delete clusterrolebinding `kubectl get clusterrolebinding |grep c-role|cut -d ' ' -f1` || echo ' ' "
-      - run: "kubectl delete namespace paymenthub-release || echo ' '"
-      - run: "kubectl create namespace paymenthub-release || echo ' '"
+      - run: "kubectl delete namespace paymenthub-av || echo ' '"
+      - run: "kubectl create namespace paymenthub-av || echo ' '"
       #- run: "kubectl delete crd `kubectl get crd|grep kong |cut -d ' ' -f1` || echo ' ' "
       - helm/upgrade-helm-chart:
           chart: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/ph-ee-g2psandbox-1.3.1.tgz"
           release-name: ph-ee-g2psandbox
-          namespace: paymenthub-release
+          namespace: paymenthub-av
           recreate-pods: true
           add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1"
           wait: true
@@ -140,7 +140,7 @@ jobs:
       - image: cimg/base:2022.06
     environment:
       TERM: dumb
-      NAMESPACE: paymenthub-release
+      NAMESPACE: paymenthub-av
     steps:
       - setup_remote_docker:
             version: 20.10.14
@@ -177,7 +177,7 @@ jobs:
       - image: cimg/base:2022.06
     environment:
       TERM: dumb
-      NAMESPACE: paymenthub-release
+      NAMESPACE: paymenthub-av
     steps:
       - setup_remote_docker:
             version: 20.10.14
@@ -192,13 +192,13 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            helm test ph-ee-g2psandbox --namespace paymenthub-release || echo test
+            helm test ph-ee-g2psandbox --namespace paymenthub-av || echo test
       - run:
           name: Fetch Integration Test Report
           command: |
             #!/bin/bash
             mkdir -p integration_report/test-report
-            kubectl cp paymenthub-release/`kubectl get pods -n paymenthub-release | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp paymenthub-av/`kubectl get pods -n paymenthub-av | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
 
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
@@ -207,11 +207,11 @@ jobs:
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub-release/`kubectl get pods -n paymenthub-release | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp paymenthub-av/`kubectl get pods -n paymenthub-av | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml  "
             done
             echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub-release/`kubectl get pods -n paymenthub-release | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp paymenthub-av/`kubectl get pods -n paymenthub-av | grep g2p-sandbox-test-connection |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
 
       - store_test_results:
           path: integration_report/test-report/cucumber.xml
