@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
-            - containerPort: 4200
+            - containerPort: 80
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"

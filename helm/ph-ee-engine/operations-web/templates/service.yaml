@@ -9,4 +9,5 @@ spec:
   ports:
     - protocol: TCP
       port: 4200
+      targetPort: 80
 {{- end }}      
