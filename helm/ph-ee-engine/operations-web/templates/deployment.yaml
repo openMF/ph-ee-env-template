@@ -37,7 +37,7 @@ spec:
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}
-volumeMounts:
+          volumeMounts:
 {{- if .Values.deployment.config }}
 {{ toYaml .Values.deployment.config | indent 12 }}
 {{- end }}
