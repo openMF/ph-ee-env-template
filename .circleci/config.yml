@@ -171,104 +171,285 @@ jobs:
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
   docker-image-availability-check-and-upgrade:
-    docker:
-      - image: cimg/python:3.10
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: xlarge
     environment:
       TERM: dumb
-    steps:
-      - mifos-orb/docker-image-availability-check-and-upgrade:
-          namespace: paymenthub
-          chart-base-url: https://fynarfin.io/images
-          chart-name: ph-ee-g2psandbox-fynarfin
-          chart-version: 0.2.0
-#          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-          release-name: g2p-sandbox
-#          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
-          cluster-name: "sit"
-          aws-region: "$REGION"
-          service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
 
-  helm-test-gov:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "sit"
-        type: string
     steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
-      - kubernetes/install-kubectl
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
-      - run:
-          name: Fetch Integration Test Report
-          command: |
+      - checkout 
+      - run: 
+          name: run minikube 
+          no_output_timeout: 40m
+          command : |
+            free -m
             #!/bin/bash
-            mkdir -p integration_report/test-report
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file 
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml  "
-            done
-            echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-      - store_test_results:
-          path: integration_report/test-report/cucumber.xml
-      - store_artifacts:
-          path: integration_report/test-report/reports/tests/test
+            #insatll kubectl
+            echo hello 
+            sudo apt-get update
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            sudo mkdir -p /etc/apt/keyrings
+            sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg || echo done
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
+            sudo apt-get install -y kubelet kubeadm kubectl
+            sudo apt-mark hold kubelet kubeadm kubectl
+            # kubectl version
 
-  helm-test-ams:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "sit"
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "sit"
-          aws-region: "$REGION"
-      - kubernetes/install-kubectl
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
-      - run:
-          name: Fetch Integration Test Report
-          command: |
-            #!/bin/bash
-            mkdir -p integration_report/test-report
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml  "
+            #Setup Minikube
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+            sudo dpkg -i minikube_latest_amd64.deb
+            echo minikube waiting
+            minikube config set cpus 6
+            minikube config set memory 25600
+            minikube start #--driver=docker
+            echo "Minikube started---------------------------------------------------------------------------------------"
+           
+            # To check the allocated values 
+            minikube config get cpus
+            minikube config get memory
+
+            MINIKUBE_IP=`minikube ip`
+            echo $MINIKUBE_IP
+            free -m
+            cat ~/.kube/config
+        
+            minikube kubectl -- get po -A #Interact with Minikube cluster
+            kubectl create namespace paymenthub
+            kubectl get -A namespace  
+
+            sudo apt install nginx        
+            sudo touch /etc/nginx/conf.d/minikube.conf 
+            echo "create nginx conf"
+            sudo chmod 777 -R /etc/nginx/conf.d/
+            echo "changed access"
+
+            sudo apt-get install apache2-utils -y
+            echo "apache2-utils installed"
+            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+
+            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            server {
+                listen       8080;
+                listen [::]:8080;
+                server_name  localhost;
+                access_log /home/circleci/project/nginx_access.log;
+                auth_basic "Administrators Area";
+                auth_basic_user_file /home/circleci/project/.htpasswd;    
+
+                location / {   
+                    proxy_pass https://$MINIKUBE_IP:8443;
+                    proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+                    proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+                }
+            }
+            EOF
+            sudo service nginx restart || echo 'start nginx'
+            #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+
+            sleep 10
+            echo "Nginx ready---------------------------------------------------------------------------------------"
+
+            echo "test-nginx-proxy"
+            curl -u minikube:minikube http://localhost:8080
+
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            ngrok config add-authtoken $AUTH_TOKEN
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            ngrok http 8080 > /dev/null &
+
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+              sleep 1
+              echo -n "."
             done
-            echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-      - store_test_results:
-          path: integration_report/test-report/cucumber.xml
-      - store_artifacts:
-          path: integration_report/test-report/reports/tests/test
+           
+            echo "Ngrok ready---------------------------------------------------------------------------------------"
+
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
+
+            echo "test ngrok "
+            curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
+            
+
+
+            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            sudo apt-get install apt-transport-https --yes
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            #helm install
+            sudo apt-get update
+            sudo apt-get install helm
+            kubectl create namespace paymenthub || echo namespace already exists
+            kubectl get -A namespace 
+    
+            #payment install
+            kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
+             
+
+            # git clone https://github.com/openMF/ph-ee-env-template
+            # cd ph-ee-env-template
+            # ls
+            # helm dep up helm/g2p-sandbox
+            # helm install -f helm/g2p-sandbox/values.yaml ph-ee-g2psandbox helm/g2p-sandbox -n paymenthub --timeout 35m
+
+            # helm repo add g2p-sandbox-master https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0/
+            # helm install ph-ee-g2psandbox g2p-sandbox-master/ph-ee-g2psandbox --version 0.0.0 -n paymenthub --timeout 30m 
+            # helm repo add g2p-sandbox-1-4 https://fynarfin.io/images/ph-ee-g2psandbox-1.4.0/
+            # helm install ph-ee-g2psandbox g2p-sandbox-1-4/ph-ee-g2psandbox --version 1.4.0 -n paymenthub --timeout 35m --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
+            # helm repo add g2p-sandbox-1-3-1 https://fynarfin.io/images/ph-ee-g2psandbox-1.3.1/
+            # helm install ph-ee-g2psandbox g2p-sandbox-1-3-1/ph-ee-g2psandbox --version 1.3.1 -n paymenthub 
+
+            # secret creation
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # sleep 300
+            cd elastic/helm-charts/elasticsearch/examples/security/
+            make secrets || echo "elastic-secrets" already exists
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            cd elastic/helm-charts/kibana/examples/security/
+            make secrets || echo "kibana-secrets" already exists
+            kubectl get secrets -n paymenthub
+            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secrets -n paymenthub
+            # kubectl get configmap -n paymenthub
+            free -g
+            sleep 5m
+            # kubectl get pods -n paymenthub
+            echo minikube is running
+            #insatll netcat
+            sudo apt install -y netcat
+            # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+           
+            #Deploy BPMN 
+            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            cd openMF/ph-ee-env-labs/orchestration
+            ls
+            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            cat deployBpmn.sh
+            cd ..
+            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+
+            # # kubectl get pods -n paymenthub
+            # # kubectl describe po -n paymenthub `kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops |cut -d ' ' -f1` || echo ' '
+            # sleep 5m
+            # kubectl get secrets -n paymenthub
+            # kubectl get pods -n paymenthub
+            # echo helm test started
+            # # kubectl describe pod ph-ee-elasticsearch-0 -n paymenthub
+            # # helm test ph-ee-g2psandbox -n paymenthub --timeout 40m #|| echo test completed
+            # helm test ph-ee-g2psandbox --namespace paymenthub || echo test
+#     docker:
+#       - image: cimg/python:3.10
+#     environment:
+#       TERM: dumb
+#     steps:
+#       - mifos-orb/docker-image-availability-check-and-upgrade:
+#           namespace: paymenthub
+#           chart-base-url: https://fynarfin.io/images
+#           chart-name: ph-ee-g2psandbox-fynarfin
+#           chart-version: 0.2.0
+# #          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+#           release-name: g2p-sandbox
+# #          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+#           cluster-name: "sit"
+#           aws-region: "$REGION"
+#           service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+
+  # helm-test-gov:
+  #   docker:
+  #     - image: cimg/python:3.10
+  #   parameters:
+  #     cluster-name:
+  #       description: "sit"
+  #       type: string
+  #   steps:
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: "sit"
+  #         aws-region: "$REGION"
+  #     - kubernetes/install-kubectl
+  #     - helm/install-helm-client:
+  #         version: "v3.8.2"
+  #     - run: helm ls --namespace=paymenthub
+  #     - run:
+  #         name: Run Helm Tests
+  #         command: |
+  #           helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+  #     - run:
+  #         name: Fetch Integration Test Report
+  #         command: |
+  #           #!/bin/bash
+  #           mkdir -p integration_report/test-report
+  #           kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #           # Specify the path to the downloaded file 
+  #           downloaded_file="integration_report/test-report/cucumber.xml"
+  #           # Loop until the file is not empty
+  #           while [ ! -s $downloaded_file ]; do
+  #               echo "File is empty, waiting..."
+  #               sleep 60  # You can adjust the sleep interval as needed
+  #               kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+  #               downloaded_file="integration_report/test-report/cucumber.xml  "
+  #           done
+  #           echo "File is no longer empty, processing..."
+  #           # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #     - store_test_results:
+  #         path: integration_report/test-report/cucumber.xml
+  #     - store_artifacts:
+  #         path: integration_report/test-report/reports/tests/test
+
+  # helm-test-ams:
+  #   docker:
+  #     - image: cimg/python:3.10
+  #   parameters:
+  #     cluster-name:
+  #       description: "sit"
+  #       type: string
+  #   steps:
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: "sit"
+  #         aws-region: "$REGION"
+  #     - kubernetes/install-kubectl
+  #     - helm/install-helm-client:
+  #         version: "v3.8.2"
+  #     - run: helm ls --namespace=paymenthub
+  #     - run:
+  #         name: Run Helm Tests
+  #         command: |
+  #           helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+  #     - run:
+  #         name: Fetch Integration Test Report
+  #         command: |
+  #           #!/bin/bash
+  #           mkdir -p integration_report/test-report
+  #           kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #           # Specify the path to the downloaded file
+  #           downloaded_file="integration_report/test-report/cucumber.xml"
+  #           # Loop until the file is not empty
+  #           while [ ! -s $downloaded_file ]; do
+  #               echo "File is empty, waiting..."
+  #               sleep 60  # You can adjust the sleep interval as needed
+  #               kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+  #               downloaded_file="integration_report/test-report/cucumber.xml  "
+  #           done
+  #           echo "File is no longer empty, processing..."
+  #           # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+  #     - store_test_results:
+  #         path: integration_report/test-report/cucumber.xml
+  #     - store_artifacts:
+  #         path: integration_report/test-report/reports/tests/test
 
 workflows:
   deploy:
@@ -303,21 +484,24 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Ngrok
           requires:
             - build-host-g2p-fyn-chart
-      - helm-test-gov:
-          cluster-name: sit
-          requires:
-            - helm-test-ams
-          context:
-            - AWS
-            - Helm
-            - slack
-      - helm-test-ams:
-          cluster-name: sit
-          requires:
-            - docker-image-availability-check-and-upgrade
-          context:
-            - AWS
-            - Helm
-            - slack
+      # - helm-test-gov:
+      #     # cluster-name: sit
+      #     requires:
+      #       - helm-test-ams
+      #     context:
+      #       - AWS
+      #       - Helm
+      #       - slack
+      #       - Ngrok
+      # - helm-test-ams:
+      #     # cluster-name: sit
+      #     requires:
+      #       - docker-image-availability-check-and-upgrade
+      #     context:
+      #       - AWS
+      #       - Helm
+      #       - slack
+      #       - Ngrok
