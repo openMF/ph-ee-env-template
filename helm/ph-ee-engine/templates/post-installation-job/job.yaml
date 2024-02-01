@@ -69,7 +69,19 @@ spec:
           kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
           kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
           kubectl get secrets -n paymenthub
+          sleep 60
 
+          # export ENV_NAMESPACE={{ .Release.Namespace }}
+          # echo "check-namespace"
+          # echo $ENV_NAMESPACE
+          # git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
+          # cd ph-ee-env-labs/helm/es-secret/
+          # make secrets || echo "elastic-certificates" already exists
+
+          # cd ../../helm/kibana-secret/
+          # make secrets || echo "kibana" already exists
+          # kubectl get secrets -n paymenthub
+          
           #insatll netcat
           apt install -y netcat
           # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;

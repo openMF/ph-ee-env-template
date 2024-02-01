@@ -280,31 +280,31 @@ jobs:
             echo "test-nginx-proxy"
             curl -u minikube:minikube http://localhost:8080
 
-            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
+            # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            # # ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
             # ngrok config add-authtoken $AUTH_TOKEN
-            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http 8080 > /dev/null &
+            # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            # ngrok http 8080 > /dev/null &
 
-            echo -n "Extracting ngrok public url ."
-            NGROK_PUBLIC_URL=""
-            while [ -z "$NGROK_PUBLIC_URL" ]; do
-              # Run 'curl' against ngrok API and extract public (using 'sed' command)
-              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-              sleep 1
-              echo -n "."
-            done
+            # echo -n "Extracting ngrok public url ."
+            # NGROK_PUBLIC_URL=""
+            # while [ -z "$NGROK_PUBLIC_URL" ]; do
+            #   # Run 'curl' against ngrok API and extract public (using 'sed' command)
+            #   export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+            #                             --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+            #                             sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+            #   sleep 1
+            #   echo -n "."
+            # done
            
-            echo "Ngrok ready---------------------------------------------------------------------------------------"
+            # echo "Ngrok ready---------------------------------------------------------------------------------------"
 
-            echo "https://$NGROK_PUBLIC_URL"
-            echo "https://$NGROK_PUBLIC_URL"
+            # echo "https://$NGROK_PUBLIC_URL"
+            # echo "https://$NGROK_PUBLIC_URL"
 
-            echo "test ngrok "
-            curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-            echo "https://$NGROK_PUBLIC_URL"
+            # echo "test ngrok "
+            # curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            # echo "https://$NGROK_PUBLIC_URL"
             
 
 
@@ -395,32 +395,50 @@ jobs:
             kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
             helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
-            helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
+            echo helm chart install starts
+            helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
 
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # sleep 300
+            cd elastic/helm-charts/elasticsearch/examples/security/
+            make secrets || echo "elastic-secrets" already exists
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            cd elastic/helm-charts/kibana/examples/security/
+            make secrets || echo "kibana-secrets" already exists
+            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secrets -n paymenthub
+            sleep 1m
+            # kubectl get pods -n paymenthub
+            #insatll netcat
+            sudo apt install -y netcat
+            # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+           
+            #Deploy BPMN 
+            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            cd openMF/ph-ee-env-labs/orchestration
+            ls
+            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            cat deployBpmn.sh
+            cd ..
+            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
 
-  helm-test-gov:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "minikube"
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "minikube"
-      - kubernetes/install-kubectl
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
       - run:
           name: Run Helm Tests
           command: |
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+                 
       - run:
           name: Fetch Integration Test Report
           command: |
             #!/bin/bash
             mkdir -p integration_report/test-report
+            #Fetch Integration Test Report for GOV
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file 
             downloaded_file="integration_report/test-report/cucumber.xml"
@@ -429,38 +447,14 @@ jobs:
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
                 kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml  "
+                downloaded_file="integration_report/test-report/cucumber.xml "
             done
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
+            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
             echo "File is no longer empty, processing..."
             # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-      - store_test_results:
-          path: integration_report/test-report/cucumber.xml
-      - store_artifacts:
-          path: integration_report/test-report/reports/tests/test
 
-  helm-test-ams:
-    docker:
-      - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        description: "minikube"
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "minikube"
-      - kubernetes/install-kubectl
-      - helm/install-helm-client:
-          version: "v3.8.2"
-      - run: helm ls --namespace=paymenthub
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
-      - run:
-          name: Fetch Integration Test Report
-          command: |
-            #!/bin/bash
-            mkdir -p integration_report/test-report
+            #Fetch Integration Test Report for ams
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
@@ -471,12 +465,16 @@ jobs:
                 kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml  "
             done
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
+             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
             echo "File is no longer empty, processing..."
             # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            
       - store_test_results:
-          path: integration_report/test-report/cucumber.xml
+          path: integration_report/test-report/
       - store_artifacts:
-          path: integration_report/test-report/reports/tests/test
+          path: integration_report/test-report/reports/tests
+
 
 workflows:
   deploy:
@@ -514,21 +512,21 @@ workflows:
             - Ngrok
           requires:
             - build-host-g2p-fyn-chart
-      - helm-test-gov:
-          cluster-name: minikube
-          requires:
-            - helm-test-ams
-          context:
-            - AWS
-            - Helm
-            - slack
-            - Ngrok
-      - helm-test-ams:
-          cluster-name: minikube
-          requires:
-            - docker-image-availability-check-and-upgrade
-          context:
-            - AWS
-            - Helm
-            - slack
-            - Ngrok
+      # - helm-test-gov:
+      #     cluster-name: minikube
+      #     requires:
+      #       - helm-test-ams
+      #     context:
+      #       - AWS
+      #       - Helm
+      #       - slack
+      #       - Ngrok
+      # - helm-test-ams:
+      #     cluster-name: minikube
+      #     requires:
+      #       - docker-image-availability-check-and-upgrade
+      #     context:
+      #       - AWS
+      #       - Helm
+      #       - slack
+      #       - Ngrok
