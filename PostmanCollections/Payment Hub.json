@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a1f41a4d-235b-439a-a805-beb249272c92",
-		"name": "Payment Hub APIs",
+		"_postman_id": "d6acbfa8-7f7a-4998-9539-43da65c2a5dd",
+		"name": "Payment Hub APIs Copy 4",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17902615",
-		"_collection_link": "https://martian-firefly-704030.postman.co/workspace/Fynarfin~cbeb07e6-89cb-4850-a0f6-5647e70b83e2/collection/17902615-a1f41a4d-235b-439a-a805-beb249272c92?action=share&source=collection_link&creator=17902615"
+		"_exporter_id": "28727869"
 	},
 	"item": [
 		{
@@ -3645,6 +3644,71 @@
 							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"ASD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"ASC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": false,\n            \"ascending\": true\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
 						}
 					]
+				},
+				{
+					"name": "Generate x-signature (dev utility)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"x-signature\", responseBody);",
+									"postman.setEnvironmentVariable(\"X-CorrelationId\", pm.request.headers.get(\"X-CorrelationID\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CorrelationID",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "/Users/ankitagarwal/fynarfin/ph-ee-bulk-demo-7.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/util/x-signature",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"util",
+								"x-signature"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -43359,17 +43423,27 @@
 							},
 							{
 								"key": "filename",
-								"value": "ph-ee-bulk-demo-6.csv",
+								"value": "ph-ee-bulk-demo-7.csv",
 								"type": "text"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{$guid}}",
+								"value": "{{X-CorrelationId}}",
 								"type": "text"
 							},
 							{
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Signature",
+								"value": "{{x-signature}}",
+								"type": "text"
+							},
+							{
+								"key": "type",
+								"value": "csv",
 								"type": "text"
 							}
 						],
@@ -43379,12 +43453,12 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{batchFilePath}}"
+									"src": "/Users/ankitagarwal/fynarfin/ph-ee-bulk-demo-7.csv"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{BulkHostName}}/batchtransactions?type=csv",
+							"raw": "{{BulkHostName}}/batchtransactions",
 							"host": [
 								"{{BulkHostName}}"
 							],
@@ -43394,7 +43468,8 @@
 							"query": [
 								{
 									"key": "type",
-									"value": "csv"
+									"value": "csv",
+									"disabled": true
 								}
 							]
 						}
@@ -43447,18 +43522,23 @@
 								"type": "text"
 							},
 							{
-								"key": "filename",
-								"value": "ph-ee-bulk-demo-6.csv",
-								"type": "text"
-							},
-							{
 								"key": "X-CorrelationID",
-								"value": "{{$guid}}",
+								"value": "{{X-CorrelationId}}",
 								"type": "text"
 							},
 							{
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Signature",
+								"value": "{{x-signature}}",
+								"type": "text"
+							},
+							{
+								"key": "type",
+								"value": "raw",
 								"type": "text"
 							}
 						],
@@ -43472,18 +43552,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BulkHostName}}/batchtransactions?type=raw",
+							"raw": "{{BulkHostName}}/batchtransactions",
 							"host": [
 								"{{BulkHostName}}"
 							],
 							"path": [
 								"batchtransactions"
-							],
-							"query": [
-								{
-									"key": "type",
-									"value": "raw"
-								}
 							]
 						}
 					},
