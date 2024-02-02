@@ -124,4 +124,4 @@ dependencies:
   - name: ph-ee-connector
     version: 1.0.0
     repository: "file://./connector-ph-ee"
-    condition: "ph-ee-connector.enabled"
+    condition: "ph-ee-connector-bulk.enabled"
