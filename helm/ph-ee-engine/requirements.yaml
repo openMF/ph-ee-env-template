@@ -120,3 +120,8 @@ dependencies:
     version: 1.0.0
     repository: "file://./connector-crm"
     condition: "crm.enabled"
+
+  - name: ph-ee-connector
+    version: 1.0.0
+    repository: "file://./connector"
+    condition: "connector.enabled"
