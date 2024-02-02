@@ -396,32 +396,33 @@ jobs:
             echo helm chart install starts
             helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
 
-            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            # # sleep 300
-            # cd elastic/helm-charts/elasticsearch/examples/security/
-            # make secrets || echo "elastic-secrets" already exists
-            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            # cd elastic/helm-charts/kibana/examples/security/
-            # make secrets || echo "kibana-secrets" already exists
-            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-            # kubectl get secrets -n {{ .Release.Namespace }}
-            # sleep 1m
-            # # kubectl get pods -n {{ .Release.Namespace }}
-
-            export ENV_NAMESPACE={{ .Release.Namespace }}
-            echo "check-namespace"
-            echo $ENV_NAMESPACE
-            git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
-            cd ph-ee-env-labs/helm/es-secret/
-            make secrets || echo "elastic-certificates" already exists
-
-            cd ../../helm/kibana-secret/
-            make secrets || echo "kibana" already exists
+            echo --------------------helm upgrade is done---------------------
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # sleep 300
+            cd elastic/helm-charts/elasticsearch/examples/security/
+            make secrets || echo "elastic-secrets" already exists
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            cd elastic/helm-charts/kibana/examples/security/
+            make secrets || echo "kibana-secrets" already exists
+            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
             kubectl get secrets -n {{ .Release.Namespace }}
+            
+            # kubectl get pods -n {{ .Release.Namespace }}
+
+            # export ENV_NAMESPACE={{ .Release.Namespace }}
+            # echo "check-namespace"
+            # echo $ENV_NAMESPACE
+            # git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
+            # cd ph-ee-env-labs/helm/es-secret/
+            # make secrets || echo "elastic-certificates" already exists
+
+            # cd ../../helm/kibana-secret/
+            # make secrets || echo "kibana" already exists
+            # kubectl get secrets -n {{ .Release.Namespace }}
             
             #insatll netcat
             sudo apt install -y netcat
