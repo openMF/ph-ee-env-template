@@ -174,7 +174,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
       docker_layer_caching: true
-    resource_class: large
+    resource_class: xlarge
     environment:
       TERM: dumb
     parameters:
@@ -227,8 +227,8 @@ jobs:
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
             sudo dpkg -i minikube_latest_amd64.deb
             echo minikube waiting
-            minikube config set cpus 4
-            minikube config set memory 15360
+            minikube config set cpus 6
+            minikube config set memory 25600
             minikube start #--driver=docker
             echo "Minikube started---------------------------------------------------------------------------------------"
            
