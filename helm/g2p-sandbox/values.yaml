@@ -555,7 +555,7 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
-  connector:
+  ph-ee-connector:
     enabled: true
     image: docker.io/openmf/ph-ee-connector-bulk:latest
     aws:
