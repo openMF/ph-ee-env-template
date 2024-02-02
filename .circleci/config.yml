@@ -404,12 +404,12 @@ jobs:
             git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
             cd elastic/helm-charts/kibana/examples/security/
             make secrets || echo "kibana-secrets" already exists
-            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/g' | kubectl create -f -
-            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/g' | kubectl create -f -
-            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/g' | kubectl create -f -
-            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/g' | kubectl create -f -
-            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/g' | kubectl create -f -
-            kubectl get secrets -n {{ .Release.Namespace }}
+            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: '"$(helm get manifest RELEASE_NAME | yq eval '.metadata.namespace' -)"'/' | kubectl create -f -
+            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: '"$(helm get manifest RELEASE_NAME | yq eval '.metadata.namespace' -)"'/' | kubectl create -f -
+            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: '"$(helm get manifest RELEASE_NAME | yq eval '.metadata.namespace' -)"'/' | kubectl create -f -
+            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: '"$(helm get manifest RELEASE_NAME | yq eval '.metadata.namespace' -)"'/' | kubectl create -f -
+            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: '"$(helm get manifest RELEASE_NAME | yq eval '.metadata.namespace' -)"'/' | kubectl create -f -
+            kubectl get secrets -n {{ .Release.Namespace }} || kubectl get secrets -n paymenthub
             
             # kubectl get pods -n {{ .Release.Namespace }}
 
