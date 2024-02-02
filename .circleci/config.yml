@@ -179,7 +179,7 @@ jobs:
       TERM: dumb
     parameters:
       namespace:
-        default: "{{ .Release.Namespace }}"
+        default: "paymenthub"
         description: |
           The kubernetes namespace that should be used.
         type: string
@@ -281,30 +281,30 @@ jobs:
 
             # for remote debugging uncomment the following lines between access start and end.
             #---------------------minikube remote aceess start---------------------
-            # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            # # ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
             # ngrok config add-authtoken $AUTH_TOKEN
-            # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            # ngrok http 8080 > /dev/null &
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            ngrok http 8080 > /dev/null &
 
-            # echo -n "Extracting ngrok public url ."
-            # NGROK_PUBLIC_URL=""
-            # while [ -z "$NGROK_PUBLIC_URL" ]; do
-            #   # Run 'curl' against ngrok API and extract public (using 'sed' command)
-            #   export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-            #                             --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-            #                             sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-            #   sleep 1
-            #   echo -n "."
-            # done
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+              sleep 1
+              echo -n "."
+            done
            
-            # echo "https://$NGROK_PUBLIC_URL"
-            # echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
 
-            # echo "test ngrok "
-            # curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-            # echo "https://$NGROK_PUBLIC_URL"
-            #---------------------minikube remote aceess end---------------------
+            echo "test ngrok "
+            curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
+            # ---------------------minikube remote aceess end---------------------
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
             sudo apt-get install apt-transport-https --yes
