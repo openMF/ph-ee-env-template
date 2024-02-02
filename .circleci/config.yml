@@ -426,7 +426,7 @@ jobs:
             
             #insatll netcat
             sudo apt install -y netcat
-            timeout 15s bash -c 'until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;'
+            timeout 1m bash -c 'until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;'
             # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
            
             #Deploy BPMN 
