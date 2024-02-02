@@ -210,7 +210,7 @@ jobs:
           command : |
             free -m
             #!/bin/bash
-            #insatll kubectl
+            #insatll kubectl--------
             echo hello 
             sudo apt-get update
             sudo apt-get install -y apt-transport-https ca-certificates curl gpg
@@ -221,7 +221,6 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y kubelet kubeadm kubectl
             sudo apt-mark hold kubelet kubeadm kubectl
-            # kubectl version
 
             #Setup Minikube
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
@@ -229,8 +228,8 @@ jobs:
             echo minikube waiting
             minikube config set cpus 6
             minikube config set memory 25600
-            minikube start #--driver=docker
-            echo "Minikube started---------------------------------------------------------------------------------------"
+            minikube start
+            echo "Minikube started-----------------------------------------------------"
            
             # To check the allocated values 
             minikube config get cpus
@@ -279,7 +278,7 @@ jobs:
             echo "test-nginx-proxy"
             curl -u minikube:minikube http://localhost:8080
 
-            # for remote debugging uncomment the following lines between access start and end.
+            # For remote access to minikube uncomment the following lines.
             #---------------------minikube remote aceess start---------------------
             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
             ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
@@ -397,6 +396,8 @@ jobs:
             helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} #--set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
 
             echo --------------------helm upgrade is done---------------------
+
+            #ES and Kibana secret creation
             git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
             # sleep 300
             cd elastic/helm-charts/elasticsearch/examples/security/
@@ -411,18 +412,6 @@ jobs:
             kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
             kubectl get secrets -n paymenthub
             echo ---------secrets created--------
-            # kubectl get pods -n paymenthub
-
-            # export ENV_NAMESPACE={{ .Release.Namespace }}
-            # echo "check-namespace"
-            # echo $ENV_NAMESPACE
-            # git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
-            # cd ph-ee-env-labs/helm/es-secret/
-            # make secrets || echo "elastic-certificates" already exists
-
-            # cd ../../helm/kibana-secret/
-            # make secrets || echo "kibana" already exists
-            # kubectl get secrets -n paymenthub
             
             #insatll netcat
             sudo apt install -y netcat
@@ -530,21 +519,4 @@ workflows:
             - Ngrok
           requires:
             - build-host-g2p-fyn-chart
-      # - helm-test-gov:
-      #     cluster-name: minikube
-      #     requires:
-      #       - helm-test-ams
-      #     context:
-      #       - AWS
-      #       - Helm
-      #       - slack
-      #       - Ngrok
-      # - helm-test-ams:
-      #     cluster-name: minikube
-      #     requires:
-      #       - docker-image-availability-check-and-upgrade
-      #     context:
-      #       - AWS
-      #       - Helm
-      #       - slack
-      #       - Ngrok
+ 
