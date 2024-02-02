@@ -55,21 +55,6 @@ spec:
           apt-get install -y kubelet kubeadm kubectl
           apt-mark hold kubelet kubeadm kubectl
 
-          # secret creation
-          # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-          # # sleep 300
-          # cd elastic/helm-charts/elasticsearch/examples/security/
-          # make secrets || echo "elastic-secrets" already exists
-          # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-          # cd elastic/helm-charts/kibana/examples/security/
-          # make secrets || echo "kibana-secrets" already exists
-          # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-          # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-          # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-          # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-          # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
-          # kubectl get secrets -n {{ .Release.Namespace }}
-
           export ENV_NAMESPACE={{ .Release.Namespace }}
           echo "check-namespace"
           echo $ENV_NAMESPACE
