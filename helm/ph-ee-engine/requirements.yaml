@@ -123,5 +123,5 @@ dependencies:
 
   - name: ph-ee-connector
     version: 1.0.0
-    repository: "file://./connector"
+    repository: "file://./connector-ph-ee"
     condition: "ph-ee-connector.enabled"
