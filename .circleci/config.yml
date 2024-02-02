@@ -179,7 +179,7 @@ jobs:
       TERM: dumb
     parameters:
       namespace:
-        default: "paymenthub"
+        default: "{{ .Release.Namespace }}"
         description: |
           The kubernetes namespace that should be used.
         type: string
@@ -242,7 +242,7 @@ jobs:
             cat ~/.kube/config
         
             minikube kubectl -- get po -A #Interact with Minikube cluster
-            kubectl create namespace paymenthub
+            kubectl create namespace {{ .Release.Namespace }}
             kubectl get -A namespace  
 
             sudo apt install nginx        
@@ -314,7 +314,7 @@ jobs:
             #helm install
             sudo apt-get update
             sudo apt-get install helm
-            kubectl create namespace paymenthub || echo namespace already exists
+            kubectl create namespace {{ .Release.Namespace }} || echo namespace already exists
             kubectl get -A namespace
       - run:
           name: fetch docker images and helm upgrade
@@ -398,27 +398,40 @@ jobs:
             echo helm chart install starts
             helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
 
-            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            # sleep 300
-            cd elastic/helm-charts/elasticsearch/examples/security/
-            make secrets || echo "elastic-secrets" already exists
-            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            cd elastic/helm-charts/kibana/examples/security/
-            make secrets || echo "kibana-secrets" already exists
-            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secrets -n paymenthub
-            sleep 1m
-            # kubectl get pods -n paymenthub
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # # sleep 300
+            # cd elastic/helm-charts/elasticsearch/examples/security/
+            # make secrets || echo "elastic-secrets" already exists
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/kibana/examples/security/
+            # make secrets || echo "kibana-secrets" already exists
+            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+            # kubectl get secrets -n {{ .Release.Namespace }}
+            # sleep 1m
+            # # kubectl get pods -n {{ .Release.Namespace }}
+
+            export ENV_NAMESPACE={{ .Release.Namespace }}
+            echo "check-namespace"
+            echo $ENV_NAMESPACE
+            git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
+            cd ph-ee-env-labs/helm/es-secret/
+            make secrets || echo "elastic-certificates" already exists
+
+            cd ../../helm/kibana-secret/
+            make secrets || echo "kibana" already exists
+            kubectl get secrets -n {{ .Release.Namespace }}
+            
             #insatll netcat
             sudo apt install -y netcat
+            timeout 15s bash -c 'until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;'
             # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
            
             #Deploy BPMN 
-            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n {{ .Release.Namespace }} & #portforward zeebe-ops &'
             git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
             cd openMF/ph-ee-env-labs/orchestration
             ls
@@ -430,8 +443,8 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace {{ .Release.Namespace }} || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace {{ .Release.Namespace }} || echo test
                  
       - run:
           name: Fetch Integration Test Report
@@ -439,36 +452,36 @@ jobs:
             #!/bin/bash
             mkdir -p integration_report/test-report
             #Fetch Integration Test Report for GOV
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp {{ .Release.Namespace }}/`kubectl get pods -n {{ .Release.Namespace }} | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file 
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp {{ .Release.Namespace }}/`kubectl get pods -n {{ .Release.Namespace }} | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml "
             done
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
             echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp {{ .Release.Namespace }}/`kubectl get pods -n {{ .Release.Namespace }} | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
 
             #Fetch Integration Test Report for ams
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp {{ .Release.Namespace }}/`kubectl get pods -n {{ .Release.Namespace }} | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp {{ .Release.Namespace }}/`kubectl get pods -n {{ .Release.Namespace }} | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml  "
             done
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
              mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
             echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp {{ .Release.Namespace }}b/`kubectl get pods -n {{ .Release.Namespace }} | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             
       - store_test_results:
           path: integration_report/test-report/

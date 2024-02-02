@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: post-installation-job
   annotations:
-    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook": post-install
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
   template:
@@ -56,35 +56,34 @@ spec:
           apt-mark hold kubelet kubeadm kubectl
 
           # secret creation
-          git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-          # sleep 300
-          cd elastic/helm-charts/elasticsearch/examples/security/
-          make secrets || echo "elastic-secrets" already exists
-          git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-          cd elastic/helm-charts/kibana/examples/security/
-          make secrets || echo "kibana-secrets" already exists
-          kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-          kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-          kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-          kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-          kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+          # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+          # # sleep 300
+          # cd elastic/helm-charts/elasticsearch/examples/security/
+          # make secrets || echo "elastic-secrets" already exists
+          # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+          # cd elastic/helm-charts/kibana/examples/security/
+          # make secrets || echo "kibana-secrets" already exists
+          # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+          # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+          # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+          # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+          # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: {{ .Release.Namespace }}/' | kubectl create -f -
+          # kubectl get secrets -n {{ .Release.Namespace }}
+
+          export ENV_NAMESPACE={{ .Release.Namespace }}
+          echo "check-namespace"
+          echo $ENV_NAMESPACE
+          git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
+          cd ph-ee-env-labs/helm/es-secret/
+          make secrets || echo "elastic-certificates" already exists
+
+          cd ../../helm/kibana-secret/
+          make secrets || echo "kibana" already exists
           kubectl get secrets -n paymenthub
-          sleep 60
-
-          # export ENV_NAMESPACE={{ .Release.Namespace }}
-          # echo "check-namespace"
-          # echo $ENV_NAMESPACE
-          # git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
-          # cd ph-ee-env-labs/helm/es-secret/
-          # make secrets || echo "elastic-certificates" already exists
-
-          # cd ../../helm/kibana-secret/
-          # make secrets || echo "kibana" already exists
-          # kubectl get secrets -n paymenthub
           
           #insatll netcat
           apt install -y netcat
-          # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+          timeout 15s bash -c 'until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;'
           
           #Deploy BPMN 
           kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n {{ .Release.Namespace }} & 
