@@ -1818,7 +1818,7 @@ ph-ee-connector_slcb:
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
 
-connector:
+ph-ee-connector:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
