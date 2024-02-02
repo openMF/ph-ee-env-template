@@ -242,7 +242,7 @@ jobs:
             cat ~/.kube/config
         
             minikube kubectl -- get po -A #Interact with Minikube cluster
-            kubectl create namespace {{ .Release.Namespace }}
+            kubectl create namespace paymenthub
             kubectl get -A namespace  
 
             sudo apt install nginx        
@@ -275,11 +275,12 @@ jobs:
             #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
 
             sleep 10
-            echo "Nginx ready---------------------------------------------------------------------------------------"
-
+            
             echo "test-nginx-proxy"
             curl -u minikube:minikube http://localhost:8080
 
+            # for remote debugging uncomment the following lines between access start and end.
+            #---------------------minikube remote aceess start---------------------
             # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
             # # ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
             # ngrok config add-authtoken $AUTH_TOKEN
@@ -297,16 +298,13 @@ jobs:
             #   echo -n "."
             # done
            
-            # echo "Ngrok ready---------------------------------------------------------------------------------------"
-
             # echo "https://$NGROK_PUBLIC_URL"
             # echo "https://$NGROK_PUBLIC_URL"
 
             # echo "test ngrok "
             # curl -u minikube:minikube https://$NGROK_PUBLIC_URL
             # echo "https://$NGROK_PUBLIC_URL"
-            
-
+            #---------------------minikube remote aceess end---------------------
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
             sudo apt-get install apt-transport-https --yes
