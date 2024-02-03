@@ -1411,7 +1411,7 @@ kafka:
   fullnameOverride: kafka
 
   provisioning:
-    enabled: true
+    enabled: false
     topics:
       - name: zeebe-export
         partitions: 1

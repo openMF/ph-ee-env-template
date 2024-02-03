@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: post-installation-job
   annotations:
-    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook": post-install
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
   template:
@@ -64,10 +64,18 @@ spec:
 
           cd ../../helm/kibana-secret/
           make secrets || echo "kibana" already exists
-
+          kubectl get secrets -n paymenthub
+          
           #insatll netcat
           apt install -y netcat
-          until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+          check_count=0
+            until ((check_count==12)) || nc -vz ph-ee-zeebe-ops 80; do 
+                echo "Waiting for zeebe-ops service"; 
+                sleep 5; 
+                check_count=$(($check_count + 1));
+            done;
+            echo ------zeebe-ops service available-----------
+          # timeout 15s bash -c 'until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;'
           
           #Deploy BPMN 
           kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n {{ .Release.Namespace }} & 
