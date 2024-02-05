@@ -17,4 +17,5 @@ Please make sure these boxes are checked before submitting your pull request - t
 
 * [ ] Add required Swagger annotation and update API documentation with details of any API changes if applicable
 
-* [ ] Followed the naming conventions as given in <https://docs.google.com/document/d/1Q4vaMSzrTxxh9TS0RILuNkSkYCxotuYk1Xe0CMIkkCU/edit?usp=sharing>
+- [ ] Followed the naming conventions as given in https://docs.google.com/document/d/1Q4vaMSzrTxxh9TS0RILuNkSkYCxotuYk1Xe0CMIkkCU/edit?usp=sharing
+
