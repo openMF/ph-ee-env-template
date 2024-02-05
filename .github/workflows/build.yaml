@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - develop
-      ft/add_github_actions
-      
+      - ft/add_github_actions
+
   pull_request:
     branches:
       - main
