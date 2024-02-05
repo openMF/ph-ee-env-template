@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: g2p-sandbox-test-gov
-    image: docker.io/openmf/ph-ee-integration-test:latest
+    image: {{ .Values.integration_test.image}}
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args:
