@@ -50,5 +50,5 @@ It directly provides values.
     - name: "VOUCHER_MANAGEMENT_CONTACTPOINT"
       value: "http://ph-ee-vouchers:80"
     - name: "GLOBAL_WAIT_TIME_MS"
-      value: "10000"
+      value: "20000"
 {{- end }}
