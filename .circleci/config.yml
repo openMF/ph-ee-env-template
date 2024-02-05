@@ -446,21 +446,6 @@ jobs:
           command: |
             #!/bin/bash
             mkdir -p integration_report/test-report
-            #Fetch Integration Test Report for GOV
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file 
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml "
-            done
-            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
-            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
-            echo "File is no longer empty, processing..."
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
 
             #Fetch Integration Test Report for ams
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
@@ -473,11 +458,30 @@ jobs:
                 kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml  "
             done
-            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
-             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
             echo "File is no longer empty, processing..."
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
+            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
+            
             # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             
+
+            #Fetch Integration Test Report for GOV
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file 
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml "
+            done
+            echo "File is no longer empty, processing..."
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
+            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
+           
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+
       - store_test_results:
           path: integration_report/test-report/
       - store_artifacts:
