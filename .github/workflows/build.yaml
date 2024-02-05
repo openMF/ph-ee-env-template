@@ -1,0 +1,38 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      ft/add_github_actions
+      
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Helm
+      run: |
+        helm dependency update helm/ph-ee-engine
+        helm lint helm/ph-ee-engine
+      shell: bash
+
+    - name: Package Helm Chart
+      run: |
+        helm package helm/ph-ee-engine --destination $(Build.ArtifactStagingDirectory)
+      shell: bash
+
+    - name: Publish Helm chart
+      uses: actions/upload-artifact@v2
+      with:
+        name: paymenthub
+        path: $(Build.ArtifactStagingDirectory)
