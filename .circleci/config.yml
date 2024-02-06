@@ -447,7 +447,7 @@ jobs:
             #!/bin/bash
             mkdir -p integration_report/test-report
 
-            #Fetch Integration Test Report for ams
+            echo "Fetch Integration Test Report for ams"
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
@@ -456,16 +456,22 @@ jobs:
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
                 kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml  "
+                downloaded_file="integration_report/test-report/cucumber.xml"
             done
             echo "File is no longer empty, processing..."
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
-            
             # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            
 
-            #Fetch Integration Test Report for GOV
+            for i in $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1); do
+                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
+                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+            done
+            
+            echo "Fetch Integration Test Report for GOV"
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file 
             downloaded_file="integration_report/test-report/cucumber.xml"
@@ -474,11 +480,16 @@ jobs:
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
                 kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml "
+                downloaded_file="integration_report/test-report/cucumber.xml"
             done
             echo "File is no longer empty, processing..."
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
+           
+            mkdir -p integration_report_final
+            cp integration_report/test-report/cucumber_gov.xml integration_report_final/ || echo ""
+            cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
+
             ls integration_report/test-report/
             # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
@@ -489,10 +500,11 @@ jobs:
                 echo " " >> all_pod_logs.log
             done
             mv all_pod_logs.log integration_report/test-report/reports/tests/
+
       - store_test_results:
-          path: integration_report/test-report/
+          path: integration_report_final/
       - store_artifacts:
-          path: integration_report/test-report/reports/tests
+          path: integration_report/test-report
 
 
 workflows:
