@@ -479,9 +479,17 @@ jobs:
             echo "File is no longer empty, processing..."
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
-           
+            ls integration_report/test-report/
             # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
+                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
 
+                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+            done
+            mv all_pod_logs.log integration_report/test-report/reports/tests/
       - store_test_results:
           path: integration_report/test-report/
       - store_artifacts:
