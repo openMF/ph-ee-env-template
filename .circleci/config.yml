@@ -504,7 +504,7 @@ jobs:
       - store_test_results:
           path: integration_report_final/
       - store_artifacts:
-          path: integration_report/test-report
+          path: integration_report/test-report/reports/tests
 
 
 workflows:
