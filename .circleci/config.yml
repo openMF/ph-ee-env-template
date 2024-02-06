@@ -484,7 +484,6 @@ jobs:
             for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
                 echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
                 kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
-
                 echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
                 echo " " >> all_pod_logs.log
                 echo " " >> all_pod_logs.log
