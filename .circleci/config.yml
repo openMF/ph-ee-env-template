@@ -171,9 +171,9 @@ jobs:
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
   minikube-run-helm-upgrade-and-helm-test:
-    machine:
-      image: ubuntu-2004:current
-      docker_layer_caching: true
+    docker:
+    - image: openmf/minikube-setup:latest
+    # - docker_layer_caching: true
     resource_class: xlarge
     environment:
       TERM: dumb
@@ -210,17 +210,18 @@ jobs:
           command : |
             free -m
             #!/bin/bash
-            #insatll kubectl--------
-            echo hello 
-            sudo apt-get update
-            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
-            sudo mkdir -p /etc/apt/keyrings
-            sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg || echo done
-            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-            sudo apt-get update
-            sudo apt-get install -y kubelet kubeadm kubectl
-            sudo apt-mark hold kubelet kubeadm kubectl
+            #  ------------------------------------------------------------
+            # #insatll kubectl--------
+            # echo hello 
+            # sudo apt-get update
+            # sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            # sudo mkdir -p /etc/apt/keyrings
+            # sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg || echo done
+            # curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            # echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            # sudo apt-get update
+            # sudo apt-get install -y kubelet kubeadm kubectl
+            # sudo apt-mark hold kubelet kubeadm kubectl
 
             #Setup Minikube
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
@@ -229,6 +230,7 @@ jobs:
             minikube config set cpus 6
             minikube config set memory 25600
             minikube start #--extra-config=kubelet.max-pods=60
+            # -------------------------------------------------------------
             echo "Minikube started-----------------------------------------------------"
            
             # To check the allocated values 
@@ -304,12 +306,12 @@ jobs:
            
             # # ---------------------minikube remote aceess end---------------------
 
-            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-            sudo apt-get install apt-transport-https --yes
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-            #helm install
-            sudo apt-get update
-            sudo apt-get install helm
+            # curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            # sudo apt-get install apt-transport-https --yes
+            # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            # #helm install
+            # sudo apt-get update
+            # sudo apt-get install helm
             kubectl create namespace paymenthub || echo namespace already exists
            
       - run:
@@ -414,8 +416,8 @@ jobs:
             kubectl get secrets -n paymenthub
             echo ---------secrets created--------
             
-            #insatll netcat
-            sudo apt install -y netcat
+            # #insatll netcat
+            # sudo apt install -y netcat
             check_count=0
             until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
                 echo "Waiting for zeebe-ops service"; 
