@@ -233,17 +233,17 @@ jobs:
             # -------------------------------------------------------------
             echo "Minikube started-----------------------------------------------------"
            
-            # To check the allocated values 
-            minikube config get cpus
-            minikube config get memory
+            # # To check the allocated values 
+            # minikube config get cpus
+            # minikube config get memory
 
-            MINIKUBE_IP=`minikube ip`
-            echo $MINIKUBE_IP
-            # cat ~/.kube/config
+            # MINIKUBE_IP=`minikube ip`
+            # echo $MINIKUBE_IP
+            # # cat ~/.kube/config
         
-            minikube kubectl -- get po -A #Interact with Minikube cluster
-            kubectl create namespace paymenthub
-            kubectl get -A namespace  
+            # minikube kubectl -- get po -A #Interact with Minikube cluster
+            # kubectl create namespace paymenthub
+            # kubectl get -A namespace  
 
             # For remote access to minikube uncomment the following lines.
             #---------------------minikube remote aceess start---------------------
