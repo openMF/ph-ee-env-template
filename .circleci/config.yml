@@ -222,6 +222,7 @@ jobs:
             # sudo apt-get update
             # sudo apt-get install -y kubelet kubeadm kubectl
             # sudo apt-mark hold kubelet kubeadm kubectl
+            echo --------------------------minikube setup starts-----------------------------------
 
             # #Setup Minikube
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
