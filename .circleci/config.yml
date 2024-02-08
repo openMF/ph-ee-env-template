@@ -224,26 +224,26 @@ jobs:
             # sudo apt-mark hold kubelet kubeadm kubectl
 
             # #Setup Minikube
-            # curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-            # sudo dpkg -i minikube_latest_amd64.deb
-            # echo minikube waiting
-            # minikube config set cpus 6
-            # minikube config set memory 25600
-            # minikube start #--extra-config=kubelet.max-pods=60
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+            sudo dpkg -i minikube_latest_amd64.deb
+            echo minikube waiting
+            minikube config set cpus 6
+            minikube config set memory 25600
+            minikube start #--extra-config=kubelet.max-pods=60
             # -------------------------------------------------------------
             echo "Minikube started-----------------------------------------------------"
            
-            # # To check the allocated values 
-            # minikube config get cpus
-            # minikube config get memory
+            # To check the allocated values 
+            minikube config get cpus
+            minikube config get memory
 
-            # MINIKUBE_IP=`minikube ip`
-            # echo $MINIKUBE_IP
-            # # cat ~/.kube/config
+            MINIKUBE_IP=`minikube ip`
+            echo $MINIKUBE_IP
+            # cat ~/.kube/config
         
-            # minikube kubectl -- get po -A #Interact with Minikube cluster
-            # kubectl create namespace paymenthub
-            # kubectl get -A namespace  
+            minikube kubectl -- get po -A #Interact with Minikube cluster
+            kubectl create namespace paymenthub
+            kubectl get -A namespace  
 
             # For remote access to minikube uncomment the following lines.
             #---------------------minikube remote aceess start---------------------
