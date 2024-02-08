@@ -172,7 +172,7 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
   minikube-run-helm-upgrade-and-helm-test:
     docker:
-    - image: openmf/minikube-setup:latest
+      - image: openmf/minikube-setup:latest
     # - docker_layer_caching: true
     resource_class: xlarge
     environment:
@@ -223,13 +223,13 @@ jobs:
             # sudo apt-get install -y kubelet kubeadm kubectl
             # sudo apt-mark hold kubelet kubeadm kubectl
 
-            #Setup Minikube
-            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-            sudo dpkg -i minikube_latest_amd64.deb
-            echo minikube waiting
-            minikube config set cpus 6
-            minikube config set memory 25600
-            minikube start #--extra-config=kubelet.max-pods=60
+            # #Setup Minikube
+            # curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+            # sudo dpkg -i minikube_latest_amd64.deb
+            # echo minikube waiting
+            # minikube config set cpus 6
+            # minikube config set memory 25600
+            # minikube start #--extra-config=kubelet.max-pods=60
             # -------------------------------------------------------------
             echo "Minikube started-----------------------------------------------------"
            
