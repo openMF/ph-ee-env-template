@@ -243,8 +243,8 @@ jobs:
             kubectl create namespace paymenthub
             kubectl get -A namespace  
 
-            # # For remote access to minikube uncomment the following lines.
-            # #---------------------minikube remote aceess start---------------------
+            # For remote access to minikube uncomment the following lines.
+            #---------------------minikube remote aceess start---------------------
             # sudo apt install nginx        
             # sudo touch /etc/nginx/conf.d/minikube.conf 
             # echo "create nginx conf"
