@@ -20,7 +20,7 @@ ph-ee-engine:
     LOGGING_LEVEL_ROOT: "INFO"
     LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
     tenants: "rhino,gorilla,wakanda,pluto,venus,jupiter"
-    DFSPIDS: "gorilla,lion"
+    DFSPIDS: "wakanda,pluto,venus,jupiter"
 
   zeebe-operate-helm:
     enabled: true
@@ -168,7 +168,6 @@ ph-ee-engine:
     image: docker.io/openmf/ph-ee-connector-mojaloop:latest
     SPRING_PROFILES_ACTIVE: "bb"
     hostname: "mojaloop.sandbox.mifos.io"
-    DFSPIDS: "gorilla,lion"
     ingress:
       enabled: false
       annotations: 
@@ -210,7 +209,6 @@ ph-ee-engine:
     hostname: "channel.sandbox.mifos.io"
     stub_hostname: "channel-gsma.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
-    DFSPIDS: "rhino,gorilla,lion"
     tenantPrimary:
       clientId: "mifos"
       clientSecret: "password"
@@ -252,7 +250,6 @@ ph-ee-engine:
   operations_app:
     enabled: true
     image: docker.io/openmf/ph-ee-operations-app:latest
-    tenants: "rhino,gorilla"
     hostname: "ops-bk.sandbox.mifos.io"
     datasource:
       username: "mifos"
@@ -395,7 +392,6 @@ ph-ee-engine:
     enabled: true
     image: docker.io/openmf/ph-ee-zeebe-ops:latest
     hostname: "zeebeops.sandbox.mifos.io"
-    tenants: "rhino,gorilla"
     ingress:
       enabled: false
       annotations: 
@@ -520,7 +516,6 @@ ph-ee-engine:
     hostname: "bill-pay.sandbox.mifos.io"
     stub_hostname: "bill-pay.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
-    DFSPIDS: "rhino,gorilla,lion"
     ingress:
       enabled: false
       tls:
@@ -544,7 +539,6 @@ ph-ee-engine:
     hostname: "crm.sandbox.mifos.io"
     stub_hostname: "crm.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
-    DFSPIDS: "rhino,gorilla,lion"
     ingress:
       enabled: false
       tls:
