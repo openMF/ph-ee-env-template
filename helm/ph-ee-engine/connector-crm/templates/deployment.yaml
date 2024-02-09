@@ -54,7 +54,7 @@ spec:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"  
             - name: "DFSPIDS"
-              value: "{{ .Values.DFSPIDS }}"
+              value: "{{ .Values.global.DFSPIDS }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
 {{- end }}        
