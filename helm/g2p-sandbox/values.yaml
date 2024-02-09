@@ -117,7 +117,7 @@ ph-ee-engine:
         CREATE DATABASE messagegateway;
         CREATE DATABASE `rhino`;
         CREATE DATABASE `gorilla`;
-        CREATE DATABASE `Wakanda`;
+        CREATE DATABASE `wakanda`;
         CREATE DATABASE `identity_account_mapper`;
         CREATE DATABASE `voucher_management`;
         CREATE DATABASE `pluto`;
