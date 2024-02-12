@@ -506,7 +506,6 @@ jobs:
       - store_artifacts:
           path: integration_report/test-report/reports/tests
 
-
 workflows:
   deploy:
     jobs:
