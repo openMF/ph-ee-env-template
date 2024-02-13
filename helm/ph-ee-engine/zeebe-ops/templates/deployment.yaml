@@ -38,6 +38,8 @@ spec:
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "TENANTS"
               value: "{{ .Values.global.tenants }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.global.DFSPIDS }}"           
             - name: "elasticsearch_url"
               value: "{{ .Values.elasticsearch_url }}"
             - name: "LOGGING_LEVEL_ROOT"

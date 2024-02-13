@@ -54,7 +54,7 @@ spec:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"  
             - name: "DFSPIDS"
-              value: "{{ .Values.DFSPIDS }}"
+              value: "{{ .Values.global.DFSPIDS }}"
             - name: "CONNECTOR_CONTACTPOINT"
               value: "{{ .Values.connector.contactpoint }}"
             - name: "BILLPAY_CONTACTPOINT"
