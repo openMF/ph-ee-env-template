@@ -295,7 +295,7 @@ jobs:
               sleep 1
               echo -n "."
             done
-           
+            echo ---------copy the below public_URL for NGrok----------
             echo "https://$NGROK_PUBLIC_URL"
             echo "https://$NGROK_PUBLIC_URL"
 
