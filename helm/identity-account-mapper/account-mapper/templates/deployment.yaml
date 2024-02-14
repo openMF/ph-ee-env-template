@@ -48,6 +48,10 @@ spec:
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max-execution-threads}}"
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll-interval}}"
             - name: "SPRING_CACHE_TIME_TO_LIVE"
               value: "{{ .Values.spring.cache.time_to_live }}"
             - name: "SPRING_CACHE_TIME_TO_IDLE"
