@@ -15,8 +15,8 @@ configmap:
   apiVersion: "v1"
 
 global:
-  max-execution-threads: 50
-  poll-interval: 10
+  max_execution_threads: 50
+  poll_interval: 10
 
 zeebe:
   broker:
