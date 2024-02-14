@@ -29,7 +29,7 @@ switch:
     host: "http://moja-simulator.sandbox.mifos.io"
 limits:
   cpu: "500m"
-  memory: "512M"
+  memory: "384M"
 requests:
   cpu: "100m"
   memory: "256M"   
