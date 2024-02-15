@@ -59,6 +59,8 @@ spec:
               value: "{{ .Values.payer.identifierType }}"
             - name: "VOUCHER_HOSTNAME"
               value: "{{ .Values.voucher.hostname }}"
+            - name: "IDENTITY_ACCOUNT_MAPPER_HOSTNAME"
+              value: "{{ .Values.identity_account_mapper.hostname }}"
             - name: "OPERATIONS_HOSTNAME"
               value: "{{ .Values.operations.hostname }}"
             - name: "OPERATIONS_TRANSFERS_ENDPOINT"

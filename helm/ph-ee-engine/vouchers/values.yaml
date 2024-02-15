@@ -34,8 +34,8 @@ payer:
   identifier:
   identifierType:
 
-identity-account-mapper:
-  hostname: ""
+identity_account_mapper:
+  hostname: "http://ph-ee-identity-account-mapper:80"
 voucher:
   hostname: "http://ph-ee-vouchers:80"
 operations:
