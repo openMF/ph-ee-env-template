@@ -55,6 +55,10 @@ spec:
               value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max_execution_threads}}"
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll_interval}}"
             - name : "mockFailure_percentage"
               value: "{{ .Values.mockFailure.percentage }}"
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
