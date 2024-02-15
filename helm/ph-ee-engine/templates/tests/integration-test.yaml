@@ -14,7 +14,7 @@ spec:
     command: [ "/bin/bash" , "-c" ]
     args: 
     # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
-    - ./gradlew test -i -Dcucumber.filter.tags="@gov and not @wip" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+    - ./gradlew test -i -Dcucumber.filter.tags="@wip" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
     env:
       - name: "OPERATIONS_APP_CONTACTPOINT"
         value: "http://ph-ee-operations-app:80"
