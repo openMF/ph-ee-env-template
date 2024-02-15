@@ -72,6 +72,8 @@ spec:
               value: "{{ .Values.account_validator_connector }}"
             - name: "CALLBACK_ENABLED"
               value: "{{ .Values.callback_enabled }}"
+            - name: "JAVA_TOOL_OPTIONS"
+              value: "{{ .Values.JAVA_TOOL_OPTIONS}}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
