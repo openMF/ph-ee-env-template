@@ -17,10 +17,10 @@ imagePullPolicy: "Always"
 hostname: "identity-mapper.sandbox.mifos.io"
 limits:
   cpu: "500m"
-  memory: "384M"
+  memory: "512M"
 requests:
   cpu: "100m"
-  memory: "256M"
+  memory: "384M"
 LOGGING_LEVEL_ROOT: INFO
 
 async:
