@@ -49,6 +49,10 @@ It directly provides values.
       value: ""
     - name: "VOUCHER_MANAGEMENT_CONTACTPOINT"
       value: "http://ph-ee-vouchers:80"
+    - name: "BILLPAY_CONTACTPOINT"
+      value: "http://ph-ee-connector-bill-pay:8080"
+    - name: "awaitly_maxWaitTime"
+      value: "30"
     - name: "GLOBAL_WAIT_TIME_MS"
       value: "5000"
 {{- end }}
