@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d6acbfa8-7f7a-4998-9539-43da65c2a5dd",
+		"_postman_id": "774a57d4-dcd9-43d8-bc44-49d4ccff3f6e",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28727869"
+		"_exporter_id": "21253421"
 	},
 	"item": [
 		{
@@ -43549,7 +43549,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    {\n        \"creditParty\": [\n            {\n                \"key\": \"msisdn\",\n                \"value\": \"8837461856\"\n            }\n        ],\n        \"debitParty\": [\n            {\n                \"key\": \"accountnumber\",\n                \"value\": \"003001003874120160\"\n            }\n        ],\n        \"subType\": \"SLCB\",\n        \"amount\": \"820.00\",\n        \"currency\": \"RWF\",\n        \"descriptionText\": \"Test Payment\"\n    },\n    {\n        \"creditParty\": [\n            {\n                \"key\": \"msisdn\",\n                \"value\": \"32131461856\"\n            }\n        ],\n        \"debitParty\": [\n            {\n                \"key\": \"accountnumber\",\n                \"value\": \"21314556003874120160\"\n            }\n        ],\n        \"subType\": \"SLCB\",\n        \"amount\": \"20.00\",\n        \"currency\": \"RWF\",\n        \"descriptionText\": \"Test Payment\"\n    }\n]",
+							"raw": "[\n    {\n        \"creditParty\": [\n            {\n                \"key\": \"msisdn\",\n                \"value\": \"8837461856\"\n            }\n        ],\n        \"debitParty\": [\n            {\n                \"key\": \"accountnumber\",\n                \"value\": \"003001003874120160\"\n            }\n        ],\n        \"subType\": \"mojaloop\",\n        \"amount\": \"820.00\",\n        \"currency\": \"USD\",\n        \"descriptionText\": \"Test Payment\"\n    },\n    {\n        \"creditParty\": [\n            {\n                \"key\": \"msisdn\",\n                \"value\": \"32131461856\"\n            }\n        ],\n        \"debitParty\": [\n            {\n                \"key\": \"accountnumber\",\n                \"value\": \"21314556003874120160\"\n            }\n        ],\n        \"subType\": \"mojaloop\",\n        \"amount\": \"20.00\",\n        \"currency\": \"USD\",\n        \"descriptionText\": \"Test Payment\"\n    }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
