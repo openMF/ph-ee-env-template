@@ -518,6 +518,11 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     ingress:
       enabled: false
+      annotations:
+        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+        nginx.ingress.kubernetes.io/enable-cors: 'true'
       tls:
         - secretName: sandbox-secret
       hosts:
@@ -541,6 +546,11 @@ ph-ee-engine:
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     ingress:
       enabled: false
+      annotations:
+        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+        nginx.ingress.kubernetes.io/enable-cors: 'true'
       tls:
         - secretName: sandbox-secret
       hosts:
