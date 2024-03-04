@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d6acbfa8-7f7a-4998-9539-43da65c2a5dd",
+		"_postman_id": "d2de6930-6c9a-4fbd-805e-07b8c87ce9da",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28727869"
+		"_exporter_id": "30685438"
 	},
 	"item": [
 		{
@@ -46114,7 +46114,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"requestID\": \"8493244991559\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"12023833433254345358844445\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"6331059032228893263382\",\n            \"narration\": \"Social Support Payment for the Month of January 2023\"\n        }\n    ]\n}",
+							"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"63310590322288932633\",\n            \"narration\": \"Social Support Payment for the Month of Jan\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46335,7 +46335,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestID \": \"849324499155\",\n  \"agentID \": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
+							"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46378,7 +46378,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+							"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
