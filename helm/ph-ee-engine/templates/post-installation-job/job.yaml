@@ -4,46 +4,32 @@ kind: Job
 metadata:
   name: post-installation-job
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
   template:
+    serviceAccountName: job-creator
     spec:
-      serviceAccountName: job-creator
       containers:
       - name: post-installation-job
-        image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06"
+        image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06" 
         securityContext:
           privileged: true
+        workingDir: /app
         command:
         - "/bin/sh"
         - "-c"
         args:
         - |
-          # Add Docker's official GPG key:
-          apt-get update
-          apt-get --assume-yes install ca-certificates curl gnupg 
-          install -m 0755 -d /etc/apt/keyrings
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-          chmod a+r /etc/apt/keyrings/docker.gpg
+          #!/bin/bash
 
-          # Add the repository to Apt sources:
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-            tee /etc/apt/sources.list.d/docker.list > /dev/null
-          apt-get update 
-          apt-get --assume-yes install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
-          
-          # starting docker-deamon
-          service docker start
-          
-          #install make
-          apt-get install --assume-yes make
-          
-          #install kubectl 
+          # Install required dependencies
           apt-get update
-          # apt-transport-https may be a dummy package; if so, you can skip that package
+          apt install sudo
+          # sudo apt-get update
+          sudo apt-get --assume-yes install apt-transport-https ca-certificates curl gnupg lsb-release
+      
+          #install kubectl 
           apt-get install -y apt-transport-https ca-certificates curl gpg
 
           curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -51,45 +37,61 @@ spec:
           # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
           echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list
 
-          apt-get update
           apt-get install -y kubelet kubeadm kubectl
           apt-mark hold kubelet kubeadm kubectl
+          sudo apt-get install -y kubectl
+          curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+          kubectl version
 
-          export ENV_NAMESPACE={{ .Release.Namespace }}
-          echo "check-namespace"
-          echo $ENV_NAMESPACE
-          git clone --depth 1 --branch v1.4.0 https://github.com/openMF/ph-ee-env-labs.git 
+          # Install Docker
+          apt-get install sysvinit-utils
+          sudo apt-get --assume-yes install docker-ce docker-ce-cli containerd.io
+          #---------docker start steps-------
+          # service docker start
+          # Verify Docker is running
+
+          apt-get --assume-yes install git 
+          apt-get --assume-yes install make
+          
+          git clone https://github.com/openMF/ph-ee-env-labs.git
           cd ph-ee-env-labs/helm/es-secret/
-          make secrets || echo "elastic-certificates" already exists
-
-          cd ../../helm/kibana-secret/
-          make secrets || echo "kibana" already exists
+          make secrets || echo "elastic-secrets" already exists
+          
+          cd ../../helm/kibana-secret
+        
+          make secrets || echo "kibana-secrets" already exists
           kubectl get secrets -n paymenthub
-          
-          #insatll netcat
-          apt install -y netcat
-          check_count=0
-            until ((check_count==12)) || nc -vz ph-ee-zeebe-ops 80; do 
-                echo "Waiting for zeebe-ops service"; 
-                sleep 5; 
-                check_count=$(($check_count + 1));
-            done;
-            echo ------zeebe-ops service available-----------
-          # timeout 15s bash -c 'until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;'
-          
-          #Deploy BPMN 
-          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n {{ .Release.Namespace }} & 
+          echo ---------------secrets created--------------- 
+          sleep 20
 
-          cd ../../orchestration
+          #insatll netcat
+          sudo apt install -y netcat
+          sleep 10
+          check_count=0
+          until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
+              echo "Waiting for zeebe-ops service"; 
+              sleep 5; 
+              check_count=$(($check_count + 1));
+          done;
+          echo ------zeebe-ops service available-----------
+          sleep 10
+          #Deploy BPMN 
+          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+          echo "sleeping to get portforwading ready"
+          sleep 15
+          git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+          cd openMF/ph-ee-env-labs/orchestration
           ls
+          sleep 10
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
           cat deployBpmn.sh
           cd ..
-          sleep 10
-          sh orchestration/deployBpmn.sh
-          echo "Configurations successful"
+          sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+          echo "---------------------------successful--------------------------"
+          #delete Clusterrole
+          kubectl delete clusterrole job-creator-role 
       restartPolicy: Never
-  backoffLimit: 0 # Adjust as needed
-  # successfulJobsHistoryLimit: 0  # Number of successful completions to retain
-  # failedJobsHistoryLimit: 0 # Number of failed completions to retain
+  backoffLimit: 0 
 {{- end }}

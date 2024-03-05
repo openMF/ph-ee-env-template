@@ -395,45 +395,47 @@ jobs:
             helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
             echo helm chart install starts
-            helm upgrade --install --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/"
-
+            helm upgrade --install  --timeout=1h --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" # --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
+            
             echo --------------------helm upgrade is done---------------------
 
-            #ES and Kibana secret creation
-            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            cd elastic/helm-charts/elasticsearch/examples/security/
-            make secrets || echo "elastic-secrets" already exists
-            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            cd elastic/helm-charts/kibana/examples/security/
-            make secrets || echo "kibana-secrets" already exists
-            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            kubectl get secrets -n paymenthub
-            echo ---------secrets created--------
+            # ----------------------Post-Installation-Steps-starts---------------------------
+            # #ES and Kibana secret creation
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/elasticsearch/examples/security/
+            # make secrets || echo "elastic-secrets" already exists
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/kibana/examples/security/
+            # make secrets || echo "kibana-secrets" already exists
+            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secrets -n paymenthub
+            # echo ---------secrets created--------
             
-            #insatll netcat
-            sudo apt install -y netcat
-            check_count=0
-            until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
-                echo "Waiting for zeebe-ops service"; 
-                sleep 5; 
-                check_count=$(($check_count + 1));
-            done;
-            echo ------zeebe-ops service available-----------
-            # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+            # #insatll netcat
+            # sudo apt install -y netcat
+            # check_count=0
+            # until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
+            #     echo "Waiting for zeebe-ops service"; 
+            #     sleep 5; 
+            #     check_count=$(($check_count + 1));
+            # done;
+            # echo ------zeebe-ops service available-----------
+            # # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
            
-            #Deploy BPMN 
-            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            cd openMF/ph-ee-env-labs/orchestration
-            ls
-            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
-            cat deployBpmn.sh
-            cd ..
-            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            # #Deploy BPMN 
+            # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            # cd openMF/ph-ee-env-labs/orchestration
+            # ls
+            # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            # cat deployBpmn.sh
+            # cd ..
+            # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            #------------------Post-Installation-Steps-ends-------------------------------
 
       - run:
           name: Run Helm Tests
