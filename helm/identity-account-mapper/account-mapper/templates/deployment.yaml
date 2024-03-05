@@ -76,6 +76,8 @@ spec:
               value: "{{ .Values.account_validator_connector }}"
             - name: "CALLBACK_ENABLED"
               value: "{{ .Values.callback_enabled }}"
+            - name: "ISEXTERNALLOOKUP"
+              value: "{{.Values.is_external_lookup}}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
