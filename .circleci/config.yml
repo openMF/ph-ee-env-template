@@ -257,6 +257,7 @@ jobs:
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
               #Keep JIRA STORY as empty for release build
               JIRA_STORY=""
+              JIRA_STORY_DIR=""
             fi 
             
             echo $SERVICE_FILE_PATH
