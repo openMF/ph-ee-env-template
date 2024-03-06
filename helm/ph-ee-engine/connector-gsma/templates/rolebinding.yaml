@@ -2,14 +2,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ph-ee-connector-gsma-role-binding
+  name: ph-ee-operator-c-role-binding
   namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: ph-ee-connector-gsma-role
+  name: ph-ee-operator-c-role
 subjects:
-- kind: ServiceAccount
-  name: ph-ee-connector-gsma
-  namespace: {{ .Release.Namespace }}
-{{- end -}}
+  - kind: ServiceAccount
+    name: payment-hub
+    namespace: {{ .Release.Namespace }}
+  {{- end -}}
