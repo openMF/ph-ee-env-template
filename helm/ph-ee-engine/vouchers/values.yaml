@@ -67,7 +67,7 @@ ingress:
   #  - secretName: sandbox-secret
   #    hosts:
   #      - chart-example.local      
-paymentadvice: true
+paymentadvice: false
 deployment:
   apiVersion: "apps/v1"
   annotations:

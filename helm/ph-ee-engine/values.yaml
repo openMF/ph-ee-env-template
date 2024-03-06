@@ -2024,7 +2024,7 @@ kong:
 
 vouchers:
   enabled: false
-  paymentadvice: true
+  paymentadvice: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   ingress:
