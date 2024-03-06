@@ -80,7 +80,6 @@ spec:
           kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub &
           echo "sleeping to get portforwading ready"
           sleep 15
-          # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
           cd ../../orchestration
           sleep 10
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
