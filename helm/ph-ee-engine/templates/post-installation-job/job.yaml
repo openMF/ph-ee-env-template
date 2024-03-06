@@ -8,8 +8,8 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
   template:
-    serviceAccountName: job-creator
     spec:
+      serviceAccountName: job-creator
       containers:
       - name: post-installation-job
         image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06" 
@@ -55,7 +55,7 @@ spec:
           apt-get --assume-yes install git 
           apt-get --assume-yes install make
           
-          git clone https://github.com/openMF/ph-ee-env-labs.git
+          git clone --depth 1 --branch v1.5.0 https://github.com/openMF/ph-ee-env-labs.git 
           cd ph-ee-env-labs/helm/es-secret/
           make secrets || echo "elastic-secrets" already exists
           
@@ -81,7 +81,7 @@ spec:
           kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
           echo "sleeping to get portforwading ready"
           sleep 15
-          git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+          git clone --depth 1 --branch v1.5.0 https://github.com/openMF/ph-ee-env-labs.git  openMF/ph-ee-env-labs
           cd openMF/ph-ee-env-labs/orchestration
           ls
           sleep 10
