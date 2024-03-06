@@ -89,6 +89,8 @@ spec:
               value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: MOCK_SCHEMA_HOSTNAME
               value: "{{ .Values.mock_schema.hostname }}"
+            - name: PAYMENTADVICE
+              value: "{{.Values.paymentadvice}}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
