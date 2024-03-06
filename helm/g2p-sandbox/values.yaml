@@ -587,7 +587,7 @@ ph-ee-engine:
         deployTime: "{{ .Values.deployTime }}"
 
   post_installation_job:
-    enabled: false
+    enabled: true
   minio:
     enabled: true
 

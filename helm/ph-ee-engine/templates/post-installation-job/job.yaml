@@ -8,11 +8,11 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
   template:
-    serviceAccountName: job-creator
     spec:
+      serviceAccountName: job-creator
       containers:
       - name: post-installation-job
-        image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06" 
+        image: ubuntu:latest 
         securityContext:
           privileged: true
         workingDir: /app
@@ -60,11 +60,7 @@ spec:
           make secrets || echo "elastic-secrets" already exists
           
           cd ../../helm/kibana-secret
-        
           make secrets || echo "kibana-secrets" already exists
-          echo ---------check for the current directory--------------
-          pwd
-          ls
           kubectl get secrets -n paymenthub
           echo ---------------secrets created--------------- 
           sleep 20
@@ -86,15 +82,12 @@ spec:
           sleep 15
           # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
           cd ../../orchestration
-          ls
           sleep 10
           sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
           cat deployBpmn.sh
           cd ..
-          sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
-          echo "---------------------------successful--------------------------"
-          #delete Clusterrole
-          kubectl delete clusterrole job-creator-role 
+          timeout 180s sh orchestration/deployBpmn.sh && sleep 5 || echo 'deploy Bpmn done'
+          echo ---------------------------successful--------------------------
       restartPolicy: Never
-  backoffLimit: 0 
+  backoffLimit: 0
 {{- end }}
