@@ -15,6 +15,9 @@ spec:
         image: ubuntu:latest # Replace with the Docker image containing Git and other tools "cimg/base:2022.06" 
         securityContext:
           privileged: true
+        env: 
+          - name: NAMESPACE
+            value:  {{ .Release.Namespace }} 
         workingDir: /app
         command:
         - "/bin/sh"
@@ -22,7 +25,6 @@ spec:
         args:
         - |
           #!/bin/bash
-
           # Install required dependencies
           apt-get update
           apt install sudo
@@ -62,7 +64,7 @@ spec:
           cd ../../helm/kibana-secret
         
           make secrets || echo "kibana-secrets" already exists
-          kubectl get secrets -n paymenthub
+          kubectl get secrets -n $NAMESPACE
           echo ---------------secrets created--------------- 
           sleep 20
 
@@ -78,7 +80,7 @@ spec:
           echo ------zeebe-ops service available-----------
           sleep 10
           #Deploy BPMN 
-          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+          kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n $NAMESPACE & #portforward zeebe-ops &'
           echo "sleeping to get portforwading ready"
           sleep 15
           git clone --depth 1 --branch v1.5.0 https://github.com/openMF/ph-ee-env-labs.git  openMF/ph-ee-env-labs
@@ -90,8 +92,6 @@ spec:
           cd ..
           sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
           echo "---------------------------successful--------------------------"
-          #delete Clusterrole
-          kubectl delete clusterrole job-creator-role 
       restartPolicy: Never
   backoffLimit: 0 
 {{- end }}
