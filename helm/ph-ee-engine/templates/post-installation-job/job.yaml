@@ -61,9 +61,6 @@ spec:
           
           cd ../../helm/kibana-secret
           make secrets || echo "kibana-secrets" already exists
-          echo ---------check for the current directory--------------
-          pwd
-          ls
           kubectl get secrets -n paymenthub
           echo ---------------secrets created--------------- 
           sleep 20
