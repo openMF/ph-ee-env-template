@@ -1540,7 +1540,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.12.0
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
   imagePullPolicy: "Always"
   camel_disable_ssl: true
   channel:
