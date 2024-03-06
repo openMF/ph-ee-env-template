@@ -266,7 +266,8 @@ jobs:
             #Using sed replace ph-ee-g2psandbox. with empty string
             sed -i 's/ph-ee-g2psandbox\.p/p/g' $filename 
             echo $filename
-            get_services_from_file $filename
+            VALUES_TO_OVERRIDE=""
+            #get_services_from_file $filename
             
             if [ -n "${VALUES_TO_OVERRIDE}" ]; then
                 VALUES_TO_OVERRIDE=$(echo --set ${VALUES_TO_OVERRIDE::-1})
