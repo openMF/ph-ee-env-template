@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d2de6930-6c9a-4fbd-805e-07b8c87ce9da",
+		"_postman_id": "1ce9416b-ec84-4c8e-93bd-aef5dfdb6fc2",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30685438"
@@ -46528,6 +46528,191 @@
 									"key": "size",
 									"value": "10"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bill Pay APIs",
+			"item": [
+				{
+					"name": "Bill Inquiry API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+								"type": "text"
+							},
+							{
+								"key": "X-CallbackURL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "X-PayerFSP-Id",
+								"value": "{{PayeeTenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BillPayHostName}}/bills/{{billId}}",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"bills",
+								"{{billId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bill Payments API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+								"type": "text"
+							},
+							{
+								"key": "X-CallbackURL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "X-PayerFSP-Id",
+								"value": "{{PayeeTenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"billInquiryRequestId\": \"12e2cedc-7372-4208-8079-7d46d691fca4\",\n    \"billId\": \"001\",\n    \"paymentReferenceID\": \"8f353842-451c-4231-afc9-58289afdc396\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BillPayHostName}}/paymentNotifications",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"paymentNotifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payer RTP Response API",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Callback-URL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Client-Correlation-ID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Biller-Id",
+								"value": "GovBill",
+								"type": "text"
+							},
+							{
+								"key": "X-Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BillPayHostName}}/billTransferRequests",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"billTransferRequests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Biller RTP Request API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Callback-URL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Client-Correlation-ID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Biller-Id",
+								"value": "GovBill",
+								"type": "text"
+							},
+							{
+								"key": "X-Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BillPayHostName}}/billTransferRequests",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"billTransferRequests"
 							]
 						}
 					},
