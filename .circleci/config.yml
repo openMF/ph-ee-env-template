@@ -348,7 +348,7 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            kubectl delete pod $(kubectl get pods | grep ph-ee-connector-channel | cut -d ' ' -f1) || echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel | cut -d ' ' -f1) -n paymenthub|| echo test
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
             sleep 600
                  
