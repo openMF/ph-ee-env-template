@@ -95,11 +95,8 @@ camunda-platform:
     image:
       repository: camunda/zeebe
       tag: 8.2.8
-    clusterSize: "1"
-    partitionCount: "1"
-    replicationFactor: "1"
-    cpuThreadCount: "2"
-    ioThreadCount: "2"
+    cpuThreadCount: "4"
+    ioThreadCount: "4"
     pvcSize: "10Gi"
 
     resources:
