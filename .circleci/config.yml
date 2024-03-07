@@ -348,9 +348,23 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-ams-mifos          | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bill-pay          | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bulk               | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel           | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-crm               | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-gsma             | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mock-payment-schema | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mojaloop-java | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-notifications | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-elasticsearch                   | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-identity-account-mapper | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-importer-es | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-importer-rdbms | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-vouchers | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep kafka-controller | cut -d ' ' -f1) -n paymenthub|| echo test
+            sleep 60
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
-            sleep 600
                  
       - run:
           name: Fetch Integration Test Report
@@ -386,6 +400,7 @@ jobs:
                 echo " " >> all_pod_logs.log
             done
             mv all_pod_logs.log integration_report/test-report/reports/tests/
+            sleep 300
 
       - store_test_results:
           path: integration_report_final/
