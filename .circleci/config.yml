@@ -348,6 +348,8 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
+            kubectl delete pod ph-ee-connector-channel
+            kubectl delete pod ph-ee-connector-bill-pay
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
             sleep 600
                  
