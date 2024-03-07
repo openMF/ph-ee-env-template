@@ -349,6 +349,7 @@ jobs:
           name: Run Helm Tests
           command: |
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+            sleep 600
                  
       - run:
           name: Fetch Integration Test Report
