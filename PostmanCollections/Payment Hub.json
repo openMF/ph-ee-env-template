@@ -46625,53 +46625,6 @@
 					"response": []
 				},
 				{
-					"name": "Payer RTP Response API",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "X-Callback-URL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
-							},
-							{
-								"key": "X-Client-Correlation-ID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
-							},
-							{
-								"key": "X-Biller-Id",
-								"value": "GovBill",
-								"type": "text"
-							},
-							{
-								"key": "X-Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BillPayHostName}}/billTransferRequests",
-							"host": [
-								"{{BillPayHostName}}"
-							],
-							"path": [
-								"billTransferRequests"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Biller RTP Request API",
 					"request": {
 						"method": "POST",
