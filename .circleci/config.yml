@@ -80,6 +80,7 @@ jobs:
     resource_class: xlarge
     environment:
       TERM: dumb
+      PH_RELEASE: 1.13.0
     parameters:
       namespace:
         default: "paymenthub"
@@ -406,7 +407,11 @@ jobs:
                 echo " " >> all_pod_logs.log
             done
             mv all_pod_logs.log integration_report/test-report/reports/tests/
-            sleep 300
+            tar -cf release_artifacts.tar integration_report/test-report/reports/tests
+            scp -o StrictHostKeyChecking=No -i b64encoded.pem release_artifacts.tar ec2-user@13.233.68.128:~/
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-engine-$PH_RELEASE-SNAPSHOT
+      - run: ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/ph-ee-engine-$PH_RELEASE-SNAPSHOT release_artifacts.tar
+            
 
       - store_test_results:
           path: integration_report_final/
