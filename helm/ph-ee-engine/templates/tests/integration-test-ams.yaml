@@ -13,7 +13,7 @@ spec:
     imagePullPolicy: "Always"
     command: [ "/bin/bash" , "-c" ]
     args:
-    - ./gradlew test -Dcucumber.filter.tags="@amsIntegration" ; echo 'Test complete' ; sleep 1500 ; echo 'pod terminate'
+    - ./gradlew test -Dcucumber.tags="@amsIntegration" ; echo 'Test complete' ; sleep 1500 ; echo 'pod terminate'
     {{- include "inttest.env" . | nindent 4 }}
     resources:
       limits:
