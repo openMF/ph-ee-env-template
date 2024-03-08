@@ -47,7 +47,7 @@ mock_schema:
 
 limits:
   cpu: "500m"
-  memory: "512M"
+  memory: "752M"
 requests:
   cpu: "100m"
   memory: "256M"

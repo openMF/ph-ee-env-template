@@ -66,7 +66,7 @@ spec:
           make secrets || echo "kibana-secrets" already exists
           kubectl get secrets -n $NAMESPACE
           echo ---------------secrets created--------------- 
-          sleep 20
+          sleep 10
 
           #insatll netcat
           sudo apt install -y netcat
@@ -92,6 +92,7 @@ spec:
           cd ..
           sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
           echo "---------------------------successful--------------------------"
+          sleep 10
       restartPolicy: Never
   backoffLimit: 0 
 {{- end }}
