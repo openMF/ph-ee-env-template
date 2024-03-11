@@ -23,6 +23,12 @@ limits:
 requests:
   cpu: "100m"
   memory: "256M"    
+readinessProbe:
+  httpGet:
+    path: /oauth/token_key
+    port: 5000
+  periodSeconds: 30
+  timeoutSeconds: 5
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:

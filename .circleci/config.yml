@@ -243,66 +243,67 @@ jobs:
             kubectl create namespace paymenthub
             kubectl get -A namespace  
 
-            # # For remote access to minikube uncomment the following lines.
-            # #---------------------minikube remote aceess start---------------------
-            # sudo apt install nginx        
-            # sudo touch /etc/nginx/conf.d/minikube.conf 
-            # echo "create nginx conf"
-            # sudo chmod 777 -R /etc/nginx/conf.d/
-            # echo "changed access"
+            # For remote access to minikube uncomment the following lines.
+            #---------------------minikube remote aceess start---------------------
+            sudo apt install nginx        
+            sudo touch /etc/nginx/conf.d/minikube.conf 
+            echo "create nginx conf"
+            sudo chmod 777 -R /etc/nginx/conf.d/
+            echo "changed access"
 
-            # sudo apt-get install apache2-utils -y
-            # echo "apache2-utils installed"
-            # htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+            sudo apt-get install apache2-utils -y
+            echo "apache2-utils installed"
+            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
 
-            # sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
-            # server {
-            #     listen       8080;
-            #     listen [::]:8080;
-            #     server_name  localhost;
-            #     access_log /home/circleci/project/nginx_access.log;
-            #     auth_basic "Administrators Area";
-            #     auth_basic_user_file /home/circleci/project/.htpasswd;    
+            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            server {
+                listen       8080;
+                listen [::]:8080;
+                server_name  localhost;
+                access_log /home/circleci/project/nginx_access.log;
+                auth_basic "Administrators Area";
+                auth_basic_user_file /home/circleci/project/.htpasswd;    
 
-            #     location / {   
-            #         proxy_pass https://$MINIKUBE_IP:8443;
-            #         proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
-            #         proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
-            #     }
-            # }
-            # EOF
-            # sudo service nginx restart || echo 'start nginx'
-            # #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+                location / {   
+                    proxy_pass https://$MINIKUBE_IP:8443;
+                    proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+                    proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+                }
+            }
+            EOF
+            sudo service nginx restart || echo 'start nginx'
+            #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
 
-            # sleep 10
+            sleep 10
             
-            # echo "test-nginx-proxy"
-            # curl -u minikube:minikube http://localhost:8080
+            echo "test-nginx-proxy"
+            curl -u minikube:minikube http://localhost:8080
 
-            # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            # # ngrok config add-authtoken $AUTH_TOKEN
-            # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            # ngrok http 8080 > /dev/null &
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            # ngrok config add-authtoken $AUTH_TOKEN
+            ngrok config add-authtoken 2bd1gKwm6rye7Pz3CtgrF7kzB1G_4xn4KChGhrwdBjhrNpm9x
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            ngrok http 8080 > /dev/null &
 
-            # echo -n "Extracting ngrok public url ."
-            # NGROK_PUBLIC_URL=""
-            # while [ -z "$NGROK_PUBLIC_URL" ]; do
-            #   # Run 'curl' against ngrok API and extract public (using 'sed' command)
-            #   export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-            #                             --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-            #                             sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-            #   sleep 1
-            #   echo -n "."
-            # done
-            # echo ---------copy the below public_URL for NGrok----------
-            # echo "https://$NGROK_PUBLIC_URL"
-            # echo "https://$NGROK_PUBLIC_URL"
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+              sleep 1
+              echo -n "."
+            done
+            echo ---------copy the below public_URL for NGrok----------
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
 
-            # #echo "test ngrok "
-            # #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-            # echo "https://$NGROK_PUBLIC_URL"
+            #echo "test ngrok "
+            #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
            
-            # # ---------------------minikube remote aceess end---------------------
+            # ---------------------minikube remote aceess end---------------------
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
             sudo apt-get install apt-transport-https --yes
@@ -437,76 +438,76 @@ jobs:
             # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
             #------------------Post-Installation-Steps-ends-------------------------------
 
-      - run:
-          name: Run Helm Tests
-          command: |
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
-            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+      # - run:
+      #     name: Run Helm Tests
+      #     command: |
+      #       helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+      #       helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
                  
-      - run:
-          name: Fetch Integration Test Report
-          command: |
-            #!/bin/bash
-            mkdir -p integration_report/test-report
+      # - run:
+      #     name: Fetch Integration Test Report
+      #     command: |
+      #       #!/bin/bash
+      #       mkdir -p integration_report/test-report
 
-            echo "Fetch Integration Test Report for ams"
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml"
-            done
-            echo "File is no longer empty, processing..."
-            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
-            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
-            # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      #       echo "Fetch Integration Test Report for ams"
+      #       kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      #       # Specify the path to the downloaded file
+      #       downloaded_file="integration_report/test-report/cucumber.xml"
+      #       # Loop until the file is not empty
+      #       while [ ! -s $downloaded_file ]; do
+      #           echo "File is empty, waiting..."
+      #           sleep 60  # You can adjust the sleep interval as needed
+      #           kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+      #           downloaded_file="integration_report/test-report/cucumber.xml"
+      #       done
+      #       echo "File is no longer empty, processing..."
+      #       mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
+      #       mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
+      #       # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
 
-            for i in $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1); do
-                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
-                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
-                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
-                echo " " >> all_pod_logs.log
-                echo " " >> all_pod_logs.log
-            done
+      #       for i in $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1); do
+      #           echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+      #           kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
+      #           echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+      #           echo " " >> all_pod_logs.log
+      #           echo " " >> all_pod_logs.log
+      #       done
             
-            echo "Fetch Integration Test Report for GOV"
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            # Specify the path to the downloaded file 
-            downloaded_file="integration_report/test-report/cucumber.xml"
-            # Loop until the file is not empty
-            while [ ! -s $downloaded_file ]; do
-                echo "File is empty, waiting..."
-                sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
-                downloaded_file="integration_report/test-report/cucumber.xml"
-            done
-            echo "File is no longer empty, processing..."
-            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
-            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
+      #       echo "Fetch Integration Test Report for GOV"
+      #       kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      #       # Specify the path to the downloaded file 
+      #       downloaded_file="integration_report/test-report/cucumber.xml"
+      #       # Loop until the file is not empty
+      #       while [ ! -s $downloaded_file ]; do
+      #           echo "File is empty, waiting..."
+      #           sleep 60  # You can adjust the sleep interval as needed
+      #           kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+      #           downloaded_file="integration_report/test-report/cucumber.xml"
+      #       done
+      #       echo "File is no longer empty, processing..."
+      #       mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
+      #       mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
            
-            mkdir -p integration_report_final
-            cp integration_report/test-report/cucumber_gov.xml integration_report_final/ || echo ""
-            cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
+      #       mkdir -p integration_report_final
+      #       cp integration_report/test-report/cucumber_gov.xml integration_report_final/ || echo ""
+      #       cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
 
-            ls integration_report/test-report/
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
-            for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
-                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
-                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
-                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
-                echo " " >> all_pod_logs.log
-                echo " " >> all_pod_logs.log
-            done
-            mv all_pod_logs.log integration_report/test-report/reports/tests/
+      #       ls integration_report/test-report/
+      #       # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+      #       for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
+      #           echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+      #           kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
+      #           echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+      #           echo " " >> all_pod_logs.log
+      #           echo " " >> all_pod_logs.log
+      #       done
+      #       mv all_pod_logs.log integration_report/test-report/reports/tests/
 
-      - store_test_results:
-          path: integration_report_final/
-      - store_artifacts:
-          path: integration_report/test-report/reports/tests
+      # - store_test_results:
+      #     path: integration_report_final/
+      # - store_artifacts:
+      #     path: integration_report/test-report/reports/tests
 
 
 workflows:

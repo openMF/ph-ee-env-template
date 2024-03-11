@@ -52,14 +52,16 @@ livenessProbe:
   httpGet:
     path: /actuator/health/liveness
     port: 8443
+    scheme: HTTPS
   initialDelaySeconds: 20
   periodSeconds: 30
 readinessProbe:
   httpGet:
     path: /actuator/health/readiness
     port: 8443
+    scheme: HTTPS
   initialDelaySeconds: 20
-  periodSeconds: 30  
+  periodSeconds: 30   
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster
 ingress:
