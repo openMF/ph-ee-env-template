@@ -20,15 +20,12 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
-<<<<<<< HEAD
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
-=======
       initContainers:
       #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
       - name: check-zeebe-gateway-ready
         image: busybox:latest
         command: ['sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for myconfig service"; sleep 2; done;']
->>>>>>> e177f67 (GOV-134 test liveness and readiness)
       containers:
         - name: ph-ee-connector-channel
           image: "{{ .Values.image }}"
