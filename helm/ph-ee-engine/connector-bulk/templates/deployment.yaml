@@ -21,6 +21,11 @@ spec:
 {{- end }}
     spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      initContainers:
+      #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+      - name: check-zeebe-gateway-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
         - name: ph-ee-connector-bulk
           image: "{{ .Values.image}}"
@@ -34,6 +39,18 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
