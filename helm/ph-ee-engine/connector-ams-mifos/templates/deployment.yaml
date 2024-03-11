@@ -47,13 +47,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness
-            port: 5000
+            port: 7070
           initialDelaySeconds: 20
           periodSeconds: 30
         readinessProbe:
           httpGet:
             path: /actuator/health/readiness
-            port: 5000
+            port: 7070
           initialDelaySeconds: 20
           periodSeconds: 30
         env:
