@@ -2001,7 +2001,7 @@ kong:
         credentials: true
         max_age: 3600
         exposed_headers :
-          - "X-Auth-Token"
+          - "*"
         preflight_continue: false
     - apiVersion: configuration.konghq.com/v1
       kind: KongClusterPlugin
