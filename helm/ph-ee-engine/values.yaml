@@ -1453,7 +1453,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.13.0
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.13.1
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   datasource:
@@ -2025,7 +2025,7 @@ kong:
 vouchers:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-vouchers:v1.3.0
+  image: docker.io/openmf/ph-ee-vouchers:v1.3.1
   ingress:
     enabled: true
     annotations:
