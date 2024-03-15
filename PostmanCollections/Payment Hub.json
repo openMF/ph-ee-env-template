@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1ce9416b-ec84-4c8e-93bd-aef5dfdb6fc2",
+		"_postman_id": "2a60aecd-10cc-4be1-8bfb-f5bba6775834",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30685438"
+		"_exporter_id": "31254556",
+		"_collection_link": "https://winter-meadow-7690.postman.co/workspace/New-Team-Workspace~2320fb6c-16f6-420f-bbd9-6be674caa541/collection/31254556-2a60aecd-10cc-4be1-8bfb-f5bba6775834?action=share&source=collection_link&creator=31254556"
 	},
 	"item": [
 		{
@@ -45829,7 +45830,48 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Register Beneficiary",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"financialAddress\": \"589\",\n            \"bankingInstitutionCode\": \"gorilla\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Update Beneficiary",
@@ -45866,7 +45908,48 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Beneficiary",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"1233456\",\n      \"bankingInstitutionCode\": \"gorilla\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Batch Account Lookup",
@@ -45903,7 +45986,48 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Batch Account Lookup",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"9404916971482891259\"\n    },\n    {\n      \"payeeIdentity\": \"76032553265657618183\"\n    },\n    {\n      \"payeeIdentity\": \"51498584148040549461\"\n    },\n    {\n      \"payeeIdentity\": \"69028769626982342710\"\n    },\n        {\n      \"payeeIdentity\": \"690287696269444382342710\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/accountLookup",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"accountLookup"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Account Lookup",
@@ -45958,7 +46082,63 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Account Lookup",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "SocialWelfare",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary/?payeeIdentity=63310590323322234956&requestId=12345667987&paymentModality=00",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary",
+										""
+									],
+									"query": [
+										{
+											"key": "payeeIdentity",
+											"value": "63310590323322234956"
+										},
+										{
+											"key": "requestId",
+											"value": "12345667987"
+										},
+										{
+											"key": "paymentModality",
+											"value": "00"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Fetch All Beneficiaries",
@@ -45991,7 +46171,44 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Fetch All Beneficiaries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiaries?page=10&pageSize=5",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiaries"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "10"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Fetch Beneficiaries",
@@ -46015,7 +46232,35 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Fetch Beneficiaries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiaries/{{payeeIdentity}}",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiaries",
+										"{{payeeIdentity}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"registeringInstitutionId\": \"123\",\n    \"payeeIdentity\": \"3001003873110196\",\n    \"paymentModality\": null,\n    \"financialAddress\": null,\n    \"bankingInstitutionCode\": null\n}"
+						}
+					]
 				},
 				{
 					"name": "Add Payment Modality",
@@ -46052,7 +46297,48 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Add Payment Modality",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"00\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/paymentModality",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"paymentModality"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Update Payment Modality",
@@ -46089,7 +46375,48 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Payment Modality",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"51498584148040549461\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"998LB283697636447147812564357\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/paymentModality",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"paymentModality"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		},
@@ -46575,7 +46902,50 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Bill Inquiry API",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+										"type": "text"
+									},
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-PayerFSP-Id",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BillPayHostName}}/bills/{{billId}}",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"bills",
+										"{{billId}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"93e55fd5-140c-4db0-83ba-bac1316b524b\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Bill Payments API",
@@ -46622,7 +46992,58 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Bill Payments API",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+										"type": "text"
+									},
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-PayerFSP-Id",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"billInquiryRequestId\": \"12e2cedc-7372-4208-8079-7d46d691fca4\",\n    \"billId\": \"001\",\n    \"paymentReferenceID\": \"8f353842-451c-4231-afc9-58289afdc396\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/paymentNotifications",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"paymentNotifications"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Biller RTP Request API",
@@ -46669,7 +47090,58 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Biller RTP Request API",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Callback-URL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Correlation-ID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Biller-Id",
+										"value": "GovBill",
+										"type": "text"
+									},
+									{
+										"key": "X-Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/billTransferRequests",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"billTransferRequests"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		}
