@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "1ce9416b-ec84-4c8e-93bd-aef5dfdb6fc2",
+		"_postman_id": "ef1ae1e6-3a8d-462e-8a60-abf2f880c9d4",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30685438"
+		"_exporter_id": "20222524"
 	},
 	"item": [
 		{
@@ -43479,7 +43479,238 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Batch Transactions",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Purpose",
+										"value": "test payment",
+										"type": "text"
+									},
+									{
+										"key": "filename",
+										"value": "ph-ee-bulk-demo-6.csv",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{X-CorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Signature",
+										"value": "{{X-Signature}}",
+										"type": "text"
+									},
+									{
+										"key": "type",
+										"value": "csv",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "data",
+											"type": "file",
+											"src": "/Users/dhavalmaniyar/Documents/projects/ph-ee-connector-integration-test/src/test/java/resources/batch_demo_csv/ph-ee-bulk-demo-6.csv"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BulkHostName}}/batchtransactions",
+									"host": [
+										"{{BulkHostName}}"
+									],
+									"path": [
+										"batchtransactions"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "csv",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Platform-TenantId",
+									"value": "gorilla"
+								},
+								{
+									"key": "X-SIGNATURE",
+									"value": "Ta+CtpvS8KjuV9yxhjBjl+OJHwJ4x+52ha82sx7ozVELDSFIPgkjCWreEMI95urBVHorkJtY3yX0+5DJodynyShL017qoYgZOZRYZZRy3JFB15Nmi3BCtvsLQc94PMsnX4zx2Nlo2g/YTyWTTU/uAGIWXmnkjMgy7mX5/r5lBpGyVu2T0xdVHF109+/3do8YJA9MTieBlInCp6bxaCRXLLkb23DiC+T+sHhzRZ2ODj5cWcKBLvDvDCz/V4n90nYyHSaxPb6EfoxZlLU2013tSnhIXW6e95el/X4Rq8QRQ6OoZgN4mi75miF+zibDex9BvTIgxCgYSuVSjB0fS7E8FQ=="
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Mar 2024 08:00:53 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "136"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/3.2.1.0-enterprise-edition"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"PollingPath\": \"/batch/Summary/fc9ea097-4566-43aa-82d4-dd455ad55e99\",\n    \"SuggestedCallbackSeconds\": \"120\"\n}"
+						},
+						{
+							"name": "Batch Transactions Callback",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Purpose",
+										"value": "test payment",
+										"type": "text"
+									},
+									{
+										"key": "filename",
+										"value": "ph-ee-bulk-demo-6.csv",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{X-CorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Signature",
+										"value": "{{X-Signature}}",
+										"type": "text"
+									},
+									{
+										"key": "type",
+										"value": "csv",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "data",
+											"type": "file",
+											"src": "/Users/dhavalmaniyar/Documents/projects/ph-ee-connector-integration-test/src/test/java/resources/batch_demo_csv/ph-ee-bulk-demo-6.csv"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BulkHostName}}/batchtransactions",
+									"host": [
+										"{{BulkHostName}}"
+									],
+									"path": [
+										"batchtransactions"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "csv",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Platform-TenantId",
+									"value": "gorilla"
+								},
+								{
+									"key": "X-SIGNATURE",
+									"value": "Ta+CtpvS8KjuV9yxhjBjl+OJHwJ4x+52ha82sx7ozVELDSFIPgkjCWreEMI95urBVHorkJtY3yX0+5DJodynyShL017qoYgZOZRYZZRy3JFB15Nmi3BCtvsLQc94PMsnX4zx2Nlo2g/YTyWTTU/uAGIWXmnkjMgy7mX5/r5lBpGyVu2T0xdVHF109+/3do8YJA9MTieBlInCp6bxaCRXLLkb23DiC+T+sHhzRZ2ODj5cWcKBLvDvDCz/V4n90nYyHSaxPb6EfoxZlLU2013tSnhIXW6e95el/X4Rq8QRQ6OoZgN4mi75miF+zibDex9BvTIgxCgYSuVSjB0fS7E8FQ=="
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Mar 2024 08:00:53 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "136"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/3.2.1.0-enterprise-edition"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"clientCorrelationId\": \"2251799816458110\",\n  \"batchId\": \"fc9ea097-4566-43aa-82d4-dd455ad55e99\",\n  \"message\": \"The Batch Aggregation API was complete with : 100\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Batch Transactions JSON",
