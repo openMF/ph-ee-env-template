@@ -14,9 +14,6 @@ secret:
 configmap:
   apiVersion: "v1"
 
-global:
-  max_execution_threads: 50
-  poll_interval: 10
 
 zeebe:
   broker:
