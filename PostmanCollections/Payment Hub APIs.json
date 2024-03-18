@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6d1077e2-6626-421f-aef7-727547582146",
-		"name": "Payment Hub APIs Copy 2",
+		"_postman_id": "629c86c6-8ac0-4d52-95b3-cc280f5ee5dd",
+		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31254556"
+		"_exporter_id": "31254556",
+		"_collection_link": "https://winter-meadow-7690.postman.co/workspace/New-Team-Workspace~2320fb6c-16f6-420f-bbd9-6be674caa541/collection/31254556-2a60aecd-10cc-4be1-8bfb-f5bba6775834?action=share&source=collection_link&creator=31254556"
 	},
 	"item": [
 		{
