@@ -46096,10 +46096,101 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:07:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n  \"requestID\": \"171073978834\",\n  \"registerRequestID\": \"915251236700\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						},
+						{
+							"name": "Register Beneficiary Already Exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"financialAddress\": \"589\",\n            \"bankingInstitutionCode\": \"gorilla\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171073977096\",\n    \"registerRequestID\": \"915251236700\",\n    \"numberFailedCases\": 1,\n    \"failedCases\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"failureReason\": \"Beneficiary already registered\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -46174,10 +46265,93 @@
 									]
 								}
 							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171073988979\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						},
+						{
+							"name": "Update Beneficiary Beneficiary not Registered",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"1233456\",\n      \"bankingInstitutionCode\": \"gorilla\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": null
+							"body": "{\n  \"requestID\": \"171074375685\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity\": \"27713803902\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Beneficiary is not registered\"\n    }\n  ]\n}"
 						}
 					]
 				},
@@ -46252,10 +46426,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"915251236706\"\n}"
 						}
 					]
 				},
@@ -46329,15 +46546,6 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{IdentityAccountMapperHostName}}/beneficiary/?payeeIdentity=63310590323322234956&requestId=12345667987&paymentModality=00",
 									"host": [
@@ -46363,10 +46571,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345667987\"\n}"
 						}
 					]
 				},
@@ -46433,10 +46684,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n    \"content\": [],\n    \"pageable\": {\n        \"sort\": {\n            \"empty\": true,\n            \"unsorted\": true,\n            \"sorted\": false\n        },\n        \"offset\": 50,\n        \"pageNumber\": 10,\n        \"pageSize\": 5,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalElements\": 1,\n    \"totalPages\": 1,\n    \"last\": true,\n    \"size\": 5,\n    \"number\": 10,\n    \"sort\": {\n        \"empty\": true,\n        \"unsorted\": true,\n        \"sorted\": false\n    },\n    \"numberOfElements\": 0,\n    \"first\": false,\n    \"empty\": true\n}"
 						}
 					]
 				},
@@ -46485,8 +46779,51 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:05:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
 							"body": "{\n    \"registeringInstitutionId\": \"123\",\n    \"payeeIdentity\": \"3001003873110196\",\n    \"paymentModality\": null,\n    \"financialAddress\": null,\n    \"bankingInstitutionCode\": null\n}"
 						}
@@ -46563,10 +46900,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:05:30 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n  \"requestID\": \"171074009205\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Banking Institution Code Invalid\"\n    }\n  ]\n}"
 						}
 					]
 				},
@@ -46607,7 +46987,7 @@
 					},
 					"response": [
 						{
-							"name": "Update Payment Modality",
+							"name": "Failed Update Payment Modality",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [
@@ -46641,10 +47021,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:05:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n  \"requestID\": \"171074011382\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity\": \"51498584148040549461\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Beneficiary is not registered\"\n    }\n  ]\n}"
 						}
 					]
 				}
@@ -47170,10 +47593,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:04:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": "{\n    \"transactionId\": \"93e55fd5-140c-4db0-83ba-bac1316b524b\"\n}"
+							"body": "{\n  \"code\": \"00\",\n  \"reason\": \"TRANSACTION SUCCESSFUL\",\n  \"clientCorrelationId\": \"f56caf0b-377d-4a1f-8ac1-715859a83eee\",\n  \"billId\": \"001\",\n  \"billDetails\": {\n    \"billerId\": \"001\",\n    \"billerName\": \"Biller1\",\n    \"billStatus\": \"PAID\",\n    \"dueDate\": \"2021-07-01\",\n    \"amountonDueDate\": \"1000\",\n    \"amountAfterDueDate\": \"1100\"\n  }\n}"
 						}
 					]
 				},
@@ -47268,10 +47734,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:04:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n  \"code\": \"00\",\n  \"reason\": \"TRANSACTION SUCCESSFUL\",\n  \"requestID\": \"f56caf0b-377d-4a1f-8ac1-715859a83eee\",\n  \"billId\": \"001\",\n  \"status\": \"ACK\"\n}"
 						}
 					]
 				},
@@ -47366,10 +47875,53 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:04:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n  \"requestId\": \"12345678-6897-6798-6798-098765432134\",\n  \"rtpId\": \"123456\",\n  \"billId\": \"12345\",\n  \"rtpStatus\": \"00\",\n  \"rejectReason\": null\n}"
 						}
 					]
 				}
