@@ -1898,7 +1898,7 @@ integration_test:
   enabled: false
   replicas: 1
   image: "docker.io/openmf/ph-ee-integration-test:latest"
-  imageTag: v1.4.0-rc.1
+  imageTag: v1.6.0-rc.4
   imagePullPolicy: "Never"
   limits:
     cpu: "500m"
