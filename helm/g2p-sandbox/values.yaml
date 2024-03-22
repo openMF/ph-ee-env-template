@@ -261,7 +261,7 @@ ph-ee-engine:
       enabled: false
       annotations: 
         kubernetes.io/ingress.class: nginx 
-        nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
+        nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid, x-correlation-id'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
         nginx.ingress.kubernetes.io/cors-allow-origin: '*'
         nginx.ingress.kubernetes.io/enable-cors: "true"
