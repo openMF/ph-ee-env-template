@@ -522,7 +522,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.17.0
+  image: docker.io/openmf/ph-ee-operations-app:v1.17.1
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
   datasource:
@@ -1897,8 +1897,8 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test:v1.6.1"
-  imageTag: v1.6.0-rc.1
+  image: "docker.io/openmf/ph-ee-integration-test:v1.6.0-rc.5"
+  imageTag: v1.6.0-rc.5
   imagePullPolicy: "Never"
   limits:
     cpu: "500m"
