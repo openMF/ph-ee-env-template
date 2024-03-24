@@ -613,7 +613,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-web:v1.16.0
+  image: docker.io/openmf/ph-ee-operations-web:v1.20.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
