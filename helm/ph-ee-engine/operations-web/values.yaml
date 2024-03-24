@@ -44,6 +44,9 @@ backend:
   PH_OPS_BACKEND_SERVER_URL: https://ops-bk.sandbox.mifos.io/api/v1
   PH_VOU_BACKEND_SERVER_URL: https://ops-bk.sandbox.mifos.io/api/v1
   PH_ACT_BACKEND_SERVER_URL: https://ops-bk.sandbox.mifos.io/api/v1
+  PH_VOU_CALLBACK_URL: https://vouchers.sandbox.mifos.io
+  PH_OPS_BATCH_KEY: ""
+  PH_OPS_BULK_CONNECTOR_URL: https://bulk-connector.sandbox.mifos.io
   PH_PLATFORM_TENANT_ID: phdefault
   PH_PLATFORM_TENANT_IDS: phdefault
   PH_REGISTERING_INSTITUTION_ID: SocialInstitution
