@@ -13,7 +13,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      PH_RELEASE: 1.13.0
+      PH_RELEASE: 1.13.1
     steps:
       - checkout
       - run: rm -f helm/ph-ee-engine/Chart.lock helm/ph-ee-engine/requirements.lock helm/ph-ee-engine/charts/*
@@ -33,7 +33,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      G2P_RELEASE: 1.5.0
+      G2P_RELEASE: 1.5.1
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox/Chart.lock helm/g2p-sandbox/requirements.lock helm/g2p-sandbox/charts/*
@@ -56,7 +56,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      SEC_RELEASE: 1.4.0
+      SEC_RELEASE: 1.4.1
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox-security/Chart.lock helm/g2p-sandbox-security/requirements.lock helm/g2p-sandbox-security/charts/*
@@ -80,7 +80,7 @@ jobs:
     resource_class: xlarge
     environment:
       TERM: dumb
-      PH_RELEASE: 1.13.0
+      PH_RELEASE: 1.13.1
     parameters:
       namespace:
         default: "paymenthub"
@@ -105,7 +105,7 @@ jobs:
         default: ph-ee-g2psandbox
         type: string
       chart-version:
-        default: 1.5.0
+        default: 1.5.1
         type: string
     steps:
       - run: 
