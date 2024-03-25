@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "e7ba3432-e852-4f9f-9a30-5e1a17c3c990",
+		"name": "Mock Payment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31254556"
+	},
+	"item": [
+		{
+			"name": "Mock Batch Summary",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Mock Batch Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{MockPaymentSchema}}/batches/{batchId}/detail",
+					"host": [
+						"{{MockPaymentSchema}}"
+					],
+					"path": [
+						"batches",
+						"{batchId}",
+						"detail"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
