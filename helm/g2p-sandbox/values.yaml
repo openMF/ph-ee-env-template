@@ -373,9 +373,6 @@ ph-ee-engine:
         konghq.com/protocol: "https"
     ingress:
       enabled: false
-      annotations:
-        konghq.com/plugins: cors
-        kubernetes.io/ingress.class: kong
       tls:
         - secretName: sandbox-secret
       hosts:
@@ -490,7 +487,7 @@ ph-ee-engine:
       enabled: false
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id, content-type, X-CallbackURL'
+        nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
         nginx.ingress.kubernetes.io/cors-allow-origin: '*'
         nginx.ingress.kubernetes.io/enable-cors: 'true'
