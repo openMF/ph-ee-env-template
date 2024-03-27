@@ -27,9 +27,9 @@ spec:
       priorityClassName: {{ .Values.priorityClassName  }}
       {{- end }}
       serviceAccountName: ph-ee-connector-ams-mifos
-      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}  
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }} 
+      #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod 
       initContainers:
-      #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
       - name: check-zeebe-gateway-ready
         image: busybox:latest
         command: ['sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for myconfig service"; sleep 2; done;']
