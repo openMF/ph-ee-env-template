@@ -14,7 +14,7 @@ spec:
     command: [ "/bin/bash" , "-c" ]
     args:
       # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
-      - ./gradlew test -Dcucumber.filter.tags="@gov and not @ext" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+      - ./gradlew test -Dcucumber.tags="@gov and not @ext" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
     {{- include "inttest.env" . | nindent 4 }}
     resources:
       limits:
