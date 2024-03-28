@@ -39,14 +39,14 @@ spec:
               path: /actuator/health/liveness
               port: 8080
               scheme: HTTPS
-            initialDelaySeconds: 20
+            initialDelaySeconds: 50
             periodSeconds: 180
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
               scheme: HTTPS
-            initialDelaySeconds: 20
+            initialDelaySeconds: 50
             periodSeconds: 180
           env:
             - name: "SPRING_PROFILES_ACTIVE"
