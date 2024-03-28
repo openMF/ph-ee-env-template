@@ -48,13 +48,13 @@ spec:
           httpGet:
             path: /actuator/health/liveness
             port: 7070
-          initialDelaySeconds: 50
+          initialDelaySeconds: 40
           periodSeconds: 30
         readinessProbe:
           httpGet:
             path: /actuator/health/readiness
             port: 7070
-          initialDelaySeconds: 50
+          initialDelaySeconds: 40
           periodSeconds: 30
         env:
         - name: "SPRING_PROFILES_ACTIVE"
