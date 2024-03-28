@@ -16,6 +16,14 @@ spec:
       labels:
         app: ph-ee-importer-es
     spec:
+      initContainers:
+      #During this Pod's initialization, check that elasricSerach and kafka services are up and running before starting this pod
+      - name: check-elasticsearch-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz ph-ee-elasticsearch 9200; do echo "Waiting for myconfig service"; sleep 2; done;']
+      - name: check-kafka-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz kafka 9092; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
         - name: ph-ee-importer-es
           image: "{{ .Values.image }}"
