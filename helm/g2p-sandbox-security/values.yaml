@@ -68,9 +68,6 @@ ph-ee-engine:
   kibana:
     enabled: false
 
-  kafka:
-    enabled: false
-
   redis:
     enabled: false
 
@@ -102,3 +99,13 @@ ph-ee-engine:
       ingress:
         enabled: false
         hostname: admin-kong.sandbox.mifos.io
+  kafka:
+    enabled: false
+    provisioning:
+      enabled: false
+      
+  post_installation_job: 
+      enabled: false
+
+  minio:
+    enabled: false
