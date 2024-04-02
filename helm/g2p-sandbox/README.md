@@ -17,3 +17,4 @@ GRANT ALL PRIVILEGES ON `gorilla`.* TO 'mifos';
 GRANT ALL ON *.* TO 'root'@'%';
 
 5. restart ops-app pod
+6. 
