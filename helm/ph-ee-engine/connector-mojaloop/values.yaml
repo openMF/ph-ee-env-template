@@ -32,7 +32,7 @@ limits:
   memory: "384M"
 requests:
   cpu: "100m"
-  memory: "256M"  
+  memory: "256M"
 livenessProbe:
   httpGet:
     path: /actuator/health/liveness

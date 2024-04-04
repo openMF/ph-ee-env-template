@@ -34,20 +34,22 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
-         livenessProbe:
-           httpGet:
-             path: /actuator/health/liveness
-             port: 8080
-             scheme: HTTPS
-           initialDelaySeconds: 20
-           periodSeconds: 180
-         readinessProbe:
-           httpGet:
-             path: /actuator/health/readiness
-             port: 8080
-             scheme: HTTPS
-           initialDelaySeconds: 20
-           periodSeconds: 180
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            failureThreshold: 3
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            failureThreshold: 3
+            timeoutSeconds: 5
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"

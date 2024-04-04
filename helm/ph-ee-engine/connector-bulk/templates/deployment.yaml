@@ -42,15 +42,21 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 5000
-            initialDelaySeconds: 20
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 40
             periodSeconds: 30
+            failureThreshold: 3
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 5000
-            initialDelaySeconds: 20
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 40
             periodSeconds: 30
+            failureThreshold: 3
+            timeoutSeconds: 5
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"

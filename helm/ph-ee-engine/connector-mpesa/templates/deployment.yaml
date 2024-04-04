@@ -35,13 +35,13 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: 5000
-            initialDelaySeconds: 20
+            initialDelaySeconds: 50
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 5000
-            initialDelaySeconds: 20
+            initialDelaySeconds: 50
             periodSeconds: 30
           resources:
             limits:
