@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fa82213c-36ed-4dd9-a775-6204c449ba65",
+		"_postman_id": "81a29c7c-afff-4c69-bc89-d0c50e6a85da",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30685438"
@@ -47360,7 +47360,92 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"63310590322288932633\",\n            \"narration\": \"Social Support Payment for the Month of Jan\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"63310590322288932633\",\n            \"narration\": \"Social Support Payment for the Month of Jan\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"849324499155\",\n  \"batchID\": \"045155518258\",\n  \"voucherInstructions\": [\n    {\n      \"instructionID\": \"1202383344325434\",\n      \"currency\": \"USD\",\n      \"amount\": 5009,\n      \"narration\": \"Social Support Payment for the Month of Jan\",\n      \"voucherNumber\": \"f3ONmzIfROhCCHZiAFXATQHqm2/tJjuh0ozax0ycaJp+rE32Cm4r2Ub8xIpE2AEXvvvG/42bB/DlVUbF2Fe1NQHF7HHBQPV0TMUy0AbIfE7ihf3Qp6DMsd2z2ffyKdo0KpRY8x25lZSB/D1wUM96KsdPR1OB4zyDOag+zSIZbJIbLD+jRWkzw8pJp0X7x5RtRrh4KD5gwR3M6RNA7Hpd+eYzUo2SsPx82QLHi1Vx1l79f3JFpPmc0lhdrfzbEZQQAk/6z2dj2aw89XaBOZsZXy751E9xJQGXtiitA8m9mIrFYZ3iQoWzbSIzFEygM6sIbJASgrm+YvYesWUP/pcmXw==\",\n      \"serialNumber\": \"17123246904971\"\n    }\n  ]\n}\n"
+						}
+					]
 				},
 				{
 					"name": "Activate Voucher",
@@ -47406,7 +47491,104 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16939790248654\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=activate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "activate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16939790248654\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=activate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "activate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171232475311\",\n  \"registerRequestID\": \"849324499155\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Suspend Voucher",
@@ -47452,7 +47634,104 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"06\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=suspend",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "suspend"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"06\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=suspend",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "suspend"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171232493718\",\n  \"registerRequestID\": \"849324499155\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Cancel Voucher",
@@ -47498,7 +47777,104 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895845478866\",\n            \"status\": \"03\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=cancel",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "cancel"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895845478866\",\n            \"status\": \"03\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=cancel",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "cancel"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171232511656\",\n  \"registerRequestID\": \"849324499155\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Reactivate Voucher",
@@ -47544,7 +47920,104 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=reactivate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "reactivate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Sample request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=reactivate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "reactivate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171233278011\",\n  \"registerRequestID\": \"849324499155\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Redeem Voucher",
@@ -47587,7 +48060,56 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=redeem",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "redeem"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"status\": \"01\",\n    \"message\": \"Voucher redemption successful!\",\n    \"serialNumber\": \"H8cTUUhlO/JIqFCRZdfyeIbtxeWvzO5++5xtj+r9wcALoOnP17mG5tYThRROkWBFrW2O4xYjtuZsV9VCQk+4VrTgzwA8uafbWZQh6hppHx7zgrwJ7E/YiC6MZriMvp4vHIFSruYFbKOt5gr3RGkNFAl1xD9wTY3n0g381/qZSSAWA8ODByt61nZLyNH91of4wHyzYtCJuFCBx3UKKhICenv1XJ4FaKUKrWYyFPCMN24DIDprwzY5aAKFRucXKYK2XG4UkyJQe7lRvDfmOo/jzGtz2LmxtsgltJYvGqglZx3Q0k4zmJUkopB4O5edAb4bMzuny3zPsbqTyk2CF/GWtQ==\",\n    \"value\": \"5009.00\",\n    \"timestamp\": \"2024-04-05T16:01:24.271818174\",\n    \"transactionId\": \"1712332884\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Redeem and Pay Voucher",
@@ -47630,7 +48152,104 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=redeemPay",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "redeemPay"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Sample request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=redeemPay",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "redeemPay"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171233306861\",\n  \"registerRequestID\": \"849324499155\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Check Validity",
@@ -47679,7 +48298,116 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/voucher/validity?isValid=true&serialNumber=16939790248654",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"voucher",
+										"validity"
+									],
+									"query": [
+										{
+											"key": "isValid",
+											"value": "true"
+										},
+										{
+											"key": "voucherNumber",
+											"value": "ffds",
+											"disabled": true
+										},
+										{
+											"key": "groupCode",
+											"value": "fsfsfd",
+											"disabled": true
+										},
+										{
+											"key": "serialNumber",
+											"value": "16939790248654"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"\"\n}\n"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/voucher/validity?isValid=true&serialNumber=16939790248654",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"voucher",
+										"validity"
+									],
+									"query": [
+										{
+											"key": "isValid",
+											"value": "true"
+										},
+										{
+											"key": "voucherNumber",
+											"value": "ffds",
+											"disabled": true
+										},
+										{
+											"key": "groupCode",
+											"value": "fsfsfd",
+											"disabled": true
+										},
+										{
+											"key": "serialNumber",
+											"value": "16939790248654"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"serialNumber\": \"17098827605447\",\n  \"isValid\": true\n}"
+						}
+					]
 				},
 				{
 					"name": "Fetch Vouchers",
@@ -47715,7 +48443,46 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers/{{voucherNumber}}",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers",
+										"{{voucherNumber}}"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"serialNumber\": \"17098827605447\",\n    \"createdDate\": \"2024-03-08T07:26:01\",\n    \"registeringInstitutionId\": \"123\",\n    \"status\": \"02\",\n    \"payeeFunctionalID\": \"63310590322288932682\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Fetch All Vouchers",
@@ -47760,7 +48527,55 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?page=0&size=10",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"serialNumber\": \"17098827605447\",\n            \"createdDate\": \"2024-03-08T07:26:01\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827614621\",\n            \"createdDate\": \"2024-03-08T07:26:01\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827623176\",\n            \"createdDate\": \"2024-03-08T07:26:02\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827631581\",\n            \"createdDate\": \"2024-03-08T07:26:03\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827640378\",\n            \"createdDate\": \"2024-03-08T07:26:04\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827649245\",\n            \"createdDate\": \"2024-03-08T07:26:05\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827658061\",\n            \"createdDate\": \"2024-03-08T07:26:06\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098828235054\",\n            \"createdDate\": \"2024-03-08T07:27:04\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098828244473\",\n            \"createdDate\": \"2024-03-08T07:27:04\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098828254959\",\n            \"createdDate\": \"2024-03-08T07:27:05\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        }\n    ],\n    \"pageable\": {\n        \"sort\": {\n            \"empty\": true,\n            \"unsorted\": true,\n            \"sorted\": false\n        },\n        \"offset\": 0,\n        \"pageNumber\": 0,\n        \"pageSize\": 10,\n        \"unpaged\": false,\n        \"paged\": true\n    },\n    \"totalPages\": 103,\n    \"totalElements\": 1029,\n    \"last\": false,\n    \"size\": 10,\n    \"number\": 0,\n    \"sort\": {\n        \"empty\": true,\n        \"unsorted\": true,\n        \"sorted\": false\n    },\n    \"numberOfElements\": 10,\n    \"first\": true,\n    \"empty\": false\n}"
+						}
+					]
 				}
 			]
 		},
