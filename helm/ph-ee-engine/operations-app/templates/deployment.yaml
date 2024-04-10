@@ -56,6 +56,8 @@ spec:
               value: "{{ .Values.datasource.schema }}"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
+            - name: "CLOUD_AWS_MINIO_PUBLIC_HOST"
+              value: "{{ .Values.minio_public_host}}"
             - name: "TOKEN_CLIENT_CHANNEL_SECRET"
               value: "{{ .Values.token_client_channel_secret }}"
             - name: "TENANTS"
