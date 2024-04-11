@@ -38,6 +38,7 @@ ingress:
   #  - secretName: sandbox-secret
   #    hosts:
   #      - chart-example.local
+minio_public_host: ""
 deployment:
   apiVersion: "apps/v1"
   annotations:
