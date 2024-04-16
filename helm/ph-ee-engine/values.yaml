@@ -543,22 +543,22 @@ operations_app:
     host: "operationsmysql"
     port: 3306
     schema: "tenants"
-  livenessProbe:
-    httpGet:
-      path: /actuator/health/liveness
-      port: 5000
-    initialDelaySeconds: 180
-    periodSeconds: 40
-    failureThreshold: 3
-    timeoutSeconds: 5
-  readinessProbe:
-    httpGet:
-      path: /actuator/health/readiness
-      port: 5000
-    initialDelaySeconds: 180
-    periodSeconds: 40
-    failureThreshold: 3
-    timeoutSeconds: 5
+  # livenessProbe:
+  #   httpGet:
+  #     path: /actuator/health/liveness
+  #     port: 5000
+  #   initialDelaySeconds: 180
+  #   periodSeconds: 40
+  #   failureThreshold: 3
+  #   timeoutSeconds: 5
+  # readinessProbe:
+  #   httpGet:
+  #     path: /actuator/health/readiness
+  #     port: 5000
+  #   initialDelaySeconds: 180
+  #   periodSeconds: 40
+  #   failureThreshold: 3
+  #   timeoutSeconds: 5
     # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true
   # Custom service account override that the pod will use
