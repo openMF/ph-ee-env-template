@@ -204,8 +204,8 @@ jobs:
         default: 0.0.0
         type: string
     steps:
-      - run: 
-          name: run minikube 
+      - run:
+          name: run minikube
           no_output_timeout: 40m
           command : |
             free -m
@@ -230,7 +230,7 @@ jobs:
             minikube config set memory 25600
             minikube start #--extra-config=kubelet.max-pods=60
             echo "Minikube started-----------------------------------------------------"
-           
+            
             # To check the allocated values 
             minikube config get cpus
             minikube config get memory
@@ -238,71 +238,71 @@ jobs:
             MINIKUBE_IP=`minikube ip`
             echo $MINIKUBE_IP
             # cat ~/.kube/config
-        
+            
             minikube kubectl -- get po -A #Interact with Minikube cluster
             kubectl create namespace paymenthub
             kubectl get -A namespace  
 
             # # For remote access to minikube uncomment the following lines.
-            # #---------------------minikube remote aceess start---------------------
-            # sudo apt install nginx        
-            # sudo touch /etc/nginx/conf.d/minikube.conf 
-            # echo "create nginx conf"
-            # sudo chmod 777 -R /etc/nginx/conf.d/
-            # echo "changed access"
+            #---------------------minikube remote aceess start---------------------
+            sudo apt install nginx        
+            sudo touch /etc/nginx/conf.d/minikube.conf 
+            echo "create nginx conf"
+            sudo chmod 777 -R /etc/nginx/conf.d/
+            echo "changed access"
 
-            # sudo apt-get install apache2-utils -y
-            # echo "apache2-utils installed"
-            # htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+            sudo apt-get install apache2-utils -y
+            echo "apache2-utils installed"
+            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
 
-            # sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
-            # server {
-            #     listen       8080;
-            #     listen [::]:8080;
-            #     server_name  localhost;
-            #     access_log /home/circleci/project/nginx_access.log;
-            #     auth_basic "Administrators Area";
-            #     auth_basic_user_file /home/circleci/project/.htpasswd;    
+            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            server {
+                listen       8080;
+                listen [::]:8080;
+                server_name  localhost;
+                access_log /home/circleci/project/nginx_access.log;
+                auth_basic "Administrators Area";
+                auth_basic_user_file /home/circleci/project/.htpasswd;    
 
-            #     location / {   
-            #         proxy_pass https://$MINIKUBE_IP:8443;
-            #         proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
-            #         proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
-            #     }
-            # }
-            # EOF
-            # sudo service nginx restart || echo 'start nginx'
-            # #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+                location / {   
+                    proxy_pass https://$MINIKUBE_IP:8443;
+                    proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+                    proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+                }
+            }
+            EOF
+            sudo service nginx restart || echo 'start nginx'
+            #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
 
-            # sleep 10
+            sleep 10
             
-            # echo "test-nginx-proxy"
-            # curl -u minikube:minikube http://localhost:8080
+            echo "test-nginx-proxy"
+            curl -u minikube:minikube http://localhost:8080
 
-            # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            # # ngrok config add-authtoken $AUTH_TOKEN
-            # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            # ngrok http 8080 > /dev/null &
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            ngrok config add-authtoken 2Zo2HVFOaaiyCIQ6ICNzBtzkfCB_4MW1T7uMsNnXgJxra4ssi
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            ngrok http 8080 > /dev/null &
 
-            # echo -n "Extracting ngrok public url ."
-            # NGROK_PUBLIC_URL=""
-            # while [ -z "$NGROK_PUBLIC_URL" ]; do
-            #   # Run 'curl' against ngrok API and extract public (using 'sed' command)
-            #   export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-            #                             --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-            #                             sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-            #   sleep 1
-            #   echo -n "."
-            # done
-            # echo ---------copy the below public_URL for NGrok----------
-            # echo "https://$NGROK_PUBLIC_URL"
-            # echo "https://$NGROK_PUBLIC_URL"
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+              sleep 1
+              echo -n "."
+            done
+            echo ---------copy the below public_URL for NGrok----------
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
 
-            # #echo "test ngrok "
-            # #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-            # echo "https://$NGROK_PUBLIC_URL"
-           
-            # # ---------------------minikube remote aceess end---------------------
+            #echo "test ngrok "
+            #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
+            
+            # ---------------------minikube remote aceess end---------------------
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
             sudo apt-get install apt-transport-https --yes
@@ -311,7 +311,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install helm
             kubectl create namespace paymenthub || echo namespace already exists
-           
+
       - run:
           name: fetch docker images and helm upgrade
           environment:
@@ -346,7 +346,7 @@ jobs:
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
             if [ "$CIRCLE_BRANCH" != "master" ]; then
-              
+            
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
@@ -387,7 +387,7 @@ jobs:
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME-$ORB_CHART_VERSION")
               echo "chart used: < $CHART_URL >"
             fi
-          
+            
             echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
             helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
 
@@ -425,16 +425,16 @@ jobs:
             # done;
             # echo ------zeebe-ops service available-----------
             # # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
-           
+            
             # #Deploy BPMN 
-            # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            # cd openMF/ph-ee-env-labs/orchestration
-            # ls
-            # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
-            # cat deployBpmn.sh
-            # cd ..
-            # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+             kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+             git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+             cd openMF/ph-ee-env-labs/orchestration
+             ls
+             sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+             cat deployBpmn.sh
+             cd ..
+             sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
             #------------------Post-Installation-Steps-ends-------------------------------
 
       - run:
@@ -442,7 +442,7 @@ jobs:
           command: |
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
             helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
-                 
+
       - run:
           name: Fetch Integration Test Report
           command: |
@@ -487,7 +487,7 @@ jobs:
             echo "File is no longer empty, processing..."
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
-           
+            
             mkdir -p integration_report_final
             cp integration_report/test-report/cucumber_gov.xml integration_report_final/ || echo ""
             cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
@@ -520,20 +520,20 @@ workflows:
       - build-and-host-g2p-sandbox:
           requires:
             - build-and-host-engine
-          context: 
+          context:
             - AWS
             - Helm
             - slack
       - build-host-g2p-fyn-chart:
           requires:
             - build-and-host-g2p-sandbox
-          context: 
+          context:
             - AWS
             - Helm
       - build-and-host-g2p-sandbox-security:
           requires:
             - build-host-g2p-fyn-chart
-          context: 
+          context:
             - AWS
             - Helm
             - slack
@@ -545,7 +545,3 @@ workflows:
             - Ngrok
           requires:
             - build-host-g2p-fyn-chart
-
-
-
-
