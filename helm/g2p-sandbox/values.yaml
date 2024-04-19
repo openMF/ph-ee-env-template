@@ -514,10 +514,10 @@ ph-ee-engine:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
     limits:
       cpu: "500m"
-      memory: "1.5Gi"
+      memory: "512M"
     requests:
       cpu: "100m"
-      memory: "1Gi"
+      memory: "512M"
 
   billPay:
     enabled: true
