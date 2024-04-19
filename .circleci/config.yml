@@ -174,7 +174,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
       docker_layer_caching: true
-    resource_class: xlarge
+    resource_class: large
     environment:
       TERM: dumb
     parameters:
@@ -313,7 +313,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install helm
             kubectl create namespace paymenthub || echo namespace already exists
-           
+            sleep 70m 30s;
+
       - run:
           name: fetch docker images and helm upgrade
           environment:
@@ -397,9 +398,7 @@ jobs:
             helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
             echo helm chart install starts
-            helm upgrade --install  --timeout=70m --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.messagegateway.enabled=false --set ph-ee-engine.notifications.enabled=false --set ph-ee-engine.operations_web.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" # --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false  
-                  
-            sleep 70m 30s;
+            helm upgrade --install  --timeout=50m --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.messagegateway.enabled=false --set ph-ee-engine.notifications.enabled=false --set ph-ee-engine.operations_web.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" # --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false  
             echo --------------------helm upgrade is done---------------------
 
             # ----------------------Post-Installation-Steps-starts---------------------------
