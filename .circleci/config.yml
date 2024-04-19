@@ -313,7 +313,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install helm
             kubectl create namespace paymenthub || echo namespace already exists
-            sleep 70m 30s;
+            sleep 70m 30s &
 
       - run:
           name: fetch docker images and helm upgrade
