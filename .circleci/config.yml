@@ -204,6 +204,8 @@ jobs:
         default: 0.0.0
         type: string
     steps:
+      - helm/install-helm-client:
+          version: "v3.8.2"
       - run: 
           name: run minikube 
           no_output_timeout: 40m
