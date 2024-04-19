@@ -29,13 +29,13 @@ ph-ee-engine:
   channel:
     enabled: false
     ingress:
-      enabled: false 
+      enabled: false
 
   operations_web:
     enabled: false
     ingress:
       enabled: false
-           
+
   operations_app:
     enabled: false
     ingress:
@@ -99,6 +99,18 @@ ph-ee-engine:
       ingress:
         enabled: false
         hostname: admin-kong.sandbox.mifos.io
+        gateway:
+          serviceMonitor:
+            enabled: true
+    ingressController:  # enable Kong as an Ingress controller
+      enabled: true
+      env:
+        kong_admin_tls_skip_verify: false
+      installCRDs: false
+    podAnnotations:
+      prometheus.io/scrape: "true" # Ask Prometheus to scrape the
+      prometheus.io/port: "8100"   # Kong pods for metrics
+
   kafka:
     enabled: false
     provisioning:
