@@ -1250,13 +1250,12 @@ zeebe_ops:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "384M"
-      cpu: "500m"
-    requests:
-      memory: "384M"
-      cpu: "100m" 
+  limits:
+    memory: "384M"
+    cpu: "500m"
+  requests:
+    memory: "384M"
+    cpu: "100m"
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1690,13 +1689,12 @@ ph_ee_connector_gsma:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "256M"
-      cpu: "500m"
-    requests:
-      memory: "256M"
-      cpu: "100m"  
+  limits:
+    memory: "256M"
+    cpu: "500m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1712,13 +1710,6 @@ ph_ee_connector_gsma:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
-      limits:
-        memory: "256M"
-        cpu: "500m"
-      requests:
-        memory: "256M"
-        cpu: "100m"    
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
@@ -2116,13 +2107,12 @@ billPay:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:
-    limits:
-      memory: "256M"
-      cpu: "500m"
-    requests:
-      memory: "256M"
-      cpu: "100m"
+  limits:
+    memory: "256M"
+    cpu: "500m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
