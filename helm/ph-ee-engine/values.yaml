@@ -273,7 +273,7 @@ channel:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"
@@ -305,7 +305,7 @@ channel:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"
@@ -380,7 +380,7 @@ ph_ee_connector_ams_mifos:
   resources:    
     limits:
       memory: "384M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "256M"
       cpu: "300m"
@@ -408,7 +408,7 @@ ph_ee_connector_ams_mifos:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -481,7 +481,7 @@ ph_ee_connector_mojaloop:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"           
@@ -510,7 +510,7 @@ ph_ee_connector_mojaloop:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -574,7 +574,7 @@ operations_app:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"         
@@ -603,7 +603,7 @@ operations_app:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -660,7 +660,7 @@ operations_web:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"       
@@ -693,7 +693,7 @@ operations_web:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -799,7 +799,7 @@ mpesa:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"       
@@ -828,7 +828,7 @@ mpesa:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -891,7 +891,7 @@ roster_connector:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"        
@@ -913,7 +913,7 @@ roster_connector:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -976,7 +976,7 @@ paygops_connector:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"       
@@ -998,7 +998,7 @@ paygops_connector:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1062,7 +1062,7 @@ messagegateway:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"   
@@ -1098,7 +1098,7 @@ messagegateway:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1162,7 +1162,7 @@ notifications:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"  
@@ -1191,7 +1191,7 @@ notifications:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512"
         cpu: "100m"    
@@ -1252,7 +1252,7 @@ zeebe_ops:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "384M"
     cpu: "100m"
@@ -1281,7 +1281,7 @@ zeebe_ops:
     resources:    
       limits:
         memory: "384M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "384M"
         cpu: "100m"    
@@ -1381,7 +1381,7 @@ importer_es:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"  
@@ -1399,7 +1399,7 @@ mockpayment:
     percentage: "0"
   limits:
     memory: "512M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -1423,7 +1423,7 @@ kafka:
     resources:
       limits:
         memory: "1400Mi"
-        cpu: "1"
+        cpu: "500m"
       requests:
         memory: "512Mi"
         cpu: "250m"
@@ -1511,7 +1511,7 @@ importer_rdbms:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"      
@@ -1533,7 +1533,7 @@ importer_rdbms:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1629,7 +1629,7 @@ connector_bulk:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"
@@ -1658,7 +1658,7 @@ connector_bulk:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"
@@ -1698,7 +1698,7 @@ ph_ee_connector_gsma:
     privileged: false
   limits:
     memory: "256M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -1787,7 +1787,7 @@ ph-ee-connector_slcb:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"          
@@ -1809,7 +1809,7 @@ ph-ee-connector_slcb:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1849,7 +1849,7 @@ mock_oracle:
     targetport: 4100
   limits:
     memory: "512M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "512M"
     cpu: "100m"
@@ -1899,7 +1899,7 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "500m"
+    cpu: "150m"
     memory: "3Gi"
   requests:
     cpu: "100m"
@@ -2026,7 +2026,7 @@ vouchers:
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   limits:
-    cpu: "500m"
+    cpu: "150m"
     memory: "384M"
   requests:
     cpu: "100m"
@@ -2116,7 +2116,7 @@ billPay:
     privileged: false
   limits:
     memory: "256M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -2186,7 +2186,7 @@ crm:
 
   limits:
     memory: "256M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"

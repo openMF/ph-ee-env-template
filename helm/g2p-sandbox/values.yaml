@@ -68,10 +68,10 @@ ph-ee-engine:
     # Allocate smaller chunks of memory per pod.
     resources:
       requests:
-        cpu: "100m"
+        cpu: "200m"
         memory: "1024M"
       limits:
-        cpu: "1000m"
+        cpu: "500m"
         memory: "1024M"
     volumeClaimTemplate:
       accessModes: [ "ReadWriteOnce" ]
@@ -507,7 +507,7 @@ ph-ee-engine:
     gradle:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
     limits:
-      cpu: "500m"
+      cpu: "150m"
       memory: "512M"
     requests:
       cpu: "100m"
