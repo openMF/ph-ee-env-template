@@ -305,12 +305,6 @@ ph-ee-engine:
     enabled: true
     image: docker.io/openmf/ph-ee-connector-gsma:latest
     SPRING_PROFILES_ACTIVE: "bb"
-    limits:
-      cpu: "500m"
-      memory: "512M"
-    requests:
-      cpu: "100m"
-      memory: "256M"
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -601,6 +595,7 @@ ph-ee-engine:
     enabled: true
   minio:
     enabled: true
+
 
 account_mapper:
   enabled: true

@@ -1252,10 +1252,10 @@ zeebe_ops:
     privileged: false
   resources:    
     limits:
-      memory: "512M"
+      memory: "384M"
       cpu: "500m"
     requests:
-      memory: "512M"
+      memory: "384M"
       cpu: "100m" 
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
@@ -1281,10 +1281,10 @@ zeebe_ops:
       privileged: false
     resources:    
       limits:
-        memory: "512M"
+        memory: "384M"
         cpu: "500m"
       requests:
-        memory: "512M"
+        memory: "384M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
     # such as zeebeops.yml for deployment  
@@ -1692,10 +1692,10 @@ ph_ee_connector_gsma:
     privileged: false
   resources:    
     limits:
-      memory: "512M"
+      memory: "256M"
       cpu: "500m"
     requests:
-      memory: "512M"
+      memory: "256M"
       cpu: "100m"  
   deployment:
     annotations: {}
@@ -1714,10 +1714,10 @@ ph_ee_connector_gsma:
       privileged: false
     resources:    
       limits:
-        memory: "512M"
+        memory: "256M"
         cpu: "500m"
       requests:
-        memory: "512M"
+        memory: "256M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_gsma.yml for deployment  
@@ -2027,6 +2027,12 @@ vouchers:
   paymentadvice: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
+  limits:
+    cpu: "500m"
+    memory: "384M"
+  requests:
+    cpu: "100m"
+    memory: "384M"
   ingress:
     enabled: true
     annotations:
@@ -2112,10 +2118,10 @@ billPay:
     privileged: false
   resources:
     limits:
-      memory: "512M"
+      memory: "256M"
       cpu: "500m"
     requests:
-      memory: "512M"
+      memory: "256M"
       cpu: "100m"
   service:
     annotations: {}
@@ -2182,10 +2188,10 @@ crm:
     privileged: false
   resources:
     limits:
-      memory: "512M"
+      memory: "256M"
       cpu: "500m"
     requests:
-      memory: "512M"
+      memory: "256M"
       cpu: "100m"
   service:
     annotations: {}
