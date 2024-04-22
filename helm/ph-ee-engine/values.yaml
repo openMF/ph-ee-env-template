@@ -105,6 +105,8 @@ camunda-platform:
     resources:
       requests:
         cpu: 100m
+      limits:
+        cpu: 200m
 
   zeebe-gateway:
     replicas: 1
