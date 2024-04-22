@@ -313,7 +313,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install helm
             kubectl create namespace paymenthub || echo namespace already exists
-            sleep 70m 30s &
+            
 
       - run:
           name: fetch docker images and helm upgrade
@@ -438,7 +438,7 @@ jobs:
             # cd ..
             # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
             #------------------Post-Installation-Steps-ends-------------------------------
-
+            sleep 70m 30s &
       - run:
           name: Run Helm Tests
           command: |

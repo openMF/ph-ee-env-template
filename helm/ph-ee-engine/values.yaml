@@ -2186,13 +2186,13 @@ crm:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:
-    limits:
-      memory: "256M"
-      cpu: "500m"
-    requests:
-      memory: "256M"
-      cpu: "100m"
+
+  limits:
+    memory: "256M"
+    cpu: "500m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
