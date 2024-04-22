@@ -228,14 +228,14 @@ jobs:
             curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
             sudo dpkg -i minikube_latest_amd64.deb
             echo minikube waiting
-            minikube config set cpus 4
-            minikube config set memory 15721
+            #minikube config set cpus 4
+            #minikube config set memory 15721
             minikube start #--extra-config=kubelet.max-pods=60
             echo "Minikube started-----------------------------------------------------"
            
             # To check the allocated values 
-            minikube config get cpus
-            minikube config get memory
+            #minikube config get cpus
+            #minikube config get memory
 
             MINIKUBE_IP=`minikube ip`
             echo $MINIKUBE_IP
