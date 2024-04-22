@@ -1420,6 +1420,13 @@ kafka:
 
   controller:
     replicaCount: 1
+    resources:
+      limits:
+        memory: "1400Mi"
+        cpu: "1"
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
 
   listeners:
     client:

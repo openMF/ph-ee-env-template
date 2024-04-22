@@ -230,7 +230,7 @@ jobs:
             echo minikube waiting
             #minikube config set cpus 4
             #minikube config set memory 15721
-            minikube start #--extra-config=kubelet.max-pods=60
+            minikube start --extra-config=kubelet.max-pods=60
             echo "Minikube started-----------------------------------------------------"
            
             # To check the allocated values 
