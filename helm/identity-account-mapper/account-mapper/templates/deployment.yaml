@@ -21,9 +21,9 @@ spec:
 {{- end }}
     spec:
       initContainers:
-        - name: check-zeebe-gateway-ready
-          image: busybox:latest
-          command: [ ‘sh’, ‘-c’,‘until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo “Waiting for myconfig service”; sleep 2; done;’ ]
+      - name: check-zeebe-gateway-ready
+        image: busybox:latest
+        command: [ ‘sh’, ‘-c’,‘until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo “Waiting for myconfig service”; sleep 2; done;’ ]
       containers:
         - name: ph-ee-identity-account-mapper
           image: "{{ .Values.image}}"
