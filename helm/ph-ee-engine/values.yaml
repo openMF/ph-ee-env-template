@@ -106,7 +106,7 @@ camunda-platform:
       requests:
         cpu: 100m
       limits:
-        cpu: 200m
+        cpu: 150m
 
   zeebe-gateway:
     replicas: 1
@@ -162,6 +162,14 @@ elasticsearch:
         secretKeyRef:
           name: elastic-credentials
           key: password
+
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1024M
+    requests:
+      cpu: 200m
+      memory: 1024M
 
 
 kibana:
@@ -275,7 +283,7 @@ channel:
   resources:    
     limits:
       memory: "512M"
-      cpu: "150m"
+      cpu: "100m"
     requests:
       memory: "512M"
       cpu: "100m"
@@ -382,10 +390,10 @@ ph_ee_connector_ams_mifos:
   resources:    
     limits:
       memory: "384M"
-      cpu: "150m"
+      cpu: "100m"
     requests:
       memory: "256M"
-      cpu: "100m"
+      cpu: "50m"
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -410,10 +418,10 @@ ph_ee_connector_ams_mifos:
     resources:    
       limits:
         memory: "512M"
-        cpu: "150m"
+        cpu: "100m"
       requests:
         memory: "512M"
-        cpu: "100m"    
+        cpu: "50m"
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-mifos.yml for deployment  
     # ph-ee-connector-ams-mifosConfig: {}
@@ -483,10 +491,10 @@ ph_ee_connector_mojaloop:
   resources:    
     limits:
       memory: "512M"
-      cpu: "150m"
+      cpu: "100m"
     requests:
       memory: "512M"
-      cpu: "100m"           
+      cpu: "50m"
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -579,7 +587,7 @@ operations_app:
       cpu: "150m"
     requests:
       memory: "512M"
-      cpu: "100m"         
+      cpu: "100m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -608,7 +616,7 @@ operations_app:
         cpu: "150m"
       requests:
         memory: "512M"
-        cpu: "100m"    
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as operations_app.yml for deployment
 
@@ -1254,10 +1262,10 @@ zeebe_ops:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "150m"
+    cpu: "100m"
   requests:
     memory: "384M"
-    cpu: "100m"
+    cpu: "50m"
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1283,10 +1291,10 @@ zeebe_ops:
     resources:    
       limits:
         memory: "384M"
-        cpu: "150m"
+        cpu: "100m"
       requests:
         memory: "384M"
-        cpu: "100m"    
+        cpu: "50m"
 # Allows you to add any config files in /usr/share/
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
@@ -1401,10 +1409,10 @@ mockpayment:
     percentage: "0"
   limits:
     memory: "512M"
-    cpu: "150m"
+    cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "50m"
   deployment:
     annotations: {}
 
@@ -1425,7 +1433,7 @@ kafka:
     resources:
       limits:
         memory: "1400Mi"
-        cpu: "500m"
+        cpu: "300m"
       requests:
         memory: "512Mi"
         cpu: "250m"
@@ -1513,10 +1521,10 @@ importer_rdbms:
   resources:    
     limits:
       memory: "512M"
-      cpu: "150m"
+      cpu: "100m"
     requests:
       memory: "512M"
-      cpu: "100m"      
+      cpu: "50m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1700,10 +1708,10 @@ ph_ee_connector_gsma:
     privileged: false
   limits:
     memory: "256M"
-    cpu: "150m"
+    cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "50m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1901,10 +1909,10 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "150m"
+    cpu: "100m"
     memory: "3Gi"
   requests:
-    cpu: "100m"
+    cpu: "50m"
     memory: "2Gi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
@@ -2028,10 +2036,10 @@ vouchers:
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   limits:
-    cpu: "150m"
+    cpu: "100m"
     memory: "384M"
   requests:
-    cpu: "100m"
+    cpu: "50m"
     memory: "384M"
   ingress:
     enabled: true
@@ -2118,10 +2126,10 @@ billPay:
     privileged: false
   limits:
     memory: "256M"
-    cpu: "150m"
+    cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "50m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
@@ -2188,10 +2196,10 @@ crm:
 
   limits:
     memory: "256M"
-    cpu: "150m"
+    cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "50m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
