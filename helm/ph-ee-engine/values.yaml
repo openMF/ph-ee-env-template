@@ -102,7 +102,7 @@ camunda-platform:
     replicationFactor: "1"
     cpuThreadCount: "2"
     ioThreadCount: "2"
-    pvcSize: "2Gi"
+    pvcSize: "1Gi"
 
     resources:
       requests:
@@ -1440,7 +1440,7 @@ kafka:
   controller:
     replicaCount: 1
     persistence:
-      size: "2Gi"
+      size: "1Gi"
     readinessProbe:
       initialDelaySeconds: 180
     resources:

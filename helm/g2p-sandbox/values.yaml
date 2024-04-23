@@ -71,7 +71,7 @@ ph-ee-engine:
       storageClassName: "gp2"
       resources:
         requests:
-          storage: 2Gi
+          storage: 1Gi
 
   kibana:
     enabled: true
@@ -599,6 +599,7 @@ account_mapper:
   requests:
     cpu: "100m"
     memory: "256M"
+  initialDelaySeconds: 180
   ingress:
     enabled: false
     pathtype: Prefix
