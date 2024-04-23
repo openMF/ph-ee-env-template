@@ -38,3 +38,10 @@ ingress:
   #  - secretName: sandbox-secret
   #    hosts:
   #      - chart-example.local
+livenessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30
+

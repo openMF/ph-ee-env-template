@@ -788,7 +788,7 @@ mpesa:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -965,7 +965,7 @@ paygops_connector:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1422,6 +1422,8 @@ mockpayment:
   requests:
     memory: "256M"
     cpu: "100m"
+  readinessProbe:
+    initialDelaySeconds: 180
   deployment:
     annotations: {}
   initialDelaySeconds: 180
@@ -2108,7 +2110,8 @@ vouchers:
     hostname: "http://ph-ee-operations-app:80"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
-  initialDelaySeconds: 180
+  readinessProbe:
+    initialDelaySeconds: 180
 
 billPay:
   enabled: false
