@@ -105,12 +105,13 @@ camunda-platform:
     pvcSize: "1Gi"
 
     resources:
-      requests:
-        cpu: "100m"
-        memory: "786Mi"
       limits:
         cpu: "150m"
         memory: "1000Mi"
+      requests:
+        cpu: "100m"
+        memory: "786Mi"
+
 
   zeebe-gateway:
     replicas: 1
