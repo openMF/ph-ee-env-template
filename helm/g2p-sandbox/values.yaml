@@ -599,6 +599,12 @@ account_mapper:
   requests:
     cpu: "100m"
     memory: "256M"
+  livenessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 30
+  readinessProbe:
+    initialDelaySeconds: 180
+    periodSeconds: 30
 
   ingress:
     enabled: false
