@@ -174,7 +174,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
       docker_layer_caching: true
-    resource_class: large
+    resource_class: xlarge
     environment:
       TERM: dumb
     parameters:
