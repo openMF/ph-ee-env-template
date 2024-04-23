@@ -594,12 +594,12 @@ account_mapper:
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO
   limits:
-    cpu: "100m"
+    cpu: "150m"
     memory: "384M"
   requests:
     cpu: "100m"
     memory: "256M"
-  initialDelaySeconds: 180
+
   ingress:
     enabled: false
     pathtype: Prefix

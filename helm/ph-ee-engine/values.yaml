@@ -173,10 +173,10 @@ elasticsearch:
     initialDelaySeconds: 180
   resources:
     limits:
-      cpu: 300m
+      cpu: 500m
       memory: 512M
     requests:
-      cpu: 200m
+      cpu: 300m
       memory: 512M
 
 
@@ -290,7 +290,7 @@ channel:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "100m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -348,7 +348,7 @@ operationsmysql:
     rootPassword: "4ET6ywqlGt"
   primary:
     persistence:
-      size: 2Gi
+      size: 1Gi
     readinessProbe:
       initialDelaySeconds: 180
   initdbScripts:
@@ -2065,7 +2065,7 @@ vouchers:
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   limits:
-    cpu: "100m"
+    cpu: "150m"
     memory: "384M"
   requests:
     cpu: "100m"
