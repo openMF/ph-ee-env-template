@@ -393,7 +393,7 @@ ph_ee_connector_ams_mifos:
       cpu: "100m"
     requests:
       memory: "256M"
-      cpu: "50m"
+      cpu: "100m"
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -421,7 +421,7 @@ ph_ee_connector_ams_mifos:
         cpu: "100m"
       requests:
         memory: "512M"
-        cpu: "50m"
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-mifos.yml for deployment  
     # ph-ee-connector-ams-mifosConfig: {}
@@ -494,7 +494,7 @@ ph_ee_connector_mojaloop:
       cpu: "100m"
     requests:
       memory: "512M"
-      cpu: "50m"
+      cpu: "100m"
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1265,7 +1265,7 @@ zeebe_ops:
     cpu: "100m"
   requests:
     memory: "384M"
-    cpu: "50m"
+    cpu: "100m"
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1294,7 +1294,7 @@ zeebe_ops:
         cpu: "100m"
       requests:
         memory: "384M"
-        cpu: "50m"
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
@@ -1412,7 +1412,7 @@ mockpayment:
     cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "50m"
+    cpu: "100m"
   deployment:
     annotations: {}
 
@@ -1524,7 +1524,7 @@ importer_rdbms:
       cpu: "100m"
     requests:
       memory: "512M"
-      cpu: "50m"
+      cpu: "100m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1711,7 +1711,7 @@ ph_ee_connector_gsma:
     cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "50m"
+    cpu: "100m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1912,7 +1912,7 @@ integration_test:
     cpu: "100m"
     memory: "3Gi"
   requests:
-    cpu: "50m"
+    cpu: "100m"
     memory: "2Gi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
@@ -2039,7 +2039,7 @@ vouchers:
     cpu: "100m"
     memory: "384M"
   requests:
-    cpu: "50m"
+    cpu: "100m"
     memory: "384M"
   ingress:
     enabled: true
@@ -2129,7 +2129,7 @@ billPay:
     cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "50m"
+    cpu: "100m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
@@ -2199,7 +2199,7 @@ crm:
     cpu: "100m"
   requests:
     memory: "256M"
-    cpu: "50m"
+    cpu: "100m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
