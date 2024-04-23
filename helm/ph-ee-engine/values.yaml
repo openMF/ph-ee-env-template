@@ -117,7 +117,7 @@ camunda-platform:
     replicas: 1
     logLevel: warn
     readinessProbe:
-      initialDelaySeconds: 60
+      initialDelaySeconds: 180
     env:
       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
         value: "4"
