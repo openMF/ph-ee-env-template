@@ -100,7 +100,7 @@ camunda-platform:
     replicationFactor: "1"
     cpuThreadCount: "2"
     ioThreadCount: "2"
-    pvcSize: "5Gi"
+    pvcSize: "1Gi"
 
     resources:
       requests:
@@ -340,7 +340,7 @@ operationsmysql:
     rootPassword: "4ET6ywqlGt"
   primary:
     persistence:
-      size: 4Gi
+      size: 1Gi
   initdbScripts:
     setup.sql: |-
       CREATE DATABASE IF NOT EXISTS phdefault;
@@ -1430,7 +1430,7 @@ kafka:
   controller:
     replicaCount: 1
     persistence:
-      size: "4Gi"
+      size: "1Gi"
     resources:
       limits:
         memory: "1400Mi"
@@ -1833,6 +1833,12 @@ ph-ee-connector:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  limits:
+    cpu: "100m"
+    memory: "256M"
+  requests:
+    cpu: "100m"
+    memory: "256M"
   ingress:
     enabled: true
     annotations:
@@ -1945,9 +1951,12 @@ integration_test:
 
 redis:
   enabled: true
+  master:
+    persistence:
+      size: "1Gi"
   replica:
     persistence:
-      size: "4Gi"
+      size: "1Gi"
     replicaCount: 1
 volumeClaimTemplate:
     storageClassName: "gp2"
@@ -2232,7 +2241,7 @@ minio:
   replicas: 1
   persistence:
     enabled: true
-    size: 5Gi
+    size: 1Gi
   mode: standalone
   rootUser: root
   rootPassword: password
