@@ -89,6 +89,8 @@ camunda-platform:
         volumeMounts:
           - name: exporters
             mountPath: /exporters/
+    readinessProbe:
+      initialDelaySeconds: 60
     volumeClaimTemplate:
       storageClassName: "gp2"
 
@@ -104,13 +106,17 @@ camunda-platform:
 
     resources:
       requests:
-        cpu: 100m
+        cpu: "100m"
+        memory: "786Mi"
       limits:
-        cpu: 150m
+        cpu: "150m"
+        memory: "1000Mi"
 
   zeebe-gateway:
     replicas: 1
     logLevel: warn
+    readinessProbe:
+      initialDelaySeconds: 60
     env:
       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
         value: "4"
@@ -162,7 +168,8 @@ elasticsearch:
         secretKeyRef:
           name: elastic-credentials
           key: password
-
+  readinessProbe:
+    initialDelaySeconds: 180
   resources:
     limits:
       cpu: 300m
@@ -252,7 +259,7 @@ channel:
       path: /actuator/health/readiness
       port: 8443
       scheme: HTTPS
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -340,7 +347,9 @@ operationsmysql:
     rootPassword: "4ET6ywqlGt"
   primary:
     persistence:
-      size: 1Gi
+      size: 2Gi
+    readinessProbe:
+      initialDelaySeconds: 180
   initdbScripts:
     setup.sql: |-
       CREATE DATABASE IF NOT EXISTS phdefault;
@@ -462,7 +471,7 @@ ph_ee_connector_mojaloop:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -554,7 +563,7 @@ operations_app:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1232,7 +1241,7 @@ zeebe_ops:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1360,7 +1369,7 @@ importer_es:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1414,6 +1423,7 @@ mockpayment:
     cpu: "100m"
   deployment:
     annotations: {}
+  initialDelaySeconds: 180
 
 
 kafka:
@@ -1430,7 +1440,9 @@ kafka:
   controller:
     replicaCount: 1
     persistence:
-      size: "1Gi"
+      size: "2Gi"
+    readinessProbe:
+      initialDelaySeconds: 180
     resources:
       limits:
         memory: "1400Mi"
@@ -1491,7 +1503,7 @@ importer_rdbms:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1609,7 +1621,7 @@ connector_bulk:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1954,10 +1966,12 @@ redis:
   master:
     persistence:
       size: "1Gi"
+    readinessProbe:
+      initialDelaySeconds: 180
   replica:
     persistence:
       size: "1Gi"
-    replicaCount: 1
+    replicaCount: 0
 volumeClaimTemplate:
     storageClassName: "gp2"
 
@@ -2093,6 +2107,7 @@ vouchers:
     hostname: "http://ph-ee-operations-app:80"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
+  initialDelaySeconds: 180
 
 billPay:
   enabled: false
@@ -2113,7 +2128,7 @@ billPay:
       path: /actuator/health/readiness
       port: 8080
       scheme: HTTPS
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -2182,7 +2197,7 @@ crm:
       path: /actuator/health/readiness
       port: 8080
       scheme: HTTPS
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
