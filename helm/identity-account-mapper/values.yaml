@@ -107,7 +107,7 @@ elasticsearch:
     storageClassName: "gp2"
     resources:
       requests:
-        storage: 10Gi
+        storage: 5Gi
 
 kibana:
   enabled: true

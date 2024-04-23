@@ -100,7 +100,7 @@ camunda-platform:
     replicationFactor: "1"
     cpuThreadCount: "2"
     ioThreadCount: "2"
-    pvcSize: "10Gi"
+    pvcSize: "5Gi"
 
     resources:
       requests:
@@ -166,10 +166,10 @@ elasticsearch:
   resources:
     limits:
       cpu: 300m
-      memory: 1024M
+      memory: 512M
     requests:
       cpu: 200m
-      memory: 1024M
+      memory: 512M
 
 
 kibana:
@@ -280,13 +280,12 @@ channel:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "100m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "100m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
 # Enabling this will publicly expose your channel instance.
@@ -339,6 +338,9 @@ operationsmysql:
     username: "mifos"
     password: "password"
     rootPassword: "4ET6ywqlGt"
+  primary:
+    persistence:
+      size: 4Gi
   initdbScripts:
     setup.sql: |-
       CREATE DATABASE IF NOT EXISTS phdefault;
@@ -488,13 +490,12 @@ ph_ee_connector_mojaloop:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "100m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "100m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -581,13 +582,12 @@ operations_app:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "150m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "100m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -1388,13 +1388,12 @@ importer_es:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "150m"
-    requests:
-      memory: "512M"
-      cpu: "100m"  
+  limits:
+    memory: "512M"
+    cpu: "150m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
   javaToolOptions: "-Xmx256M"
   deployment:
     annotations: {}
@@ -1430,6 +1429,8 @@ kafka:
 
   controller:
     replicaCount: 1
+    persistence:
+      size: "4Gi"
     resources:
       limits:
         memory: "1400Mi"
@@ -1945,6 +1946,8 @@ integration_test:
 redis:
   enabled: true
   replica:
+    persistence:
+      size: "4Gi"
     replicaCount: 1
 volumeClaimTemplate:
     storageClassName: "gp2"
@@ -2229,7 +2232,7 @@ minio:
   replicas: 1
   persistence:
     enabled: true
-    size: 10Gi
+    size: 5Gi
   mode: standalone
   rootUser: root
   rootPassword: password
