@@ -11,4 +11,4 @@ dependencies:
   version: 0.0.0-SNAPSHOT
 - name: konga
   version: 1.0.0
-  repository:  https://fynarfin.io/images/jira-story-version/konga/
+  repository:  https://fynarfin.io/images/konga/
