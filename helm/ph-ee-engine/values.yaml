@@ -2018,7 +2018,6 @@ kong:
         redirect_after_logout_uri: http://keycloak.localhost/auth/realms/kong-oidc/protocol/openid-connect/logout?redirect_uri=http://keycloak.localhost
 
     
-
 vouchers:
   enabled: false
   paymentadvice: false
