@@ -20,6 +20,14 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+      #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+      - name: check-zeebe-gateway-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for myconfig service"; sleep 2; done;']
+      - name: check-elasticsearch-ready
+        image: busybox:latest
+        command: ['sh', '-c','until nc -vz ph-ee-elasticsearch 9200; do echo "Waiting for myconfig service"; sleep 2; done;']
       containers:
         - name: ph-ee-zeebe-ops
           image: "{{ .Values.image }}"
@@ -33,6 +41,18 @@ spec:
               cpu: "{{ .Values.requests.cpu }}"
           ports:
             - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 40
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 40
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"

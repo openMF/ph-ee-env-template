@@ -32,7 +32,23 @@ limits:
   memory: "384M"
 requests:
   cpu: "100m"
-  memory: "256M"   
+  memory: "256M"
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 9191
+  initialDelaySeconds: 120
+  periodSeconds: 30
+  failureThreshold: 3
+  timeoutSeconds: 5 
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 9191
+  initialDelaySeconds: 120
+  periodSeconds: 30
+  failureThreshold: 3
+  timeoutSeconds: 5
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:
