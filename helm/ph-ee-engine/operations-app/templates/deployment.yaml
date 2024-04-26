@@ -20,6 +20,11 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+        #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
+        - name: check-operationsmysql-ready
+          image: busybox:latest
+          command: [ 'sh', '-c','until nc -vz operationsmysql 3306; do echo "Waiting for operationsmysql service"; sleep 2; done;' ]
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-operations-app

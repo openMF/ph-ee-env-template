@@ -282,7 +282,7 @@ jobs:
             curl -u minikube:minikube http://localhost:8080
 
             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            ngrok config add-authtoken 2XZrGubibPqLSX5y16wCIAVMvKY_5QnDM2TPcqrSxqNPmD7j5
+            ngrok config add-authtoken $AUTH_TOKEN
             echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
             ngrok http 8080 > /dev/null &
 
@@ -314,7 +314,22 @@ jobs:
             sudo apt-get install helm
             kubectl create namespace paymenthub || echo namespace already exists
             
-
+            # ----------------------Post-Installation-Steps-starts---------------------------
+            #ES and Kibana secret creation
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            cd elastic/helm-charts/elasticsearch/examples/security/
+            make secrets || echo "elastic-secrets" already exists
+            git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            cd elastic/helm-charts/kibana/examples/security/
+            make secrets || echo "kibana-secrets" already exists
+            kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            kubectl get secrets -n paymenthub
+            echo ---------secrets created--------
+          
       - run:
           name: fetch docker images and helm upgrade
           environment:
@@ -398,45 +413,35 @@ jobs:
             helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
             echo helm chart install starts
-            helm upgrade --install  --timeout=50m --set ph-ee-engine.kibana.enabled=false --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.messagegateway.enabled=false --set ph-ee-engine.notifications.enabled=false --set ph-ee-engine.operations_web.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" # --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false  
-            echo --------------------helm upgrade is done---------------------
-
-            # ----------------------Post-Installation-Steps-starts---------------------------
-            # #ES and Kibana secret creation
-            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            # cd elastic/helm-charts/elasticsearch/examples/security/
-            # make secrets || echo "elastic-secrets" already exists
-            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
-            # cd elastic/helm-charts/kibana/examples/security/
-            # make secrets || echo "kibana-secrets" already exists
-            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
-            # kubectl get secrets -n paymenthub
-            # echo ---------secrets created--------
+            helm upgrade --install  --timeout=50m  --set account_mapper.enabled=false --set ph-ee-engine.ph_ee_connector_ams_mifos.enabled=false  --set ph-ee-engine.channel.enabled=false  --set ph-ee-engine.crm.enabled=false  --set ph-ee-engine.billPay.enabled=false  --set ph-ee-engine.operations_app.enabled=false  --set ph-ee-engine.connector_bulk.enabled=false  --set ph-ee-engine.ph-ee-connector.enabled=false  --set ph-ee-engine.ph_ee_connector_gsma.enabled=false  --set ph-ee-engine.ph_ee_connector_mojaloop.enabled=false  --set ph-ee-engine.vouchers.enabled=false  --set ph-ee-engine.vouchers.enabled=false  --set ph-ee-engine.importer_rdbms.enabled=false  --set ph-ee-engine.importer_es.enabled=false  --set ph-ee-engine.mockpayment.enabled=false  --set ph-ee-engine.post_installation_job.enabled=false  --set ph-ee-engine.kibana.enabled=false  --set ph-ee-engine.kafka.global.storageClass=standard  --set ph-ee-engine.messagegateway.enabled=false  --set ph-ee-engine.notifications.enabled=false  --set ph-ee-engine.operations_web.enabled=false  --set ph-ee-engine.kafka.provisioning.enabled=false  --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}   --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" #  --set ph-ee-engine.post_installation_job.enabled=false  --set ph-ee-engine.kafka.provisioning.enabled=false  
+            echo --------------------helm upgrade in Phase 1 done---------------------
+            sleep 2m 30s;
+            helm upgrade --install  --timeout=50m --set ph-ee-engine.ph_ee_connector_gsma.enabled=false  --set ph-ee-engine.ph_ee_connector_mojaloop.enabled=false  --set ph-ee-engine.vouchers.enabled=false  --set ph-ee-engine.importer_rdbms.enabled=false  --set ph-ee-engine.importer_es.enabled=false  --set ph-ee-engine.mockpayment.enabled=false  --set ph-ee-engine.post_installation_job.enabled=false  --set ph-ee-engine.kibana.enabled=false  --set ph-ee-engine.kafka.global.storageClass=standard  --set ph-ee-engine.messagegateway.enabled=false  --set ph-ee-engine.notifications.enabled=false  --set ph-ee-engine.operations_web.enabled=false  --set ph-ee-engine.kafka.provisioning.enabled=false  --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}   --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" #  --set ph-ee-engine.post_installation_job.enabled=false  --set ph-ee-engine.kafka.provisioning.enabled=false
+            echo --------------------helm upgrade in Phase 2 done---------------------
+            sleep 3m 30s;
+            helm upgrade --install  --timeout=50m --set ph-ee-engine.post_installation_job.enabled=false  --set ph-ee-engine.kibana.enabled=false  --set ph-ee-engine.kafka.global.storageClass=standard  --set ph-ee-engine.messagegateway.enabled=false  --set ph-ee-engine.notifications.enabled=false  --set ph-ee-engine.operations_web.enabled=false  --set ph-ee-engine.kafka.provisioning.enabled=false  --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}   --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" #  --set ph-ee-engine.post_installation_job.enabled=false  --set ph-ee-engine.kafka.provisioning.enabled=false
+            echo --------------------helm upgrade in Phase 3 done---------------------
+            sleep 5m;
+            #insatll netcat
+            sudo apt install -y netcat
+            check_count=0
+            until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
+               echo "Waiting for zeebe-ops service"; 
+               sleep 5; 
+               check_count=$(($check_count + 1));
+            done;
+            echo ------zeebe-ops service available-----------
+            # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
             
-            # #insatll netcat
-            # sudo apt install -y netcat
-            # check_count=0
-            # until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
-            #     echo "Waiting for zeebe-ops service"; 
-            #     sleep 5; 
-            #     check_count=$(($check_count + 1));
-            # done;
-            # echo ------zeebe-ops service available-----------
-            # # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
-           
-            # #Deploy BPMN 
-            # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            # cd openMF/ph-ee-env-labs/orchestration
-            # ls
-            # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
-            # cat deployBpmn.sh
-            # cd ..
-            # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            #Deploy BPMN 
+            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            cd openMF/ph-ee-env-labs/orchestration
+            ls
+            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            cat deployBpmn.sh
+            cd ..
+            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
             #------------------Post-Installation-Steps-ends-------------------------------
             sleep 70m 30s &
       - run:

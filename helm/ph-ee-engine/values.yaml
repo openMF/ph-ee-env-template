@@ -173,11 +173,11 @@ elasticsearch:
     initialDelaySeconds: 180
   resources:
     limits:
-      cpu: 500m
-      memory: 512M
+      cpu: "1000m"
+      memory: "1024M"
     requests:
-      cpu: 300m
-      memory: 512M
+      cpu: "100m"
+      memory: "786M"
 
 
 kibana:
@@ -399,13 +399,12 @@ ph_ee_connector_ams_mifos:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "384M"
-      cpu: "100m"
-    requests:
-      memory: "256M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -502,7 +501,7 @@ ph_ee_connector_mojaloop:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "100m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -594,7 +593,7 @@ operations_app:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "100m"
+    cpu: "200m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -816,13 +815,13 @@ mpesa:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
+  resources:
     limits:
       memory: "512M"
       cpu: "150m"
     requests:
       memory: "512M"
-      cpu: "100m"       
+      cpu: "100m"
 # Enabling this will publicly expose your mpesa instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -908,13 +907,13 @@ roster_connector:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
+  resources:
     limits:
       memory: "512M"
       cpu: "150m"
     requests:
       memory: "512M"
-      cpu: "100m"        
+      cpu: "100m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1272,10 +1271,10 @@ zeebe_ops:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "100m"
+    cpu: "300m"
   requests:
     memory: "384M"
-    cpu: "100m"
+    cpu: "150m"
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1400,7 +1399,7 @@ importer_es:
     privileged: false
   limits:
     memory: "512M"
-    cpu: "150m"
+    cpu: "400m"
   requests:
     memory: "512M"
     cpu: "100m"
@@ -1418,15 +1417,16 @@ mockpayment:
     percentage: "0"
   limits:
     memory: "512M"
-    cpu: "100m"
+    cpu: "250m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
+  livenessProbe:
+    initialDelaySeconds: 180
   readinessProbe:
     initialDelaySeconds: 180
   deployment:
     annotations: {}
-  initialDelaySeconds: 180
 
 
 kafka:
@@ -1445,14 +1445,14 @@ kafka:
     persistence:
       size: "1Gi"
     readinessProbe:
-      initialDelaySeconds: 180
-    resources:
-      limits:
-        memory: "1400Mi"
-        cpu: "300m"
-      requests:
-        memory: "512Mi"
-        cpu: "250m"
+      initialDelaySeconds: 5
+#    resources:
+#      limits:
+#        memory: "1400Mi"
+#        cpu: "1400Mi"
+#      requests:
+#        memory: "512Mi"
+#        cpu: "350m"
 
   listeners:
     client:
@@ -1534,13 +1534,12 @@ importer_rdbms:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "100m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "250m"
+  requests:
+    memory: "256M"
+    cpu: "150m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1559,7 +1558,7 @@ importer_rdbms:
     resources:    
       limits:
         memory: "512M"
-        cpu: "150m"
+        cpu: "200m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1652,13 +1651,12 @@ connector_bulk:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "150m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
 # Enabling this will publicly expose your connector_bulk instance.
@@ -1724,7 +1722,7 @@ ph_ee_connector_gsma:
     privileged: false
   limits:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -1972,8 +1970,6 @@ redis:
     readinessProbe:
       initialDelaySeconds: 180
   replica:
-    persistence:
-      size: "1Gi"
     replicaCount: 0
 volumeClaimTemplate:
     storageClassName: "gp2"
@@ -2065,10 +2061,10 @@ vouchers:
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   limits:
-    cpu: "150m"
+    cpu: "250m"
     memory: "384M"
   requests:
-    cpu: "100m"
+    cpu: "150m"
     memory: "384M"
   ingress:
     enabled: true
@@ -2157,7 +2153,7 @@ billPay:
     privileged: false
   limits:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
@@ -2227,7 +2223,7 @@ crm:
 
   limits:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
   requests:
     memory: "256M"
     cpu: "100m"
