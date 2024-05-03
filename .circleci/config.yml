@@ -171,11 +171,8 @@ jobs:
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
   minikube-run-helm-upgrade-and-helm-test:
-    # machine:
-    #   image: ubuntu-2004:current
-    # resource_class: xlarge
-    docker:
-      - image: cimg/base:2022.09
+    machine:
+      image: ubuntu-2004:current
     resource_class: xlarge
     environment:
       TERM: dumb
@@ -229,22 +226,22 @@ jobs:
             sudo dpkg -i minikube_latest_amd64.deb
             echo minikube waiting
 
-            #docker install 
-            for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done #uninstall all conflicting packages
-            sudo apt-get update #Set up Docker's apt repository.
-            sudo apt-get install ca-certificates curl
-            sudo install -m 0755 -d /etc/apt/keyrings
-            sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-            sudo chmod a+r /etc/apt/keyrings/docker.asc
+            # #docker install 
+            # for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done #uninstall all conflicting packages
+            # sudo apt-get update #Set up Docker's apt repository.
+            # sudo apt-get install ca-certificates curl
+            # sudo install -m 0755 -d /etc/apt/keyrings
+            # sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            # sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-            # Add the repository to Apt sources:
-            echo \
-              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-              $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-              sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            sudo apt-get update
-            sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin #Install the Docker packages
-            sudo docker run hello-world #Verify that the Docker Engine installation is successful 
+            # # Add the repository to Apt sources:
+            # echo \
+            #   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+            #   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            #   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            # sudo apt-get update
+            # sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin #Install the Docker packages
+            # sudo docker run hello-world #Verify that the Docker Engine installation is successful 
 
             minikube config set cpus 6
             minikube config set memory 25600
