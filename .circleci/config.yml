@@ -5,11 +5,12 @@ orbs:
   aws-eks: circleci/aws-eks@2.2.0
   kubernetes: circleci/kubernetes@1.3
   mifos-orb: mifos/docker-image-availability-check-and-upgrade@1.0.0
+image: cimg/python:3.10
 
 jobs:
   build-and-host-engine:
     docker:
-      - image: cimg/python:3.10
+      - image: "{{buildkit}}"
     working_directory: ~/repo
     environment:
       TERM: dumb
@@ -42,7 +43,7 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz
   build-and-host-g2p-sandbox:
     docker:
-      - image: cimg/python:3.10
+      - image: "{{buildkit}}"
     working_directory: ~/repo
     environment:
       TERM: dumb
@@ -85,7 +86,7 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY index.yaml ph-ee-g2psandbox-0.0.0$JIRA_STORY.tgz
   build-host-g2p-fyn-chart:
     docker:
-      - image: cimg/python:3.10
+      - image: "{{buildkit}}"
     working_directory: ~/repo
     environment:
       TERM: dumb
@@ -128,7 +129,7 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz
   build-and-host-g2p-sandbox-security:
     docker:
-      - image: cimg/python:3.10
+      - image: "{{buildkit}}"
     working_directory: ~/repo
     environment:
       TERM: dumb
@@ -173,7 +174,6 @@ jobs:
   minikube-run-helm-upgrade-and-helm-test:
     machine:
       image: ubuntu-2004:current
-      docker_layer_caching: true
     resource_class: xlarge
     environment:
       TERM: dumb
