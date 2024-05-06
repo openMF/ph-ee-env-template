@@ -27,7 +27,7 @@ global:
   poll_interval: 10
   postgresql:
     auth:
-      postgresPassword: password
+      password: password
 camunda-platform:
 
   connectors:
