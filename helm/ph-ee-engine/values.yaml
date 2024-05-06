@@ -25,6 +25,9 @@ global:
   DFSPIDS: ""
   max_execution_threads: 50
   poll_interval: 10
+  postgresql:
+    auth:
+      postgresPassword: password
 camunda-platform:
 
   connectors:
