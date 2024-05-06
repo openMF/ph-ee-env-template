@@ -28,6 +28,7 @@ global:
   postgresql:
     auth:
       password: password
+      postgresPassword: password
 camunda-platform:
 
   connectors:
