@@ -35,6 +35,12 @@ spec:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
           env:
+            - name: "SERVER_PORT"
+              value: "{{ .Values.deployment.serverPort }}"
+            - name: "SERVER_SSL_ENABLED"
+              value: "{{ .Values.deployment.serverSslEnabled }}"
+            - name: "SECURITY_JWS_ENABLE"
+              value: "{{ .Values.deployment.securityJwsEnable }}"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
             - name: "CAMEL_DISABLE-SSL"

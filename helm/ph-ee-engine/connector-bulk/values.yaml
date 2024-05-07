@@ -71,3 +71,6 @@ deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+  serverPort: "8443"
+  serverSslEnabled: true
+  securityJwsEnable: true

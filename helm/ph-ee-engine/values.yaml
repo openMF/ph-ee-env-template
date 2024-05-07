@@ -1656,6 +1656,9 @@ connector_bulk:
       requests:
         memory: "512M"
         cpu: "100m"
+    serverPort: "8443"
+    serverSslEnabled: true
+    securityJwsEnable: true
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-bulk.yml for deployment  
     # ph-ee-connector-bulkConfig: {}
