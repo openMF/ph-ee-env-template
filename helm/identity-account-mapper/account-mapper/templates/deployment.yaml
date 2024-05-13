@@ -83,8 +83,6 @@ spec:
               value: "{{ .Values.callback_enabled }}"
             - name: "ISEXTERNALLOOKUP"
               value: "{{.Values.is_external_lookup}}"
-            - name: "JAVA_TOOL_OPTIONS"
-              value: "{{ .Values.JAVA_TOOL_OPTIONS}}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
