@@ -71,7 +71,7 @@ ph-ee-engine:
       storageClassName: "gp2"
       resources:
         requests:
-          storage: 1Gi
+          storage: 5Gi
 
   kibana:
     enabled: true

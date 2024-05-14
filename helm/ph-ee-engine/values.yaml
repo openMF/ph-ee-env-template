@@ -102,11 +102,11 @@ camunda-platform:
     replicationFactor: "1"
     cpuThreadCount: "2"
     ioThreadCount: "2"
-    pvcSize: "1Gi"
+    pvcSize: "5Gi"
 
     resources:
       limits:
-        cpu: "150m"
+        cpu: "250m"
         memory: "1000Mi"
       requests:
         cpu: "100m"
@@ -348,7 +348,7 @@ operationsmysql:
     rootPassword: "4ET6ywqlGt"
   primary:
     persistence:
-      size: 1Gi
+      size: 3Gi
     readinessProbe:
       initialDelaySeconds: 180
   initdbScripts:
@@ -1443,16 +1443,16 @@ kafka:
   controller:
     replicaCount: 1
     persistence:
-      size: "1Gi"
+      size: "4Gi"
     readinessProbe:
       initialDelaySeconds: 5
-#    resources:
-#      limits:
-#        memory: "1400Mi"
-#        cpu: "1400Mi"
-#      requests:
-#        memory: "512Mi"
-#        cpu: "350m"
+    resources:
+      limits:
+        memory: "1000Mi"
+        cpu: "1400Mi"
+      requests:
+        memory: "512Mi"
+        cpu: "350m"
 
   listeners:
     client:
@@ -1965,8 +1965,15 @@ integration_test:
 redis:
   enabled: true
   master:
+    resources:
+      limits:
+        cpu: "200m"
+        memory: "384M"
+      requests:
+        cpu: "100m"
+        memory: "384M"
     persistence:
-      size: "1Gi"
+      size: "3Gi"
     readinessProbe:
       initialDelaySeconds: 180
   replica:
