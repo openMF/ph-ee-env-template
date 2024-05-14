@@ -329,6 +329,8 @@ jobs:
             kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
             kubectl get secrets -n paymenthub
             echo ---------secrets created--------
+            minikube ssh -- free -m
+            echo ------------MEMORY CHECK -----------
           
       - run:
           name: fetch docker images and helm upgrade
