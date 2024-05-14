@@ -1929,11 +1929,11 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "100m"
-    memory: "3Gi"
+    cpu: "200m"
+    memory: "512Gi"
   requests:
     cpu: "100m"
-    memory: "2Gi"
+    memory: "512Gi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
