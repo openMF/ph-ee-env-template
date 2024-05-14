@@ -1432,7 +1432,6 @@ mockpayment:
 kafka:
   enabled: true
   fullnameOverride: kafka
-
   provisioning:
     enabled: true
     topics:
@@ -1446,13 +1445,13 @@ kafka:
       size: "4Gi"
     readinessProbe:
       initialDelaySeconds: 5
-    resources:
-      limits:
-        memory: "1000Mi"
-        cpu: "1400Mi"
-      requests:
-        memory: "512Mi"
-        cpu: "350m"
+#    resources:
+#      limits:
+#        memory: "1000Mi"
+#        cpu: "1400Mi"
+#      requests:
+#        memory: "512Mi"
+#        cpu: "350m"
 
   listeners:
     client:
@@ -1847,7 +1846,7 @@ ph-ee-connector:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
   limits:
-    cpu: "100m"
+    cpu: "200m"
     memory: "256M"
   requests:
     cpu: "100m"
@@ -2114,6 +2113,8 @@ vouchers:
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
   readinessProbe:
+    initialDelaySeconds: 180
+  livenessProbe:
     initialDelaySeconds: 180
 
 billPay:
