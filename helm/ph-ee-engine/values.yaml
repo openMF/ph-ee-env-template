@@ -1859,7 +1859,7 @@ ph-ee-connector:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: connector.sandbox.mifos.io
+      - host: connector1.sandbox.mifos.io
         paths:
           - path: "/"
             backend:
@@ -2259,11 +2259,11 @@ minio:
   fullnameOverride: "minio"
   resources:
     requests:
-      memory: 256Mi
+      memory: 150Mi
   replicas: 1
   persistence:
     enabled: true
-    size: 1Gi
+    size: 512Mi
   mode: standalone
   rootUser: root
   rootPassword: password

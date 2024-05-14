@@ -569,9 +569,18 @@ ph-ee-engine:
       region: "ap-south-1"
       access_key: "aws-access-key"
       secret_key: "aws-secret-key"
-    hostname: "connector.sandbox.mifos.io"
+    hostname: "connector1.sandbox.mifos.io"
     ingress:
       enabled: true
+      hosts:
+        - host: connector1.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: ph-ee-connector
+                  port:
+                    number: 80
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
