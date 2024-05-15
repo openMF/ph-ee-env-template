@@ -426,12 +426,12 @@ ph_ee_connector_ams_mifos:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
+    resources:
       limits:
-        memory: "512M"
-        cpu: "100m"
+        memory: "384M"
+        cpu: "150m"
       requests:
-        memory: "512M"
+        memory: "256M"
         cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-mifos.yml for deployment  
@@ -1273,7 +1273,7 @@ zeebe_ops:
     memory: "384M"
     cpu: "300m"
   requests:
-    memory: "384M"
+    memory: "256M"
     cpu: "150m"
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
@@ -1967,10 +1967,10 @@ redis:
     resources:
       limits:
         cpu: "200m"
-        memory: "384M"
+        memory: "256M"
       requests:
         cpu: "100m"
-        memory: "384M"
+        memory: "100M"
     persistence:
       size: "3Gi"
     readinessProbe:
@@ -2071,7 +2071,7 @@ vouchers:
     memory: "384M"
   requests:
     cpu: "150m"
-    memory: "384M"
+    memory: "256M"
   ingress:
     enabled: true
     annotations:
