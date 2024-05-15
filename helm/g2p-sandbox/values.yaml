@@ -498,11 +498,11 @@ ph-ee-engine:
     gradle:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
     limits:
-      cpu: "150m"
-      memory: "512M"
+      cpu: "400m"
+      memory: "856Gi"
     requests:
-      cpu: "100m"
-      memory: "512M"
+      cpu: "250m"
+      memory: "512Gi"
 
   billPay:
     enabled: true
