@@ -109,7 +109,7 @@ camunda-platform:
         cpu: "250m"
         memory: "1000Mi"
       requests:
-        cpu: "100m"
+        cpu: "150m"
         memory: "786Mi"
 
 
@@ -1846,10 +1846,10 @@ ph-ee-connector:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
   limits:
-    cpu: "200m"
-    memory: "256M"
+    cpu: "250m"
+    memory: "384M"
   requests:
-    cpu: "100m"
+    cpu: "150m"
     memory: "256M"
   ingress:
     enabled: true
@@ -1928,10 +1928,10 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "200m"
+    cpu: "350m"
     memory: "512Gi"
   requests:
-    cpu: "100m"
+    cpu: "150m"
     memory: "512Gi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
@@ -2160,8 +2160,8 @@ billPay:
     runAsUser: 0
     privileged: false
   limits:
-    memory: "256M"
-    cpu: "150m"
+    memory: "384M"
+    cpu: "250m"
   requests:
     memory: "256M"
     cpu: "100m"
