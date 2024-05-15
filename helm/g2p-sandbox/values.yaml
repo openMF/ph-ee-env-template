@@ -606,7 +606,7 @@ account_mapper:
     cpu: "400m"
     memory: "384M"
   requests:
-    cpu: "100m"
+    cpu: "150m"
     memory: "256M"
   livenessProbe:
     initialDelaySeconds: 20

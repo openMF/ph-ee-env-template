@@ -290,10 +290,10 @@ channel:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "150m"
+    cpu: "250m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
   service:
     annotations: {}
 # Enabling this will publicly expose your channel instance.
@@ -596,7 +596,7 @@ operations_app:
     cpu: "200m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
