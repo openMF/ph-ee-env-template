@@ -593,10 +593,10 @@ operations_app:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "200m"
+    cpu: "350m"
   requests:
     memory: "256M"
-    cpu: "150m"
+    cpu: "200m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -1928,10 +1928,10 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "350m"
+    cpu: "400m"
     memory: "512Gi"
   requests:
-    cpu: "150m"
+    cpu: "250m"
     memory: "512Gi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
