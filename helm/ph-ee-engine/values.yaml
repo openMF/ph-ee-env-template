@@ -1445,14 +1445,6 @@ kafka:
       size: "4Gi"
     readinessProbe:
       initialDelaySeconds: 5
-    resources:
-      limits:
-        memory: "1000Mi"
-        cpu: "500Mi"
-      requests:
-        memory: "512Mi"
-        cpu: "350m"
-
   listeners:
     client:
       protocol: PLAINTEXT
