@@ -449,7 +449,7 @@ jobs:
           name: Run Helm Tests
           command: |
             helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
-#            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
 
       - run:
           name: Fetch Integration Test Report
