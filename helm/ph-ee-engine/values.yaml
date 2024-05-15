@@ -1445,13 +1445,13 @@ kafka:
       size: "4Gi"
     readinessProbe:
       initialDelaySeconds: 5
-#    resources:
-#      limits:
-#        memory: "1000Mi"
-#        cpu: "1400Mi"
-#      requests:
-#        memory: "512Mi"
-#        cpu: "350m"
+    resources:
+      limits:
+        memory: "1000Mi"
+        cpu: "500Mi"
+      requests:
+        memory: "512Mi"
+        cpu: "350m"
 
   listeners:
     client:
@@ -1932,7 +1932,7 @@ integration_test:
     memory: "512Gi"
   requests:
     cpu: "250m"
-    memory: "512Gi"
+    memory: "256Gi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
