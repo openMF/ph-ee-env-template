@@ -495,6 +495,7 @@ ph-ee-engine:
         deployTime: "{{ .Values.deployTime }}"
   integration_test:
     enabled: true
+    nodeName: minikube
     gradle:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
 

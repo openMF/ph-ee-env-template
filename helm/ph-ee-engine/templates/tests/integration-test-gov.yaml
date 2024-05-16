@@ -7,6 +7,7 @@ metadata:
   annotations:
     "helm.sh/hook": test-success
 spec:
+  nodeName:  {{.Values.nodeName}}
   containers:
   - name: g2p-sandbox-test-gov
     image: "{{ .Values.integration_test.image}}"
