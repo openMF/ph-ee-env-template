@@ -232,7 +232,7 @@ jobs:
             #minikube config set memory 15721
             minikube start --extra-config=kubelet.max-pods=60 --cpus max --memory max --disk-size 50g
             echo "Minikube started-----------------------------------------------------"
-           
+            minikube addons enable metrics-server
             # To check the allocated values 
             #minikube config get cpus
             #minikube config get memory
