@@ -1921,10 +1921,10 @@ integration_test:
   imagePullPolicy: "Never"
   limits:
     cpu: "400m"
-    memory: "384Gi"
+    memory: "384Mi"
   requests:
     cpu: "250m"
-    memory: "256Gi"
+    memory: "256Mi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
