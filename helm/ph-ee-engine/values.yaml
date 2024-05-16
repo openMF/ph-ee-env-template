@@ -1916,12 +1916,12 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test:v1.6.2"
+  image: "docker.io/openmf/ph-ee-integration-test:latest"
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "500m"
-    memory: "1Gi"
+    cpu: "800m"
+    memory: "1.2Gi"
   requests:
     cpu: "250m"
     memory: "256Mi"
