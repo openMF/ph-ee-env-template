@@ -1,5 +1,5 @@
 {
-	"id": "7db4b5b7-795e-4575-9cfd-9e687453f4fd",
+	"id": "af77afa1-631c-4dbd-8fd0-bc6151c48338",
 	"name": "SIT",
 	"values": [
 		{
@@ -141,7 +141,7 @@
 		},
 		{
 			"key": "clientCorrelationId",
-			"value": "12345678-6897-6798-6798-098765432134",
+			"value": "123456",
 			"type": "default",
 			"enabled": true
 		},
@@ -219,7 +219,7 @@
 		},
 		{
 			"key": "X-CallbackURL",
-			"value": "https://webhook.site/e41af4b6-a371-4c05-a360-3c28984d3014",
+			"value": "https://webhook.site/e5fc2440-03a6-4125-be88-88c97674e899",
 			"type": "default",
 			"enabled": true
 		},
@@ -239,9 +239,26 @@
 			"value": "https://bill-pay.sandbox.fynarfin.io",
 			"type": "default",
 			"enabled": true
+		},
+		{
+			"key": "billId",
+			"value": "001",
+			"enabled": true
+		},
+		{
+			"key": "ConnectorCRMHostName",
+			"value": "https://connector-crm.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ConnectorBulkHostName",
+			"value": "https://connector.sandbox.fynarfin.io",
+			"type": "default",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2024-03-04T07:07:07.482Z",
-	"_postman_exported_using": "Postman/10.23.5"
+	"_postman_exported_at": "2024-05-16T19:44:05.790Z",
+	"_postman_exported_using": "Postman/10.24.24"
 }
