@@ -1920,8 +1920,8 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "400m"
-    memory: "384Mi"
+    cpu: "500m"
+    memory: "512Mi"
   requests:
     cpu: "250m"
     memory: "256Mi"
