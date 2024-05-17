@@ -444,7 +444,6 @@ jobs:
             cat deployBpmn.sh
             cd ..
             sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
-            sleep 70m 30s &
             #------------------Post-Installation-Steps-ends-------------------------------
       - run:
           name: Run Helm Tests
