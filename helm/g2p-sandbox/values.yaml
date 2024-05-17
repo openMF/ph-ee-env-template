@@ -519,6 +519,8 @@ ph-ee-engine:
     hostname: "bill-pay.sandbox.mifos.io"
     stub_hostname: "bill-pay.sandbox.mifos.io"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
+    operations:
+      url: "http://ph-ee-operations-app:80"
     ingress:
       enabled: false
       annotations:

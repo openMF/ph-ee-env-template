@@ -19,6 +19,8 @@ billpay:
 connector:
   contactpoint: ""
 DFSPIDS: ""
+operations:
+  url: ""
 limits:
   cpu: "500m"
   memory: "512M"
