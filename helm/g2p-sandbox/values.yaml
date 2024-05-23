@@ -555,7 +555,7 @@ ph-ee-engine:
         deployTime: "{{ .Values.deployTime }}"
 
   ph-ee-connector:
-    enabled: false
+    enabled: true
     aws:
       region: "ap-south-1"
       access_key: "aws-access-key"
@@ -580,7 +580,7 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
-  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
+  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.2
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:

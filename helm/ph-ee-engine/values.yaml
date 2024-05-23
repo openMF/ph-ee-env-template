@@ -205,7 +205,7 @@ kibana:
 channel:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-channel:v1.11.0
+  image: docker.io/openmf/ph-ee-connector-channel:v1.12.0
   imagePullPolicy: "Always"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
@@ -344,7 +344,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.17.2
   imagePullPolicy: "Always"
   ams_local_enabled: true
   ams_local_interop_host: "fineract-server"
@@ -420,7 +420,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.5.0
+  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.5.1
   imagePullPolicy: "Always"
   hostname: ""
   switch:
@@ -522,9 +522,10 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.17.1
+  image: docker.io/openmf/ph-ee-operations-app:v1.20.0
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
+  minio_public_host: "http://minio:9000"
   datasource:
       username: "mifos"
       password: "password"
@@ -1203,7 +1204,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-zeebe-ops:v1.4.0
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.5.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
@@ -1394,7 +1395,7 @@ importer_es:
 
 mockpayment:
   enabled: false
-  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.0
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.1
   replicas: 1
   mockFailure:
     percentage: "0"
@@ -1453,7 +1454,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.13.1
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.14.0
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   datasource:
@@ -1540,7 +1541,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.13.0
   imagePullPolicy: "Always"
   camel_disable_ssl: true
   channel:
@@ -1664,7 +1665,7 @@ connector_bulk:
 ph_ee_connector_gsma:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-gsma:v1.3.0
+  image: docker.io/openmf/ph-ee-connector-gsma:v1.3.1
   imagePullPolicy: "Always"
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
@@ -1823,7 +1824,9 @@ ph-ee-connector_slcb:
 ph-ee-connector:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  image: docker.io/openmf/ph-ee-connector-bulk:v1.2.0
+  operations_app:
+    contactpoint: "http://ph-ee-operations-app:5000"
   ingress:
     enabled: true
     annotations:
@@ -1897,8 +1900,8 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test:v1.6.2"
-  imageTag: v1.6.0-rc.5
+  image: "docker.io/openmf/ph-ee-integration-test:v1.6.2-rc.2"
+  imageTag: v1.6.2-rc.2
   imagePullPolicy: "Never"
   limits:
     cpu: "500m"
@@ -2025,7 +2028,7 @@ kong:
 vouchers:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-vouchers:v1.3.1
+  image: docker.io/openmf/ph-ee-vouchers:v1.4.0
   ingress:
     enabled: true
     annotations:
@@ -2070,8 +2073,12 @@ vouchers:
 billPay:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bill-pay:v1.1.0
+  image: docker.io/openmf/ph-ee-bill-pay:v1.2.0
   imagePullPolicy: "Always"
+  connector:
+    contactpoint: "http://ph-ee-connector:80"
+  billpay:
+    contactpoint: "http://ph-ee-connector-bill-pay:8080"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -2140,7 +2147,7 @@ billPay:
 crm:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-crm:v1.1.0
+  image: docker.io/openmf/ph-ee-connector-crm:v1.2.0
   imagePullPolicy: "Always"
   livenessProbe:
     httpGet:

@@ -13,7 +13,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      PH_RELEASE: 1.13.0
+      PH_RELEASE: 1.13.1
     steps:
       - checkout
       - run: rm -f helm/ph-ee-engine/Chart.lock helm/ph-ee-engine/requirements.lock helm/ph-ee-engine/charts/*
@@ -33,7 +33,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      G2P_RELEASE: 1.5.0
+      G2P_RELEASE: 1.5.1
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox/Chart.lock helm/g2p-sandbox/requirements.lock helm/g2p-sandbox/charts/*
@@ -56,7 +56,7 @@ jobs:
     working_directory: ~/repo
     environment:
       TERM: dumb
-      SEC_RELEASE: 1.4.0
+      SEC_RELEASE: 1.4.1
     steps:
       - checkout
       - run: rm -f helm/g2p-sandbox-security/Chart.lock helm/g2p-sandbox-security/requirements.lock helm/g2p-sandbox-security/charts/*
@@ -80,7 +80,7 @@ jobs:
     resource_class: xlarge
     environment:
       TERM: dumb
-      PH_RELEASE: 1.13.0
+      PH_RELEASE: 1.13.1
     parameters:
       namespace:
         default: "paymenthub"
@@ -105,7 +105,7 @@ jobs:
         default: ph-ee-g2psandbox
         type: string
       chart-version:
-        default: 1.5.0
+        default: 1.5.1
         type: string
     steps:
       - run: 
@@ -206,7 +206,6 @@ jobs:
             #echo "test ngrok "
             #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
             echo "https://$NGROK_PUBLIC_URL"
-           
             # ---------------------minikube remote access end---------------------
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
@@ -339,31 +338,31 @@ jobs:
             #kubectl uncordon minikube-m02
             #kubectl uncordon minikube-m03
             
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops   | cut -d ' ' -f1) -n paymenthub|| echo test
-            sleep 60
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops   | cut -d ' ' -f1) -n paymenthub|| echo test
+            #sleep 60
             #Deploy BPMN 
-            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            git clone --depth 1 --branch v1.5.0 https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            cd openMF/ph-ee-env-labs/orchestration
-            ls
-            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
-            cat deployBpmn.sh
-            cd ..
-            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            #kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            #git clone --depth 1 --branch v1.6.0 https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            #cd openMF/ph-ee-env-labs/orchestration
+            #ls
+            #sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            #cat deployBpmn.sh
+            #cd ..
+            #sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
             #------------------Post-Installation-Steps-ends-------------------------------
 
       - run:
           name: Run Helm Tests
           command: |
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-ams-mifos          | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector          | cut -d ' ' -f1) -n paymenthub|| echo test
             kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bill-pay          | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bulk               | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel           | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-crm               | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-gsma             | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mock-payment-schema | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mojaloop-java | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-notifications | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bulk               | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel           | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-crm               | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-gsma             | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mock-payment-schema | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mojaloop-java | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-notifications | cut -d ' ' -f1) -n paymenthub|| echo test
             #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-elasticsearch                   | cut -d ' ' -f1) -n paymenthub|| echo test
             kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-identity-account-mapper | cut -d ' ' -f1) -n paymenthub|| echo test
             kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-importer-es | cut -d ' ' -f1) -n paymenthub|| echo test
@@ -439,13 +438,13 @@ workflows:
       - build-and-host-g2p-sandbox-security:
           requires:
             - build-and-host-g2p-sandbox
-          context: 
+          context:
             - AWS
             - Helm
             - slack
       - minikube-run-helm-upgrade-and-helm-test:
           requires:
-                - build-and-host-g2p-sandbox
+            - build-and-host-g2p-sandbox
           context:
             - AWS
             - Helm
