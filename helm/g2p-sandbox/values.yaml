@@ -590,10 +590,9 @@ ph-ee-engine:
   minio:
     enabled: true
 
-
 account_mapper:
   enabled: true
-  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
+  image: docker.io/openmf/ph-ee-identity-account-mapper:latest
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO
   limits:
