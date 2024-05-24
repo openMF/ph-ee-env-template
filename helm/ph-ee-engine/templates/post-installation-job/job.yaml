@@ -47,7 +47,7 @@ spec:
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin/kubectl
           kubectl version
-
+          echo "---------------- kubectl installed -----------------"
           # Install Docker
           apt-get install sysvinit-utils
           sudo apt-get --assume-yes install docker-ce docker-ce-cli containerd.io
