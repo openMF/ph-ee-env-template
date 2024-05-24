@@ -289,7 +289,7 @@ channel:
     runAsUser: 0
     privileged: false
   limits:
-    memory: "384M"
+    memory: "512M"
     cpu: "300m"
   requests:
     memory: "256M"
