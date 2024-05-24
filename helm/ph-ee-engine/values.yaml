@@ -290,7 +290,7 @@ channel:
     privileged: false
   limits:
     memory: "384M"
-    cpu: "250m"
+    cpu: "300m"
   requests:
     memory: "256M"
     cpu: "150m"
@@ -2222,7 +2222,7 @@ crm:
     privileged: false
 
   limits:
-    memory: "256M"
+    memory: "384M"
     cpu: "150m"
   requests:
     memory: "256M"
