@@ -2060,7 +2060,7 @@ vouchers:
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   limits:
     cpu: "250m"
-    memory: "384M"
+    memory: "512M"
   requests:
     cpu: "150m"
     memory: "256M"
