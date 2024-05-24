@@ -58,7 +58,7 @@ spec:
           apt-get --assume-yes install git 
           apt-get --assume-yes install make
           
-          git clone https://github.com/openMF/ph-ee-env-labs.git
+          git clone --depth 1 --branch v1.6.0 https://github.com/openMF/ph-ee-env-labs.git
           cd ph-ee-env-labs/helm/es-secret/
           make secrets || echo "elastic-secrets" already exists
           
