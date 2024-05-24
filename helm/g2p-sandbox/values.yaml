@@ -593,7 +593,7 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
-  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
+  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO
   limits:
@@ -646,7 +646,7 @@ account_mapper:
       max_byte_off_heap: 10
       max_byte_disk: 10
     datasource:
-      url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
+      url: jdbc:mysql://operationsmysql:3306/identity_account_mapper
       username: mifos
       password: password
  
