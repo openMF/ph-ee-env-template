@@ -1850,7 +1850,7 @@ ph-ee-connector:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: connector1.sandbox.mifos.io
+      - host: connector.sandbox.mifos.io
         paths:
           - path: "/"
             backend:
