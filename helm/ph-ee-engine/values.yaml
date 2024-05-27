@@ -1898,7 +1898,7 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test:v1.6.2-rc.1"
+  image: "docker.io/openmf/ph-ee-integration-test:phee-346"
   imageTag: v1.6.2-rc.1
   imagePullPolicy: "Never"
   limits:
