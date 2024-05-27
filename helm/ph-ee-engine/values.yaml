@@ -525,6 +525,7 @@ operations_app:
   image: docker.io/openmf/ph-ee-operations-app:v1.20.0
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
+  minio_public_host: "https://minio:9000"
   datasource:
       username: "mifos"
       password: "password"
