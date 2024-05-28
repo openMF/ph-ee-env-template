@@ -2074,6 +2074,10 @@ billPay:
   replicas: 1
   image: docker.io/openmf/ph-ee-bill-pay:v1.2.0
   imagePullPolicy: "Always"
+  connector:
+    contactpoint: "http://ph-ee-connector:8080"
+  billpay:
+    contactpoint: "http://ph-ee-bill-pay:8080"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
