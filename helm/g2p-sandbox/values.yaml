@@ -558,7 +558,7 @@ ph-ee-engine:
         deployTime: "{{ .Values.deployTime }}"
 
   ph-ee-connector:
-    enabled: false
+    enabled: true
     aws:
       region: "ap-south-1"
       access_key: "aws-access-key"

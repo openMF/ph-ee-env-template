@@ -339,17 +339,17 @@ jobs:
             #kubectl uncordon minikube-m02
             #kubectl uncordon minikube-m03
             
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops   | cut -d ' ' -f1) -n paymenthub|| echo test
-            sleep 60
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-zeebe-ops   | cut -d ' ' -f1) -n paymenthub|| echo test
+            #sleep 60
             #Deploy BPMN 
-            kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            git clone --depth 1 --branch v1.6.0 https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            cd openMF/ph-ee-env-labs/orchestration
-            ls
-            sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
-            cat deployBpmn.sh
-            cd ..
-            sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            #kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            #git clone --depth 1 --branch v1.6.0 https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            #cd openMF/ph-ee-env-labs/orchestration
+            #ls
+            #sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            #cat deployBpmn.sh
+            #cd ..
+            #sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
             #------------------Post-Installation-Steps-ends-------------------------------
 
       - run:

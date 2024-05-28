@@ -1824,7 +1824,7 @@ ph-ee-connector_slcb:
 ph-ee-connector:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  image: docker.io/openmf/ph-ee-connector-bulk:v1.2.0
   ingress:
     enabled: true
     annotations:
