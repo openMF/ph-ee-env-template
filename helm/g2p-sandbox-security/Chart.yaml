@@ -2,13 +2,13 @@ apiVersion: v2
 description: PaymentHub EE Barebone Edition
 type: application
 name: ph-ee-g2psandbox-security
-version: 1.5.0
-appVersion: 1.5.0
+version: 1.2.0
+appVersion: 1.2.0
 
 dependencies:
 - name: ph-ee-engine
-  repository: https://fynarfin.io/images/ph-ee-engine-1.14.0-SNAPSHOT
-  version: 1.14.0-SNAPSHOT
+  repository: https://fynarfin.io/images/ph-ee-engine-0.0.0-SNAPSHOT
+  version: 0.0.0-SNAPSHOT
 - name: konga
   version: 1.0.0
   repository:  https://fynarfin.io/images/konga/
