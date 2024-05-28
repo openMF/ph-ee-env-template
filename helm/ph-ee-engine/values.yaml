@@ -2077,7 +2077,7 @@ billPay:
   connector:
     contactpoint: "http://ph-ee-connector:8080"
   billpay:
-    contactpoint: "http://ph-ee-bill-pay:8080"
+    contactpoint: "http://ph-ee-connector-bill-pay:8080"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
