@@ -355,15 +355,15 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-ams-mifos          | cut -d ' ' -f1) -n paymenthub|| echo test
+            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector          | cut -d ' ' -f1) -n paymenthub|| echo test
             kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bill-pay          | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bulk               | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel           | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-crm               | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-gsma             | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mock-payment-schema | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mojaloop-java | cut -d ' ' -f1) -n paymenthub|| echo test
-            kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-notifications | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-bulk               | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-channel           | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-crm               | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-gsma             | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mock-payment-schema | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-mojaloop-java | cut -d ' ' -f1) -n paymenthub|| echo test
+            #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-connector-notifications | cut -d ' ' -f1) -n paymenthub|| echo test
             #kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-elasticsearch                   | cut -d ' ' -f1) -n paymenthub|| echo test
             kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-identity-account-mapper | cut -d ' ' -f1) -n paymenthub|| echo test
             kubectl delete pod $(kubectl get pods -n paymenthub | grep ph-ee-importer-es | cut -d ' ' -f1) -n paymenthub|| echo test

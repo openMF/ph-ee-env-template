@@ -1825,6 +1825,8 @@ ph-ee-connector:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.2.0
+  operations_app:
+    contactpoint: "http://ph-ee-operations-app:5000"
   ingress:
     enabled: true
     annotations:
@@ -2075,7 +2077,7 @@ billPay:
   image: docker.io/openmf/ph-ee-bill-pay:v1.2.0
   imagePullPolicy: "Always"
   connector:
-    contactpoint: "http://ph-ee-connector:8080"
+    contactpoint: "http://ph-ee-connector:80"
   billpay:
     contactpoint: "http://ph-ee-connector-bill-pay:8080"
   livenessProbe:
