@@ -28,9 +28,8 @@ spec:
 
           # Install required dependencies
           apt-get update
-          apt install sudo
           # sudo apt-get update
-          sudo apt-get --assume-yes install apt-transport-https ca-certificates curl gnupg lsb-release
+          apt-get --assume-yes install apt-transport-https ca-certificates curl gnupg lsb-release
       
           #install kubectl 
           apt-get install -y apt-transport-https ca-certificates curl gpg
@@ -42,15 +41,15 @@ spec:
 
           apt-get install -y kubelet kubeadm kubectl
           apt-mark hold kubelet kubeadm kubectl
-          sudo apt-get install -y kubectl
+          apt-get install -y kubectl
           curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x ./kubectl
-          sudo mv ./kubectl /usr/local/bin/kubectl
+          mv ./kubectl /usr/local/bin/kubectl
           kubectl version
-
+          echo "---------------- kubectl installed -----------------"
           # Install Docker
           apt-get install sysvinit-utils
-          sudo apt-get --assume-yes install docker-ce docker-ce-cli containerd.io
+          apt-get --assume-yes install docker-ce docker-ce-cli containerd.io
           #---------docker start steps-------
           # service docker start
           # Verify Docker is running
@@ -58,7 +57,7 @@ spec:
           apt-get --assume-yes install git 
           apt-get --assume-yes install make
           
-          git clone https://github.com/openMF/ph-ee-env-labs.git
+          git clone --depth 1 --branch v1.6.0 https://github.com/openMF/ph-ee-env-labs.git
           cd ph-ee-env-labs/helm/es-secret/
           make secrets || echo "elastic-secrets" already exists
           
@@ -69,7 +68,7 @@ spec:
           sleep 20
 
           #insatll netcat
-          sudo apt install -y netcat
+          apt install -y netcat
           sleep 10
           check_count=0
           until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
