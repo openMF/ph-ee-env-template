@@ -1438,13 +1438,13 @@ kafka:
   kraft:
     clusterId: spDnn4oSr6DLKPx3cEheLp
 
-  # externalAccess:
-  #   enabled: true
-  #   autoDiscovery:
-  #     enabled: true
+  externalAccess:
+    enabled: true
+    autoDiscovery:
+      enabled: true
 
-  # rbac:
-  #   create: true
+  rbac:
+    create: true
 
   extraConfig: |
     offsets.topic.replication.factor=1
