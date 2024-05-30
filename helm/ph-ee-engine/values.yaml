@@ -1454,7 +1454,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.14.0
+  image: docker.io/openmf/ph-ee-importer-rdbms:phee-658
   imagePullPolicy: "Always"
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   datasource:
