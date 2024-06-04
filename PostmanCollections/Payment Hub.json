@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "3f9bad4a-e0b2-4c48-ab5d-ac2ebd44b822",
+		"_postman_id": "9c17d3c5-2673-4aae-b67b-000928f79850",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30685438"
+		"_exporter_id": "21253421"
 	},
 	"item": [
 		{
@@ -148,8 +148,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"body": {
@@ -960,8 +959,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"url": {
@@ -1079,8 +1077,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"url": {
@@ -1198,8 +1195,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"url": {
@@ -1541,8 +1537,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"body": {
@@ -1874,8 +1869,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"url": {
@@ -3676,18 +3670,15 @@
 						"header": [
 							{
 								"key": "X-CorrelationID",
-								"value": "{{$guid}}",
-								"type": "text"
+								"value": "{{$guid}}"
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "privateKey",
-								"value": "{{privateKey}}",
-								"type": "text"
+								"value": "{{privateKey}}"
 							}
 						],
 						"body": {
@@ -3727,8 +3718,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa",
-								"type": "text"
+								"value": "ibank-usa"
 							}
 						],
 						"url": {
@@ -3757,12 +3747,10 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
 								"value": "ibank-usa"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3793,8 +3781,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa",
-								"type": "text"
+								"value": "ibank-usa"
 							}
 						],
 						"url": {
@@ -3823,12 +3810,10 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
 								"value": "ibank-usa"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3862,12 +3847,10 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
 								"value": "ibank-usa"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3898,8 +3881,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa",
-								"type": "text"
+								"value": "ibank-usa"
 							}
 						],
 						"body": {
@@ -3936,12 +3918,10 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
 								"value": "ibank-usa"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -3972,12 +3952,10 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
 								"value": "ibank-usa"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -4203,8 +4181,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -4839,8 +4816,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -5648,8 +5624,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -6398,8 +6373,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -7197,8 +7171,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -7827,8 +7800,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -8570,8 +8542,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -9341,8 +9312,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -10130,8 +10100,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -10783,8 +10752,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"url": {
@@ -11426,8 +11394,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -12253,8 +12220,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"url": {
@@ -12905,8 +12871,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"body": {
@@ -13692,8 +13657,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -14482,8 +14446,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"url": {
@@ -15134,8 +15097,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"body": {
@@ -15921,8 +15883,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -16711,8 +16672,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"url": {
@@ -17363,8 +17323,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"body": {
@@ -18150,8 +18109,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -18943,8 +18901,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -19575,8 +19532,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -20202,8 +20158,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -20829,8 +20784,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -21660,8 +21614,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -22491,8 +22444,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -23200,8 +23152,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"url": {
@@ -23868,8 +23819,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -24733,8 +24683,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"url": {
@@ -25419,8 +25368,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"body": {
@@ -26246,8 +26194,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -27074,8 +27021,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"url": {
@@ -27761,8 +27707,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"body": {
@@ -28588,8 +28533,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -29416,8 +29360,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"url": {
@@ -30103,8 +30046,7 @@
 																	},
 																	{
 																		"key": "Accept",
-																		"value": "application/json",
-																		"type": "text"
+																		"value": "application/json"
 																	}
 																],
 																"body": {
@@ -30930,8 +30872,7 @@
 															},
 															{
 																"key": "Accept",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -31752,8 +31693,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -32404,8 +32344,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -33056,8 +32995,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -33708,8 +33646,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -34564,8 +34501,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -35420,8 +35356,7 @@
 													},
 													{
 														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"url": {
@@ -36144,8 +36079,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"url": {
@@ -36730,8 +36664,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"url": {
@@ -37378,8 +37311,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"url": {
@@ -38019,8 +37951,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -38759,8 +38690,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"url": {
@@ -39366,8 +39296,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"url": {
@@ -39888,8 +39817,7 @@
 											},
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -40407,8 +40335,7 @@
 									},
 									{
 										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"url": {
@@ -40772,8 +40699,7 @@
 									},
 									{
 										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"url": {
@@ -41397,8 +41323,7 @@
 									},
 									{
 										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -42170,8 +42095,7 @@
 									},
 									{
 										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"url": {
@@ -42667,13 +42591,11 @@
 								"header": [
 									{
 										"key": "Platform-TenantId",
-										"value": "{{TenantName}}",
-										"type": "text"
+										"value": "{{TenantName}}"
 									},
 									{
 										"key": "X-CorrelationID",
-										"value": "{{clientCorrelationId}}",
-										"type": "text"
+										"value": "{{clientCorrelationId}}"
 									}
 								],
 								"body": {
@@ -42706,18 +42628,15 @@
 								"header": [
 									{
 										"key": "X-CorrelationID",
-										"value": "{{clientCorrelationId}}",
-										"type": "text"
+										"value": "{{clientCorrelationId}}"
 									},
 									{
 										"key": "accountHoldingInstitutionId",
-										"value": "{{accountHoldingInstitutionId}}",
-										"type": "text"
+										"value": "{{accountHoldingInstitutionId}}"
 									},
 									{
 										"key": "amsName",
-										"value": "{{amsName}}",
-										"type": "text"
+										"value": "{{amsName}}"
 									}
 								],
 								"body": {
@@ -42902,13 +42821,11 @@
 								"header": [
 									{
 										"key": "Platform-TenantId",
-										"value": "{{PayeeTenantName}}",
-										"type": "text"
+										"value": "{{PayeeTenantName}}"
 									},
 									{
 										"key": "X-CorrelationID",
-										"value": "{{clientCorrelationId}}",
-										"type": "text"
+										"value": "{{clientCorrelationId}}"
 									}
 								],
 								"body": {
@@ -42943,8 +42860,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{PlatformTenant}}",
-								"type": "text"
+								"value": "{{PlatformTenant}}"
 							}
 						],
 						"url": {
@@ -42968,8 +42884,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{PlatformTenant}}",
-								"type": "text"
+								"value": "{{PlatformTenant}}"
 							}
 						],
 						"body": {
@@ -43028,8 +42943,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"body": {
@@ -43061,13 +42975,11 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "requestType",
-								"value": "transfers",
-								"type": "text"
+								"value": "transfers"
 							}
 						],
 						"url": {
@@ -43096,8 +43008,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "tn05",
-								"type": "text"
+								"value": "tn05"
 							}
 						],
 						"body": {
@@ -43130,8 +43041,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "tn05",
-								"type": "text"
+								"value": "tn05"
 							}
 						],
 						"body": {
@@ -43164,8 +43074,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "tn05",
-								"type": "text"
+								"value": "tn05"
 							}
 						],
 						"body": {
@@ -43200,12 +43109,10 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
 								"value": "ibank-usa"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
 								"value": "application/json"
 							}
 						],
@@ -43234,8 +43141,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "ibank-usa",
-								"type": "text"
+								"value": "ibank-usa"
 							}
 						],
 						"body": {
@@ -43284,13 +43190,11 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"url": {
@@ -43456,13 +43360,11 @@
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							},
 							{
 								"key": "X-Callback-URL",
-								"value": "{{BulkHostName}}/simulate",
-								"type": "text"
+								"value": "{{BulkHostName}}/simulate"
 							}
 						],
 						"body": {
@@ -43575,33 +43477,27 @@
 						"header": [
 							{
 								"key": "Purpose",
-								"value": "test payment",
-								"type": "text"
+								"value": "test payment"
 							},
 							{
 								"key": "filename",
-								"value": "ph-ee-bulk-demo-7.csv",
-								"type": "text"
+								"value": "ph-ee-bulk-demo-7.csv"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{X-CorrelationId}}",
-								"type": "text"
+								"value": "{{X-CorrelationId}}"
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "X-Signature",
-								"value": "{{x-signature}}",
-								"type": "text"
+								"value": "{{x-signature}}"
 							},
 							{
 								"key": "type",
-								"value": "csv",
-								"type": "text"
+								"value": "csv"
 							}
 						],
 						"body": {
@@ -43906,28 +43802,23 @@
 						"header": [
 							{
 								"key": "Purpose",
-								"value": "test payment",
-								"type": "text"
+								"value": "test payment"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{X-CorrelationId}}",
-								"type": "text"
+								"value": "{{X-CorrelationId}}"
 							},
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "X-Signature",
-								"value": "{{x-signature}}",
-								"type": "text"
+								"value": "{{x-signature}}"
 							},
 							{
 								"key": "type",
-								"value": "raw",
-								"type": "text"
+								"value": "raw"
 							}
 						],
 						"body": {
@@ -43962,8 +43853,7 @@
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"body": {
@@ -44246,7 +44136,7 @@
 							"_postman_previewlanguage": "json",
 							"header": [],
 							"cookie": [],
-							"body": "{\n    \"batchId\": \"c02a14f0-5e7e-44a1-88eb-5584a21e6f28\",\n    \"requestId\": \"dhgdfe-jiae-ugir-bsjf-ndsdfsdfdfd\",\n    \"totalTransactions\": 2,\n    \"ongoing\": 2,\n    \"failed\": 0,\n    \"completed\": 0,\n    \"total_amount\": 767,\n    \"completed_amount\": 0,\n    \"ongoing_amount\": 767,\n    \"failed_amount\": 0,\n    \"result_file\": null,\n    \"resultGeneratedAt\": 1634955667187,\n    \"note\": \"Sample Response\"\n}"
+							"body": "{\n    \"batchId\": \"e24748c4-63ba-47d7-86fb-4cbd51b00c56\",\n    \"requestId\": null,\n    \"total\": 10,\n    \"ongoing\": 0,\n    \"failed\": 0,\n    \"successful\": 10,\n    \"totalAmount\": 550,\n    \"successfulAmount\": 550,\n    \"pendingAmount\": 0,\n    \"failedAmount\": 0,\n    \"file\": \"http://minio.sandbox.fynarfin.io/paymenthub-ee/1717483373950_1717483373930_response.csv\",\n    \"notes\": \"Failed Batch Request\",\n    \"createdAt\": null,\n    \"status\": \"COMPLETED\",\n    \"modes\": null,\n    \"purpose\": null,\n    \"failPercentage\": \"0\",\n    \"successPercentage\": \"100\",\n    \"registeringInstitutionId\": \"SocialWelfare,123\",\n    \"payerFsp\": \"gorilla\",\n    \"correlationId\": \"2251799822162705\"\n}"
 						}
 					]
 				},
@@ -44723,8 +44613,7 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"url": {
@@ -45012,8 +44901,7 @@
 							},
 							{
 								"key": "X-Correlation-ID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"url": {
@@ -45059,7 +44947,7 @@
 					},
 					"response": [
 						{
-							"name": "Batch Summary",
+							"name": "Batch Payment Detail",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -45080,11 +44968,12 @@
 									},
 									{
 										"key": "Platform-TenantId",
-										"value": "ibank-usa"
+										"value": "{{TenantName}}"
 									},
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww"
+										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww",
+										"disabled": true
 									},
 									{
 										"key": "Origin",
@@ -45100,17 +44989,22 @@
 										"key": "Referer",
 										"value": "http://localhost:4200/",
 										"disabled": true
+									},
+									{
+										"key": "X-Correlation-ID",
+										"value": "{{clientCorrelationId}}"
 									}
 								],
 								"url": {
-									"raw": "{{OperationsHostName}}/api/v1/batch?batchId={{batchId}}",
+									"raw": "{{OperationsHostName}}/api/v1/batches/{{batchId}}?associations=all",
 									"host": [
 										"{{OperationsHostName}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"batch"
+										"batches",
+										"{{batchId}}"
 									],
 									"query": [
 										{
@@ -45126,16 +45020,26 @@
 											"disabled": true
 										},
 										{
-											"key": "batchId",
-											"value": "{{batchId}}"
+											"key": "associations",
+											"value": "all"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"disabled": true
 										}
 									]
 								}
 							},
-							"_postman_previewlanguage": "json",
-							"header": [],
+							"_postman_previewlanguage": null,
+							"header": null,
 							"cookie": [],
-							"body": "{\n    \"batchId\": \"c02a14f0-5e7e-44a1-88eb-5584a21e6f28\",\n    \"requestId\": \"dhgdfe-jiae-ugir-bsjf-ndsdfsdfdfd\",\n    \"totalTransactions\": 2,\n    \"ongoing\": 2,\n    \"failed\": 0,\n    \"completed\": 0,\n    \"total_amount\": 767,\n    \"completed_amount\": 0,\n    \"ongoing_amount\": 767,\n    \"failed_amount\": 0,\n    \"result_file\": null,\n    \"resultGeneratedAt\": 1634955667187,\n    \"note\": \"Sample Response\"\n}"
+							"body": "{\n    \"batchId\": \"e24748c4-63ba-47d7-86fb-4cbd51b00c56\",\n    \"payerFsp\": \"gorilla\",\n    \"reportGeneratedBy\": null,\n    \"reportGeneratedAt\": \"2024-06-04T14:48:17.344214\",\n    \"startedAt\": 1717483377000,\n    \"completedAt\": 1717483377000,\n    \"registeringInstitutionId\": \"SocialWelfare,123\",\n    \"status\": \"null\",\n    \"subBatchList\": [\n        {\n            \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\",\n            \"batchId\": null,\n            \"startedAt\": null,\n            \"completedAt\": null,\n            \"registeringInstitutionId\": null,\n            \"requestId\": null,\n            \"total\": 5,\n            \"ongoing\": null,\n            \"successful\": null,\n            \"failed\": null,\n            \"totalAmount\": 150,\n            \"pendingAmount\": null,\n            \"successfulAmount\": null,\n            \"failedAmount\": null,\n            \"file\": null,\n            \"notes\": null,\n            \"createdAt\": null,\n            \"status\": null,\n            \"modes\": null,\n            \"purpose\": null,\n            \"failedPercentage\": null,\n            \"successPercentage\": null,\n            \"payerFsp\": null,\n            \"approvedAmount\": null,\n            \"approvedTransactionCount\": null,\n            \"payeeFspSet\": [],\n            \"instructionList\": null,\n            \"budgetAccount\": \"\",\n            \"generatedBy\": null,\n            \"generatedAt\": null,\n            \"totalInstructionCount\": null\n        },\n        {\n            \"subBatchId\": \"936feadb-a653-404b-b6c8-f9192db1b219\",\n            \"batchId\": null,\n            \"startedAt\": null,\n            \"completedAt\": null,\n            \"registeringInstitutionId\": null,\n            \"requestId\": null,\n            \"total\": 5,\n            \"ongoing\": null,\n            \"successful\": null,\n            \"failed\": null,\n            \"totalAmount\": 400,\n            \"pendingAmount\": null,\n            \"successfulAmount\": null,\n            \"failedAmount\": null,\n            \"file\": null,\n            \"notes\": null,\n            \"createdAt\": null,\n            \"status\": null,\n            \"modes\": null,\n            \"purpose\": null,\n            \"failedPercentage\": null,\n            \"successPercentage\": null,\n            \"payerFsp\": null,\n            \"approvedAmount\": null,\n            \"approvedTransactionCount\": null,\n            \"payeeFspSet\": [],\n            \"instructionList\": null,\n            \"budgetAccount\": \"\",\n            \"generatedBy\": null,\n            \"generatedAt\": null,\n            \"totalInstructionCount\": null\n        }\n    ],\n    \"instructionList\": [\n        {\n            \"instructionId\": \"98e200ef-8cec-4e70-b92a-e1c439c9a130\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803912\",\n            \"amount\": 10,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\"\n        },\n        {\n            \"instructionId\": \"11fca01d-3737-4ff0-81fa-15c7c545e997\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803913\",\n            \"amount\": 20,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\"\n        },\n        {\n            \"instructionId\": \"f2337c44-098a-4982-968e-16f42a24ea2a\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803914\",\n            \"amount\": 30,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\"\n        },\n        {\n            \"instructionId\": \"c84e96e2-9e3f-45e7-91b2-be2fe58a8654\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803915\",\n            \"amount\": 40,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\"\n        },\n        {\n            \"instructionId\": \"a819407e-c874-4dc5-9efa-1a3a9fc0001d\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803916\",\n            \"amount\": 50,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\"\n        },\n        {\n            \"instructionId\": \"0f6e771c-8def-4935-afa0-25228d08e1ad\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803917\",\n            \"amount\": 60,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"936feadb-a653-404b-b6c8-f9192db1b219\"\n        },\n        {\n            \"instructionId\": \"fd0980ed-19a8-4d9b-a74f-b96e4c444139\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803918\",\n            \"amount\": 70,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": \"936feadb-a653-404b-b6c8-f9192db1b219\"\n        },\n        {\n            \"instructionId\": \"63473ed0-b57c-4e24-9698-a0e7c287f6ea\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803919\",\n            \"amount\": 80,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483372000,\n            \"subBatchId\": \"936feadb-a653-404b-b6c8-f9192db1b219\"\n        },\n        {\n            \"instructionId\": \"0a8de59b-8d8e-4db1-916d-fdd2b0f374d9\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803910\",\n            \"amount\": 90,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483372000,\n            \"subBatchId\": \"936feadb-a653-404b-b6c8-f9192db1b219\"\n        },\n        {\n            \"instructionId\": \"edb6aff0-8efd-40c0-9b82-e2cd42ac3439\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"27713803911\",\n            \"amount\": 100,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483372000,\n            \"subBatchId\": \"936feadb-a653-404b-b6c8-f9192db1b219\"\n        }\n    ],\n    \"total\": 10,\n    \"ongoing\": 0,\n    \"successful\": 10,\n    \"failed\": 0,\n    \"totalAmount\": 550,\n    \"pendingAmount\": 0,\n    \"successfulAmount\": 550,\n    \"failedAmount\": 0,\n    \"totalInstruction\": 0,\n    \"totalBatchAmount\": 550,\n    \"clientCorrelationId\": \"2251799822162705\"\n}"
 						}
 					]
 				},
@@ -45214,8 +45118,7 @@
 							},
 							{
 								"key": "X-Correlation-ID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"url": {
@@ -45257,7 +45160,7 @@
 					},
 					"response": [
 						{
-							"name": "Batch Summary",
+							"name": "Sub Batch Payment Detail",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -45278,11 +45181,12 @@
 									},
 									{
 										"key": "Platform-TenantId",
-										"value": "ibank-usa"
+										"value": "{{TenantName}}"
 									},
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww"
+										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaWRlbnRpdHktcHJvdmlkZXIiLCJpYmFuay11c2EiXSwic2NvcGUiOlsiaWRlbnRpdHkiXSwiZXhwIjoxNjMyNjY3MjY4LCJhdXRob3JpdGllcyI6WyJBTExfRlVOQ1RJT05TIl0sImp0aSI6InE2bklEMUZSNzlvM1JTK2U2enZVZ2hoa0c2ST0iLCJjbGllbnRfaWQiOiJjaGFubmVsLWliYW5rLXVzYSJ9.pt-az4y6ue2OEh5PIpV8cPkhHFwql_XK8OVRc_31gH-8GLwwZwtG9Q1k16LNxfTG4lsDpPYkJUO7UwabJlDuEfIzQtMhalVY3QwkFKjOr9T77c9esFHsjJ35FfQ5cVEDW3dUgFjF_1l-QsPAD1Nil1JSpYg-tXy8bJaVn1BI8VxYrN713VB-ZOs-eVJC_0zdK8iUHGmbSxuHojfhsj3INvU6vYYzo0u-jCzFfxImrIIFdia8DuL1S6sy4kd2ZM08_NCw_4rzW3hCgL9Yu0u_SfO2iJvh0BsXg4DC8iweBfq8rDqfQNR0Vzew9zCmiynZBWbp3elmkNnZDcVJU3yTww",
+										"disabled": true
 									},
 									{
 										"key": "Origin",
@@ -45298,17 +45202,24 @@
 										"key": "Referer",
 										"value": "http://localhost:4200/",
 										"disabled": true
+									},
+									{
+										"key": "X-Correlation-ID",
+										"value": "{{clientCorrelationId}}"
 									}
 								],
 								"url": {
-									"raw": "{{OperationsHostName}}/api/v1/batch?batchId={{batchId}}",
+									"raw": "{{OperationsHostName}}/api/v1/batches/{{batchId}}}/subBatches/{{subBatchId}}?offset=0&limit=5",
 									"host": [
 										"{{OperationsHostName}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"batch"
+										"batches",
+										"{{batchId}}}",
+										"subBatches",
+										"{{subBatchId}}"
 									],
 									"query": [
 										{
@@ -45324,16 +45235,20 @@
 											"disabled": true
 										},
 										{
-											"key": "batchId",
-											"value": "{{batchId}}"
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "5"
 										}
 									]
 								}
 							},
-							"_postman_previewlanguage": "json",
-							"header": [],
+							"_postman_previewlanguage": null,
+							"header": null,
 							"cookie": [],
-							"body": "{\n    \"batchId\": \"c02a14f0-5e7e-44a1-88eb-5584a21e6f28\",\n    \"requestId\": \"dhgdfe-jiae-ugir-bsjf-ndsdfsdfdfd\",\n    \"totalTransactions\": 2,\n    \"ongoing\": 2,\n    \"failed\": 0,\n    \"completed\": 0,\n    \"total_amount\": 767,\n    \"completed_amount\": 0,\n    \"ongoing_amount\": 767,\n    \"failed_amount\": 0,\n    \"result_file\": null,\n    \"resultGeneratedAt\": 1634955667187,\n    \"note\": \"Sample Response\"\n}"
+							"body": "{\n    \"subBatchId\": \"9a75b6cf-4a85-4eb6-974f-036fbf1c7b22\",\n    \"batchId\": \"e24748c4-63ba-47d7-86fb-4cbd51b00c56\",\n    \"startedAt\": null,\n    \"completedAt\": null,\n    \"registeringInstitutionId\": null,\n    \"requestId\": null,\n    \"total\": null,\n    \"ongoing\": null,\n    \"successful\": null,\n    \"failed\": null,\n    \"totalAmount\": null,\n    \"pendingAmount\": null,\n    \"successfulAmount\": null,\n    \"failedAmount\": null,\n    \"file\": null,\n    \"notes\": null,\n    \"createdAt\": null,\n    \"status\": null,\n    \"modes\": null,\n    \"purpose\": null,\n    \"failedPercentage\": null,\n    \"successPercentage\": null,\n    \"payerFsp\": null,\n    \"approvedAmount\": null,\n    \"approvedTransactionCount\": null,\n    \"payeeFspSet\": null,\n    \"instructionList\": [\n        {\n            \"instructionId\": \"98e200ef-8cec-4e70-b92a-e1c439c9a130\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"\",\n            \"amount\": 10,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": null\n        },\n        {\n            \"instructionId\": \"11fca01d-3737-4ff0-81fa-15c7c545e997\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"\",\n            \"amount\": 20,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": null\n        },\n        {\n            \"instructionId\": \"f2337c44-098a-4982-968e-16f42a24ea2a\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"\",\n            \"amount\": 30,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": null\n        },\n        {\n            \"instructionId\": \"c84e96e2-9e3f-45e7-91b2-be2fe58a8654\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"\",\n            \"amount\": 40,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": null\n        },\n        {\n            \"instructionId\": \"a819407e-c874-4dc5-9efa-1a3a9fc0001d\",\n            \"payerFsp\": null,\n            \"payeeFunctionalId\": \"\",\n            \"amount\": 50,\n            \"status\": \"COMPLETED\",\n            \"reason\": null,\n            \"startedAt\": 1717483371000,\n            \"completedAt\": 1717483371000,\n            \"subBatchId\": null\n        }\n    ],\n    \"budgetAccount\": null,\n    \"generatedBy\": null,\n    \"generatedAt\": \"2024-06-04T14:55:03.653749\",\n    \"totalInstructionCount\": 5\n}"
 						}
 					]
 				}
@@ -45349,13 +45264,11 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"body": {
@@ -45425,8 +45338,7 @@
 						"header": [
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"body": {
@@ -45459,18 +45371,15 @@
 						"header": [
 							{
 								"key": "Fineract-Platform-TenantId",
-								"value": "default",
-								"type": "text"
+								"value": "default"
 							},
 							{
 								"key": "Fineract-Tenant-App-Key",
-								"value": "123456543234abdkdkdkd",
-								"type": "text"
+								"value": "123456543234abdkdkdkd"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"body": {
@@ -45506,13 +45415,11 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
+								"value": "application/x-www-form-urlencoded"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							}
 						],
 						"body": {
@@ -46184,13 +46091,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -46436,13 +46341,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -46680,13 +46583,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -46887,13 +46788,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "SocialWelfare",
-								"type": "text"
+								"value": "SocialWelfare"
 							}
 						],
 						"body": {
@@ -47029,8 +46928,7 @@
 						"header": [
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"url": {
@@ -47142,8 +47040,7 @@
 						"header": [
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"url": {
@@ -47237,13 +47134,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -47358,13 +47253,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -47484,13 +47377,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -47625,13 +47516,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -47784,13 +47673,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -47943,13 +47830,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -48102,13 +47987,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -48258,13 +48141,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -48358,13 +48239,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -48514,13 +48393,11 @@
 						"header": [
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"url": {
@@ -48675,8 +48552,7 @@
 						"header": [
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -48749,8 +48625,7 @@
 						"header": [
 							{
 								"key": "X-Registering-Institution-ID",
-								"value": "{{X-Registering-Institution-ID}}",
-								"type": "text"
+								"value": "{{X-Registering-Institution-ID}}"
 							}
 						],
 						"body": {
@@ -48849,23 +48724,19 @@
 										"header": [
 											{
 												"key": "Platform-TenantId",
-												"value": "{{TenantName}}",
-												"type": "text"
+												"value": "{{TenantName}}"
 											},
 											{
 												"key": "X-CorrelationID",
-												"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
-												"type": "text"
+												"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee"
 											},
 											{
 												"key": "X-CallbackURL",
-												"value": "{{X-CallbackURL}}",
-												"type": "text"
+												"value": "{{X-CallbackURL}}"
 											},
 											{
 												"key": "X-PayerFSP-Id",
-												"value": "{{PayeeTenantName}}",
-												"type": "text"
+												"value": "{{PayeeTenantName}}"
 											}
 										],
 										"url": {
@@ -48888,18 +48759,15 @@
 										"header": [
 											{
 												"key": "Platform-TenantId",
-												"value": "{{TenantName}}",
-												"type": "text"
+												"value": "{{TenantName}}"
 											},
 											{
 												"key": "X-CorrelationID",
-												"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
-												"type": "text"
+												"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee"
 											},
 											{
 												"key": "X-PayerFSP-Id",
-												"value": "{{PayeeTenantName}}",
-												"type": "text"
+												"value": "{{PayeeTenantName}}"
 											}
 										],
 										"body": {
@@ -48935,28 +48803,23 @@
 										"header": [
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											},
 											{
 												"key": "X-Platform-TenantId",
-												"value": "{{TenantName}}",
-												"type": "text"
+												"value": "{{TenantName}}"
 											},
 											{
 												"key": "X-Client-Correlation-ID",
-												"value": "{{clientCorrelationId}}",
-												"type": "text"
+												"value": "{{clientCorrelationId}}"
 											},
 											{
 												"key": "X-Callback-URL",
-												"value": "{{X-CallbackURL}}",
-												"type": "text"
+												"value": "{{X-CallbackURL}}"
 											},
 											{
 												"key": "X-Biller-Id",
-												"value": "GovBill",
-												"type": "text"
+												"value": "GovBill"
 											}
 										],
 										"body": {
@@ -49031,8 +48894,8 @@
 											},
 											"status": "Accepted",
 											"code": 202,
-											"_postman_previewlanguage": null,
-											"header": null,
+											"_postman_previewlanguage": "Text",
+											"header": [],
 											"cookie": [],
 											"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345678-6897-6798-6798-098765432134\"\n}"
 										}
@@ -49047,23 +48910,19 @@
 								"header": [
 									{
 										"key": "X-Callback-URL",
-										"value": "{{X-CallbackURL}}",
-										"type": "text"
+										"value": "{{X-CallbackURL}}"
 									},
 									{
 										"key": "X-Client-Correlation-ID",
-										"value": "{{clientCorrelationId}}",
-										"type": "text"
+										"value": "{{clientCorrelationId}}"
 									},
 									{
 										"key": "X-Biller-Id",
-										"value": "GovBill",
-										"type": "text"
+										"value": "GovBill"
 									},
 									{
 										"key": "X-Platform-TenantId",
-										"value": "{{TenantName}}",
-										"type": "text"
+										"value": "{{TenantName}}"
 									}
 								],
 								"body": {
@@ -49157,23 +49016,19 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "1234",
-								"type": "text"
+								"value": "1234"
 							},
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "Payer-FSP-Id",
-								"value": "{{PayeeTenantName}}",
-								"type": "text"
+								"value": "{{PayeeTenantName}}"
 							}
 						],
 						"url": {
@@ -49367,23 +49222,19 @@
 						"header": [
 							{
 								"key": "X-Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "1234",
-								"type": "text"
+								"value": "1234"
 							},
 							{
 								"key": "X-CallbackURL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-PayerFSP-Id",
-								"value": "{{PayeeTenantName}}",
-								"type": "text"
+								"value": "{{PayeeTenantName}}"
 							}
 						],
 						"body": {
@@ -49601,23 +49452,19 @@
 						"header": [
 							{
 								"key": "X-Callback-URL",
-								"value": "{{X-CallbackURL}}",
-								"type": "text"
+								"value": "{{X-CallbackURL}}"
 							},
 							{
 								"key": "X-Client-Correlation-ID",
-								"value": "{{clientCorrelationId}}",
-								"type": "text"
+								"value": "{{clientCorrelationId}}"
 							},
 							{
 								"key": "X-Biller-Id",
-								"value": "GovBill",
-								"type": "text"
+								"value": "GovBill"
 							},
 							{
 								"key": "X-Platform-TenantId",
-								"value": "{{TenantName}}",
-								"type": "text"
+								"value": "{{TenantName}}"
 							}
 						],
 						"body": {
