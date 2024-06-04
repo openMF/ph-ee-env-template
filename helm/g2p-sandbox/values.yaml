@@ -20,7 +20,7 @@ ph-ee-engine:
     LOGGING_LEVEL_ROOT: "INFO"
     LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
     tenants: "rhino,gorilla,wakanda,pluto,venus,jupiter"
-    DFSPIDS: "wakanda,pluto,venus,jupiter"
+    DFSPIDS: "wakanda,pluto,venus,jupiter,gorilla"
 
   zeebe-operate-helm:
     enabled: true
@@ -598,9 +598,15 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
-  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.4.0
+  image: docker.io/openmf/ph-ee-identity-account-mapper:latest
   hostname: "identity-mapper.sandbox.mifos.io"
-  LOGGING_LEVEL_ROOT: INFO    
+  LOGGING_LEVEL_ROOT: INFO
+  livenessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 30
+  readinessProbe:
+    initialDelaySeconds: 180
+    periodSeconds: 30
   ingress:
     enabled: false
     pathtype: Prefix

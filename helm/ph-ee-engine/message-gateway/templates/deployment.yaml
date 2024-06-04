@@ -20,6 +20,11 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+        #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+        - name: check-zeebe-gateway-ready
+          image: busybox:latest
+          command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
       containers:
         - name: message-gateway
           image: "{{ .Values.image }}"  
@@ -37,14 +42,14 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: 9191
-            initialDelaySeconds: 120
-            periodSeconds: 30
+            initialDelaySeconds: {{.Values.livenessProbe.initialDelaySeconds}}
+            periodSeconds: {{.Values.livenessProbe.periodSeconds}}
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 9191
-            initialDelaySeconds: 120
-            periodSeconds: 30
+            initialDelaySeconds: {{.Values.readinessProbe.initialDelaySeconds}}
+            periodSeconds: {{.Values.readinessProbe.periodSeconds}}
 
           env:
             - name: "SPRING_DATASOURCE_URL"

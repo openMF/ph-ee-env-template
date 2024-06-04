@@ -19,7 +19,12 @@ spec:
 {{- if .Values.deployment.annotations }}
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
-    spec: 
+    spec:
+      initContainers:
+        #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+        - name: check-zeebe-gateway-ready
+          image: busybox:latest
+          command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
       affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}
       tolerations: {{ toYaml ( .Values.tolerations | default .Values.deployment.tolerations ) | nindent 8 }}
