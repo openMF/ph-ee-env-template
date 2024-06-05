@@ -18,9 +18,9 @@ spec:
     {{- include "inttest.env" . | nindent 4 }}
     resources:
       limits:
-        cpu: "500m"
-        memory: "1.5Gi"
+        cpu: "{{.Values.integration_test.limits.cpu}}"
+        memory: "{{.Values.integration_test.limits.memory}}"
       requests:
-        cpu: "100m"
-        memory: "1Gi"
+        cpu: "{{.Values.integration_test.requests.cpu}}"
+        memory: "{{.Values.integration_test.requests.memory}}"
   restartPolicy: Never

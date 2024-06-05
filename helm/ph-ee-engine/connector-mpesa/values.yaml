@@ -79,3 +79,9 @@ deployment:
     deployTime: "{{ .Values.deployTime }}"
 skip:
   enabled: false
+livenessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30

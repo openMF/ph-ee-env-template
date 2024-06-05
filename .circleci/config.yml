@@ -257,22 +257,22 @@ jobs:
 
             # sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
             # server {
-            #     listen       8080;
-            #     listen [::]:8080;
-            #     server_name  localhost;
-            #     access_log /home/circleci/project/nginx_access.log;
-            #     auth_basic "Administrators Area";
-            #     auth_basic_user_file /home/circleci/project/.htpasswd;    
+            #    listen       8080;
+            #    listen [::]:8080;
+            #    server_name  localhost;
+            #    access_log /home/circleci/project/nginx_access.log;
+            #   auth_basic "Administrators Area";
+            #   auth_basic_user_file /home/circleci/project/.htpasswd;    
 
-            #     location / {   
-            #         proxy_pass https://$MINIKUBE_IP:8443;
-            #         proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
-            #         proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
-            #     }
+            #    location / {   
+            #        proxy_pass https://$MINIKUBE_IP:8443;
+            #        proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+            #        proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+            #    }
             # }
             # EOF
             # sudo service nginx restart || echo 'start nginx'
-            # #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+            # SYSTEMD_LESS=FRXMK  systemctl status nginx.service
 
             # sleep 10
             
@@ -280,7 +280,7 @@ jobs:
             # curl -u minikube:minikube http://localhost:8080
 
             # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            # # ngrok config add-authtoken $AUTH_TOKEN
+            # ngrok config add-authtoken $AUTH_TOKEN
             # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
             # ngrok http 8080 > /dev/null &
 
@@ -298,11 +298,10 @@ jobs:
             # echo "https://$NGROK_PUBLIC_URL"
             # echo "https://$NGROK_PUBLIC_URL"
 
-            # #echo "test ngrok "
-            # #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            # echo "test ngrok "
+            # curl -u minikube:minikube https://$NGROK_PUBLIC_URL
             # echo "https://$NGROK_PUBLIC_URL"
-           
-            # # ---------------------minikube remote aceess end---------------------
+            # # ---------------------minikube remote access end---------------------
 
             curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
             sudo apt-get install apt-transport-https --yes
@@ -395,7 +394,7 @@ jobs:
             helm repo update
             echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
             echo helm chart install starts
-            helm upgrade --install  --timeout=1h --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" # --set ph-ee-engine.post_installation_job.enabled=false --set ph-ee-engine.kafka.provisioning.enabled=false
+            helm upgrade --install  --timeout=1h --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" #--set ph-ee-engine.kafka.provisioning.enabled=false
             
             echo --------------------helm upgrade is done---------------------
 
