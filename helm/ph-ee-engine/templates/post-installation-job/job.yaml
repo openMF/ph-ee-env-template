@@ -91,6 +91,9 @@ spec:
           cat deployBpmn.sh
           cd ..
           timeout 180s sh orchestration/deployBpmn.sh && sleep 5 || echo 'deploy Bpmn done'
+          echo "Removing ph-ee-env-labs directory"
+          cd ..
+          rm -rf ph-ee-env-labs
           echo ---------------------------successful--------------------------
 
       restartPolicy: Never
