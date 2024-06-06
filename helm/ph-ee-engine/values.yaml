@@ -522,7 +522,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.20.0
+  image: docker.io/openmf/ph-ee-operations-app:v1.20.1
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
   minio_public_host: "http://minio:9000"
@@ -1910,7 +1910,7 @@ integration_test:
     cpu: "100m"
     memory: "2Gi"
   operations_app:
-    contactpoint: "http://ph-ee-operations-app:80"
+    contactpoint: "http://ph-ee-operations-app:5000"
   bulk_processor:
     contactpoint: "https://ph-ee-connector-bulk:8443"
   channel_connector:
