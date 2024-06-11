@@ -4,7 +4,7 @@ orbs:
   helm: circleci/helm@2.0.1
   aws-eks: circleci/aws-eks@2.2.0
   kubernetes: circleci/kubernetes@1.3
-  mifos-orb: mifos/docker-image-availability-check-and-upgrade@1.0.0
+  fynarfin-orb: fynarfin/docker-image-availability-check-and-upgrade@1.0.0
 
 jobs:
   build-and-host-engine:
@@ -24,9 +24,9 @@ jobs:
             JIRA_STORY: ''
             JIRA_STORY_DIR: ''
           command: |
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            if [ "$CIRCLE_BRANCH" != "develop" ]; then
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
               echo Charts will save in https://fynarfin.io/images$JIRA_STORY_DIR
@@ -57,9 +57,9 @@ jobs:
             JIRA_STORY: ''
             JIRA_STORY_DIR: ''
           command: |
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            if [ "$CIRCLE_BRANCH" != "develop" ]; then
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
@@ -90,7 +90,7 @@ jobs:
     environment:
       TERM: dumb
     steps:
-      - run: git clone https://github.com/openmf/ph-ee-env-labs
+      - run: git clone https://github.com/fynarfin/ph-ee-env-labs
       - run: rm -f ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/requirements.lock ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/charts/*
       - helm/install-helm-client:
           version: "v3.8.2"
@@ -101,9 +101,9 @@ jobs:
             JIRA_STORY: ''
             JIRA_STORY_DIR: ''
           command: |
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            if [ "$CIRCLE_BRANCH" != "develop" ]; then
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
@@ -143,9 +143,9 @@ jobs:
             JIRA_STORY: ''
             JIRA_STORY_DIR: ''
           command: |
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            if [ "$CIRCLE_BRANCH" != "develop" ]; then
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
@@ -192,7 +192,7 @@ jobs:
         default: "minikube"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+        default: https://raw.githubusercontent.com/fynarfin/ph-ee-env-labs/develop/.circleci/services.txt
         type: string
       chart-base-url:
         default: https://fynarfin.io/images
@@ -333,7 +333,7 @@ jobs:
             
             function generate_values_to_override() {
               PREFIX="docker.io/"
-              if [ "$CIRCLE_BRANCH" != "master" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
+              if [ "$CIRCLE_BRANCH" != "develop" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
                   echo "image: < $1=$2:$JIRA_STORY >"
                   VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
               else
@@ -344,10 +344,10 @@ jobs:
             function check_for_image_tag(){
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            if [ "$CIRCLE_BRANCH" != "develop" ]; then
               
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi 
@@ -427,8 +427,8 @@ jobs:
            
             # #Deploy BPMN 
             # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
-            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
-            # cd openMF/ph-ee-env-labs/orchestration
+            # git clone https://github.com/fynarfin/ph-ee-env-labs.git fynarfin/ph-ee-env-labs
+            # cd fynarfin/ph-ee-env-labs/orchestration
             # ls
             # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
             # cat deployBpmn.sh

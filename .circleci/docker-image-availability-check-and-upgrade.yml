@@ -24,7 +24,7 @@ commands:
         default: "${REGION}"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+        default: https://raw.githubusercontent.com/fynarfin/ph-ee-env-labs/develop/.circleci/services.txt
         type: string
       chart-base-url:
         default: https://fynarfin.io/images
@@ -65,7 +65,7 @@ commands:
             
             function generate_values_to_override() {
               PREFIX="docker.io/"
-              if [ "$CIRCLE_BRANCH" != "master" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
+              if [ "$CIRCLE_BRANCH" != "develop" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
                   echo "image: < $1=$2:$JIRA_STORY >"
                   VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
               else
@@ -76,10 +76,10 @@ commands:
             function check_for_image_tag(){
               curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
             }
-            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            if [ "$CIRCLE_BRANCH" != "develop" ]; then
               
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi 
@@ -141,7 +141,7 @@ jobs:
         default: "$REGION"
         type: string
       service-file-path:
-        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+        default: https://raw.githubusercontent.com/fynarfin/ph-ee-env-labs/develop/.circleci/services.txt
         type: string
       chart-base-url:
         default: https://fynarfin.io/images/
