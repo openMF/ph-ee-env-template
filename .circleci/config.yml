@@ -313,7 +313,7 @@ jobs:
            
       - run:
           name: fetch docker images and helm upgrade
-          no_output_timeout: 20m
+          no_output_timeout: 30m
           environment:
             ORB_CHART_BASE_URL: << parameters.chart-base-url >>
             ORB_CHART_NAME: << parameters.chart-name >>
