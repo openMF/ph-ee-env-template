@@ -68,14 +68,17 @@ spec:
           sleep 20
 
           #insatll netcat
-          apt install -y netcat
+          apt-get update && apt-get install -y netcat-openbsd
+          echo "------------ netcat installed ---------------"
           sleep 10
-          check_count=0
-          until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
-              echo "Waiting for zeebe-ops service"; 
-              sleep 5; 
-              check_count=$(($check_count + 1));
-          done;
+          SERVICE_HOST=${SERVICE_HOST:-"ph-ee-zeebe-ops"}
+          SERVICE_PORT=${SERVICE_PORT:-"80"}
+          until nc -z $SERVICE_HOST $SERVICE_PORT; do
+            echo "Service $SERVICE_HOST:$SERVICE_PORT is not running. Checking again in 5 seconds..."
+            sleep 5
+          done
+
+
           echo ------zeebe-ops service available-----------
           sleep 10
           #Deploy BPMN 
@@ -89,6 +92,7 @@ spec:
           cd ..
           timeout 180s sh orchestration/deployBpmn.sh && sleep 5 || echo 'deploy Bpmn done'
           echo ---------------------------successful--------------------------
+
       restartPolicy: Never
   backoffLimit: 0
 {{- end }}
