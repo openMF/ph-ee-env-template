@@ -545,6 +545,7 @@ operations_app:
   image: docker.io/openmf/ph-ee-operations-app:v1.10.0
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
+  minio_public_host: "http://minio:9000"
   datasource:
       username: "mifos"
       password: "password"
@@ -1843,6 +1844,8 @@ ph-ee-connector:
   requests:
     cpu: "150m"
     memory: "256M"
+  operations_app:
+    contactpoint: "http://ph-ee-operations-app:5000"
   ingress:
     enabled: true
     annotations:
@@ -2114,6 +2117,10 @@ billPay:
   replicas: 1
   image: docker.io/openmf/ph-ee-bill-pay:v1.0.0
   imagePullPolicy: "Always"
+  connector:
+    contactpoint: "http://ph-ee-connector:80"
+  billpay:
+    contactpoint: "http://ph-ee-connector-bill-pay:8080"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
