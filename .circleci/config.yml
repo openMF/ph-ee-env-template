@@ -40,7 +40,7 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz
-  build-and-host-ph-ee-kenya:
+  build-and-host-g2p-sandbox:
     docker:
       - image: cimg/python:3.10
     working_directory: ~/repo
@@ -48,11 +48,11 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      - run: rm -f helm/ph-ee-kenya/Chart.lock helm/ph-ee-kenya/requirements.lock helm/ph-ee-kenya/charts/*
+      - run: rm -f helm/g2p-sandbox/Chart.lock helm/g2p-sandbox/requirements.lock helm/g2p-sandbox/charts/*
       - helm/install-helm-client:
           version: "v3.8.2"
       - run:
-          name: build-and-host-ph-ee-kenya
+          name: build-and-host-g2p-sandbox
           environment:
             JIRA_STORY: ''
             JIRA_STORY_DIR: ''
@@ -65,18 +65,18 @@ jobs:
             fi
             CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
-              sed -i "10s@^ *repository:.*\$@  repository: $CHART_URL@" helm/ph-ee-kenya/Chart.yaml
-              sed -i "11s@^ *version:.*\$@  version: 0.0.0-SNAPSHOT$JIRA_STORY@" helm.ph-ee-kenya/Chart.yaml
+              sed -i "10s@^ *repository:.*\$@  repository: $CHART_URL@" helm/g2p-sandbox/Chart.yaml
+              sed -i "11s@^ *version:.*\$@  version: 0.0.0-SNAPSHOT$JIRA_STORY@" helm/g2p-sandbox/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
               CHART_URL="https://fynarfin.io/images/ph-ee-engine-0.0.0-SNAPSHOT"
               echo "chart used: < $CHART_URL >"
             fi
-            sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/ph-ee-kenya/Chart.yaml
-            # rm -rf helm/ph-ee-kenya/templates/config.yml
-            cat helm/ph-ee-kenya/Chart.yaml
-            helm dep up helm/ph-ee-kenya
-            helm package helm/ph-ee-kenya
+            sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
+            # rm -rf helm/g2p-sandbox/templates/config.yml
+            cat helm/g2p-sandbox/Chart.yaml
+            helm dep up helm/g2p-sandbox
+            helm package helm/g2p-sandbox
             helm repo index .
             echo "$CERT_FILE" | base64 --decode > b64encoded.pem
             chmod 400 b64encoded.pem
@@ -459,7 +459,7 @@ jobs:
             helm upgrade --install  --timeout=1h --set ph-ee-engine.kafka.global.storageClass=standard --set ph-ee-engine.kafka.provisioning.enabled=false --set ph-ee-engine.elasticsearch.volumeClaimTemplate.storageClassName=standard ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}  --set ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_interop_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_account_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_customer_host="https://fynams.sandbox.fynarfin.io/",ph-ee-engine.ph_ee_connector_ams_mifos.ams_local_auth_host="https://fynams.sandbox.fynarfin.io/" #--set ph-ee-engine.kafka.provisioning.enabled=false
             
             echo --------------------helm upgrade is done---------------------
-
+            sleep 30m
             # ----------------------Post-Installation-Steps-starts---------------------------
             # #ES and Kibana secret creation
             # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
@@ -501,8 +501,8 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
-            helm test ph-ee-kenya --filter name=ph-ee-kenya-test-gov --namespace paymenthub || echo test
-            helm test ph-ee-kenya --filter name=ph-ee-kenya-test-ams --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
                  
       - run:
           name: Fetch Integration Test Report
@@ -511,22 +511,22 @@ jobs:
             mkdir -p integration_report/test-report
 
             echo "Fetch Integration Test Report for ams"
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep ph-ee-kenya-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep ph-ee-kenya-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml"
             done
             echo "File is no longer empty, processing..."
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
-            # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep ph-ee-kenya-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
 
-            for i in $(kubectl get pods -n paymenthub | grep ph-ee-kenya-test-ams |cut -d " " -f1); do
+            for i in $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1); do
                 echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
                 kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
                 echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
@@ -535,14 +535,14 @@ jobs:
             done
             
             echo "Fetch Integration Test Report for GOV"
-            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep ph-ee-kenya-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file 
             downloaded_file="integration_report/test-report/cucumber.xml"
             # Loop until the file is not empty
             while [ ! -s $downloaded_file ]; do
                 echo "File is empty, waiting..."
                 sleep 60  # You can adjust the sleep interval as needed
-                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep ph-ee-kenya-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
                 downloaded_file="integration_report/test-report/cucumber.xml"
             done
             echo "File is no longer empty, processing..."
@@ -554,7 +554,7 @@ jobs:
             cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
 
             ls integration_report/test-report/
-            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep ph-ee-kenya-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
                 echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
                 kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
@@ -578,7 +578,7 @@ workflows:
             - AWS
             - Helm
             - slack
-      - build-and-host-ph-ee-kenya:
+      - build-and-host-g2p-sandbox:
           requires:
             - build-and-host-engine
           context: 
@@ -592,5 +592,5 @@ workflows:
             - slack
             - Ngrok
           requires:
-            - build-and-host-ph-ee-kenya
+            - build-and-host-g2p-sandbox
  
