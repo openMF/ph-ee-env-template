@@ -89,6 +89,8 @@ camunda-platform:
         volumeMounts:
           - name: exporters
             mountPath: /exporters/
+    readinessProbe:
+      initialDelaySeconds: 60
     volumeClaimTemplate:
       storageClassName: "gp2"
 
@@ -100,15 +102,22 @@ camunda-platform:
     replicationFactor: "1"
     cpuThreadCount: "2"
     ioThreadCount: "2"
-    pvcSize: "10Gi"
+    pvcSize: "5Gi"
 
     resources:
+      limits:
+        cpu: "250m"
+        memory: "768Mi"
       requests:
-        cpu: 100m
+        cpu: "150m"
+        memory: "500Mi"
+
 
   zeebe-gateway:
     replicas: 1
     logLevel: warn
+    readinessProbe:
+      initialDelaySeconds: 180
     env:
       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
         value: "4"
@@ -160,6 +169,15 @@ elasticsearch:
         secretKeyRef:
           name: elastic-credentials
           key: password
+  readinessProbe:
+    initialDelaySeconds: 180
+  resources:
+    limits:
+      cpu: "1000m"
+      memory: "1024M"
+    requests:
+      cpu: "100m"
+      memory: "786M"
 
 
 kibana:
@@ -242,7 +260,7 @@ channel:
       path: /actuator/health/readiness
       port: 8443
       scheme: HTTPS
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -270,13 +288,12 @@ channel:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "512M"
+    cpu: "300m"
+  requests:
+    memory: "256M"
+    cpu: "150m"
   service:
     annotations: {}
 # Enabling this will publicly expose your channel instance.
@@ -305,7 +322,7 @@ channel:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"
@@ -329,6 +346,11 @@ operationsmysql:
     username: "mifos"
     password: "password"
     rootPassword: "4ET6ywqlGt"
+  primary:
+    persistence:
+      size: 3Gi
+    readinessProbe:
+      initialDelaySeconds: 180
   initdbScripts:
     setup.sql: |-
       CREATE DATABASE IF NOT EXISTS phdefault;
@@ -377,13 +399,12 @@ ph_ee_connector_ams_mifos:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "384M"
-      cpu: "500m"
-    requests:
-      memory: "256M"
-      cpu: "300m"
+  limits:
+    memory: "384M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -405,13 +426,13 @@ ph_ee_connector_ams_mifos:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
+    resources:
       limits:
-        memory: "512M"
-        cpu: "500m"
+        memory: "384M"
+        cpu: "150m"
       requests:
-        memory: "512M"
-        cpu: "100m"    
+        memory: "256M"
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-mifos.yml for deployment  
     # ph-ee-connector-ams-mifosConfig: {}
@@ -450,7 +471,7 @@ ph_ee_connector_mojaloop:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -478,13 +499,12 @@ ph_ee_connector_mojaloop:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"           
+  limits:
+    memory: "384M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
 # Enabling this will publicly expose your mojaloop instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -510,7 +530,7 @@ ph_ee_connector_mojaloop:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -544,7 +564,7 @@ operations_app:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -572,13 +592,12 @@ operations_app:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"         
+  limits:
+    memory: "384M"
+    cpu: "350m"
+  requests:
+    memory: "256M"
+    cpu: "200m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -604,10 +623,10 @@ operations_app:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
-        cpu: "100m"    
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as operations_app.yml for deployment
 
@@ -661,7 +680,7 @@ operations_web:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"       
@@ -694,7 +713,7 @@ operations_web:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -769,7 +788,7 @@ mpesa:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -797,13 +816,13 @@ mpesa:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
+  resources:
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
-      cpu: "100m"       
+      cpu: "100m"
 # Enabling this will publicly expose your mpesa instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -829,7 +848,7 @@ mpesa:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -889,13 +908,13 @@ roster_connector:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
+  resources:
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
-      cpu: "100m"        
+      cpu: "100m"
   deployment:
     annotations: {}
     affinity: {}
@@ -914,7 +933,7 @@ roster_connector:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -946,7 +965,7 @@ paygops_connector:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -977,7 +996,7 @@ paygops_connector:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"       
@@ -999,7 +1018,7 @@ paygops_connector:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1063,7 +1082,7 @@ messagegateway:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"   
@@ -1099,7 +1118,7 @@ messagegateway:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1163,7 +1182,7 @@ notifications:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"  
@@ -1192,7 +1211,7 @@ notifications:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512"
         cpu: "100m"    
@@ -1223,7 +1242,7 @@ zeebe_ops:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1251,13 +1270,12 @@ zeebe_ops:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m" 
+  limits:
+    memory: "384M"
+    cpu: "300m"
+  requests:
+    memory: "256M"
+    cpu: "150m"
 # Enabling this will publicly expose your zeebe_ops instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
@@ -1282,11 +1300,11 @@ zeebe_ops:
       privileged: false
     resources:    
       limits:
-        memory: "512M"
-        cpu: "500m"
+        memory: "384M"
+        cpu: "100m"
       requests:
-        memory: "512M"
-        cpu: "100m"    
+        memory: "384M"
+        cpu: "100m"
 # Allows you to add any config files in /usr/share/
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
@@ -1352,7 +1370,7 @@ importer_es:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1380,13 +1398,12 @@ importer_es:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"  
+  limits:
+    memory: "512M"
+    cpu: "400m"
+  requests:
+    memory: "512M"
+    cpu: "100m"
   javaToolOptions: "-Xmx256M"
   deployment:
     annotations: {}
@@ -1400,11 +1417,15 @@ mockpayment:
   mockFailure:
     percentage: "0"
   limits:
-    memory: "512M"
-    cpu: "500m"
+    memory: "384M"
+    cpu: "250m"
   requests:
     memory: "256M"
-    cpu: "100m"
+    cpu: "150m"
+  livenessProbe:
+    initialDelaySeconds: 180
+  readinessProbe:
+    initialDelaySeconds: 180
   deployment:
     annotations: {}
 
@@ -1412,7 +1433,6 @@ mockpayment:
 kafka:
   enabled: true
   fullnameOverride: kafka
-
   provisioning:
     enabled: true
     topics:
@@ -1422,7 +1442,10 @@ kafka:
 
   controller:
     replicaCount: 1
-
+    persistence:
+      size: "4Gi"
+    readinessProbe:
+      initialDelaySeconds: 5
   listeners:
     client:
       protocol: PLAINTEXT
@@ -1475,7 +1498,7 @@ importer_rdbms:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1503,13 +1526,12 @@ importer_rdbms:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"      
+  limits:
+    memory: "384M"
+    cpu: "250m"
+  requests:
+    memory: "256M"
+    cpu: "150m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1528,7 +1550,7 @@ importer_rdbms:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "200m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1593,7 +1615,7 @@ connector_bulk:
     httpGet:
       path: /actuator/health/readiness
       port: 9191
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -1621,13 +1643,12 @@ connector_bulk:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
 # Enabling this will publicly expose your connector_bulk instance.
@@ -1653,7 +1674,7 @@ connector_bulk:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"
@@ -1691,13 +1712,12 @@ ph_ee_connector_gsma:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"  
+  limits:
+    memory: "256M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   deployment:
     annotations: {}
     affinity: {}
@@ -1713,13 +1733,6 @@ ph_ee_connector_gsma:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
@@ -1790,7 +1803,7 @@ ph-ee-connector_slcb:
   resources:    
     limits:
       memory: "512M"
-      cpu: "500m"
+      cpu: "150m"
     requests:
       memory: "512M"
       cpu: "100m"          
@@ -1812,7 +1825,7 @@ ph-ee-connector_slcb:
     resources:    
       limits:
         memory: "512M"
-        cpu: "500m"
+        cpu: "150m"
       requests:
         memory: "512M"
         cpu: "100m"    
@@ -1825,6 +1838,12 @@ ph-ee-connector:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  limits:
+    cpu: "250m"
+    memory: "384M"
+  requests:
+    cpu: "150m"
+    memory: "256M"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:5000"
   ingress:
@@ -1854,7 +1873,7 @@ mock_oracle:
     targetport: 4100
   limits:
     memory: "512M"
-    cpu: "500m"
+    cpu: "150m"
   requests:
     memory: "512M"
     cpu: "100m"
@@ -1904,11 +1923,11 @@ integration_test:
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
-    cpu: "500m"
-    memory: "3Gi"
+    cpu: "800m"
+    memory: "1.2Gi"
   requests:
-    cpu: "100m"
-    memory: "2Gi"
+    cpu: "250m"
+    memory: "256Mi"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
@@ -1939,8 +1958,20 @@ integration_test:
 
 redis:
   enabled: true
+  master:
+    resources:
+      limits:
+        cpu: "200m"
+        memory: "256M"
+      requests:
+        cpu: "100m"
+        memory: "100M"
+    persistence:
+      size: "3Gi"
+    readinessProbe:
+      initialDelaySeconds: 180
   replica:
-    replicaCount: 1
+    replicaCount: 0
 volumeClaimTemplate:
     storageClassName: "gp2"
 
@@ -2030,6 +2061,12 @@ vouchers:
   paymentadvice: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
+  limits:
+    cpu: "250m"
+    memory: "512M"
+  requests:
+    cpu: "150m"
+    memory: "256M"
   ingress:
     enabled: true
     annotations:
@@ -2070,6 +2107,10 @@ vouchers:
     hostname: "http://ph-ee-operations-app:80"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
+  readinessProbe:
+    initialDelaySeconds: 180
+  livenessProbe:
+    initialDelaySeconds: 180
 
 billPay:
   enabled: false
@@ -2094,7 +2135,7 @@ billPay:
       path: /actuator/health/readiness
       port: 8080
       scheme: HTTPS
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -2117,13 +2158,12 @@ billPay:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+  limits:
+    memory: "384M"
+    cpu: "250m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
@@ -2164,7 +2204,7 @@ crm:
       path: /actuator/health/readiness
       port: 8080
       scheme: HTTPS
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -2187,13 +2227,13 @@ crm:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"
+
+  limits:
+    memory: "384M"
+    cpu: "150m"
+  requests:
+    memory: "256M"
+    cpu: "100m"
   service:
     annotations: {}
   # Only enable this if you have security enabled on your cluster
@@ -2219,11 +2259,11 @@ minio:
   fullnameOverride: "minio"
   resources:
     requests:
-      memory: 256Mi
+      memory: 150Mi
   replicas: 1
   persistence:
     enabled: true
-    size: 10Gi
+    size: 512Mi
   mode: standalone
   rootUser: root
   rootPassword: password
@@ -2233,3 +2273,5 @@ minio:
 
 post_installation_job:
   enabled: false
+
+

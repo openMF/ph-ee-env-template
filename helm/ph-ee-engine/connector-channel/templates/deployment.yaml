@@ -29,6 +29,7 @@ spec:
         - name: check-redis-ready
           image: busybox:latest
           command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-redis-master 6379; do echo "Waiting for redis-master service"; sleep 2; done;' ]
+
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-channel

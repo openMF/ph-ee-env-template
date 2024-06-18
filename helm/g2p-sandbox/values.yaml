@@ -66,19 +66,12 @@ ph-ee-engine:
     # Shrink default JVM heap.
     esJavaOpts: "-Xmx512m -Xms512m"
     # Allocate smaller chunks of memory per pod.
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "1024M"
-      limits:
-        cpu: "1000m"
-        memory: "1024M"
     volumeClaimTemplate:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "gp2"
       resources:
         requests:
-          storage: 10Gi
+          storage: 5Gi
 
   kibana:
     enabled: true
@@ -189,8 +182,6 @@ ph-ee-engine:
 
   mockpayment:
     enabled: true 
-    limits:
-      memory: "768M"
     ingress:
         enabled: false
         hosts:
@@ -305,12 +296,6 @@ ph-ee-engine:
     enabled: true
     image: docker.io/openmf/ph-ee-connector-gsma:latest
     SPRING_PROFILES_ACTIVE: "bb"
-    limits:
-      cpu: "500m"
-      memory: "512M"
-    requests:
-      cpu: "100m"
-      memory: "256M"
     deployment:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
@@ -578,9 +563,18 @@ ph-ee-engine:
       region: "ap-south-1"
       access_key: "aws-access-key"
       secret_key: "aws-secret-key"
-    hostname: "connector.sandbox.mifos.io"
+    hostname: "connector1.sandbox.mifos.io"
     ingress:
       enabled: true
+      hosts:
+        - host: connector1.sandbox.mifos.io
+          paths:
+            - path: "/"
+              backend:
+                service:
+                  name: ph-ee-connector
+                  port:
+                    number: 80
       annotations:
         nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
@@ -601,12 +595,19 @@ account_mapper:
   image: docker.io/openmf/ph-ee-identity-account-mapper:latest
   hostname: "identity-mapper.sandbox.mifos.io"
   LOGGING_LEVEL_ROOT: INFO
+  limits:
+    cpu: "400m"
+    memory: "512M"
+  requests:
+    cpu: "150m"
+    memory: "256M"
   livenessProbe:
     initialDelaySeconds: 20
     periodSeconds: 30
   readinessProbe:
     initialDelaySeconds: 180
     periodSeconds: 30
+
   ingress:
     enabled: false
     pathtype: Prefix

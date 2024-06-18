@@ -36,6 +36,7 @@ spec:
             httpGet:
               path: /oauth/token_key
               port: 5000
+            timeoutSeconds: 5
             initialDelaySeconds: {{.Values.readinessProbe.initialDelaySeconds}}
             periodSeconds: {{.Values.readinessProbe.periodSeconds}}
           resources:
