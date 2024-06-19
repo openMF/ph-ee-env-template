@@ -578,7 +578,7 @@ operations_app:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"         
+      cpu: "100m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -1900,7 +1900,7 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test:latest"
+  image: "docker.io/openmf/ph-ee-integration-test:test"
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
