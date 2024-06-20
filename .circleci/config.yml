@@ -447,10 +447,6 @@ jobs:
             echo helm chart install starts
             
             # Download ph-ee-g2p-sandbox-ci-chart and extract
-            echo "##########################################"
-            echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz"
-            echo "##################################################"
-            echo "$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz"
             curl -O $ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz && tar xvf $ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz
             rm -rf $ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz
             
@@ -596,13 +592,6 @@ workflows:
           context: 
             - AWS
             - Helm
-#      - build-g2p-sandbox-ci-chart:
-#          requires:
-#            - build-host-g2p-fyn-chart
-#          context:
-#            - AWS
-#            - Helm
-#            - slack
       - build-and-host-g2p-sandbox-security:
           requires:
             - build-host-g2p-fyn-chart
