@@ -1,0 +1,1293 @@
+{
+	"info": {
+		"_postman_id": "0d349262-6c70-40cb-af4e-60d12b38562a",
+		"name": "Fineract-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20222524"
+	},
+	"item": [
+		{
+			"name": "Create client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "saccosuites.dxluat.safaricom.co.ke"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": [],\n    \"familyMembers\": [],\n    \"officeId\": 1,\n    \"legalFormId\": 1,\n    \"firstname\": \"Elon\",\n    \"lastname\": \"musk\",\n    \"locale\": \"en\",\n    \"active\": false,\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"activationDate\": \"04 July 2023\",\n    \"submittedOnDate\": \"04 July 2022\",\n    \"savingsProductId\": null\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/clients",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activate client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.sandbox.fynarfin.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"activationDate\": \"04 July 2022\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/clients/{{clientId}}?command=activate",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"clients",
+						"{{clientId}}"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "activate"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create savings product",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setEnvironmentVariable(\"shortname\", \"S\"+_.random (0,99));",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"savingsProductId\", jsonData.resourceId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.sandbox.fynarfin.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyCode\": \"USD\",\n    \"digitsAfterDecimal\": 2,\n    \"interestCompoundingPeriodType\": 1,\n    \"interestPostingPeriodType\": 4,\n    \"interestCalculationType\": 1,\n    \"interestCalculationDaysInYearType\": 365,\n    \"accountingRule\": \"1\",\n    \"name\": \"{{$randomFullName}}\",\n    \"shortName\": \"{{shortname}}\",\n    \"inMultiplesOf\": \"1\",\n    \"nominalAnnualInterestRate\": 10,\n    \"paymentChannelToFundSourceMappings\": [],\n    \"feeToIncomeAccountMappings\": [],\n    \"penaltyToIncomeAccountMappings\": [],\n    \"charges\": [],\n    \"locale\": \"en\"\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/savingsproducts",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"savingsproducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create savings account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"savingsId\", jsonData.resourceId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.sandbox.fynarfin.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productId\": {{savingsProductId}},\n    \"nominalAnnualInterestRate\": 10,\n    \"withdrawalFeeForTransfers\": false,\n    \"allowOverdraft\": false,\n    \"lienAllowed\": false,\n    \"enforceMinRequiredBalance\": false,\n    \"withHoldTax\": false,\n    \"interestCompoundingPeriodType\": 1,\n    \"interestPostingPeriodType\": 4,\n    \"interestCalculationType\": 1,\n    \"interestCalculationDaysInYearType\": 365,\n    \"externalId\": \"{{$randomBankAccount}}\",\n    \"submittedOnDate\": \"05 July 2023\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"monthDayFormat\": \"dd MMM\",\n    \"charges\": [],\n    \"clientId\": \"1\"\n}"
+				},
+				"url": {
+					"raw": "https://fynams.sandbox.fynarfin.io/fineract-provider/api/v1/savingsaccounts",
+					"protocol": "https",
+					"host": [
+						"fynams",
+						"sandbox",
+						"fynarfin",
+						"io"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"savingsaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savings account approve",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.sandbox.fynarfin.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"approvedOnDate\": \"05 July 2023\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/savingsaccounts/{{savingsId}}?command=approve",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"savingsaccounts",
+						"{{savingsId}}"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "approve"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savings account activate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.sandbox.fynarfin.io"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"activatedOnDate\":\"05 July 2023\",\"locale\":\"en\",\"dateFormat\":\"dd MMMM yyyy\"}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/savingsaccounts/{{savingsId}}?command=activate",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"savingsaccounts",
+						"{{savingsId}}"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "activate"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Interop Identifier",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "fynams.sandbox.fynarfin.io",
+						"type": "text"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ=",
+						"type": "text"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "fineract-platform-tenantid",
+						"value": "{{TenantName}}",
+						"type": "text"
+					},
+					{
+						"key": "origin",
+						"value": "https://communityapp.sandbox.fynarfin.io",
+						"type": "text"
+					},
+					{
+						"key": "referer",
+						"value": "https://communityapp.sandbox.fynarfin.io/",
+						"type": "text"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
+						"type": "text"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0",
+						"type": "text"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\"",
+						"type": "text"
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty",
+						"type": "text"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors",
+						"type": "text"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site",
+						"type": "text"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountId\": \"1c9dd1aa-40bf-40f7-80db-cf127fbf28c3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fynams.sandbox.fynarfin.io/fineract-provider/api/v1/interoperation/parties/{{identifierType}}/{{identifier}}",
+					"protocol": "https",
+					"host": [
+						"fynams",
+						"sandbox",
+						"fynarfin",
+						"io"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"interoperation",
+						"parties",
+						"{{identifierType}}",
+						"{{identifier}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product loan",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setEnvironmentVariable(\"shortname\", \"S\"+_.random (0,99));",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"loanProductId\", jsonData.resourceId);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "Fineract-Platform-TenantId",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://65.0.42.17:8443"
+					},
+					{
+						"key": "Referer",
+						"value": "https://65.0.42.17:8443/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyCode\": \"USD\",\n    \"includeInBorrowerCycle\": \"false\",\n    \"useBorrowerCycle\": false,\n    \"digitsAfterDecimal\": \"2\",\n    \"inMultiplesOf\": \"1\",\n    \"repaymentFrequencyType\": 2,\n    \"interestRateFrequencyType\": 2,\n    \"amortizationType\": 1,\n    \"interestType\": 1,\n    \"interestCalculationPeriodType\": 1,\n    \"transactionProcessingStrategyId\": 6,\n    \"principalVariationsForBorrowerCycle\": [],\n    \"interestRateVariationsForBorrowerCycle\": [],\n    \"numberOfRepaymentVariationsForBorrowerCycle\": [],\n    \"multiDisburseLoan\": false,\n    \"accountingRule\": \"1\",\n    \"daysInYearType\": 1,\n    \"daysInMonthType\": 1,\n    \"isInterestRecalculationEnabled\": false,\n    \"preClosureInterestCalculationStrategy\": 1,\n    \"isLinkedToFloatingInterestRates\": false,\n    \"allowVariableInstallments\": false,\n    \"name\": \"{{$randomCompanyName}}\",\n    \"shortName\": \"{{shortname}}\",\n    \"installmentAmountInMultiplesOf\": \"2\",\n    \"principal\": \"10000\",\n    \"numberOfRepayments\": \"12\",\n    \"interestRatePerPeriod\": 19.9,\n    \"repaymentEvery\": \"1\",\n    \"paymentChannelToFundSourceMappings\": [],\n    \"feeToIncomeAccountMappings\": [],\n    \"penaltyToIncomeAccountMappings\": [],\n    \"charges\": [],\n    \"allowAttributeOverrides\": {\n        \"amortizationType\": true,\n        \"interestType\": true,\n        \"transactionProcessingStrategyId\": true,\n        \"interestCalculationPeriodType\": true,\n        \"inArrearsTolerance\": true,\n        \"repaymentEvery\": true,\n        \"graceOnPrincipalAndInterestPayment\": true,\n        \"graceOnArrearsAgeing\": true\n    },\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\",\n    \"rates\": [],\n    \"fixedPrincipalPercentagePerInstallment\": null\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/loanproducts",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"loanproducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"response includes results\", function(){",
+							"    pm.expect(pm.response.json()).to.include.keys(\"results\");",
+							"});",
+							"",
+							"let firstResponse = pm.response.json();",
+							"let loanId = firstResponse.loanId;",
+							"pm.environment.set(\"loanId\",loanId);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "Fineract-Platform-TenantId",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://65.0.42.17:8443"
+					},
+					{
+						"key": "Referer",
+						"value": "https://65.0.42.17:8443/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clientId\": \"1\",//*\n    \"productId\": 1,//*\n    \"disbursementData\": [],\n    \"principal\": 7800,\n    \"loanTermFrequency\": 12,\n    \"loanTermFrequencyType\": 2,\n    \"numberOfRepayments\": 12,\n    \"repaymentEvery\": 1,\n    \"repaymentFrequencyType\": 2,\n    \"interestRatePerPeriod\": 8.9,\n    \"amortizationType\": 1,\n    // \"isEqualAmortization\": false,\n    \"interestType\": 0,\n    \"interestCalculationPeriodType\": 0,\n    // \"allowPartialPeriodInterestCalcualtion\": false,\n    // \"graceOnArrearsAgeing\": 7,\n    \"transactionProcessingStrategyId\": \"2\",\n    // \"rates\": [],\n    // \"repaymentsStartingFromDate\": \"27 May 2023\",\n    \"locale\": \"en\",//*\n    \"dateFormat\": \"dd MMMM yyyy\",//*\n    \"loanType\": \"individual\",//*\n    \"expectedDisbursementDate\": \"19 June 2023\",//*\n    \"submittedOnDate\":  \"19 June 2023\" //*\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/loans",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve loan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "Fineract-Platform-TenantId",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://65.0.42.17:8443"
+					},
+					{
+						"key": "Referer",
+						"value": "https://65.0.42.17:8443/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"approvedOnDate\": \"19 June 2023\",\n    // \"approvedLoanAmount\": 7800,\n    // \"expectedDisbursementDate\": \"19 June 2023\",\n    // \"disbursementData\": [],\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/loans/{{loanId}}?command=approve",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"loans",
+						"{{loanId}}"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "approve"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "disburse loan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "Fineract-Platform-TenantId",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://65.0.42.17:8443"
+					},
+					{
+						"key": "Referer",
+						"value": "https://65.0.42.17:8443/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentTypeId\": 1,\n    // \"transactionAmount\": 7800,\n    \"actualDisbursementDate\": \"19 June 2023\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/loans/{{loanId}}?command=disburse",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"loans",
+						"{{loanId}}"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "disburse"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Loan repayment api",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "Fineract-Platform-TenantId",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://65.0.42.17:8443"
+					},
+					{
+						"key": "Referer",
+						"value": "https://65.0.42.17:8443/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentTypeId\": 1,\n    \"transactionAmount\": 684,\n    \"transactionDate\": \"19 June 2023\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+				},
+				"url": {
+					"raw": "{{fineractURL}}/fineract-provider/api/v1/loans/{{loanId}}/transactions?command=repayment",
+					"host": [
+						"{{fineractURL}}"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"loans",
+						"{{loanId}}",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "command",
+							"value": "repayment"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "interop loan repayment API",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bWlmb3M6cGFzc3dvcmQ="
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					},
+					{
+						"key": "Fineract-Platform-TenantId",
+						"value": "{{TenantName}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://65.0.42.17:8443"
+					},
+					{
+						"key": "Referer",
+						"value": "https://65.0.42.17:8443/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"transactionDate\": \"05 July 2023\",\n    \"paymentTypeId\": \"1\",\n    \"transactionAmount\": \"200\",\n    \"locale\": \"en\",\n    \"dateFormat\": \"dd MMMM yyyy\"\n}"
+				},
+				"url": {
+					"raw": "https://fynams.sandbox.fynarfin.io/fineract-provider/api/v1/interoperation/transactions/000000001/loanrepayment",
+					"protocol": "https",
+					"host": [
+						"fynams",
+						"sandbox",
+						"fynarfin",
+						"io"
+					],
+					"path": [
+						"fineract-provider",
+						"api",
+						"v1",
+						"interoperation",
+						"transactions",
+						"000000001",
+						"loanrepayment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "shortname",
+			"value": ""
+		}
+	]
+}
