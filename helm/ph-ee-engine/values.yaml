@@ -1412,6 +1412,7 @@ mockpayment:
 kafka:
   enabled: true
   fullnameOverride: kafka
+  port: 9099
 
   provisioning:
     enabled: true
