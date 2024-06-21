@@ -245,62 +245,63 @@ jobs:
 
             # # For remote access to minikube uncomment the following lines.
             # #---------------------minikube remote aceess start---------------------
-             sudo apt install nginx        
-             sudo touch /etc/nginx/conf.d/minikube.conf 
-             echo "create nginx conf"
-             sudo chmod 777 -R /etc/nginx/conf.d/
-             echo "changed access"
+            sudo apt install nginx        
+            sudo touch /etc/nginx/conf.d/minikube.conf 
+            echo "create nginx conf"
+            sudo chmod 777 -R /etc/nginx/conf.d/
+            echo "changed access"
 
-             sudo apt-get install apache2-utils -y
-             echo "apache2-utils installed"
-             htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+            sudo apt-get install apache2-utils -y
+            echo "apache2-utils installed"
+            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
 
-             sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
-             server {
-                 listen       8080;
-                 listen [::]:8080;
-                 server_name  localhost;
-                 access_log /home/circleci/project/nginx_access.log;
-                 auth_basic "Administrators Area";
-                 auth_basic_user_file /home/circleci/project/.htpasswd;    
+            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            server {
+                listen       8080;
+                listen [::]:8080;
+                server_name  localhost;
+                access_log /home/circleci/project/nginx_access.log;
+                auth_basic "Administrators Area";
+                auth_basic_user_file /home/circleci/project/.htpasswd;    
 
-                 location / {   
-                     proxy_pass https://$MINIKUBE_IP:8443;
-                     proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
-                     proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
-                 }
-             }
-             EOF
-             sudo service nginx restart || echo 'start nginx'
-             SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+                location / {   
+                    proxy_pass https://$MINIKUBE_IP:8443;
+                    proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+                    proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+                }
+            }
+            EOF
+            sudo service nginx restart || echo 'start nginx'
+            #SYSTEMD_LESS=FRXMK  systemctl status nginx.service
 
-             sleep 10
+            sleep 10
             
-             echo "test-nginx-proxy"
-             curl -u minikube:minikube http://localhost:8080
+            echo "test-nginx-proxy"
+            curl -u minikube:minikube http://localhost:8080
 
-             curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-             ngrok config add-authtoken $AUTH_TOKEN
-             echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-             ngrok http 8080 > /dev/null &
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            # ngrok config add-authtoken $AUTH_TOKEN
+            ngrok config add-authtoken 2Zo2HVFOaaiyCIQ6ICNzBtzkfCB_4MW1T7uMsNnXgJxra4ssi
+            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml 
+            ngrok http 8080 > /dev/null &
 
-             echo -n "Extracting ngrok public url ."
-             NGROK_PUBLIC_URL=""
-             while [ -z "$NGROK_PUBLIC_URL" ]; do
-               # Run 'curl' against ngrok API and extract public (using 'sed' command)
-               export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-                                         --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-                                         sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-               sleep 1
-               echo -n "."
-             done
-             echo ---------copy the below public_URL for NGrok----------
-             echo "https://$NGROK_PUBLIC_URL"
-             echo "https://$NGROK_PUBLIC_URL"
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+            # Run 'curl' against ngrok API and extract public (using 'sed' command)
+            export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                      --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                      sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+            sleep 1
+            echo -n "."
+            done
+            echo ---------copy the below public_URL for NGrok----------
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
 
-            echo "test ngrok "
-             curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-             echo "https://$NGROK_PUBLIC_URL"
+            #echo "test ngrok "
+            #curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
             
             # # ---------------------minikube remote aceess end---------------------
 
