@@ -4,7 +4,7 @@ orbs:
   helm: circleci/helm@2.0.1
   aws-eks: circleci/aws-eks@2.2.0
   kubernetes: circleci/kubernetes@1.3
-  fynarfin-orb: fynarfin/docker-image-availability-check-and-upgrade@1.0.1
+  fynarfin-orb: fynarfin/docker-image-availability-check-and-upgrade@1.0.2
 
 jobs:
   build-and-host-engine:
@@ -29,7 +29,7 @@ jobs:
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
-              echo Charts will save in https://fynarfin.io/images$JIRA_STORY_DIR
+              echo Charts will save in https://fynarfin.io/images/fynarfin$JIRA_STORY_DIR
             fi
             sed -i "5s/.*/version: 0.0.0-SNAPSHOT$JIRA_STORY/" helm/ph-ee-engine/Chart.yaml
             helm dep up helm/ph-ee-engine
@@ -63,13 +63,13 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
+            CHART_URL="https://fynarfin.io/images/fynarfin$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "10s@^ *repository:.*\$@  repository: $CHART_URL@" helm/g2p-sandbox/Chart.yaml
               sed -i "11s@^ *version:.*\$@  version: 0.0.0-SNAPSHOT$JIRA_STORY@" helm/g2p-sandbox/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-engine-0.0.0-SNAPSHOT"
+              CHART_URL="https://fynarfin.io/images/fynarfin/ph-ee-engine-0.0.0-SNAPSHOT"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
@@ -107,13 +107,13 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
+            CHART_URL="https://fynarfin.io/images/fynarfin$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "11s@^ *repository:.*\$@  repository: $CHART_URL@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
               sed -i "12s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0"
+              CHART_URL="https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-0.0.0"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "6s/.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
@@ -149,13 +149,13 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
+            CHART_URL="https://fynarfin.io/images/fynarfin$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "10s@^ *repository:.*\$@  repository: $CHART_URL@" helm/g2p-sandbox-security/Chart.yaml
               sed -i "11s@^ *version:.*\$@  version: 0.0.0-SNAPSHOT$JIRA_STORY@" helm/g2p-sandbox-security/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-engine-0.0.0-SNAPSHOT"
+              CHART_URL="https://fynarfin.io/images/fynarfin/ph-ee-engine-0.0.0-SNAPSHOT"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox-security/Chart.yaml
@@ -195,7 +195,7 @@ jobs:
         default: https://raw.githubusercontent.com/fynarfin/ph-ee-env-labs/develop/.circleci/services.txt
         type: string
       chart-base-url:
-        default: https://fynarfin.io/images
+        default: https://fynarfin.io/images/fynarfin
         type: string
       chart-name:
         default: ph-ee-g2psandbox
@@ -373,16 +373,16 @@ jobs:
             fi
             
             # Generating the chart url for deployment
-            # chart: "https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0/ph-ee-g2psandbox-0.0.0.tgz"
+            # chart: "https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-0.0.0/ph-ee-g2psandbox-0.0.0.tgz"
             ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
             
             CHART_URL="$ORB_PARAM_CHART"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               echo "chart used: < $CHART_URL >"
-              # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0"
+              # add-repo: "https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-0.0.0"
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY")
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0/ph-ee-g2psandbox-0.0.0.tgz"
+              CHART_URL="https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-0.0.0/ph-ee-g2psandbox-0.0.0.tgz"
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME-$ORB_CHART_VERSION")
               echo "chart used: < $CHART_URL >"
             fi
