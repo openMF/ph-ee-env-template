@@ -27,7 +27,7 @@ commands:
         default: https://raw.githubusercontent.com/fynarfin/ph-ee-env-labs/develop/.circleci/services.txt
         type: string
       chart-base-url:
-        default: https://fynarfin.io/images
+        default: https://fynarfin.io/images/fynarfin
         type: string
       chart-name:
         default: ph-ee-g2psandbox-fynarfin
@@ -79,7 +79,7 @@ commands:
             if [ "$CIRCLE_BRANCH" != "develop" ]; then
               
               PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/fynarfin/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi 
@@ -102,16 +102,16 @@ commands:
             fi
             
             # Generating the chart url for deployment
-            # chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+            # chart: "https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
             ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
             
             CHART_URL="$ORB_PARAM_CHART"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               echo "chart used: < $CHART_URL >"
-              # add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
+              # add-repo: "https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-fynarfin"
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
+              CHART_URL="https://fynarfin.io/images/fynarfin/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
               echo "chart used: < $CHART_URL >"
             fi
@@ -144,7 +144,7 @@ jobs:
         default: https://raw.githubusercontent.com/fynarfin/ph-ee-env-labs/develop/.circleci/services.txt
         type: string
       chart-base-url:
-        default: https://fynarfin.io/images/
+        default: https://fynarfin.io/images/fynarfin/
         type: string
       chart-name:
         default: ph-ee-g2psandbox-fynarfin
@@ -159,7 +159,7 @@ jobs:
           release-name: <<parameters.release-name>>
           cluster-name: <<parameters.cluster-name>>
           aws-region: <<parameters.aws-region>>
-          chart-base-url: https://fynarfin.io/images/
+          chart-base-url: https://fynarfin.io/images/fynarfin/
           chart-name: ph-ee-g2psandbox-fynarfin
           chart-version: 0.2.0
 
