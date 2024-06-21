@@ -45,6 +45,8 @@ It directly provides values.
           fieldPath: status.podIP
     - name: "CALLBACK_URL"
       value: "http://$(MY_POD_IP):53013"
+    - name: "EMAIL_URL"
+      value: "http://$(MY_POD_IP):3025"
     - name: "PAYBILL_MPESA_CONNECTOR_CONTACTPOINT"
       value: ""
     - name: "VOUCHER_MANAGEMENT_CONTACTPOINT"
