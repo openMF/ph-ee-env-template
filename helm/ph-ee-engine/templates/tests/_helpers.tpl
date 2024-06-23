@@ -52,7 +52,7 @@ It directly provides values.
     - name: "BILLPAY_CONTACTPOINT"
       value: "http://ph-ee-connector-bill-pay:8080"
     - name: "awaitly_maxWaitTime"
-      value: "30"
+      value: "60"
     - name: "GLOBAL_WAIT_TIME_MS"
       value: "5000"
 {{- end }}
