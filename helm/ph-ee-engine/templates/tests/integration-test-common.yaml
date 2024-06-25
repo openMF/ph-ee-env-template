@@ -1,26 +1,25 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: g2p-sandbox-test-gov
+  name: g2p-sandbox-test-common
   labels:
-    app: "integration-test-gov"
+    app: "integration-test-common"
   annotations:
     "helm.sh/hook": test-success
 spec:
   containers:
-    - name: g2p-sandbox-test-gov
-      image: "{{ .Values.integration_test.image}}"
-      imagePullPolicy: "Always"
-      command: [ "/bin/bash" , "-c" ]
-      args:
-        # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
-        - ./gradlew test -Dcucumber.filter.tags="@common and not @ext" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
-      {{- include "inttest.env" . | nindent 4 }}
-      resources:
-        limits:
-          cpu: "{{.Values.integration_test.limits.cpu}}"
-          memory: "{{.Values.integration_test.limits.memory}}"
-        requests:
-          cpu: "{{.Values.integration_test.requests.cpu}}"
-          memory: "{{.Values.integration_test.requests.memory}}"
+  - name: g2p-sandbox-test-common
+    image: "{{ .Values.integration_test.image}}"
+    imagePullPolicy: "Always"
+    command: [ "/bin/bash" , "-c" ]
+    args:
+    - ./gradlew test -Dcucumber.filter.tags="@common" ; echo 'Test complete' ; sleep 1500 ; echo 'pod terminate'
+    {{- include "inttest.env" . | nindent 4 }}
+    resources:
+      limits:
+        cpu: "{{.Values.integration_test.limits.cpu}}"
+        memory: "{{.Values.integration_test.limits.memory}}"
+      requests:
+        cpu: "{{.Values.integration_test.requests.cpu}}"
+        memory: "{{.Values.integration_test.requests.memory}}"
   restartPolicy: Never
