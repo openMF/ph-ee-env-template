@@ -500,8 +500,10 @@ jobs:
       - run:
           name: Run Helm Tests
           command: |
+            helm test ph-ee-kenya --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
             helm test ph-ee-kenya --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
             helm test ph-ee-kenya --filter name=g2p-sandbox-test-common --namespace paymenthub || echo test
+
 
       - run:
           name: Fetch Integration Test Report
@@ -533,9 +535,36 @@ jobs:
                 echo " " >> all_pod_logs.log
             done
             
-            echo "Fetch Integration Test Report for Common"
-            echo "Finish common... $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-common)"
-            echo "Finish... $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams)"
+            echo "Fetch Integration Test Report for gov"
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file 
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml"
+            done
+            echo "File is no longer empty, processing..."
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
+            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
+           
+            mkdir -p integration_report_final
+            cp integration_report/test-report/cucumber_gov.xml integration_report_final/ || echo ""
+            cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
+
+            ls integration_report/test-report/
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
+                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
+                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+            done
+            
+            echo "Fetch Integration Test Report for common"
             kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-common |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
             # Specify the path to the downloaded file 
             downloaded_file="integration_report/test-report/cucumber.xml"
@@ -549,7 +578,7 @@ jobs:
             echo "File is no longer empty, processing..."
             mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_common.xml
             mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_common
-           
+            
             mkdir -p integration_report_final
             cp integration_report/test-report/cucumber_common.xml integration_report_final/ || echo ""
             cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
@@ -563,6 +592,7 @@ jobs:
                 echo " " >> all_pod_logs.log
                 echo " " >> all_pod_logs.log
             done
+            
             mv all_pod_logs.log integration_report/test-report/reports/tests/
 
       - store_test_results:
