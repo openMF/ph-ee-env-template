@@ -611,4 +611,4 @@ workflows:
             - slack
             - Ngrok
           requires:
-            - build-host-g2p-fyn-chart
+            - build-g2p-sandbox-ci-chart
