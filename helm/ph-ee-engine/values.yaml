@@ -578,7 +578,7 @@ operations_app:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"         
+      cpu: "100m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
