@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "3f9bad4a-e0b2-4c48-ab5d-ac2ebd44b822",
+		"_postman_id": "d1034a3a-efa8-4115-a160-3f58f8ccec98",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30685438"
+		"_exporter_id": "21253421"
 	},
 	"item": [
 		{
@@ -3757,13 +3757,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3823,13 +3823,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3862,13 +3862,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3936,13 +3936,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3972,13 +3972,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -42970,6 +42970,11 @@
 								"key": "Platform-TenantId",
 								"value": "{{PlatformTenant}}",
 								"type": "text"
+							},
+							{
+								"key": "X-PayeeDFSP-ID",
+								"value": "{{payeeDFSPId}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -43200,13 +43205,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -43566,7 +43571,8 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -43601,6 +43607,11 @@
 							{
 								"key": "type",
 								"value": "csv",
+								"type": "text"
+							},
+							{
+								"key": "X-PayeeDFSP-ID",
+								"value": "{{payeeDFSPId}}",
 								"type": "text"
 							}
 						],
@@ -49031,8 +49042,8 @@
 											},
 											"status": "Accepted",
 											"code": 202,
-											"_postman_previewlanguage": null,
-											"header": null,
+											"_postman_previewlanguage": "Text",
+											"header": [],
 											"cookie": [],
 											"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345678-6897-6798-6798-098765432134\"\n}"
 										}
