@@ -1,0 +1,15 @@
+apiVersion: v2
+description: PaymentHub EE Barebone Edition
+type: application
+name: ph-ee-g2psandbox
+version: 1.5.0
+appVersion: 1.5.0
+
+dependencies:
+- name: ph-ee-engine
+  repository: file://../ph-ee-engine
+  version: 1.13.0-SNAPSHOT
+
+- name: account_mapper
+  version: 1.0.0
+  repository: "file://../identity-account-mapper/account-mapper"
