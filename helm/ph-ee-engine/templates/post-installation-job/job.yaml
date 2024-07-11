@@ -46,7 +46,7 @@ spec:
           chmod +x ./kubectl
           mv ./kubectl /usr/local/bin/kubectl
           kubectl version
-
+          echo "---------------- kubectl installed -----------------"
           # Install Docker
           apt-get install sysvinit-utils
           apt-get --assume-yes install docker-ce docker-ce-cli containerd.io
@@ -56,8 +56,8 @@ spec:
 
           apt-get --assume-yes install git 
           apt-get --assume-yes install make
-          
-          git clone https://github.com/openMF/ph-ee-env-labs.git
+
+          git clone --depth 1 --branch v1.6.2 https://github.com/openMF/ph-ee-env-labs.git
           cd ph-ee-env-labs/helm/es-secret/
           make secrets || echo "elastic-secrets" already exists
           
