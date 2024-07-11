@@ -1,5 +1,3 @@
-{{- if .Values.enabled -}}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,7 +5,7 @@ metadata:
   labels:
     app: ph-ee-connector-notifications
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.replicas | default 1 }}
   selector:
     matchLabels:
       app: ph-ee-connector-notifications
@@ -15,59 +13,58 @@ spec:
     metadata:
       labels:
         app: ph-ee-connector-notifications
+      {{- with .Values.deployment.annotations }}
       annotations:
-{{- if .Values.deployment.annotations }}
-{{ toYaml .Values.deployment.annotations | indent 8 }}
-{{- end }}
-    spec:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
-        - name: "ph-ee-connector-notifications"
-          image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
-          resources:
-            limits:
-              memory: "{{ .Values.limits.memory }}"
-              cpu: "{{ .Values.limits.cpu }}"
-            requests:
-              memory: "{{ .Values.requests.memory }}"
-              cpu: "{{ .Values.requests.cpu }}"
-          ports:
-           - containerPort: 5000
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /actuator/health/readiness
-              port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
-          env:
-            - name: "SPRING_PROFILES_ACTIVE"
-              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
-            - name: "ZEEBE_BROKER_CONTACTPOINT"
-              value: "{{ .Release.Name }}-zeebe-gateway:26500"
-            - name: "HOSTCONFIG_HOST"
-              value: "{{ .Values.hostconfig.host }}"
-            - name: "HOSTCONFIG_PORT"
-              value: "{{ .Values.hostconfig.port }}"
-            - name: "MESSAGEGATEWAYCONFIG_HOST"
-              value: "{{ .Values.MESSAGEGATEWAYCONFIG_HOST }}"
-            - name: "NOTIFICATION_LOCAL_HOST"
-              value: "{{ .Values.NOTIFICATION_LOCAL_HOST }}"
-            - name: "NOTIFICATION_SUCCESS_ENABLED"
-              value: "{{ .Values.NOTIFICATION_SUCCESS_ENABLED }}"
-            - name: "NOTIFICATION_FAILURE_ENABLED"
-              value: "{{ .Values.NOTIFICATION_FAILURE_ENABLED }}"
-            - name: "LOGGING_LEVEL_ROOT"
-              value:  "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
-{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
-{{- end }}        
-          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
-          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
-
-{{- end }}
+      - name: "ph-ee-connector-notifications"
+        image: "{{ .Values.image }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
+        {{- if .Values.resources }}
+        {{- include "common.resourceTemplate" . | nindent 8 }}
+        {{- end }}
+        ports:
+          - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 30
+        env:
+          - name: "SPRING_PROFILES_ACTIVE"
+            value: "{{ .Values.springProfilesActive | default "" }}"
+          - name: "ZEEBE_BROKER_CONTACTPOINT"
+            value: "{{ .Release.Name }}-zeebe-gateway:26500"
+          - name: "HOSTCONFIG_HOST"
+            value: "{{ .Values.hostconfig.host | default "" }}"
+          - name: "HOSTCONFIG_PORT"
+            value: "{{ .Values.hostconfig.port | default "" }}"
+          - name: "MESSAGEGATEWAYCONFIG_HOST"
+            value: "{{ .Values.messageGatewayConfigHost | default "" }}"
+          - name: "NOTIFICATION_LOCAL_HOST"
+            value: "{{ .Values.notificationLocalHost | default "" }}"
+          - name: "NOTIFICATION_SUCCESS_ENABLED"
+            value: "{{ .Values.notificationSuccessEnabled | default "false" }}"
+          - name: "NOTIFICATION_FAILURE_ENABLED"
+            value: "{{ .Values.notificationFailureEnabled | default "false" }}"
+          - name: "LOGGING_LEVEL_ROOT"
+            value: "{{ .Values.loggingLevelRoot | default "INFO" }}"
+        {{- if .Values.extraEnvs }}
+          {{- toYaml .Values.extraEnvs | nindent 12 }}
+        {{- end }}
+        {{- if .Values.envFrom }}
+        envFrom: 
+          {{- toYaml .Values.envFrom | nindent 12 }}
+        {{- end }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: 
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- end }}

@@ -90,7 +90,7 @@ camunda-platform:
           - name: exporters
             mountPath: /exporters/
     volumeClaimTemplate:
-      storageClassName: "gp2"
+      storageClassName: "local-path"
 
     image:
       repository: camunda/zeebe
@@ -339,7 +339,7 @@ operationsmysql:
       GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
       GRANT ALL PRIVILEGES ON `voucher_management`.* TO 'mifos';
   volumeClaimTemplate:
-    storageClassName: "gp2"
+    storageClassName: "local-path"
 
 ph_ee_connector_ams_mifos:
   enabled: false
@@ -1110,10 +1110,10 @@ messagegateway:
 notifications:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-notifications:v1.4.0
-  imagePullPolicy: "Always"
+  image: "docker.io/openmf/ph-ee-notifications:v1.4.0"
+  imagePullPolicy: IfNotPresent
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
-  NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
+  NOTIFICATION_LOCAL_HOST: "fred"
   NOTIFICATION_SUCCESS_ENABLED: "false"
   NOTIFICATION_FAILURE_ENABLED: "true"
   hostconfig:
@@ -1159,13 +1159,7 @@ notifications:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
-    requests:
-      memory: "512M"
-      cpu: "100m"  
+  
 # Enabling this will publicly expose your notifications instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
@@ -1188,13 +1182,7 @@ notifications:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512"
-        cpu: "100m"    
+  
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-notifications.yml for deployment  
     # ph-ee-connector-notificationsConfig: {}
@@ -1939,7 +1927,7 @@ redis:
   replica:
     replicaCount: 1
 volumeClaimTemplate:
-    storageClassName: "gp2"
+    storageClassName: "local-path"
 
 kong:
   enabled: false

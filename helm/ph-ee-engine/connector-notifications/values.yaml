@@ -8,22 +8,15 @@ configmap:
   apiversion: "v1"
 
 enabled: true
-image: ""
-imageTag: latest
 SPRING_PROFILES_ACTIVE: ""
 MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
 NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
 NOTIFICATION_SUCCESS_ENABLED: "false"
 NOTIFICATION_FAILURE_ENABLED: "false"
+imagePullPolicy: "ifNotPresent"
 hostconfig:
   host: "message-gateway"
   port: 80
-limits:
-  cpu: "500m"
-  memory: "512M"
-requests:
-  cpu: "100m"
-  memory: "256M"  
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:

@@ -34,9 +34,9 @@ ph-ee-engine:
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx      
+        kubernetes.io/ingress.class: nginx-ext     
       path: /
-      host: operate.sandbox.mifos.io
+      host: operate.local
       tls:
         enabled: true
 
@@ -64,21 +64,21 @@ ph-ee-engine:
           port: 9200
         initialDelaySeconds: 30
     # Shrink default JVM heap.
-    esJavaOpts: "-Xmx512m -Xms512m"
+    esJavaOpts: "-Xmx128m -Xms512m"
     # Allocate smaller chunks of memory per pod.
     resources:
       requests:
         cpu: "100m"
-        memory: "1024M"
+        memory: "128M"
       limits:
         cpu: "1000m"
-        memory: "1024M"
+        memory: "256M"
     volumeClaimTemplate:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "gp2"
+      storageClassName: "local-path"
       resources:
         requests:
-          storage: 10Gi
+          storage: 1Gi
 
   kibana:
     enabled: true
@@ -89,13 +89,14 @@ ph-ee-engine:
     protocol: http
     ingress:
       enabled: false
-      className: "nginx"
+      className: "nginx-ext"
       pathtype: "Prefix"
-      annotations: {}
-        # kubernetes.io/ingress.class: nginx
-        # kubernetes.io/tls-acme: "true"       
+      annotations: {
+        kubernetes.io/ingress.class: nginx-ext
+        # kubernetes.io/tls-acme: "true" 
+      }      
       hosts:
-        - host: analytics.sandbox.mifos.io
+        - host: analytics.local
           paths:
             - path: /
       #tls: []
@@ -139,18 +140,18 @@ ph-ee-engine:
     enabled: true
     SPRING_PROFILES_ACTIVE: "fin12,bb"
     ams_local_enabled: true
-    ams_local_interop_host: "https://fynams.sandbox.mifos.io/"
-    ams_local_account_host: "https://fynams.sandbox.mifos.io/"
-    ams_local_customer_host: "https://fynams.sandbox.mifos.io/"
-    ams_local_auth_host: "https://fynams.sandbox.mifos.io/"
+    ams_local_interop_host: "https://fynams.local/"
+    ams_local_account_host: "https://fynams.local/"
+    ams_local_customer_host: "https://fynams.local/"
+    ams_local_auth_host: "https://fynams.local/"
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: nginx-ext
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ams-mifos.sandbox.mifos.io          
+        - host: ams-mifos.local          
           paths: 
           - path: "/"
             backend:
@@ -165,15 +166,15 @@ ph-ee-engine:
   ph_ee_connector_mojaloop:
     enabled: true
     SPRING_PROFILES_ACTIVE: "bb"
-    hostname: "mojaloop.sandbox.mifos.io"
+    hostname: "mojaloop.local"
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx      
+        kubernetes.io/ingress.class: nginx-ext     
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: mojaloop.sandbox.mifos.io          
+        - host: mojaloop.local          
           paths: 
           - path: "/"
             backend:
@@ -203,8 +204,8 @@ ph-ee-engine:
 
   channel:
     enabled: true
-    hostname: "channel.sandbox.mifos.io"
-    stub_hostname: "channel-gsma.sandbox.mifos.io"
+    hostname: "channel.local"
+    stub_hostname: "channel-gsma.local"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     tenantPrimary:
       clientId: "mifos"
@@ -223,7 +224,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: channel.sandbox.mifos.io          
+        - host: channel.local          
           paths: 
           - path: "/"
             backend:
@@ -231,7 +232,7 @@ ph-ee-engine:
                 name: "ph-ee-connector-channel"
                 port:
                   number: 8443
-        - host: channel-gsma.sandbox.mifos.io          
+        - host: channel-gsma.local          
           paths:          
           - path: "/"
             backend:
@@ -246,7 +247,7 @@ ph-ee-engine:
 
   operations_app:
     enabled: true
-    hostname: "ops-bk.sandbox.mifos.io"
+    hostname: "ops-bk.local"
     datasource:
       username: "mifos"
       password: "password"
@@ -256,7 +257,7 @@ ph-ee-engine:
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx 
+        kubernetes.io/ingress.class: nginx-ext
         nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
         nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
         nginx.ingress.kubernetes.io/cors-allow-origin: '*'
@@ -264,7 +265,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops-bk.sandbox.mifos.io          
+        - host: ops-bk.local          
           paths: 
           - path: "/"
             backend:
@@ -278,13 +279,13 @@ ph-ee-engine:
 
   operations_web:
     enabled: true
-    hostname: "ops.sandbox.mifos.io"
+    hostname: "ops.local"
     ingress:
       enabled: false
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops.sandbox.mifos.io          
+        - host: ops.local          
           paths: 
           - path: "/"
             backend:
@@ -294,7 +295,7 @@ ph-ee-engine:
                   number: 4200
 
   identity:
-    hostname: "ops-bk.sandbox.mifos.io"
+    hostname: "ops-bk.local"
 
   ph_ee_connector_gsma:
     enabled: true
@@ -326,19 +327,20 @@ ph-ee-engine:
     imagePullPolicy: "Always"
     SPRING_PROFILES_ACTIVE: "bb"
     LOGGING_LEVEL_ROOT: "INFO"
-    MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
+    MESSAGEGATEWAYCONFIG_HOST: "message-gateway-1"
     NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
     NOTIFICATION_SUCCESS_ENABLED: "false"
     NOTIFICATION_FAILURE_ENABLED: "true"   
-    hostname: "notifications.sandbox.mifos.io"
+    hostname: "notifications.local"
+    includeResources: false
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx  
+        kubernetes.io/ingress.class: nginx-ext  
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: notifications.sandbox.mifos.io         
+        - host: notifications.local         
           paths: 
           - path: "/"
             backend:
@@ -353,7 +355,7 @@ ph-ee-engine:
   connector_bulk:
     enabled: true
     tenant: "rhino,gorilla"
-    hostname: bulk-connector.sandbox.mifos.io
+    hostname: bulk-connector.local
     operations_app:
       contactpoint: "http://ph-ee-operations-app:80"
       endpoints:
@@ -367,11 +369,11 @@ ph-ee-engine:
       enabled: false
       annotations:
         konghq.com/plugins: cors
-        kubernetes.io/ingress.class: kong
+        kubernetes.io/ingress.class: nginx-ext
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: bulk-connector.sandbox.mifos.io     
+        - host: bulk-connector.local     
           paths: 
           - path: "/"
             backend:
@@ -385,15 +387,15 @@ ph-ee-engine:
         
   zeebe_ops:
     enabled: true
-    hostname: "zeebeops.sandbox.mifos.io"
+    hostname: "zeebeops.local"
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx  
+        kubernetes.io/ingress.class: nginx-ext  
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: zeebeops.sandbox.mifos.io          
+        - host: zeebeops.local          
           paths: 
           - path: "/"
             backend:
@@ -411,15 +413,15 @@ ph-ee-engine:
       value:
         api_key: "<api_key>"
         project_id: "<project_id>"
-    hostname: "messagegateway.sandbox.mifos.io"
+    hostname: "messagegateway.local"
     ingress:
       enabled: false
       annotations: 
-        kubernetes.io/ingress.class: nginx  
+        kubernetes.io/ingress.class: nginx-ext 
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: messagegateway.sandbox.mifos.io       
+        - host: messagegateway.local       
           paths: 
           - path: "/"
             backend:
@@ -446,9 +448,9 @@ ph-ee-engine:
     enabled: false
     ingress:
       enabled: false
-      ingressClassName: "kong"
+      ingressClassName: "nginx-ext"
       rules:
-        - host: 'keycloak.sandbox.mifos.io'
+        - host: 'keycloak.local'
           paths:
           - path: /
             pathType: Prefix
@@ -484,7 +486,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: vouchers.sandbox.mifos.io
+        - host: vouchers.local
           paths:
             - path: "/"
               backend:
@@ -502,8 +504,8 @@ ph-ee-engine:
 
   billPay:
     enabled: true
-    hostname: "bill-pay.sandbox.mifos.io"
-    stub_hostname: "bill-pay.sandbox.mifos.io"
+    hostname: "bill-pay.local"
+    stub_hostname: "bill-pay.local"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     ingress:
       enabled: false
@@ -515,7 +517,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: bill-pay.sandbox.mifos.io
+        - host: bill-pay.local
           paths:
             - path: "/"
               backend:
@@ -529,8 +531,8 @@ ph-ee-engine:
 
   crm:
     enabled: true
-    hostname: "crm.sandbox.mifos.io"
-    stub_hostname: "crm.sandbox.mifos.io"
+    hostname: "crm.local"
+    stub_hostname: "crm.local"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     ingress:
       enabled: false
@@ -542,7 +544,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: crm.sandbox.mifos.io
+        - host: crm.local
           paths:
             - path: "/"
               backend:
@@ -560,7 +562,7 @@ ph-ee-engine:
       region: "ap-south-1"
       access_key: "aws-access-key"
       secret_key: "aws-secret-key"
-    hostname: "connector.sandbox.mifos.io"
+    hostname: "connector.local"
     ingress:
       enabled: true
       annotations:
@@ -581,7 +583,7 @@ ph-ee-engine:
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
-  hostname: "identity-mapper.sandbox.mifos.io"
+  hostname: "identity-mapper.local"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
     enabled: false
@@ -595,7 +597,7 @@ account_mapper:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: identity-mapper.sandbox.mifos.io
+      - host: identity-mapper.local
         paths:
         - path: "/"
           backend:
