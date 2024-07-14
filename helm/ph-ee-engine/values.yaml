@@ -1,17 +1,17 @@
-ingress:
-  apiversion: "networking.k8s.io/v1"
+# ingress:
+#   apiversion: "networking.k8s.io/v1"
 
-deployment:
-  apiversion: "apps/v1"
+# deployment:
+#   apiversion: "apps/v1"
 
-service:
-  apiversion: "v1"
+# service:
+#   apiversion: "v1"
 
-secret:
-  apiversion: "v1"
+# secret:
+#   apiversion: "v1"
 
-configmap:
-  apiversion: "v1"  
+# configmap:
+#   apiversion: "v1"  
 
 global:
   bucket_name: paymenthub-ee
@@ -1108,33 +1108,8 @@ messagegateway:
     #   message-gateway.yml: |
 
 notifications:
-  enabled: true
-  replicas: 1
-  image: "docker.io/openmf/ph-ee-notifications:v1.4.0"
-  imagePullPolicy: IfNotPresent
-  MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
-  NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
-  NOTIFICATION_SUCCESS_ENABLED: "false"
   NOTIFICATION_FAILURE_ENABLED: "true"
-  hostconfig:
-    host: "message-gateway"
-    port: 80
-  livenessProbe:
-    httpGet:
-      path: /actuator/health/liveness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5 
-  readinessProbe:
-    httpGet:
-      path: /actuator/health/readiness
-      port: 9191
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-    timeoutSeconds: 5
+
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use

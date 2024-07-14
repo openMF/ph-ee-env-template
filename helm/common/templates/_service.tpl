@@ -1,26 +1,8 @@
 
-{{- define "common.resourceTemplate" -}}
-resources:
-  {{- toYaml .Values.resources | nindent 2 }}
-{{- end -}}
-
-
-{{- define "common.labels" -}}
-app.kubernetes.io/name: {{ include "common.names.fullname" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/version: {{ .Chart.AppVersion }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
-
-{{- define "common.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "common.names.fullname" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end -}}
-
 {{/*
-Generic service template
+Generic service template for PaymentHub EE 
 */}}
-{{- define "common.service" -}}
+{{- define "common.service.service" -}}
 {{- $fullName := include "common.names.fullname" . -}}
 apiVersion: {{ .Values.service.apiversion | default "v1" }}
 kind: Service
@@ -44,7 +26,7 @@ spec:
       targetPort: {{ .Values.service.actuatorPort.targetPort | default 8080 }}
     {{- end }}
   selector:
-    app: {{ .Values.service.selectorApp | default $fullName }}
+    app: {{ include "common.names.fullname" . | default .Values.service.selectorApp  }}
   sessionAffinity: {{ .Values.service.sessionAffinity | default "None" }}
   type: {{ .Values.service.type | default "ClusterIP" }}
 {{- end }}

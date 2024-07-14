@@ -1,22 +1,3 @@
 {{- if .Values.enabled -}}
-apiVersion: {{ .Values.service.apiversion }}
-kind: Service
-metadata:
-  labels:
-    app: ph-ee-connector-notifications
-  name: ph-ee-connector-notifications
-spec:
-  ports:
-    - name: port
-      port: 80
-      protocol: TCP
-      targetPort: 5000
-    - name: actuator
-      protocol: TCP
-      port: 8080   # Port where Actuator endpoints are exposed
-      targetPort: 8080
-  selector:
-    app: ph-ee-connector-notifications
-  sessionAffinity: None
-  type: ClusterIP
-{{- end }}  
+{{- include "common.service" . -}}
+{{- end }}
