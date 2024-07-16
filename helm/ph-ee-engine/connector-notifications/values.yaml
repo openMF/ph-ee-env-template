@@ -31,15 +31,28 @@ service:
 deployment:
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+
 ingress:
-  enabled: false
+  enabled: true
+  className: nginx-ext
   annotations: {}
-  # kubernetes.io/ingress.class: "nginx"
   pathtype: ImplementationSpecific
   hosts:
-    - host: "" 
+    - host: "example.local" 
       paths:
         - path: /
+          backend: 
+            service: 
+              name: ph-ee-notifications
+              port:
+                number: 80 
+        # - path: /actuator
+        #   backend: 
+        #     service: 
+        #       name: ph-ee-notifications
+        #       port:
+        #         number: 8080
+
   tls: []
   #  - secretName: sandbox-secret
   #    hosts:

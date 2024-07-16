@@ -1,46 +1,47 @@
-{{- define "common.ingress" -}}
-{{- $ingress := . -}}
-{{- $pathtype := $ingress.Values.ingress.pathtype | default "ImplementationSpecific" -}}
-{{- $ingressPath := $ingress.Values.ingress.path | default "/" -}}
+{{- define "common.ingress.apiversion" -}}
 apiVersion: networking.k8s.io/v1
-kind: Ingress
+{{- end -}}
+
+{{- define "common.ingress.metadata" -}}
 metadata:
-  name: {{ $ingress.Values.ingress.name | default $ingress.Chart.Name }}
+  name: {{ include "common.names.fullname" . }}
   labels:
-    app: {{ $ingress.Chart.Name }}
-    release: {{ $ingress.Release.Name }}
-    heritage: {{ $ingress.Release.Service }}
-  {{- with $ingress.Values.ingress.annotations }}
+    app: {{ .Chart.Name | quote }}
+    release: {{ .Release.Name | quote }}
+  {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+{{- end -}}
+
+{{- define "common.ingress.spec" -}}
 spec:
-  {{- if $ingress.Values.ingress.className }}
-  ingressClassName: {{ $ingress.Values.ingress.className | quote }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
   {{- end }}
-  {{- if $ingress.Values.ingress.tls }}
+  {{- if .Values.ingress.tls }}
   tls:
-    {{- range $tls := $ingress.Values.ingress.tls }}
+    {{- range $tls := .Values.ingress.tls }}
     - hosts:
       {{- range $host := $tls.hosts }}
-        - {{ $host }}
+        - {{ $host | quote }}
       {{- end }}
-      secretName: {{ $tls.secretName }}
+      secretName: {{ $tls.secretName | quote }}
     {{- end }}
   {{- end }}
   rules:
-    {{- range $host := $ingress.Values.ingress.hosts }}
-    - host: {{ $host.host }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          {{- range $path := $host.paths }}
-          - path: {{ $path.path }}
-            pathType: {{ $pathtype }}
+          {{- range .paths }}
+          - path: {{ .path | quote }}
+            pathType: {{ $.Values.ingress.pathtype | default "ImplementationSpecific" | quote }}
             backend:
               service:
-                name: {{ $path.backend.service.name }}
+                name: {{ .backend.service.name | quote }}
                 port:
-                  number: {{ $path.backend.service.port.number }}
+                  number: {{ .backend.service.port.number }}
           {{- end }}
-{{- end }}
+    {{- end }}
 {{- end -}}
