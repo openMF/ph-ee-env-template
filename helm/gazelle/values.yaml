@@ -277,22 +277,22 @@ ph-ee-engine:
       annotations:
         deployTime: "{{ .Values.deployTime }}"
 
-  operations_web:
-    enabled: true
-    hostname: "ops.local"
-    ingress:
-      enabled: false
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: ops.local          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-operations-web"
-                port:
-                  number: 4200
+  # operations_web:
+  #   enabled: true
+  #   hostname: "ops.local"
+  #   ingress:
+  #     enabled: true
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: ops.local          
+  #         paths: 
+  #         - path: "/"
+  #           backend:
+  #             service:
+  #               name: "ph-ee-operations-web"
+  #               port:
+  #                 number: 4200
 
   identity:
     hostname: "ops-bk.local"
@@ -322,35 +322,35 @@ ph-ee-engine:
   paygops_connector:
     enabled: false
     
-  # notifications:
-  #   enabled: true
-  #   imagePullPolicy: "Always"
-  #   SPRING_PROFILES_ACTIVE: "bb"
-  #   LOGGING_LEVEL_ROOT: "INFO"
-  #   MESSAGEGATEWAYCONFIG_HOST: "message-gateway-1"
-  #   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
-  #   NOTIFICATION_SUCCESS_ENABLED: "false"
-  #   NOTIFICATION_FAILURE_ENABLED: "true"   
-  #   hostname: "notifications.local"
-  #   includeResources: false
-  #   ingress:
-  #     enabled: false
-  #     annotations: 
-  #       kubernetes.io/ingress.class: nginx-ext  
-  #     tls:
-  #       - secretName: sandbox-secret
-  #     hosts:
-  #       - host: notifications.local         
-  #         paths: 
-  #         - path: "/"
-  #           backend:
-  #             service:
-  #               name: "ph-ee-connector-notifications"
-  #               port:
-  #                 number: 80  
-  #   deployment:
-  #     annotations:
-  #       deployTime: "{{ .Values.deployTime }}"
+  notifications:
+    enabled: true
+    imagePullPolicy: "Always"
+    SPRING_PROFILES_ACTIVE: "bb"
+    LOGGING_LEVEL_ROOT: "INFO"
+    MESSAGEGATEWAYCONFIG_HOST: "message-gateway-1"
+    NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
+    NOTIFICATION_SUCCESS_ENABLED: "false"
+    NOTIFICATION_FAILURE_ENABLED: "true"   
+    hostname: "notifications.local"
+    includeResources: false
+    ingress:
+      enabled: false
+      annotations: 
+        kubernetes.io/ingress.class: nginx-ext  
+      tls:
+        - secretName: sandbox-secret
+      hosts:
+        - host: notifications.local         
+          paths: 
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-notifications"
+                port:
+                  number: 80  
+    deployment:
+      annotations:
+        deployTime: "{{ .Values.deployTime }}"
 
   connector_bulk:
     enabled: true

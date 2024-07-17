@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image }}"
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
           {{- if .Values.resources }}
           {{- include "common.resourceTemplate" . | nindent 8 }}

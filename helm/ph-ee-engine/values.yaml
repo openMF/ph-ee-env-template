@@ -662,15 +662,26 @@ operations_web:
       memory: "512M"
       cpu: "500m"
     requests:
-      memory: "512M"
+      memory: "100M"
       cpu: "100m"       
 # Enabling this will publicly expose your operations_web instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
-    enabled: false
-    path: "/"
-    annotations: {}    
-    backend: {}
+    enabled: true
+    tls:
+      - secretName: sandbox-secret
+    hosts:
+      - host: ops.local          
+        paths: 
+        - path: "/"
+          backend:
+            service:
+              name: "ph-ee-operations-web"
+              port:
+                number: 4200
+    # path: "/"
+    # annotations: {}    
+    #backend: {}
   deployment:
     config:
       - name: ph-ee-operations-web-config
@@ -695,7 +706,7 @@ operations_web:
         memory: "512M"
         cpu: "500m"
       requests:
-        memory: "512M"
+        memory: "100M"
         cpu: "100m"    
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-operations-web.yml for deployment
@@ -1139,15 +1150,7 @@ notifications:
 # Only enable this if you have security enabled on your cluster    
   ingress:
     enabled: false
-    path: "/notifications"
-    annotations: {}
-    backend: {}
-  deployment:
-    annotations: {}
-    affinity: {}
-    nodeSelector: {}
-    tolerations: []
-    envFrom: []
+
   # - configMapRef:
   #     name: config-secret
     extraEnvs: []
@@ -1157,11 +1160,6 @@ notifications:
     securityContext:
       runAsUser: 0
       privileged: false
-  
-# Allows you to add any config files in /usr/share/
-    # such as ph-ee-connector-notifications.yml for deployment  
-    # ph-ee-connector-notificationsConfig: {}
-    #   ph-ee-connector-notifications.yml: |
 
 zeebe_ops:
   enabled: false

@@ -1,8 +1,8 @@
 enabled: true
 fullnameOverride: phee-connector-notifications
 replicas: 1 
-image: "docker.io/openmf/ph-ee-notifications:v1.4.0"
-imagePullPolicy: "IfNotPresent"
+image: "docker.io/openmf/ph-ee-notifications"
+imageTag: "v1.4.0"
 springProfilesActive: ""
 messageGatewayConfigHost: "message-gateway"
 notificationLocalHost: "connector-notifications"
