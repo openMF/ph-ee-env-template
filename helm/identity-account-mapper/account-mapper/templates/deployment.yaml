@@ -20,6 +20,11 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+        #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
+        - name: check-operationsmysql-ready
+          image: busybox:latest
+          command: [ 'sh', '-c','until nc -vz operationsmysql 3306; do echo "Waiting for operationsmysql service"; sleep 2; done;' ]
       containers:
         - name: ph-ee-identity-account-mapper
           image: "{{ .Values.image}}"
@@ -37,17 +42,21 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            initialDelaySeconds: {{.Values.livenessProbe.initialDelaySeconds}}
+            periodSeconds: {{.Values.livenessProbe.periodSeconds}}
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 30
+            initialDelaySeconds: {{.Values.readinessProbe.initialDelaySeconds}}
+            periodSeconds: {{.Values.readinessProbe.periodSeconds}}
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max_execution_threads}}"
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll_interval}}"
             - name: "SPRING_CACHE_TIME_TO_LIVE"
               value: "{{ .Values.spring.cache.time_to_live }}"
             - name: "SPRING_CACHE_TIME_TO_IDLE"
@@ -72,6 +81,8 @@ spec:
               value: "{{ .Values.account_validator_connector }}"
             - name: "CALLBACK_ENABLED"
               value: "{{ .Values.callback_enabled }}"
+            - name: "ISEXTERNALLOOKUP"
+              value: "{{.Values.is_external_lookup}}"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}

@@ -47,7 +47,7 @@ config:
     enabled: true  
 limits:
   cpu: "256m"
-  memory: "512M"
+  memory: "384M"
 requests:
   cpu: "100m"
   memory: "256M"

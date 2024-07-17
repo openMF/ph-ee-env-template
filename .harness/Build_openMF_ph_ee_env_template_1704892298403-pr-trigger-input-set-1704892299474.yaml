@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_openMF_ph_ee_env_template_1704892298403-pr-trigger-input-set
+  identifier: Build_openMF_ph_ee_env_template_1704892298403prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_openMF_ph_ee_env_template_1704892298403
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>

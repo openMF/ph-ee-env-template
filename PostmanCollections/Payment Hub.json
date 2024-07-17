@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a1f41a4d-235b-439a-a805-beb249272c92",
+		"_postman_id": "d1034a3a-efa8-4115-a160-3f58f8ccec98",
 		"name": "Payment Hub APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17902615",
-		"_collection_link": "https://martian-firefly-704030.postman.co/workspace/Fynarfin~cbeb07e6-89cb-4850-a0f6-5647e70b83e2/collection/17902615-a1f41a4d-235b-439a-a805-beb249272c92?action=share&source=collection_link&creator=17902615"
+		"_exporter_id": "21253421"
 	},
 	"item": [
 		{
@@ -3645,6 +3644,76 @@
 							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"workflowInstanceKey\": \"2251799816099637\",\n            \"transactionId\": \"8c2358be640c4BtABNeY\",\n            \"startedAt\": 1654769838000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"USD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        },\n        {\n            \"id\": 2,\n            \"workflowInstanceKey\": \"2251799816729405\",\n            \"transactionId\": \"dd2183f3ac5d5leU5nz3\",\n            \"startedAt\": 1654993348000,\n            \"completedAt\": null,\n            \"state\": \"ACCEPTED\",\n            \"payeeDfspId\": null,\n            \"payeePartyId\": \"24450523\",\n            \"payeePartyIdType\": \"ACCOUNTID\",\n            \"payeeFee\": null,\n            \"payeeQuoteCode\": null,\n            \"payerDfspId\": null,\n            \"payerPartyId\": \"254708374149\",\n            \"payerPartyIdType\": \"MSISDN\",\n            \"payerFee\": null,\n            \"payerQuoteCode\": null,\n            \"amount\": 1,\n            \"currency\": \"ASD\",\n            \"direction\": \"INCOMING\",\n            \"authType\": null,\n            \"initiatorType\": \"BUSINESS\",\n            \"scenario\": \"MPESA\"\n        }\n    ],\n    \"totalPages\": 1,\n    \"totalElements\": 2,\n    \"last\": true,\n    \"numberOfElements\": 2,\n    \"sort\": [\n        {\n            \"direction\": \"ASC\",\n            \"property\": \"startedAt\",\n            \"ignoreCase\": false,\n            \"nullHandling\": \"NATIVE\",\n            \"descending\": false,\n            \"ascending\": true\n        }\n    ],\n    \"first\": true,\n    \"size\": 20,\n    \"number\": 0\n}"
 						}
 					]
+				},
+				{
+					"name": "Generate x-signature (dev utility)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"x-signature\", responseBody);",
+									"postman.setEnvironmentVariable(\"X-CorrelationId\", pm.request.headers.get(\"X-CorrelationID\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CorrelationID",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "privateKey",
+								"value": "{{privateKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "/Users/ankitagarwal/fynarfin/ph-ee-bulk-demo-7.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{OperationsHostName}}/api/v1/util/x-signature",
+							"host": [
+								"{{OperationsHostName}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"util",
+								"x-signature"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -3688,13 +3757,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3754,13 +3823,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3793,13 +3862,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3867,13 +3936,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3903,13 +3972,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -42672,7 +42741,159 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "GSMA Transaction",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-CorrelationID",
+												"value": "{{clientCorrelationId}}",
+												"type": "text"
+											},
+											{
+												"key": "accountHoldingInstitutionId",
+												"value": "{{accountHoldingInstitutionId}}",
+												"type": "text"
+											},
+											{
+												"key": "amsName",
+												"value": "{{amsName}}",
+												"type": "text"
+											},
+											{
+												"key": "X-CallbackURL",
+												"value": "https://webhook.site/3cb8ab56-c03d-4251-9911-520f235da8f5",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"11\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": \"{{MSISDN}}\"\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": \"{{accountId}}\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ChannelHostName}}/channel/gsma/transaction",
+											"host": [
+												"{{ChannelHostName}}"
+											],
+											"path": [
+												"channel",
+												"gsma",
+												"transaction"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 24 Apr 2024 10:22:08 GMT"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "*"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "13"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/3.2.1.0-enterprise-edition"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"transactionId\": \"168e49b0-b0e9-4446-a4d8-188f2b9a42e3\"\n}"
+								},
+								{
+									"name": "GSMA Transaction callback",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-CorrelationID",
+												"value": "{{clientCorrelationId}}",
+												"type": "text"
+											},
+											{
+												"key": "accountHoldingInstitutionId",
+												"value": "{{accountHoldingInstitutionId}}",
+												"type": "text"
+											},
+											{
+												"key": "amsName",
+												"value": "{{amsName}}",
+												"type": "text"
+											},
+											{
+												"key": "X-CallbackURL",
+												"value": "https://webhook.site/3cb8ab56-c03d-4251-9911-520f235da8f5",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"requestingOrganisationTransactionReference\": \"string\",\n    \"subType\": \"inbound\",\n    \"type\": \"transfer\",\n    \"amount\": \"11\",\n    \"currency\": \"USD\",\n    \"descriptionText\": \"string\",\n    \"requestDate\": \"2022-09-28T12:51:19.260+00:00\",\n    \"customData\": [\n        {\n            \"key\": \"string\",\n            \"value\": \"string\"\n        }\n    ],\n    \"payer\": [\n        {\n            \"partyIdType\": \"MSISDN\",\n            \"partyIdIdentifier\": \"{{MSISDN}}\"\n        }\n    ],\n    \"payee\": [\n        {\n            \"partyIdType\": \"accountId\",\n            \"partyIdIdentifier\": \"{{accountId}}\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ChannelHostName}}/channel/gsma/transaction",
+											"host": [
+												"{{ChannelHostName}}"
+											],
+											"path": [
+												"channel",
+												"gsma",
+												"transaction"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"transferCode\": \"fb13887d-396b-492c-b481-f634fe0dfb03\",\n    \"completedTimestamp\": \"2024-04-24T15:52:08+0530\",\n    \"transactionCode\": \"168e49b0-b0e9-4446-a4d8-188f2b9a42e3\",\n    \"state\": \"ACCEPTED\"\n}"
+								}
+							]
 						},
 						{
 							"name": "International Remmitance Payee",
@@ -42748,6 +42969,11 @@
 							{
 								"key": "Platform-TenantId",
 								"value": "{{PlatformTenant}}",
+								"type": "text"
+							},
+							{
+								"key": "X-PayeeDFSP-ID",
+								"value": "{{payeeDFSPId}}",
 								"type": "text"
 							}
 						],
@@ -42979,13 +43205,13 @@
 						"header": [
 							{
 								"key": "Platform-TenantId",
-								"type": "text",
-								"value": "ibank-usa"
+								"value": "ibank-usa",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -43345,7 +43571,8 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"batchId\", jsonData.pollingApi);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -43359,17 +43586,32 @@
 							},
 							{
 								"key": "filename",
-								"value": "ph-ee-bulk-demo-6.csv",
+								"value": "ph-ee-bulk-demo-7.csv",
 								"type": "text"
 							},
 							{
 								"key": "X-CorrelationID",
-								"value": "{{$guid}}",
+								"value": "{{X-CorrelationId}}",
 								"type": "text"
 							},
 							{
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Signature",
+								"value": "{{x-signature}}",
+								"type": "text"
+							},
+							{
+								"key": "type",
+								"value": "csv",
+								"type": "text"
+							},
+							{
+								"key": "X-PayeeDFSP-ID",
+								"value": "{{payeeDFSPId}}",
 								"type": "text"
 							}
 						],
@@ -43379,12 +43621,12 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{batchFilePath}}"
+									"src": "/Users/ankitagarwal/fynarfin/ph-ee-bulk-demo-7.csv"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{BulkHostName}}/batchtransactions?type=csv",
+							"raw": "{{BulkHostName}}/batchtransactions",
 							"host": [
 								"{{BulkHostName}}"
 							],
@@ -43394,12 +43636,244 @@
 							"query": [
 								{
 									"key": "type",
-									"value": "csv"
+									"value": "csv",
+									"disabled": true
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Batch Transactions",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Purpose",
+										"value": "test payment",
+										"type": "text"
+									},
+									{
+										"key": "filename",
+										"value": "ph-ee-bulk-demo-6.csv",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{X-CorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Signature",
+										"value": "{{X-Signature}}",
+										"type": "text"
+									},
+									{
+										"key": "type",
+										"value": "csv",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "data",
+											"type": "file",
+											"src": "/Users/dhavalmaniyar/Documents/projects/ph-ee-connector-integration-test/src/test/java/resources/batch_demo_csv/ph-ee-bulk-demo-6.csv"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BulkHostName}}/batchtransactions",
+									"host": [
+										"{{BulkHostName}}"
+									],
+									"path": [
+										"batchtransactions"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "csv",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Platform-TenantId",
+									"value": "gorilla"
+								},
+								{
+									"key": "X-SIGNATURE",
+									"value": "Ta+CtpvS8KjuV9yxhjBjl+OJHwJ4x+52ha82sx7ozVELDSFIPgkjCWreEMI95urBVHorkJtY3yX0+5DJodynyShL017qoYgZOZRYZZRy3JFB15Nmi3BCtvsLQc94PMsnX4zx2Nlo2g/YTyWTTU/uAGIWXmnkjMgy7mX5/r5lBpGyVu2T0xdVHF109+/3do8YJA9MTieBlInCp6bxaCRXLLkb23DiC+T+sHhzRZ2ODj5cWcKBLvDvDCz/V4n90nYyHSaxPb6EfoxZlLU2013tSnhIXW6e95el/X4Rq8QRQ6OoZgN4mi75miF+zibDex9BvTIgxCgYSuVSjB0fS7E8FQ=="
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Mar 2024 08:00:53 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "136"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/3.2.1.0-enterprise-edition"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"PollingPath\": \"/batch/Summary/fc9ea097-4566-43aa-82d4-dd455ad55e99\",\n    \"SuggestedCallbackSeconds\": \"120\"\n}"
+						},
+						{
+							"name": "Batch Transactions Callback",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Purpose",
+										"value": "test payment",
+										"type": "text"
+									},
+									{
+										"key": "filename",
+										"value": "ph-ee-bulk-demo-6.csv",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "{{X-CorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Signature",
+										"value": "{{X-Signature}}",
+										"type": "text"
+									},
+									{
+										"key": "type",
+										"value": "csv",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "data",
+											"type": "file",
+											"src": "/Users/dhavalmaniyar/Documents/projects/ph-ee-connector-integration-test/src/test/java/resources/batch_demo_csv/ph-ee-bulk-demo-6.csv"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BulkHostName}}/batchtransactions",
+									"host": [
+										"{{BulkHostName}}"
+									],
+									"path": [
+										"batchtransactions"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "csv",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Platform-TenantId",
+									"value": "gorilla"
+								},
+								{
+									"key": "X-SIGNATURE",
+									"value": "Ta+CtpvS8KjuV9yxhjBjl+OJHwJ4x+52ha82sx7ozVELDSFIPgkjCWreEMI95urBVHorkJtY3yX0+5DJodynyShL017qoYgZOZRYZZRy3JFB15Nmi3BCtvsLQc94PMsnX4zx2Nlo2g/YTyWTTU/uAGIWXmnkjMgy7mX5/r5lBpGyVu2T0xdVHF109+/3do8YJA9MTieBlInCp6bxaCRXLLkb23DiC+T+sHhzRZ2ODj5cWcKBLvDvDCz/V4n90nYyHSaxPb6EfoxZlLU2013tSnhIXW6e95el/X4Rq8QRQ6OoZgN4mi75miF+zibDex9BvTIgxCgYSuVSjB0fS7E8FQ=="
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Mar 2024 08:00:53 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "X-Kong-Upstream-Latency",
+									"value": "136"
+								},
+								{
+									"key": "X-Kong-Proxy-Latency",
+									"value": "1"
+								},
+								{
+									"key": "Via",
+									"value": "kong/3.2.1.0-enterprise-edition"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"clientCorrelationId\": \"2251799816458110\",\n  \"batchId\": \"fc9ea097-4566-43aa-82d4-dd455ad55e99\",\n  \"message\": \"The Batch Aggregation API was complete with : 100\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Batch Transactions JSON",
@@ -43447,18 +43921,23 @@
 								"type": "text"
 							},
 							{
-								"key": "filename",
-								"value": "ph-ee-bulk-demo-6.csv",
-								"type": "text"
-							},
-							{
 								"key": "X-CorrelationID",
-								"value": "{{$guid}}",
+								"value": "{{X-CorrelationId}}",
 								"type": "text"
 							},
 							{
 								"key": "Platform-TenantId",
 								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Signature",
+								"value": "{{x-signature}}",
+								"type": "text"
+							},
+							{
+								"key": "type",
+								"value": "raw",
 								"type": "text"
 							}
 						],
@@ -43472,18 +43951,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BulkHostName}}/batchtransactions?type=raw",
+							"raw": "{{BulkHostName}}/batchtransactions",
 							"host": [
 								"{{BulkHostName}}"
 							],
 							"path": [
 								"batchtransactions"
-							],
-							"query": [
-								{
-									"key": "type",
-									"value": "raw"
-								}
 							]
 						}
 					},
@@ -45750,7 +46223,222 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"financialAddress\": \"589\",\n            \"bankingInstitutionCode\": \"gorilla\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:07:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171073978834\",\n  \"registerRequestID\": \"915251236700\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						},
+						{
+							"name": "Register Beneficiary Already Exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"financialAddress\": \"589\",\n            \"bankingInstitutionCode\": \"gorilla\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171073977096\",\n    \"registerRequestID\": \"915251236700\",\n    \"numberFailedCases\": 1,\n    \"failedCases\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"failureReason\": \"Beneficiary already registered\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Register Beneficiary 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"01\",\n            \"financialAddress\": \"589\",\n            \"bankingInstitutionCode\": \"gorilla\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 08:32:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"915251236706\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Beneficiary",
@@ -45787,7 +46475,214 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"1233456\",\n      \"bankingInstitutionCode\": \"gorilla\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171073988979\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 0,\n  \"failedCases\": []\n}"
+						},
+						{
+							"name": "Update Beneficiary Beneficiary not Registered",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"1233456\",\n      \"bankingInstitutionCode\": \"gorilla\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171074375685\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity\": \"27713803902\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Beneficiary is not registered\"\n    }\n  ]\n}"
+						},
+						{
+							"name": "Update Beneficiary 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"1233456\",\n      \"bankingInstitutionCode\": \"gorilla\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 08:32:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"915251236706\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Batch Account Lookup",
@@ -45824,7 +46719,174 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"9404916971482891259\"\n    },\n    {\n      \"payeeIdentity\": \"76032553265657618183\"\n    },\n    {\n      \"payeeIdentity\": \"51498584148040549461\"\n    },\n    {\n      \"payeeIdentity\": \"69028769626982342710\"\n    },\n        {\n      \"payeeIdentity\": \"690287696269444382342710\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/accountLookup",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"accountLookup"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"915251236706\"\n}"
+						},
+						{
+							"name": "Batch Account Lookup 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"27713803912\"\n    },\n    {\n      \"payeeIdentity\": \"76032553265657618183\"\n    },\n    {\n      \"payeeIdentity\": \"51498584148040549461\"\n    },\n    {\n      \"payeeIdentity\": \"69028769626982342710\"\n    },\n        {\n      \"payeeIdentity\": \"690287696269444382342710\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/accountLookup",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"accountLookup"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 08:34:34 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"915251236706\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Account Lookup",
@@ -45879,7 +46941,97 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Account Lookup",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "SocialWelfare",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiary/?payeeIdentity=63310590323322234956&requestId=12345667987&paymentModality=00",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiary",
+										""
+									],
+									"query": [
+										{
+											"key": "payeeIdentity",
+											"value": "63310590323322234956"
+										},
+										{
+											"key": "requestId",
+											"value": "12345667987"
+										},
+										{
+											"key": "paymentModality",
+											"value": "00"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345667987\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Fetch All Beneficiaries",
@@ -45912,7 +47064,87 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Fetch All Beneficiaries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiaries?page=10&pageSize=5",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiaries"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "10"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:06:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [],\n    \"pageable\": {\n        \"sort\": {\n            \"empty\": true,\n            \"unsorted\": true,\n            \"sorted\": false\n        },\n        \"offset\": 50,\n        \"pageNumber\": 10,\n        \"pageSize\": 5,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalElements\": 1,\n    \"totalPages\": 1,\n    \"last\": true,\n    \"size\": 5,\n    \"number\": 10,\n    \"sort\": {\n        \"empty\": true,\n        \"unsorted\": true,\n        \"sorted\": false\n    },\n    \"numberOfElements\": 0,\n    \"first\": false,\n    \"empty\": true\n}"
+						}
+					]
 				},
 				{
 					"name": "Fetch Beneficiaries",
@@ -45936,7 +47168,78 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Fetch Beneficiaries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/beneficiaries/{{payeeIdentity}}",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"beneficiaries",
+										"{{payeeIdentity}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:05:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"registeringInstitutionId\": \"123\",\n    \"payeeIdentity\": \"3001003873110196\",\n    \"paymentModality\": null,\n    \"financialAddress\": null,\n    \"bankingInstitutionCode\": null\n}"
+						}
+					]
 				},
 				{
 					"name": "Add Payment Modality",
@@ -45973,7 +47276,91 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Add Payment Modality",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"915251236706\",\n    \"beneficiaries\": [\n        {\n            \"payeeIdentity\": \"27713803912\",\n            \"paymentModality\": \"00\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/paymentModality",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"paymentModality"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:05:30 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171074009205\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity\": \"27713803912\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Banking Institution Code Invalid\"\n    }\n  ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Payment Modality",
@@ -46010,7 +47397,91 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Failed Update Payment Modality",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestID\": \"915251236706\",\n  \"beneficiaries\": [\n    {\n      \"payeeIdentity\": \"51498584148040549461\",\n      \"paymentModality\": \"00\",\n      \"financialAddress\": \"998LB283697636447147812564357\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IdentityAccountMapperHostName}}/paymentModality",
+									"host": [
+										"{{IdentityAccountMapperHostName}}"
+									],
+									"path": [
+										"paymentModality"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:05:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-registering-institution-id"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"requestID\": \"171074011382\",\n  \"registerRequestID\": \"915251236706\",\n  \"numberFailedCases\": 1,\n  \"failedCases\": [\n    {\n      \"payeeIdentity\": \"51498584148040549461\",\n      \"paymentModality\": \"00\",\n      \"failureReason\": \"Beneficiary is not registered\"\n    }\n  ]\n}"
+						}
+					]
 				}
 			]
 		},
@@ -46035,7 +47506,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"requestID\": \"8493244991559\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"12023833433254345358844445\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"6331059032228893263382\",\n            \"narration\": \"Social Support Payment for the Month of January 2023\"\n        }\n    ]\n}",
+							"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"63310590322288932633\",\n            \"narration\": \"Social Support Payment for the Month of Jan\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46052,7 +47523,108 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"63310590322288932633\",\n            \"narration\": \"Social Support Payment for the Month of Jan\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"groupCode\": \"021\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"payeeFunctionalID\": \"63310590322288932633\",\n            \"narration\": \"Social Support Payment for the Month of Jan\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"instructionID\": \"1202383344325434\",\n            \"currency\": \"USD\",\n            \"amount\": 5009,\n            \"narration\": \"Social Support Payment for the Month of Jan\",\n            \"voucherNumber\": \"f3ONmzIfROhCCHZiAFXATQHqm2/tJjuh0ozax0ycaJp+rE32Cm4r2Ub8xIpE2AEXvvvG/42bB/DlVUbF2Fe1NQHF7HHBQPV0TMUy0AbIfE7ihf3Qp6DMsd2z2ffyKdo0KpRY8x25lZSB/D1wUM96KsdPR1OB4zyDOag+zSIZbJIbLD+jRWkzw8pJp0X7x5RtRrh4KD5gwR3M6RNA7Hpd+eYzUo2SsPx82QLHi1Vx1l79f3JFpPmc0lhdrfzbEZQQAk/6z2dj2aw89XaBOZsZXy751E9xJQGXtiitA8m9mIrFYZ3iQoWzbSIzFEygM6sIbJASgrm+YvYesWUP/pcmXw==\",\n            \"serialNumber\": \"17123246904971\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Activate Voucher",
@@ -46098,7 +47670,120 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16939790248654\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=activate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "activate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16939790248654\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=activate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "activate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171232475311\",\n    \"registerRequestID\": \"849324499155\",\n    \"numberFailedCases\": 0,\n    \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Suspend Voucher",
@@ -46144,7 +47829,120 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"06\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=suspend",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "suspend"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"06\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=suspend",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "suspend"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171232493718\",\n    \"registerRequestID\": \"849324499155\",\n    \"numberFailedCases\": 0,\n    \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Cancel Voucher",
@@ -46152,7 +47950,7 @@
 						"auth": {
 							"type": "noauth"
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "X-CallbackURL",
@@ -46190,7 +47988,120 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895845478866\",\n            \"status\": \"03\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=cancel",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "cancel"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895845478866\",\n            \"status\": \"03\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=cancel",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "cancel"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171232511656\",\n    \"registerRequestID\": \"849324499155\",\n    \"numberFailedCases\": 0,\n    \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Reactivate Voucher",
@@ -46236,12 +48147,125 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=reactivate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "reactivate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Sample request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestID\": \"849324499155\",\n    \"batchID\": \"045155518258\",\n    \"voucherInstructions\": [\n        {\n            \"serialNumber\": \"16895906640276\",\n            \"status\": \"02\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=reactivate",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "reactivate"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171233278011\",\n    \"registerRequestID\": \"849324499155\",\n    \"numberFailedCases\": 0,\n    \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Redeem Voucher",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "X-CallbackURL",
@@ -46256,7 +48280,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestID \": \"849324499155\",\n  \"agentID \": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
+							"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46279,7 +48303,64 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168959066402710531\"\n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=redeem",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "redeem"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"01\",\n    \"message\": \"Voucher redemption successful!\",\n    \"serialNumber\": \"H8cTUUhlO/JIqFCRZdfyeIbtxeWvzO5++5xtj+r9wcALoOnP17mG5tYThRROkWBFrW2O4xYjtuZsV9VCQk+4VrTgzwA8uafbWZQh6hppHx7zgrwJ7E/YiC6MZriMvp4vHIFSruYFbKOt5gr3RGkNFAl1xD9wTY3n0g381/qZSSAWA8ODByt61nZLyNH91of4wHyzYtCJuFCBx3UKKhICenv1XJ4FaKUKrWYyFPCMN24DIDprwzY5aAKFRucXKYK2XG4UkyJQe7lRvDfmOo/jzGtz2LmxtsgltJYvGqglZx3Q0k4zmJUkopB4O5edAb4bMzuny3zPsbqTyk2CF/GWtQ==\",\n    \"value\": \"5009.00\",\n    \"timestamp\": \"2024-04-05T16:01:24.271818174\",\n    \"transactionId\": \"1712332884\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Redeem and Pay Voucher",
@@ -46299,7 +48380,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"requestId\": \"849324499155787\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+							"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46322,7 +48403,120 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=redeemPay",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "redeemPay"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"849324499155\"\n}"
+						},
+						{
+							"name": "Sample request body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requestId\": \"849324499155\",\n  \"agentId\": \"1234567890\",\n  \"voucherSecretNumber\": \"168975377470710722\"\n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?command=redeemPay",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "command",
+											"value": "redeemPay"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestID\": \"171233306861\",\n    \"registerRequestID\": \"849324499155\",\n    \"numberFailedCases\": 0,\n    \"failedCases\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Check Validity",
@@ -46371,7 +48565,116 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/voucher/validity?isValid=true&serialNumber=16939790248654",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"voucher",
+										"validity"
+									],
+									"query": [
+										{
+											"key": "isValid",
+											"value": "true"
+										},
+										{
+											"key": "voucherNumber",
+											"value": "ffds",
+											"disabled": true
+										},
+										{
+											"key": "groupCode",
+											"value": "fsfsfd",
+											"disabled": true
+										},
+										{
+											"key": "serialNumber",
+											"value": "16939790248654"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"\"\n}\n"
+						},
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/voucher/validity?isValid=true&serialNumber=16939790248654",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"voucher",
+										"validity"
+									],
+									"query": [
+										{
+											"key": "isValid",
+											"value": "true"
+										},
+										{
+											"key": "voucherNumber",
+											"value": "ffds",
+											"disabled": true
+										},
+										{
+											"key": "groupCode",
+											"value": "fsfsfd",
+											"disabled": true
+										},
+										{
+											"key": "serialNumber",
+											"value": "16939790248654"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"serialNumber\": \"17098827605447\",\n  \"isValid\": true\n}"
+						}
+					]
 				},
 				{
 					"name": "Fetch Vouchers",
@@ -46407,7 +48710,45 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers/{{voucherNumber}}",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers",
+										"{{voucherNumber}}"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"serialNumber\": \"17098827605447\",\n    \"createdDate\": \"2024-03-08T07:26:01\",\n    \"registeringInstitutionId\": \"123\",\n    \"status\": \"02\",\n    \"payeeFunctionalID\": \"63310590322288932682\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Fetch All Vouchers",
@@ -46452,7 +48793,1051 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Sample response 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Registering-Institution-ID",
+										"value": "{{X-Registering-Institution-ID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{VoucherManagementHostName}}/vouchers?page=0&size=10",
+									"host": [
+										"{{VoucherManagementHostName}}"
+									],
+									"path": [
+										"vouchers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"serialNumber\": \"17098827605447\",\n            \"createdDate\": \"2024-03-08T07:26:01\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827614621\",\n            \"createdDate\": \"2024-03-08T07:26:01\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827623176\",\n            \"createdDate\": \"2024-03-08T07:26:02\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827631581\",\n            \"createdDate\": \"2024-03-08T07:26:03\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827640378\",\n            \"createdDate\": \"2024-03-08T07:26:04\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827649245\",\n            \"createdDate\": \"2024-03-08T07:26:05\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098827658061\",\n            \"createdDate\": \"2024-03-08T07:26:06\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098828235054\",\n            \"createdDate\": \"2024-03-08T07:27:04\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098828244473\",\n            \"createdDate\": \"2024-03-08T07:27:04\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        },\n        {\n            \"serialNumber\": \"17098828254959\",\n            \"createdDate\": \"2024-03-08T07:27:05\",\n            \"registeringInstitutionId\": \"123\",\n            \"status\": \"02\",\n            \"payeeFunctionalID\": \"63310590322288932682\"\n        }\n    ],\n    \"pageable\": {\n        \"sort\": {\n            \"empty\": true,\n            \"unsorted\": true,\n            \"sorted\": false\n        },\n        \"offset\": 0,\n        \"pageNumber\": 0,\n        \"pageSize\": 10,\n        \"unpaged\": false,\n        \"paged\": true\n    },\n    \"totalPages\": 103,\n    \"totalElements\": 1029,\n    \"last\": false,\n    \"size\": 10,\n    \"number\": 0,\n    \"sort\": {\n        \"empty\": true,\n        \"unsorted\": true,\n        \"sorted\": false\n    },\n    \"numberOfElements\": 10,\n    \"first\": true,\n    \"empty\": false\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Bill Pay APIs",
+			"item": [
+				{
+					"name": "Mock APIs",
+					"item": [
+						{
+							"name": "Connector-CRM",
+							"item": [
+								{
+									"name": "Bill Inquiry API",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Platform-TenantId",
+												"value": "{{TenantName}}",
+												"type": "text"
+											},
+											{
+												"key": "X-CorrelationID",
+												"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+												"type": "text"
+											},
+											{
+												"key": "X-CallbackURL",
+												"value": "{{X-CallbackURL}}",
+												"type": "text"
+											},
+											{
+												"key": "X-PayerFSP-Id",
+												"value": "{{PayeeTenantName}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{ConnectorCRMHostName}}/bills/{{billId}}",
+											"host": [
+												"{{ConnectorCRMHostName}}"
+											],
+											"path": [
+												"bills",
+												"{{billId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Bill Payments API",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Platform-TenantId",
+												"value": "{{TenantName}}",
+												"type": "text"
+											},
+											{
+												"key": "X-CorrelationID",
+												"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+												"type": "text"
+											},
+											{
+												"key": "X-PayerFSP-Id",
+												"value": "{{PayeeTenantName}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"billInquiryRequestId\": \"12e2cedc-7372-4208-8079-7d46d691fca4\",\n    \"billId\": \"001\",\n    \"paymentReferenceID\": \"8f353842-451c-4231-afc9-58289afdc396\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ConnectorCRMHostName}}/paymentNotifications",
+											"host": [
+												"{{ConnectorCRMHostName}}"
+											],
+											"path": [
+												"paymentNotifications"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Connector-Bulk",
+							"item": [
+								{
+									"name": "Payer RTP Request API",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "X-Platform-TenantId",
+												"value": "{{TenantName}}",
+												"type": "text"
+											},
+											{
+												"key": "X-Client-Correlation-ID",
+												"value": "{{clientCorrelationId}}",
+												"type": "text"
+											},
+											{
+												"key": "X-Callback-URL",
+												"value": "{{X-CallbackURL}}",
+												"type": "text"
+											},
+											{
+												"key": "X-Biller-Id",
+												"value": "GovBill",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ConnectorBulkHostName}}/billTransferRequests",
+											"host": [
+												"{{ConnectorBulkHostName}}"
+											],
+											"path": [
+												"billTransferRequests"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Payer RTP Request API 202",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "X-Platform-TenantId",
+														"value": "{{TenantName}}",
+														"type": "text"
+													},
+													{
+														"key": "X-Client-Correlation-ID",
+														"value": "{{clientCorrelationId}}",
+														"type": "text"
+													},
+													{
+														"key": "X-Callback-URL",
+														"value": "{{X-CallbackURL}}",
+														"type": "text"
+													},
+													{
+														"key": "X-Biller-Id",
+														"value": "GovBill",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ConnectorBulkHostName}}/billTransferRequests",
+													"host": [
+														"{{ConnectorBulkHostName}}"
+													],
+													"path": [
+														"billTransferRequests"
+													]
+												}
+											},
+											"status": "Accepted",
+											"code": 202,
+											"_postman_previewlanguage": "Text",
+											"header": [],
+											"cookie": [],
+											"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345678-6897-6798-6798-098765432134\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Payer RTP Response API",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-Callback-URL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Correlation-ID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Biller-Id",
+										"value": "GovBill",
+										"type": "text"
+									},
+									{
+										"key": "X-Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/billTransferRequests",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"billTransferRequests"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Payer RTP Response API 202",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "X-Callback-URL",
+												"value": "{{X-CallbackURL}}",
+												"type": "text"
+											},
+											{
+												"key": "X-Client-Correlation-ID",
+												"value": "{{clientCorrelationId}}",
+												"type": "text"
+											},
+											{
+												"key": "X-Biller-Id",
+												"value": "GovBill",
+												"type": "text"
+											},
+											{
+												"key": "X-Platform-TenantId",
+												"value": "{{TenantName}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BillPayHostName}}/billTransferRequests",
+											"host": [
+												"{{BillPayHostName}}"
+											],
+											"path": [
+												"billTransferRequests"
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345678-6897-6798-6798-098765432134\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Bill Inquiry API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "X-CallbackURL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "Payer-FSP-Id",
+								"value": "{{PayeeTenantName}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BillPayHostName}}/bills/{{billId}}",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"bills",
+								"{{billId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+										"type": "text"
+									},
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-PayerFSP-Id",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BillPayHostName}}/bills/{{billId}}",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"bills",
+										"{{billId}}"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:04:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"code\": \"00\",\n  \"reason\": \"TRANSACTION SUCCESSFUL\",\n  \"clientCorrelationId\": \"f56caf0b-377d-4a1f-8ac1-715859a83eee\",\n  \"billId\": \"001\",\n  \"billDetails\": {\n    \"billerId\": \"001\",\n    \"billerName\": \"Biller1\",\n    \"billStatus\": \"PAID\",\n    \"dueDate\": \"2021-07-01\",\n    \"amountonDueDate\": \"1000\",\n    \"amountAfterDueDate\": \"1100\"\n  }\n}"
+						},
+						{
+							"name": "Bill Inquiry API 202",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+										"type": "text"
+									},
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-PayerFSP-Id",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BillPayHostName}}/bills/{{billId}}",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"bills",
+										"{{billId}}"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 08:47:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"33397af3-a696-460c-95c3-3b21773643f5\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Bill Payments API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							},
+							{
+								"key": "X-CorrelationID",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "X-CallbackURL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "X-PayerFSP-Id",
+								"value": "{{PayeeTenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"billInquiryRequestId\": \"12e2cedc-73\",\n    \"billId\": \"001\",\n    \"paymentReferenceID\": \"8f353842-451c-4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BillPayHostName}}/paymentNotifications",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"paymentNotifications"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+										"type": "text"
+									},
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-PayerFSP-Id",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"billInquiryRequestId\": \"12e2cedc-7372-4208-8079-7d46d691fca4\",\n    \"billId\": \"001\",\n    \"paymentReferenceID\": \"8f353842-451c-4231-afc9-58289afdc396\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/paymentNotifications",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"paymentNotifications"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:04:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"code\": \"00\",\n  \"reason\": \"TRANSACTION SUCCESSFUL\",\n  \"requestID\": \"f56caf0b-377d-4a1f-8ac1-715859a83eee\",\n  \"billId\": \"001\",\n  \"status\": \"ACK\"\n}"
+						},
+						{
+							"name": "Bill Payments API 202",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									},
+									{
+										"key": "X-CorrelationID",
+										"value": "f56caf0b-377d-4a1f-8ac1-715859a83eee",
+										"type": "text"
+									},
+									{
+										"key": "X-CallbackURL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-PayerFSP-Id",
+										"value": "{{PayeeTenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"billInquiryRequestId\": \"12e2cedc-7372-4208-8079-7d46d691fca4\",\n    \"billId\": \"001\",\n    \"paymentReferenceID\": \"8f353842-451c-4231-afc9-58289afdc396\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/paymentNotifications",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"paymentNotifications"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 08:48:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"f183aea3-a75d-43e3-a7c1-830a10d72956\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Biller RTP Request API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Callback-URL",
+								"value": "{{X-CallbackURL}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Client-Correlation-ID",
+								"value": "{{clientCorrelationId}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Biller-Id",
+								"value": "GovBill",
+								"type": "text"
+							},
+							{
+								"key": "X-Platform-TenantId",
+								"value": "{{TenantName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billID\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetails\": {\n    \"payerFSPID\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"billDetails\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BillPayHostName}}/billTransferRequests",
+							"host": [
+								"{{BillPayHostName}}"
+							],
+							"path": [
+								"billTransferRequests"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Callback request body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Callback-URL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Correlation-ID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Biller-Id",
+										"value": "GovBill",
+										"type": "text"
+									},
+									{
+										"key": "X-Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/billTransferRequests",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"billTransferRequests"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 05:04:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"requestId\": \"12345678-6897-6798-6798-098765432134\",\n  \"rtpId\": \"123456\",\n  \"billId\": \"12345\",\n  \"rtpStatus\": \"00\",\n  \"rejectReason\": null\n}"
+						},
+						{
+							"name": "Biller RTP Request API",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Callback-URL",
+										"value": "{{X-CallbackURL}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Correlation-ID",
+										"value": "{{clientCorrelationId}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Biller-Id",
+										"value": "GovBill",
+										"type": "text"
+									},
+									{
+										"key": "X-Platform-TenantId",
+										"value": "{{TenantName}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientCorrelationId\": \"123445\",\n  \"billId\": \"12345\",\n  \"requestType\": \"00\",\n  \"payerFspDetail\": {\n    \"payerFspId\": \"lion\",\n    \"financialAddress\": \"1223455\"\n  },\n  \"alias\": null,\n  \"bill\": {\n    \"billerName\": \"Test\",\n    \"amount\": 100.0\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BillPayHostName}}/billTransferRequests",
+									"host": [
+										"{{BillPayHostName}}"
+									],
+									"path": [
+										"billTransferRequests"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 08:48:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15724800; includeSubDomains"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "PUT, GET, POST, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": \"00\",\n    \"responseDescription\": \"Request successfully received by Pay-BB\",\n    \"requestID\": \"12345678-6897-6798-6798-098765432134\"\n}"
+						}
+					]
 				}
 			]
 		}

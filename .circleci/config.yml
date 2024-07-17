@@ -7,6 +7,51 @@ orbs:
   mifos-orb: mifos/docker-image-availability-check-and-upgrade@1.0.0
 
 jobs:
+  build-g2p-sandbox-ci-chart:
+    docker:
+      - image: cimg/python:3.10
+    working_directory: ~/repo
+    environment:
+      TERM: dumb
+    steps:
+      - checkout
+      - run: git clone https://github.com/openmf/ph-ee-env-labs
+      - run: rm -f ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.lock ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/requirements.lock ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/charts/*
+      - helm/install-helm-client:
+          version: "v3.8.2"
+      # - run: "sed -i '12s/.*/version: 0.0.0/' helm/ph-ee-g2p-sandbox-ci/Chart.yaml"
+      - run:
+          name: build-and-host-ph-ee-g2p-sandbox-ci
+          environment:
+            JIRA_STORY: ''
+            JIRA_STORY_DIR: ''
+          command: |
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
+                PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+                PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+                JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
+                if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
+                echo Charts will save in https://fynarfin.io/images$JIRA_STORY_DIR
+            fi
+            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY"
+            if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
+              sed -i "11s@^ *repository:.*\$@  repository: $CHART_URL@" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
+              sed -i "12s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
+              echo "chart used: < $CHART_URL >"
+            else
+              CHART_URL="https://fynarfin.io/images/ph-ee-g2p-sandbox-ci-0.0.0"
+              echo "chart used: < $CHART_URL >"
+            fi
+            sed -i "6s/.*/version: 0.0.0$JIRA_STORY/" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
+            cat ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
+            helm dep up ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci
+            helm package ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci
+            helm repo index .
+            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
+            chmod 400 b64encoded.pem
+            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/fynafin$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
+            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
+            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/fynafin$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
   build-and-host-engine:
     docker:
       - image: cimg/python:3.10
@@ -73,7 +118,7 @@ jobs:
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
-            rm -rf helm/g2p-sandbox/templates/config.yml
+            # rm -rf helm/g2p-sandbox/templates/config.yml
             cat helm/g2p-sandbox/Chart.yaml
             helm dep up helm/g2p-sandbox
             helm package helm/g2p-sandbox
@@ -170,69 +215,360 @@ jobs:
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
             ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
-  docker-image-availability-check-and-upgrade:
-    docker:
-      - image: cimg/python:3.10
+  minikube-run-helm-upgrade-and-helm-test:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: large
     environment:
       TERM: dumb
+    parameters:
+      namespace:
+        default: "paymenthub"
+        description: |
+          The kubernetes namespace that should be used.
+        type: string
+      release-name:
+        default: "g2p-sandbox"
+        description: |
+          Specify a name for the release.
+        type: string
+      cluster-name:
+        default: "minikube"
+        type: string
+      service-file-path:
+        default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
+        type: string
+      chart-base-url:
+        default: https://fynarfin.io/images
+        type: string
+      chart-name:
+        default: ph-ee-g2p-sandbox-ci
+        type: string
+      chart-version:
+        default: 0.0.0
+        type: string
     steps:
-      - mifos-orb/docker-image-availability-check-and-upgrade:
-          namespace: paymenthub
-          chart-base-url: https://fynarfin.io/images
-          chart-name: ph-ee-g2psandbox-fynarfin
-          chart-version: 0.2.0
-#          chart: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin/ph-ee-g2psandbox-fynarfin-0.2.0.tgz"
-          release-name: g2p-sandbox
-#          add-repo: "https://fynarfin.io/images/ph-ee-g2psandbox-fynarfin"
-          cluster-name: "sit"
-          aws-region: "$REGION"
-          service-file-path: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
-
-  test-chart-gov:
-    docker:
-      - image: cimg/openjdk:17.0.0
-    steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
+      - helm/install-helm-client:
+            version: "v3.8.2"
       - run: 
-          name: Ngrok setup
-          command: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-      - run:
-          name: Test execution
-          command: |
-            ngrok config add-authtoken $AUTH_TOKEN
-            echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            ngrok http 53013 > /dev/null &
-            echo -n "Extracting ngrok public url ."
-            NGROK_PUBLIC_URL=""
-            while [ -z "$NGROK_PUBLIC_URL" ]; do
-              # Run 'curl' against ngrok API and extract public (using 'sed' command)
-              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-              sleep 1
-              echo -n "."
-            done
+          name: run minikube 
+          no_output_timeout: 40m
+          command : |
+            free -m
+            #!/bin/bash
+            #insatll kubectl--------
+            echo hello 
+            sudo apt-get update
+            sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+            sudo mkdir -p /etc/apt/keyrings
+            sudo touch -y /etc/apt/keyrings/kubernetes-apt-keyring.gpg || echo done
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
+            sudo apt-get install -y kubelet kubeadm kubectl
+            sudo apt-mark hold kubelet kubeadm kubectl
 
-            export CALLBACK_URL="https://$NGROK_PUBLIC_URL"
-            echo -n "Public url ."
-            echo $CALLBACK_URL
-            cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@gov" 
-            echo -n "Test execution is completed, kill ngrok"
-            pkill ngrok
+            #Setup Minikube
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+            sudo dpkg -i minikube_latest_amd64.deb
+            echo minikube waiting
+            minikube config set cpus 4
+            minikube config set memory 15721
+            minikube start #--extra-config=kubelet.max-pods=60 --cpus max --memory max --disk-size 50g
+            echo "Minikube started-----------------------------------------------------"
+            minikube addons enable metrics-server
+            # To check the allocated values 
+            #minikube config get cpus
+            #minikube config get memory
+
+            MINIKUBE_IP=`minikube ip`
+            echo $MINIKUBE_IP
+            # cat ~/.kube/config
+        
+            minikube kubectl -- get po -A #Interact with Minikube cluster
+            kubectl create namespace paymenthub
+            kubectl get -A namespace  
+
+            # # For remote access to minikube uncomment the following lines.
+            # #---------------------minikube remote aceess start---------------------
+            # sudo apt install nginx        
+            # sudo touch /etc/nginx/conf.d/minikube.conf 
+            # echo "create nginx conf"
+            # sudo chmod 777 -R /etc/nginx/conf.d/
+            # echo "changed access"
+
+            # sudo apt-get install apache2-utils -y
+            # echo "apache2-utils installed"
+            # htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+
+            # sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            # server {
+            #    listen       8080;
+            #    listen [::]:8080;
+            #    server_name  localhost;
+            #    access_log /home/circleci/project/nginx_access.log;
+            #   auth_basic "Administrators Area";
+            #   auth_basic_user_file /home/circleci/project/.htpasswd;    
+
+            #    location / {   
+            #        proxy_pass https://$MINIKUBE_IP:8443;
+            #        proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+            #        proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+            #    }
+            # }
+            # EOF
+            # sudo service nginx restart || echo 'start nginx'
+            # SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+
+            # sleep 10
+            
+            # echo "test-nginx-proxy"
+            # curl -u minikube:minikube http://localhost:8080
+
+            # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            # ngrok config add-authtoken $AUTH_TOKEN
+            # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            # ngrok http 8080 > /dev/null &
+
+            # echo -n "Extracting ngrok public url ."
+            # NGROK_PUBLIC_URL=""
+            # while [ -z "$NGROK_PUBLIC_URL" ]; do
+            #   # Run 'curl' against ngrok API and extract public (using 'sed' command)
+            #   export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+            #                             --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+            #                             sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+            #   sleep 1
+            #   echo -n "."
+            # done
+            # echo ---------copy the below public_URL for NGrok----------
+            # echo "https://$NGROK_PUBLIC_URL"
+            # echo "https://$NGROK_PUBLIC_URL"
+
+            # echo "test ngrok "
+            # curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            # echo "https://$NGROK_PUBLIC_URL"
+            # # ---------------------minikube remote access end---------------------
+
+            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            sudo apt-get install apt-transport-https --yes
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            #helm install
+            sudo apt-get update
+            sudo apt-get install helm
+            kubectl create namespace paymenthub || echo namespace already exists
+            minikube ssh -- free -m
+            echo ------------MEMORY CHECK -----------
+           
+      - run:
+          no_output_timeout: 20m
+          name: fetch docker images and helm upgrade
+          environment:
+            ORB_CHART_BASE_URL: << parameters.chart-base-url >>
+            ORB_CHART_NAME: << parameters.chart-name >>
+            ORB_CHART_VERSION: << parameters.chart-version >>
+            ORB_PARAM_NAMESPACE: << parameters.namespace >>
+            ORB_PARAM_RELEASE_NAME: << parameters.release-name >>
+            JIRA_STORY: ''
+            JIRA_STORY_DIR: ''
+            VALUES_TO_OVERRIDE: ''
+            SERVICE_FILE_PATH: << parameters.service-file-path>>
+          command: |
+            function get_services_from_file() {
+                file=$1
+                while IFS= read -r line || [ -n "$line" ]; do
+                  generate_values_to_override $line
+                done < "$file"
+            }
+            
+            function generate_values_to_override() {
+              PREFIX="docker.io/"
+              if [ "$CIRCLE_BRANCH" != "master" ] && check_for_image_tag ${2#"$PREFIX"} ${JIRA_STORY}; then
+                  echo "image: < $1=$2:$JIRA_STORY >"
+                  VALUES_TO_OVERRIDE+=$(echo "$1=$2:$JIRA_STORY"),
+              else
+                  echo "image: < $1=$2:latest >"
+                  VALUES_TO_OVERRIDE+=$(echo "$1=$2:latest"),
+              fi
+            }
+            function check_for_image_tag(){
+              curl --silent -f --head -lL https://hub.docker.com/v2/repositories/$1/tags/$2/ > /dev/null
+            }
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
+              
+              PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
+              if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
+            fi 
+            
+            echo $SERVICE_FILE_PATH
+            wget $SERVICE_FILE_PATH 
+            filename=$(basename "$SERVICE_FILE_PATH")
+            #Using sed replace ph-ee-g2psandbox. with empty string
+            sed -i 's/ph-ee-g2p-sandbox-ci\.p/p/g' $filename 
+            echo $filename
+            get_services_from_file $filename
+            
+            if [ -n "${VALUES_TO_OVERRIDE}" ]; then
+                VALUES_TO_OVERRIDE=$(echo --set ${VALUES_TO_OVERRIDE::-1})
+                echo "VALUES_TO_OVERRIDE: $VALUES_TO_OVERRIDE"
+            fi
+
+            if [ -n "${ORB_PARAM_NAMESPACE}" ]; then
+                ORB_PARAM_NAMESPACE=$(echo --namespace ${ORB_PARAM_NAMESPACE})
+            fi
+            if [ -n "${JIRA_STORY}" ]; then
+              JIRA_STORY=-$(echo $JIRA_STORY)
+            fi
+            
+            # Generating the chart url for deployment
+            # chart: "https://fynarfin.io/images/ph-ee-g2p-sandbox-ci/ph-ee-g2p-sandbox-ci-0.0.0.tgz"
+            ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
+            CHART_URL="$ORB_PARAM_CHART"
+            if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
+              echo "chart used: < $CHART_URL >"
+              # add-repo: "https://fynarfin.io/images/ph-ee-g2p-sandbox-ci"
+              ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
+            else
+              CHART_URL="https://fynarfin.io/images/ph-ee-g2p-sandbox-ci/ph-ee-g2p-sandbox-ci-0.0.0.tgz"
+              ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
+              echo "chart used: < $CHART_URL >"
+            fi
+          
+            echo helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+            helm repo add "${ORB_PARAM_RELEASE_NAME}" "${ORB_PARAM_REPO}"
+
+            kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml #Install ServiceMonitor
+            helm repo update
+            echo "helm upgrade --install ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}"
+            echo helm chart install starts
+            
+            # Download ph-ee-g2p-sandbox-ci-chart and extract
+            curl -O $ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz && tar xvf $ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz
+            rm -rf $ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz
+            
+            ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
+            
+            EXTRA_VALUES=$(echo "-f ph-ee-g2p-sandbox-ci/values_p1.yaml")
+            helm upgrade ${EXTRA_VALUES} --install  --timeout=1h ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} 
+            echo --------------------helm upgrade in Phase 1 done---------------------
+            EXTRA_VALUES=$(echo "-f ph-ee-g2p-sandbox-ci/values_p2.yaml")
+            helm upgrade ${EXTRA_VALUES} --install  --timeout=1h ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
+            echo --------------------helm upgrade in Phase 2 done---------------------
+            echo --------------------helm upgrade is done---------------------
+            sleep 1m;
+            
+            # ----------------------Post-Installation-Steps-starts---------------------------
+            # #ES and Kibana secret creation
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/elasticsearch/examples/security/
+            # make secrets || echo "elastic-secrets" already exists
+            # git clone -b 7.17 https://github.com/elastic/helm-charts.git elastic/helm-charts
+            # cd elastic/helm-charts/kibana/examples/security/
+            # make secrets || echo "kibana-secrets" already exists
+            # kubectl get secret elastic-certificate-crt -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificate-pem -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-certificates -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret elastic-credentials -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secret kibana -n default -o yaml | sed 's/namespace: default/namespace: paymenthub/' | kubectl create -f -
+            # kubectl get secrets -n paymenthub
+            # echo ---------secrets created--------
+            
+            # #insatll netcat
+            # sudo apt install -y netcat
+            # check_count=0
+            # until ((check_count==20)) || nc -vz ph-ee-zeebe-ops 80; do 
+            #     echo "Waiting for zeebe-ops service"; 
+            #     sleep 5; 
+            #     check_count=$(($check_count + 1));
+            # done;
+            # echo ------zeebe-ops service available-----------
+            # # until nc -vz ph-ee-zeebe-ops 80; do echo "Waiting for zeebe-ops service"; sleep 2; done;
+           
+            # #Deploy BPMN 
+            # kubectl port-forward service/ph-ee-zeebe-ops 5000:80 -n paymenthub & #portforward zeebe-ops &'
+            # git clone https://github.com/openMF/ph-ee-env-labs.git openMF/ph-ee-env-labs
+            # cd openMF/ph-ee-env-labs/orchestration
+            # ls
+            # sed -i "/HOST=/c\HOST=http://localhost:5000/zeebe/upload" deployBpmn.sh
+            # cat deployBpmn.sh
+            # cd ..
+            # sh orchestration/deployBpmn.sh || echo 'deploy Bpmn done'
+            #------------------Post-Installation-Steps-ends-------------------------------
+
+      - run:
+          name: Run Helm Tests
+          command: |
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-gov --namespace paymenthub || echo test
+            helm test g2p-sandbox --filter name=g2p-sandbox-test-ams --namespace paymenthub || echo test
+                 
+      - run:
+          name: Fetch Integration Test Report
+          command: |
+            #!/bin/bash
+            mkdir -p integration_report/test-report
+
+            echo "Fetch Integration Test Report for ams"
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml"
+            done
+            echo "File is no longer empty, processing..."
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_ams.xml
+            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_ams
+            # kubectl cp paymenthubb/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+
+            for i in $(kubectl get pods -n paymenthub | grep g2p-sandbox-test-ams |cut -d " " -f1); do
+                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
+                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+            done
+            
+            echo "Fetch Integration Test Report for GOV"
+            kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            # Specify the path to the downloaded file 
+            downloaded_file="integration_report/test-report/cucumber.xml"
+            # Loop until the file is not empty
+            while [ ! -s $downloaded_file ]; do
+                echo "File is empty, waiting..."
+                sleep 60  # You can adjust the sleep interval as needed
+                kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build/ integration_report/test-report
+                downloaded_file="integration_report/test-report/cucumber.xml"
+            done
+            echo "File is no longer empty, processing..."
+            mv integration_report/test-report/cucumber.xml integration_report/test-report/cucumber_gov.xml
+            mv integration_report/test-report/reports/tests/test integration_report/test-report/reports/tests/test_gov
+           
+            mkdir -p integration_report_final
+            cp integration_report/test-report/cucumber_gov.xml integration_report_final/ || echo ""
+            cp integration_report/test-report/cucumber_ams.xml integration_report_final/ || echo ""
+
+            ls integration_report/test-report/
+            # kubectl cp paymenthub/`kubectl get pods -n paymenthub | grep g2p-sandbox-test-gov |cut -d " " -f1`:/ph-ee-connector-integration-test/build integration_report/test-report
+            for i in $(kubectl get pods -n paymenthub |cut -d " " -f1|tail -n +2); do
+                echo "--------------------------------------------------------------------Logs of $i Start---------------------------------------------------------------------------" >> all_pod_logs.log
+                kubectl logs -n paymenthub  $i  --all-containers=true >> all_pod_logs.log
+                echo "---------------------------------------------------------------------Logs of $i End----------------------------------------------------------------------------" >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+                echo " " >> all_pod_logs.log
+            done
+            mv all_pod_logs.log integration_report/test-report/reports/tests/
+
       - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
+          path: integration_report_final/
       - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
-  test-chart-ams:
-    docker:
-      - image: cimg/openjdk:17.0.0
-    steps:
-      - run: git clone https://github.com/openmf/ph-ee-integration-test
-      - run: cd ph-ee-integration-test && ./gradlew test -Dcucumber.filter.tags="@amsIntegration"
-      - store_test_results:
-          path: ph-ee-integration-test/build/cucumber.xml
-      - store_artifacts:
-          path: ph-ee-integration-test/build/reports/tests/test
+          path: integration_report/test-report/reports/tests
+
+
 workflows:
   deploy:
     jobs:
@@ -261,10 +597,11 @@ workflows:
             - AWS
             - Helm
             - slack
-      - docker-image-availability-check-and-upgrade:
+      - minikube-run-helm-upgrade-and-helm-test:
           context:
             - AWS
             - Helm
             - slack
+            - Ngrok
           requires:
             - build-host-g2p-fyn-chart

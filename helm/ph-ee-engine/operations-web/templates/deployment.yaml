@@ -25,7 +25,7 @@ spec:
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
-            - containerPort: 4200
+            - containerPort: 80
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -33,6 +33,44 @@ spec:
             requests:
               memory: "{{ .Values.requests.memory }}"
               cpu: "{{ .Values.requests.cpu }}"
+          env:
+            - name: "PH_OPS_BACKEND_SERVER_URL"
+              value: "{{ .Values.backend.PH_OPS_BACKEND_SERVER_URL }}"
+            - name: "PH_VOU_BACKEND_SERVER_URL"
+              value: "{{ .Values.backend.PH_VOU_BACKEND_SERVER_URL }}"
+            - name: "PH_ACT_BACKEND_SERVER_URL"
+              value: "{{ .Values.backend.PH_ACT_BACKEND_SERVER_URL }}"
+            - name: "PH_PLATFORM_TENANT_ID"
+              value: "{{ .Values.backend.PH_PLATFORM_TENANT_ID }}"
+            - name: "PH_PLATFORM_TENANT_IDS"
+              value: "{{ .Values.backend.PH_PLATFORM_TENANT_IDS }}"
+            - name: "PH_REGISTERING_INSTITUTION_ID"
+              value: "{{ .Values.backend.PH_REGISTERING_INSTITUTION_ID }}"
+            - name: "PH_AUTH_ENABLED"
+              value: "{{ .Values.auth.PH_AUTH_ENABLED }}"
+            - name: "PH_OAUTH_ENABLED"
+              value: "{{ .Values.auth.PH_OAUTH_ENABLED }}"
+            - name: "PH_OAUTH_TYPE"
+              value: "{{ .Values.auth.PH_OAUTH_TYPE }}"
+            - name: "PH_OAUTH_SERVER_URL"
+              value: "{{ .Values.auth.PH_OAUTH_SERVER_URL }}"
+            - name: "PH_OAUTH_REALM"
+              value: "{{ .Values.auth.PH_OAUTH_REALM }}"
+            - name: "PH_OAUTH_CLIENT_ID"
+              value: "{{ .Values.auth.PH_OAUTH_CLIENT_ID }}"
+            - name: "PH_OAUTH_CLIENT_SECRET"
+              value: "{{ .Values.auth.PH_OAUTH_CLIENT_SECRET }}"
+            - name: "PH_OAUTH_BASIC_AUTH"
+              value: "{{ .Values.auth.PH_OAUTH_BASIC_AUTH }}"
+            - name: "PH_OAUTH_BASIC_AUTH_TOKEN"
+              value: "{{ .Values.auth.PH_OAUTH_BASIC_AUTH_TOKEN }}"
+            - name: "PH_DEFAULT_LANGUAGE"
+              value: "{{ .Values.PH_DEFAULT_LANGUAGE }}"
+            - name: "PH_SUPPORTED_LANGUAGES"
+              value: "{{ .Values.PH_SUPPORTED_LANGUAGES }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}
           volumeMounts:
 {{- if .Values.deployment.config }}
 {{ toYaml .Values.deployment.config | indent 12 }}

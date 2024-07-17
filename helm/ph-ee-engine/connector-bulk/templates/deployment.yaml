@@ -20,6 +20,11 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+        #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+        - name: check-zeebe-gateway-ready
+          image: busybox:latest
+          command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-bulk
@@ -41,6 +46,10 @@ spec:
               value: "{{ .Values.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max_execution_threads}}"
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll_interval}}"
             - name: "TENANTS"
               value: "{{ .Values.global.tenants }}"
             - name: "APPLICATION_BUCKET-NAME"

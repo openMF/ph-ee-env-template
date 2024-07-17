@@ -24,7 +24,7 @@ extraInitContainers: ""
 ## tenants properties have been moved to fin12
 limits:
   cpu: "500m"
-  memory: "512M"
+  memory: "384M"
 requests:
   cpu: "100m"
   memory: "256M"  

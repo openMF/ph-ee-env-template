@@ -48,3 +48,10 @@ deployment:
 operations_app:
   datasource:
     host: "operationsmysql"
+
+livenessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30

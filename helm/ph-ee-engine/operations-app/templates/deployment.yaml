@@ -20,6 +20,11 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      initContainers:
+        #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
+        - name: check-operationsmysql-ready
+          image: busybox:latest
+          command: [ 'sh', '-c','until nc -vz operationsmysql 3306; do echo "Waiting for operationsmysql service"; sleep 2; done;' ]
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-operations-app
@@ -31,8 +36,8 @@ spec:
             httpGet:
               path: /oauth/token_key
               port: 5000
-            periodSeconds: 180
-            timeoutSeconds: 5
+            initialDelaySeconds: {{.Values.readinessProbe.initialDelaySeconds}}
+            periodSeconds: {{.Values.readinessProbe.periodSeconds}}
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -56,10 +61,31 @@ spec:
               value: "{{ .Values.datasource.schema }}"
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
+            - name: "CLOUD_AWS_MINIO_PUBLIC_HOST"
+              value: "{{ .Values.minio_public_host}}"
             - name: "TOKEN_CLIENT_CHANNEL_SECRET"
               value: "{{ .Values.token_client_channel_secret }}"
             - name: "TENANTS"
               value: "{{ .Values.global.tenants }}"
+            - name: "AWS_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: bulk-processor-secret
+                  key: aws-access-key
+            - name: "AWS_SECRET_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: bulk-processor-secret
+                  key: aws-secret-key
+            - name: "CLOUD_AWS_REGION"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-region"
+            - name: "CLOUD_AWS_S3BASEURL"
+              value: {{.Values.global.s3BaseUrl}}
+            - name: "APPLICATION_BUCKET_NAME"
+              value: "{{ .Values.global.bucket_name }}"
             - name: "LOGGING_LEVEL_ROOT"
               value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
             - name: "LOGGING_PATTERN_CONSOLE"

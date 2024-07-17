@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: g2p-sandbox-test-gov
+  labels:
+    app: "integration-test-gov"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+  - name: g2p-sandbox-test-gov
+    image: "{{ .Values.integration_test.image}}"
+    imagePullPolicy: "Always"
+    command: [ "/bin/bash" , "-c" ]
+    args:
+      # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+      - ./gradlew test -Dcucumber.filter.tags="@gov and not @ext" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
+    {{- include "inttest.env" . | nindent 4 }}
+    resources:
+      limits:
+        cpu: "{{.Values.integration_test.limits.cpu}}"
+        memory: "{{.Values.integration_test.limits.memory}}"
+      requests:
+        cpu: "{{.Values.integration_test.requests.cpu}}"
+        memory: "{{.Values.integration_test.requests.memory}}"
+  restartPolicy: Never

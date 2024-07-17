@@ -34,8 +34,8 @@ payer:
   identifier:
   identifierType:
 
-identity-account-mapper:
-  hostname: ""
+identity_account_mapper:
+  hostname: "http://ph-ee-identity-account-mapper:80"
 voucher:
   hostname: "http://ph-ee-vouchers:80"
 operations:
@@ -50,7 +50,7 @@ limits:
   memory: "512M"
 requests:
   cpu: "100m"
-  memory: "512M"
+  memory: "256M"
 
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster  
@@ -67,8 +67,15 @@ ingress:
   #  - secretName: sandbox-secret
   #    hosts:
   #      - chart-example.local      
-
+paymentadvice: false
 deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+
+livenessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 30

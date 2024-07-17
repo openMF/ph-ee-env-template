@@ -23,6 +23,8 @@ global:
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   tenants: ""
   DFSPIDS: ""
+  max_execution_threads: 50
+  poll_interval: 10
 camunda-platform:
   connectors:
     enabled: false
@@ -216,7 +218,7 @@ channel:
       keyFormat: "clientCorrelationId_tenant_api"
       apiList: "/channel/transfer,/channel/collection,/channel/gsma/transaction,/channel/transactionRequest"
   operations:
-    url: ""
+    url: "http://ph-ee-operations-app:80/api/v1"
     authEnabled: false
   tenantPrimary:
     clientId: ""
@@ -377,10 +379,10 @@ ph_ee_connector_ams_mifos:
     privileged: false
   resources:    
     limits:
-      memory: "2048M"
+      memory: "384M"
       cpu: "500m"
     requests:
-      memory: "1024M"
+      memory: "256M"
       cpu: "300m"
 # Enabling this will publicly expose your ams-mifos instance.
 # Only enable this if you have security enabled on your cluster    
@@ -523,6 +525,7 @@ operations_app:
   image: docker.io/openmf/ph-ee-operations-app:v1.10.0
   imagePullPolicy: "Always"
   token_client_channel_secret: ""
+  minio_public_host: "http://minio:9000"
   datasource:
       username: "mifos"
       password: "password"
@@ -575,7 +578,7 @@ operations_app:
       cpu: "500m"
     requests:
       memory: "512M"
-      cpu: "100m"         
+      cpu: "100m"
 # Enabling this will publicly expose your operations_app instance.
 # Only enable this if you have security enabled on your cluster       
   ingress:
@@ -1418,7 +1421,7 @@ kafka:
         replicationFactor: 1
 
   controller:
-    replicaCount: 3
+    replicaCount: 1
 
   listeners:
     client:
@@ -1435,6 +1438,18 @@ kafka:
 
   kraft:
     clusterId: spDnn4oSr6DLKPx3cEheLp
+
+  # externalAccess:
+  #   enabled: true
+  #   autoDiscovery:
+  #     enabled: true
+
+  # rbac:
+  #   create: true
+
+  extraConfig: |
+    offsets.topic.replication.factor=1
+    transaction.state.log.replication.factor=1    
 
 importer_rdbms:
   enabled: true
@@ -1806,10 +1821,12 @@ ph-ee-connector_slcb:
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
 
-connector:
+ph-ee-connector:
   enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  operations_app:
+    contactpoint: "http://ph-ee-operations-app:5000"
   ingress:
     enabled: true
     annotations:
@@ -1883,7 +1900,7 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test"
+  image: "docker.io/openmf/ph-ee-integration-test:latest"
   imageTag: v1.4.0-rc.1
   imagePullPolicy: "Never"
   limits:
@@ -1987,7 +2004,7 @@ kong:
         credentials: true
         max_age: 3600
         exposed_headers :
-          - "X-Auth-Token"
+          - "*"
         preflight_continue: false
     - apiVersion: configuration.konghq.com/v1
       kind: KongClusterPlugin
@@ -2010,6 +2027,7 @@ kong:
 
 vouchers:
   enabled: false
+  paymentadvice: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
   ingress:
@@ -2044,22 +2062,24 @@ vouchers:
     tenant: rhino
     identifier: 12345678
     identifierType: MSISDN
-  voucher:
-    hostname: "https://vouchers.sandbox.mifos.io"
   salting:
     enabled: true
   identity-account-mapper:
     hostname: "https://ph-ee-identity-mapper:80"
   operations:
-    hostname: "https://ops-bk.sandbox.mifos.io"
+    hostname: "http://ph-ee-operations-app:80"
     endpoints:
       transfers: "/api/v1/transfers?size=1&page=0"
 
 billPay:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-bill-pay:v1.0.0
+  image: docker.io/openmf/ph-ee-bill-pay:v1.0.0
   imagePullPolicy: "Always"
+  connector:
+    contactpoint: "http://ph-ee-connector:80"
+  billpay:
+    contactpoint: "http://ph-ee-connector-bill-pay:8080"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
