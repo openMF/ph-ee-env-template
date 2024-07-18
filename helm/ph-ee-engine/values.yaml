@@ -299,16 +299,7 @@ channel:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the channel Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-channel.yml for deployment  
     # ph-ee-connector-channelConfig: {}
@@ -405,13 +396,6 @@ ph_ee_connector_ams_mifos:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-mifos.yml for deployment  
     # ph-ee-connector-ams-mifosConfig: {}
@@ -504,16 +488,7 @@ ph_ee_connector_mojaloop:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the mojaloop Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-mojaloop-java.yml for deployment  
     # ph-ee-connector-mojaloop-javaConfig: {}
@@ -598,16 +573,7 @@ operations_app:
 # - User that the container will execute as.
 # Not necessary to run as root (0) as the operations_app Deployment use cases do not need access to Kubernetes Node internals
 # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as operations_app.yml for deployment
 
@@ -688,16 +654,7 @@ operations_web:
 # - User that the container will execute as.
 # Not necessary to run as root (0) as the operation-web Deployment use cases do not need access to Kubernetes Node internals
 # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-operations-web.yml for deployment
     # ph-ee-operations-webConfig: {}
@@ -823,16 +780,7 @@ mpesa:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the mpesa Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-mpesa.yml for deployment  
     # ph-ee-connector-mpesaConfig: {}
@@ -908,16 +856,7 @@ roster_connector:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the roster_connector Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-roster.yml for deployment  
     # ph-ee-connector-ams-rosterConfig: {}
@@ -993,16 +932,7 @@ paygops_connector:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the paygops Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-ams-paygops.yml for deployment  
     # ph-ee-connector-ams-paygopsConfig: {}
@@ -1093,16 +1023,7 @@ messagegateway:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the message-gateway Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as message-gateway.yml for deployment  
     # message-gatewayConfig: {}
@@ -1186,16 +1107,7 @@ notifications:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the notifications Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-notifications.yml for deployment  
     # ph-ee-connector-notificationsConfig: {}
@@ -1277,16 +1189,7 @@ zeebe_ops:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the zeebeops Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
@@ -1408,7 +1311,6 @@ mockpayment:
   deployment:
     annotations: {}
 
-
 kafka:
   enabled: true
   fullnameOverride: kafka
@@ -1522,16 +1424,7 @@ importer_rdbms:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the importer_rdbms Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-importer_rdbms.yml for deployment  
     # ph-ee-importer_rdbmsConfig: {}
@@ -1647,16 +1540,7 @@ connector_bulk:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"
+
 # Allows you to add any config files in /usr/share/
     # such as ph-ee-connector-bulk.yml for deployment  
     # ph-ee-connector-bulkConfig: {}
@@ -1710,16 +1594,7 @@ ph_ee_connector_gsma:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the gsma Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_gsma.yml for deployment  
     # ph_ee_connector_gsmaConfig: {}
@@ -1806,16 +1681,7 @@ ph-ee-connector_slcb:
   # - User that the container will execute as.
   # Not necessary to run as root (0) as the ph_ee_connector_slcb Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
-    securityContext:
-      runAsUser: 0
-      privileged: false
-    resources:    
-      limits:
-        memory: "512M"
-        cpu: "500m"
-      requests:
-        memory: "512M"
-        cpu: "100m"    
+
 # Allows you to add any config files in /usr/share/
     # such as ph_ee_connector_slcb.yml for deployment  
     # ph_ee_connector_slcbConfig: {}
