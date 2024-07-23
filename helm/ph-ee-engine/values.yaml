@@ -611,7 +611,6 @@ operations_app:
     # such as operations_app.yml for deployment
 
 operations_web:
-  enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-web:v1.20.0
   imagePullPolicy: "Always"
@@ -663,11 +662,33 @@ operations_web:
       cpu: "500m"
     requests:
       memory: "100M"
-      cpu: "100m"       
+      cpu: "100m"   
+
+  backend:
+    PH_OPS_BACKEND_SERVER_URL: http://ph-ee-operations-app
+    PH_VOU_BACKEND_SERVER_URL: http://ph-ee-vouchers
+    PH_ACT_BACKEND_SERVER_URL: http://ph-ee-identity-account-mapper
+    PH_OPS_BULK_CONNECTOR_URL: http://ph-ee-connector-bulk
+    PH_PLATFORM_TENANT_ID: gorilla
+    PH_PLATFORM_TENANT_IDS: gorilla
+    PH_REGISTERING_INSTITUTION_ID: 123
+  auth:
+    PH_AUTH_ENABLED: false
+    PH_OAUTH_ENABLED: false
+    PH_OAUTH_TYPE: keycloak
+    PH_OAUTH_SERVER_URL: http://keycloak.sandbox.fynarfin.io/auth
+    PH_OAUTH_REALM: paymenthub
+    PH_OAUTH_CLIENT_ID: opsapp
+    PH_OAUTH_CLIENT_SECRET: Y2xpZW50Og==
+    PH_OAUTH_BASIC_AUTH: true
+    PH_OAUTH_BASIC_AUTH_TOKEN: Y2xpZW50Og==
+    PH_DEFAULT_LANGUAGE: en
+    PH_SUPPORTED_LANGUAGES: en,fr,es    
 # Enabling this will publicly expose your operations_web instance.
 # Only enable this if you have security enabled on your cluster      
   ingress:
     enabled: true
+    className: nginx
     tls:
       - secretName: sandbox-secret
     hosts:
@@ -679,9 +700,7 @@ operations_web:
               name: "ph-ee-operations-web"
               port:
                 number: 4200
-    # path: "/"
-    # annotations: {}    
-    #backend: {}
+
   deployment:
     config:
       - name: ph-ee-operations-web-config
