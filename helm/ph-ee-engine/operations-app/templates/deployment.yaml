@@ -21,10 +21,9 @@ spec:
 {{- end }}
     spec:
       initContainers:
-        #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
-        - name: check-operationsmysql-ready
-          image: busybox:latest
-          command: [ 'sh', '-c','until nc -vz operationsmysql 3306; do echo "Waiting for operationsmysql service"; sleep 2; done;' ]
+      {{- with .Values.extraInitContainers }}
+      {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-operations-app
@@ -99,14 +98,6 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
-      initContainers:
-        - name: wait-db
-          image: jwilder/dockerize
-          imagePullPolicy: IfNotPresent
-          args:
-            - -timeout=120s
-            - -wait
-            - tcp://{{ .Values.secret.datasource.host }}:3306
       volumes:
         - name: ph-ee-config
           configMap:

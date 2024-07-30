@@ -17,14 +17,13 @@ spec:
         app: ph-ee-connector-bulk
       annotations:
 {{- if .Values.deployment.annotations }}
-{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{ toYaml .Values.deployment.annotations | indent 10 }}
 {{- end }}
     spec:
       initContainers:
-        #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
-        - name: check-zeebe-gateway-ready
-          image: busybox:latest
-          command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
+      {{- with .Values.extraInitContainers }}
+      {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-bulk

@@ -600,6 +600,11 @@ account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:latest
   hostname: "identity-mapper.sandbox.mifos.io"
+  extraInitContainers:
+    #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
+    - name: check-db-service
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.datasource.host}} {{.Values.datasource.port}}; do echo "Waiting for database service"; sleep 2; done;' ]
   LOGGING_LEVEL_ROOT: INFO
   livenessProbe:
     initialDelaySeconds: 20

@@ -21,10 +21,9 @@ spec:
 {{- end }}
     spec:
       initContainers:
-        #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
-        - name: check-zeebe-gateway-ready
-          image: busybox:latest
-          command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
+      {{- with .Values.extraInitContainers }}
+      {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
       containers:
         - name: message-gateway
           image: "{{ .Values.image }}"  
@@ -95,14 +94,6 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
-      initContainers:
-        - name: wait-db
-          image: jwilder/dockerize
-          imagePullPolicy: IfNotPresent
-          args:
-            - -timeout=120s
-            - -wait
-            - tcp://{{ .Values.operations_app.datasource.host }}:3306
       volumes:
         - name: ph-ee-config
           configMap:
