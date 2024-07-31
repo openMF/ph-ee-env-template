@@ -33,7 +33,7 @@ jobs:
                 if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
                 echo Charts will save in https://fynarfin.io/images$JIRA_STORY_DIR
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY"
+            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "11s@^ *repository:.*\$@  repository: $CHART_URL@" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
               sed -i "12s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
@@ -49,9 +49,9 @@ jobs:
             helm repo index .
             echo "$CERT_FILE" | base64 --decode > b64encoded.pem
             chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images/fynafin$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
+            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
             scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images/fynafin$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
+            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
   build-and-host-engine:
     docker:
       - image: cimg/python:3.10
@@ -590,9 +590,16 @@ workflows:
           context: 
             - AWS
             - Helm
-      - build-and-host-g2p-sandbox-security:
+      - build-g2p-sandbox-ci-chart:
           requires:
             - build-host-g2p-fyn-chart
+          context:
+            - AWS
+            - Helm
+            - slack
+      - build-and-host-g2p-sandbox-security:
+          requires:
+            - build-g2p-sandbox-ci-chart
           context: 
             - AWS
             - Helm
@@ -604,4 +611,4 @@ workflows:
             - slack
             - Ngrok
           requires:
-            - build-host-g2p-fyn-chart
+            - build-g2p-sandbox-ci-chart
