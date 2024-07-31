@@ -17,10 +17,9 @@ spec:
         app: ph-ee-importer-es
     spec:
       initContainers:
-        #During this Pod's initialization, check that ph-ee-elasticsearch service is up and running before starting this pod
-        - name: check-ph-ee-elasticsearch-ready
-          image: busybox:latest
-          command: [ 'sh', '-c','until nc -vz ph-ee-elasticsearch 9200; do echo "Waiting for ph-ee-elasticsearch service"; sleep 2; done;' ]
+      {{- with .Values.extraInitContainers }}
+      {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
       containers:
         - name: ph-ee-importer-es
           image: "{{ .Values.image }}"
@@ -38,7 +37,7 @@ spec:
           - name: "LOGGING_LEVEL_ROOT"
             value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
           - name: "importer_elasticsearch_url"
-            value: "{{ .Values.importer_elasticsearch_url }}"
+            value: "{{ .Values.importer_elasticsearch_url}}"
           - name: "JAVA_TOOL_OPTIONS"
             value: "{{ .Values.javaToolOptions}}"
           - name: "LOGGING_PATTERN_CONSOLE"

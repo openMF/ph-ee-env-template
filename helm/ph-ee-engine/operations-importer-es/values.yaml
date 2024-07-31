@@ -18,6 +18,10 @@ image: ""
 imageTag: latest
 elasticsearch_sslverification: false
 elasticsearch_security_enabled: false
+importer:
+  elasticsearch:
+    host: ph-ee-elasticsearch
+    port: 9200
 importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
 javaToolOptions: 
 logging:
@@ -65,3 +69,4 @@ limits:
 requests:
   cpu: "100m"
   memory: "256M"
+extraInitContainers: []

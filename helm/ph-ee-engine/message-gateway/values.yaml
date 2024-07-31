@@ -48,6 +48,7 @@ deployment:
 operations_app:
   datasource:
     host: "operationsmysql"
+    port: "3306"
 
 livenessProbe:
   initialDelaySeconds: 20
@@ -55,3 +56,4 @@ livenessProbe:
 readinessProbe:
   initialDelaySeconds: 20
   periodSeconds: 30
+extraInitContainers: []

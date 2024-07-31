@@ -34,3 +34,4 @@ deployment:
   apiVersion: "apps/v1"
   annotations:
     deployTime: "{{ .Values.deployTime }}"
+extraInitContainers: []

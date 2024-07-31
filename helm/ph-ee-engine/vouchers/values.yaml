@@ -79,3 +79,5 @@ livenessProbe:
 readinessProbe:
   initialDelaySeconds: 20
   periodSeconds: 30
+
+extraInitContainers: []

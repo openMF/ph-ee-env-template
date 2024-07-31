@@ -209,8 +209,16 @@ channel:
   imagePullPolicy: "Always"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
+  extraInitContainers:
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
+    #During this Pod's initialization, check that redis is up and running before starting this pod
+    - name: check-redis-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.redis.host}} {{.Values.redis.port}}; do echo "Waiting for redis-master service"; sleep 2; done;' ]
   redis:
-    host: "127.0.0.1"
+    host: "redis-master"
     port: 6379
     password: ""
     idempotency:
@@ -282,6 +290,24 @@ channel:
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
+    hosts:
+      - host: channel.sandbox.mifos.io
+        paths:
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-channel"
+                port:
+                  number: 8443
+      - host: channel-gsma.sandbox.mifos.io
+        paths:
+          - path: "/"
+            backend:
+              service:
+                name: "ph-ee-connector-channel-gsma"
+                port:
+                  number: 82
+
     enabled: true
     path: "/channel"
     annotations: {}
@@ -345,7 +371,14 @@ ph_ee_connector_ams_mifos:
   ams_local_tenants: ""
   ams_local_loan_host: ""
 # Whether this chart should self-manage its service account, role, and associated role binding.
-  managedServiceAccount: true 
+  managedServiceAccount: true
+  extraInitContainers:
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
+    - name: check-db-service
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.operations_app.datasource.host}} {{.Values.operations_app.datasource.port}}; do echo "Waiting for database service"; sleep 2; done;' ]
 # Custom service account override that the pod will use
   serviceAccount: "" 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
@@ -407,6 +440,11 @@ ph_ee_connector_mojaloop:
   image: docker.io/openmf/ph-ee-connector-mojaloop:v1.3.0
   imagePullPolicy: "Always"
   hostname: ""
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   switch:
     quotes:
       host: ""
@@ -499,6 +537,11 @@ operations_app:
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-app:v1.10.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
+    - name: check-db-service
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.secret.datasource.host}} {{.Values.secret.datasource.port}}; do echo "Waiting for database service"; sleep 2; done;' ]
   token_client_channel_secret: ""
   minio_public_host: "http://minio:9000"
   datasource:
@@ -667,6 +710,11 @@ mpesa:
   replicas: 1
   image: "docker.io/openmf/ph-ee-connector-mpesa"
   imageTag: "v1.6.0"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   zeebe_init_transfer_wait_timer: 10
   tenant: ""
   serviceAccountName: ""
@@ -943,6 +991,14 @@ messagegateway:
   replicas: 1
   image: docker.io/openmf/message-gateway:v1.1.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
+    - name: check-db-service
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.operations_app.datasource.host}} {{.Values.operations_app.datasource.port}}; do echo "Waiting for database service"; sleep 2; done;' ]
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
@@ -1034,6 +1090,11 @@ notifications:
   replicas: 1
   image: docker.io/openmf/ph-ee-notifications:v1.3.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway"
   NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
   NOTIFICATION_SUCCESS_ENABLED: "false"
@@ -1118,6 +1179,11 @@ zeebe_ops:
   replicas: 1
   image: docker.io/openmf/ph-ee-zeebe-ops:v1.2.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   imagePullSecrets: []
   elasticsearch_contactpoint: "ph-ee-elasticsearch:9200"
   elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
@@ -1202,6 +1268,11 @@ importer_es:
   image: docker.io/openmf/ph-ee-importer-es:v1.6.0
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
+  extraInitContainers:
+    #During this Pod's initialization, check that ph-ee-elasticsearch service is up and running before starting this pod
+    - name: check-ph-ee-elasticsearch-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.importer.elasticsearch.host}} {{.Values.importer.elasticsearch.port}} ; do echo "Waiting for ph-ee-elasticsearch service"; sleep 2; done;' ]
   reporting:
     enabled: true
     fields:
@@ -1300,6 +1371,11 @@ mockpayment:
   enabled: false
   image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.4.0
   replicas: 1
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   mockFailure:
     percentage: "0"
   limits:
@@ -1358,6 +1434,11 @@ importer_rdbms:
   replicas: 1
   image: docker.io/openmf/ph-ee-importer-rdbms:v1.7.1
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
+    - name: check-db-service
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{.Values.datasource.host}} {{.Values.datasource.port}}; do echo "Waiting for database service"; sleep 2; done;' ]
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   datasource:
       username: "mifos"
@@ -1448,6 +1529,11 @@ connector_bulk:
         batch_transaction: "/api/v1/batch/transactions"
   identity_account_mapper:
     hostname: "http://ph-ee-identity-account-mapper:80"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   config:
     partylookup:
       enable: false
@@ -1551,6 +1637,11 @@ ph_ee_connector_gsma:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.2.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -1605,6 +1696,11 @@ ph-ee-connector_slcb:
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
   imageTag: "v1.4.0"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   username: "username"
   password: "password"
   signature_key: "long_segnature_key"
@@ -1693,6 +1789,11 @@ ph-ee-connector:
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
   operations_app:
     contactpoint: "http://ph-ee-operations-app:5000"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   ingress:
     enabled: true
     annotations:
@@ -1805,6 +1906,7 @@ integration_test:
 
 redis:
   enabled: true
+  fullnameOverride: redis
   replica:
     replicaCount: 1
 volumeClaimTemplate:
@@ -1896,6 +1998,11 @@ vouchers:
   paymentadvice: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.1.0
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   ingress:
     enabled: true
     annotations:
@@ -1942,6 +2049,11 @@ billPay:
   replicas: 1
   image: docker.io/openmf/ph-ee-bill-pay:v1.0.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   connector:
     contactpoint: "http://ph-ee-connector:80"
   billpay:
@@ -2016,6 +2128,11 @@ crm:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-crm:v1.0.0
   imagePullPolicy: "Always"
+  extraInitContainers:
+    #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
+    - name: check-zeebe-gateway-ready
+      image: busybox:latest
+      command: [ 'sh', '-c','until nc -vz {{ .Release.Name }}-zeebe-gateway 26500; do echo "Waiting for zeebe-gateway service"; sleep 2; done;' ]
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness

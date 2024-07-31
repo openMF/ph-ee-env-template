@@ -50,3 +50,4 @@ deployment:
 operations_app:
   datasource:
     host: "operationsmysql"
+    port: "3306"
