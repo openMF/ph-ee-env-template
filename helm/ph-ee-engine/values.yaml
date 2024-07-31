@@ -205,7 +205,7 @@ kibana:
 channel:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-channel:v1.9.0
+  image: docker.io/openmf/ph-ee-connector-channel:v1.12.1
   imagePullPolicy: "Always"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
@@ -361,7 +361,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.3.0
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.17.2
   imagePullPolicy: "Always"
   ams_local_enabled: true
   ams_local_interop_host: "fineract-server"
@@ -437,7 +437,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.3.0
+  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.5.2
   imagePullPolicy: "Always"
   hostname: ""
   extraInitContainers:
@@ -535,7 +535,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.10.0
+  image: docker.io/openmf/ph-ee-operations-app:v1.20.1
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
@@ -623,7 +623,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-web:v1.10.0
+  image: docker.io/openmf/ph-ee-operations-web:v1.20.0
   imagePullPolicy: "Always"
   imagePullSecrets: []
   webhost: ""
@@ -709,7 +709,7 @@ mpesa:
   enabled: false
   replicas: 1
   image: "docker.io/openmf/ph-ee-connector-mpesa"
-  imageTag: "v1.6.0"
+  imageTag: "v1.7.0"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
     - name: check-zeebe-gateway-ready
@@ -989,7 +989,7 @@ paygops_connector:
 messagegateway:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/message-gateway:v1.1.0
+  image: docker.io/openmf/message-gateway:v1.2.0
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
@@ -1088,7 +1088,7 @@ messagegateway:
 notifications:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-notifications:v1.3.0
+  image: docker.io/openmf/ph-ee-notifications:v1.4.0
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
@@ -1177,7 +1177,7 @@ notifications:
 zeebe_ops:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-zeebe-ops:v1.2.0
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.5.0
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
@@ -1265,7 +1265,7 @@ zeebe_ops:
 importer_es:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-es:v1.6.0
+  image: docker.io/openmf/ph-ee-importer-es:v1.14.0
   imagePullPolicy: "Always"
   importer_elasticsearch_url: "http://ph-ee-elasticsearch:9200/"
   extraInitContainers:
@@ -1369,7 +1369,7 @@ importer_es:
 
 mockpayment:
   enabled: false
-  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.4.0
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.1
   replicas: 1
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
@@ -1432,7 +1432,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.7.1
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.14.2
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that operationsmysql service is up and running before starting this pod
@@ -1515,7 +1515,7 @@ importer_rdbms:
 connector_bulk:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.9.0
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.13.1
   imagePullPolicy: "Always"
   camel_disable_ssl: true
   channel:
@@ -1635,7 +1635,7 @@ connector_bulk:
 ph_ee_connector_gsma:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-gsma:v1.2.0
+  image: docker.io/openmf/ph-ee-connector-gsma:v1.3.1
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
@@ -1786,7 +1786,7 @@ ph-ee-connector_slcb:
 ph-ee-connector:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  image: docker.io/openmf/ph-ee-connector-bulk:v1.2.1
   operations_app:
     contactpoint: "http://ph-ee-operations-app:5000"
   extraInitContainers:
@@ -1997,7 +1997,7 @@ vouchers:
   enabled: false
   paymentadvice: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-vouchers:v1.1.0
+  image: docker.io/openmf/ph-ee-vouchers:v1.4.0
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
     - name: check-zeebe-gateway-ready
@@ -2047,7 +2047,7 @@ vouchers:
 billPay:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-bill-pay:v1.0.0
+  image: docker.io/openmf/ph-ee-bill-pay:v1.2.0
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
@@ -2126,7 +2126,7 @@ billPay:
 crm:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-crm:v1.0.0
+  image: docker.io/openmf/ph-ee-connector-crm:v1.2.0
   imagePullPolicy: "Always"
   extraInitContainers:
     #During this Pod's initialization, check that zeebe-gateway service is up and running before starting this pod
