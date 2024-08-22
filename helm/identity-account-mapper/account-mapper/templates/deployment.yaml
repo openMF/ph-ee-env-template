@@ -50,6 +50,8 @@ spec:
             initialDelaySeconds: {{.Values.readinessProbe.initialDelaySeconds}}
             periodSeconds: {{.Values.readinessProbe.periodSeconds}}
           env:
+            - name: "GSMA_CONNECTOR_CONTACTPOINT"
+              value: "{{.Values.gsma.contactpoint}}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
             - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"

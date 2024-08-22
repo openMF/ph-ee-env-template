@@ -70,3 +70,5 @@ readinessProbe:
   periodSeconds: 30
 
 extraInitContainers: []
+gsma:
+  contactpoint: "http://ph-ee-connector-ams-mifos:80"
