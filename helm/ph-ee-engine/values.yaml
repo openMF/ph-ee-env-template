@@ -133,7 +133,7 @@ camunda-platform:
     enabled: false
 
 elasticsearch:
-  enabled: true
+  enabled: false
   # imageTag: 7.17.1
   replicas: 1
   protocol: http
@@ -163,7 +163,7 @@ elasticsearch:
 
 
 kibana:
-  enabled: true
+  enabled: false
   imageTag: 7.16.3
   fullnameOverride: "ph-ee-kibana"
   elasticsearchHosts: "http://ph-ee-elasticsearch:9200/"
