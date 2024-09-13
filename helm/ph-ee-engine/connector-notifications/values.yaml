@@ -1,5 +1,5 @@
 enabled: true
-fullnameOverride: phee-connector-notifications
+fullnameOverride: ph-ee-connector-notifications
 replicas: 1 
 image: "docker.io/openmf/ph-ee-notifications"
 imageTag: "v1.4.0"
