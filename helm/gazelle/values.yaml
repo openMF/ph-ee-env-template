@@ -36,7 +36,7 @@ ph-ee-engine:
       annotations: 
         kubernetes.io/ingress.class: nginx     
       path: /
-      host: operate.local
+      host: operate.mifos.gazelle.test
       tls:
         enabled: true
 
@@ -96,13 +96,13 @@ ph-ee-engine:
         # kubernetes.io/tls-acme: "true" 
       }      
       hosts:
-        - host: analytics.local
+        - host: analytics.mifos.gazelle.test
           paths:
             - path: /
       #tls: []
       #  - secretName: chart-example-tls
       #    hosts:
-      #      - chart-example.local
+      #      - chart-example.mifos.gazelle.test
 
   operations:
     enabled: true
@@ -151,7 +151,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ams-mifos.local          
+        - host: ams-mifos.mifos.gazelle.test          
           paths: 
           - path: "/"
             backend:
@@ -166,7 +166,7 @@ ph-ee-engine:
   ph_ee_connector_mojaloop:
     enabled: true
     SPRING_PROFILES_ACTIVE: "bb"
-    hostname: "mojaloop.local"
+    hostname: "mojaloop.mifos.gazelle.test"
     ingress:
       enabled: false
       annotations: 
@@ -174,7 +174,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: mojaloop.local          
+        - host: mojaloop.mifos.gazelle.test          
           paths: 
           - path: "/"
             backend:
@@ -204,8 +204,8 @@ ph-ee-engine:
 
   channel:
     enabled: true
-    hostname: "channel.local"
-    stub_hostname: "channel-gsma.local"
+    hostname: "channel.mifos.gazelle.test"
+    stub_hostname: "channel-gsma.mifos.gazelle.test"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     tenantPrimary:
       clientId: "mifos"
@@ -224,7 +224,7 @@ ph-ee-engine:
       # tls:
       #   - secretName: sandbox-secret
       hosts:
-        - host: channel.local          
+        - host: channel.mifos.gazelle.test          
           paths: 
           - path: "/"
             backend:
@@ -232,7 +232,7 @@ ph-ee-engine:
                 name: "ph-ee-connector-channel"
                 port:
                   number: 8443
-        - host: channel-gsma.local          
+        - host: channel-gsma.mifos.gazelle.test          
           paths:          
           - path: "/"
             backend:
@@ -247,7 +247,7 @@ ph-ee-engine:
 
   operations_app:
     enabled: true
-    hostname: "ops-bk.local"
+    hostname: "ops-bk.mifos.gazelle.test"
     datasource:
       username: "mifos"
       password: "password"
@@ -265,7 +265,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: ops-bk.local          
+        - host: ops-bk.mifos.gazelle.test          
           paths: 
           - path: "/"
             backend:
@@ -279,13 +279,13 @@ ph-ee-engine:
 
   # operations_web:
   #   enabled: true
-  #   hostname: "ops.local"
+  #   hostname: "ops.mifos.gazelle.test"
   #   ingress:
   #     enabled: true
   #     tls:
   #       - secretName: sandbox-secret
   #     hosts:
-  #       - host: ops.local          
+  #       - host: ops.mifos.gazelle.test          
   #         paths: 
   #         - path: "/"
   #           backend:
@@ -295,7 +295,7 @@ ph-ee-engine:
   #                 number: 4200
 
   identity:
-    hostname: "ops-bk.local"
+    hostname: "ops-bk.mifos.gazelle.test"
 
   ph_ee_connector_gsma:
     enabled: true
@@ -331,7 +331,7 @@ ph-ee-engine:
     NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
     NOTIFICATION_SUCCESS_ENABLED: "false"
     NOTIFICATION_FAILURE_ENABLED: "true"   
-    hostname: "notifications.local"
+    hostname: "notifications.mifos.gazelle.test"
     includeResources: false
     ingress:
       enabled: false
@@ -340,7 +340,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: notifications.local         
+        - host: notifications.mifos.gazelle.test         
           paths: 
           - path: "/"
             backend:
@@ -355,7 +355,7 @@ ph-ee-engine:
   connector_bulk:
     enabled: true
     #tenants: "rhino,gorilla"
-    hostname: bulk-connector.local
+    hostname: bulk-connector.mifos.gazelle.test
     operations_app:
       contactpoint: "http://ph-ee-operations-app:80"
       endpoints:
@@ -373,7 +373,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: bulk-connector.local     
+        - host: bulk-connector.mifos.gazelle.test     
           paths: 
           - path: "/"
             backend:
@@ -387,7 +387,7 @@ ph-ee-engine:
         
   zeebe_ops:
     enabled: true
-    hostname: "zeebeops.local"
+    hostname: "zeebeops.mifos.gazelle.test"
     ingress:
       enabled: false
       annotations: 
@@ -395,7 +395,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: zeebeops.local          
+        - host: zeebeops.mifos.gazelle.test          
           paths: 
           - path: "/"
             backend:
@@ -413,7 +413,7 @@ ph-ee-engine:
       value:
         api_key: "<api_key>"
         project_id: "<project_id>"
-    hostname: "messagegateway.local"
+    hostname: "messagegateway.mifos.gazelle.test"
     ingress:
       enabled: false
       annotations: 
@@ -421,7 +421,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: messagegateway.local       
+        - host: messagegateway.mifos.gazelle.test       
           paths: 
           - path: "/"
             backend:
@@ -450,7 +450,7 @@ ph-ee-engine:
       enabled: false
       ingressClassName: "nginx"
       rules:
-        - host: 'keycloak.local'
+        - host: 'keycloak.mifos.gazelle.test'
           paths:
           - path: /
             pathType: Prefix
@@ -486,7 +486,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: vouchers.local
+        - host: vouchers.mifos.gazelle.test
           paths:
             - path: "/"
               backend:
@@ -504,8 +504,8 @@ ph-ee-engine:
 
   billPay:
     enabled: true
-    hostname: "bill-pay.local"
-    stub_hostname: "bill-pay.local"
+    hostname: "bill-pay.mifos.gazelle.test"
+    stub_hostname: "bill-pay.mifos.gazelle.test"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     ingress:
       enabled: false
@@ -517,7 +517,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: bill-pay.local
+        - host: bill-pay.mifos.gazelle.test
           paths:
             - path: "/"
               backend:
@@ -531,8 +531,8 @@ ph-ee-engine:
 
   crm:
     enabled: true
-    hostname: "crm.local"
-    stub_hostname: "crm.local"
+    hostname: "crm.mifos.gazelle.test"
+    stub_hostname: "crm.mifos.gazelle.test"
     SPRING_PROFILES_ACTIVE: "bb,tenants"
     ingress:
       enabled: false
@@ -544,7 +544,7 @@ ph-ee-engine:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: crm.local
+        - host: crm.mifos.gazelle.test
           paths:
             - path: "/"
               backend:
@@ -562,7 +562,7 @@ ph-ee-engine:
       region: "ap-south-1"
       access_key: "aws-access-key"
       secret_key: "aws-secret-key"
-    hostname: "connector.local"
+    hostname: "connector.mifos.gazelle.test"
     ingress:
       enabled: true
       annotations:
@@ -583,7 +583,7 @@ ph-ee-engine:
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
-  hostname: "identity-mapper.local"
+  hostname: "identity-mapper.mifos.gazelle.test"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
     enabled: false
@@ -597,7 +597,7 @@ account_mapper:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: identity-mapper.local
+      - host: identity-mapper.mifos.gazelle.test
         paths:
         - path: "/"
           backend:
