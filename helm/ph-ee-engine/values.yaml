@@ -692,7 +692,7 @@ operations_web:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: ops.local          
+      - host: ops.mifos.gazelle.test          
         paths: 
         - path: "/"
           backend:
