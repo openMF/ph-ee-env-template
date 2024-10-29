@@ -1,3 +1,4 @@
+{{- if .Values.integration_test.enableAMSTest }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -23,3 +24,4 @@ spec:
         cpu: "100m"
         memory: "1Gi"
   restartPolicy: Never
+{{- end }}

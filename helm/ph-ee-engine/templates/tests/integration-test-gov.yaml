@@ -1,3 +1,4 @@
+{{- if .Values.integration_test.enableGOVTest }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -10,7 +11,7 @@ spec:
   containers:
   - name: g2p-sandbox-test-gov
     image: "{{ .Values.integration_test.image}}"
-    imagePullPolicy: "Always"
+    imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy}}"
     command: [ "/bin/bash" , "-c" ]
     args:
       # - ./gradlew test -Dcucumber.filter.tags="@bd012" ; echo 'Test complete' ; sleep 300 ; echo 'pod terminate'
@@ -24,3 +25,4 @@ spec:
         cpu: "100m"
         memory: "1Gi"
   restartPolicy: Never
+  {{- end }}

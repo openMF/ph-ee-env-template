@@ -1,0 +1,33 @@
+{{- if .Values.integration_test.enableGazelleTest }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ph-ee-integration-test-gazelle
+  labels:
+    app: "ph-ee-integration-test-gazelle"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+  - name: ph-ee-integration-test-gazelle
+    image: "{{ .Values.integration_test.image }}"
+    imagePullPolicy: "{{ .Values.integration_test.imagePullPolicy }}"
+    command: ["/bin/bash", "-c"]
+    args:
+      - |
+        ./gradlew test -Dcucumber.filter.tags="{{ .Values.integration_test.testTags }}" && \
+        tar -czvf /tmp/test_results.tar.gz build/ && \
+        echo 'Test complete' && \
+        echo "sleeping .. which enables test result retrival"
+        sleep 1800 && \
+        echo 'pod terminate'
+    {{- include "inttest.env" . | nindent 4 }}
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "1.5Gi"
+      requests:
+        cpu: "100m"
+        memory: "{{ .Values.integration_test.memoryRequest }}"
+  restartPolicy: Never
+  {{- end }}
