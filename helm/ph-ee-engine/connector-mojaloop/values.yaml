@@ -11,22 +11,22 @@ enabled: true
 image: ""
 imageTag: "latest"
 SPRING_PROFILES_ACTIVE: ""
-DFSPIDS: "gorilla,rhino"
+DFSPIDS: "gorilla,lion"
 switch:
   quotes:
-    host: "http://quoting-service.sandbox.mifos.io"
-    service: "quoting-service.sandbox.mifos.io"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   als:
-    host: "http://account-lookup-service.sandbox.mifos.io"
-    service: "account-lookup-service.local"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   transfers:
-    host: "http://api-adapter.sandbox.mifos.io"
-    service: "api-adapter.sandbox.mifos.io"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   transactions:
-    host: "http://ml-api-adapter.sandbox.mifos.io"
-    service: "ml-api-adapter.sandbox.mifos.io"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   oracle:
-    host: "http://moja-simulator.sandbox.mifos.io"
+    host: "http://fspiop.mifos.gazelle.test"
 limits:
   cpu: "500m"
   memory: "384M"
