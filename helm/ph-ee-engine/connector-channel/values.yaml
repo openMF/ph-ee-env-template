@@ -30,11 +30,11 @@ redis:
 tenantPrimary:
   clientId: "mifos"
   clientSecret: "password"
-  tenant: "rhino"
+  tenant: "greenbank"
 tenantSecondary:
   clientId: "mifos"
   clientSecret: "password"
-  tenant: "gorilla"
+  tenant: "bluebank"
 notifications: 
   NOTIFICATION_SUCCESS_ENABLED: "false"
   NOTIFICATION_FAILURE_ENABLED: "false"  

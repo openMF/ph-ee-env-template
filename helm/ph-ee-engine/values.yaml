@@ -328,12 +328,13 @@ operationsmysql:
     database: "default"
     username: "mifos"
     password: "password"
-    rootPassword: "mysqlpw"
+    rootPassword: "ethieTieCh8ahv"
   initdbScripts:
     setup.sql: |-
-      CREATE DATABASE IF NOT EXISTS tenants;
-      CREATE DATABASE IF NOT EXISTS phdefault;
-      CREATE DATABASE IF NOT EXISTS messagegateway;
+      CREATE DATABASE `FRED`;
+      CREATE DATABASE IF NOT EXISTS `tenants`;
+      CREATE DATABASE IF NOT EXISTS `phdefault`;
+      CREATE DATABASE IF NOT EXISTS `messagegateway`;
       CREATE DATABASE `voucher_management`
       GRANT ALL ON *.* TO 'root'@'%';
       GRANT ALL PRIVILEGES ON tenants.* to 'mifos'
