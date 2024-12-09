@@ -1,18 +1,3 @@
-# ingress:
-#   apiversion: "networking.k8s.io/v1"
-
-# deployment:
-#   apiversion: "apps/v1"
-
-# service:
-#   apiversion: "v1"
-
-# secret:
-#   apiversion: "v1"
-
-# configmap:
-#   apiversion: "v1"  
-
 global:
   bucket_name: paymenthub-ee
   region: "ap-south-1"
