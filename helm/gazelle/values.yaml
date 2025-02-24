@@ -573,6 +573,7 @@ ph-ee-engine:
 
   post_installation_job:
     enabled: true
+    
   minio:
     enabled: true
 
