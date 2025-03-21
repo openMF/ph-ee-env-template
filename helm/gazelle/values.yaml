@@ -136,10 +136,10 @@ ph-ee-engine:
     enabled: true
     SPRING_PROFILES_ACTIVE: "fin12,bb"
     ams_local_enabled: true
-    ams_local_interop_host: "https://fineract-server/"
-    ams_local_account_host: "https://fineract-server/"
-    ams_local_customer_host: "https://fineract-server/"
-    ams_local_auth_host: "https://fineract-server/"
+    ams_local_interop_host: http://fineract-server.mifosx.svc.cluster.local
+    ams_local_account_host: http://fineract-server.mifosx.svc.cluster.local
+    ams_local_customer_host: http://fineract-server.mifosx.svc.cluster.local
+    ams_local_auth_host: http://fineract-server.mifosx.svc.cluster.local
     ingress:
       enabled: false
       annotations: 

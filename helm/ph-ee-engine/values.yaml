@@ -330,10 +330,11 @@ operationsmysql:
     storageClassName: "local-path"
 
 ph_ee_connector_ams_mifos:
-  enabled: false
+  enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0
-  imagePullPolicy: "Always"
+  #image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0
+  image: docker.io/devarsh10/ph-ee-connector-ams-mifos:latest
+  imagePullPolicy: IfNotPresent
   ams_local_enabled: true
   ams_local_interop_host: "fineract-server"
   ams_local_account_host: "fineract-server"
