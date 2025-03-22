@@ -1,202 +1,134 @@
 ph-ee-engine:
-  ingress:
-    apiversion: "networking.k8s.io/v1"
+  # ingress:
+  #   apiversion: "networking.k8s.io/v1"
 
-  deployment:
-    apiversion: "apps/v1"
+  # deployment:
+  #   apiversion: "apps/v1"
 
-  service:
-    apiversion: "v1"
+  # service:
+  #   apiversion: "v1"
 
-  secret:
-    apiversion: "v1"
+  # secret:
+  #   apiversion: "v1"
 
-  configmap:
-    apiversion: "v1"
+  # configmap:
+  #   apiversion: "v1"
 
-  global:
-    SPRING_PROFILES_ACTIVE: "bb"
-    imagePullPolicy: "Always"
-    LOGGING_LEVEL_ROOT: "INFO"
-    LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-    tenants: "greenbank,bluebank"
-    DFSPIDS: "greenbank,bluebank"
+  #global:
 
-  zeebe-operate-helm:
-    enabled: true
-    image:
-      repository: camunda/operate
-      tag: 1.1.0
-    global:
-      elasticsearch:
-        host: "ph-ee-elasticsearch"
-        clusterName: "ph-ee-elasticsearch"
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx     
-      path: /
-      host: operate.mifos.gazelle.test
-      tls:
-        enabled: true
+  # zeebe-operate-helm:
+  #   enabled: true
+  #   image:
+  #     repository: camunda/operate
+  #     tag: 1.1.0
+  #   global:
+  #     elasticsearch:
+  #       host: "ph-ee-elasticsearch"
+  #       clusterName: "ph-ee-elasticsearch"
+  #   ingress:
+  #     enabled: false
+  #     annotations: 
+  #       kubernetes.io/ingress.class: nginx     
+  #     path: /
+  #     host: operate.mifos.gazelle.test
+  #     tls:
+  #       enabled: true
 
-  elasticsearch:
-    enabled: true
-    #Single Node Solution
-    clusterHealthCheckParams: "wait_for_status=yellow&timeout=100s"
-    protocol: http
-    master:
-      readinessProbe:
-        httpGet:
-          allow-insecure: true
-          username: elastic
-          password: "{{ .Env.ELASTIC_PASSWORD }}"
-          path: /_cluster/health?wait_for_status=yellow&timeout=5s
-          port: 9200
-        initialDelaySeconds: 30
-    data:
-      readinessProbe:
-        httpGet:
-          allow-insecure: true
-          username: elastic
-          password: "{{ .Env.ELASTIC_PASSWORD }}"
-          path: /_cluster/health?wait_for_status=yellow&timeout=5s
-          port: 9200
-        initialDelaySeconds: 30
-    # Shrink default JVM heap.
-    esJavaOpts: "-Xmx128m -Xms512m"
-    # Allocate smaller chunks of memory per pod.
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "128M"
-      limits:
-        cpu: "1000m"
-        memory: "256M"
-    volumeClaimTemplate:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "local-path"
-      resources:
-        requests:
-          storage: 1Gi
 
-  kibana:
-    enabled: true
-    readinessProbe:
-      initialDelaySeconds: 45
-      timeoutSeconds: 15
-      successThreshold: 1    
-    protocol: http
-    ingress:
-      enabled: false
-      className: "nginx"
-      pathtype: "Prefix"
-      annotations: {
-        kubernetes.io/ingress.class: nginx
-        # kubernetes.io/tls-acme: "true" 
-      }      
-      hosts:
-        - host: kibana-phee.mifos.gazelle.test
-          paths:
-            - path: /
-      #tls: []
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.mifos.gazelle.test
 
-  operations:
-    enabled: true
+  # operations:
+  #   enabled: true
 
-  operationsmysql:
-    auth:
-      database: "tenants"
-      username: "mifos"
-      password: "password"
-      rootPassword: "ethieTieCh8ahv"
-    initdbScripts:
-      setup.sql: |-
-        CREATE DATABASE IF NOT EXISTS FRED2;
-        CREATE DATABASE IF NOT EXISTS tenants;
-        CREATE DATABASE IF NOT EXISTS phdefault;
-        CREATE DATABASE IF NOT EXISTS messagegateway;
-        CREATE DATABASE IF NOT EXISTS voucher_management; 
-        CREATE DATABASE IF NOT EXISTS identity_account_mapper;
-        CREATE DATABASE IF NOT EXISTS greenbank;
-        CREATE DATABASE IF NOT EXISTS bluebank;
-        GRANT ALL ON *.* TO 'root'@'%';
-        GRANT ALL PRIVILEGES ON tenants.* to 'mifos'; 
-        GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON voucher_management.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON identity_account_mapper.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON `greenbank`.* TO 'mifos';
-        GRANT ALL PRIVILEGES ON `bluebank`.* TO 'mifos';  
+  # operationsmysql:
+  #   auth:
+  #     database: "tenants"
+  #     username: "mifos"
+  #     password: "password"
+  #     rootPassword: "ethieTieCh8ahv"
+  #   initdbScripts:
+  #     setup.sql: |-
+  #       CREATE DATABASE IF NOT EXISTS FRED2;
+  #       CREATE DATABASE IF NOT EXISTS tenants;
+  #       CREATE DATABASE IF NOT EXISTS phdefault;
+  #       CREATE DATABASE IF NOT EXISTS messagegateway;
+  #       CREATE DATABASE IF NOT EXISTS voucher_management; 
+  #       CREATE DATABASE IF NOT EXISTS identity_account_mapper;
+  #       CREATE DATABASE IF NOT EXISTS greenbank;
+  #       CREATE DATABASE IF NOT EXISTS bluebank;
+  #       GRANT ALL ON *.* TO 'root'@'%';
+  #       GRANT ALL PRIVILEGES ON tenants.* to 'mifos'; 
+  #       GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
+  #       GRANT ALL PRIVILEGES ON phdefault.* TO 'mifos';
+  #       GRANT ALL PRIVILEGES ON voucher_management.* TO 'mifos';
+  #       GRANT ALL PRIVILEGES ON identity_account_mapper.* TO 'mifos';
+  #       GRANT ALL PRIVILEGES ON `greenbank`.* TO 'mifos';
+  #       GRANT ALL PRIVILEGES ON `bluebank`.* TO 'mifos';  
 
-  ph_ee_connector_ams_mifos:
-    enabled: true
-    SPRING_PROFILES_ACTIVE: "fin12,bb"
-    ams_local_enabled: true
-    ams_local_interop_host: http://fineract-server.mifosx.svc.cluster.local
-    ams_local_account_host: http://fineract-server.mifosx.svc.cluster.local
-    ams_local_customer_host: http://fineract-server.mifosx.svc.cluster.local
-    ams_local_auth_host: http://fineract-server.mifosx.svc.cluster.local
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: ams-mifos.mifos.gazelle.test          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: ph-ee-connector-ams-mifos
-                port:
-                  number: 80   
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  # ph_ee_connector_ams_mifos:
+  #   enabled: true
+  #   SPRING_PROFILES_ACTIVE: "fin12,bb"
+  #   ams_local_enabled: true
+  #   ams_local_interop_host: http://fineract-server.mifosx.svc.cluster.local
+  #   ams_local_account_host: http://fineract-server.mifosx.svc.cluster.local
+  #   ams_local_customer_host: http://fineract-server.mifosx.svc.cluster.local
+  #   ams_local_auth_host: http://fineract-server.mifosx.svc.cluster.local
+  #   ingress:
+  #     enabled: false
+  #     annotations: 
+  #       kubernetes.io/ingress.class: nginx
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: ams-mifos.mifos.gazelle.test          
+  #         paths: 
+  #         - path: "/"
+  #           backend:
+  #             service:
+  #               name: ph-ee-connector-ams-mifos
+  #               port:
+  #                 number: 80   
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
 
-  ph_ee_connector_mojaloop:
-    enabled: true
-    SPRING_PROFILES_ACTIVE: "bb"
-    hostname: "mojaloop.mifos.gazelle.test"
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx     
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: mojaloop.mifos.gazelle.test          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: ph-ee-connector-mojaloop-java
-                port:
-                  number: 80 
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  # ph_ee_connector_mojaloop:
+  #   enabled: true
+  #   SPRING_PROFILES_ACTIVE: "bb"
+  #   hostname: "mojaloop.mifos.gazelle.test"
+  #   ingress:
+  #     enabled: false
+  #     annotations: 
+  #       kubernetes.io/ingress.class: nginx     
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: mojaloop.mifos.gazelle.test          
+  #         paths: 
+  #         - path: "/"
+  #           backend:
+  #             service:
+  #               name: ph-ee-connector-mojaloop-java
+  #               port:
+  #                 number: 80 
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
 
-  mockpayment:
-    enabled: true 
-    limits:
-      memory: "768M"
-    ingress:
-        enabled: false
-        hosts:
-          - host: ""
-            paths:
-            - path: "/"
-              backend:
-                service:
-                  name: ph-ee-connector-mock-payment-schema
-                  port:
-                    number: 80
+  # mockpayment:
+  #   enabled: true 
+  #   limits:
+  #     memory: "768M"
+  #   ingress:
+  #       enabled: false
+  #       hosts:
+  #         - host: ""
+  #           paths:
+  #           - path: "/"
+  #             backend:
+  #               service:
+  #                 name: ph-ee-connector-mock-payment-schema
+  #                 port:
+  #                   number: 80
 
   channel:
     enabled: true
@@ -236,9 +168,9 @@ ph-ee-engine:
                 name: "ph-ee-connector-channel-gsma"
                 port:
                   number: 82
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+    # deployment:
+    #   annotations:
+    #     deployTime: "{{ .Values.deployTime }}"
 
 
   operations_app:
@@ -269,9 +201,9 @@ ph-ee-engine:
                 name: "ph-ee-operations-app"
                 port:
                   number: 80
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+    # deployment:
+    #   annotations:
+    #     deployTime: "{{ .Values.deployTime }}"
 
   # operations_web:
   #   enabled: true
@@ -293,30 +225,18 @@ ph-ee-engine:
   identity:
     hostname: "ops-bk.mifos.gazelle.test"
 
-  ph_ee_connector_gsma:
-    enabled: true
-    SPRING_PROFILES_ACTIVE: "bb"
-    limits:
-      cpu: "500m"
-      memory: "512M"
-    requests:
-      cpu: "100m"
-      memory: "256M"
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
-
-  ph_ee_connector_slcb:
-    enabled: false
-   
-  mpesa:
-    enabled: false
-    
-  roster_connector:
-    enabled: false
-    
-  paygops_connector:
-    enabled: false
+  # ph_ee_connector_gsma:
+  #   enabled: true
+  #   SPRING_PROFILES_ACTIVE: "bb"
+  #   limits:
+  #     cpu: "500m"
+  #     memory: "512M"
+  #   requests:
+  #     cpu: "100m"
+  #     memory: "256M"
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
     
   notifications:
     enabled: true
@@ -329,261 +249,230 @@ ph-ee-engine:
     NOTIFICATION_FAILURE_ENABLED: "true"   
     hostname: "notifications.mifos.gazelle.test"
     includeResources: false
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx  
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: notifications.mifos.gazelle.test         
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-connector-notifications"
-                port:
-                  number: 80  
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+    # ingress:
+    #   enabled: false
+    #   annotations: 
+    #     kubernetes.io/ingress.class: nginx  
+    #   tls:
+    #     - secretName: sandbox-secret
+    #   hosts:
+    #     - host: notifications.mifos.gazelle.test         
+    #       paths: 
+    #       - path: "/"
+    #         backend:
+    #           service:
+    #             name: "ph-ee-connector-notifications"
+    #             port:
+    #               number: 80  
+    # deployment:
+    #   annotations:
+    #     deployTime: "{{ .Values.deployTime }}"
 
-  connector_bulk:
-    enabled: true
+  # connector_bulk:
+  #   enabled: true
     #tenants: "rhino,gorilla"
-    hostname: bulk-connector.mifos.gazelle.test
-    operations_app:
-      contactpoint: "http://ph-ee-operations-app:80"
-      endpoints:
-        batch_transaction: "/api/v1/batch/transactions"
-    identity_account_mapper:
-      hostname: "http://ph-ee-identity-account-mapper:80"
+    #hostname: bulk-connector.mifos.gazelle.test
+    # operations_app:
+    #   contactpoint: "http://ph-ee-operations-app:80"
+    #   endpoints:
+    #     batch_transaction: "/api/v1/batch/transactions"
+    # identity_account_mapper:
+    #   hostname: "http://ph-ee-identity-account-mapper:80"
     # service:
     #   annotations:
     #     konghq.com/protocol: "https"
-    ingress:
-      enabled: false
-      annotations:
-      #  konghq.com/plugins: cors
-        kubernetes.io/ingress.class: nginx
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: bulk-connector.mifos.gazelle.test     
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-connector-bulk"
-                port:
-                  number: 8443
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+    # ingress:
+    #   enabled: false
+    #   annotations:
+    #   #  konghq.com/plugins: cors
+    #     kubernetes.io/ingress.class: nginx
+    #   tls:
+    #     - secretName: sandbox-secret
+    #   hosts:
+    #     - host: bulk-connector.mifos.gazelle.test     
+    #       paths: 
+    #       - path: "/"
+    #         backend:
+    #           service:
+    #             name: "ph-ee-connector-bulk"
+    #             port:
+    #               number: 8443
+    # deployment:
+    #   annotations:
+    #     deployTime: "{{ .Values.deployTime }}"
         
-  zeebe_ops:
-    enabled: true
-    hostname: "zeebeops.mifos.gazelle.test"
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx  
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: zeebeops.mifos.gazelle.test          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-zeebe-ops"
-                port:
-                  number: 80 
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  # zeebe_ops:
+  #   enabled: true
+  #   hostname: "zeebeops.mifos.gazelle.test"
+  #   ingress:
+  #     enabled: false
+  #     annotations: 
+  #       kubernetes.io/ingress.class: nginx  
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: zeebeops.mifos.gazelle.test          
+  #         paths: 
+  #         - path: "/"
+  #           backend:
+  #             service:
+  #               name: "ph-ee-zeebe-ops"
+  #               port:
+  #                 number: 80 
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
 
-  messagegateway:
-    enabled: true
-    secret:
-      value:
-        api_key: "<api_key>"
-        project_id: "<project_id>"
-    hostname: "messagegateway.mifos.gazelle.test"
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx 
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: messagegateway.mifos.gazelle.test       
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "message-gateway"
-                port:
-                  number: 80   
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"                           
+  # messagegateway:
+  #   enabled: true
+  #   hostname: "messagegateway.mifos.gazelle.test"
+  #   ingress:
+  #     enabled: false
+  #     annotations: 
+  #       kubernetes.io/ingress.class: nginx 
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: messagegateway.mifos.gazelle.test       
+  #         paths: 
+  #         - path: "/"
+  #           backend:
+  #             service:
+  #               name: "message-gateway"
+  #               port:
+  #                 number: 80   
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"                           
 
-  importer_es:
-    enabled: true
-    elasticsearch_sslverification: false
-    elasticsearch_security_enabled: false
-    reporting:
-      enabled: false
+  # importer_es:
+  #   enabled: true
+  #   elasticsearch_sslverification: false
+  #   elasticsearch_security_enabled: false
+  #   reporting:
+  #     enabled: false
 
-  importer_rdbms:
-    enabled: true
-    LOGGING_LEVEL_ROOT: "DEBUG"
+  # importer_rdbms:
+  #   enabled: true
+  #   LOGGING_LEVEL_ROOT: "DEBUG"
 
-  keycloak:
-    enabled: false
-    ingress:
-      enabled: false
-      ingressClassName: "nginx"
-      rules:
-        - host: 'keycloak.mifos.gazelle.test'
-          paths:
-          - path: /
-            pathType: Prefix
-      tls: []
-    
-  kong:
-    enabled: false
-    image:
-      repository: revomatico/docker-kong-oidc
-      tag: "latest"
-    env:
-      plugins: "bundled,oidc"
-    admin:
-      enabled: true
-      http:
-        enabled: true
-      tls:
-        enabled: false
-      ingress:
-        enabled: false
-        hostname: admin-kong.sandbox.mifos.io
 
-  vouchers:
-    enabled: true
-    ingress:
-      enabled: false
-      annotations:
-        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id, content-type, X-CallbackURL'
-        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-        nginx.ingress.kubernetes.io/enable-cors: 'true'
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: vouchers.mifos.gazelle.test
-          paths:
-            - path: "/"
-              backend:
-                service:
-                  name: ph-ee-vouchers
-                  port:
-                    number: 80
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  # vouchers:
+  #   enabled: true
+  #   ingress:
+  #     enabled: false
+  #     annotations:
+  #       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+  #       nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id, content-type, X-CallbackURL'
+  #       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+  #       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+  #       nginx.ingress.kubernetes.io/enable-cors: 'true'
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: vouchers.mifos.gazelle.test
+  #         paths:
+  #           - path: "/"
+  #             backend:
+  #               service:
+  #                 name: ph-ee-vouchers
+  #                 port:
+  #                   number: 80
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
   integration_test:
     enabled: true
     gradle:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
 
-  billPay:
-    enabled: true
-    hostname: "bill-pay.mifos.gazelle.test"
-    stub_hostname: "bill-pay.mifos.gazelle.test"
-    SPRING_PROFILES_ACTIVE: "bb,tenants"
-    ingress:
-      enabled: false
-      annotations:
-        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-        nginx.ingress.kubernetes.io/enable-cors: 'true'
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: bill-pay.mifos.gazelle.test
-          paths:
-            - path: "/"
-              backend:
-                service:
-                  name: "ph-ee-bill-pay"
-                  port:
-                    number: 8080
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  # billPay:
+  #   enabled: true
+  #   hostname: "bill-pay.mifos.gazelle.test"
+  #   stub_hostname: "bill-pay.mifos.gazelle.test"
+  #   SPRING_PROFILES_ACTIVE: "bb,tenants"
+  #   ingress:
+  #     enabled: false
+  #     annotations:
+  #       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+  #       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+  #       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+  #       nginx.ingress.kubernetes.io/enable-cors: 'true'
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: bill-pay.mifos.gazelle.test
+  #         paths:
+  #           - path: "/"
+  #             backend:
+  #               service:
+  #                 name: "ph-ee-bill-pay"
+  #                 port:
+  #                   number: 8080
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
 
-  crm:
-    enabled: true
-    hostname: "crm.mifos.gazelle.test"
-    stub_hostname: "crm.mifos.gazelle.test"
-    SPRING_PROFILES_ACTIVE: "bb,tenants"
-    ingress:
-      enabled: false
-      annotations:
-        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-        nginx.ingress.kubernetes.io/enable-cors: 'true'
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: crm.mifos.gazelle.test
-          paths:
-            - path: "/"
-              backend:
-                service:
-                  name: "ph-ee-connector-crm"
-                  port:
-                    number: 8080
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  # crm:
+  #   enabled: true
+  #   hostname: "crm.mifos.gazelle.test"
+  #   stub_hostname: "crm.mifos.gazelle.test"
+  #   SPRING_PROFILES_ACTIVE: "bb,tenants"
+  #   ingress:
+  #     enabled: false
+  #     annotations:
+  #       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+  #       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+  #       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+  #       nginx.ingress.kubernetes.io/enable-cors: 'true'
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: crm.mifos.gazelle.test
+  #         paths:
+  #           - path: "/"
+  #             backend:
+  #               service:
+  #                 name: "ph-ee-connector-crm"
+  #                 port:
+  #                   number: 8080
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
 
-  ph-ee-connector:
-    enabled: false
-    aws:
-      region: "ap-south-1"
-      access_key: "aws-access-key"
-      secret_key: "aws-secret-key"
-    hostname: "connector.mifos.gazelle.test"
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-        nginx.ingress.kubernetes.io/enable-cors: 'true'
+  # ph-ee-connector:
+  #   enabled: false
+  #   aws:
+  #     region: "ap-south-1"
+  #     access_key: "aws-access-key"
+  #     secret_key: "aws-secret-key"
+  #   hostname: "connector.mifos.gazelle.test"
+  #   ingress:
+  #     enabled: true
+  #     annotations:
+  #       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
+  #       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+  #       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+  #       nginx.ingress.kubernetes.io/enable-cors: 'true'
 
-    deployment:
-      annotations:
-        deployTime: "{{ .Values.deployTime }}"
+  #   deployment:
+  #     annotations:
+  #       deployTime: "{{ .Values.deployTime }}"
 
   post_installation_job:
     enabled: true
     
-  minio:
-    enabled: true
+  # minio:
+  #   enabled: true
 
 account_mapper:
-  enabled: true
+  enabled: false
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
   hostname: "identity-mapper.mifos.gazelle.test"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
     enabled: false
+    className: nginx
     pathtype: Prefix
     annotations:
       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
