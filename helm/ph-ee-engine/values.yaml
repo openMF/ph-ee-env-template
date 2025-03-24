@@ -347,9 +347,8 @@ channel:
     #   ph-ee-connector-channel.yml: |        
 
 operations:
-  enabled: true
   mysql:
-    enabled: true
+    enabled: false
 
 operationsmysql:
   enabled: false
@@ -457,7 +456,7 @@ ph_ee_connector_mojaloop:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-mojaloop:v1.5.0
   imagePullPolicy: IfNotPresent
-  hostname: ""mojaloop.mifos.gazelle.test"
+  hostname: "mojaloop.mifos.gazelle.test"
   switch:
     quotes:
       host: ""
@@ -489,21 +488,15 @@ ph_ee_connector_mojaloop:
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
-# Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
-# Custom service account override that the pod will use
   serviceAccount: "" 
-# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
   serviceAccountAnnotations: {} 
-# How long to wait for mojaloop pods to stop gracefully
   terminationGracePeriod: 30 
 # Extra environment variables for mojaloop container.
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
   extraEnvs: []
-# This is the PriorityClass settings as defined in
-# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
   # ph-ee-connector-mojaloop-javaConfig: ""
   #   ph-ee-connector-mojaloop-java.yml: |
@@ -574,7 +567,7 @@ operations_app:
   datasource:
       username: "mifos"
       password: "password"
-      host: "operationsmysql"
+      host: "mysql.infra.svc.cluster.local"
       port: 3306
       schema: "tenants"
   livenessProbe:
@@ -1174,7 +1167,7 @@ messagegateway:
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
   MYSQL_PASSWORD: "password"
-  DATASOURCE_URL: jdbc:mysql:thin://operationsmysql:3306/messagegateway
+  DATASOURCE_URL: jdbc:mysql:thin://mysql.infra.svc.cluster.local:3306/messagegateway
   PROVIDERSOURCE_FROMDATABASE: "disabled"
   PROVIDERSOURCE_FROMYML: "enabled"
   livenessProbe:
@@ -2274,7 +2267,7 @@ vouchers:
       deployTime: "{{ .Values.deployTime }}"
   spring:
     datasource:
-      url: jdbc:mysql://operationsmysql:3306/voucher_management
+      url: jdbc:mysql://mysql.infra.svc.cluster.local:3306/voucher_management
       username: mifos
       password: password
   async:
