@@ -216,6 +216,7 @@ channel:
   imagePullPolicy: IfNotPresent
   hostname: "channel.mifos.gazelle.test"
   stub_hostname: "channel-gsma.mifos.gazelle.test"
+  SPRING_PROFILES_ACTIVE: "bb,tenants"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   redis:
@@ -301,7 +302,7 @@ channel:
   #       - path: "/"
   #         backend:
   #           service:
-  #             name: "ph-ee-connector-channel"
+  #             name: ph-ee-connector-channel
   #             port:
   #               number: 8443
   #     - host: channel-gsma.mifos.gazelle.test          
@@ -318,7 +319,8 @@ channel:
   #   backend: {}
   #   stub_backend: {}
   deployment:
-    annotations: {}
+    annotations:
+        deployTime: "{{ .Values.deployTime }}"
     affinity: {}
     nodeSelector: {}
     tolerations: []
@@ -350,6 +352,7 @@ operations:
     enabled: true
 
 operationsmysql:
+  enabled: false
   fullnameOverride: "operationsmysql"
   image:
     tag: "5.7"
@@ -384,6 +387,7 @@ ph_ee_connector_ams_mifos:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0
+  SPRING_PROFILES_ACTIVE: "fin12, bb"
   imagePullPolicy: IfNotPresent
   ams_local_enabled: true
   ams_local_interop_host: http://fineract-server.mifosx.svc.cluster.local
@@ -565,6 +569,7 @@ operations_app:
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-app:v1.17.1
   imagePullPolicy: IfNotPresent
+  hostname: "ops-bk.mifos.gazelle.test"
   token_client_channel_secret: ""
   datasource:
       username: "mifos"
@@ -679,6 +684,7 @@ operations_web:
   image: docker.io/openmf/ph-ee-operations-web:v1.20.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
+  hostname: "ops.mifos.gazelle.test"
   webhost: ""
   livenessProbe:
     httpGet:
@@ -1277,8 +1283,17 @@ messagegateway:
     #   message-gateway.yml: |
 
 notifications:
+  enabled: true 
+  image: docker.io/openmf/ph-ee-notifications:v1.4.0 
+  imagePullPolicy:  IfNotPresent
   hostname: "notifications.mifos.gazelle.test"
-  NOTIFICATION_FAILURE_ENABLED: "true"
+  SPRING_PROFILES_ACTIVE: "bb"
+  LOGGING_LEVEL_ROOT: "INFO"
+  MESSAGEGATEWAYCONFIG_HOST: "message-gateway-1"
+  NOTIFICATION_LOCAL_HOST: "ph-ee-connector-notifications"
+  NOTIFICATION_SUCCESS_ENABLED: "false"
+  NOTIFICATION_FAILURE_ENABLED: "true"  
+  includeResources: false
 
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
@@ -1308,12 +1323,12 @@ notifications:
 # Enabling this will publicly expose your notifications instance.
 # Only enable this if you have security enabled on your cluster    
   ingress:
-    enabled: true
+    enabled: false
     className: nginx
     annotations: 
       kubernetes.io/ingress.class: nginx  
-    tls:
-      - secretName: sandbox-secret
+    # tls:
+    #   - secretName: sandbox-secret
     hosts:
       - host: notifications.mifos.gazelle.test         
         paths: 
@@ -1323,9 +1338,6 @@ notifications:
               name: "ph-ee-connector-notifications"
               port:
                 number: 80  
-  # ingress:
-  #   enabled: false
-
   # - configMapRef:
   #     name: config-secret
     extraEnvs: []
@@ -1410,11 +1422,6 @@ zeebe_ops:
               name: "ph-ee-zeebe-ops"
               port:
                 number: 80    
-  # ingress:
-  #   enabled: false
-  #   path: "/zeebeops"
-  #   annotations: {}
-  #   backend: {}
   deployment:
     annotations:
       deployTime: "{{ .Values.deployTime }}"
@@ -1442,7 +1449,6 @@ zeebe_ops:
     # such as zeebeops.yml for deployment  
     # ph-ee-zeebe-opsConfig: {}
     #   ph-ee-zeebe-ops.yml: |
-
 
 importer_es:
   enabled: false
@@ -1627,7 +1633,7 @@ importer_rdbms:
   datasource:
       username: "mifos"
       password: "password"
-      host: "operationsmysql"
+      host: "mysql.infra.svc.cluster.local"
       port: 3306
       schema: "tenants"
   livenessProbe:
@@ -2243,12 +2249,13 @@ kong:
     
 
 vouchers:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-vouchers:v1.3.1
   imagePullPolicy: IfNotPresent
   ingress:
     enabled: true
+    className: nginx
     annotations:
       kubernetes.io/ingress.class: nginx
     tls:
