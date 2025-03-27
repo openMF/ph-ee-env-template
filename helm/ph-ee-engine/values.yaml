@@ -291,8 +291,8 @@ channel:
     annotations: {}
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster   
-  # ingress:
-  #   enabled: false
+  ingress:
+    enabled: false
   #   className: nginx
   #   # tls:
   #   #   - secretName: sandbox-secret
@@ -395,6 +395,9 @@ ph_ee_connector_ams_mifos:
   ams_local_auth_host: http://fineract-server.mifosx.svc.cluster.local
   ams_local_tenants: ""
   ams_local_loan_host: ""
+  operations_app:
+    datasource:
+      host: "mysql.infra.svc.cluster.local"
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -564,6 +567,11 @@ operations_app:
   imagePullPolicy: IfNotPresent
   hostname: "ops-bk.mifos.gazelle.test"
   token_client_channel_secret: ""
+  # note curently BOTH secret.datasource and datasource are used by the chart
+  # TODO examine if secret.datasource can be removed
+  secret:
+    datasource:
+      host: "mysql.infra.svc.cluster.local" 
   datasource:
       username: "mifos"
       password: "password"
@@ -616,31 +624,29 @@ operations_app:
       cpu: "500m"
   requests:
     memory: "128k"
-    cpu: "50m"         
-# Enabling this will publicly expose your operations_app instance.
-# Only enable this if you have security enabled on your cluster 
-  # ingress:
-  #   enabled: false # Change to true to enable the ingress
-  #   className: nginx
-  #   pathtype: Prefix
-  #   path: "/"
-  #   annotations:
-  #     kubernetes.io/ingress.class: nginx
-  #     nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
-  #     nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-  #     nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-  #     nginx.ingress.kubernetes.io/enable-cors: "true"
-  #   tls:
-  #     - secretName: sandbox-secret
-  #   hosts:
-  #     - host: ops-bk.mifos.gazelle.test
-  #       paths:
-  #       - path: "/"
-  #         backend:
-  #           service:
-  #             name: ph-ee-operations-app
-  #             port:
-  #               number: 80  
+    cpu: "50m"        
+
+  ingress:
+    enabled: true
+    className: nginx
+    pathtype: Prefix
+    path: "/"
+    annotations:
+      nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
+      nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+      nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+    tls:
+      - secretName: sandbox-secret
+    hosts:
+      - host: ops-bk.mifos.gazelle.test
+        paths:
+        - path: "/"
+          backend:
+            service:
+              name: ph-ee-operations-app
+              port:
+                number: 80  
   # ingress:
   #   enabled: true
   #   path: "/opsapp"
@@ -655,9 +661,6 @@ operations_app:
   # - configMapRef:
   #     name: config-secret
     extraEnvs: []
-# - User that the container will execute as.
-# Not necessary to run as root (0) as the operations_app Deployment use cases do not need access to Kubernetes Node internals
-# - Typically not necessarily unless running within environments such as OpenShift.
     securityContext:
       runAsUser: 0
       privileged: false
@@ -668,8 +671,6 @@ operations_app:
     requests:
       memory: "128k"
       cpu: "50m"    
-# Allows you to add any config files in /usr/share/
-    # such as operations_app.yml for deployment
 
 operations_web:
   enabled: true
@@ -740,7 +741,7 @@ operations_web:
     PH_AUTH_ENABLED: false
     PH_OAUTH_ENABLED: false
     PH_OAUTH_TYPE: keycloak
-    PH_OAUTH_SERVER_URL: http://notused-for-gazelle.io/auth
+    PH_OAUTH_SERVER_URL: http://ops.mifos.gazelle.test/auth
     PH_OAUTH_REALM: paymenthub
     PH_OAUTH_CLIENT_ID: opsapp
     PH_OAUTH_CLIENT_SECRET: Y2xpZW50Og==
@@ -749,13 +750,14 @@ operations_web:
     PH_DEFAULT_LANGUAGE: en
     PH_SUPPORTED_LANGUAGES: en,fr,es      
   ingress:
+    enabled: true 
+    className: nginx
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/cors-allow-headers: content-type,platform-tenantid,privatekey,x-correlationid,x-correlation-id,purpose,type,x-callback-url,x-program-id,x-registering-institution-id,x-signature
       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
       nginx.ingress.kubernetes.io/enable-cors: "true"
-    enabled: true 
     tls:
       - secretName: sandbox-secret
     hosts:
@@ -1277,7 +1279,8 @@ messagegateway:
 
 notifications:
   enabled: true 
-  image: docker.io/openmf/ph-ee-notifications:v1.4.0 
+  image: docker.io/openmf/ph-ee-notifications
+  imageTag: v1.4.0
   imagePullPolicy:  IfNotPresent
   hostname: "notifications.mifos.gazelle.test"
   SPRING_PROFILES_ACTIVE: "bb"
@@ -1624,11 +1627,11 @@ importer_rdbms:
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   LOGGING_LEVEL_ROOT: "DEBUG"
   datasource:
-      username: "mifos"
-      password: "password"
-      host: "mysql.infra.svc.cluster.local"
-      port: 3306
-      schema: "tenants"
+    username: "mifos"
+    password: "password"
+    host: "mysql.infra.svc.cluster.local"
+    port: 3306
+    schema: "tenants"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -1645,21 +1648,15 @@ importer_rdbms:
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
-# Whether this chart should self-manage its service account, role, and associated role binding.
+
   managedServiceAccount: true 
-# Custom service account override that the pod will use
   serviceAccount: "" 
-# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
   serviceAccountAnnotations: {} 
-# How long to wait for importer_rdbms pods to stop gracefully
   terminationGracePeriod: 30 
-# Extra environment variables for importer_rdbms container.
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
   extraEnvs: []
-# This is the PriorityClass settings as defined in
-# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
   # ph-ee-importer_rdbmsConfig: ""
   #   ph-ee-importer_rdbms.yml: |
@@ -1682,12 +1679,7 @@ importer_rdbms:
     nodeSelector: {}
     tolerations: []
     envFrom: []
-  # - configMapRef:
-  #     name: config-secret
     extraEnvs: []
-  # - User that the container will execute as.
-  # Not necessary to run as root (0) as the importer_rdbms Deployment use cases do not need access to Kubernetes Node internals
-  # - Typically not necessarily unless running within environments such as OpenShift.
     securityContext:
       runAsUser: 0
       privileged: false
@@ -1773,15 +1765,10 @@ connector_bulk:
   envFrom: [] 
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: []
-# This is the PriorityClass settings as defined in
-# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
+  extraEnvs: [] 
   priorityClassName: "" 
   # ph-ee-connector-bulkConfig: ""
   #   ph-ee-connector-bulk.yml: |
-  # - User that the container will execute as.
-  # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
-  # - Typically not necessarily unless running within environments such as OpenShift.
   securityContext:
     runAsUser: 0
     privileged: false
@@ -1797,7 +1784,7 @@ connector_bulk:
 # Enabling this will publicly expose your connector_bulk instance.
 # Only enable this if you have security enabled on your cluster
   ingress:
-    enabled: false
+    enabled: true
     className: nginx
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"

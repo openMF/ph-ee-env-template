@@ -14,31 +14,30 @@ ph-ee-engine:
         keyPassword: "password"
         keyStorePassword: "password"  
 
-  operations_app:
-    ingress:
-      enabled: false
-      annotations: 
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
-        nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-        nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-        nginx.ingress.kubernetes.io/enable-cors: "true"
-      tls:
-        - secretName: sandbox-secret
-      hosts:
-        - host: ops-bk.mifos.gazelle.test          
-          paths: 
-          - path: "/"
-            backend:
-              service:
-                name: "ph-ee-operations-app"
-                port:
-                  number: 80
+  # operations_app:
+  #   ingress:
+  #     enabled: false
+  #     annotations: 
+  #       kubernetes.io/ingress.class: nginx
+  #       nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
+  #       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
+  #       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+  #       nginx.ingress.kubernetes.io/enable-cors: "true"
+  #     tls:
+  #       - secretName: sandbox-secret
+  #     hosts:
+  #       - host: ops-bk.mifos.gazelle.test          
+  #         paths: 
+  #         - path: "/"
+  #           backend:
+  #             service:
+  #               name: "ph-ee-operations-app"
+  #               port:
+  #                 number: 80
 
-  identity:
-    hostname: "ops-bk.mifos.gazelle.test"
+  # identity:
+  #   hostname: "ops-bk.mifos.gazelle.test"
     
-
   integration_test:
     enabled: true
     gradle:
