@@ -6,8 +6,9 @@ global:
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
-  tenants: "greenbank,bluebank"
-  DFSPIDS: "greenbank,bluebank"
+  # schema for the tenants will get created in the paymenthub database by importer-rdbms
+  tenants: "ph_greenbank,ph_bluebank"
+  DFSPIDS: "fred_greenbank,fred_bluebank"
   max_execution_threads: 50
   poll_interval: 10
 
@@ -734,14 +735,14 @@ operations_web:
     PH_ACT_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test
     PH_OPS_BULK_CONNECTOR_URL: https://bulk-connector.mifos.gazelle.test
     PH_OPS_SIGNATURE_URL: https://ops.mifos.gazelle.test/api/v1/util/x-signature
-    PH_PLATFORM_TENANT_ID: greenbank
-    PH_PLATFORM_TENANT_IDS: "greenbank,bluebank"
+    PH_PLATFORM_TENANT_ID: ph_greenbank
+    PH_PLATFORM_TENANT_IDS: "ph_greenbank,ph_bluebank"
     PH_REGISTERING_INSTITUTION_ID: 123
   auth:
     PH_AUTH_ENABLED: false
     PH_OAUTH_ENABLED: false
     PH_OAUTH_TYPE: keycloak
-    PH_OAUTH_SERVER_URL: http://ops.mifos.gazelle.test/auth
+    PH_OAUTH_SERVER_URL: http://ops-bk.mifos.gazelle.test/auth
     PH_OAUTH_REALM: paymenthub
     PH_OAUTH_CLIENT_ID: opsapp
     PH_OAUTH_CLIENT_SECRET: Y2xpZW50Og==
@@ -1626,6 +1627,15 @@ importer_rdbms:
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   LOGGING_LEVEL_ROOT: "DEBUG"
+  # note both datasource and datasource.core are used by the rdbms chart
+  # TODO: remove datasource.core from the rdbms chart
+  datasource:
+    core:
+      host: "mysql.infra.svc.cluster.local"
+      port: 3306
+      schema: "tenants"
+      username: "mifos"
+      password: "password"
   datasource:
     username: "mifos"
     password: "password"
@@ -1694,7 +1704,7 @@ importer_rdbms:
     # such as ph-ee-importer_rdbms.yml for deployment  
     # ph-ee-importer_rdbmsConfig: {}
     #   ph-ee-importer_rdbms.yml: |
-  javaToolOptions: "-Xmx256M"
+  javaToolOptions: "-Xmx128m"
 
 connector_bulk:
   enabled: true
@@ -1702,7 +1712,7 @@ connector_bulk:
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
   imagePullPolicy: IfNotPresent
   hostname: bulk-connector.mifos.gazelle.test
-  tenants: "greenbank,bluebank"
+  tenants: "ph_greenbank,ph_bluebank"
   camel_disable_ssl: true
   channel:
     hostname: ""
@@ -1771,11 +1781,10 @@ connector_bulk:
   #   ph-ee-connector-bulk.yml: |
   securityContext:
     runAsUser: 0
-    privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
+    privileged: false   
+  limits:
+    memory: "512M"
+    cpu: "500m"
   requests:
     memory: "128k"
     cpu: "50m"
@@ -2263,7 +2272,7 @@ vouchers:
     queue_capacity: 100
   expiry_time: 60
   payer:
-    tenant: greenbank
+    tenant: ph_greenbank
     identifier: 12345678
     identifierType: MSISDN
   salting:

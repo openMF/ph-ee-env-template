@@ -1,5 +1,5 @@
 {{- if .Values.enabled -}}
-apiVersion: {{ .Values.service.apiversion }}
+apiVersion: v1
 kind: Service
 metadata:
   labels:
