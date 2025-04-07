@@ -8,7 +8,7 @@ global:
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   # schema for the tenants will get created in the paymenthub database by importer-rdbms
   tenants: "ph_greenbank,ph_bluebank"
-  DFSPIDS: "fred_greenbank,fred_bluebank"
+  DFSPIDS: "ph_greenbank,ph_bluebank"
   max_execution_threads: 50
   poll_interval: 10
 
@@ -242,7 +242,7 @@ channel:
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
-      port: 8443
+      port: 8080
       scheme: HTTPS 
     initialDelaySeconds: 120
     periodSeconds: 30
@@ -251,7 +251,7 @@ channel:
   readinessProbe:
     httpGet:
       path: /actuator/health/readiness
-      port: 8443
+      port: 8080
       scheme: HTTPS
     initialDelaySeconds: 120
     periodSeconds: 30
@@ -273,18 +273,12 @@ channel:
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass  
   priorityClassName: "" 
-  # ph-ee-connector-channelConfig: ""
-  #   ph-ee-connector-channel: |
-  # - User that the container will execute as.
-  # Not necessary to run as root (0) as the channel Deployment use cases do not need access to Kubernetes Node internals
-  # - Typically not necessarily unless running within environments such as OpenShift.
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:    
-    limits:
-      memory: "512M"
-      cpu: "500m"
+  limits:
+    memory: "512M"
+    cpu: "500m"
   requests:
     memory: "128k"
     cpu: "50m"
@@ -293,30 +287,30 @@ channel:
 # Enabling this will publicly expose your channel instance.
 # Only enable this if you have security enabled on your cluster   
   ingress:
-    enabled: false
-  #   className: nginx
-  #   # tls:
-  #   #   - secretName: sandbox-secret
-  #   hosts:
-  #     - host: channel.mifos.gazelle.test          
-  #       paths: 
-  #       - path: "/"
-  #         backend:
-  #           service:
-  #             name: ph-ee-connector-channel
-  #             port:
-  #               number: 8443
-  #     - host: channel-gsma.mifos.gazelle.test          
-  #       paths:          
-  #       - path: "/"
-  #         backend:
-  #           service:
-  #             name: "ph-ee-connector-channel-gsma"
-  #             port:
-  #               number: 82 
-  #   annotations:
-  #       kubernetes.io/ingress.class: nginx
-  #       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    enabled: true
+    className: nginx
+    # tls:
+    #   - secretName: sandbox-secret
+    hosts:
+      - host: channel.mifos.gazelle.test          
+        paths: 
+        - path: "/"
+          backend:
+            service:
+              name: ph-ee-connector-channel
+              port:
+                number: 8443
+      - host: channel-gsma.mifos.gazelle.test          
+        paths:          
+        - path: "/"
+          backend:
+            service:
+              name: "ph-ee-connector-channel-gsma"
+              port:
+                number: 82 
+    # annotations:
+    #     kubernetes.io/ingress.class: nginx
+    #     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   #   backend: {}
   #   stub_backend: {}
   deployment:
@@ -335,8 +329,7 @@ channel:
     securityContext:
       runAsUser: 0
       privileged: false
-    resources:    
-      limits:
+    limits:
         memory: "512M"
         cpu: "500m"
     requests:
@@ -742,7 +735,7 @@ operations_web:
     PH_AUTH_ENABLED: false
     PH_OAUTH_ENABLED: false
     PH_OAUTH_TYPE: keycloak
-    PH_OAUTH_SERVER_URL: http://ops-bk.mifos.gazelle.test/auth
+    PH_OAUTH_SERVER_URL: https://ops-bk.mifos.gazelle.test/auth
     PH_OAUTH_REALM: paymenthub
     PH_OAUTH_CLIENT_ID: opsapp
     PH_OAUTH_CLIENT_SECRET: Y2xpZW50Og==
@@ -1712,13 +1705,13 @@ connector_bulk:
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
   imagePullPolicy: IfNotPresent
   hostname: bulk-connector.mifos.gazelle.test
-  tenants: "ph_greenbank,ph_bluebank"
+  tenants: "ph_greenbank, ph_bluebank"
+  SPRING_PROFILES_ACTIVE: ""
   camel_disable_ssl: true
   channel:
     hostname: ""
   pollingApi:
     timer: "180"
-  tenants: ""
   operations_app:
       #contactpoint: "http://ph-ee-operations-app:5000"
       contactpoint: "http://ph-ee-operations-app:80"
@@ -2023,7 +2016,7 @@ ph-ee-connector_slcb:
     #   ph_ee_connector_slcb.yml: |
 
 ph-ee-connector:
-  enabled: false
+  enabled: true 
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
   imagePullPolicy: IfNotPresent
@@ -2033,7 +2026,8 @@ ph-ee-connector:
     secret_key: "aws-secret-key"
   hostname: "connector.mifos.gazelle.test"
   ingress:
-    enabled: false
+    className: nginx
+    enabled: true
     annotations:
       nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
@@ -2119,7 +2113,7 @@ integration_test:
     memory: "3Gi"
   requests:
     cpu: "100m"
-    memory: "2Gi"
+    memory: "512m"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
@@ -2328,10 +2322,9 @@ billPay:
   securityContext:
     runAsUser: 0
     privileged: false
-  resources:
-    limits:
-      memory: "512M"
-      cpu: "500m"
+  limits:
+    memory: "512M"
+    cpu: "500m"
   requests:
     memory: "128k"
     cpu: "50m"
@@ -2466,9 +2459,8 @@ crm:
 minio:
   enabled: true
   fullnameOverride: "minio"
-  resources:
-    requests:
-      memory: 128k
+  requests:
+    memory: 128k
   replicas: 1
   persistence:
     enabled: true
