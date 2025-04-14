@@ -315,9 +315,9 @@ channel:
     #   ph-ee-connector-channel.yml: |        
 
 operations:
-  enabled: true
+  enabled: false
   mysql:
-    enabled: true
+    enabled: false
 
 operationsmysql:
   fullnameOverride: "operationsmysql"
