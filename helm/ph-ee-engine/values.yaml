@@ -7,8 +7,8 @@ global:
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   # schema for the tenants will get created in the paymenthub database by importer-rdbms
-  tenants: "ph_greenbank,ph_bluebank"
-  DFSPIDS: "ph_greenbank,ph_bluebank"
+  tenants: "greenbank,bluebank"
+  DFSPIDS: "greenbank,bluebank"
   max_execution_threads: 50
   poll_interval: 10
 
@@ -342,10 +342,10 @@ channel:
 
 operations:
   mysql:
-    enabled: false
+    enabled: true
 
 operationsmysql:
-  enabled: false
+  enabled: true
   fullnameOverride: "operationsmysql"
   image:
     tag: "5.7"
@@ -357,7 +357,6 @@ operationsmysql:
     rootPassword: "ethieTieCh8ahv"
   initdbScripts:
     setup.sql: |-
-      CREATE DATABASE IF NOT EXISTS FRED2;
       CREATE DATABASE IF NOT EXISTS tenants;
       CREATE DATABASE IF NOT EXISTS phdefault;
       CREATE DATABASE IF NOT EXISTS messagegateway;
@@ -391,7 +390,7 @@ ph_ee_connector_ams_mifos:
   ams_local_loan_host: ""
   operations_app:
     datasource:
-      host: "mysql.infra.svc.cluster.local"
+      host: operationsmysql
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
 # Custom service account override that the pod will use
@@ -565,11 +564,11 @@ operations_app:
   # TODO examine if secret.datasource can be removed
   secret:
     datasource:
-      host: "mysql.infra.svc.cluster.local" 
+      host: operationsmysql 
   datasource:
       username: "mifos"
       password: "password"
-      host: "mysql.infra.svc.cluster.local"
+      host: operationsmysql
       port: 3306
       schema: "tenants"
   livenessProbe:
@@ -728,8 +727,8 @@ operations_web:
     PH_ACT_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test
     PH_OPS_BULK_CONNECTOR_URL: https://bulk-connector.mifos.gazelle.test
     PH_OPS_SIGNATURE_URL: https://ops.mifos.gazelle.test/api/v1/util/x-signature
-    PH_PLATFORM_TENANT_ID: ph_greenbank
-    PH_PLATFORM_TENANT_IDS: "ph_greenbank,ph_bluebank"
+    PH_PLATFORM_TENANT_ID: greenbank
+    PH_PLATFORM_TENANT_IDS: "greenbank,bluebank"
     PH_REGISTERING_INSTITUTION_ID: 123
   auth:
     PH_AUTH_ENABLED: false
@@ -1163,7 +1162,7 @@ messagegateway:
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
   MYSQL_PASSWORD: "password"
-  DATASOURCE_URL: jdbc:mysql:thin://mysql.infra.svc.cluster.local:3306/messagegateway
+  DATASOURCE_URL: jdbc:mysql:thin://operationsmysql3306/messagegateway
   PROVIDERSOURCE_FROMDATABASE: "disabled"
   PROVIDERSOURCE_FROMYML: "enabled"
   livenessProbe:
@@ -1624,7 +1623,7 @@ importer_rdbms:
   # TODO: remove datasource.core from the rdbms chart
   datasource:
     core:
-      host: "mysql.infra.svc.cluster.local"
+      host: operationsmysql
       port: 3306
       schema: "tenants"
       username: "mifos"
@@ -1632,7 +1631,7 @@ importer_rdbms:
   datasource:
     username: "mifos"
     password: "password"
-    host: "mysql.infra.svc.cluster.local"
+    host: operationsmysql
     port: 3306
     schema: "tenants"
   livenessProbe:
@@ -1705,7 +1704,7 @@ connector_bulk:
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
   imagePullPolicy: IfNotPresent
   hostname: bulk-connector.mifos.gazelle.test
-  tenants: "ph_greenbank, ph_bluebank"
+  tenants: "greenbank, bluebank"
   SPRING_PROFILES_ACTIVE: ""
   camel_disable_ssl: true
   channel:
@@ -1856,7 +1855,7 @@ connector_bulk:
     #   ph-ee-connector-bulk.yml: |
 
 ph_ee_connector_gsma:
-  enabled: false
+  enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.3.0
   imagePullPolicy: IfNotPresent
@@ -2257,7 +2256,7 @@ vouchers:
       deployTime: "{{ .Values.deployTime }}"
   spring:
     datasource:
-      url: jdbc:mysql://mysql.infra.svc.cluster.local:3306/voucher_management
+      url: jdbc:mysql://operationsmysql3306/voucher_management
       username: mifos
       password: password
   async:
@@ -2266,7 +2265,7 @@ vouchers:
     queue_capacity: 100
   expiry_time: 60
   payer:
-    tenant: ph_greenbank
+    tenant: greenbank
     identifier: 12345678
     identifierType: MSISDN
   salting:
@@ -2475,7 +2474,6 @@ minio:
     enabled: true
     ingressClassName: nginx
     annotations:
-      kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
       - minio.mifos.gazelle.test

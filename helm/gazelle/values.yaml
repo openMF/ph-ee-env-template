@@ -4,11 +4,11 @@ ph-ee-engine:
     tenantPrimary:
       clientId: "mifos"
       clientSecret: "password"
-      tenant: "fred_ph_greenbank"
+      tenant: "greenbank"
     tenantSecondary:
       clientId: "mifos"
       clientSecret: "password"
-      tenant: "fred_ph_bluebank"
+      tenant: "bluebank"
     server:
       ssl:
         keyPassword: "password"
