@@ -1794,8 +1794,8 @@ connector_bulk:
       nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
       #nginx.ingress.kubernetes.io/cors-allow-origin: '*'
       #nginx.ingress.kubernetes.io/cors-allow-origin-regex: "https?://ops\.mifos.gazelle.test:4200"
-      nginx.ingress.kubernetes.io/cors-allow-origin-regex: "https://ops.mifos.gazelle.test"
-      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin-regex: 'https://ops.mifos.gazelle.test'
+      nginx.ingress.kubernetes.io/enable-cors: 'true'
     tls:
       - secretName: sandbox-secret
     hosts:

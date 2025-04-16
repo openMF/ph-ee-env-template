@@ -44,12 +44,12 @@ ph-ee-engine:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
 
 account_mapper:
-  enabled: false
+  enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
   hostname: "identity-mapper.mifos.gazelle.test"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
-    enabled: false
+    enabled: true
     className: nginx
     pathtype: Prefix
     annotations:
