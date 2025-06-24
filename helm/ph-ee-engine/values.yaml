@@ -213,7 +213,7 @@ camunda-platform:
 channel:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-channel:v1.11.0
+  image: docker.io/openmf/ph-ee-connector-channel:v1.11.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   hostname: "channel.mifos.gazelle.test"
   stub_hostname: "channel-gsma.mifos.gazelle.test"
@@ -365,6 +365,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: true
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0
   SPRING_PROFILES_ACTIVE: "fin12, bb"
   imagePullPolicy: IfNotPresent
@@ -429,7 +430,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-mojaloop:v1.5.0
+  image: docker.io/openmf/ph-ee-connector-mojaloop:gazelle-v1.1.0
   imagePullPolicy: IfNotPresent
   hostname: "mojaloop.mifos.gazelle.test"
   switch:
@@ -535,7 +536,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.17.1
+  image: docker.io/openmf/ph-ee-operations-app:v1.17.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   hostname: "ops-bk.mifos.gazelle.test"
   token_client_channel_secret: ""
@@ -647,6 +648,7 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-operations-web:v1.20.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
@@ -828,6 +830,7 @@ identity:
 mpesa:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: "docker.io/openmf/ph-ee-connector-mpesa"
   imagePullPolicy: IfNotPresent
   imageTag: "v1.7.0"
@@ -962,6 +965,7 @@ mpesa:
 roster_connector:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-roster"
   imagePullPolicy: IfNotPresent
   imageTag: "v1.3.1"
@@ -1048,6 +1052,7 @@ roster_connector:
 paygops_connector:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/phee-connector-ams-paygops"
   imagePullPolicy: IfNotPresent
   imageTag: "v1.6.1"
@@ -1134,6 +1139,7 @@ paygops_connector:
 messagegateway:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/message-gateway:v1.2.0
   imagePullPolicy: IfNotPresent
   hostname: "messagegateway.mifos.gazelle.test"
@@ -1252,7 +1258,7 @@ messagegateway:
 notifications:
   enabled: true 
   image: docker.io/openmf/ph-ee-notifications
-  imageTag: v1.4.0
+  imageTag: v1.4.0-gazelle-1.1.0
   imagePullPolicy:  IfNotPresent
   hostname: "notifications.mifos.gazelle.test"
   SPRING_PROFILES_ACTIVE: "bb"
@@ -1323,7 +1329,7 @@ notifications:
 zeebe_ops:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-zeebe-ops:v1.4.0
+  image: docker.io/openmf/ph-ee-zeebe-ops:v1.4.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
   hostname: "zeebeops.mifos.gazelle.test"
@@ -1421,6 +1427,7 @@ zeebe_ops:
 importer_es:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-importer-es:v1.14.0
   imagePullPolicy: IfNotPresent
   importer_elasticsearch_url: "infra-elasticsearch.infra.svc.cluster.local:9200/"
@@ -1520,7 +1527,7 @@ importer_es:
 
 mockpayment:
   enabled: true
-  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.0
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   hostname: "mockpayment.mifos.gazelle.test"
@@ -1594,7 +1601,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.13.1
+  image: docker.io/openmf/ph-ee-importer-rdbms:v1.13.1-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   LOGGING_LEVEL_ROOT: "DEBUG"
@@ -1680,6 +1687,7 @@ importer_rdbms:
 connector_bulk:
   enabled: true
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
   imagePullPolicy: IfNotPresent
   hostname: bulk-connector.mifos.gazelle.test
@@ -1836,7 +1844,7 @@ connector_bulk:
 ph_ee_connector_gsma:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-gsma:v1.3.0
+  image: docker.io/openmf/ph-ee-connector-gsma:v1.3.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
 # Whether this chart should self-manage its service account, role, and associated role binding.
   managedServiceAccount: true 
@@ -1899,6 +1907,7 @@ ph_ee_connector_gsma:
 ph-ee-connector_slcb:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/ph-ee-slcb"
   imagePullPolicy: IfNotPresent
   imageTag: "v1.5.0"
@@ -1996,6 +2005,7 @@ ph-ee-connector_slcb:
 ph-ee-connector:
   enabled: true 
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
   imagePullPolicy: IfNotPresent
   aws:
@@ -2029,6 +2039,7 @@ ph-ee-connector:
 
 mock_oracle:
   enabled: false
+  #IMAGETODO
   replicas: 1
   image: "419830066942.dkr.ecr.ap-south-1.amazonaws.com/mock-asl-oracle"
   imagePullPolicy: IfNotPresent
@@ -2082,16 +2093,16 @@ keycloak:
 integration_test:
   enabled: false
   replicas: 1
-  image: "docker.io/openmf/ph-ee-integration-test:v1.6.2"
+  image: docker.io/openmf/ph-ee-integration-test
   imagePullPolicy: IfNotPresent
-  imageTag: v1.6.0-rc.5
-  imagePullPolicy: "Never"
+  imageTag: v1.6.2-gazelle-1.1.0
+  imagePullPolicy: IfNotPresent
   limits:
     cpu: "500m"
     memory: "3Gi"
   requests:
     cpu: "100m"
-    memory: "512m"
+    memory: "128m"
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
@@ -2212,6 +2223,7 @@ kong:
 vouchers:
   enabled: false
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-vouchers:v1.3.1
   imagePullPolicy: IfNotPresent
   ingress:
@@ -2259,7 +2271,7 @@ vouchers:
 billPay:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-bill-pay:v1.1.0
+  image: docker.io/openmf/ph-ee-bill-pay:v1.1.0-gazelle-1.1.0 
   imagePullPolicy: IfNotPresent
   hostname: "bill-pay.mifos.gazelle.test"
   stub_hostname: "bill-pay.mifos.gazelle.test"
@@ -2353,6 +2365,7 @@ crm:
   hostname: "crm.mifos.gazelle.test"
   stub_hostname: "crm.mifos.gazelle.test"
   replicas: 1
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-connector-crm:v1.1.0
   imagePullPolicy: IfNotPresent
   livenessProbe:

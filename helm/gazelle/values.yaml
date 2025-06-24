@@ -45,6 +45,7 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
+  #IMAGETODO
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0
   hostname: "identity-mapper.mifos.gazelle.test"
   LOGGING_LEVEL_ROOT: INFO    
