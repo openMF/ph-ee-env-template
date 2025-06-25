@@ -365,8 +365,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: true
   replicas: 1
-  #IMAGETODO
-  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0-gazelle-1.1.0
   SPRING_PROFILES_ACTIVE: "fin12, bb"
   imagePullPolicy: IfNotPresent
   ams_local_enabled: true
@@ -430,7 +429,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-mojaloop:gazelle-v1.1.0
+  image: docker.io/openmf/ph-ee-connector-mojaloop-java:gazelle-v1.1.0
   imagePullPolicy: IfNotPresent
   hostname: "mojaloop.mifos.gazelle.test"
   switch:
@@ -536,7 +535,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.17.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-operations-app:v1.17.1-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   hostname: "ops-bk.mifos.gazelle.test"
   token_client_channel_secret: ""
@@ -648,8 +647,9 @@ operations_app:
 operations_web:
   enabled: true
   replicas: 1
-  #IMAGETODO
-  image: docker.io/openmf/ph-ee-operations-web:v1.20.0
+  #IMAGETODO - check this one 
+  #image: docker.io/openmf/ph-ee-operations-web:v1.20.0
+  image: docker.io/openmf/ph-ee-operations-web:v1.25.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
   hostname: "ops.mifos.gazelle.test"
