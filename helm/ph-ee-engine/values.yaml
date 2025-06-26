@@ -217,7 +217,7 @@ channel:
   imagePullPolicy: IfNotPresent
   hostname: "channel.mifos.gazelle.test"
   stub_hostname: "channel-gsma.mifos.gazelle.test"
-  #SPRING_PROFILES_ACTIVE: "bb,tenants"
+  #SPRING_PROFILES_ACTIVE: "bb,tenants"q
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   redis:
@@ -1687,8 +1687,7 @@ importer_rdbms:
 connector_bulk:
   enabled: true
   replicas: 1
-  #IMAGETODO
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1
+  image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   hostname: bulk-connector.mifos.gazelle.test
   tenants: "greenbank, bluebank"
@@ -2005,8 +2004,7 @@ ph-ee-connector_slcb:
 ph-ee-connector:
   enabled: true 
   replicas: 1
-  #IMAGETODO
-  image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0
+  image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   aws:
     region: "ap-south-1"
