@@ -33,18 +33,18 @@ spec:
           {{- end }}
           ports:
             - containerPort: 5000
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.livenessProbe.path | default "/actuator/health/liveness" }}
-              port: {{ .Values.livenessProbe.port | default 8080 }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds | default 20 }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds | default 30 }}
-          readinessProbe:
-            httpGet:
-              path: {{ .Values.readinessProbe.path | default "/actuator/health/readiness" }}
-              port: {{ .Values.readinessProbe.port | default 8080 }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds | default 20 }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds | default 30 }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: {{ .Values.livenessProbe.path | default "/actuator/health/liveness" }}
+          #     port: {{ .Values.livenessProbe.port | default 8080 }}
+          #   initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds | default 20 }}
+          #   periodSeconds: {{ .Values.livenessProbe.periodSeconds | default 30 }}
+          # readinessProbe:
+          #   httpGet:
+          #     path: {{ .Values.readinessProbe.path | default "/actuator/health/readiness" }}
+          #     port: {{ .Values.readinessProbe.port | default 8080 }}
+          #   initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds | default 20 }}
+          #   periodSeconds: {{ .Values.readinessProbe.periodSeconds | default 30 }}
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.springProfilesActive | default "" }}"
