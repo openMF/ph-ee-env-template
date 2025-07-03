@@ -75,12 +75,17 @@ spec:
               mountPath: "/config"
       initContainers:
         - name: wait-db
-          image: jwilder/dockerize
+          image: busybox:1.35
           imagePullPolicy: IfNotPresent
+          command: ['sh', '-c']
           args:
-            - -timeout=120s
-            - -wait
-            - tcp://{{ .Values.secret.datasource.host }}:3306
+            - |
+              echo "Waiting for database connection..."
+              until nc -z {{ .Values.secret.datasource.host }} 3306; do
+                echo "Database not ready, waiting..."
+                sleep 2
+              done
+              echo "Database is ready!"
       volumes:
         - name: ph-ee-config
           configMap:
