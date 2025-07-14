@@ -1841,7 +1841,7 @@ connector_bulk:
     #   ph-ee-connector-bulk.yml: |
 
 ph_ee_connector_gsma:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.3.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
