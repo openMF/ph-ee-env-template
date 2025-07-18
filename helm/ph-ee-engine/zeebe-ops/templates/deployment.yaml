@@ -23,7 +23,7 @@ spec:
       containers:
         - name: ph-ee-zeebe-ops
           image: "{{ .Values.image }}"
-          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           resources:
             limits:
               memory: "{{ .Values.limits.memory }}"
@@ -33,6 +33,18 @@ spec:
               cpu: "{{ .Values.requests.cpu }}"
           ports:
             - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path | default "/actuator/health/liveness" }}
+              port: {{ .Values.livenessProbe.port | default 8080}}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds | default 30 }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds | default 30 }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path | default "/actuator/health/readiness" }}
+              port: {{ .Values.readinessProbe.port | default 8080 }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds | default 30 }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds | default 30 }}
           env:
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
@@ -61,10 +73,24 @@ spec:
                   name: elastic-credentials
                   key: password
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}        
           envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
           securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
 
+      #     volumeMounts:
+      #       - name: ph-ee-config
+      #         mountPath: "/config"
+      #       - name: local-code
+      #         mountPath: /app # Mount your local code into /app in the container
+      #     command: ["java", "-jar", "/app/build/libs/ph-ee-zeebe-ops-0.0.1-SNAPSHOT.jar"] # replace ph-ee-connector-bulk-0.0.1-SNAPSHOT.jar with your jar file name
+      # volumes:
+      #   - name: ph-ee-config
+      #     configMap:
+      #       name: ph-ee-config
+      #   - name: local-code
+      #     hostPath:
+      #       path: /home/mifosu/ph-ee-zeebe-ops # local project path
+      #       type: Directory # Ensure it's a directory 
 
 {{- end }}
