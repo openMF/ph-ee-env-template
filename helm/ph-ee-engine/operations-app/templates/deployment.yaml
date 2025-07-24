@@ -23,6 +23,7 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-operations-app
+          #image: "openjdk:17"
           image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
           ports:
@@ -73,6 +74,9 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+          #   - name: local-code
+          #     mountPath: /app # Mount your local code into /app in the container
+          # command: ["java", "-jar", "/app/build/libs/operations-app-gazelle-1.1.0.jar"] # replace ph-ee-connector-bulk-0.0.1-SNAPSHOT.jar with your jar file name
       initContainers:
         - name: wait-db
           image: busybox:1.35
@@ -90,4 +94,8 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+        # - name: local-code
+        #   hostPath:
+        #     path: /home/mifosu/ph-ee-operations-app # local project path
+        #     type: Directory # Ensure it's a directory 
 {{- end }}

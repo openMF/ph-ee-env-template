@@ -1,5 +1,4 @@
 {{- if .Values.enabled -}}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,7 +22,8 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       containers:
         - name: ph-ee-connector-bulk
-          image: "{{ .Values.image}}"
+          image: "openjdk:17"
+          # image: "{{ .Values.image }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000
@@ -37,21 +37,21 @@ spec:
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
-            - name: "CAMEL_DISABLE-SSL"
+            - name: "CAMEL_DISABLE_SSL"
               value: "{{ .Values.camel_disable_ssl }}"
             - name: "ZEEBE_BROKER_CONTACTPOINT"
               value: "{{ .Release.Name }}-zeebe-gateway:26500"
-            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
-              value: "{{ .Values.global.max_execution_threads}}"
-            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
-              value: "{{ .Values.global.poll_interval}}"
+            - name: "ZEEBE_CLIENT_MAX_EXECUTION_THREADS"
+              value: "{{ .Values.global.max_execution_threads }}"
+            - name: "ZEEBE_CLIENT_POLL_INTERVAL"
+              value: "{{ .Values.global.poll_interval }}"
             - name: "TENANTS"
               value: "{{ .Values.global.tenants }}"
-            - name: "APPLICATION_BUCKET-NAME"
+            - name: "APPLICATION_BUCKET_NAME"
               value: "{{ .Values.global.bucket_name }}"
-            - name: "OPERATIONS-APP_CONTACTPOINT"
+            - name: "OPERATIONS_APP_CONTACTPOINT"
               value: "{{ .Values.operations_app.contactpoint }}"
-            - name: "OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION"
+            - name: "OPERATIONS_APP_ENDPOINTS_BATCH_TRANSACTION"
               value: "{{ .Values.operations_app.endpoints.batch_transaction }}"
             - name: "CONFIG_PARTYLOOKUP_ENABLE"
               value: "{{ .Values.config.partylookup.enable }}"
@@ -73,9 +73,9 @@ spec:
               value: "{{ .Values.config.mergeback.enable }}"
             - name: "CONFIG_BACKPRESSURE_ENABLE"
               value: "{{ .Values.config.backpressure.enable }}"
-            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_ENABLE"
+            - name: "CONFIG_COMPLETION_THRESHOLD_CHECK_ENABLE"
               value: "{{ .Values.config.completion_threshold_check.enable }}"
-            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
+            - name: "CONFIG_COMPLETION_THRESHOLD_CHECK_COMPLETION_RATE"
               value: "{{ .Values.config.completion_threshold_check.completion_rate }}"
             - name: "CLOUD_AWS_REGION_STATIC"
               valueFrom:
@@ -85,7 +85,7 @@ spec:
             - name: "BP_JAVA_OPTS"
               value: "-Xmx400m -Xms400m"
             - name: "CLOUD_AWS_S3BASEURL"
-              value: {{.Values.global.s3BaseUrl}}
+              value: "{{ .Values.global.s3BaseUrl }}"
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
@@ -106,8 +106,16 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+            - name: local-code
+              mountPath: /app
+          command: ["java", "-jar", "/app/build/libs/ph-ee-processor-bulk-gazelle-1.1.0.jar"]
+          workingDir: /app
       volumes:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+        - name: local-code
+          hostPath:
+            path: /home/mifosu/ph-ee-bulk-processor # local project path
+            type: Directory
 {{- end }}
