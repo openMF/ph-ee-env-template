@@ -336,6 +336,7 @@ operationsmysql:
   fullnameOverride: "operationsmysql"
   image:
     tag: "5.7"
+    repository: bitnamilegacy/mysql
     debug: false
   auth:
     database: "tenants"
