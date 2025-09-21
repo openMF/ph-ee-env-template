@@ -1769,50 +1769,35 @@ connector_bulk:
     cpu: "50m"
   service:
     annotations: {}
-# Enabling this will publicly expose your connector_bulk instance.
-# Only enable this if you have security enabled on your cluster
+# Tom D : ingress updated for bulk-connector to support CORS from ops.mifos.gazelle.test
   ingress:
     enabled: true
     className: nginx
+    pathType: Prefix
+    path: /batchtransactions
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/cors-allow-headers: "content-type,platform-tenantid,purpose,type,x-callback-url,x-correlationid,x-program-id,x-registering-institution-id,x-signature"
-      nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-      #nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+      nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.test"
-      #nginx.ingress.kubernetes.io/cors-allow-origin-regex: "https?://ops\.mifos.gazelle.test:4200"
-      nginx.ingress.kubernetes.io/enable-cors: 'true'
+      nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
+      nginx.ingress.kubernetes.io/cors-allow-headers: "content-type,platform-tenantid,purpose,type,x-callback-url,x-correlationid,x-program-id,x-registering-institution-id,x-signature"
+      nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+      nginx.ingress.kubernetes.io/enable-access-log: "true"
+      nginx.ingress.kubernetes.io/log-format: '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for" $request_uri'
     tls:
-      - secretName: sandbox-secret
+    - hosts:
+      - bulk-connector.mifos.gazelle.test
+      secretName: sandbox-secret
     hosts:
-      - host: bulk-connector.mifos.gazelle.test     
-        paths: 
-        - path: "/"
-          backend:
-            service:
-              name: "ph-ee-connector-bulk"
-              port:
-                number: 8443
-  # ingress:
-  #   enabled: false
-  #   annotations:
-  #   #  konghq.com/plugins: cors
-  #     kubernetes.io/ingress.class: nginx
-  #   tls:
-  #     - secretName: sandbox-secret
-  #   hosts:
-  #     - host: bulk-connector.mifos.gazelle.test     
-  #       paths: 
-  #       - path: "/"
-  #         backend:
-  #           service:
-  #             name: "ph-ee-connector-bulk"
-  #             port:
-  #               number: 8443
-  # ingress:
-  #   enabled: false 
-  #   annotations: {}    
+    - host: bulk-connector.mifos.gazelle.test
+      paths:
+      - path: /batchtransactions
+        backend:
+          service:
+            name: bulk-connector-service
+            port:
+              number: 443
+
   deployment:
     annotations:
       deployTime: "{{ .Values.deployTime }}"
