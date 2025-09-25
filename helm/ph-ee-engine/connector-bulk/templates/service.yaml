@@ -1,20 +1,17 @@
 {{- if .Values.enabled -}}
-apiVersion: v1
+apiVersion: {{ .Values.service.apiversion }}
 kind: Service
 metadata:
   labels:
     app: ph-ee-connector-bulk
   name: ph-ee-connector-bulk
-{{- with .Values.service.annotations }}
-  annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
 spec:
   ports:
     - name: port
-      port: 8443
+      port: 80
       protocol: TCP
-      targetPort: 8443
+      targetPort: 8080
+
   selector:
     app: ph-ee-connector-bulk
   sessionAffinity: None

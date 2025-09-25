@@ -1685,12 +1685,12 @@ importer_rdbms:
     #   ph-ee-importer_rdbms.yml: |
   javaToolOptions: "-Xmx128m"
 
-connector_bulk:
+bulk_processor:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
-  hostname: bulk-connector.mifos.gazelle.test
+  hostname: bulk-processor.mifos.gazelle.test
   tenants: "greenbank, bluebank"
   SPRING_PROFILES_ACTIVE: ""
   camel_disable_ssl: true
@@ -1756,8 +1756,6 @@ connector_bulk:
   #     name: config-secret
   extraEnvs: [] 
   priorityClassName: "" 
-  # ph-ee-connector-bulkConfig: ""
-  #   ph-ee-connector-bulk.yml: |
   securityContext:
     runAsUser: 0
     privileged: false   
@@ -1769,7 +1767,7 @@ connector_bulk:
     cpu: "50m"
   service:
     annotations: {}
-# Tom D : ingress updated for bulk-connector to support CORS from ops.mifos.gazelle.test
+# Tom D : ingress updated for bulk-processor to support CORS from ops.mifos.gazelle.test
   ingress:
     enabled: true
     className: nginx
@@ -1786,15 +1784,15 @@ connector_bulk:
       nginx.ingress.kubernetes.io/log-format: '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for" $request_uri'
     tls:
     - hosts:
-      - bulk-connector.mifos.gazelle.test
+      - bulk-processor.mifos.gazelle.test
       secretName: sandbox-secret
     hosts:
-    - host: bulk-connector.mifos.gazelle.test
+    - host: bulk-processor.mifos.gazelle.test
       paths:
       - path: /batchtransactions
         backend:
           service:
-            name: bulk-connector-service
+            name: bulk-processor-service
             port:
               number: 443
 
@@ -1809,7 +1807,7 @@ connector_bulk:
   #     name: config-secret
     extraEnvs: []
   # - User that the container will execute as.
-  # Not necessary to run as root (0) as the connector_bulk Deployment use cases do not need access to Kubernetes Node internals
+  # Not necessary to run as root (0) as the bulk-processor Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
     securityContext:
       runAsUser: 0
@@ -1821,10 +1819,6 @@ connector_bulk:
     requests:
       memory: "128k"
       cpu: "50m"
-# Allows you to add any config files in /usr/share/
-    # such as ph-ee-connector-bulk.yml for deployment  
-    # ph-ee-connector-bulkConfig: {}
-    #   ph-ee-connector-bulk.yml: |
 
 ph_ee_connector_gsma:
   enabled: true
@@ -1987,8 +1981,8 @@ ph-ee-connector_slcb:
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
 
-ph-ee-connector:
-  enabled: true 
+connector_bulk:
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
@@ -2009,12 +2003,12 @@ ph-ee-connector:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: connector.mifos.gazelle.test
+      - host: connector-bulk.mifos.gazelle.test
         paths:
           - path: "/"
             backend:
               service:
-                name: ph-ee-connector
+                name: ph-ee-connector-bulk
                 port:
                   number: 80
   deployment:

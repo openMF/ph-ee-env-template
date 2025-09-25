@@ -2,14 +2,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ph-ee-connector-c-role-binding
+  name: ph-ee-bulk-processor-c-role-binding
 subjects:
 - kind: ServiceAccount
-  name: ph-ee-connector # name of your service account
+  name: ph-ee-bulk-processor # name of your service account
   namespace: {{ .Release.Namespace }} # this is the namespace your service account is in
 roleRef: # referring to your ClusterRole
   kind: ClusterRole
-  name: ph-ee-connector-c-role
+  name: ph-ee-bulk-processor-c-role
   apiGroup: rbac.authorization.k8s.io
   
 {{- end -}}

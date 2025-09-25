@@ -1,44 +1,49 @@
 {{- if .Values.ingress.enabled -}}
+{{- $pathtype := .Values.ingress.pathtype -}}
+{{- $ingressPath := .Values.ingress.path -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ph-ee-connector-bulk
-  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  {{- if .Values.ingress.annotations }}
+{{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
-  {{- end }}
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className | quote }}
   {{- end }}
-  {{- if .Values.ingress.tls }}
+{{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
-  - hosts:
-    {{- range .hosts }}
-    - {{ . | quote }}
+  {{- if .ingressPath }}
+  {{- range  .Values.ingress.tls }}
+    - hosts:
+    {{- range  .hosts }}
+        - {{ . }}
     {{- end }}
-    secretName: {{ .secretName | quote }}
+      secretName: {{ .secretName }}
   {{- end }}
+{{- else }}
+{{ toYaml .Values.ingress.tls | indent 4 }}
   {{- end }}
+{{- end}}
   rules:
   {{- range .Values.ingress.hosts }}
-  - host: {{ .host | quote }}
-    http:
-      paths:
+    - host: {{ .host }}
+      http:
+        paths:
       {{- range .paths }}
-      - path: {{ .path | quote }}
-        pathType: {{ $.Values.ingress.pathType | default "Prefix" }}
-        backend:
-          service:
-            name: {{ .backend.service.name | quote }}
-            port:
-              number: {{ .backend.service.port.number }}
+          - path: {{ .path }}
+            pathType: {{ $pathtype }}
+            backend:
+              service:
+                name: {{ .backend.service.name}}
+                port:
+                  number: {{ .backend.service.port.number}}
       {{- end }}
-  {{- end }}
-{{- end }}
+ {{- end }}
+ {{- end }}

@@ -5,7 +5,7 @@ metadata:
   name: ph-ee-connector-bulk-c-role-binding
 subjects:
 - kind: ServiceAccount
-  name: ph-ee-connector-bulk # name of your service account
+  name: ph-ee-connector # name of your service account
   namespace: {{ .Release.Namespace }} # this is the namespace your service account is in
 roleRef: # referring to your ClusterRole
   kind: ClusterRole
