@@ -21,6 +21,12 @@ spec:
 {{- end }}
     spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      # --- BEGIN Init Container ---
+      initContainers:
+        - name: wait-for-gateway
+          image: busybox:1.28 # Or another image with nslookup and nc
+          command: ['sh', '-c', 'until nslookup phee-zeebe-gateway && nc -z phee-zeebe-gateway 26500; do echo "Waiting for phee-zeebe-gateway (port 26500)..."; sleep 2; done; echo "Gateway is up!"']
+      # --- END Init Container ---
       containers:
         - name: ph-ee-bulk-processor
           image: "{{ .Values.image}}"

@@ -1685,7 +1685,7 @@ importer_rdbms:
     #   ph-ee-importer_rdbms.yml: |
   javaToolOptions: "-Xmx128m"
 
-bulk_processor:
+ph_ee_bulk_processor:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1-gazelle-1.1.0

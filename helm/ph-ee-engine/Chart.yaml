@@ -93,10 +93,10 @@ dependencies:
     version: 1.0.0
     repository: "file://./bulk-processor"
     condition: "bulk_processor.enabled"
-  # - name: connector_bulk
-  #   version: 1.0.0
-  #   repository: "file://./connector-bulk"
-  #   condition: "connector_bulk.enabled"
+  - name: connector_bulk
+    version: 1.0.0
+    repository: "file://./connector-bulk"
+    condition: "connector_bulk.enabled"
   - name: channel
     version: 1.0.0
     repository: "file://./connector-channel"
