@@ -31,12 +31,7 @@ spec:
       {{- end }}
       serviceAccountName: ph-ee-connector-ams-mifos
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
-      # --- BEGIN Init Container ---
-      initContainers:
-        - name: wait-for-gateway
-          image: busybox:1.28 # Or another image with nslookup and nc
-          command: ['sh', '-c', 'until nslookup phee-zeebe-gateway && nc -z phee-zeebe-gateway 26500; do echo "Waiting for phee-zeebe-gateway (port 26500)..."; sleep 2; done; echo "Gateway is up!"']
-      # --- END Init Container ---
+
       containers:
         - name: ph-ee-connector-ams-mifos
           image: "{{ .Values.image }}"
@@ -84,7 +79,24 @@ spec:
           # {{- if .Values.deployment.config }}
           # {{ toYaml .Values.deployment.config | indent 12 }}
           # {{- end }}
+      # --- BEGIN Init Container ---
       initContainers:
+        - name: wait-for-gateway
+          image: curlimages/curl:latest # Lightweight image with curl
+          command: ['sh', '-c']
+          args:
+            - |
+              GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
+              echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
+              
+              # Wait until curl returns an HTTP status code 200 (UP/OK)
+              until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
+                echo "Gateway not yet fully ready..."
+                sleep 2
+              done
+              
+              echo "Gateway is fully up! Proceeding to main container..."
+  
         - name: wait-db
           image: busybox:1.35
           imagePullPolicy: IfNotPresent
@@ -97,6 +109,7 @@ spec:
                 sleep 2
               done
               echo "Database is ready!"
+      # --- END Init Container ---
       volumes:
         - name: ph-ee-config
           configMap:

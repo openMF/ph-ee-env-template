@@ -53,13 +53,15 @@ account_mapper:
     className: nginx
     pathtype: Prefix
     annotations:
-      nginx.ingress.kubernetes.io/access-control-allow-origin: 'true'
-      nginx.ingress.kubernetes.io/cors-allow-headers: 'x-registering-institution-id'
-      nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-      nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-      nginx.ingress.kubernetes.io/enable-cors: 'true'
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.test"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
+      nginx.ingress.kubernetes.io/cors-allow-headers: "x-registering-institution-id, Content-Type, Authorization"
+      nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     tls:
-      - secretName: sandbox-secret
+    - hosts:
+      - identity-mapper.mifos.gazelle.test
+      secretName: sandbox-secret
     hosts:
       - host: identity-mapper.mifos.gazelle.test
         paths:

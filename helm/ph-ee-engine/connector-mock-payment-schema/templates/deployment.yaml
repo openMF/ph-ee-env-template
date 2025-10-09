@@ -21,6 +21,24 @@ spec:
 {{- end }}
     spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      # --- BEGIN Init Container ---
+      initContainers:
+        - name: wait-for-gateway
+          image: curlimages/curl:latest # Lightweight image with curl
+          command: ['sh', '-c']
+          args:
+            - |
+              GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
+              echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
+              
+              # Wait until curl returns an HTTP status code 200 (UP/OK)
+              until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
+                echo "Gateway not yet fully ready..."
+                sleep 2
+              done
+              
+              echo "Gateway is fully up! Proceeding to main container..."
+      # --- END Init Container ---
       containers:
         - name: ph-ee-connector-mock-payment-schema
           image: "{{ .Values.image }}"

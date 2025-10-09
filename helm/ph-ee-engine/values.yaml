@@ -706,8 +706,8 @@ operations_web:
   backend:
     PH_OPS_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test/api/v1
     PH_VOU_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test/api/v1
-    PH_ACT_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test
-    PH_OPS_BULK_CONNECTOR_URL: https://bulk-connector.mifos.gazelle.test
+    PH_ACT_BACKEND_SERVER_URL: https://identity-mapper.mifos.gazelle.test
+    PH_OPS_BULK_CONNECTOR_URL: https://connector-bulk.mifos.gazelle.test
     PH_OPS_SIGNATURE_URL: https://ops.mifos.gazelle.test/api/v1/util/x-signature
     PH_PLATFORM_TENANT_ID: greenbank
     PH_PLATFORM_TENANT_IDS: "greenbank,bluebank"
@@ -1560,6 +1560,10 @@ mockpayment:
 kafka:
   enabled: true
   fullnameOverride: kafka
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/kafka
+    tag: 3.5.1-debian-11-r25
 
   provisioning:
     enabled: true
@@ -1792,9 +1796,9 @@ ph_ee_bulk_processor:
       - path: /batchtransactions
         backend:
           service:
-            name: bulk-processor-service
+            name: ph-ee-bulk-processor
             port:
-              number: 443
+              number: 8443
 
   deployment:
     annotations:
@@ -1981,8 +1985,8 @@ ph-ee-connector_slcb:
     # ph_ee_connector_slcbConfig: {}
     #   ph_ee_connector_slcb.yml: |
 
-connector_bulk:
-  enabled: false
+ph_ee_connector_bulk:
+  enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
