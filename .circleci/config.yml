@@ -47,11 +47,17 @@ jobs:
             helm dep up ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci
             helm package ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "ph-ee-g2p-sandbox-ci$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
+
   build-and-host-engine:
     docker:
       - image: cimg/python:3.10
@@ -175,11 +181,16 @@ jobs:
             helm dep up ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
             helm package ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "pushing ph-ee-g2psandbox-fynarfin$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   build-and-host-g2p-sandbox-security:
     docker:
       - image: cimg/python:3.10
@@ -219,11 +230,16 @@ jobs:
             helm dep up helm/g2p-sandbox-security
             helm package helm/g2p-sandbox-security
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "pushing ph-ee-g2psandbox-fynarfin$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   minikube-run-helm-upgrade-and-helm-test:
     machine:
       image: ubuntu-2004:current
@@ -601,6 +617,7 @@ workflows:
           context: 
             - AWS
             - Helm
+            - Secrets
       - build-g2p-sandbox-ci-chart:
           requires:
             - build-host-g2p-fyn-chart
@@ -608,6 +625,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - build-and-host-g2p-sandbox-security:
           requires:
             - build-g2p-sandbox-ci-chart
@@ -615,6 +633,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - minikube-run-helm-upgrade-and-helm-test:
           context:
             - AWS
