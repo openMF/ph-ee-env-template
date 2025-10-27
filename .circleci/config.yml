@@ -476,10 +476,10 @@ jobs:
             ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
             
             EXTRA_VALUES=$(echo "-f ph-ee-g2p-sandbox-ci/values_p1.yaml")
-            helm upgrade ${EXTRA_VALUES} --install  --timeout=1h ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} 
+            helm upgrade ${EXTRA_VALUES} --install  --timeout=5m ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE} 
             echo --------------------helm upgrade in Phase 1 done---------------------
             EXTRA_VALUES=$(echo "-f ph-ee-g2p-sandbox-ci/values_p2.yaml")
-            helm upgrade ${EXTRA_VALUES} --install  --timeout=1h ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
+            helm upgrade ${EXTRA_VALUES} --install  --timeout=5m ${VALUES_TO_OVERRIDE} ${ORB_PARAM_RELEASE_NAME} ${ORB_PARAM_CHART} ${ORB_PARAM_NAMESPACE}
             echo --------------------helm upgrade in Phase 2 done---------------------
             echo --------------------helm upgrade is done---------------------
             sleep 1m;
