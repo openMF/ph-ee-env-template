@@ -80,11 +80,15 @@ jobs:
             helm dep up helm/ph-ee-engine
             helm package helm/ph-ee-engine
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   build-and-host-g2p-sandbox:
     docker:
       - image: cimg/python:3.10
@@ -577,6 +581,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - build-and-host-g2p-sandbox:
           requires:
             - build-and-host-engine
