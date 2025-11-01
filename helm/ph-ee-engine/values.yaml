@@ -1388,7 +1388,7 @@ mockpayment:
     annotations: {}
 
 kafka:
-  registry: docker.io/bitnamilegacy
+  image: docker.io/bitnamilegacy/kafka:3.5.1-debian-11-r25
   enabled: true
   fullnameOverride: kafka
 
