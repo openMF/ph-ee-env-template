@@ -1388,6 +1388,7 @@ mockpayment:
     annotations: {}
 
 kafka:
+  registry: docker.io/bitnamilegacy
   enabled: true
   fullnameOverride: kafka
 
