@@ -31,15 +31,15 @@ jobs:
                 PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
                 JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
                 if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
-                echo Charts will save in https://fynarfin.io/images$JIRA_STORY_DIR
+                echo Charts will save in https://openmf.github.io/helm-charts/payment-hub/images$JIRA_STORY_DIR
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
+            CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "11s@^ *repository:.*\$@  repository: $CHART_URL@" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
               sed -i "12s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-g2p-sandbox-ci-0.0.0"
+              CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-g2p-sandbox-ci-0.0.0"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "6s/.*/version: 0.0.0$JIRA_STORY/" ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci/Chart.yaml
@@ -47,11 +47,17 @@ jobs:
             helm dep up ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci
             helm package ph-ee-env-labs/helm/ph-ee-g2p-sandbox-ci
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2p-sandbox-ci$JIRA_STORY index.yaml ph-ee-g2p-sandbox-ci-0.0.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "ph-ee-g2p-sandbox-ci$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
+
   build-and-host-engine:
     docker:
       - image: cimg/python:3.10
@@ -74,17 +80,21 @@ jobs:
               PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
-              echo Charts will save in https://fynarfin.io/images$JIRA_STORY_DIR
+              echo Charts will save in https://openmf.github.io/helm-charts/payment-hub/images$JIRA_STORY_DIR
             fi
             sed -i "5s/.*/version: 0.0.0-SNAPSHOT$JIRA_STORY/" helm/ph-ee-engine/Chart.yaml
             helm dep up helm/ph-ee-engine
             helm package helm/ph-ee-engine
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo cp -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY index.yaml ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   build-and-host-g2p-sandbox:
     docker:
       - image: cimg/python:3.10
@@ -108,13 +118,13 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
+            CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "10s@^ *repository:.*\$@  repository: $CHART_URL@" helm/g2p-sandbox/Chart.yaml
               sed -i "11s@^ *version:.*\$@  version: 0.0.0-SNAPSHOT$JIRA_STORY@" helm/g2p-sandbox/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-engine-0.0.0-SNAPSHOT"
+              CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-engine-0.0.0-SNAPSHOT"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox/Chart.yaml
@@ -123,11 +133,16 @@ jobs:
             helm dep up helm/g2p-sandbox
             helm package helm/g2p-sandbox
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY index.yaml ph-ee-g2psandbox-0.0.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY index.yaml ph-ee-g2psandbox-0.0.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "pushing ph-ee-g2psandbox-0.0.0$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   build-host-g2p-fyn-chart:
     docker:
       - image: cimg/python:3.10
@@ -152,13 +167,13 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
+            CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-0.0.0$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "11s@^ *repository:.*\$@  repository: $CHART_URL@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
               sed -i "12s@^ *version:.*\$@  version: 0.0.0$JIRA_STORY@" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-g2psandbox-0.0.0"
+              CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-g2psandbox-0.0.0"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "6s/.*/version: 0.2.0$JIRA_STORY/" ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT/Chart.yaml
@@ -166,11 +181,16 @@ jobs:
             helm dep up ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
             helm package ph-ee-env-labs/helm/g2p-sandbox-fynarfin-SIT
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-fynarfin$JIRA_STORY index.yaml ph-ee-g2psandbox-fynarfin-0.2.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "pushing ph-ee-g2psandbox-fynarfin$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   build-and-host-g2p-sandbox-security:
     docker:
       - image: cimg/python:3.10
@@ -194,13 +214,13 @@ jobs:
               JIRA_STORY=-$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
               if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY" && JIRA_STORY_DIR=$(echo /jira-story-version); fi
             fi
-            CHART_URL="https://fynarfin.io/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
+            CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-engine-0.0.0-SNAPSHOT$JIRA_STORY"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               sed -i "10s@^ *repository:.*\$@  repository: $CHART_URL@" helm/g2p-sandbox-security/Chart.yaml
               sed -i "11s@^ *version:.*\$@  version: 0.0.0-SNAPSHOT$JIRA_STORY@" helm/g2p-sandbox-security/Chart.yaml
               echo "chart used: < $CHART_URL >"
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-engine-0.0.0-SNAPSHOT"
+              CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-engine-0.0.0-SNAPSHOT"
               echo "chart used: < $CHART_URL >"
             fi
             sed -i "5s/.*/version: 0.0.0$JIRA_STORY/" helm/g2p-sandbox-security/Chart.yaml
@@ -210,11 +230,16 @@ jobs:
             helm dep up helm/g2p-sandbox-security
             helm package helm/g2p-sandbox-security
             helm repo index .
-            echo "$CERT_FILE" | base64 --decode > b64encoded.pem
-            chmod 400 b64encoded.pem
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mkdir -p /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY
-            scp -o StrictHostKeyChecking=No -i b64encoded.pem index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz ec2-user@13.233.68.128:~/
-            ssh -i b64encoded.pem -o StrictHostKeyChecking=No ec2-user@13.233.68.128 sudo mv -t /apps/apache-tomcat-7.0.82/webapps/ROOT/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
+
+            git clone https://github.com/openMF/helm-charts.git
+            mkdir -p  helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY
+            cp -t helm-charts/payment-hub/images$JIRA_STORY_DIR/ph-ee-g2psandbox-security$JIRA_STORY index.yaml ph-ee-g2psandbox-security-0.0.0$JIRA_STORY.tgz
+            cd helm-charts
+            git config --global user.email "manoj@mifos.org"
+            git config --global user.name "Manoj-CI"
+            git add --a
+            git commit -m "pushing ph-ee-g2psandbox-fynarfin$JIRA_STORY"
+            git push https://$HELM_GIT_USER:$HELM_GIT_PAT@github.com/openMF/helm-charts.git master
   minikube-run-helm-upgrade-and-helm-test:
     machine:
       image: ubuntu-2004:current
@@ -240,7 +265,7 @@ jobs:
         default: https://raw.githubusercontent.com/openMF/ph-ee-env-labs/master/.circleci/services.txt
         type: string
       chart-base-url:
-        default: https://fynarfin.io/images
+        default: https://openmf.github.io/helm-charts/payment-hub/images
         type: string
       chart-name:
         default: ph-ee-g2p-sandbox-ci
@@ -290,69 +315,70 @@ jobs:
             kubectl create namespace paymenthub
             kubectl get -A namespace  
 
-            # # For remote access to minikube uncomment the following lines.
-            # #---------------------minikube remote aceess start---------------------
-            # sudo apt install nginx        
-            # sudo touch /etc/nginx/conf.d/minikube.conf 
-            # echo "create nginx conf"
-            # sudo chmod 777 -R /etc/nginx/conf.d/
-            # echo "changed access"
+            # For remote access to minikube uncomment the following lines.
+            #---------------------minikube remote aceess start---------------------
+            sudo apt install nginx        
+            sudo touch /etc/nginx/conf.d/minikube.conf 
+            echo "create nginx conf"
+            sudo chmod 777 -R /etc/nginx/conf.d/
+            echo "changed access"
 
-            # sudo apt-get install apache2-utils -y
-            # echo "apache2-utils installed"
-            # htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
+            sudo apt-get install apache2-utils -y
+            echo "apache2-utils installed"
+            htpasswd -bc /home/circleci/project/.htpasswd minikube minikube
 
-            # sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
-            # server {
-            #    listen       8080;
-            #    listen [::]:8080;
-            #    server_name  localhost;
-            #    access_log /home/circleci/project/nginx_access.log;
-            #   auth_basic "Administrators Area";
-            #   auth_basic_user_file /home/circleci/project/.htpasswd;    
+            sudo cat \<<EOF > /etc/nginx/conf.d/minikube.conf 
+            server {
+               listen       8080;
+               listen [::]:8080;
+               server_name  localhost;
+               access_log /home/circleci/project/nginx_access.log;
+              auth_basic "Administrators Area";
+              auth_basic_user_file /home/circleci/project/.htpasswd;    
 
-            #    location / {   
-            #        proxy_pass https://$MINIKUBE_IP:8443;
-            #        proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
-            #        proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
-            #    }
-            # }
-            # EOF
-            # sudo service nginx restart || echo 'start nginx'
-            # SYSTEMD_LESS=FRXMK  systemctl status nginx.service
+               location / {   
+                   proxy_pass https://$MINIKUBE_IP:8443;
+                   proxy_ssl_certificate /home/circleci/.minikube/profiles/minikube/client.crt;
+                   proxy_ssl_certificate_key /home/circleci/.minikube/profiles/minikube/client.key;
+               }
+            }
+            EOF
+            sudo service nginx restart || echo 'start nginx'
+            SYSTEMD_LESS=FRXMK  systemctl status nginx.service
 
-            # sleep 10
+            sleep 10
             
-            # echo "test-nginx-proxy"
-            # curl -u minikube:minikube http://localhost:8080
+            echo "test-nginx-proxy"
+            curl -u minikube:minikube http://localhost:8080
 
-            # curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
-            # ngrok config add-authtoken $AUTH_TOKEN
-            # echo "web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
-            # ngrok http 8080 > /dev/null &
+            curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+            ngrok config add-authtoken $AUTH_TOKEN
+            echo "    web_addr: $LOCAL_PORT" >> /home/circleci/.config/ngrok/ngrok.yml
+            cat /home/circleci/.config/ngrok/ngrok.yml
+            ngrok http 8080 > /dev/null &
 
-            # echo -n "Extracting ngrok public url ."
-            # NGROK_PUBLIC_URL=""
-            # while [ -z "$NGROK_PUBLIC_URL" ]; do
-            #   # Run 'curl' against ngrok API and extract public (using 'sed' command)
-            #   export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
-            #                             --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
-            #                             sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
-            #   sleep 1
-            #   echo -n "."
-            # done
-            # echo ---------copy the below public_URL for NGrok----------
-            # echo "https://$NGROK_PUBLIC_URL"
-            # echo "https://$NGROK_PUBLIC_URL"
+            echo -n "Extracting ngrok public url ."
+            NGROK_PUBLIC_URL=""
+            while [ -z "$NGROK_PUBLIC_URL" ]; do
+              # Run 'curl' against ngrok API and extract public (using 'sed' command)
+              export NGROK_PUBLIC_URL=$(curl --silent --max-time 10 --connect-timeout 5 \
+                                        --show-error http://127.0.0.1:$LOCAL_PORT/api/tunnels | \
+                                        sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+              sleep 1
+              echo -n "."
+            done
+            echo ---------copy the below public_URL for NGrok----------
+            echo "https://$NGROK_PUBLIC_URL"
+            echo "https://$NGROK_PUBLIC_URL"
 
-            # echo "test ngrok "
-            # curl -u minikube:minikube https://$NGROK_PUBLIC_URL
-            # echo "https://$NGROK_PUBLIC_URL"
-            # # ---------------------minikube remote access end---------------------
+            echo "test ngrok "
+            curl -u minikube:minikube https://$NGROK_PUBLIC_URL
+            echo "https://$NGROK_PUBLIC_URL"
+            # ---------------------minikube remote access end---------------------
 
-            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-            sudo apt-get install apt-transport-https --yes
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            sudo apt-get install curl gpg apt-transport-https --yes
+            curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+            echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
             #helm install
             sudo apt-get update
             sudo apt-get install helm
@@ -423,15 +449,15 @@ jobs:
             fi
             
             # Generating the chart url for deployment
-            # chart: "https://fynarfin.io/images/ph-ee-g2p-sandbox-ci/ph-ee-g2p-sandbox-ci-0.0.0.tgz"
+            # chart: "https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-g2p-sandbox-ci/ph-ee-g2p-sandbox-ci-0.0.0.tgz"
             ORB_PARAM_CHART=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY/$ORB_CHART_NAME-$ORB_CHART_VERSION$JIRA_STORY.tgz")
             CHART_URL="$ORB_PARAM_CHART"
             if curl --output /dev/null --silent --head --fail "$CHART_URL"; then
               echo "chart used: < $CHART_URL >"
-              # add-repo: "https://fynarfin.io/images/ph-ee-g2p-sandbox-ci"
+              # add-repo: "https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-g2p-sandbox-ci"
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL$JIRA_STORY_DIR/$ORB_CHART_NAME$JIRA_STORY")
             else
-              CHART_URL="https://fynarfin.io/images/ph-ee-g2p-sandbox-ci/ph-ee-g2p-sandbox-ci-0.0.0.tgz"
+              CHART_URL="https://openmf.github.io/helm-charts/payment-hub/images/ph-ee-g2p-sandbox-ci/ph-ee-g2p-sandbox-ci-0.0.0.tgz"
               ORB_PARAM_REPO=$(echo "$ORB_CHART_BASE_URL/$ORB_CHART_NAME")
               echo "chart used: < $CHART_URL >"
             fi
@@ -577,6 +603,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - build-and-host-g2p-sandbox:
           requires:
             - build-and-host-engine
@@ -584,12 +611,14 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - build-host-g2p-fyn-chart:
           requires:
             - build-and-host-g2p-sandbox
           context: 
             - AWS
             - Helm
+            - Secrets
       - build-g2p-sandbox-ci-chart:
           requires:
             - build-host-g2p-fyn-chart
@@ -597,6 +626,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - build-and-host-g2p-sandbox-security:
           requires:
             - build-g2p-sandbox-ci-chart
@@ -604,6 +634,7 @@ workflows:
             - AWS
             - Helm
             - slack
+            - Secrets
       - minikube-run-helm-upgrade-and-helm-test:
           context:
             - AWS
