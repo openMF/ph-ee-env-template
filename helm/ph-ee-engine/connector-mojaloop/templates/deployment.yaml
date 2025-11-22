@@ -13,7 +13,115 @@ spec:
       app: ph-ee-connector-mojaloop-java
   template:
     metadata:
+      labels:{{- if .Values.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph-ee-connector-mojaloop-java
+  labels:
+    app: ph-ee-connector-mojaloop-java
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-mojaloop-java
+  template:
+    metadata:
       labels:
+        app: ph-ee-connector-mojaloop-java
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      # --- BEGIN Init Container ---
+      initContainers:
+        - name: wait-for-gateway
+          image: curlimages/curl:latest # Lightweight image with curl
+          command: ['sh', '-c']
+          args:
+            - |
+              GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
+              echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
+              
+              # Wait until curl returns an HTTP status code 200 (UP/OK)
+              until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
+                echo "Gateway not yet fully ready..."
+                sleep 2
+              done
+              
+              echo "Gateway is fully up! Proceeding to main container..."
+      # --- END Init Container ---
+      containers:
+        - name: ph-ee-connector-mojaloop-java
+          image: "{{ .Values.image }}" 
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
+
+            - name: "DFSPIDS"
+              value: "{{ .Values.global.DFSPIDS }}"
+
+            - name: "SWITCH_quotes-host"
+              value: "{{ .Values.switch.quotes.host }}"
+
+            - name: "SWITCH_quote-service"
+              value: "{{ .Values.switch.quotes.service }}"
+
+            - name: "SWITCH_als-host"
+              value: "{{ .Values.switch.als.host }}"
+
+            - name: "SWITCH_account-lookup-service"
+              value: "{{ .Values.switch.als.service }}"
+
+            - name: "SWITCH_transfers-host"
+              value: "{{ .Values.switch.transfers.host }}"
+
+            - name: "SWITCH_transfers-service"
+              value: "{{ .Values.switch.transfers.service }}"
+
+            - name: "SWITCH_transactions-host"
+              value: "{{ .Values.switch.transactions.host }}"
+
+            - name: "SWITCH_transaction-request-service"
+              value: "{{ .Values.switch.transactions.service }}"
+
+            - name: "SWITCH_oracle-host"
+              value: "{{ .Values.switch.oracle.host }}"
+
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
+
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max_execution_threads}}"
+
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll_interval}}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }} 
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}              
+
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}
         app: ph-ee-connector-mojaloop-java
       annotations:
 {{- if .Values.deployment.annotations }}

@@ -40,7 +40,7 @@ spec:
             - containerPort: 5000
           {{- if .Values.resources }}
           {{- include "common.resourceTemplate" . | nindent 8 }}
-          {{- end }}
+          {{- end }} helm/ph-ee-engine/connector-ams-mifos/templates/deployment.yaml
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
