@@ -364,7 +364,7 @@ operationsmysql:
     storageClassName: "local-path"
 
 ph_ee_connector_ams_mifos:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0-gazelle-1.1.0
   SPRING_PROFILES_ACTIVE: "fin12, bb"
@@ -646,10 +646,8 @@ operations_app:
       cpu: "50m"    
 
 operations_web:
-  enabled: true
+  enabled: false
   replicas: 1
-  #IMAGETODO - check this one 
-  #image: docker.io/openmf/ph-ee-operations-web:v1.20.0
   image: docker.io/openmf/ph-ee-operations-web:v1.25.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []

@@ -25,14 +25,6 @@ dependencies:
     repository: "https://charts.bitnami.com/bitnami"
     alias: operationsmysql
     condition: "operations.mysql.enabled"
-  - name: kong
-    version: 2.13.1
-    repository: https://charts.konghq.com
-    condition: "kong.enabled"
-  - name: keycloak
-    version: 18.1.1
-    repository: https://codecentric.github.io/helm-charts
-    condition: "keycloak.enabled"
   - name: redis
     version: 17.9.3
     repository: "https://charts.bitnami.com/bitnami"
@@ -53,14 +45,6 @@ dependencies:
     version: 1.0.0
     repository: "file://./connector-notifications"
     condition: "notifications.enabled"
-  - name: paygops_connector
-    version: 1.0.0
-    repository: "file://./ams-paygops"
-    condition: "paygops_connector.enabled"
-  - name: roster_connector
-    version: 1.0.0
-    repository: "file://./ams-roster"
-    condition: "roster_connector.enabled"
   - name: mpesa
     version: 1.0.0
     repository: "file://./connector-mpesa"
@@ -125,8 +109,23 @@ dependencies:
     repository: "https://charts.min.io/"
     version: 5.0.14
     condition: "minio.enabled"
-  - name: crm
-    version: 1.0.0
-    repository: "file://./connector-crm"
-    condition: "crm.enabled"
-
+  # - name: paygops_connector
+  #   version: 1.0.0
+  #   repository: "file://./ams-paygops"
+  #   condition: "paygops_connector.enabled"
+  # - name: roster_connector
+  #   version: 1.0.0
+  #   repository: "file://./ams-roster"
+  #   condition: "roster_connector.enabled"
+  # - name: crm
+  #   version: 1.0.0
+  #   repository: "file://./connector-crm"
+  #   condition: "crm.enabled"
+  # - name: kong
+  #   version: 2.13.1
+  #   repository: https://charts.konghq.com
+  #   condition: "kong.enabled"
+    # - name: keycloak
+    # version: 18.1.1
+    # repository: https://codecentric.github.io/helm-charts
+    # condition: "keycloak.enabled"
