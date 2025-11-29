@@ -10,7 +10,7 @@ configmap:
 enabled: true
 image: docker.io/openmf/ph-ee-identity-account-mapper:latest
 imagePullPolicy: "Always"
-hostname: "identity-mapper.sandbox.mifos.io"
+hostname: "identity-mapper.mifos.gazelle.test"
 limits:
   cpu: "500m"
   memory: "784M"
@@ -34,12 +34,9 @@ spring:
     max_byte_off_heap: 10
     max_byte_disk: 10
   datasource:
-    url: jdbc:mysql:thin://operationsmysql:3306/identity_account_mapper
+    url: jdbc:mysql://operationsmysql:3306/identity_account_mapper
     username: mifos
     password: password
-
-
-
 
 ingress:
   enabled: true
