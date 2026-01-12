@@ -29,7 +29,7 @@ mock_payment_schema:
     batch_summary: "/mockapi/v1/batch"
     batch_detail: "/mockapi/v1/batch/detail"
 bulk_processor:
-  contactpoint: "https://ph-ee-connector-bulk:8443"
+  contactpoint: "https://ph-ee-bulk-processor:8443"
   endpoints:
     batch_transaction: "/batchtransactions"
 aws:

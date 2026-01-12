@@ -76,6 +76,9 @@ spec:
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}
           volumeMounts:
+{{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+{{- end }}
 {{- if .Values.deployment.config }}
 {{ toYaml .Values.deployment.config | indent 12 }}
 {{- end }}
@@ -83,4 +86,7 @@ spec:
         - name: ph-ee-operations-web-config
           configMap:
             name: ph-ee-operations-web-config
+{{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+{{- end }}
 {{- end }}

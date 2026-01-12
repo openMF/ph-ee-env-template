@@ -2,13 +2,15 @@ global:
   bucket_name: paymenthub-ee
   region: "ap-south-1"
   s3BaseUrl: "http://minio:9000"
+  AWS_ACCESS_KEY: "root"
+  AWS_SECRET_KEY: "password"
   SPRING_PROFILES_ACTIVE: "fin12, bb"
   imagePullPolicy: IfNotPresent
   LOGGING_LEVEL_ROOT: "INFO"
   LOGGING_PATTERN_CONSOLE: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
   # schema for the tenants will get created in the paymenthub database by importer-rdbms
-  tenants: "greenbank,bluebank"
-  DFSPIDS: "greenbank,bluebank"
+  tenants: "greenbank,bluebank,redbank"
+  DFSPIDS: "greenbank,bluebank,redbank"
   max_execution_threads: 50
   poll_interval: 10
 
@@ -217,7 +219,7 @@ channel:
   imagePullPolicy: IfNotPresent
   hostname: "channel.mifos.gazelle.test"
   stub_hostname: "channel-gsma.mifos.gazelle.test"
-  #SPRING_PROFILES_ACTIVE: "bb,tenants"q
+  SPRING_PROFILES_ACTIVE: "fin12,bb,tenants"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
   redis:
@@ -243,8 +245,8 @@ channel:
     httpGet:
       path: /actuator/health/liveness
       port: 8080
-      scheme: HTTPS 
-    initialDelaySeconds: 120
+      scheme: HTTP
+    initialDelaySeconds: 60
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5 
@@ -252,8 +254,8 @@ channel:
     httpGet:
       path: /actuator/health/readiness
       port: 8080
-      scheme: HTTPS
-    initialDelaySeconds: 120
+      scheme: HTTP
+    initialDelaySeconds: 60
     periodSeconds: 30
     failureThreshold: 3
     timeoutSeconds: 5
@@ -352,6 +354,7 @@ operationsmysql:
       CREATE DATABASE IF NOT EXISTS identity_account_mapper;
       CREATE DATABASE IF NOT EXISTS greenbank;
       CREATE DATABASE IF NOT EXISTS bluebank;
+      CREATE DATABASE IF NOT EXISTS redbank;
       GRANT ALL ON *.* TO 'root'@'%';
       GRANT ALL PRIVILEGES ON tenants.* to 'mifos'; 
       GRANT ALL PRIVILEGES ON messagegateway.* TO 'mifos';
@@ -360,6 +363,7 @@ operationsmysql:
       GRANT ALL PRIVILEGES ON identity_account_mapper.* TO 'mifos';
       GRANT ALL PRIVILEGES ON `greenbank`.* TO 'mifos';
       GRANT ALL PRIVILEGES ON `bluebank`.* TO 'mifos';  
+      GRANT ALL PRIVILEGES ON `redbank`.* TO 'mifos';  
   volumeClaimTemplate:
     storageClassName: "local-path"
 
@@ -605,10 +609,16 @@ operations_app:
     pathtype: Prefix
     path: "/"
     annotations:
-      nginx.ingress.kubernetes.io/cors-allow-headers: 'platform-tenantid'
-      nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-      nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.test"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE, PATCH"
+      nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Platform-TenantId,platform-tenantid,purpose,type,x-callback-url,x-correlationid,x-correlation-id,X-Correlation-ID,x-program-id,x-registering-institution-id,x-signature,Sec-Fetch-Dest,Sec-Fetch-Mode,Sec-Fetch-Site,Sec-GPC,Pragma"
+      nginx.ingress.kubernetes.io/cors-expose-headers: "Content-Length,Content-Range,X-Correlation-ID,x-correlation-id"
+      nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+      nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      nginx.ingress.kubernetes.io/enable-access-log: "true"
     tls:
       - secretName: sandbox-secret
     hosts:
@@ -1146,7 +1156,7 @@ messagegateway:
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
   MYSQL_PASSWORD: "password"
-  DATASOURCE_URL: jdbc:mysql:thin://operationsmysql3306/messagegateway
+  DATASOURCE_URL: jdbc:mysql://operationsmysql:3306/messagegateway
   PROVIDERSOURCE_FROMDATABASE: "disabled"
   PROVIDERSOURCE_FROMYML: "enabled"
   livenessProbe:
@@ -1774,7 +1784,7 @@ ph_ee_bulk_processor:
     enabled: true
     className: nginx
     pathType: Prefix
-    path: /batchtransactions
+    path: /
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/enable-cors: "true"
@@ -1791,7 +1801,7 @@ ph_ee_bulk_processor:
     hosts:
     - host: bulk-processor.mifos.gazelle.test
       paths:
-      - path: /batchtransactions
+      - path: /
         backend:
           service:
             name: ph-ee-bulk-processor
@@ -2086,7 +2096,7 @@ integration_test:
   operations_app:
     contactpoint: "http://ph-ee-operations-app:80"
   bulk_processor:
-    contactpoint: "https://ph-ee-connector-bulk:8443"
+    contactpoint: "https://ph-ee-bulk-processor:8443"
   channel_connector:
     contactpoint: "https://ph-ee-connector-channel:8443"
   kafka:

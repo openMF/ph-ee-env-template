@@ -1,0 +1,95 @@
+{{- if .Values.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ph-ee-connector-mock-payment-schema"
+  labels:
+    app: ph-ee-connector-mock-payment-schema
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-connector-mock-payment-schema
+  template:
+    metadata:
+      labels:
+        app: ph-ee-connector-mock-payment-schema
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      # --- BEGIN Init Container ---
+      initContainers:
+        - name: wait-for-gateway
+          image: curlimages/curl:latest # Lightweight image with curl
+          command: ['sh', '-c']
+          args:
+            - |
+              GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
+              echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
+              
+              # Wait until curl returns an HTTP status code 200 (UP/OK)
+              until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
+                echo "Gateway not yet fully ready..."
+                sleep 2
+              done
+              
+              echo "Gateway is fully up! Proceeding to main container..."
+      # --- END Init Container ---
+      containers:
+        - name: ph-ee-connector-mock-payment-schema
+          image: "{{ .Values.image }}"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "{{ .Values.global.imagePullPolicy }}"
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
+            - name: "DFSPIDS"
+              value: "{{ .Values.global.DFSPIDS }}"
+            - name: "LOGGING_LEVEL_ROOT"
+              value: "{{ .Values.global.LOGGING_LEVEL_ROOT }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max_execution_threads}}"
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll_interval}}"
+            - name : "mockFailure_percentage"
+              value: "{{ .Values.mockFailure.percentage }}"
+{{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+{{- end }}        
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}
+

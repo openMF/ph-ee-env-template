@@ -1,0 +1,119 @@
+{{- if .Values.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph-ee-bulk-processor
+  labels:
+    app: ph-ee-bulk-processor
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: ph-ee-bulk-processor
+  template:
+    metadata:
+      labels:
+        app: ph-ee-bulk-processor
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      # --- BEGIN Init Container ---
+      initContainers:
+        - name: wait-for-gateway
+          image: busybox:1.28 # Or another image with nslookup and nc
+          command: ['sh', '-c', 'until nslookup phee-zeebe-gateway && nc -z phee-zeebe-gateway 26500; do echo "Waiting for phee-zeebe-gateway (port 26500)..."; sleep 2; done; echo "Gateway is up!"']
+      # --- END Init Container ---
+      containers:
+        - name: ph-ee-bulk-processor
+          image: "{{ .Values.image}}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "{{ .Values.limits.memory }}"
+              cpu: "{{ .Values.limits.cpu }}"
+            requests:
+              memory: "{{ .Values.requests.memory }}"
+              cpu: "{{ .Values.requests.cpu }}"
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "{{ .Values.global.SPRING_PROFILES_ACTIVE }}"
+            - name: "CAMEL_DISABLE-SSL"
+              value: "{{ .Values.camel_disable_ssl }}"
+            - name: "ZEEBE_BROKER_CONTACTPOINT"
+              value: "{{ .Release.Name }}-zeebe-gateway:26500"
+            - name: "ZEEBE_CLIENT_MAX-EXECUTION-THREADS"
+              value: "{{ .Values.global.max_execution_threads}}"
+            - name: "ZEEBE_CLIENT_POLL-INTERVAL"
+              value: "{{ .Values.global.poll_interval}}"
+            - name: "TENANTS"
+              value: "{{ .Values.global.tenants }}"
+            - name: "APPLICATION_BUCKET-NAME"
+              value: "{{ .Values.global.bucket_name }}"
+            - name: "OPERATIONS-APP_CONTACTPOINT"
+              value: "{{ .Values.operations_app.contactpoint }}"
+            - name: "OPERATIONS-APP_ENDPOINTS_BATCH-TRANSACTION"
+              value: "{{ .Values.operations_app.endpoints.batch_transaction }}"
+            - name: "CONFIG_PARTYLOOKUP_ENABLE"
+              value: "{{ .Values.config.partylookup.enable }}"
+            - name: "CONFIG_APPROVAL_ENABLE"
+              value: "{{ .Values.config.approval.enable }}"
+            - name: "CONFIG_ORDERING_ENABLE"
+              value: "{{ .Values.config.ordering.enable }}"
+            - name: "CONFIG_ORDERING_FIELD"
+              value: "{{ .Values.config.ordering.field }}"
+            - name: "CONFIG_SPLITTING_ENABLE"
+              value: "{{ .Values.config.splitting.enable }}"
+            - name: "CONFIG_SPLITTING_SUB_BATCH_SIZE"
+              value: "{{ .Values.config.splitting.sub_batch_size }}"
+            - name: "CONFIG_FORMATTING_ENABLE"
+              value: "{{ .Values.config.formatting.enable }}"
+            - name: "CONFIG_FORMATTING_STANDARD"
+              value: "{{ .Values.config.formatting.standard }}"
+            - name: "CONFIG_MERGEBACK_ENABLE"
+              value: "{{ .Values.config.mergeback.enable }}"
+            - name: "CONFIG_BACKPRESSURE_ENABLE"
+              value: "{{ .Values.config.backpressure.enable }}"
+            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_ENABLE"
+              value: "{{ .Values.config.completion_threshold_check.enable }}"
+            - name: "CONFIG_COMPLETION-THRESHOLD-CHECK_COMPLETION-RATE"
+              value: "{{ .Values.config.completion_threshold_check.completion_rate }}"
+            - name: "CLOUD_AWS_REGION_STATIC"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-region"
+            - name: "BP_JAVA_OPTS"
+              value: "-Xmx400m -Xms400m"
+            - name: "CLOUD_AWS_S3BASEURL"
+              value: {{.Values.global.s3BaseUrl}}
+            - name: "AWS_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-access-key"
+            - name: "AWS_SECRET_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "bulk-processor-secret"
+                  key: "aws-secret-key"
+            - name: "IDENTITY_MAPPER_CONTACTPOINT"
+              value: "{{ .Values.identity_account_mapper.hostname }}"
+{{- if .Values.deployment.extraEnvs }}
+{{ toYaml .Values.deployment.extraEnvs | nindent 12 }}
+{{- end }}       
+          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
+          volumeMounts:
+            - name: ph-ee-config
+              mountPath: "/config"
+      volumes:
+        - name: ph-ee-config
+          configMap:
+            name: ph-ee-config
+{{- end }}
