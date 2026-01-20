@@ -69,7 +69,7 @@ spec:
                   name: "bulk-processor-secret"
                   key: "aws-region"
             - name: "CLOUD_AWS_S3BASEURL"
-              value: {{.Values.global.s3BaseUrl}}
+              value: "{{.Values.global.s3BaseUrl}}"
             - name: "AWS_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
@@ -82,7 +82,7 @@ spec:
                   key: "aws-secret-key"
 
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 10 }}
+{{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}
           envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
           securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}

@@ -26,7 +26,7 @@ ph-ee-engine:
 account_mapper:
   enabled: true
   image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0-gazelle-1.1.0
-  hostname: "identity-mapper.mifos.gazelle.test"
+  hostname: "identity-mapper.mifos.gazelle.localhost"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:
     enabled: true
@@ -34,16 +34,16 @@ account_mapper:
     pathtype: Prefix
     annotations:
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.test"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.localhost"
       nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
       nginx.ingress.kubernetes.io/cors-allow-headers: "x-registering-institution-id, Content-Type, Authorization"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     tls:
     - hosts:
-      - identity-mapper.mifos.gazelle.test
+      - identity-mapper.mifos.gazelle.localhost
       secretName: sandbox-secret
     hosts:
-      - host: identity-mapper.mifos.gazelle.test
+      - host: identity-mapper.mifos.gazelle.localhost
         paths:
         - path: "/"
           backend:

@@ -22,10 +22,15 @@ spec:
     spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       # --- BEGIN Init Container ---
+{{- if .Values.deployment.initContainers }}
+      initContainers:
+{{ toYaml .Values.deployment.initContainers | nindent 8 }}
+{{- else }}
       initContainers:
         - name: wait-for-gateway
           image: busybox:1.28 # Or another image with nslookup and nc
           command: ['sh', '-c', 'until nslookup phee-zeebe-gateway && nc -z phee-zeebe-gateway 26500; do echo "Waiting for phee-zeebe-gateway (port 26500)..."; sleep 2; done; echo "Gateway is up!"']
+{{- end }}
       # --- END Init Container ---
       containers:
         - name: ph-ee-bulk-processor
@@ -106,14 +111,26 @@ spec:
               value: "{{ .Values.identity_account_mapper.hostname }}"
 {{- if .Values.deployment.extraEnvs }}
 {{ toYaml .Values.deployment.extraEnvs | nindent 12 }}
-{{- end }}       
-          envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
-          securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
+{{- end }}
+{{- if or .Values.envFrom .Values.deployment.envFrom }}
+          envFrom:
+{{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
+{{- end }}
+{{- if or .Values.podSecurityContext .Values.deployment.securityContext }}
+          securityContext:
+{{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
+{{- end }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+{{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
+{{- end }}
       volumes:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+{{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | nindent 8 }}
+{{- end }}
 {{- end }}

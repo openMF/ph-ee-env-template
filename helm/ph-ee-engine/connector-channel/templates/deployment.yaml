@@ -26,6 +26,27 @@ spec:
         - name: wait-for-gateway
           image: busybox:1.28 # Or another image with nslookup and nc
           command: ['sh', '-c', 'until nslookup phee-zeebe-gateway && nc -z phee-zeebe-gateway 26500; do echo "Waiting for phee-zeebe-gateway (port 26500)..."; sleep 2; done; echo "Gateway is up!"']
+        - name: create-keystore
+          image: eclipse-temurin:17-jre
+          command:
+            - sh
+            - -c
+            - |
+              echo "Creating PKCS12 keystore from TLS certificate..."
+              openssl pkcs12 -export \
+                -in /certs/tls.crt \
+                -inkey /certs/tls.key \
+                -out /tls/keystore.p12 \
+                -name sandbox-cert \
+                -passout pass:changeit
+              echo "Keystore created successfully"
+              ls -la /tls/
+          volumeMounts:
+            - name: sandbox-cert
+              mountPath: /certs
+              readOnly: true
+            - name: tls-keystore
+              mountPath: /tls
       # --- END Init Container ---      
       containers:
         - name: ph-ee-connector-channel
@@ -109,9 +130,15 @@ spec:
                   key: "redis-password"
 {{end}}
             - name: "server_ssl_key-password"
-              value: "{{ .Values.server.ssl.keyPassword }}" 
+              value: "changeit"
             - name: "server_ssl_key-store-password"
-              value: "{{ .Values.server.ssl.keyStorePassword }}"  
+              value: "changeit"
+            - name: "server_ssl_key-store"
+              value: "/tls/keystore.p12"
+            - name: "server_ssl_key-store-type"
+              value: "PKCS12"
+            - name: "server_ssl_key-alias"
+              value: "sandbox-cert"  
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}        
@@ -120,8 +147,16 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+            - name: tls-keystore
+              mountPath: /tls
+              readOnly: true
       volumes:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+        - name: sandbox-cert
+          secret:
+            secretName: sandbox-secret
+        - name: tls-keystore
+          emptyDir: {}
 {{- end }}

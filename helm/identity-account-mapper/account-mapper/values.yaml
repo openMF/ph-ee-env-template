@@ -10,7 +10,7 @@ configmap:
 enabled: true
 image: docker.io/openmf/ph-ee-identity-account-mapper:latest
 imagePullPolicy: "Always"
-hostname: "identity-mapper.mifos.gazelle.test"
+hostname: "identity-mapper.mifos.gazelle.localhost"
 limits:
   cpu: "500m"
   memory: "784M"

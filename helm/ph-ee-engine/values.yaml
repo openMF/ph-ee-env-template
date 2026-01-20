@@ -28,7 +28,7 @@ zeebe-operate-helm:
     annotations: 
       kubernetes.io/ingress.class: nginx     
     path: /
-    host: operate.mifos.gazelle.test
+    host: operate.mifos.gazelle.localhost
     tls:
       enabled: true
 
@@ -184,7 +184,7 @@ camunda-platform:
       className: nginx
       pathtype: ImplementationSpecific
       hosts:
-        - host: elastic-phee.mifos.gazelle.test
+        - host: elastic-phee.mifos.gazelle.localhost
           paths:
             - path: /    
 
@@ -204,21 +204,21 @@ camunda-platform:
         # kubernetes.io/tls-acme: "true" 
       }      
       hosts:
-        - host: kibana-phee.mifos.gazelle.test
+        - host: kibana-phee.mifos.gazelle.localhost
           paths:
             - path: /
       #tls: []
       #  - secretName: chart-example-tls
       #    hosts:
-      #      - chart-example.mifos.gazelle.test
+      #      - chart-example.mifos.gazelle.localhost
 
 channel:
   enabled: true
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-channel:v1.11.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
-  hostname: "channel.mifos.gazelle.test"
-  stub_hostname: "channel-gsma.mifos.gazelle.test"
+  hostname: "channel.mifos.gazelle.localhost"
+  stub_hostname: "channel-gsma.mifos.gazelle.localhost"
   SPRING_PROFILES_ACTIVE: "fin12,bb,tenants"
   TRANSACTION_ID_LENGTH: 20
   gsma_payee_tenant: ""
@@ -286,7 +286,7 @@ channel:
     # tls:
     #   - secretName: sandbox-secret
     hosts:
-      - host: channel.mifos.gazelle.test          
+      - host: channel.mifos.gazelle.localhost          
         paths: 
         - path: "/"
           backend:
@@ -294,7 +294,7 @@ channel:
               name: ph-ee-connector-channel
               port:
                 number: 8443
-      - host: channel-gsma.mifos.gazelle.test          
+      - host: channel-gsma.mifos.gazelle.localhost          
         paths:          
         - path: "/"
           backend:
@@ -405,7 +405,7 @@ ph_ee_connector_ams_mifos:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: ams-mifos.mifos.gazelle.test          
+      - host: ams-mifos.mifos.gazelle.localhost          
         paths: 
         - path: "/"
           backend:
@@ -436,13 +436,13 @@ ph_ee_connector_mojaloop:
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-mojaloop-java:gazelle-v1.1.0
   imagePullPolicy: IfNotPresent
-  hostname: "mojaloop.mifos.gazelle.test"
+  hostname: "mojaloop.mifos.gazelle.localhost"
   switch:
     quotes:
       host: ""
       service: ""
     als:
-      host: vnextadmin.mifos.gazelle.test/_interop
+      host: vnextadmin.mifos.gazelle.localhost/_interop
       service: ""
     transfers:
       host: ""
@@ -502,7 +502,7 @@ ph_ee_connector_mojaloop:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: mojaloop.mifos.gazelle.test          
+      - host: mojaloop.mifos.gazelle.localhost          
         paths: 
         - path: "/"
           backend:
@@ -542,7 +542,7 @@ operations_app:
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-app:v1.17.1-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
-  hostname: "ops-bk.mifos.gazelle.test"
+  hostname: "ops-bk.mifos.gazelle.localhost"
   token_client_channel_secret: ""
   # note curently BOTH secret.datasource and datasource are used by the chart
   # TODO examine if secret.datasource can be removed
@@ -612,7 +612,7 @@ operations_app:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.test"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.localhost"
       nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE, PATCH"
       nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,Platform-TenantId,platform-tenantid,purpose,type,x-callback-url,x-correlationid,x-correlation-id,X-Correlation-ID,x-program-id,x-registering-institution-id,x-signature,Sec-Fetch-Dest,Sec-Fetch-Mode,Sec-Fetch-Site,Sec-GPC,Pragma"
       nginx.ingress.kubernetes.io/cors-expose-headers: "Content-Length,Content-Range,X-Correlation-ID,x-correlation-id"
@@ -622,7 +622,7 @@ operations_app:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: ops-bk.mifos.gazelle.test
+      - host: ops-bk.mifos.gazelle.localhost
         paths:
         - path: "/"
           backend:
@@ -661,7 +661,7 @@ operations_web:
   image: docker.io/openmf/ph-ee-operations-web:v1.25.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
-  hostname: "ops.mifos.gazelle.test"
+  hostname: "ops.mifos.gazelle.localhost"
   webhost: ""
   livenessProbe:
     httpGet:
@@ -712,11 +712,11 @@ operations_web:
     cpu: "50m"   
 
   backend:
-    PH_OPS_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test/api/v1
-    PH_VOU_BACKEND_SERVER_URL: https://ops.mifos.gazelle.test/api/v1
-    PH_ACT_BACKEND_SERVER_URL: https://identity-mapper.mifos.gazelle.test
-    PH_OPS_BULK_CONNECTOR_URL: https://connector-bulk.mifos.gazelle.test
-    PH_OPS_SIGNATURE_URL: https://ops.mifos.gazelle.test/api/v1/util/x-signature
+    PH_OPS_BACKEND_SERVER_URL: https://ops.mifos.gazelle.localhost/api/v1
+    PH_VOU_BACKEND_SERVER_URL: https://ops.mifos.gazelle.localhost/api/v1
+    PH_ACT_BACKEND_SERVER_URL: https://identity-mapper.mifos.gazelle.localhost
+    PH_OPS_BULK_CONNECTOR_URL: https://connector-bulk.mifos.gazelle.localhost
+    PH_OPS_SIGNATURE_URL: https://ops.mifos.gazelle.localhost/api/v1/util/x-signature
     PH_PLATFORM_TENANT_ID: greenbank
     PH_PLATFORM_TENANT_IDS: "greenbank,bluebank"
     PH_REGISTERING_INSTITUTION_ID: 123
@@ -724,7 +724,7 @@ operations_web:
     PH_AUTH_ENABLED: false
     PH_OAUTH_ENABLED: false
     PH_OAUTH_TYPE: keycloak
-    PH_OAUTH_SERVER_URL: https://ops-bk.mifos.gazelle.test/auth
+    PH_OAUTH_SERVER_URL: https://ops-bk.mifos.gazelle.localhost/auth
     PH_OAUTH_REALM: paymenthub
     PH_OAUTH_CLIENT_ID: opsapp
     PH_OAUTH_CLIENT_SECRET: Y2xpZW50Og==
@@ -744,7 +744,7 @@ operations_web:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: ops.mifos.gazelle.test       
+      - host: ops.mifos.gazelle.localhost       
         paths: 
         - path: "/"
           backend:
@@ -794,7 +794,7 @@ operations_web:
   #   tls:
   #     - secretName: sandbox-secret
   #   hosts:
-  #     - host: ops.mifos.gazelle.test          
+  #     - host: ops.mifos.gazelle.localhost          
   #       paths: 
   #       - path: "/"
   #         backend:
@@ -1151,7 +1151,7 @@ messagegateway:
   #IMAGETODO
   image: docker.io/openmf/message-gateway:v1.2.0
   imagePullPolicy: IfNotPresent
-  hostname: "messagegateway.mifos.gazelle.test"
+  hostname: "messagegateway.mifos.gazelle.localhost"
   CALLBACKCONFIG_HOST: "ph-ee-connector-notifications"
   HOSTCONFIG_HOST: "message-gateway"
   MYSQL_USERNAME: "mifos"
@@ -1216,7 +1216,7 @@ messagegateway:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: messagegateway.mifos.gazelle.test       
+      - host: messagegateway.mifos.gazelle.localhost       
         paths: 
         - path: "/"
           backend:
@@ -1269,7 +1269,7 @@ notifications:
   image: docker.io/openmf/ph-ee-notifications
   imageTag: v1.4.0-gazelle-1.1.0
   imagePullPolicy:  IfNotPresent
-  hostname: "notifications.mifos.gazelle.test"
+  hostname: "notifications.mifos.gazelle.localhost"
   SPRING_PROFILES_ACTIVE: "bb"
   LOGGING_LEVEL_ROOT: "INFO"
   MESSAGEGATEWAYCONFIG_HOST: "message-gateway-1"
@@ -1313,7 +1313,7 @@ notifications:
     # tls:
     #   - secretName: sandbox-secret
     hosts:
-      - host: notifications.mifos.gazelle.test         
+      - host: notifications.mifos.gazelle.localhost         
         paths: 
         - path: "/"
           backend:
@@ -1341,7 +1341,7 @@ zeebe_ops:
   image: docker.io/openmf/ph-ee-zeebe-ops:v1.4.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
-  hostname: "zeebeops.mifos.gazelle.test"
+  hostname: "zeebeops.mifos.gazelle.localhost"
   elasticsearch_contactpoint: "infra-elasticsearch.infra.svc.cluster.local:9200"
   elasticsearch_url: "http://infra-elasticsearch.infra.svc.cluster.local:9200/"
   elasticsearch_sslverification: false
@@ -1397,7 +1397,7 @@ zeebe_ops:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: zeebeops.mifos.gazelle.test          
+      - host: zeebeops.mifos.gazelle.localhost          
         paths: 
         - path: "/"
           backend:
@@ -1539,7 +1539,7 @@ mockpayment:
   image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
   replicas: 1
-  hostname: "mockpayment.mifos.gazelle.test"
+  hostname: "mockpayment.mifos.gazelle.localhost"
   mockFailure:
     percentage: "0"
   limits:
@@ -1554,7 +1554,7 @@ mockpayment:
     annotations:
         kubernetes.io/ingress.class: nginx
     hosts:
-      - host: mockpayment.mifos.gazelle.test
+      - host: mockpayment.mifos.gazelle.localhost
         paths:
         - path: "/"
           backend:
@@ -1702,7 +1702,7 @@ ph_ee_bulk_processor:
   replicas: 1
   image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
-  hostname: bulk-processor.mifos.gazelle.test
+  hostname: bulk-processor.mifos.gazelle.localhost
   tenants: "greenbank, bluebank"
   SPRING_PROFILES_ACTIVE: ""
   camel_disable_ssl: true
@@ -1779,7 +1779,7 @@ ph_ee_bulk_processor:
     cpu: "50m"
   service:
     annotations: {}
-# Tom D : ingress updated for bulk-processor to support CORS from ops.mifos.gazelle.test
+# Tom D : ingress updated for bulk-processor to support CORS from ops.mifos.gazelle.localhost
   ingress:
     enabled: true
     className: nginx
@@ -1788,7 +1788,7 @@ ph_ee_bulk_processor:
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.test"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://ops.mifos.gazelle.localhost"
       nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
       nginx.ingress.kubernetes.io/cors-allow-headers: "content-type,platform-tenantid,purpose,type,x-callback-url,x-correlationid,x-program-id,x-registering-institution-id,x-signature"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
@@ -1796,10 +1796,10 @@ ph_ee_bulk_processor:
       nginx.ingress.kubernetes.io/log-format: '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for" $request_uri'
     tls:
     - hosts:
-      - bulk-processor.mifos.gazelle.test
+      - bulk-processor.mifos.gazelle.localhost
       secretName: sandbox-secret
     hosts:
-    - host: bulk-processor.mifos.gazelle.test
+    - host: bulk-processor.mifos.gazelle.localhost
       paths:
       - path: /
         backend:
@@ -2002,7 +2002,7 @@ ph_ee_connector_bulk:
     region: "ap-south-1"
     access_key: "aws-access-key"
     secret_key: "aws-secret-key"
-  hostname: "connector.mifos.gazelle.test"
+  hostname: "connector.mifos.gazelle.localhost"
   ingress:
     className: nginx
     enabled: true
@@ -2015,7 +2015,7 @@ ph_ee_connector_bulk:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: connector-bulk.mifos.gazelle.test
+      - host: connector-bulk.mifos.gazelle.localhost
         paths:
           - path: "/"
             backend:
@@ -2224,7 +2224,7 @@ vouchers:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: vouchers.mifos.gazelle.test
+      - host: vouchers.mifos.gazelle.localhost
         paths:
           - path: "/"
             backend:
@@ -2263,8 +2263,8 @@ billPay:
   replicas: 1
   image: docker.io/openmf/ph-ee-bill-pay:v1.1.0-gazelle-1.1.0 
   imagePullPolicy: IfNotPresent
-  hostname: "bill-pay.mifos.gazelle.test"
-  stub_hostname: "bill-pay.mifos.gazelle.test"
+  hostname: "bill-pay.mifos.gazelle.localhost"
+  stub_hostname: "bill-pay.mifos.gazelle.localhost"
   livenessProbe:
     httpGet:
       path: /actuator/health/liveness
@@ -2323,7 +2323,7 @@ billPay:
     tls:
       - secretName: sandbox-secret
     hosts:
-      - host: bill-pay.mifos.gazelle.test
+      - host: bill-pay.mifos.gazelle.localhost
         paths:
           - path: "/"
             backend:
@@ -2352,8 +2352,8 @@ billPay:
 
 crm:
   enabled: false
-  hostname: "crm.mifos.gazelle.test"
-  stub_hostname: "crm.mifos.gazelle.test"
+  hostname: "crm.mifos.gazelle.localhost"
+  stub_hostname: "crm.mifos.gazelle.localhost"
   replicas: 1
   #IMAGETODO
   image: docker.io/openmf/ph-ee-connector-crm:v1.1.0
@@ -2417,7 +2417,7 @@ crm:
       tls:
         - secretName: sandbox-secret
       hosts:
-        - host: crm.mifos.gazelle.test
+        - host: crm.mifos.gazelle.localhost
           paths:
             - path: "/"
               backend:
@@ -2458,7 +2458,7 @@ minio:
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
-      - minio.mifos.gazelle.test
+      - minio.mifos.gazelle.localhost
 
 post_installation_job:
   enabled: false
