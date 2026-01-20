@@ -20,6 +20,42 @@ spec:
 {{ toYaml .Values.deployment.annotations | indent 8 }}
 {{- end }}
     spec:
+      # --- BEGIN Init Container ---
+{{- if .Values.deployment.initContainers }}
+      initContainers:
+{{ toYaml .Values.deployment.initContainers | nindent 8 }}
+{{- else }}
+      initContainers:
+        - name: wait-for-gateway
+          image: curlimages/curl:latest # Lightweight image with curl
+          command: ['sh', '-c']
+          args:
+            - |
+              GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
+              echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
+
+              # Wait until curl returns an HTTP status code 200 (UP/OK)
+              until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
+                echo "Gateway not yet fully ready..."
+                sleep 2
+              done
+
+              echo "Gateway is fully up! Proceeding to main container..."
+
+        - name: wait-db
+          image: busybox:1.35
+          imagePullPolicy: IfNotPresent
+          command: ['sh', '-c']
+          args:
+            - |
+              echo "Waiting for database connection..."
+              until nc -z {{ .Values.spring.datasource.host }} 3306; do
+                echo "Database not ready, waiting..."
+                sleep 2
+              done
+              echo "Database is ready!"
+{{- end }}
+      # --- END Init Container ---
       containers:
         - name: ph-ee-identity-account-mapper
           image: "{{ .Values.image}}"

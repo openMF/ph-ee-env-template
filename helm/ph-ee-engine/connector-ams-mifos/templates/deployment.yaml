@@ -20,12 +20,18 @@ spec:
         {{ toYaml .Values.deployment.annotations | indent 8 }}
         {{- end }}
     spec:
-      affinity: 
+      {{- if .Values.deployment.affinity }}
+      affinity:
         {{- toYaml .Values.deployment.affinity | nindent 8 }}
-      nodeSelector: 
+      {{- end }}
+      {{- if .Values.deployment.nodeSelector }}
+      nodeSelector:
         {{- toYaml .Values.deployment.nodeSelector | nindent 8 }}
-      tolerations: 
+      {{- end }}
+      {{- if or .Values.tolerations .Values.deployment.tolerations }}
+      tolerations:
         {{- toYaml ( .Values.tolerations | default .Values.deployment.tolerations ) | nindent 8 }}
+      {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
@@ -38,9 +44,6 @@ spec:
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           ports:
             - containerPort: 5000
-          {{- if .Values.resources }}
-          {{- include "common.resourceTemplate" . | nindent 8 }}
-          {{- end }}
           env:
             - name: "SPRING_PROFILES_ACTIVE"
               value: "{{ .Values.SPRING_PROFILES_ACTIVE }}"
@@ -65,21 +68,30 @@ spec:
             - name: "ZEEBE_CLIENT_POLL-INTERVAL"
               value: "{{ .Values.global.poll_interval }}"
             {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
-            {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
+            {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | nindent 12 }}
             {{- end }}
           {{- if .Values.envFrom | default .Values.deployment.envFrom }}
           envFrom:
             {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 12 }}
           {{- end }}
-          securityContext: 
+          {{- if or .Values.podSecurityContext .Values.deployment.securityContext }}
+          securityContext:
             {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+{{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
+{{- end }}
           # {{- if .Values.deployment.config }}
           # {{ toYaml .Values.deployment.config | indent 12 }}
           # {{- end }}
       # --- BEGIN Init Container ---
+{{- if .Values.deployment.initContainers }}
+      initContainers:
+{{ toYaml .Values.deployment.initContainers | nindent 8 }}
+{{- else }}
       initContainers:
         - name: wait-for-gateway
           image: curlimages/curl:latest # Lightweight image with curl
@@ -88,15 +100,15 @@ spec:
             - |
               GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
               echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
-              
+
               # Wait until curl returns an HTTP status code 200 (UP/OK)
               until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
                 echo "Gateway not yet fully ready..."
                 sleep 2
               done
-              
+
               echo "Gateway is fully up! Proceeding to main container..."
-  
+
         - name: wait-db
           image: busybox:1.35
           imagePullPolicy: IfNotPresent
@@ -109,11 +121,15 @@ spec:
                 sleep 2
               done
               echo "Database is ready!"
+{{- end }}
       # --- END Init Container ---
       volumes:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+{{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | nindent 8 }}
+{{- end }}
       {{- if .Values.extraContainers }}
       {{ tpl .Values.extraContainers . | indent 6 }}
       {{- end }}

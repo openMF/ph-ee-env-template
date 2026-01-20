@@ -10,11 +10,14 @@ configmap:
   apiversion: "v1"
 
 enabled: true
+replicas: 1
 image: ""
 imageTag: ""
 imagePullPolicy: ""
+imagePullSecrets: []
 SPRING_PROFILES_ACTIVE: ""
 hostname: ""
+terminationGracePeriod: 30
 ams_local_enabled: true
 ams_local_interop_host : ""
 ams_local_customer_host : ""
