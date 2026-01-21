@@ -215,7 +215,7 @@ camunda-platform:
 channel:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-channel:v1.11.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-connector-channel:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   hostname: "channel.mifos.gazelle.localhost"
   stub_hostname: "channel-gsma.mifos.gazelle.localhost"
@@ -370,7 +370,7 @@ operationsmysql:
 ph_ee_connector_ams_mifos:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-ams-mifos:v1.7.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-connector-ams-mifos:mifos-v2.0.0
   SPRING_PROFILES_ACTIVE: "fin12, bb"
   imagePullPolicy: IfNotPresent
   ams_local_enabled: true
@@ -434,7 +434,7 @@ ph_ee_connector_ams_mifos:
 ph_ee_connector_mojaloop:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-mojaloop-java:gazelle-v1.1.0
+  image: docker.io/openmf/ph-ee-connector-mojaloop-java:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   hostname: "mojaloop.mifos.gazelle.localhost"
   switch:
@@ -540,7 +540,7 @@ ph_ee_connector_mojaloop:
 operations_app:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-app:v1.17.1-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-operations-app:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   hostname: "ops-bk.mifos.gazelle.localhost"
   token_client_channel_secret: ""
@@ -658,7 +658,7 @@ operations_app:
 operations_web:
   enabled: false
   replicas: 1
-  image: docker.io/openmf/ph-ee-operations-web:v1.25.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-operations-web:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
   hostname: "ops.mifos.gazelle.localhost"
@@ -1338,7 +1338,7 @@ notifications:
 zeebe_ops:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-zeebe-ops:v1.4.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-zeebe-ops:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
   hostname: "zeebeops.mifos.gazelle.localhost"
@@ -1536,7 +1536,7 @@ importer_es:
 
 mockpayment:
   enabled: true
-  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:v1.6.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-connector-mock-payment-schema:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   replicas: 1
   hostname: "mockpayment.mifos.gazelle.localhost"
@@ -1614,7 +1614,7 @@ kafka:
 importer_rdbms:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-importer-rdbms:v1.13.1-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-importer-rdbms:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   SPRING_PROFILES_ACTIVE: "local,tenantsConnection"
   LOGGING_LEVEL_ROOT: "DEBUG"
@@ -1700,7 +1700,7 @@ importer_rdbms:
 ph_ee_bulk_processor:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-bulk-processor:v1.12.1-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-bulk-processor:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   hostname: bulk-processor.mifos.gazelle.localhost
   tenants: "greenbank, bluebank"
@@ -1996,7 +1996,7 @@ ph-ee-connector_slcb:
 ph_ee_connector_bulk:
   enabled: true
   replicas: 1
-  image: docker.io/openmf/ph-ee-connector-bulk:v1.1.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-connector-bulk:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   aws:
     region: "ap-south-1"

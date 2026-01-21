@@ -25,7 +25,7 @@ ph-ee-engine:
 
 account_mapper:
   enabled: true
-  image: docker.io/openmf/ph-ee-identity-account-mapper:v1.6.0-gazelle-1.1.0
+  image: docker.io/openmf/ph-ee-identity-account-mapper:mifos-v2.0.0
   hostname: "identity-mapper.mifos.gazelle.localhost"
   LOGGING_LEVEL_ROOT: INFO    
   ingress:

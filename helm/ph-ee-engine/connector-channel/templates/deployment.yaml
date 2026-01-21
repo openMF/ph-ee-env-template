@@ -32,13 +32,25 @@ spec:
             - sh
             - -c
             - |
-              echo "Creating PKCS12 keystore from TLS certificate..."
+              echo "Creating JKS keystore from TLS certificate (sandbox-secret)..."
+              # Convert to PKCS12 first
               openssl pkcs12 -export \
                 -in /certs/tls.crt \
                 -inkey /certs/tls.key \
-                -out /tls/keystore.p12 \
-                -name sandbox-cert \
+                -out /tmp/keystore.p12 \
+                -name tomcat-https \
                 -passout pass:changeit
+
+              # Convert PKCS12 to JKS (Spring Boot default format)
+              keytool -importkeystore \
+                -srckeystore /tmp/keystore.p12 \
+                -srcstoretype PKCS12 \
+                -destkeystore /tls/keystore.jks \
+                -deststoretype JKS \
+                -srcstorepass changeit \
+                -deststorepass changeit \
+                -noprompt
+
               echo "Keystore created successfully"
               ls -la /tls/
           volumeMounts:
@@ -129,16 +141,16 @@ spec:
                   name: "{{ .Release.Name }}-redis" 
                   key: "redis-password"
 {{end}}
-            - name: "server_ssl_key-password"
+            - name: "SERVER_SSL_KEY-PASSWORD"
               value: "changeit"
-            - name: "server_ssl_key-store-password"
+            - name: "SERVER_SSL_KEY-STORE-PASSWORD"
               value: "changeit"
-            - name: "server_ssl_key-store"
-              value: "/tls/keystore.p12"
-            - name: "server_ssl_key-store-type"
-              value: "PKCS12"
-            - name: "server_ssl_key-alias"
-              value: "sandbox-cert"  
+            - name: "SERVER_SSL_KEY-STORE"
+              value: "file:/tls/keystore.jks"
+            - name: "SERVER_SSL_KEY-STORE-TYPE"
+              value: "JKS"
+            - name: "SERVER_SSL_KEY-ALIAS"
+              value: "tomcat-https"  
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 12 }}
 {{- end }}        
