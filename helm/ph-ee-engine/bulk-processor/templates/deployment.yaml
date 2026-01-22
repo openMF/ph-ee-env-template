@@ -22,15 +22,64 @@ spec:
     spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       # --- BEGIN Init Container ---
-{{- if .Values.deployment.initContainers }}
-      initContainers:
-{{ toYaml .Values.deployment.initContainers | nindent 8 }}
-{{- else }}
       initContainers:
         - name: wait-for-gateway
-          image: busybox:1.28 # Or another image with nslookup and nc
+          image: busybox:1.28
           command: ['sh', '-c', 'until nslookup phee-zeebe-gateway && nc -z phee-zeebe-gateway 26500; do echo "Waiting for phee-zeebe-gateway (port 26500)..."; sleep 2; done; echo "Gateway is up!"']
-{{- end }}
+        - name: create-keystore
+          image: eclipse-temurin:17-jre
+          command:
+            - sh
+            - -c
+            - |
+              echo "Creating JKS keystore from TLS certificate (sandbox-secret)..."
+              # Convert to PKCS12 first
+              openssl pkcs12 -export \
+                -in /certs/tls.crt \
+                -inkey /certs/tls.key \
+                -out /tmp/keystore.p12 \
+                -name tomcat-https \
+                -passout pass:changeit
+
+              # Convert PKCS12 to JKS (Spring Boot default format)
+              keytool -importkeystore \
+                -srckeystore /tmp/keystore.p12 \
+                -srcstoretype PKCS12 \
+                -destkeystore /tls/keystore.jks \
+                -deststoretype JKS \
+                -srcstorepass changeit \
+                -deststorepass changeit \
+                -noprompt
+
+              echo "Keystore created successfully"
+              ls -la /tls/
+          volumeMounts:
+            - name: sandbox-cert
+              mountPath: /certs
+              readOnly: true
+            - name: tls-keystore
+              mountPath: /tls
+        - name: import-ssl-cert
+          image: eclipse-temurin:17-jre
+          command:
+            - sh
+            - -c
+            - |
+              echo "Copying default Java cacerts..."
+              cp /opt/java/openjdk/lib/security/cacerts /shared/cacerts
+              echo "Importing sandbox certificate to trust store..."
+              keytool -import -trustcacerts -alias sandbox-cert \
+                -file /certs/tls.crt \
+                -keystore /shared/cacerts \
+                -storepass changeit -noprompt
+              echo "Certificate imported successfully"
+              keytool -list -keystore /shared/cacerts -storepass changeit | grep sandbox
+          volumeMounts:
+            - name: sandbox-cert
+              mountPath: /certs
+              readOnly: true
+            - name: shared-cacerts
+              mountPath: /shared
       # --- END Init Container ---
       containers:
         - name: ph-ee-bulk-processor
@@ -109,6 +158,16 @@ spec:
                   key: "aws-secret-key"
             - name: "IDENTITY_MAPPER_CONTACTPOINT"
               value: "{{ .Values.identity_account_mapper.hostname }}"
+            - name: "SERVER_SSL_KEY-PASSWORD"
+              value: "changeit"
+            - name: "SERVER_SSL_KEY-STORE-PASSWORD"
+              value: "changeit"
+            - name: "SERVER_SSL_KEY-STORE"
+              value: "file:/tls/keystore.jks"
+            - name: "SERVER_SSL_KEY-STORE-TYPE"
+              value: "JKS"
+            - name: "SERVER_SSL_KEY-ALIAS"
+              value: "tomcat-https"
 {{- if .Values.deployment.extraEnvs }}
 {{ toYaml .Values.deployment.extraEnvs | nindent 12 }}
 {{- end }}
@@ -123,6 +182,12 @@ spec:
           volumeMounts:
             - name: ph-ee-config
               mountPath: "/config"
+            - name: tls-keystore
+              mountPath: /tls
+              readOnly: true
+            - name: shared-cacerts
+              mountPath: /shared
+              readOnly: true
 {{- if .Values.deployment.extraVolumeMounts }}
 {{ toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
 {{- end }}
@@ -130,6 +195,13 @@ spec:
         - name: ph-ee-config
           configMap:
             name: ph-ee-config
+        - name: sandbox-cert
+          secret:
+            secretName: sandbox-secret
+        - name: tls-keystore
+          emptyDir: {}
+        - name: shared-cacerts
+          emptyDir: {}
 {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | nindent 8 }}
 {{- end }}

@@ -88,27 +88,19 @@ spec:
           # {{ toYaml .Values.deployment.config | indent 12 }}
           # {{- end }}
       # --- BEGIN Init Container ---
-{{- if .Values.deployment.initContainers }}
-      initContainers:
-{{ toYaml .Values.deployment.initContainers | nindent 8 }}
-{{- else }}
       initContainers:
         - name: wait-for-gateway
-          image: curlimages/curl:latest # Lightweight image with curl
+          image: curlimages/curl:latest
           command: ['sh', '-c']
           args:
             - |
               GATEWAY_HEALTH_URL="http://phee-zeebe-gateway:9600/actuator/health/liveness"
               echo "Waiting for Zeebe Gateway liveness check on $GATEWAY_HEALTH_URL..."
-
-              # Wait until curl returns an HTTP status code 200 (UP/OK)
               until curl -s $GATEWAY_HEALTH_URL | grep -q '"status":"UP"'; do
                 echo "Gateway not yet fully ready..."
                 sleep 2
               done
-
               echo "Gateway is fully up! Proceeding to main container..."
-
         - name: wait-db
           image: busybox:1.35
           imagePullPolicy: IfNotPresent
@@ -121,7 +113,6 @@ spec:
                 sleep 2
               done
               echo "Database is ready!"
-{{- end }}
       # --- END Init Container ---
       volumes:
         - name: ph-ee-config
