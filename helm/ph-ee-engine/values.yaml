@@ -2259,7 +2259,7 @@ vouchers:
       transfers: "/api/v1/transfers?size=1&page=0"
 
 billPay:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-bill-pay:v1.1.0-gazelle-1.1.0 
   imagePullPolicy: IfNotPresent

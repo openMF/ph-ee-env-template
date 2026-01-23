@@ -32,25 +32,13 @@ spec:
             - sh
             - -c
             - |
-              echo "Creating JKS keystore from TLS certificate (sandbox-secret)..."
-              # Convert to PKCS12 first
+              echo "Creating PKCS12 keystore from TLS certificate (sandbox-secret)..."
               openssl pkcs12 -export \
                 -in /certs/tls.crt \
                 -inkey /certs/tls.key \
-                -out /tmp/keystore.p12 \
+                -out /tls/keystore.p12 \
                 -name tomcat-https \
                 -passout pass:changeit
-
-              # Convert PKCS12 to JKS (Spring Boot default format)
-              keytool -importkeystore \
-                -srckeystore /tmp/keystore.p12 \
-                -srcstoretype PKCS12 \
-                -destkeystore /tls/keystore.jks \
-                -deststoretype JKS \
-                -srcstorepass changeit \
-                -deststorepass changeit \
-                -noprompt
-
               echo "Keystore created successfully"
               ls -la /tls/
           volumeMounts:
@@ -146,9 +134,9 @@ spec:
             - name: "SERVER_SSL_KEY-STORE-PASSWORD"
               value: "changeit"
             - name: "SERVER_SSL_KEY-STORE"
-              value: "file:/tls/keystore.jks"
+              value: "file:/tls/keystore.p12"
             - name: "SERVER_SSL_KEY-STORE-TYPE"
-              value: "JKS"
+              value: "PKCS12"
             - name: "SERVER_SSL_KEY-ALIAS"
               value: "tomcat-https"  
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
