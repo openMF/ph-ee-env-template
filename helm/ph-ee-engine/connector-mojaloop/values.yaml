@@ -14,19 +14,19 @@ SPRING_PROFILES_ACTIVE: ""
 DFSPIDS: "gorilla,lion"
 switch:
   quotes:
-    host: "http://fspiop.mifos.gazelle.localhost"
-    service: "fspiop.mifos.gazelle.localhost"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   als:
-    host: "http://fspiop.mifos.gazelle.localhost"
-    service: "fspiop.mifos.gazelle.localhost"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   transfers:
-    host: "http://fspiop.mifos.gazelle.localhost"
-    service: "fspiop.mifos.gazelle.localhost"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   transactions:
-    host: "http://fspiop.mifos.gazelle.localhost"
-    service: "fspiop.mifos.gazelle.localhost"
+    host: "http://fspiop.mifos.gazelle.test"
+    service: "fspiop.mifos.gazelle.test"
   oracle:
-    host: "http://fspiop.mifos.gazelle.localhost"
+    host: "http://fspiop.mifos.gazelle.test"
 limits:
   cpu: "500m"
   memory: "384M"
