@@ -1,11 +1,57 @@
-# helm charts for use with and by Mifos-Gazelle deployments
-This chart is based on the g2p-sandbox or at least uses it as a starting point for a purpose built chart for PHEE that 
-will work with the mifos-gazelle deloyment tools 
+# ph-ee-gazelle
 
-## Usage: this chart is designed to be deployed from mifos-gazelle 
-=> please refer to the mifos-gazelle readme at *TBD* for instructions on deploying and interacting
+Umbrella Helm chart for [mifos-gazelle](https://github.com/openMF/mifos-gazelle) deployments of Payment Hub EE (PHEE) v1.13.0.
 
-## Notes
-- initially the target platform for this chart is a single node kubernetes cluster running on an Ubuntu VM and the values.yaml files  will reflect this.
-- it is a design goal however to facilitate growing from a single cluster for POCs to full scale deployments on the most popular kubernetes engines such as AWS EKS, Azure AKS, Oracle OCI OKE etc 
-- this chart and the mifos-gazelle tools that deploy it may/will/do currently depend upon the c4gt-gazelle-dev branch of the ph-ee-template repo 
+**Do not deploy this chart directly** — it is installed and configured by `mifos-gazelle`'s `run.sh` tooling.
+
+## What this chart deploys
+
+| Component | Source |
+|-----------|--------|
+| Payment Hub EE engine (all microservices) | `ph-ee-engine` subchart |
+| Identity Account Mapper | `account_mapper` subchart |
+| Tenant ConfigMap (`ph-ee-config`) | `config/` property files |
+
+## Dependencies
+
+| Name | Version | Purpose |
+|------|---------|---------|
+| `ph-ee-engine` | 1.13.0-gazelle | All PHEE microservices + infrastructure |
+| `account_mapper` | 1.0.0 | GovStack identity/account lookup |
+| `common` | 1.13.0-gazelle | Shared Helm helpers |
+
+## Tenant configuration
+
+Default tenants configured in `values.yaml`:
+
+| Tenant | Role |
+|--------|------|
+| `greenbank` | Primary payer (Mojaloop routing) |
+| `bluebank` | Secondary / payee FSP |
+| `redbank` | Closedloop payer (set in ph-ee-engine values) |
+
+The `config/` directory holds Spring Boot `.properties` files that are bundled into the `ph-ee-config` ConfigMap at deploy time:
+
+```
+config/
+  application-tenants.properties          # tenant workflow mappings
+  application-tenantsConnection.properties # Fineract DB connections per tenant
+  application-bb.properties               # payment mode / connector config
+  application-fin12.properties            # AMS Mifos connector settings
+```
+
+## Deploying via mifos-gazelle
+
+```bash
+# Full deployment (recommended)
+sudo ./run.sh
+
+# Deploy PHEE only
+sudo ./run.sh --phee
+```
+
+See the [mifos-gazelle docs](../../docs/MIFOS-GAZELLE-README.md) for prerequisites and full deployment guide.
+
+## Local development (hostPath mounts)
+
+When running with hostPath mounts, changes to Spring Boot application YAML files require a JAR rebuild and pod restart — ConfigMap changes alone have no effect. See [DEV-TEST-TIPS.md](../../docs/DEV-TEST-TIPS.md).
