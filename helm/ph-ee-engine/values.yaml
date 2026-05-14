@@ -113,14 +113,10 @@ camunda-platform:
 
 
 
-#   zeebe-gateway:
-#     replicas: 1
-#     logLevel: warn
-#     env:
-#       - name: ZEEBE_GATEWAY_THREADS_MANAGEMENTTHREADS
-#         value: "4"
-#       - name: ZEEBE_GATEWAY_MONITORING_ENABLED
-#         value: "true"
+#  zeebe-gateway:
+#    env:
+#      - name: ZEEBE_GATEWAY_REST_ENABLED
+#        value: "true"
 
 #   elasticsearch:
 #     enabled: false
@@ -213,7 +209,7 @@ camunda-platform:
       #      - chart-example.mifos.gazelle.test
 
 channel:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-channel:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
@@ -426,7 +422,7 @@ ph_ee_connector_ams_mifos:
     #   ph-ee-connector-ams-mifos.yml: | 
 
 ph_ee_connector_mojaloop:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-mojaloop-java:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
@@ -532,7 +528,7 @@ ph_ee_connector_mojaloop:
     #   ph-ee-connector-mojaloop-java.yml: |
 
 operations_app:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-operations-app:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
@@ -1259,7 +1255,7 @@ messagegateway:
     #   message-gateway.yml: |
 
 notifications:
-  enabled: true 
+  enabled: false
   image: docker.io/openmf/ph-ee-notifications
   imageTag: v1.4.0-gazelle-1.1.0
   imagePullPolicy:  IfNotPresent
@@ -1330,7 +1326,7 @@ notifications:
 
 
 zeebe_ops:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-zeebe-ops:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
@@ -1529,7 +1525,7 @@ importer_es:
 
 
 mockpayment:
-  enabled: true
+  enabled: false
   image: docker.io/openmf/ph-ee-connector-mock-payment-schema:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
   replicas: 1
@@ -1606,7 +1602,7 @@ kafka:
     transaction.state.log.replication.factor=1    
 
 importer_rdbms:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-importer-rdbms:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
@@ -1692,7 +1688,7 @@ importer_rdbms:
   javaToolOptions: "-Xmx128m"
 
 ph_ee_bulk_processor:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-bulk-processor:mifos-v2.0.0
   imagePullPolicy: IfNotPresent
@@ -1827,7 +1823,7 @@ ph_ee_bulk_processor:
       cpu: "50m"
 
 ph_ee_connector_gsma:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-gsma:v1.3.0-gazelle-1.1.0
   imagePullPolicy: IfNotPresent
@@ -1988,7 +1984,7 @@ ph-ee-connector_slcb:
     #   ph_ee_connector_slcb.yml: |
 
 ph_ee_connector_bulk:
-  enabled: true
+  enabled: false
   replicas: 1
   image: docker.io/openmf/ph-ee-connector-bulk:mifos-v2.0.0
   imagePullPolicy: IfNotPresent

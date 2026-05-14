@@ -24,7 +24,7 @@ ph-ee-engine:
       command: ./gradlew test -Dcucumber.filter.tags="@gov"
 
 account_mapper:
-  enabled: true
+  enabled: false
   image: docker.io/openmf/ph-ee-identity-account-mapper:mifos-v2.0.0
   hostname: "identity-mapper.mifos.gazelle.test"
   LOGGING_LEVEL_ROOT: INFO    
